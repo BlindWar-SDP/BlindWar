@@ -1,2 +1,2 @@
 # BlindWar
-Blind Test project for CS-206 EPFL course
+Blind Test project for CS-306 EPFL course
