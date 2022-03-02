@@ -4,10 +4,12 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
+import androidx.test.espresso.intent.matcher.IntentMatchers.toPackage
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import org.hamcrest.Matchers.allOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,6 +30,12 @@ class MainActivityTest {
     fun checkIntent() {
         Intents.init()
         onView(withId(R.id.mainButton)).perform(click())
+        intended(
+            allOf(
+                toPackage("ch.epfl.sdp.blindwar"),
+                hasExtra(EXTRA_MESSAGE, "Name")
+            )
+        )
         Intents.release()
     }
 }
