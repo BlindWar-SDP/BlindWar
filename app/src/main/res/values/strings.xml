@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">BlindWar</string>
+    <string name="solo">SOLO</string>
+    <string name="multi">MULTI</string>
+    <string name="profile">PROFILE</string>
+    <string name="logout">LOGOUT</string>
+    <string name="blindwar">BLINDWAR</string>
+
     <string name="format_descr"> Survival : Description placeholder
     |Against the Clock :
     |Regular : Description placeholder</string>
+    
     <string name="opt_descr"> Song Selection : Description placeholder
     |Altered audio : Description placeholder</string>
 
