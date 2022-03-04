@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginLeft="8sp"
-        tools:context=".TutorialActivity">
+        >
 
         <TextView
             android:id="@+id/title"
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8sp"
-            android:text="" />
+            android:text="@string/modes_descr" />
 
         <TextView
             android:id="@+id/format_title"
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8sp"
-            android:text="" />
+            android:text="@string/format_descr" />
 
         <TextView
             android:id="@+id/commands_title"
@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8sp"
-            android:text="" />
+            android:text="@string/comm_descr" />
 
         <TextView
             android:id="@+id/song_opt_title"
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8sp"
-            android:text="" />
+            android:text="@string/song_opt_descr" />
 
     </LinearLayout>
 </ScrollView>
