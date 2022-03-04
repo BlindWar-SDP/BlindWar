@@ -75,6 +75,7 @@
         android:id="@+id/titleText"
         android:layout_width="258dp"
         android:layout_height="70dp"
+        android:gravity="center"
         android:text="@string/blindwar"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="48sp"

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BlindWar">
         <activity
-            android:name=".Main_menu"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".GreetingActivity"
@@ -22,7 +22,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Main_menu"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
