@@ -6,8 +6,8 @@
 
     <ImageButton
         android:id="@+id/startButton"
-        android:contentDescription="@string/play_button_description"
         android:src="@drawable/play_arrow"
+        android:contentDescription="@string/play_button_description"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
