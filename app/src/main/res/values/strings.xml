@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BlindWar</string>
+    <string name="play_button_description">Click here to play or stop the game</string>
 </resources>
