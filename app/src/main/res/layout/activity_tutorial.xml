@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="8sp"
+        tools:context=".TutorialActivity">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tutorial"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/modes_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modes"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/modes_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8sp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/format_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8sp"
+            android:text="Formats"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/format_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8sp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/commands_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8sp"
+            android:text="Commands"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/commands_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8sp"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/song_opt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8sp"
+            android:text="Game Options"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/song_opt_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8sp"
+            android:text="" />
+
+    </LinearLayout>
+</ScrollView>
