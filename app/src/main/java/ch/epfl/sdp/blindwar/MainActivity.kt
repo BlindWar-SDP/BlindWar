@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
+import ch.epfl.sdp.blindwar.tutorial.TutorialFragment
+import ch.epfl.sdp.blindwar.tutorial.ViewPagerAdapter
 
 const val EXTRA_MESSAGE = "ch.epfl.blindwar.MESSAGE"
 
