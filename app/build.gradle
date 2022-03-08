@@ -1,7 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    // id 'kotlin-android-extensions'
     id 'jacoco'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -49,6 +51,10 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
+
+    // Firebase
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
 }
 
 tasks.withType(Test) {

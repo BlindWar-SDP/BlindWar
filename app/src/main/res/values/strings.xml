@@ -6,11 +6,13 @@
     <string name="profile">PROFILE</string>
     <string name="logout">LOGOUT</string>
     <string name="blindwar">BLINDWAR</string>
+    <string name="sign_in_btn">Sign In</string>
+
 
     <string name="format_descr"> Survival : Description placeholder
     |Against the Clock :
     |Regular : Description placeholder</string>
-    
+
     <string name="opt_descr"> Song Selection : Description placeholder
     |Altered audio : Description placeholder</string>
 
@@ -22,4 +24,5 @@
 
     <string name="song_opt_descr"> Random Song Sel : Description placeholder| Custom
     playlist </string>
+
 </resources>

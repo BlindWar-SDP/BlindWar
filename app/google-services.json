@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "245117989054",
+    "project_id": "blindwar-sdp",
+    "storage_bucket": "blindwar-sdp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245117989054:android:385e2b4a5ac23a5dd2eeef",
+        "android_client_info": {
+          "package_name": "ch.epfl.sdp.blindwar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245117989054-qqojs339nan3e7pf46761n1a870ir668.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5uoxYKv7fapqmfTkGc2qc9QXmNbEUKAo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245117989054-qqojs339nan3e7pf46761n1a870ir668.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
