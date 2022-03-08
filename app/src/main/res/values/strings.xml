@@ -24,5 +24,6 @@
 
     <string name="song_opt_descr"> Random Song Sel : Description placeholder| Custom
     playlist </string>
+    <string name="sign_out_button">Sign Out</string>
 
 </resources>

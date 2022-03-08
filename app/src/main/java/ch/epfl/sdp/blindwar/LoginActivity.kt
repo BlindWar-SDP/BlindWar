@@ -37,8 +37,6 @@ class LoginActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        googleSignInClient.signOut()
-
         mAuth = FirebaseAuth.getInstance()
 
         findViewById<Button>(R.id.button_SignIn).setOnClickListener{
