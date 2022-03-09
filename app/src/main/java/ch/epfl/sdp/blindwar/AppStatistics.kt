@@ -60,7 +60,7 @@ class AppStatistics {
 
     // function for updating solo percentages
     private fun soloPercentUpdate() {
-        var total = soloCorrect + soloWrong
+        val total = soloCorrect + soloWrong
         soloCorrectPercent = (soloCorrect * 100 / total).toFloat()
         soloWrongPercent = 100 - soloCorrectPercent
     }
@@ -78,7 +78,7 @@ class AppStatistics {
 
     // function for updating multiplayer percentages
     private fun multiCorrectnessPercentUpdate() {
-        var total = multiCorrect + multiWrong
+        val total = multiCorrect + multiWrong
         multiCorrectPercent = (multiCorrect * 100 / total).toFloat()
         multiWrongPercent = 100 - multiCorrectPercent
     }
@@ -96,7 +96,7 @@ class AppStatistics {
 
     // function for updating multiplayer win rate
     private fun multiWinRateUpdate() {
-        var total = wins + losses
+        val total = wins + losses
         winPercent = (wins * 100 / total).toFloat()
         lossPercent = 100 - winPercent
     }
