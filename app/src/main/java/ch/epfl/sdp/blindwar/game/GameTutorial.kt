@@ -16,22 +16,38 @@ import java.util.*
  *
  * @param assetManager AssetManager instance to get the mp3 files
  */
-class GameTutorial(assetManager: AssetManager): Game() {
+class GameTutorial(assetManager: AssetManager) : Game() {
     private val assetManager = assetManager
     private val mediaMetadataRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
-    val player = MediaPlayer()
+    private val player = MediaPlayer()
+    val sessionId: Int
+        get() = player.audioSessionId
 
-    // Map each title with its asset file descriptor
-    private var assetFileDescriptorPerTitle: Map<String, AssetFileDescriptor> =
-        assetManager.list("")?.filter { it.endsWith(".mp3") } ?.map { assetManager.openFd(it) }?.associateBy({
-        // Get the title
-        mediaMetadataRetriever.setDataSource(it.fileDescriptor, it.startOffset, it.length)
-        return@associateBy mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE).toString()
-    }, { it }) ?: emptyMap()
+    private val test = assetManager.list("")
 
-    private var titlePlayed: Set<String> = assetFileDescriptorPerTitle.keys
+    // Map each title with its asset file descriptor and its important metadata
+    private var assetFileDescriptorAndMetaDataPerTitle: Map<String, Pair<AssetFileDescriptor, MusicMetaData>> =
+        assetManager.list("")?.filter { it.endsWith(".mp3") }?.map { assetManager.openFd(it) }
+            ?.associateBy({
+                // Get the title
+                mediaMetadataRetriever.setDataSource(it.fileDescriptor, it.startOffset, it.length)
+                return@associateBy mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+                    .toString()
+            }, {
+                return@associateBy Pair(
+                    it,
+                    MusicMetaData(
+                        mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+                            .toString(),
+                        mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+                            .toString()
+                    )
+                )
+            }) ?: emptyMap()
 
-    override fun nextRound() {
+    private var titlePlayed: Set<String> = assetFileDescriptorAndMetaDataPerTitle.keys
+
+    override fun nextRound(): MusicMetaData? {
 
         // Stop the music
         player.stop()
@@ -39,7 +55,7 @@ class GameTutorial(assetManager: AssetManager): Game() {
         // Get a random title
         val random = Random()
         val title = this.titlePlayed.elementAt(random.nextInt(this.titlePlayed.size))
-        val afd = this.assetFileDescriptorPerTitle[title]
+        val afd = this.assetFileDescriptorAndMetaDataPerTitle[title]?.first
 
         // Change the current music
         afd?.let { player.setDataSource(afd.fileDescriptor, afd.startOffset, it.length) }
@@ -47,10 +63,17 @@ class GameTutorial(assetManager: AssetManager): Game() {
 
         // Play the music
         player.start()
+
+        return this.assetFileDescriptorAndMetaDataPerTitle[title]?.second
     }
 
 
-    override fun guess(titleGuess: String) {
-        TODO("Not yet implemented")
+    override fun guess(titleGuess: String): Int {
+        if (titleGuess == this.title) {
+            this.score += 1
+            this.nextRound()
+        }
+
+        return this.score
     }
 }
