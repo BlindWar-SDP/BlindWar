@@ -1,0 +1,79 @@
+package ch.epfl.sdp.blindwar
+
+class AppStatistics {
+    //statistics for solo mode
+    private var soloCorrect: Int = 0
+    private var soloWrong: Int = 0
+    private var soloCorrectPercent: Float = 0.0F
+    private var soloWrongPercent: Float = 0.0F
+
+    //statistics for multiplayer mode
+    private var multiCorrect: Int = 0
+    private var multiWrong: Int = 0
+    private var multiCorrectPercent: Float = 0.0F
+    private var multiWrongPercent: Float = 0.0F
+    private var wins: Int = 0
+    private var losses: Int = 0
+    private var winPercent: Float = 0.0F
+    private var lossPercent: Float = 0.0F
+    private var elo: Int = 1000
+
+    //function for resetting stats to 0 (except for elo)
+    fun resetStatistics() {
+        soloCorrect = 0
+        soloWrong = 0
+        soloCorrectPercent = 0.0F
+        soloWrongPercent = 0.0F
+        multiCorrect = 0
+        multiWrong = 0
+        multiCorrectPercent = 0.0F
+        multiWrongPercent = 0.0F
+        wins = 0
+        losses = 0
+        winPercent = 0.0F
+        lossPercent = 0.0F
+    }
+
+    // function for updating solo percentages
+    fun soloPercentUpdate() {
+        var total = soloCorrect + soloWrong
+        soloCorrectPercent = (soloCorrect * 100 / total).toFloat()
+        soloWrongPercent = 100 - soloCorrectPercent
+    }
+
+    // function for updating solo percentages
+    fun multiCorrectnessPercentUpdate() {
+        var total = multiCorrect + multiWrong
+        multiCorrectPercent = (multiCorrect * 100 / total).toFloat()
+        multiWrongPercent = 100 - multiCorrectPercent
+    }
+
+    // function for updating solo percentages
+    fun multiWinRateUpdate() {
+        var total = wins + losses
+        winPercent = (wins * 100 / total).toFloat()
+        lossPercent = 100 - winPercent
+    }
+
+    // function for updating elo (very simplified version)
+    fun eloUpdate(opponentElo: Int, win: Boolean) {
+        if (win) {
+            if (opponentElo > elo) {
+                elo+= 15
+            } else if (opponentElo == elo) {
+                elo+= 10
+            } else {
+                elo+=5
+            }
+        } else {
+            if (opponentElo > elo) {
+                elo-= 5
+            } else if (opponentElo == elo) {
+                elo-= 10
+            } else {
+                elo-= 15
+            }
+        }
+    }
+
+}
