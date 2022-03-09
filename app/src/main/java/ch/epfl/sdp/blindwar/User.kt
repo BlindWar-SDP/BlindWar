@@ -17,8 +17,4 @@ class User (
         screenName = newName
     }
 
-    //function to change profile picture?
-    fun changeProfilePicture(newImage: Image) {
-        profilePicture = newImage
-    }
 }

@@ -2,21 +2,21 @@ package ch.epfl.sdp.blindwar
 
 class AppStatistics {
     //statistics for solo mode
-    private var soloCorrect: Int = 0
-    private var soloWrong: Int = 0
+    var soloCorrect: Int = 0
+    var soloWrong: Int = 0
     private var soloCorrectPercent: Float = 0.0F
     private var soloWrongPercent: Float = 0.0F
 
     //statistics for multiplayer mode
-    private var multiCorrect: Int = 0
-    private var multiWrong: Int = 0
+    var multiCorrect: Int = 0
+    var multiWrong: Int = 0
     private var multiCorrectPercent: Float = 0.0F
     private var multiWrongPercent: Float = 0.0F
-    private var wins: Int = 0
-    private var losses: Int = 0
+    var wins: Int = 0
+    var losses: Int = 0
     private var winPercent: Float = 0.0F
     private var lossPercent: Float = 0.0F
-    private var elo: Int = 1000
+    var elo: Int = 1000
 
     //function for resetting stats to 0 (except for elo)
     fun resetStatistics() {
