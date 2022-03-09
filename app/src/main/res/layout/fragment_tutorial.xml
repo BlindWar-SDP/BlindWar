@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginLeft="8sp"
-        tools:context=".TutorialActivity">
+        tools:context=".tutorial.TutorialActivity">
 
         <TextView
             android:id="@+id/title"
@@ -80,6 +80,22 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8sp"
             android:text="" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button" />
+
+        <com.gauravk.audiovisualizer.visualizer.BarVisualizer
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            custom:avDensity="0.8"
+            custom:avType="fill"
+            custom:avColor="@color/av_dark_blue"
+            custom:avSpeed="normal"/>
 
     </LinearLayout>
 </ScrollView>
