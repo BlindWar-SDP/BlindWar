@@ -5,6 +5,7 @@ import android.content.res.AssetManager
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.util.Log
+import java.util.*
 
 
 /**
@@ -18,22 +19,34 @@ import android.util.Log
 class GameTutorial(assetManager: AssetManager): Game() {
     private val assetManager = assetManager
     private val mediaMetadataRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
+    val player = MediaPlayer()
+
+    // Map each title with its asset file descriptor
+    private var assetFileDescriptorPerTitle: Map<String, AssetFileDescriptor> =
+        assetManager.list("")?.filter { it.endsWith(".mp3") } ?.map { assetManager.openFd(it) }?.associateBy({
+        // Get the title
+        mediaMetadataRetriever.setDataSource(it.fileDescriptor, it.startOffset, it.length)
+        return@associateBy mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE).toString()
+    }, { it }) ?: emptyMap()
+
+    private var titlePlayed: Set<String> = assetFileDescriptorPerTitle.keys
 
     override fun nextRound() {
-        val afd: AssetFileDescriptor = assetManager.openFd("Gorillaz-Feel Good Inc.mp3")
-        assetManager.list("")?.filter { it.endsWith(".mp3") } ?.forEach { Log.d("MUSIC", it.toString()) }
 
-        val player = MediaPlayer()
-        player.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+        // Stop the music
+        player.stop()
+
+        // Get a random title
+        val random = Random()
+        val title = this.titlePlayed.elementAt(random.nextInt(this.titlePlayed.size))
+        val afd = this.assetFileDescriptorPerTitle[title]
+
+        // Change the current music
+        afd?.let { player.setDataSource(afd.fileDescriptor, afd.startOffset, it.length) }
         player.prepare()
+
+        // Play the music
         player.start()
-
-        mediaMetadataRetriever.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
-
-        // Music are taken from our assets directory: in this directory, title metadata are well defined for all musics
-        super.title = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE).toString()
-
-        Log.d("TITLE", super.title)
     }
 
 
