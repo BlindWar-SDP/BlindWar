@@ -15,8 +15,8 @@ class TutorialActivity: AppCompatActivity() {
         val viewPager: ViewPager2 = findViewById(R.id.pager)
         val fragments = arrayListOf<Fragment>(TutorialFragment(), TutorialFragment())
         val adapter = ViewPagerAdapter(fragments, this)
-
         assert(fragments.size == adapter.itemCount)
+
         viewPager.adapter = adapter
     }
 }

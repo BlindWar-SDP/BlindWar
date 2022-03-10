@@ -4,6 +4,10 @@ plugins {
     id 'jacoco'
 }
 
+jacoco {
+    toolVersion = "0.8.7"
+}
+
 android {
     compileSdk 31
 
@@ -46,6 +50,8 @@ dependencies {
 
     // JUnit
     testImplementation 'junit:junit:4.13.2'
+    // https://mvnrepository.com/artifact/org.jacoco/org.jacoco.agent
+    androidTestImplementation("org.jacoco:org.jacoco.ant:0.8.7")
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
 
