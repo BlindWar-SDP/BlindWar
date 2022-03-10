@@ -47,87 +47,77 @@ class AppStatistics {
         lossPercent = 0.0F
     }
 
+    // general function for updating percentages
+    private fun percentUpdate(good: Int, bad: Int): Pair<Float, Float> {
+        val total = good + bad
+        val goodPercent = (good * 100 / total).toFloat()
+        val badPercent = 100 - goodPercent
+        return goodPercent to badPercent
+    }
+
     //function for updating solo correct/wrong stats
     fun soloCorrectnessUpdate(correct: Boolean) {
         if (correct) {
             soloCorrect++
-            soloPercentUpdate()
         } else {
             soloWrong++
-            soloPercentUpdate()
         }
-    }
-
-    // function for updating solo percentages
-    private fun soloPercentUpdate() {
-        val total = soloCorrect + soloWrong
-        soloCorrectPercent = (soloCorrect * 100 / total).toFloat()
-        soloWrongPercent = 100 - soloCorrectPercent
+        val (a, b) = percentUpdate(soloCorrect, soloWrong)
+        soloCorrectPercent = a
+        soloWrongPercent = b
     }
 
     //function for updating multiplayer correct/wrong stats
     fun multiCorrectnessUpdate(correct: Boolean) {
         if (correct) {
             multiCorrect++
-            multiCorrectnessPercentUpdate()
         } else {
             multiWrong++
-            multiCorrectnessPercentUpdate()
         }
-    }
-
-    // function for updating multiplayer percentages
-    private fun multiCorrectnessPercentUpdate() {
-        val total = multiCorrect + multiWrong
-        multiCorrectPercent = (multiCorrect * 100 / total).toFloat()
-        multiWrongPercent = 100 - multiCorrectPercent
+        val (a, b) = percentUpdate(multiCorrect, multiWrong)
+        multiCorrectPercent = a
+        multiWrongPercent = b
     }
 
     // function for updating win/loss numbers
     fun multiWinLossCountUpdate(win: Boolean) {
         if (win) {
             wins++
-            multiWinRateUpdate()
         } else {
             losses++
-            multiWinRateUpdate()
+        }
+        val (a, b) = percentUpdate(wins, losses)
+        winPercent = a
+        lossPercent = b
+    }
+
+
+    // function for updating elo in case of win (very simple version)
+    fun eloUpdateWin(opponentElo: Int) {
+        elo += when {
+            opponentElo > elo -> {
+                15
+            }
+            opponentElo == elo -> {
+                10
+            }
+            else -> {
+                5
+            }
         }
     }
 
-    // function for updating multiplayer win rate
-    private fun multiWinRateUpdate() {
-        val total = wins + losses
-        winPercent = (wins * 100 / total).toFloat()
-        lossPercent = 100 - winPercent
-    }
-
-    // function for updating elo (very simple version)
-    fun eloUpdate(opponentElo: Int, win: Boolean) {
-        if (win) {
-            elo += when {
-                opponentElo > elo -> {
-                    15
-                }
-                opponentElo == elo -> {
-                    10
-                }
-                else -> {
-                    5
-                }
+    // function for updating elo in case of loss (very simple version)
+    fun eloUpdateLoss(opponentElo: Int) {
+        elo -= when {
+            opponentElo > elo -> { 5
             }
-        } else {
-            elo -= when {
-                opponentElo > elo -> {
-                    5
-                }
-                opponentElo == elo -> {
-                    10
-                }
-                else -> {
-                    15
-                }
+            opponentElo == elo -> { 10
+            }
+            else -> { 15
             }
         }
+
     }
 
 }

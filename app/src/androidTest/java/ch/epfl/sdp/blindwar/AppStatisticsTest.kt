@@ -154,21 +154,21 @@ class AppStatisticsTest {
 
     @Test
     fun eloUpdateWin() {
-        testStats5.eloUpdate(1100, true)
+        testStats5.eloUpdateWin(1100)
         assert(testStats5.elo == 1015)
-        testStats5.eloUpdate(1015, true)
+        testStats5.eloUpdateWin(1015)
         assert(testStats5.elo == 1025)
-        testStats5.eloUpdate(1015, true)
+        testStats5.eloUpdateWin(1015)
         assert(testStats5.elo == 1030)
     }
 
     @Test
     fun eloUpdateLoss() {
-        testStats4.eloUpdate(1100, false)
+        testStats4.eloUpdateLoss(1100)
         assert(testStats4.elo == 995)
-        testStats4.eloUpdate(995, false)
+        testStats4.eloUpdateLoss(995)
         assert(testStats4.elo == 985)
-        testStats4.eloUpdate(900, false)
+        testStats4.eloUpdateLoss(900)
         assert(testStats4.elo == 970)
     }
 }

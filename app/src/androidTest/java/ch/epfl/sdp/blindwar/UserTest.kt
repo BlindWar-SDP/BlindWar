@@ -57,7 +57,7 @@ class UserTest {
 
     @Test
     fun setUserStatistics() {
-        testUser.userStatistics.eloUpdate(1005, true)
+        testUser.userStatistics.eloUpdateWin(1005)
         assertEquals(testUser.userStatistics.elo, 1015)
     }
 }
