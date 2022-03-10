@@ -27,6 +27,11 @@ class VoskActivityTest : TestCase() {
     }
 
     @Test
+    fun onCreate2() {
+        onView(withId(R.id.result_text)).check(matches(isEnabled()))
+    }
+
+    @Test
     fun onResult() {
         onView(withId(R.id.result_text)).check(matches(isEnabled()))
     }
@@ -49,5 +54,9 @@ class VoskActivityTest : TestCase() {
     @Test
     fun onTimeout() {
         onView(withId(R.id.recognize_mic)).check(matches(isEnabled()))
+    }
+
+    @Test
+    fun recognizeMicrophone() {
     }
 }
