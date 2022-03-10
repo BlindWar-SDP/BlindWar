@@ -37,9 +37,7 @@ class VoskActivity : Activity(), RecognitionListener {
         setUiState(STATE_START)
         findViewById<View>(R.id.recognize_mic).setOnClickListener { recognizeMicrophone() }
         (findViewById<View>(R.id.pause) as ToggleButton).setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-            pause(
-                isChecked
-            )
+            pause(isChecked)
         }
         LibVosk.setLogLevel(LogLevel.INFO)
 
@@ -58,7 +56,7 @@ class VoskActivity : Activity(), RecognitionListener {
     }
 
     private fun initModel() {
-        StorageService.unpack(this, "heavy-us", "model",
+        StorageService.unpack(this, "model-en-us", "model",
             { model: Model? ->
                 this.model = model
                 setUiState(STATE_READY)
