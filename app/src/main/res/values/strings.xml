@@ -3,6 +3,7 @@
     <string name="play_button_description">Click here to play or stop the game</string>
     <string name="solo">SOLO</string>
     <string name="multi">MULTI</string>
+    <string name="tuto">TUTO</string>
     <string name="profile">PROFILE</string>
     <string name="logout">LOGOUT</string>
     <string name="blindwar">BLINDWAR</string>

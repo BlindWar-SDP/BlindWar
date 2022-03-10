@@ -33,11 +33,11 @@
         app:layout_constraintVertical_bias="0.323" />
 
     <Button
-        android:id="@+id/multiButton"
+        android:id="@+id/tutoButton"
         android:layout_width="137dp"
         android:layout_height="70dp"
         android:layout_marginTop="20dp"
-        android:text="@string/multi"
+        android:text="@string/tuto"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
