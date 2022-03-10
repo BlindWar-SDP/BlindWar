@@ -12,24 +12,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BlindWar" >
-        <activity android:name=".GreetingActivity"
-            android:parentActivityName=".MainActivity">
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
 
         <activity android:name=".tutorial.TutorialActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainMenuActivity">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".MainMenuActivity" />
+        </activity>
+
+        <activity android:name=".SoloActivity"
+            android:parentActivityName=".MainMenuActivity">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainMenuActivity" />
+        </activity>
+
+        <activity android:name=".ProfileActivity"
+            android:parentActivityName=".MainMenuActivity">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainMenuActivity" />
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".MainMenuActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

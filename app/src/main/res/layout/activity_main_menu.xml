@@ -5,39 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="414dp"
-        android:layout_height="731dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.445"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.764"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@color/black" />
 
     <Button
         android:id="@+id/soloButton"
         android:layout_width="137dp"
         android:layout_height="70dp"
+        android:onClick="soloButton"
         android:text="@string/solo"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.323" />
 
     <Button
-        android:id="@+id/tutoButton"
+        android:id="@+id/tutorialButton"
         android:layout_width="137dp"
         android:layout_height="70dp"
         android:layout_marginTop="20dp"
-        android:text="@string/tuto"
+        android:onClick="tutorialButton"
+        android:text="@string/tutorial"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,8 +49,10 @@
         android:id="@+id/profileButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="profileButton"
         android:text="@string/profile"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:theme="@style/Button.Red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.232"
@@ -62,6 +64,7 @@
         android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:theme="@style/Button.Red"
         android:text="@string/logout"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -74,13 +77,14 @@
         android:id="@+id/titleText"
         android:layout_width="258dp"
         android:layout_height="70dp"
+        android:layout_marginBottom="60dp"
         android:gravity="center"
-        android:text="@string/blindwar"
+        android:text="@string/blind_war"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#FFFFFF"
         android:textSize="48sp"
         app:layout_constraintBottom_toTopOf="@+id/soloButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

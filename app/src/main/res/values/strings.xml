@@ -3,10 +3,10 @@
     <string name="play_button_description">Click here to play or stop the game</string>
     <string name="solo">SOLO</string>
     <string name="multi">MULTI</string>
-    <string name="tuto">TUTO</string>
+    <string name="tutorial">TUTORIAL</string>
     <string name="profile">PROFILE</string>
     <string name="logout">LOGOUT</string>
-    <string name="blindwar">BLINDWAR</string>
+    <string name="blind_war">BLINDWAR</string>
 
     <string name="format_descr"> Survival : Description placeholder
     |Against the Clock :

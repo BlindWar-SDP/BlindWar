@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
-import com.gauravk.audiovisualizer.visualizer.BarVisualizer
-import com.gauravk.audiovisualizer.visualizer.BlastVisualizer
 
 
 class TutorialFragment : Fragment() {
