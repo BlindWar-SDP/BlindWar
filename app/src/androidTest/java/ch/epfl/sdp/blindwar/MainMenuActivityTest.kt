@@ -52,4 +52,10 @@ class MainMenuActivityTest : TestCase() {
             .perform(click())
         intended(hasComponent(ProfileActivity::class.java.name))
     }
+
+    @Test
+    fun testLaunchVosk() {
+        onView(withId(R.id.SpeechButton)).perform(click())
+        intended(hasComponent(VoskActivity::class.java.name))
+    }
 }
