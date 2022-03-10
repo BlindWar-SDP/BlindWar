@@ -24,4 +24,11 @@
     playlist </string>
     <string name="tutorial">TUTORIAL</string>
     <string name="blind_war">Blind War</string>
+    <string name="backText"><![CDATA[->]]></string>
+    <string name="emailText">Your email here</string>
+    <string name="statisticsText">Statistics</string>
+    <string name="nameText">Your name here</string>
+    <string name="editProfileText">Edit profile</string>
+    <string name="logoutText">:( Logout</string>
+    <string name="profilePicDescriptionText">The profile picture of the user</string>
 </resources>
