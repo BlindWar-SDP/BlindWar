@@ -23,7 +23,7 @@ class GameTutorial(assetManager: AssetManager) : Game() {
     val sessionId: Int
         get() = player.audioSessionId
 
-    private val test = assetManager.list("")
+    private val test = assetManager.list("")?.filter { it.endsWith(".mp3") }?.map { assetManager.openFd(it).length }
 
     // Map each title with its asset file descriptor and its important metadata
     private var assetFileDescriptorAndMetaDataPerTitle: Map<String, Pair<AssetFileDescriptor, MusicMetaData>> =
