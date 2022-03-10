@@ -8,11 +8,6 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
-import ch.epfl.sdp.blindwar.game.GameTutorial
-import ch.epfl.sdp.blindwar.game.MusicMetaData
-import junit.framework.Assert
-import junit.framework.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 

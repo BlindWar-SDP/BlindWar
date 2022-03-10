@@ -4,7 +4,6 @@ import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
-import android.util.Log
 import java.util.*
 
 
@@ -16,14 +15,11 @@ import java.util.*
  *
  * @param assetManager AssetManager instance to get the mp3 files
  */
-class GameTutorial(assetManager: AssetManager) : Game() {
-    private val assetManager = assetManager
+class GameTutorial(private val assetManager: AssetManager) : Game() {
     private val mediaMetadataRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
     private val player = MediaPlayer()
     val sessionId: Int
         get() = player.audioSessionId
-
-    private val test = assetManager.list("")?.filter { it.endsWith(".mp3") }?.map { assetManager.openFd(it).length }
 
     // Map each title with its asset file descriptor and its important metadata
     private var assetFileDescriptorAndMetaDataPerTitle: Map<String, Pair<AssetFileDescriptor, MusicMetaData>> =
@@ -45,19 +41,24 @@ class GameTutorial(assetManager: AssetManager) : Game() {
                 )
             }) ?: emptyMap()
 
-    private var titlePlayed: Set<String> = assetFileDescriptorAndMetaDataPerTitle.keys
+    private var playlist: MutableSet<String> = assetFileDescriptorAndMetaDataPerTitle.keys.toSet() as MutableSet<String>
 
     override fun nextRound(): MusicMetaData? {
 
         // Stop the music
         player.stop()
+        player.reset()
 
         // Get a random title
         val random = Random()
-        val title = this.titlePlayed.elementAt(random.nextInt(this.titlePlayed.size))
+        val title = this.playlist.elementAt(random.nextInt(this.playlist.size))
         val afd = this.assetFileDescriptorAndMetaDataPerTitle[title]?.first
 
+        // Remove it to the playlist
+        this.playlist.remove(title)
+
         // Change the current music
+        this.title = title
         afd?.let { player.setDataSource(afd.fileDescriptor, afd.startOffset, it.length) }
         player.prepare()
 

@@ -1,10 +1,9 @@
 package ch.epfl.sdp.blindwar.game
 
-import android.content.res.AssetFileDescriptor
-
 abstract class Game {
-    protected var score = 0
-    protected lateinit var title: String
+    var score = 0
+        protected  set
+    protected var title: String? = null
 
     /**
      * Pass to the next round
