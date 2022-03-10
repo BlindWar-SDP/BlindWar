@@ -29,8 +29,8 @@ class DemoFragment : Fragment() {
         //get reference to visualizer
         val mVisualizer = view.findViewById<BarVisualizer>(R.id.bar);
 
-        //val audioSessionId: Int = gameTutorial.getSessionId()
-        //if (audioSessionId != -1) mVisualizer.setAudioSessionId(audioSessionId)
+        val audioSessionId: Int = gameTutorial.sessionId
+        if (audioSessionId != -1) mVisualizer.setAudioSessionId(audioSessionId)
 
 
         return view

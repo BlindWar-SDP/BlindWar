@@ -17,20 +17,6 @@ class TutorialFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-            val view: View = inflater.inflate(R.layout.fragment_tutorial, container, false)
-            val button: Button = view.findViewById<View>(R.id.button) as Button
-            button.setOnClickListener{
-                val fragment2 = SettingsFragment()
-                val transaction = parentFragmentManager.beginTransaction()
-                transaction.replace(R.id.tutorial_container, fragment2)
-                transaction.commit()
-            }
+    ): View = inflater.inflate(R.layout.fragment_tutorial, container, false)
 
-        //get reference to visualizer
-        val mVisualizer = view.findViewById<BarVisualizer>(R.id.bar);
-
-
-        return view
-    }
 }
