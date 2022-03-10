@@ -7,21 +7,23 @@
     <string name="logout">LOGOUT</string>
     <string name="blindwar">BLINDWAR</string>
 
-    <string name="format_descr"> Survival : Description placeholder
+    <string name="format_description"> Survival : Description placeholder
     |Against the Clock :
     |Regular : Description placeholder</string>
-    
+
     <string name="opt_descr"> Song Selection : Description placeholder
     |Altered audio : Description placeholder</string>
 
-    <string name="comm_descr"> Dedicated fragment describing the UI elements :
+    <string name="comm_description"> Dedicated fragment describing the UI elements :
     |Microphone / Pass / Timer / Settings</string>
 
-    <string name="modes_descr"> Solo Game : Description placeholder
+    <string name="modes_description"> Solo Game : Description placeholder
     |Multi Game : Description placeholder</string>
 
-    <string name="song_opt_descr"> Random Song Sel : Description placeholder| Custom
+    <string name="song_opt_description"> Random Song Sel : Description placeholder| Custom
     playlist </string>
+    <string name="tutorial">TUTORIAL</string>
+    <string name="blind_war">Blind War</string>
     <string name="backText"><![CDATA[->]]></string>
     <string name="emailText">Your email here</string>
     <string name="statisticsText">Statistics</string>
@@ -42,4 +44,11 @@
     <string name="stop_file">Stop File</string>
     <string name="pause">Pause</string>
     <string name="continueRecognition">Continue</string>
+    <string name="speechRecognition">SR(only for demo)</string>
+    <string name="content_description_background_image">Black Background Image</string>
+    <string name="tutorial_textview">Tutorial</string>
+    <string name="tutorial_modes">Modes</string>
+    <string name="tutorial_formats">Formats</string>
+    <string name="tutorial_commands">Commands</string>
+    <string name="tutorial_options">Game Options</string>
 </resources>
