@@ -18,9 +18,6 @@ class ViewPagerAdapter(
     }
 
     override fun createFragment(position: Int): Fragment {
-        if (items.isEmpty() || position < 0 || position > items.size - 1)
-            return Fragment()
-
         return items[position]
     }
 }
