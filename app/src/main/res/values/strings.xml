@@ -27,6 +27,8 @@
 
     <string name="sign_out_button">Sign Out</string>
 
+    <string name="tutorial">TUTORIAL</string>
+    <string name="blind_war">Blind War</string>
     <string name="backText"><![CDATA[->]]></string>
     <string name="emailText">Your email here</string>
     <string name="statisticsText">Statistics</string>
