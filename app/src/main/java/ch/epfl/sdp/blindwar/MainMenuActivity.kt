@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-iimport com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 
@@ -14,17 +14,9 @@ class MainMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
 
-        // Log Out
+        // Sign Out TODO : chose between [SIGN/LOG] -> button/functions coherence
         findViewById<Button>(R.id.logoutButton).setOnClickListener{
-            // Firebase logout
-            FirebaseAuth.getInstance().signOut()
-            // Google logout
-            GoogleSignIn.getClient(this,
-                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
-            ).signOut()
-
-            startActivity(Intent(this, MainActivity::class.java)) // TODO : can be directly LoginActivity
-            finish()
+            signOut()
         }
     }
 
@@ -46,4 +38,16 @@ class MainMenuActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    // Called when the user taps the Sign Out button
+    fun signOut(){
+        // Firebase logout
+        FirebaseAuth.getInstance().signOut()
+        // Google logout
+        GoogleSignIn.getClient(this,
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+        ).signOut()
+
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
+    }
 }

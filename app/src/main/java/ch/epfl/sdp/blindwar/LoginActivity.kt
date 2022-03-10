@@ -15,7 +15,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 class LoginActivity : AppCompatActivity() {
 
     companion object{
-        private const val RC_SIGN_IN = 123
+        private const val RC_SIGN_IN = 1234
     }
 
     private lateinit var mAuth: FirebaseAuth
@@ -25,21 +25,33 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        //GOOGLE SIGNIN inspired by:
+        //GOOGLE SIGN_IN inspired by:
         // https://firebase.google.com/docs/auth/android/google-signin#kotlin+ktx_1
         // https://www.youtube.com/watch?v=-tCIsI7aZGk
 
-        // Configure Google Sign In [gso=google sign in option]
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
         mAuth = FirebaseAuth.getInstance()
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
+//        mAuth.signOut() // TO COMMENT -> "trick" for debug
 
-        findViewById<Button>(R.id.button_SignIn).setOnClickListener{
-            signIn()
+        val user = mAuth.currentUser // TODO : Should I add '?' to be nullable? - seems not needed
+
+        // if not logged in
+        if (user == null) {
+            // Configure Google Sign In [gso=google sign in option]
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+            googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+            findViewById<Button>(R.id.button_SignIn).setOnClickListener{
+                signIn()
+            }
+//            finish()
+
+        // if already logged in: start MainMenu
+        } else {
+            startActivity(Intent(this, MainMenuActivity::class.java))
+            finish()
         }
     }
 
@@ -79,7 +91,9 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("LoginActivity", "signInWithCredential:success")
                     // val user = mAuth.currentUser
                     // updateUI(user)
-                    startActivity(Intent(this, MainActivity::class.java))
+//                    startActivity(Intent(this, LoginActivity::class.java))
+                    startActivity(Intent(this, MainMenuActivity::class.java))
+                    finish()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("LoginActivity", "signInWithCredential:failure", task.exception)
