@@ -22,6 +22,6 @@ class GreetingActivityTest {
             putExtra(EXTRA_MESSAGE, "BlindWar")
         }
         ActivityScenario.launch<GreetingActivity>(intent)
-            .use { scenario -> onView(withId(R.id.textViewGreeting)).check(matches(withText("BlindWar"))) }
+            .use { onView(withId(R.id.textViewGreeting)).check(matches(withText("BlindWar"))) }
     }
 }
