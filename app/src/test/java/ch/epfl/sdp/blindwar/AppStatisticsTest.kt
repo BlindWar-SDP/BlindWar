@@ -7,6 +7,8 @@ class AppStatisticsTest {
     private var testStats = AppStatistics() // for individual metrics
     private var testStats2 = AppStatistics() // for right/win percentage
     private var testStats3 = AppStatistics() // for wrong/loss percentage
+    private var testStats4 = AppStatistics() // for reset test
+    private var testStats5 = AppStatistics() // for elo test
 
     @Test
     fun getSoloCorrectInitial() {
@@ -128,10 +130,45 @@ class AppStatisticsTest {
 
     @Test
     fun resetStatistics() {
+        testStats4.soloCorrectnessUpdate(true)
+        testStats4.soloCorrectnessUpdate(false)
+        testStats4.multiCorrectnessUpdate(true)
+        testStats4.multiCorrectnessUpdate(false)
+        testStats4.multiWinLossCountUpdate(true)
+        testStats4.multiWinLossCountUpdate(false)
+        testStats4.resetStatistics()
+        assert(testStats4.soloCorrect == 0)
+        assert(testStats4.soloWrong == 0)
+        assert(testStats4.soloCorrectPercent == 0.0F)
+        assert(testStats4.soloWrongPercent == 0.0F)
+        assert(testStats4.multiCorrect == 0)
+        assert(testStats4.multiWrong == 0)
+        assert(testStats4.multiCorrectPercent == 0.0F)
+        assert(testStats4.multiWrongPercent == 0.0F)
+        assert(testStats4.wins == 0)
+        assert(testStats4.losses == 0)
+        assert(testStats4.winPercent == 0.0F)
+        assert(testStats4.lossPercent == 0.0F)
     }
 
 
     @Test
-    fun eloUpdate() {
+    fun eloUpdateWin() {
+        testStats5.eloUpdate(1100, true)
+        assert(testStats5.elo == 1015)
+        testStats5.eloUpdate(1015, true)
+        assert(testStats5.elo == 1025)
+        testStats5.eloUpdate(1015, true)
+        assert(testStats5.elo == 1030)
+    }
+
+    @Test
+    fun eloUpdateLoss() {
+        testStats4.eloUpdate(1100, false)
+        assert(testStats4.elo == 995)
+        testStats4.eloUpdate(995, false)
+        assert(testStats4.elo == 985)
+        testStats4.eloUpdate(900, false)
+        assert(testStats4.elo == 970)
     }
 }
