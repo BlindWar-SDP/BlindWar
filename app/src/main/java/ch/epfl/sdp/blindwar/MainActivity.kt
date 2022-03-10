@@ -17,11 +17,15 @@ class MainActivity : AppCompatActivity() {
 
     /** Called when the user taps the Send button */
     fun sendMessage(view: View) {
-        val editText = findViewById<EditText>(R.id.editTextTextPersonName)
-        val message = editText.text.toString()
-        val intent = Intent(this, GreetingActivity::class.java).apply {
-            putExtra(EXTRA_MESSAGE, message)
+        //val editText = findViewById<EditText>(R.id.editTextTextPersonName)
+        //val message = editText.text.toString()
+        val intent = Intent(this, VoskActivity::class.java).apply {
+            putExtra(EXTRA_MESSAGE, "message")
         }
         startActivity(intent)
+        /*val intent = Intent(this, GreetingActivity::class.java).apply {
+            putExtra(EXTRA_MESSAGE, message)
+        }
+        startActivity(intent)*/
     }
 }
