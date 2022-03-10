@@ -8,18 +8,15 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.GameTutorial
 
 class TutorialActivity: AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tutorial)
 
-        var viewPager: ViewPager2 = findViewById(R.id.pager)
-
-        val fragments = arrayListOf<Fragment>(TutorialFragment(), TutorialFragment(), DemoFragment())
-
-        val game: GameTutorial = GameTutorial(assets)
-
+        val viewPager: ViewPager2 = findViewById(R.id.pager)
+        val fragments = arrayListOf<Fragment>(TutorialFragment(), TutorialFragment())
         val adapter = ViewPagerAdapter(fragments, this)
+
+        assert(fragments.size == adapter.itemCount)
         viewPager.adapter = adapter
     }
 }
