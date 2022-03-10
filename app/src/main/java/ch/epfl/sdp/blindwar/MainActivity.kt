@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity() {
         if (user != null) {
             startActivity(Intent(this, MainMenuActivity::class.java))
             finish()
-            // if not logged in: start LoginActivity
+
+        // if not logged in: start LoginActivity
         } else {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()

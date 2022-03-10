@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        //GOOGLE SIGNIN fom:
+        //GOOGLE SIGNIN inspired by:
         // https://firebase.google.com/docs/auth/android/google-signin#kotlin+ktx_1
         // https://www.youtube.com/watch?v=-tCIsI7aZGk
 
@@ -35,9 +35,8 @@ class LoginActivity : AppCompatActivity() {
             .requestEmail()
             .build()
 
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-
         mAuth = FirebaseAuth.getInstance()
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         findViewById<Button>(R.id.button_SignIn).setOnClickListener{
             signIn()

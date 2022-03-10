@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BlindWar">
         <activity
+            android:name=".Profile_basic"
+            android:exported="false" />
+        <activity
             android:name=".MainMenuActivity"
             android:exported="false" />
         <activity
