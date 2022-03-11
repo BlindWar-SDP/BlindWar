@@ -29,4 +29,7 @@ class MainMenuActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun launchSpeechRecognitionActivity(view: View) {
+        startActivity(Intent(this, VoskActivity::class.java))
+    }
 }

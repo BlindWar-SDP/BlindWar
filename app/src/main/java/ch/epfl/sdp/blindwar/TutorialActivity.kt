@@ -2,7 +2,6 @@ package ch.epfl.sdp.blindwar
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.app.ActionBar
 
 class TutorialActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
