@@ -1,0 +1,4 @@
+#Fri Mar 11 11:24:38 CET 2022
+base.0=C\:\\Desktop\\BlindW\\models\\build\\intermediates\\dex\\debugAndroidTest\\mergeProjectDexDebugAndroidTest\\0\\classes.dex
+renamed.0=classes.dex
+path.0=0/classes.dex
