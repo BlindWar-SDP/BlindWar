@@ -6,20 +6,20 @@
     <string name="profile">PROFILE</string>
     <string name="logout">LOGOUT</string>
 
-    <string name="format_descr"> Survival : Description placeholder
+    <string name="format_description"> Survival : Description placeholder
     |Against the Clock :
     |Regular : Description placeholder</string>
 
     <string name="opt_descr"> Song Selection : Description placeholder
     |Altered audio : Description placeholder</string>
 
-    <string name="comm_descr"> Dedicated fragment describing the UI elements :
+    <string name="comm_description"> Dedicated fragment describing the UI elements :
     |Microphone / Pass / Timer / Settings</string>
 
-    <string name="modes_descr"> Solo Game : Description placeholder
+    <string name="modes_description"> Solo Game : Description placeholder
     |Multi Game : Description placeholder</string>
 
-    <string name="song_opt_descr"> Random Song Sel : Description placeholder| Custom
+    <string name="song_opt_description"> Random Song Sel : Description placeholder| Custom
     playlist </string>
     <string name="tutorial">TUTORIAL</string>
     <string name="blind_war">Blind War</string>
@@ -30,4 +30,24 @@
     <string name="editProfileText">Edit profile</string>
     <string name="logoutText">:( Logout</string>
     <string name="profilePicDescriptionText">The profile picture of the user</string>
+
+    <string name="recognize_file">Recognize File</string>
+    <string name="recognize_microphone">Recognize Microphone</string>
+    <string name="stop_microphone">Stop Microphone</string>
+    <string name="preparing">Preparing the recognizer\n</string>
+    <string name="ready">Ready\n</string>
+    <string name="failed">Failed to init recognizer %s\n</string>
+    <string name="elapsed">Result %s elapsed %d milliseconds\n</string>
+    <string name="starting">Starting\n</string>
+    <string name="say_something">Say something\n</string>
+    <string name="stop_file">Stop File</string>
+    <string name="pause">Pause</string>
+    <string name="continueRecognition">Continue</string>
+    <string name="speechRecognition">SR(only for demo)</string>
+    <string name="content_description_background_image">Black Background Image</string>
+    <string name="tutorial_textview">Tutorial</string>
+    <string name="tutorial_modes">Modes</string>
+    <string name="tutorial_formats">Formats</string>
+    <string name="tutorial_commands">Commands</string>
+    <string name="tutorial_options">Game Options</string>
 </resources>

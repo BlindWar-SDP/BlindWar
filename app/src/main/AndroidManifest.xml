@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ch.epfl.sdp.blindwar">
+    package="ch.epfl.sdp.blindwar" >
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -13,6 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BlindWar" >
 
+        <activity
+            android:name=".VoskActivity"
+            android:parentActivityName=".MainMenuActivity">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainMenuActivity" />
+        </activity>
         <activity
             android:name=".tutorial.TutorialActivity"
             android:exported="false"/>
@@ -34,5 +44,4 @@
         </activity>
 
     </application>
-
 </manifest>
