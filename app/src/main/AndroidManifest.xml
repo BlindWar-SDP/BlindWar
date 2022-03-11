@@ -27,15 +27,17 @@
             android:name=".tutorial.TutorialActivity"
             android:exported="false"/>
         <activity
+            android:name=".MainMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".SoloActivity"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".MainMenuActivity"
-            android:exported="true"
-            android:theme="@style/Theme.BlindWar">
+            android:name=".LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

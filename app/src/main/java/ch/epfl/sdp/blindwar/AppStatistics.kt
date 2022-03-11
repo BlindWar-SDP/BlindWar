@@ -1,24 +1,15 @@
 package ch.epfl.sdp.blindwar
 
 class AppStatistics {
-    //statistics for solo mode
-    var soloCorrect: Int = 0
-        private set
-    var soloWrong: Int = 0
-        private set
-    var soloCorrectPercent: Float = 0.0F
-        private set
-    var soloWrongPercent: Float = 0.0F
-        private set
+    private val numberOfMode = Mode.values().size
 
-    //statistics for multiplayer mode
-    var multiCorrect: Int = 0
+    var correctArray = IntArray(numberOfMode)
         private set
-    var multiWrong: Int = 0
+    var wrongArray = IntArray(numberOfMode)
         private set
-    var multiCorrectPercent: Float = 0.0F
+    var correctPercent = FloatArray(numberOfMode)
         private set
-    var multiWrongPercent: Float = 0.0F
+    var wrongPercent = FloatArray(numberOfMode)
         private set
     var wins: Int = 0
         private set
@@ -33,14 +24,10 @@ class AppStatistics {
 
     //function for resetting stats to 0 (except for elo)
     fun resetStatistics() {
-        soloCorrect = 0
-        soloWrong = 0
-        soloCorrectPercent = 0.0F
-        soloWrongPercent = 0.0F
-        multiCorrect = 0
-        multiWrong = 0
-        multiCorrectPercent = 0.0F
-        multiWrongPercent = 0.0F
+        correctArray = IntArray(numberOfMode)
+        wrongArray = IntArray(numberOfMode)
+        correctPercent = FloatArray(numberOfMode)
+        wrongPercent = FloatArray(numberOfMode)
         wins = 0
         losses = 0
         winPercent = 0.0F
@@ -55,28 +42,20 @@ class AppStatistics {
         return goodPercent to badPercent
     }
 
-    //function for updating solo correct/wrong stats
-    fun soloCorrectnessUpdate(correct: Boolean) {
+    /**
+     * function for updating correct/wrong stats
+     *
+     * @param correct
+     */
+    fun correctnessUpdate(correct: Boolean, mode: Mode) {
         if (correct) {
-            soloCorrect++
+            correctArray[mode.ordinal]++
         } else {
-            soloWrong++
+            wrongArray[mode.ordinal]++
         }
-        val (a, b) = percentUpdate(soloCorrect, soloWrong)
-        soloCorrectPercent = a
-        soloWrongPercent = b
-    }
-
-    //function for updating multiplayer correct/wrong stats
-    fun multiCorrectnessUpdate(correct: Boolean) {
-        if (correct) {
-            multiCorrect++
-        } else {
-            multiWrong++
-        }
-        val (a, b) = percentUpdate(multiCorrect, multiWrong)
-        multiCorrectPercent = a
-        multiWrongPercent = b
+        val (a, b) = percentUpdate(correctArray[mode.ordinal], wrongArray[mode.ordinal])
+        correctPercent[mode.ordinal] = a
+        wrongPercent[mode.ordinal] = b
     }
 
     // function for updating win/loss numbers
