@@ -95,29 +95,18 @@ class AppStatistics {
     // function for updating elo in case of win (very simple version)
     fun eloUpdateWin(opponentElo: Int) {
         elo += when {
-            opponentElo > elo -> {
-                15
-            }
-            opponentElo == elo -> {
-                10
-            }
-            else -> {
-                5
-            }
+            opponentElo > elo -> 15
+            opponentElo == elo -> 10
+            else -> 5
         }
     }
 
     // function for updating elo in case of loss (very simple version)
     fun eloUpdateLoss(opponentElo: Int) {
         elo -= when {
-            opponentElo > elo -> { 5
-            }
-            opponentElo == elo -> { 10
-            }
-            else -> { 15
-            }
+            opponentElo > elo -> 5
+            opponentElo == elo -> 10
+            else -> 15
         }
-
     }
-
 }

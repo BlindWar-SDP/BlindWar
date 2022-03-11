@@ -21,6 +21,7 @@ class MainMenuActivityTest : TestCase() {
     var testRule = ActivityScenarioRule(
         MainMenuActivity::class.java
     )
+
     @Before
     fun setup() {
         Intents.init()
@@ -37,16 +38,24 @@ class MainMenuActivityTest : TestCase() {
             .perform(click())
         intended(hasComponent(SoloActivity::class.java.name))
     }
+
     @Test
     fun testTutorialButton() {
         onView(withId(R.id.tutorialButton))
             .perform(click())
         intended(hasComponent(TutorialActivity::class.java.name))
     }
+
     @Test
     fun testProfileButton() {
         onView(withId(R.id.profileButton))
             .perform(click())
         intended(hasComponent(ProfileActivity::class.java.name))
+    }
+
+    @Test
+    fun testLaunchVosk() {
+        onView(withId(R.id.SpeechButton)).perform(click())
+        intended(hasComponent(VoskActivity::class.java.name))
     }
 }
