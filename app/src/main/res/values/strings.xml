@@ -11,7 +11,7 @@
     <string name="format_descr"> Survival : Description placeholder
     |Against the Clock :
     |Regular : Description placeholder</string>
-    
+
     <string name="opt_descr"> Song Selection : Description placeholder
     |Altered audio : Description placeholder</string>
 
@@ -23,6 +23,8 @@
 
     <string name="song_opt_descr"> Random Song Sel : Description placeholder| Custom
     playlist </string>
+    <string name="tutorial">TUTORIAL</string>
+    <string name="blind_war">Blind War</string>
     <string name="backText"><![CDATA[->]]></string>
     <string name="emailText">Your email here</string>
     <string name="statisticsText">Statistics</string>
