@@ -5,7 +5,7 @@ buildscript {
         mavenCentral()
     }
 
-    ext.kotlin_version = '4.1.0'
+    //ext.kotlin_version = '4.1.0'
 
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.4'
