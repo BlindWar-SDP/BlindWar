@@ -29,6 +29,12 @@ class MainMenuActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    // Called when the user taps the Solo button
+    fun logoutButton(view: View) {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
     fun launchSpeechRecognitionActivity(view: View) {
         startActivity(Intent(this, VoskActivity::class.java))
     }

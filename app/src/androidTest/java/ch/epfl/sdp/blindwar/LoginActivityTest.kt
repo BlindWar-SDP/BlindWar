@@ -16,10 +16,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class MainMenuActivityTest : TestCase() {
+class LoginActivityTest : TestCase() {
     @get:Rule
     var testRule = ActivityScenarioRule(
-        MainMenuActivity::class.java
+        LoginActivity::class.java
     )
 
     @Before
@@ -33,36 +33,9 @@ class MainMenuActivityTest : TestCase() {
     }
 
     @Test
-    fun testSoloButton() {
-        onView(withId(R.id.soloButton))
-            .perform(click())
-        intended(hasComponent(SoloActivity::class.java.name))
-    }
-
-    @Test
-    fun testTutorialButton() {
-        onView(withId(R.id.tutorialButton))
-            .perform(click())
-        intended(hasComponent(TutorialActivity::class.java.name))
-    }
-
-    @Test
-    fun testProfileButton() {
-        onView(withId(R.id.profileButton))
-            .perform(click())
-        intended(hasComponent(ProfileActivity::class.java.name))
-    }
-
-    @Test
-    fun testLogoutButton() {
+    fun testLoginButton() {
         onView(withId(R.id.logoutButton))
             .perform(click())
-        intended(hasComponent(LoginActivity::class.java.name))
-    }
-
-    @Test
-    fun testLaunchVosk() {
-        onView(withId(R.id.SpeechButton)).perform(click())
-        intended(hasComponent(VoskActivity::class.java.name))
+        intended(hasComponent(MainMenuActivity::class.java.name))
     }
 }

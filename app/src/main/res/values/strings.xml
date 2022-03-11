@@ -5,6 +5,7 @@
     <string name="multi">MULTI</string>
     <string name="profile">PROFILE</string>
     <string name="logout">LOGOUT</string>
+    <string name="login">LOGIN</string>
     <string name="blindwar">BLINDWAR</string>
 
     <string name="format_description"> Survival : Description placeholder
