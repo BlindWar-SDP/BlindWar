@@ -16,10 +16,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class LoginActivityTest : TestCase() {
+class ProfileActivityTest : TestCase() {
     @get:Rule
     var testRule = ActivityScenarioRule(
-        LoginActivity::class.java
+        ProfileActivity::class.java
     )
 
     @Before
@@ -33,9 +33,9 @@ class LoginActivityTest : TestCase() {
     }
 
     @Test
-    fun testLoginButton() {
-        onView(withId(R.id.button_SignIn))
+    fun testLogoutButton() {
+        onView(withId(R.id.logoutButton))
             .perform(click())
-        intended(hasComponent(LoginActivity::class.java.name))
+        intended(hasComponent(MainMenuActivity::class.java.name))
     }
 }

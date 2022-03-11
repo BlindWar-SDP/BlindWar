@@ -88,6 +88,7 @@
         android:id="@+id/logoutButton"
         android:layout_width="253dp"
         android:layout_height="50dp"
+        android:onClick="logoutButton"
         android:text="@string/logoutText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
