@@ -41,13 +41,21 @@ class GameTutorial(private val assetManager: AssetManager) : Game() {
                 )
             }) ?: emptyMap()
 
-    private var playlist: MutableSet<String> = assetFileDescriptorAndMetaDataPerTitle.keys.toSet() as MutableSet<String>
+    private var playlist: MutableSet<String> = resetPlaylist()
+
+    private fun resetPlaylist(): MutableSet<String> {
+        return assetFileDescriptorAndMetaDataPerTitle.keys.toSet() as MutableSet<String>
+    }
 
     override fun nextRound(): MusicMetaData? {
 
         // Stop the music
         player.stop()
         player.reset()
+
+        // Check for empty playlist
+        if (playlist.isEmpty())
+            playlist = resetPlaylist()
 
         // Get a random title
         val random = Random()
