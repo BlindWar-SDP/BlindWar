@@ -4,8 +4,8 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="21"
-6-->C:\Desktop\BlindW\models\src\main\AndroidManifest.xml
+6-->C:\Users\roxas\Desktop\EPFL_BA6\SDP\BlindWar\models\src\main\AndroidManifest.xml
 7        android:targetSdkVersion="31" />
-7-->C:\Desktop\BlindW\models\src\main\AndroidManifest.xml
+7-->C:\Users\roxas\Desktop\EPFL_BA6\SDP\BlindWar\models\src\main\AndroidManifest.xml
 8
 9</manifest>

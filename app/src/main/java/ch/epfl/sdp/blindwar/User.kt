@@ -7,6 +7,12 @@ class User(
     val lastName: String,
     val email: String,
     var screenName: String,
-    var profilePicture: Image?,
-    var userStatistics: AppStatistics
-)
+    //var profilePicture: Image?,
+    var userStatistics: AppStatistics) {
+
+    override fun toString(): String {
+        return firstName + lastName + email + screenName + userStatistics.toString()
+    }
+}
+
+

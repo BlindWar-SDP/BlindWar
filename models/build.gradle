@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 31
@@ -14,6 +15,11 @@ android {
             assets.srcDirs += "$buildDir/generated/assets"
         }
     }
+}
+
+dependencies {
+    implementation 'com.google.firebase:firebase-database:19.2.1'
+    implementation 'com.google.firebase:firebase-database-ktx:20.0.4'
 }
 
 tasks.register('genUUID') {
