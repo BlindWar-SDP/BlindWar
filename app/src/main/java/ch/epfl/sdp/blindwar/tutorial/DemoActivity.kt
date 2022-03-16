@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.GameTutorial
 import ch.epfl.sdp.blindwar.game.MusicMetaData
+import com.chibde.visualizer.LineVisualizer
 
 class DemoActivity: AppCompatActivity() {
     private lateinit var game: GameTutorial
@@ -16,6 +17,7 @@ class DemoActivity: AppCompatActivity() {
     private lateinit var guessEditText: EditText
     private lateinit var scoreTextView: TextView
     private lateinit var musicMetaData: MusicMetaData
+    private lateinit var visualizer: LineVisualizer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +33,12 @@ class DemoActivity: AppCompatActivity() {
         this.guessEditText = findViewById<EditText>(R.id.guessEditText)
         this.scoreTextView = findViewById<TextView>(R.id.scoreTextView)
         this.scoreTextView.setText("test")
+
+        this.visualizer = findViewById(R.id.visualizer)
+        visualizer.setStrokeWidth(10)
+
+        // Set your media player to the visualizer.
+        visualizer.setPlayer(game.sessionId)
     }
 
     fun playAndPause(view: View) {
