@@ -6,7 +6,6 @@ import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.util.Log
 import java.util.*
-import kotlin.random.Random.Default.nextInt
 
 
 /**
@@ -79,12 +78,11 @@ class GameTutorial(private val assetManager: AssetManager, timeToFind: Int) : Ga
 
 
     override fun guess(titleGuess: String): Boolean {
-        if (titleGuess.uppercase(Locale.getDefault()) == this.title?.uppercase(Locale.getDefault())) {
+        return if (titleGuess.uppercase(Locale.getDefault()) == this.title?.uppercase(Locale.getDefault())) {
             this.score += 1
-            return true
-        }
-        else
-            return false
+            true
+        } else
+            false
     }
 
     override fun play() {

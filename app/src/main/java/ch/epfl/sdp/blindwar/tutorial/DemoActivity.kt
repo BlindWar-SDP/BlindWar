@@ -10,6 +10,7 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.GameTutorial
 import ch.epfl.sdp.blindwar.game.MusicMetaData
 
+
 class DemoActivity: AppCompatActivity() {
     private lateinit var game: GameTutorial
     private var playing = true
@@ -26,11 +27,12 @@ class DemoActivity: AppCompatActivity() {
 
         // Start a music
         this.game.nextRound()
+        this.game.play()
 
         // Get the widgets
-        this.guessEditText = findViewById<EditText>(R.id.guessEditText)
-        this.scoreTextView = findViewById<TextView>(R.id.scoreTextView)
-        this.scoreTextView.setText("test")
+        this.guessEditText = findViewById(R.id.guessEditText)
+        this.scoreTextView = findViewById(R.id.scoreTextView)
+        this.scoreTextView.text = "test"
     }
 
     fun playAndPause(view: View) {
@@ -42,6 +44,11 @@ class DemoActivity: AppCompatActivity() {
             this.game.play()
             this.playing = true
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        this.game.pause()
     }
 
     fun guess(view: View) {
@@ -57,5 +64,8 @@ class DemoActivity: AppCompatActivity() {
             // Pass to the next music
             this.musicMetaData = this.game.nextRound()!!
         }
+
+        // Delete the text of the guess
+        this.guessEditText.setText("")
     }
 }

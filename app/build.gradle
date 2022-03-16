@@ -71,6 +71,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'
+    androidTestImplementation('com.adevinta.android:barista:4.1.0') {
+        exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
+    }
 
     debugImplementation("androidx.fragment:fragment-testing:1.4.1")
     debugImplementation("androidx.fragment:fragment-ktx:1.1.0-beta01")
