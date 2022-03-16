@@ -21,6 +21,8 @@ class MainMenuActivity : AppCompatActivity() {
 
     // Called when the user taps the Tutorial button
     fun tutorialButton(view: View) {
+        val database = UserDatabase()
+        database.setElo("JOJO", 1100)
         val intent = Intent(this, TutorialActivity::class.java)
         startActivity(intent)
     }
@@ -28,11 +30,12 @@ class MainMenuActivity : AppCompatActivity() {
     // Called when the user taps the Solo button
     fun profileButton(view: View) {
         val intent = Intent(this, ProfileActivity::class.java)
+        /*
         val database = UserDatabase()
         val appStatistics = AppStatistics()
         val user = User("Jojo", "Joestar", "@", "JOJO",
             appStatistics)
-        database.addUser(user)
+        database.addUser(user)*/
         startActivity(intent)
     }
 
