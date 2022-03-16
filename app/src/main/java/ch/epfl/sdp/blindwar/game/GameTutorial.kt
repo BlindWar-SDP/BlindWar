@@ -4,7 +4,9 @@ import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
+import android.util.Log
 import java.util.*
+import kotlin.random.Random.Default.nextInt
 
 
 /**
@@ -15,7 +17,7 @@ import java.util.*
  *
  * @param assetManager AssetManager instance to get the mp3 files
  */
-class GameTutorial(private val assetManager: AssetManager) : Game() {
+class GameTutorial(private val assetManager: AssetManager, timeToFind: Int) : Game(timeToFind) {
     private val mediaMetadataRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
     private val player = MediaPlayer()
     val sessionId: Int
@@ -57,24 +59,39 @@ class GameTutorial(private val assetManager: AssetManager) : Game() {
         // Remove it to the playlist
         this.playlist.remove(title)
 
+        // Get a random time
+        Log.d("test", super.timeToFind.toString())
+        afd?.let { player.setDataSource(afd.fileDescriptor, afd.startOffset, it.length) }
+        afd?.let { mediaMetadataRetriever.setDataSource(afd.fileDescriptor, afd.startOffset, it.length) }
+        val time = random.nextInt(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toInt()
+            ?.minus(this.timeToFind) ?: 1)
+
         // Change the current music
         this.title = title
-        afd?.let { player.setDataSource(afd.fileDescriptor, afd.startOffset, it.length) }
-        player.prepare()
+        this.player.prepare()
+        this.player.seekTo(time)
 
         // Play the music
-        player.start()
+        this.player.start()
 
         return this.assetFileDescriptorAndMetaDataPerTitle[title]?.second
     }
 
 
-    override fun guess(titleGuess: String): Int {
-        if (titleGuess == this.title) {
+    override fun guess(titleGuess: String): Boolean {
+        if (titleGuess.uppercase(Locale.getDefault()) == this.title?.uppercase(Locale.getDefault())) {
             this.score += 1
-            this.nextRound()
+            return true
         }
+        else
+            return false
+    }
 
-        return this.score
+    override fun play() {
+        this.player.start()
+    }
+
+    override fun pause() {
+        this.player.pause()
     }
 }

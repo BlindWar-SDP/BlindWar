@@ -1,0 +1,61 @@
+package ch.epfl.sdp.blindwar.tutorial
+
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.game.GameTutorial
+import ch.epfl.sdp.blindwar.game.MusicMetaData
+
+class DemoActivity: AppCompatActivity() {
+    private lateinit var game: GameTutorial
+    private var playing = true
+    private lateinit var guessEditText: EditText
+    private lateinit var scoreTextView: TextView
+    private lateinit var musicMetaData: MusicMetaData
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_demo)
+
+        // Create the game instance with difficulty easy
+        this.game = GameTutorial(assets, 5000)
+
+        // Start a music
+        this.game.nextRound()
+
+        // Get the widgets
+        this.guessEditText = findViewById<EditText>(R.id.guessEditText)
+        this.scoreTextView = findViewById<TextView>(R.id.scoreTextView)
+        this.scoreTextView.setText("test")
+    }
+
+    fun playAndPause(view: View) {
+        if(playing) {
+            this.game.pause()
+            this.playing = false
+        }
+        else {
+            this.game.play()
+            this.playing = true
+        }
+    }
+
+    fun guess(view: View) {
+        // Try to guess
+        Log.d("guesses", guessEditText.text.toString())
+        if(this.game.guess(guessEditText.text.toString())) {
+            Log.d("guess", "Good guess")
+
+            Log.d("points", this.game.score.toString())
+            // Update the number of point view
+            //this.scoreTextView.setText(this.game.score)
+
+            // Pass to the next music
+            this.musicMetaData = this.game.nextRound()!!
+        }
+    }
+}

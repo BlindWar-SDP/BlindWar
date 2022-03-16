@@ -27,6 +27,9 @@
             android:name=".tutorial.TutorialActivity"
             android:exported="false"/>
         <activity
+            android:name=".tutorial.DemoActivity"
+            android:exported="false"/>
+        <activity
             android:name=".MainMenuActivity"
             android:exported="false" />
         <activity
