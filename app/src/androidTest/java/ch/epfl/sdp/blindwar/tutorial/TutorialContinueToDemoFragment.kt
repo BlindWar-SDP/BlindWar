@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.tutorial
 
+import androidx.fragment.app.Fragment
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.intent.Intents.intended
@@ -13,7 +14,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class TutorialContinueToDemoFragment {
+class TutorialContinueToDemoFragment : Fragment() {
 
     @get:Rule
     var testRule = ActivityScenarioRule(
