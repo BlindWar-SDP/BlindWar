@@ -19,9 +19,4 @@ class TutorialActivity: AppCompatActivity() {
 
         viewPager.adapter = adapter
     }
-
-    fun continueToDemo(view: View) {
-        val intent = Intent(this, DemoActivity::class.java)
-        startActivity(intent)
-    }
 }

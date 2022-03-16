@@ -26,6 +26,7 @@ import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.anyOf
 import org.hamcrest.Matcher
 
+
 /**
  * ViewAction that issues a swipe gesture on a [ViewPager2] to move that ViewPager2 to the next
  * page, taking orientation and layout direction into account.
