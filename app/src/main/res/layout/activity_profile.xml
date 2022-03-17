@@ -7,8 +7,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fefefe">
+        android:background="#fefefe"
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -16,26 +16,11 @@
             android:background="@color/black" />
 
         <ImageView
+            android:layout_marginTop="147dp"
+            android:src="@drawable/oval"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="147dp"
-            android:contentDescription="@string/oval_description"
-            android:src="@drawable/oval" />
-
-        <Button
-            android:id="@+id/backToMainButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="149dp"
-            android:layout_marginTop="378dp"
-            android:layout_marginEnd="175dp"
-            android:layout_marginBottom="306dp"
-            android:onClick="backToMainButton"
-            android:text="@string/backText" />
+            android:contentDescription="@string/oval_description" />
 
 
     </RelativeLayout>
@@ -51,8 +36,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@color/opaque_black" />
+        app:srcCompat="@color/opaque_black" />-->
 
+
+    <Button
+        android:id="@+id/backToMainButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginBottom="667dp"
+        android:onClick="backToMainButton"
+        android:text="@string/backText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/profileImageView"

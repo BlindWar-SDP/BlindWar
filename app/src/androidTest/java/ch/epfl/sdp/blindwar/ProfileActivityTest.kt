@@ -32,7 +32,7 @@ class ProfileActivityTest : TestCase() {
         Intents.release()
     }
 
-    @Test
+    /*@Test
     fun testLogoutButton() {
         onView(withId(R.id.logoutButton))
             .perform(click())
@@ -44,5 +44,5 @@ class ProfileActivityTest : TestCase() {
         onView(withId(R.id.backToMainButton))
             .perform(click())
         intended(hasComponent(MainMenuActivity::class.java.name))
-    }
+    }*/
 }
