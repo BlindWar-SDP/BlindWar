@@ -1,4 +1,7 @@
-#Fri Mar 11 11:24:38 CET 2022
-base.0=C\:\\Desktop\\BlindW\\models\\build\\intermediates\\dex\\debugAndroidTest\\mergeProjectDexDebugAndroidTest\\0\\classes.dex
+#Thu Mar 17 19:11:08 CET 2022
+base.1=C\:\\Users\\roxas\\Desktop\\EPFL_BA6\\SDP\\BlindWar\\models\\build\\intermediates\\dex\\debugAndroidTest\\mergeProjectDexDebugAndroidTest\\0\\classes.dex
+path.1=0/classes.dex
+base.0=C\:\\Users\\roxas\\Desktop\\EPFL_BA6\\SDP\\BlindWar\\models\\build\\intermediates\\dex\\debugAndroidTest\\mergeExtDexDebugAndroidTest\\classes.dex
+renamed.1=classes2.dex
 renamed.0=classes.dex
-path.0=0/classes.dex
+path.0=classes.dex

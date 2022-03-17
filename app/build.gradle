@@ -63,7 +63,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx:20.0.4'
 
     testImplementation 'junit:junit:4.13.2'
-
     implementation 'net.java.dev.jna:jna:5.8.0@aar'
     implementation group: 'com.alphacephei', name: 'vosk-android', version: '0.3.32'
     implementation project(':models')

@@ -3,30 +3,98 @@
 3    package="org.vosk.models.test" >
 4
 5    <uses-sdk
-5-->C:\Desktop\BlindW\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1209694689932995353.xml:5:5-74
+5-->C:\Users\roxas\Desktop\EPFL_BA6\SDP\BlindWar\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest2412605526444034374.xml:5:5-74
 6        android:minSdkVersion="21"
-6-->C:\Desktop\BlindW\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1209694689932995353.xml:5:15-41
+6-->C:\Users\roxas\Desktop\EPFL_BA6\SDP\BlindWar\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest2412605526444034374.xml:5:15-41
 7        android:targetSdkVersion="31" />
-7-->C:\Desktop\BlindW\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1209694689932995353.xml:5:42-71
+7-->C:\Users\roxas\Desktop\EPFL_BA6\SDP\BlindWar\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest2412605526444034374.xml:5:42-71
 8
 9    <instrumentation
-9-->C:\Desktop\BlindW\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1209694689932995353.xml:11:5-15:70
+9-->C:\Users\roxas\Desktop\EPFL_BA6\SDP\BlindWar\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest2412605526444034374.xml:11:5-15:70
 10        android:name="android.test.InstrumentationTestRunner"
-10-->C:\Desktop\BlindW\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1209694689932995353.xml:11:22-75
+10-->C:\Users\roxas\Desktop\EPFL_BA6\SDP\BlindWar\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest2412605526444034374.xml:11:22-75
 11        android:functionalTest="false"
-11-->C:\Desktop\BlindW\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1209694689932995353.xml:14:22-52
+11-->C:\Users\roxas\Desktop\EPFL_BA6\SDP\BlindWar\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest2412605526444034374.xml:14:22-52
 12        android:handleProfiling="false"
-12-->C:\Desktop\BlindW\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1209694689932995353.xml:13:22-53
+12-->C:\Users\roxas\Desktop\EPFL_BA6\SDP\BlindWar\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest2412605526444034374.xml:13:22-53
 13        android:label="Tests for org.vosk.models.test"
-13-->C:\Desktop\BlindW\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1209694689932995353.xml:15:22-68
+13-->C:\Users\roxas\Desktop\EPFL_BA6\SDP\BlindWar\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest2412605526444034374.xml:15:22-68
 14        android:targetPackage="org.vosk.models.test" />
-14-->C:\Desktop\BlindW\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1209694689932995353.xml:12:22-66
-15
-16    <application android:debuggable="true" >
-16-->C:\Desktop\BlindW\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1209694689932995353.xml:7:5-9:19
-17        <uses-library android:name="android.test.runner" />
-17-->C:\Desktop\BlindW\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1209694689932995353.xml:8:9-60
-17-->C:\Desktop\BlindW\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest1209694689932995353.xml:8:23-57
-18    </application>
+14-->C:\Users\roxas\Desktop\EPFL_BA6\SDP\BlindWar\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest2412605526444034374.xml:12:22-66
+15    <!-- Although the *SdkVersion is captured in gradle build files, this is required for non gradle builds -->
+16    <!-- <uses-sdk android:minSdkVersion="14"/> -->
+17    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+17-->[com.google.firebase:firebase-database:20.0.4] C:\Users\roxas\.gradle\caches\transforms-3\81955c857f482f99613d59707b6a1ce2\transformed\jetified-firebase-database-20.0.4\AndroidManifest.xml:25:5-79
+17-->[com.google.firebase:firebase-database:20.0.4] C:\Users\roxas\.gradle\caches\transforms-3\81955c857f482f99613d59707b6a1ce2\transformed\jetified-firebase-database-20.0.4\AndroidManifest.xml:25:22-76
+18    <uses-permission android:name="android.permission.INTERNET" />
+18-->[com.google.firebase:firebase-database:20.0.4] C:\Users\roxas\.gradle\caches\transforms-3\81955c857f482f99613d59707b6a1ce2\transformed\jetified-firebase-database-20.0.4\AndroidManifest.xml:26:5-67
+18-->[com.google.firebase:firebase-database:20.0.4] C:\Users\roxas\.gradle\caches\transforms-3\81955c857f482f99613d59707b6a1ce2\transformed\jetified-firebase-database-20.0.4\AndroidManifest.xml:26:22-64
 19
-20</manifest>
+20    <application
+20-->C:\Users\roxas\Desktop\EPFL_BA6\SDP\BlindWar\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest2412605526444034374.xml:7:5-9:19
+21        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+21-->[androidx.core:core:1.2.0] C:\Users\roxas\.gradle\caches\transforms-3\9d8ad91b7ccb51fb1212b0a4ce941844\transformed\core-1.2.0\AndroidManifest.xml:24:18-86
+22        android:debuggable="true" >
+23        <uses-library android:name="android.test.runner" />
+23-->C:\Users\roxas\Desktop\EPFL_BA6\SDP\BlindWar\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest2412605526444034374.xml:8:9-60
+23-->C:\Users\roxas\Desktop\EPFL_BA6\SDP\BlindWar\models\build\intermediates\tmp\manifest\androidTest\debug\tempFile1ProcessTestManifest2412605526444034374.xml:8:23-57
+24
+25        <service
+25-->[com.google.firebase:firebase-database-ktx:20.0.4] C:\Users\roxas\.gradle\caches\transforms-3\87ed534b4829b3a8234291ee83d06678\transformed\jetified-firebase-database-ktx-20.0.4\AndroidManifest.xml:12:9-18:19
+26            android:name="com.google.firebase.components.ComponentDiscoveryService"
+26-->[com.google.firebase:firebase-database-ktx:20.0.4] C:\Users\roxas\.gradle\caches\transforms-3\87ed534b4829b3a8234291ee83d06678\transformed\jetified-firebase-database-ktx-20.0.4\AndroidManifest.xml:13:13-84
+27            android:directBootAware="true"
+27-->[com.google.firebase:firebase-common:20.1.0] C:\Users\roxas\.gradle\caches\transforms-3\120ebdd507987d4664afeba66bf73fac\transformed\jetified-firebase-common-20.1.0\AndroidManifest.xml:35:13-43
+28            android:exported="false" >
+28-->[com.google.firebase:firebase-database-ktx:20.0.4] C:\Users\roxas\.gradle\caches\transforms-3\87ed534b4829b3a8234291ee83d06678\transformed\jetified-firebase-database-ktx-20.0.4\AndroidManifest.xml:14:13-37
+29            <meta-data
+29-->[com.google.firebase:firebase-database-ktx:20.0.4] C:\Users\roxas\.gradle\caches\transforms-3\87ed534b4829b3a8234291ee83d06678\transformed\jetified-firebase-database-ktx-20.0.4\AndroidManifest.xml:15:13-17:85
+30                android:name="com.google.firebase.components:com.google.firebase.database.ktx.FirebaseDatabaseKtxRegistrar"
+30-->[com.google.firebase:firebase-database-ktx:20.0.4] C:\Users\roxas\.gradle\caches\transforms-3\87ed534b4829b3a8234291ee83d06678\transformed\jetified-firebase-database-ktx-20.0.4\AndroidManifest.xml:16:17-124
+31                android:value="com.google.firebase.components.ComponentRegistrar" />
+31-->[com.google.firebase:firebase-database-ktx:20.0.4] C:\Users\roxas\.gradle\caches\transforms-3\87ed534b4829b3a8234291ee83d06678\transformed\jetified-firebase-database-ktx-20.0.4\AndroidManifest.xml:17:17-82
+32            <meta-data
+32-->[com.google.firebase:firebase-database:20.0.4] C:\Users\roxas\.gradle\caches\transforms-3\81955c857f482f99613d59707b6a1ce2\transformed\jetified-firebase-database-20.0.4\AndroidManifest.xml:32:13-34:85
+33                android:name="com.google.firebase.components:com.google.firebase.database.DatabaseRegistrar"
+33-->[com.google.firebase:firebase-database:20.0.4] C:\Users\roxas\.gradle\caches\transforms-3\81955c857f482f99613d59707b6a1ce2\transformed\jetified-firebase-database-20.0.4\AndroidManifest.xml:33:17-109
+34                android:value="com.google.firebase.components.ComponentRegistrar" />
+34-->[com.google.firebase:firebase-database:20.0.4] C:\Users\roxas\.gradle\caches\transforms-3\81955c857f482f99613d59707b6a1ce2\transformed\jetified-firebase-database-20.0.4\AndroidManifest.xml:34:17-82
+35            <meta-data
+35-->[com.google.firebase:firebase-common-ktx:20.1.0] C:\Users\roxas\.gradle\caches\transforms-3\e6718c97a9a2816c6cce806cbcd7eb9e\transformed\jetified-firebase-common-ktx-20.1.0\AndroidManifest.xml:15:13-17:85
+36                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonKtxRegistrar"
+36-->[com.google.firebase:firebase-common-ktx:20.1.0] C:\Users\roxas\.gradle\caches\transforms-3\e6718c97a9a2816c6cce806cbcd7eb9e\transformed\jetified-firebase-common-ktx-20.1.0\AndroidManifest.xml:16:17-113
+37                android:value="com.google.firebase.components.ComponentRegistrar" />
+37-->[com.google.firebase:firebase-common-ktx:20.1.0] C:\Users\roxas\.gradle\caches\transforms-3\e6718c97a9a2816c6cce806cbcd7eb9e\transformed\jetified-firebase-common-ktx-20.1.0\AndroidManifest.xml:17:17-82
+38        </service>
+39
+40        <provider
+40-->[com.google.firebase:firebase-common:20.1.0] C:\Users\roxas\.gradle\caches\transforms-3\120ebdd507987d4664afeba66bf73fac\transformed\jetified-firebase-common-20.1.0\AndroidManifest.xml:26:9-31:39
+41            android:name="com.google.firebase.provider.FirebaseInitProvider"
+41-->[com.google.firebase:firebase-common:20.1.0] C:\Users\roxas\.gradle\caches\transforms-3\120ebdd507987d4664afeba66bf73fac\transformed\jetified-firebase-common-20.1.0\AndroidManifest.xml:27:13-77
+42            android:authorities="org.vosk.models.test.firebaseinitprovider"
+42-->[com.google.firebase:firebase-common:20.1.0] C:\Users\roxas\.gradle\caches\transforms-3\120ebdd507987d4664afeba66bf73fac\transformed\jetified-firebase-common-20.1.0\AndroidManifest.xml:28:13-72
+43            android:directBootAware="true"
+43-->[com.google.firebase:firebase-common:20.1.0] C:\Users\roxas\.gradle\caches\transforms-3\120ebdd507987d4664afeba66bf73fac\transformed\jetified-firebase-common-20.1.0\AndroidManifest.xml:29:13-43
+44            android:exported="false"
+44-->[com.google.firebase:firebase-common:20.1.0] C:\Users\roxas\.gradle\caches\transforms-3\120ebdd507987d4664afeba66bf73fac\transformed\jetified-firebase-common-20.1.0\AndroidManifest.xml:30:13-37
+45            android:initOrder="100" />
+45-->[com.google.firebase:firebase-common:20.1.0] C:\Users\roxas\.gradle\caches\transforms-3\120ebdd507987d4664afeba66bf73fac\transformed\jetified-firebase-common-20.1.0\AndroidManifest.xml:31:13-36
+46
+47        <activity
+47-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\roxas\.gradle\caches\transforms-3\f92e6ba21f133cf8005bf5b1495f844f\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+48            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+48-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\roxas\.gradle\caches\transforms-3\f92e6ba21f133cf8005bf5b1495f844f\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+49            android:exported="false"
+49-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\roxas\.gradle\caches\transforms-3\f92e6ba21f133cf8005bf5b1495f844f\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+50            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+50-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\roxas\.gradle\caches\transforms-3\f92e6ba21f133cf8005bf5b1495f844f\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+51
+52        <meta-data
+52-->[com.google.android.gms:play-services-basement:18.0.0] C:\Users\roxas\.gradle\caches\transforms-3\fc38bbfa3eb9a22d7185eb0338a1c180\transformed\jetified-play-services-basement-18.0.0\AndroidManifest.xml:21:9-23:69
+53            android:name="com.google.android.gms.version"
+53-->[com.google.android.gms:play-services-basement:18.0.0] C:\Users\roxas\.gradle\caches\transforms-3\fc38bbfa3eb9a22d7185eb0338a1c180\transformed\jetified-play-services-basement-18.0.0\AndroidManifest.xml:22:13-58
+54            android:value="@integer/google_play_services_version" />
+54-->[com.google.android.gms:play-services-basement:18.0.0] C:\Users\roxas\.gradle\caches\transforms-3\fc38bbfa3eb9a22d7185eb0338a1c180\transformed\jetified-play-services-basement-18.0.0\AndroidManifest.xml:23:13-66
+55    </application>
+56
+57</manifest>

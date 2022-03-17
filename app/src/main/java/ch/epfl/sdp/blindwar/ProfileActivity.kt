@@ -15,20 +15,7 @@ import com.google.firebase.database.ktx.getValue
 
 class ProfileActivity : AppCompatActivity() {
     private val database = UserDatabase()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // user id should be sent according to authentication
-        database.addUserListener("JOJO", userInfoListener)
-        setContentView(R.layout.activity_profile)
-    }
-
-    fun logoutButton(view: View) {
-        startActivity(Intent(this, LoginActivity::class.java))
-    }
-
-
-    val userInfoListener = object : ValueEventListener {
+    private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             // Get User info and use the values to update the UI
             val user = dataSnapshot.getValue<User>()
@@ -48,4 +35,18 @@ class ProfileActivity : AppCompatActivity() {
             Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
         }
     }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // user id should be set according to authentication
+        database.addUserListener("JOJO", userInfoListener)
+        setContentView(R.layout.activity_profile)
+    }
+
+    fun logoutButton(view: View) {
+        startActivity(Intent(this, LoginActivity::class.java))
+    }
+
+
 }

@@ -16,23 +16,31 @@ class UserDatabase {
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private val userReference = database.getReference("Users")
 
-
+    // Get an elo reference for manipulating the elo data of an user
     private fun getEloReference(screenName: String): DatabaseReference {
         return userReference.child(screenName).child("userStatistics").child("elo")
     }
 
+    // Add user to database
     fun addUser(user: User) {
         userReference.child(user.screenName).setValue(user)
     }
 
+    // Remove user from database
+    fun removeUser(screenName: String) {
+        userReference.child(screenName).removeValue()
+    }
+
+    // Set elo of an user
     fun setElo(screenName: String, elo: Int) {
         getEloReference(screenName).setValue(elo)
     }
 
-
+    /*
     fun addEloListener(screenName: String, listener: ValueEventListener) {
         getEloReference(screenName).addValueEventListener(listener)
     }
+    */
     fun addUserListener(screenName: String, listener: ValueEventListener) {
             userReference.child(screenName).addValueEventListener(listener)
     }
