@@ -6,6 +6,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
+import ch.epfl.sdp.blindwar.ui.VoskActivity
 import junit.framework.TestCase
 import org.hamcrest.Matchers.not
 import org.junit.Rule

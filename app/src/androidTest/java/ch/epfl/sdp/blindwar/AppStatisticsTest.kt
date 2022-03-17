@@ -1,5 +1,7 @@
 package ch.epfl.sdp.blindwar
 
+import ch.epfl.sdp.blindwar.ui.AppStatistics
+import ch.epfl.sdp.blindwar.ui.Mode
 import org.junit.Test
 
 class AppStatisticsTest {

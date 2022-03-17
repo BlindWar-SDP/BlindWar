@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginLeft="8sp"
-        tools:context=".tutorial.TutorialActivity">
+        tools:context=".ui.tutorial.TutorialActivity">
 
         <TextView
             android:id="@+id/title"

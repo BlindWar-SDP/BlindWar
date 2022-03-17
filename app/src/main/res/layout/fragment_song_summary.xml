@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/failure">
+
+    <View
+        android:id="@+id/colored_bar"
+        android:layout_width="384dp"
+        android:layout_height="665dp"
+        android:background="@color/opaque_black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/timeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TIME"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/colored_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.553" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/public_sans"
+        android:textColor="@color/white"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="@+id/timeTextView"
+        app:layout_constraintTop_toTopOf="@+id/colored_bar" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="556dp"
+        android:fontFamily="@font/public_sans"
+        android:textColor="@color/white"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/colored_bar"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView2" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="234dp"
+        android:layout_height="284dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="66dp"
+        android:layout_height="63dp"
+        android:contentDescription="@string/blindwar"
+        app:layout_constraintBottom_toBottomOf="@+id/colored_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.44"
+        app:srcCompat="@drawable/circle_button" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
