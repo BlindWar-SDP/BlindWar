@@ -38,4 +38,11 @@ class ProfileActivityTest : TestCase() {
             .perform(click())
         intended(hasComponent(LoginActivity::class.java.name))
     }
+
+    @Test
+    fun testLoginButton() {
+        onView(withId(R.id.backToMainButton))
+            .perform(click())
+        intended(hasComponent(MainMenuActivity::class.java.name))
+    }
 }
