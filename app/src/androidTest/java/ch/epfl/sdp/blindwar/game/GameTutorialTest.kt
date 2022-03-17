@@ -8,6 +8,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.Matchers.empty
+import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 class GameTutorialTest {
@@ -28,7 +29,7 @@ class GameTutorialTest {
     @Test
     fun testNextRound() {
         //val gameTutorial = GameTutorial(InstrumentationRegistry.getInstrumentation().targetContext.assets)
-        val gameTutorial = GameTutorial(ApplicationProvider.getApplicationContext<Context>().assets)
+        val gameTutorial = GameTutorial(ApplicationProvider.getApplicationContext<Context>().assets, 5000)
 
         // Iterate 10 times since we have 10 different musics in tutorial
         val toPlay = expectedMusics.copyOf().toMutableSet()
@@ -44,7 +45,7 @@ class GameTutorialTest {
 
     @Test
     fun testTwoGoodGuesses() {
-        val gameTutorial = GameTutorial(ApplicationProvider.getApplicationContext<Context>().assets)
+        val gameTutorial = GameTutorial(ApplicationProvider.getApplicationContext<Context>().assets, 5000)
         val music1 = gameTutorial.nextRound()
         music1?.let { gameTutorial.guess(it.title) }
 
@@ -55,8 +56,17 @@ class GameTutorialTest {
     }
 
     @Test
+    fun testUpperCaseGuess() {
+        val gameTutorial = GameTutorial(ApplicationProvider.getApplicationContext<Context>().assets, 5000)
+        val music1 = gameTutorial.nextRound()
+        music1?.let { gameTutorial.guess(it.title.uppercase(Locale.getDefault())) }
+
+        assertThat(gameTutorial.score, `is`(1))
+    }
+
+    @Test
     fun testTwoGoodAndOneBadGuesses() {
-        val gameTutorial = GameTutorial(ApplicationProvider.getApplicationContext<Context>().assets)
+        val gameTutorial = GameTutorial(ApplicationProvider.getApplicationContext<Context>().assets, 5000)
         val music1 = gameTutorial.nextRound()
         music1?.let { gameTutorial.guess(it.title) }
 
