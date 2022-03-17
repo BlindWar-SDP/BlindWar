@@ -26,6 +26,7 @@ import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.anyOf
 import org.hamcrest.Matcher
 
+
 /**
  * ViewAction that issues a swipe gesture on a [ViewPager2] to move that ViewPager2 to the next
  * page, taking orientation and layout direction into account.
@@ -80,10 +81,10 @@ private class SwipeAction(val direction: Direction) : ViewAction {
         }
         val isForward = direction == Direction.FORWARD
         val swipeAction: ViewAction
-        if (vp.orientation == ViewPager2.ORIENTATION_HORIZONTAL) {
-            swipeAction = if (isForward == vp.isRtl()) swipeRight() else swipeLeft()
+        swipeAction = if (vp.orientation == ViewPager2.ORIENTATION_HORIZONTAL) {
+            if (isForward == vp.isRtl()) swipeRight() else swipeLeft()
         } else {
-            swipeAction = if (isForward) swipeUp() else swipeDown()
+            if (isForward) swipeUp() else swipeDown()
         }
         swipeAction.perform(uiController, view)
     }
