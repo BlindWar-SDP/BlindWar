@@ -5,96 +5,152 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="#fefefe"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:background="@color/black"
+            android:onClick="loginButton" />
+
+        <ImageView
+            android:layout_marginTop="147dp"
+            android:src="@drawable/oval"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:contentDescription="@string/oval_description" />
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/content_description_background_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@color/opaque_black" />
+
+
     <Button
         android:id="@+id/backToMainButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginBottom="667dp"
+        android:onClick="loginButton"
         android:text="@string/backText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/profileImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="126dp"
+        android:layout_marginEnd="142dp"
+        android:layout_marginBottom="477dp"
         android:contentDescription="@string/profilePicDescriptionText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.19"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.184"
         tools:ignore="ImageContrastCheck"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/emailView"
         android:layout_width="285dp"
-        android:layout_height="28dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="292dp"
+        android:layout_marginEnd="63dp"
+        android:layout_marginBottom="399dp"
+        android:gravity="center"
         android:text="@string/emailText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.416" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/statsButton"
         android:layout_width="253dp"
         android:layout_height="50dp"
+        android:layout_marginStart="77dp"
+        android:layout_marginTop="477dp"
+        android:layout_marginEnd="81dp"
+        android:layout_marginBottom="204dp"
         android:text="@string/statisticsText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.341"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailView"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/nameView"
-        android:layout_width="185dp"
-        android:layout_height="54dp"
-        android:layout_marginBottom="128dp"
+        android:layout_width="249dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="81dp"
+        android:layout_marginTop="254dp"
+        android:layout_marginEnd="81dp"
+        android:layout_marginBottom="439dp"
+        android:gravity="center"
         android:text="@string/nameText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/emailView"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.929"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/profileEditButton"
+        android:id="@+id/editProfileButton"
         android:layout_width="253dp"
         android:layout_height="50dp"
+        android:layout_marginStart="79dp"
+        android:layout_marginTop="584dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginBottom="97dp"
         android:text="@string/editProfileText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.341"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoutButton"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/logoutButton"
         android:layout_width="253dp"
         android:layout_height="50dp"
+        android:layout_marginStart="79dp"
+        android:layout_marginTop="648dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginBottom="33dp"
         android:onClick="logoutButton"
-        android:text="@string/logoutText"
+        android:text="@string/logout"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.341"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/statsButton"
-        app:layout_constraintVertical_bias="0.627" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

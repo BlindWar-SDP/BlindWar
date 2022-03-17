@@ -14,4 +14,8 @@ class ProfileActivity : AppCompatActivity() {
     fun logoutButton(view: View) {
         startActivity(Intent(this, LoginActivity::class.java))
     }
+
+    fun loginButton(view: View) {
+        startActivity(Intent(this, MainMenuActivity::class.java))
+    }
 }
