@@ -59,7 +59,6 @@ class GameTutorial(private val assetManager: AssetManager, timeToFind: Int) : Ga
         this.playlist.remove(title)
 
         // Get a random time
-        Log.d("test", super.timeToFind.toString())
         afd?.let { player.setDataSource(afd.fileDescriptor, afd.startOffset, it.length) }
         afd?.let { mediaMetadataRetriever.setDataSource(afd.fileDescriptor, afd.startOffset, it.length) }
         val time = random.nextInt(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toInt()

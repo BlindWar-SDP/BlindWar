@@ -1,17 +1,13 @@
 package ch.epfl.sdp.blindwar.tutorial
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.GameTutorial
 import ch.epfl.sdp.blindwar.game.MusicMetaData
-import com.chibde.visualizer.CircleVisualizer
-import com.chibde.visualizer.LineVisualizer
 
 class DemoActivity: AppCompatActivity() {
     private lateinit var game: GameTutorial
@@ -19,7 +15,7 @@ class DemoActivity: AppCompatActivity() {
     private lateinit var guessEditText: EditText
     private lateinit var scoreTextView: TextView
     private lateinit var musicMetaData: MusicMetaData
-    private lateinit var visualizer: CircleVisualizer
+    //private lateinit var visualizer: CircleVisualizer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,11 +66,7 @@ class DemoActivity: AppCompatActivity() {
 
     fun guess(view: View) {
         // Try to guess
-        Log.d("guesses", guessEditText.text.toString())
         if(this.game.guess(guessEditText.text.toString())) {
-            Log.d("guess", "Good guess")
-
-            Log.d("points", this.game.score.toString())
             // Update the number of point view
             //this.scoreTextView.setText(this.game.score)
 
