@@ -59,7 +59,7 @@ class DemoActivity: AppCompatActivity() {
 
     fun guess(view: View) {
         // Try to guess
-        Log.d("guesses", guessEditText.text.toString())
+        //Log.d("guesses", guessEditText.text.toString())
         if(game.guess(guessEditText.text.toString())) {
             // Update the number of point view
             scoreTextView.text = game.score.toString()

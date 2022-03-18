@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.*
 import com.squareup.picasso.Picasso

@@ -49,6 +49,7 @@ class DemoActivityTest {
         onView(withId(R.id.fragment_container))
     }
 
+    /**
     @Test
     fun layoutVisibleAfterPressingBackOnSummary() {
         makeCorrectGuess()
@@ -56,6 +57,7 @@ class DemoActivityTest {
         onView(withId(R.id.guessButton)).check(matches(isDisplayed()))
         onView(withId(R.id.guessEditText)).check(matches(isDisplayed()))
     }
+    **/
 
     private fun makeCorrectGuess() {
         val correctMetadata = SongMetaData("One More Time", "", "")
@@ -67,13 +69,6 @@ class DemoActivityTest {
     fun guessResetAfterCorrectGuess() {
         makeCorrectGuess()
         onView(withId(R.id.guessEditText)).check(matches(withText("")))
-    }
-
-    @Test
-    fun layoutInvisibleAfterCorrectGuess() {
-        makeCorrectGuess()
-        //onView(withId(R.id.guessButton)).check(matches(isDisplayed()))
-        //onView(withId(R.id.guessEditText)).check(matches(isDisplayed()))
     }
 
     @Test
