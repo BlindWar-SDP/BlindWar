@@ -9,7 +9,7 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.GameTutorial
 import ch.epfl.sdp.blindwar.game.MusicMetaData
 
-class DemoActivity: AppCompatActivity() {
+class DemoActivity : AppCompatActivity() {
     private lateinit var game: GameTutorial
     private var playing = true
     private lateinit var guessEditText: EditText
@@ -32,9 +32,9 @@ class DemoActivity: AppCompatActivity() {
         this.guessEditText = findViewById(R.id.guessEditText)
         this.scoreTextView = findViewById(R.id.scoreTextView)
         this.scoreTextView.text = "test"
-        this.guessEditText = findViewById<EditText>(R.id.guessEditText)
-        this.scoreTextView = findViewById<TextView>(R.id.scoreTextView)
-        this.scoreTextView.setText("test")
+        this.guessEditText = findViewById(R.id.guessEditText)
+        this.scoreTextView = findViewById(R.id.scoreTextView)
+        this.scoreTextView.text = "test"
 
         /**
 
@@ -45,15 +45,14 @@ class DemoActivity: AppCompatActivity() {
         // Set your media player to the visualizer.
         visualizer.setPlayer(game.sessionId)
 
-        **/
+         **/
     }
 
     fun playAndPause(view: View) {
-        if(playing) {
+        if (playing) {
             this.game.pause()
             this.playing = false
-        }
-        else {
+        } else {
             this.game.play()
             this.playing = true
         }
@@ -66,7 +65,7 @@ class DemoActivity: AppCompatActivity() {
 
     fun guess(view: View) {
         // Try to guess
-        if(this.game.guess(guessEditText.text.toString())) {
+        if (this.game.guess(guessEditText.text.toString())) {
             // Update the number of point view
             //this.scoreTextView.setText(this.game.score)
 
