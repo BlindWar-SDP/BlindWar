@@ -34,7 +34,7 @@ class DemoActivity : AppCompatActivity() {
         this.scoreTextView.text = "test"
         this.guessEditText = findViewById(R.id.guessEditText)
         this.scoreTextView = findViewById(R.id.scoreTextView)
-        this.scoreTextView.setText("test")
+        this.scoreTextView.text = "test"
 
         /**
 
