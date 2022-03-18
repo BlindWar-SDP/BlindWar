@@ -16,11 +16,11 @@
             android:background="@color/black" />
 
         <ImageView
-            android:layout_marginTop="147dp"
-            android:src="@drawable/oval"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:contentDescription="@string/oval_description" />
+            android:layout_marginTop="147dp"
+            android:contentDescription="@string/oval_description"
+            android:src="@drawable/oval" />
 
 
     </RelativeLayout>
@@ -80,6 +80,30 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.713" />
 
+    <TextView
+        android:id="@+id/eloDeclarationView"
+        android:layout_width="285dp"
+        android:layout_height="65dp"
+        android:text="@string/elo"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/statsButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/eloView"
+        android:layout_width="310dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/statsButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/your_elo_here"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
     <Button
         android:id="@+id/statsButton"
         android:layout_width="253dp"
@@ -132,6 +156,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,4 +70,6 @@
     <string name="last_name">Last Name</string>
     <string name="birthdate_text">Please, enter your Birthdate</string>
     <string name="confirm">Confirm</string>
+    <string name="your_elo_here">Your elo here</string>
+    <string name="elo">ELO:</string>
 </resources>
