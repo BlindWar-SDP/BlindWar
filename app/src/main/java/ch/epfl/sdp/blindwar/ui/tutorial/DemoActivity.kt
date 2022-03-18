@@ -1,15 +1,12 @@
 package ch.epfl.sdp.blindwar.ui.tutorial
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.GameTutorial
-import ch.epfl.sdp.blindwar.domain.game.SongSummaryFragment
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 
 class DemoActivity: AppCompatActivity() {

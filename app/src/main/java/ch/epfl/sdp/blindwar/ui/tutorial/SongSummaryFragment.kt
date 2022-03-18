@@ -1,7 +1,6 @@
-package ch.epfl.sdp.blindwar.domain.game
+package ch.epfl.sdp.blindwar.ui.tutorial
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.*
 import com.squareup.picasso.Picasso
 
 class SongSummaryFragment: Fragment() {
