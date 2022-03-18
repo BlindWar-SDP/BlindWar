@@ -1,30 +1,16 @@
 package ch.epfl.sdp.blindwar.game
 
 import junit.framework.TestCase
-import org.junit.Test
 
 class GameHelperTest : TestCase() {
 
     private val gameHelper = GameHelper
 
-    @Test
-    fun correctTitleVocal() {
+    fun testCorrectTitleVocal() {
         assertTrue(gameHelper.isTheCorrectTitle("connemara", "connemara", true))
     }
 
-    @Test
-    fun slightlyCorrectTitleVocal() {
-        assertTrue(
-            gameHelper.isTheCorrectTitle(
-                "Les lacs du connemara",
-                "Les lacs connemara",
-                true
-            )
-        )
-    }
-
-    @Test
-    fun falseTitle() {
+    fun testFalseTitle() {
         assertFalse(
             gameHelper.isTheCorrectTitle(
                 "Les lacs du connemara",
@@ -41,8 +27,7 @@ class GameHelperTest : TestCase() {
         )
     }
 
-    @Test
-    fun falseTitleVocal() {
+    fun testFalseTitleVocal() {
         assertFalse(
             gameHelper.isTheCorrectTitle(
                 "Les lacs du connemara",
@@ -52,23 +37,11 @@ class GameHelperTest : TestCase() {
         )
     }
 
-    @Test
-    fun falseTitleKeyboard() {
+    fun testFalseTitleKeyboard() {
         assertFalse(
             gameHelper.isTheCorrectTitle(
                 "Les lacs du connemara",
                 "connemara les lacs ",
-                false
-            )
-        )
-    }
-
-    @Test
-    fun correctTitleKeyboard() {
-        assertTrue(
-            gameHelper.isTheCorrectTitle(
-                "connemara a a a a a a a a a a ",
-                "connemara a a a a a a a a b",
                 false
             )
         )
