@@ -4,7 +4,6 @@ import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
-import android.util.Log
 import java.util.*
 
 
@@ -42,7 +41,8 @@ class GameTutorial(private val assetManager: AssetManager, timeToFind: Int) : Ga
                 )
             }) ?: emptyMap()
 
-    private var playlist: MutableSet<String> = assetFileDescriptorAndMetaDataPerTitle.keys.toSet() as MutableSet<String>
+    private var playlist: MutableSet<String> =
+        assetFileDescriptorAndMetaDataPerTitle.keys.toSet() as MutableSet<String>
 
     override fun nextRound(): MusicMetaData? {
 
@@ -60,9 +60,18 @@ class GameTutorial(private val assetManager: AssetManager, timeToFind: Int) : Ga
 
         // Get a random time
         afd?.let { player.setDataSource(afd.fileDescriptor, afd.startOffset, it.length) }
-        afd?.let { mediaMetadataRetriever.setDataSource(afd.fileDescriptor, afd.startOffset, it.length) }
-        val time = random.nextInt(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toInt()
-            ?.minus(this.timeToFind) ?: 1)
+        afd?.let {
+            mediaMetadataRetriever.setDataSource(
+                afd.fileDescriptor,
+                afd.startOffset,
+                it.length
+            )
+        }
+        val time = random.nextInt(
+            mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+                ?.toInt()
+                ?.minus(this.timeToFind) ?: 1
+        )
 
         // Change the current music
         this.title = title
