@@ -32,6 +32,13 @@ class GameHelperTest : TestCase() {
                 true
             )
         )
+        assertFalse(
+            gameHelper.isTheCorrectTitle(
+                "Les lacs du connemara",
+                "connemara",
+                false
+            )
+        )
     }
 
     @Test
@@ -51,7 +58,7 @@ class GameHelperTest : TestCase() {
             gameHelper.isTheCorrectTitle(
                 "Les lacs du connemara",
                 "connemara les lacs ",
-                true
+                false
             )
         )
     }
