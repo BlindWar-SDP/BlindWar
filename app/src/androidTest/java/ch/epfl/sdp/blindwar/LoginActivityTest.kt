@@ -36,6 +36,6 @@ class LoginActivityTest : TestCase() {
     fun testLoginButton() {
         onView(withId(R.id.button_SignIn))
             .perform(click())
-        intended(hasComponent(MainMenuActivity::class.java.name))
+        intended(hasComponent(NewUserActivity::class.java.name))
     }
 }

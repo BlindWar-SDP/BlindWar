@@ -62,4 +62,12 @@
     <string name="formats_textview">Formats</string>
     <string name="commands_textview">Commands</string>
     <string name="game_options_textview">Game Options</string>
+
+    <string name="Btn_email">e-mail</string>
+    <string name="Btn_google">Google</string>
+    <string name="text_pseudo">Pseudo</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="birthdate_text">Please, enter your Birthdate</string>
+    <string name="confirm">Confirm</string>
 </resources>

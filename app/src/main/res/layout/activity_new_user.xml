@@ -47,6 +47,7 @@
         android:layout_height="22dp"
         android:layout_marginStart="16dp"
         android:text="@string/birthdate_text"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="270dp" />
 
@@ -63,14 +64,14 @@
     <DatePicker
         android:layout_width="252dp"
         android:layout_height="148dp"
-        android:layout_marginStart="108dp"
+        android:layout_marginStart="76dp"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
         android:maxDate="01/01/2022"
         android:minDate="01/01/1922"
         android:spinnersShown="true"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="264dp" />
+        tools:layout_editor_absoluteY="307dp" />
 
     <Button
         android:id="@+id/NU_Validate_Btn"
