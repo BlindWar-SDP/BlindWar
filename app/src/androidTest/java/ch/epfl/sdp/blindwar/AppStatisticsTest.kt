@@ -59,6 +59,7 @@ class AppStatisticsTest {
         testStats3.correctnessUpdate(true, Mode.SOLO)
         testStats3.correctnessUpdate(false, Mode.SOLO)
         assert(testStats3.wrongPercent[soloIndex] == 50.0F)
+        
     }
 
     @Test
