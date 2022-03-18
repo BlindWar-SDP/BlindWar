@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -35,6 +36,6 @@ class NewUserActivityTest : TestCase() {
     fun testConfirmButton() {
         onView(withId(R.id.NU_Confirm_Btn))
             .perform(ViewActions.click())
-//        Intents.intended(IntentMatchers.hasComponent(MainMenuActivity::class.java.name))
+            intended(IntentMatchers.hasComponent(MainMenuActivity::class.java.name))
     }
 }
