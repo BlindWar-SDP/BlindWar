@@ -74,6 +74,12 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.4.0'
     androidTestImplementation('com.adevinta.android:barista:4.1.0') {
         exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
+
+    // Firebase
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.2'
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
+//    classpath 'com.google.gms:google-services:4.3.10'
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
     }
 
     debugImplementation("androidx.fragment:fragment-testing:1.4.1")

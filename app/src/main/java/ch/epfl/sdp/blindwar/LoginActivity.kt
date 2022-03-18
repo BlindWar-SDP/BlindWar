@@ -14,6 +14,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun loginButton(view: View) {
-        startActivity(Intent(this, MainMenuActivity::class.java))
+        startActivity(Intent(this, NewUserActivity::class.java))
     }
 }
