@@ -21,7 +21,6 @@ class NewUserActivity : AppCompatActivity() {
 //        val firstName: String? = findViewById<EditText>(R.id.NU_FirstName).text.toString()
 //        val lastName: String? = findViewById<EditText>(R.id.NU_LastName).text.toString()
 //        val birthDate: Long? = findViewById<CalendarView>(R.id.NU_birthdate).date
-
 //        createUser(pseudo, firstName, lastName, birthDate)
         startActivity(Intent(this, MainMenuActivity::class.java))
     }
