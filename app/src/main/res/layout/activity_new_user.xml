@@ -1,9 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".NewUserActivity">
+
+    <EditText
+        android:id="@+id/NU_pseudo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/text_pseudo"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="65dp" />
+
+    <EditText
+        android:id="@+id/NU_FirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/first_name"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="127dp" />
+
+    <EditText
+        android:id="@+id/NU_LastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/last_name"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="189dp" />
+
+    <TextView
+        android:id="@+id/NU_birthdate_text"
+        android:layout_width="210dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/birthdate_text"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="270dp" />
+
+    <CalendarView
+        android:id="@+id/NU_birthdate"
+        android:layout_width="272dp"
+        android:layout_height="237dp"
+        android:layout_marginStart="16dp"
+        android:maxDate="01/01/2022"
+        android:minDate="01/01/1922"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="428dp" />
+
+    <DatePicker
+        android:layout_width="252dp"
+        android:layout_height="148dp"
+        android:layout_marginStart="108dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"
+        android:maxDate="01/01/2022"
+        android:minDate="01/01/1922"
+        android:spinnersShown="true"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="264dp" />
+
+    <Button
+        android:id="@+id/NU_Validate_Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="confirm"
+        android:text="@string/confirm"
+        tools:layout_editor_absoluteX="264dp"
+        tools:layout_editor_absoluteY="640dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
