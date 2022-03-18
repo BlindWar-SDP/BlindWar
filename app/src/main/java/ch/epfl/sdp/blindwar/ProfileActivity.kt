@@ -52,4 +52,8 @@ class ProfileActivity : AppCompatActivity() {
         startActivity(Intent(this, MainMenuActivity::class.java))
     }
 
+    fun statisticsButton(view: View) {
+        startActivity(Intent(this, StatisticsActivity::class.java))
+    }
+
 }
