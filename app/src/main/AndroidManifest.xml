@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BlindWar" >
 
+         <activity
+            android:name=".NewUserActivity"
+            android:exported="false" />
         <activity
             android:name=".VoskActivity"
             android:parentActivityName=".MainMenuActivity">
