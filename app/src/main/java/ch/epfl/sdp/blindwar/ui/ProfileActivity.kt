@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.StatisticsActivity
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

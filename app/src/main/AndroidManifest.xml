@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BlindWar" >
 
+         <activity
+            android:name=".ui.NewUserActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.VoskActivity"
             android:parentActivityName=".ui.MainMenuActivity">
@@ -37,7 +40,7 @@
             android:name=".ui.tutorial.DemoActivity"
             android:exported="false" />
         <activity
-            android:name=".StatisticsActivity"
+            android:name=".ui.StatisticsActivity"
             android:exported="false" />
         <activity
             android:name=".ui.LoginActivity"

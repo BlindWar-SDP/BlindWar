@@ -8,9 +8,9 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.ui.ProfileActivity
+import ch.epfl.sdp.blindwar.ui.StatisticsActivity
 import junit.framework.TestCase
 import org.junit.After
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 

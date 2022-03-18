@@ -23,7 +23,7 @@ class UserDatabase {
 
     // Add user to database
     fun addUser(user: User) {
-        userReference.child(user.screenName).setValue(user)
+        userReference.child(user.pseudo!!).setValue(user)
     }
 
     // Remove user from database
@@ -42,11 +42,6 @@ class UserDatabase {
     }
     */
     fun addUserListener(screenName: String, listener: ValueEventListener) {
-            userReference.child(screenName).addValueEventListener(listener)
+//        userReference.child(screenName).addValueEventListener(listener)
     }
-
-
-
-
-
 }

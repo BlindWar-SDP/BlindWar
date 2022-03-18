@@ -1,10 +1,10 @@
-package ch.epfl.sdp.blindwar
+package ch.epfl.sdp.blindwar.ui
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import ch.epfl.sdp.blindwar.ui.ProfileActivity
+import ch.epfl.sdp.blindwar.R
 
 class StatisticsActivity : AppCompatActivity() {
 

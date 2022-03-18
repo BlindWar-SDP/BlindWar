@@ -11,6 +11,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.ui.LoginActivity
 import ch.epfl.sdp.blindwar.ui.MainMenuActivity
 import ch.epfl.sdp.blindwar.ui.ProfileActivity
+import ch.epfl.sdp.blindwar.ui.StatisticsActivity
 import junit.framework.TestCase
 import org.junit.After
 import org.junit.Before
