@@ -30,7 +30,7 @@ class NewUserActivityTest : TestCase() {
 
     @Test
     fun testConfirmButton() {
-        onView(withId(R.id.NU_Validate_Btn))
+        onView(withId(R.id.NU_Confirm_Btn))
             .perform(ViewActions.click())
         Intents.intended(IntentMatchers.hasComponent(MainMenuActivity::class.java.name))
     }
