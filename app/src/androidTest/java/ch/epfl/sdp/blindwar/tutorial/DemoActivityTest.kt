@@ -1,6 +1,6 @@
 package ch.epfl.sdp.blindwar.tutorial
-
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*

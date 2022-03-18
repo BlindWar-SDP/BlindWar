@@ -16,7 +16,7 @@ class TutorialFragmentTest {
 
     @Test
     fun testCorrectlySetLayout() {
-        val scenario = launchFragmentInContainer<TutorialFragment>()
+        launchFragmentInContainer<TutorialFragment>()
         onView(withId(R.id.title)).check(matches(withText("Tutorial")))
         onView(withId(R.id.song_opt_title)).check(matches(withText("Game Options")))
         onView(withId(R.id.format_title)).check(matches(withText("Formats")))

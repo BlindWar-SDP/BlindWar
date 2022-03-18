@@ -15,6 +15,7 @@ class UserTest {
     private val screenName2 = "Screen Name2"
 
     private var testUser = User(firstName, lastName, email, screenName, null, AppStatistics())
+    private var testUser1 = User(firstName, lastName, email, screenName, null, AppStatistics())
 
     @Test
     fun getFirstName() {
@@ -59,7 +60,8 @@ class UserTest {
 
     @Test
     fun setUserStatistics() {
-        testUser.userStatistics.eloUpdateWin(1005)
+        testUser1.userStatistics.eloUpdateWin(1005)
+        testUser.userStatistics = testUser1.userStatistics
         assertEquals(testUser.userStatistics.elo, 1015)
     }
 }

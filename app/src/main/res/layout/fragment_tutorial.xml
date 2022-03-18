@@ -7,16 +7,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginLeft="8sp"
-        tools:context=".ui.tutorial.TutorialActivity">
+        android:layout_marginStart="8sp"
+        tools:context=".tutorial.TutorialActivity">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tutorial"
+            android:text="@string/tutorial_textview"
             android:layout_marginTop="16dp"
             android:textStyle="bold"
             android:textAlignment="center"
@@ -26,7 +26,7 @@
             android:id="@+id/modes_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Modes"
+            android:text="@string/modes_textview"
             android:textStyle="bold" />
 
         <TextView
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8sp"
-            android:text="Formats"
+            android:text="@string/formats_textview"
             android:textStyle="bold" />
 
         <TextView
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8sp"
-            android:text="Commands"
+            android:text="@string/commands_textview"
             android:textStyle="bold" />
 
         <TextView
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8sp"
-            android:text="Game Options"
+            android:text="@string/game_options_textview"
             android:textStyle="bold" />
 
         <TextView
