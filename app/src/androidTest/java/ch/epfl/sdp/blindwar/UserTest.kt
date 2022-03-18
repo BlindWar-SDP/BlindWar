@@ -3,10 +3,10 @@ package ch.epfl.sdp.blindwar
 import android.net.Uri
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
+import org.junit.Before
 import org.junit.Test
 
 class UserTest {
-
     private var email1 = "test1@epfl.ch"
     private var email2 = "test2@epfl.ch"
     private var firstName1 = "firstName1"
@@ -20,9 +20,30 @@ class UserTest {
     private var userStatistics: AppStatistics = AppStatistics()
     private var profilePicture: Uri? = null
 
+    private lateinit var testUser1: User
 
-    private var testUser1 = User(email1, userStatistics, pseudo1, firstName1, lastName1, birthDate1, profilePicture)
-    private var testUser2 = User(email2, userStatistics, pseudo2, firstName2, lastName2, birthDate2, profilePicture)
+    private lateinit var testUser2: User
+
+    @Before
+    fun setUp() {
+        testUser1 = UserBuilder().setBirthDate(birthDate1)
+            .setEmail(email1)
+            .setFirstName(firstName1)
+            .setLastName(lastName1)
+            .setImage(profilePicture)
+            .setStats(userStatistics)
+            .setPseudo(pseudo1)
+            .build()
+
+        testUser2 = UserBuilder().setBirthDate(birthDate2)
+            .setEmail(email2)
+            .setFirstName(firstName2)
+            .setLastName(lastName2)
+            .setImage(profilePicture)
+            .setStats(userStatistics)
+            .setPseudo(pseudo2)
+            .build()
+    }
 
     @Test
     fun getFirstName() {
@@ -46,8 +67,8 @@ class UserTest {
 
     @Test
     fun setScreenName() {
-        testUser1.pseudo = pseudo2
-        assertEquals(testUser1.pseudo, pseudo2)
+        val testUser = testUser1.builder().setPseudo(pseudo2).build()
+        assertEquals(testUser.pseudo, pseudo2)
     }
     /*
     @Test
@@ -69,7 +90,10 @@ class UserTest {
     @Test
     fun setUserStatistics() {
         testUser1.userStatistics.eloUpdateWin(1005)
-        testUser1.userStatistics = testUser1.userStatistics
-        assertEquals(testUser1.userStatistics.elo, 1015)
+        val testUser = testUser1.builder()
+            .setStats(testUser1.userStatistics)
+            .build()
+
+        assertEquals(testUser.userStatistics, testUser1.userStatistics)
     }
 }
