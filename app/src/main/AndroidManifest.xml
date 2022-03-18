@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ch.epfl.sdp.blindwar" >
+    package="ch.epfl.sdp.blindwar">
+
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -10,8 +11,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round_base"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BlindWar" >
-
+        android:theme="@style/Theme.BlindWar">
+        <activity
+            android:name=".NewUserActivity"
+            android:exported="false" />
         <activity
             android:name=".VoskActivity"
             android:parentActivityName=".MainMenuActivity">
@@ -23,10 +26,10 @@
         </activity>
         <activity
             android:name=".tutorial.TutorialActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".tutorial.DemoActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".MainMenuActivity"
             android:exported="false" />
@@ -45,6 +48,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
+
 </manifest>
