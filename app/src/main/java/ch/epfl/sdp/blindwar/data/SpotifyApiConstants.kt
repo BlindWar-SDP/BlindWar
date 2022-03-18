@@ -1,10 +1,19 @@
 package ch.epfl.sdp.blindwar.data
 
+import android.util.Base64
+
 object SpotifyApiConstants {
     /** Credentials constants **/
     const val CLIENT_ID = "66f4e3c14d6e425caed973ba62bb2077";
     const val CLIENT_SECRET = "c0d9389a443646ba8b47496d84862075";
     const val AUTH_TYPE = "client_credentials"
+
+    fun credentialsEncoding(): String {
+        return "Basic ${Base64.encodeToString(
+                "$CLIENT_ID:$CLIENT_SECRET".toByteArray(Charsets.UTF_8),
+                Base64.NO_WRAP
+            )}"
+    }
 
     /** Headers constants **/
     const val AUTH = "Authorization"
@@ -15,11 +24,11 @@ object SpotifyApiConstants {
     /** URL path constants **/
     const val API_PATH = "api/token/"
     const val ARTIST_PATH = "artists/{artist_id}"
-    const val TRACK_PATH = "tracks/{track_id}"
+    //const val TRACK_PATH = "tracks/{track_id}"
 
     /** Query and field constants **/
     const val ARTIST_ID = "artist_id"
-    const val TRACK_ID = "track_id"
     const val GRANT_TYPE = "grant_type"
-    const val LIMIT = "limit"
+    //const val TRACK_ID = "track_id"
+    //const val LIMIT = "limit"
 }

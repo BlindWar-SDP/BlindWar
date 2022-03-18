@@ -4,8 +4,10 @@ import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
-import ch.epfl.sdp.blindwar.ui.SongMetaData
+import android.util.Log
+import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.SONG_MAP
 import java.util.*
+import kotlin.collections.HashMap
 
 
 /**
@@ -16,11 +18,9 @@ import java.util.*
  *
  * @param assetManager AssetManager instance to get the mp3 files
  */
-class GameTutorial(private val assetManager: AssetManager) : Game() {
+class GameTutorial(private val assetManager: AssetManager, timeToFind: Int) : Game(timeToFind) {
     private val mediaMetadataRetriever: MediaMetadataRetriever = MediaMetadataRetriever()
     private val player = MediaPlayer()
-    val sessionId: Int
-        get() = player.audioSessionId
 
     // Map each title with its asset file descriptor and its important metadata
     private var assetFileDescriptorAndMetaDataPerTitle: Map<String, Pair<AssetFileDescriptor, SongMetaData>> =
@@ -31,60 +31,80 @@ class GameTutorial(private val assetManager: AssetManager) : Game() {
                 return@associateBy mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
                     .toString()
             }, {
+                val author = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+                    .toString()
+                val title = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+                    .toString()
+
                 return@associateBy Pair(
                     it,
                     SongMetaData(
-                        mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
-                            .toString(),
-                        mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
-                            .toString(),
-                        ""
+                        title,
+                        author,
+                        SONG_MAP[author]!!
                     )
                 )
             }) ?: emptyMap()
 
-    private var playlist: MutableSet<String> = resetPlaylist()
+    private var playlist: MutableSet<String> = refreshPlaylist()
 
-    private fun resetPlaylist(): MutableSet<String> {
+    private fun refreshPlaylist(): MutableSet<String> {
         return assetFileDescriptorAndMetaDataPerTitle.keys.toSet() as MutableSet<String>
     }
 
     override fun nextRound(): SongMetaData? {
+        if (playlist.isEmpty())
+            playlist = refreshPlaylist()
 
         // Stop the music
         player.stop()
         player.reset()
 
-        // Check for empty playlist
-        if (playlist.isEmpty())
-            playlist = resetPlaylist()
-
         // Get a random title
         val random = Random()
-        val title = this.playlist.elementAt(random.nextInt(this.playlist.size))
-        val afd = this.assetFileDescriptorAndMetaDataPerTitle[title]?.first
+        val title = playlist.elementAt(random.nextInt(playlist.size))
+        val afd = assetFileDescriptorAndMetaDataPerTitle[title]?.first
+        currentMetaData = assetFileDescriptorAndMetaDataPerTitle[title]?.second!!
 
         // Remove it to the playlist
-        this.playlist.remove(title)
+        playlist.remove(title)
+
+        // Get a random time
+        //Log.d("test", super.timeToFind.toString())
+        afd?.let { player.setDataSource(afd.fileDescriptor, afd.startOffset, it.length) }
+        afd?.let { mediaMetadataRetriever.setDataSource(afd.fileDescriptor, afd.startOffset, it.length) }
+        /**
+        val time = random.nextInt(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toInt()
+            ?.minus(this.timeToFind) ?: 1)
+        **/
+
+        // Keep the start time low enough so that at least half the song can be heard (for now)
+        val time = random.nextInt(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toInt()
+            ?.div(2) ?: 1)
 
         // Change the current music
-        this.title = title
-        afd?.let { player.setDataSource(afd.fileDescriptor, afd.startOffset, it.length) }
         player.prepare()
+        player.seekTo(time)
 
         // Play the music
         player.start()
 
-        return this.assetFileDescriptorAndMetaDataPerTitle[title]?.second
+        return currentMetaData
     }
 
+    override fun guess(titleGuess: String): Boolean {
+        return if (titleGuess.uppercase(Locale.getDefault()) == currentMetaData?.title?.uppercase(Locale.getDefault())) {
+            score += 1
+            true
+        } else
+            false
+    }
 
-    override fun guess(titleGuess: String): Int {
-        if (titleGuess == this.title) {
-            this.score += 1
-            this.nextRound()
-        }
+    override fun play() {
+        player.start()
+    }
 
-        return this.score
+    override fun pause() {
+        player.pause()
     }
 }

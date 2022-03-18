@@ -13,19 +13,24 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import ch.epfl.sdp.blindwar.domain.game.GameTutorial
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.SpotifyApiConstants
 import ch.epfl.sdp.blindwar.data.SpotifyApiConstants.AUTH_TYPE
-import ch.epfl.sdp.blindwar.data.SpotifyApiConstants.CLIENT_ID
-import ch.epfl.sdp.blindwar.data.SpotifyApiConstants.CLIENT_SECRET
+import ch.epfl.sdp.blindwar.data.SpotifyApiConstants.credentialsEncoding
+import ch.epfl.sdp.blindwar.data.SpotifyArtist
 import ch.epfl.sdp.blindwar.data.SpotifyService
 import ch.epfl.sdp.blindwar.data.SpotifyToken
-import com.chibde.visualizer.LineVisualizer
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 
+/** Fragment used to test metadata fetching through Spotify Api
+ * soon to be refactored using a clean architecture **/
 class DemonstrationTutorialFragment : Fragment() {
     private lateinit var gameTutorial: GameTutorial
+    private var logged: Boolean = false
+    private lateinit var responseToken: SpotifyToken
+    private lateinit var artistView: ImageView
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,45 +40,32 @@ class DemonstrationTutorialFragment : Fragment() {
             inflater.inflate(R.layout.fragment_demonstration_tutorial, container, false)
         val btn: Button = view.findViewById(R.id.button)
 
-        gameTutorial = activity?.applicationContext?.let { GameTutorial(it.assets) }!!
+        gameTutorial = activity?.applicationContext?.let { GameTutorial(it.assets, 5000)}!!
 
         btn.setOnClickListener {
             gameTutorial.nextRound()
         }
 
-        /**
-        val lineVisualizer2: LineVisualizer = view.findViewById(R.id.visualizer)
+        artistView = view.findViewById<ImageView>(R.id.artist)
+        responseToken = SpotifyToken("", 0, "")
 
-        // Set your media player to the visualizer.
-        lineVisualizer2.setPlayer(gameTutorial.sessionId)
-        **/
+        fetchToken()
 
-        val lineVisualizer: LineVisualizer = view.findViewById(R.id.visualizer)
-        lineVisualizer.setStrokeWidth(10)
+        return view
+    }
 
-        // Set your media player to the visualizer.
-        lineVisualizer.setPlayer(gameTutorial.sessionId)
-
-        val artistView = view.findViewById<ImageView>(R.id.artist)
-        var logged: Boolean = false
-
-        lifecycleScope.launchWhenCreated {
-            var responseToken: SpotifyToken = SpotifyToken("", 0, "")
-
-            /* Get access token */
+    private fun fetchToken() {
+        lifecycleScope.launchWhenCreated{
             if (!logged) {
                 val auth = try {
-                    val credentials = "Basic ${encodeToString("$CLIENT_ID:$CLIENT_SECRET".toByteArray(Charsets.UTF_8), NO_WRAP)}"
+                    val credentials = credentialsEncoding()
                     Log.d(TAG, credentials)
                     SpotifyService.apiAuth.value.getToken(credentials, AUTH_TYPE)
-                } catch(e: IOException) {
-                    Log.e(TAG, "IOException")
+                } catch (e: IOException) {
                     return@launchWhenCreated
                 } catch (e: HttpException) {
-                    Log.e(TAG, "HttpException")
                     return@launchWhenCreated
                 } catch (e: Exception) {
-                    Log.d(TAG, e.stackTraceToString())
                     return@launchWhenCreated
                 }
 
@@ -83,16 +75,22 @@ class DemonstrationTutorialFragment : Fragment() {
                     logged = true
                     Log.d(TAG, "AUTHENTICATION SUCCESSFUL")
                     Log.d(TAG, responseToken.access_token)
+                    fetchMetadata()
                 } else {
-                    Log.d(TAG, "AUTHENTICATION NOT SUCCESSFUL ${auth.code().toString()+auth.message()+auth.toString()}")
+                    Log.d(
+                        TAG,
+                        "AUTHENTICATION NOT SUCCESSFUL ${
+                            auth.code().toString() + auth.message() + auth.toString()
+                        }"
+                    )
                 }
             }
+        }
+    }
 
-            /* Prefetch metadata */
+    private fun fetchMetadata() {
+        lifecycleScope.launchWhenCreated {
             if (logged) {
-                // Hard coded until the token retrieval is resolved
-                //responseToken.access_token = "BQD9fdu-CEOGxQOR7A5HohOIIqZY655mUaVx_zgvfluJfqx_NZlbrnJuSp3GZxZg-e6XKJUFoELwVLngUVxrl4Eno8bybSM9LASeA4ltfTD-1MJ1yQKxKAurykv7TY9sz6fRVMg_Z-bfDhgD"
-                    // Bearer ${responseToken.access_token}
                 val response = try {
                     SpotifyService.apiMeta.value.getArtist("Bearer ${responseToken.access_token}", "3fMbdgg4jU18AjLCKBhRSm")
                 } catch(e: IOException) {
@@ -107,13 +105,13 @@ class DemonstrationTutorialFragment : Fragment() {
 
                 if (response.isSuccessful && response.body() != null) {
                     val imageUrl = response.body()!!.images[0].url
+                    // Put the image in the cache
                     Picasso.get().load(imageUrl).into(artistView)
+                    //songMetaData = spotifyArtistToSongMetadata(response.body()!!)
                 } else {
                     Log.e(TAG, "Response not successful")
                 }
             }
         }
-
-        return view
     }
 }

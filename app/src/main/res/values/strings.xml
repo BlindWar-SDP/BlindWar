@@ -52,4 +52,9 @@
     <string name="tutorial_formats">Formats</string>
     <string name="tutorial_commands">Commands</string>
     <string name="tutorial_options">Game Options</string>
+    <string name="continue_to_demo_button_text">Continue to the demo</string>
+    <string name="zero">0</string>
+    <string name="guess_button_text">Guess !</string>
+    <string name="hint_guess">A Forest</string>
+
 </resources>

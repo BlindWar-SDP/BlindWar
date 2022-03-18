@@ -4,79 +4,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/failure">
-
-    <View
-        android:id="@+id/colored_bar"
-        android:layout_width="384dp"
-        android:layout_height="665dp"
-        android:background="@color/opaque_black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+    android:background="@color/success">
 
     <TextView
         android:id="@+id/timeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="109dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="16dp"
         android:text="TIME"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/colored_bar"
+        android:textSize="40dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.553" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/artistTextView"
+        android:layout_width="366dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/public_sans"
+        android:text="ARTIST"
         android:textColor="@color/white"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintStart_toStartOf="@+id/timeTextView"
-        app:layout_constraintTop_toTopOf="@+id/colored_bar" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="556dp"
-        android:fontFamily="@font/public_sans"
-        android:textColor="@color/white"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/colored_bar"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        android:textSize="45dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView2" />
+        app:layout_constraintStart_toStartOf="@+id/timeTextView"
+        app:layout_constraintTop_toBottomOf="@+id/timeTextView" />
+
+    <TextView
+        android:id="@+id/trackTextView"
+        android:layout_width="362dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="16dp"
+        android:color="@color/white"
+        android:fontFamily="@font/public_sans"
+        android:text="TRACK"
+        android:textAlignment="center"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.107"
+        app:layout_constraintStart_toStartOf="@+id/artistTextView"
+        app:layout_constraintTop_toBottomOf="@+id/artistTextView" />
 
     <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="234dp"
-        android:layout_height="284dp"
-        android:layout_marginTop="48dp"
+        android:id="@+id/artistImageView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/trackTextView"
         tools:srcCompat="@tools:sample/avatars" />
+
+
 
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="66dp"
         android:layout_height="63dp"
+        android:layout_marginTop="64dp"
         android:contentDescription="@string/blindwar"
-        app:layout_constraintBottom_toBottomOf="@+id/colored_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="0.44"
+        app:layout_constraintTop_toBottomOf="@+id/artistImageView"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/circle_button" />
 
 

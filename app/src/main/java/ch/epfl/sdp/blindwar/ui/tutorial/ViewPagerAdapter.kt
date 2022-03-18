@@ -12,18 +12,12 @@ class ViewPagerAdapter(
     val items: List<Fragment>,
     activity: AppCompatActivity
 ):FragmentStateAdapter(activity) {
-    var current = 0
-
-    fun getCurrent(): Fragment {
-        return items[current]
-    }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
     override fun createFragment(position: Int): Fragment {
-        current = position
         return items[position]
     }
 }
