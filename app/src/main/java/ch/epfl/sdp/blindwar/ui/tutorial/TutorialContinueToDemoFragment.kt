@@ -17,8 +17,8 @@ class TutorialContinueToDemoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_continue_to_demo, container, false)
-        view.findViewById<Button>(R.id.continueDemoButton).setOnClickListener{
-            val intent: Intent = Intent(this.activity, DemoActivity::class.java)
+        view.findViewById<Button>(R.id.continueDemoButton).setOnClickListener {
+            val intent = Intent(this.activity, DemoActivity::class.java)
             startActivity(intent)
         }
         return view
