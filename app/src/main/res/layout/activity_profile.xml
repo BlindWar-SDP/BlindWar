@@ -84,6 +84,7 @@
         android:id="@+id/statsButton"
         android:layout_width="253dp"
         android:layout_height="50dp"
+        android:onClick="statisticsButton"
         android:text="@string/statisticsText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toTopOf="@+id/editProfileButton"
