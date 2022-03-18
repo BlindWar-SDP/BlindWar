@@ -15,7 +15,6 @@
         <activity
             android:name=".VoskActivity"
             android:parentActivityName=".MainMenuActivity">
-
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -23,18 +22,22 @@
         </activity>
         <activity
             android:name=".tutorial.TutorialActivity"
+            android:parentActivityName=".MainMenuActivity"
             android:exported="false"/>
         <activity
             android:name=".tutorial.DemoActivity"
             android:exported="false"/>
         <activity
             android:name=".MainMenuActivity"
+            android:parentActivityName=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".SoloActivity"
+            android:parentActivityName=".MainMenuActivity"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"
+            android:parentActivityName=".MainMenuActivity"
             android:exported="false" />
         <activity
             android:name=".StatisticsActivity"
