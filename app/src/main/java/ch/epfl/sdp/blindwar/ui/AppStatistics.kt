@@ -3,13 +3,13 @@ package ch.epfl.sdp.blindwar.ui
 class AppStatistics {
     private val numberOfMode = Mode.values().size
 
-    var correctArray = IntArray(numberOfMode)
+    var correctArray = IntArray(numberOfMode).toMutableList()
         private set
-    var wrongArray = IntArray(numberOfMode)
+    var wrongArray = IntArray(numberOfMode).toMutableList()
         private set
-    var correctPercent = FloatArray(numberOfMode)
+    var correctPercent = FloatArray(numberOfMode).toMutableList()
         private set
-    var wrongPercent = FloatArray(numberOfMode)
+    var wrongPercent = FloatArray(numberOfMode).toMutableList()
         private set
     var wins: Int = 0
         private set
@@ -24,10 +24,10 @@ class AppStatistics {
 
     //function for resetting stats to 0 (except for elo)
     fun resetStatistics() {
-        correctArray = IntArray(numberOfMode)
-        wrongArray = IntArray(numberOfMode)
-        correctPercent = FloatArray(numberOfMode)
-        wrongPercent = FloatArray(numberOfMode)
+        correctArray = IntArray(numberOfMode).toMutableList()
+        wrongArray = IntArray(numberOfMode).toMutableList()
+        correctPercent = FloatArray(numberOfMode).toMutableList()
+        wrongPercent = FloatArray(numberOfMode).toMutableList()
         wins = 0
         losses = 0
         winPercent = 0.0F
@@ -88,4 +88,12 @@ class AppStatistics {
             else -> 15
         }
     }
+
+    override fun toString(): String {
+        return  "hello" +
+                //correctArray.toString() + wrongArray.toString() + correctPercent.toString() +
+                //wrongPercent.toString() +
+                wins.toString() + losses.toString() +
+                winPercent.toString() + lossPercent.toString() + elo.toString()
+     }
 }

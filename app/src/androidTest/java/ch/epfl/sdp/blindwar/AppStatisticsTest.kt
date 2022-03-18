@@ -17,7 +17,7 @@ class AppStatisticsTest {
 
     @Test
     fun getCorrectInitial() {
-        assert(testStats.correctArray.contentEquals(IntArray(modeSize)))
+        assert(testStats.correctArray.toIntArray().contentEquals(IntArray(modeSize)))
     }
 
     @Test
@@ -33,7 +33,7 @@ class AppStatisticsTest {
 
     @Test
     fun getWrongInitial() {
-        assert(testStats.wrongArray.contentEquals(IntArray(modeSize)))
+        assert(testStats.wrongArray.toIntArray().contentEquals(IntArray(modeSize)))
     }
 
     @Test

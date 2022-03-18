@@ -14,8 +14,9 @@ class UserTest {
     private val screenName = "Screen Name"
     private val screenName2 = "Screen Name2"
 
-    private var testUser = User(firstName, lastName, email, screenName, null, AppStatistics())
-    private var testUser1 = User(firstName, lastName, email, screenName, null, AppStatistics())
+    private var testUser = User(firstName, lastName, email, screenName, AppStatistics())
+    private var testUser1 = User(firstName, lastName, email, screenName, AppStatistics())
+
 
     @Test
     fun getFirstName() {
@@ -42,7 +43,7 @@ class UserTest {
         testUser.screenName = screenName2
         assertEquals(testUser.screenName, screenName2)
     }
-
+    /*
     @Test
     fun getProfilePicture() {
         assertNull(testUser.profilePicture)
@@ -51,7 +52,7 @@ class UserTest {
     @Test
     fun setProfilePicture() {
         assertNull(testUser.profilePicture)
-    }
+    }*/
 
     @Test
     fun getUserStatistics() {
