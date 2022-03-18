@@ -48,4 +48,11 @@ class ProfileActivityTest : TestCase() {
             .perform(click())
         intended(hasComponent(MainMenuActivity::class.java.name))
     }
+
+    @Test
+    fun testStatisticsButton() {
+        onView(withId(R.id.statsButton))
+            .perform(click())
+        intended(hasComponent(StatisticsActivity::class.java.name))
+    }
 }

@@ -88,6 +88,14 @@ dependencies {
         exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
     }
 
+    // Firebase
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.2'
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
+//    classpath 'com.google.gms:google-services:4.3.10'
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
+    implementation 'com.google.firebase:firebase-database:19.2.1'
+    implementation 'com.google.firebase:firebase-database-ktx:20.0.4'
+
     debugImplementation("androidx.fragment:fragment-testing:1.4.1")
     debugImplementation("androidx.fragment:fragment-ktx:1.1.0-beta01")
     debugImplementation("androidx.test:core:1.2.0")

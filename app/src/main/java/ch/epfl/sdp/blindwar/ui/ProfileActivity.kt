@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.StatisticsActivity
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -51,6 +52,10 @@ class ProfileActivity : AppCompatActivity() {
 
     fun backToMainButton(view: View) {
         startActivity(Intent(this, MainMenuActivity::class.java))
+    }
+
+    fun statisticsButton(view: View) {
+        startActivity(Intent(this, StatisticsActivity::class.java))
     }
 
 }
