@@ -1,5 +1,7 @@
 package ch.epfl.sdp.blindwar
 
+import ch.epfl.sdp.blindwar.ui.AppStatistics
+import ch.epfl.sdp.blindwar.ui.Mode
 import org.junit.Test
 
 class AppStatisticsTest {
@@ -57,6 +59,7 @@ class AppStatisticsTest {
         testStats3.correctnessUpdate(true, Mode.SOLO)
         testStats3.correctnessUpdate(false, Mode.SOLO)
         assert(testStats3.wrongPercent[soloIndex] == 50.0F)
+        
     }
 
     @Test

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ch.epfl.sdp.blindwar" >
+
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -13,44 +14,39 @@
         android:theme="@style/Theme.BlindWar" >
 
          <activity
-            android:name=".NewUserActivity"
+            android:name=".ui.NewUserActivity"
             android:exported="false" />
         <activity
-            android:name=".VoskActivity"
-            android:parentActivityName=".MainMenuActivity">
+            android:name=".ui.VoskActivity"
+            android:parentActivityName=".ui.MainMenuActivity">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainMenuActivity" />
+                android:value=".ui.MainMenuActivity" />
         </activity>
         <activity
-            android:name=".tutorial.TutorialActivity"
-            android:parentActivityName=".MainMenuActivity"
+            android:name=".ui.tutorial.TutorialActivity"
             android:exported="false"/>
         <activity
-            android:name=".tutorial.DemoActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".MainMenuActivity"
-            android:parentActivityName=".LoginActivity"
+            android:name=".ui.MainMenuActivity"
             android:exported="false" />
         <activity
-            android:name=".SoloActivity"
-            android:parentActivityName=".MainMenuActivity"
+            android:name=".ui.SoloActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileActivity"
-            android:parentActivityName=".MainMenuActivity"
+            android:name=".ui.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".StatisticsActivity"
+            android:name=".ui.tutorial.DemoActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.StatisticsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

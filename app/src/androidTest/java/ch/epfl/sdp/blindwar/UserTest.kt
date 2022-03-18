@@ -1,6 +1,9 @@
 package ch.epfl.sdp.blindwar
 
+import ch.epfl.sdp.blindwar.ui.AppStatistics
+import ch.epfl.sdp.blindwar.ui.User
 import android.net.Uri
+import ch.epfl.sdp.blindwar.ui.UserBuilder
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before

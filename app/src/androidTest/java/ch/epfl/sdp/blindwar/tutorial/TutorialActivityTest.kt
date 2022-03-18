@@ -17,6 +17,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.viewpager2.widget.ViewPager2
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.tutorial.util.*
+import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import org.hamcrest.Matcher
 import org.junit.After
 import org.junit.Before

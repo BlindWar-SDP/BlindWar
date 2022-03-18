@@ -53,6 +53,7 @@
     <string name="tutorial_formats">Formats</string>
     <string name="tutorial_commands">Commands</string>
     <string name="tutorial_options">Game Options</string>
+
     <string name="oval_description">Oval shape for profile</string>
     <string name="hint_guess">A Forest</string>
     <string name="guess_button_text">Guess !</string>

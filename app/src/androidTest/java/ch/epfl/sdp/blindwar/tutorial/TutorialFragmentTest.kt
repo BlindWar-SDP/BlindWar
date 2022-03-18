@@ -7,6 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.ui.tutorial.TutorialFragment
 import org.junit.Test
 import org.junit.runner.RunWith
 
