@@ -62,4 +62,6 @@
     <string name="formats_textview">Formats</string>
     <string name="commands_textview">Commands</string>
     <string name="game_options_textview">Game Options</string>
+    <string name="your_elo_here">Your elo here</string>
+    <string name="elo">ELO:</string>
 </resources>
