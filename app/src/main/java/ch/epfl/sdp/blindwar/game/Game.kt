@@ -8,9 +8,9 @@ package ch.epfl.sdp.blindwar.game
  *
  * @param timeToFind Time to find the music
  */
-abstract class Game(protected  val timeToFind: Int) {
+abstract class Game(protected val timeToFind: Int) {
     var score = 0
-        protected  set
+        protected set
     protected var title: String? = null
 
     /**
@@ -32,11 +32,11 @@ abstract class Game(protected  val timeToFind: Int) {
      * Play the current music if in pause
      *
      */
-    abstract fun play(): Unit
+    abstract fun play()
 
     /**
      * Pause the current music if playing
      *
      */
-    abstract  fun pause(): Unit
+    abstract fun pause()
 }
