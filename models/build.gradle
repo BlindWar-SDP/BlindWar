@@ -24,11 +24,11 @@ dependencies {
 
 tasks.register('genUUID') {
     def uuid = UUID.randomUUID().toString()
-    def odir = file("$buildDir/generated/assets/model-en-us")
-    def ofile = file("$odir/uuid")
+    def outputDirectory = file("$buildDir/generated/assets/model-en-us")
+    def outputFile = file("$outputDirectory/uuid")
     doLast {
-        mkdir odir
-        ofile.text = uuid
+        mkdir outputDirectory
+        outputFile.text = uuid
     }
 }
 

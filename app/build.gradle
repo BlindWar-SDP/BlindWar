@@ -64,6 +64,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.13.2'
     implementation 'net.java.dev.jna:jna:5.8.0@aar'
+    implementation 'io.github.gautamchibde:audiovisualizer:2.2.5'
     implementation group: 'com.alphacephei', name: 'vosk-android', version: '0.3.32'
     implementation project(':models')
     testImplementation 'junit:junit:4.13.2'
@@ -73,6 +74,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'
+    androidTestImplementation('com.adevinta.android:barista:4.1.0') {
+        exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
+    }
 
     debugImplementation("androidx.fragment:fragment-testing:1.4.1")
     debugImplementation("androidx.fragment:fragment-ktx:1.1.0-beta01")
@@ -111,9 +115,10 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
 
     sourceDirectories.setFrom(files([mainSrc]))
     classDirectories.setFrom(files([debugTree]))
-    executionData.setFrom(fileTree(dir: project.buildDir, includes:
-            ['outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec',
-             'outputs/code_coverage/debugAndroidTest/connected/*coverage.ec']))
+    executionData.setFrom(fileTree(dir: project.buildDir, includes: [
+            'outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec',
+            'outputs/code_coverage/debugAndroidTest/connected/*/coverage.ec'
+    ]))
 
 }
 

@@ -8,11 +8,12 @@
     <string name="login">LOGIN</string>
     <string name="blindwar">BLINDWAR</string>
 
+    <string name="logo_description">Logo of the application</string>
     <string name="format_description"> Survival : Description placeholder
     |Against the Clock :
     |Regular : Description placeholder</string>
 
-    <string name="opt_descr"> Song Selection : Description placeholder
+    <string name="opt_description"> Song Selection : Description placeholder
     |Altered audio : Description placeholder</string>
 
     <string name="comm_description"> Dedicated fragment describing the UI elements :
@@ -52,4 +53,15 @@
     <string name="tutorial_formats">Formats</string>
     <string name="tutorial_commands">Commands</string>
     <string name="tutorial_options">Game Options</string>
+    <string name="oval_description">Oval shape for profile</string>
+    <string name="hint_guess">A Forest</string>
+    <string name="guess_button_text">Guess !</string>
+    <string name="zero">0</string>
+    <string name="continue_to_demo_button_text">Continue to the demo</string>
+    <string name="modes_textview">Modes</string>
+    <string name="formats_textview">Formats</string>
+    <string name="commands_textview">Commands</string>
+    <string name="game_options_textview">Game Options</string>
+    <string name="your_elo_here">Your elo here</string>
+    <string name="elo">ELO:</string>
 </resources>
