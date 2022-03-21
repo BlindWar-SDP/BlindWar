@@ -10,7 +10,8 @@ import ch.epfl.sdp.blindwar.domain.game.GameTutorial
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 
 class DemoActivity: AppCompatActivity() {
-    private lateinit var game: GameTutorial
+    /** TODO: Refactor Game class to avoid this encapsulation leak **/
+    lateinit var game: GameTutorial
     private var playing = true
     private lateinit var guessEditText: EditText
     private lateinit var scoreTextView: TextView
@@ -68,6 +69,13 @@ class DemoActivity: AppCompatActivity() {
         guessEditText.setText("")
     }
 
+    private fun setVisibilityLayout(code: Int) {
+        guessButton.visibility = code
+        scoreTextView.visibility = code
+        guessEditText.visibility = code
+        startButton.visibility = code
+    }
+
     private fun launchSongSummary() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.addToBackStack(SongSummaryFragment::class.java.name)
@@ -82,13 +90,6 @@ class DemoActivity: AppCompatActivity() {
         songSummary.arguments = bundle
         transaction.add(R.id.fragment_container, songSummary, "Song Summary")
         transaction.commit()
-    }
-
-    private fun setVisibilityLayout(code: Int) {
-        guessButton.visibility = code
-        scoreTextView.visibility = code
-        guessEditText.visibility = code
-        startButton.visibility = code
     }
 
     override fun onBackPressed() {

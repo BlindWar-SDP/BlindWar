@@ -8,6 +8,8 @@
     <string name="login">LOGIN</string>
     <string name="blindwar">BLINDWAR</string>
 
+    <string name="disk_anim">https://assets2.lottiefiles.com/packages/lf20_X1YA9O/29 - Music.json</string>
+
     <string name="logo_description">Logo of the application</string>
     <string name="format_description"> Survival : Description placeholder
     |Against the Clock :

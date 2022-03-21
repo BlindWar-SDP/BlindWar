@@ -4,7 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/song_summary_fragment"
     android:background="@color/success">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/particleView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_url="https://assets2.lottiefiles.com/packages/lf20_aurdjel0.json" />
 
     <TextView
         android:id="@+id/timeTextView"
@@ -27,8 +42,8 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/public_sans"
         android:text="ARTIST"
+        app:autoSizeTextType="uniform"
         android:textColor="@color/white"
-        android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/timeTextView"
@@ -43,7 +58,7 @@
         android:color="@color/white"
         android:fontFamily="@font/public_sans"
         android:text="TRACK"
-        android:textSize="45dp"
+        app:autoSizeTextType="uniform"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -61,19 +76,20 @@
         app:layout_constraintTop_toBottomOf="@+id/trackTextView"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="66dp"
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="65dp"
         android:layout_height="63dp"
-        android:layout_marginTop="64dp"
-        android:contentDescription="@string/blindwar"
+        android:layout_marginTop="72dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/artistImageView"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/circle_button" />
-
+        app:layout_constraintVertical_bias="0.029"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false"
+        app:lottie_speed="2"
+        app:lottie_url="https://assets2.lottiefiles.com/private_files/lf30_huml8m4r.json" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
