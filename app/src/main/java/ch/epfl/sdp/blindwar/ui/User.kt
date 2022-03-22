@@ -4,13 +4,13 @@ import android.media.Image
 import android.net.Uri
 
 data class User(
-    val email: String,
-    val userStatistics: AppStatistics,
-    val pseudo: String?,
-    val firstName: String?,
-    val lastName: String?,
-    val birthDate: Long?,
-    val profilePicture: Uri?,
+    val email: String = "email",
+    val userStatistics: AppStatistics = AppStatistics(),
+    val pseudo: String? = "pseudo",
+    val firstName: String? = "firstName",
+    val lastName: String? = "lastName",
+    val birthDate: Long? = 0,
+    //val profilePicture: Uri?,
 ) {
     fun builder(): UserBuilder{
         return UserBuilder().setBirthDate(birthDate!!)
@@ -19,7 +19,7 @@ data class User(
             .setLastName(lastName!!)
             .setPseudo(pseudo!!)
             .setStats(userStatistics)
-            .setImage(profilePicture)
+            //.setImage(profilePicture)
     }
 }
 
@@ -48,7 +48,7 @@ class UserBuilder(
             firstName,
             lastName,
             birthDate,
-            profilePicture
+            //profilePicture
         )
     }
 }

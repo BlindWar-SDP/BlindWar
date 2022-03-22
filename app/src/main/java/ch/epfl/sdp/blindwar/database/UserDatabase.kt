@@ -17,8 +17,8 @@ class UserDatabase {
     private val userReference = database.getReference("Users")
 
     // Get an elo reference for manipulating the elo data of an user
-    private fun getEloReference(screenName: String): DatabaseReference {
-        return userReference.child(screenName).child("userStatistics").child("elo")
+    private fun getEloReference(pseudo: String): DatabaseReference {
+        return userReference.child(pseudo).child("userStatistics").child("elo")
     }
 
     // Add user to database
@@ -27,13 +27,13 @@ class UserDatabase {
     }
 
     // Remove user from database
-    fun removeUser(screenName: String) {
-        userReference.child(screenName).removeValue()
+    fun removeUser(pseudo: String) {
+        userReference.child(pseudo).removeValue()
     }
 
     // Set elo of an user
-    fun setElo(screenName: String, elo: Int) {
-        getEloReference(screenName).setValue(elo)
+    fun setElo(pseudo: String, elo: Int) {
+        getEloReference(pseudo).setValue(elo)
     }
 
     /*
@@ -41,7 +41,7 @@ class UserDatabase {
         getEloReference(screenName).addValueEventListener(listener)
     }
     */
-    fun addUserListener(screenName: String, listener: ValueEventListener) {
-//        userReference.child(screenName).addValueEventListener(listener)
+    fun addUserListener(pseudo: String, listener: ValueEventListener) {
+        userReference.child(pseudo).addValueEventListener(listener)
     }
 }
