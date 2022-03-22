@@ -5,26 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:background="#fefefe"
-        android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="170dp"
-            android:background="@color/black" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="147dp"
-            android:contentDescription="@string/oval_description"
-            android:src="@drawable/oval" />
-
-
-    </RelativeLayout>
-
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="0dp"
@@ -36,13 +16,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@color/opaque_black" />
+        app:srcCompat="@color/prussian_blue" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:background="@color/green_blue_crayola" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="147dp"
+            android:contentDescription="@string/oval_description"
+            android:src="@drawable/oval" />
+
+
+    </RelativeLayout>-->
 
 
     <Button
         android:id="@+id/backToMainButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/pop_star"
         android:onClick="backToMainButton"
         android:text="@string/backText"
         app:layout_constraintBottom_toTopOf="@+id/profileImageView"
@@ -53,11 +53,25 @@
         app:layout_constraintVertical_bias="0.148" />
 
     <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="129dp"
+        android:layout_height="129dp"
+        android:contentDescription="@string/oval_description"
+        android:src="@drawable/rounded_rectangle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.235"
+        app:srcCompat="@color/pop_star" />
+
+    <ImageView
         android:id="@+id/profileImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/profilePicDescriptionText"
-        app:layout_constraintBottom_toTopOf="@+id/nameView"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,46 +82,51 @@
 
     <TextView
         android:id="@+id/emailView"
-        android:layout_width="285dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:gravity="center"
+        android:gravity="start"
         android:text="@string/emailText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/statsButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.713" />
+        app:layout_constraintVertical_bias="0.45" />
 
     <TextView
         android:id="@+id/eloDeclarationView"
-        android:layout_width="285dp"
-        android:layout_height="65dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/elo"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/statsButton"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.787"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
 
     <TextView
         android:id="@+id/eloView"
-        android:layout_width="310dp"
-        android:layout_height="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/statsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/example_elo"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.955"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/your_elo_here"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        app:layout_constraintVertical_bias="0.3" />
 
     <Button
         android:id="@+id/statsButton"
         android:layout_width="253dp"
         android:layout_height="50dp"
+        android:backgroundTint="@color/green_blue_crayola"
         android:onClick="statisticsButton"
         android:text="@string/statisticsText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -119,24 +138,25 @@
 
     <TextView
         android:id="@+id/nameView"
-        android:layout_width="249dp"
-        android:layout_height="38dp"
-        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="41dp"
+        android:gravity="start"
         android:text="@string/nameText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#FFFFFF"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/emailView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.392" />
 
     <Button
         android:id="@+id/editProfileButton"
         android:layout_width="253dp"
         android:layout_height="50dp"
+        android:backgroundTint="@color/green_blue_crayola"
         android:text="@string/editProfileText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toTopOf="@+id/logoutButton"
@@ -149,6 +169,7 @@
         android:id="@+id/logoutButton"
         android:layout_width="253dp"
         android:layout_height="50dp"
+        android:backgroundTint="@color/pop_star"
         android:onClick="logoutButton"
         android:text="@string/logout"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
