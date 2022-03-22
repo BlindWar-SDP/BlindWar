@@ -43,7 +43,9 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // user id should be set according to authentication
-        database.addUserListener(currentUser!!.uid, userInfoListener)
+        if (currentUser != null) {
+            database.addUserListener(currentUser.uid, userInfoListener)
+        }
         setContentView(R.layout.activity_profile)
     }
 
