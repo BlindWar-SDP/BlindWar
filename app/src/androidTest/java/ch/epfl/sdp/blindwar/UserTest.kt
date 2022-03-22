@@ -1,11 +1,9 @@
 package ch.epfl.sdp.blindwar
 
-import ch.epfl.sdp.blindwar.ui.AppStatistics
-import ch.epfl.sdp.blindwar.ui.User
+import ch.epfl.sdp.blindwar.user.AppStatistics
+import ch.epfl.sdp.blindwar.user.User
 import android.net.Uri
-import ch.epfl.sdp.blindwar.ui.UserBuilder
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 
@@ -19,33 +17,47 @@ class UserTest {
     private var pseudo1 = "Screen Name1"
     private var pseudo2 = "Screen Name2"
     private var birthDate1: Long= 1312341234
-    private var birthDate2: Long= 1312341234
+    private var birthDate2: Long= 1312311111
     private var userStatistics: AppStatistics = AppStatistics()
-    private var profilePicture: Uri? = null
+//    private var profilePicture: Uri? = null
 
     private lateinit var testUser1: User
-
     private lateinit var testUser2: User
 
     @Before
     fun setUp() {
-        testUser1 = UserBuilder().setBirthDate(birthDate1)
+        testUser1 = User.Builder()
             .setEmail(email1)
-            .setFirstName(firstName1)
-            .setLastName(lastName1)
-            .setImage(profilePicture)
             .setStats(userStatistics)
             .setPseudo(pseudo1)
+            .setFirstName(firstName1)
+            .setLastName(lastName1)
+            .setBirthDate(birthDate1)
+//            .setImage(profilePicture)
             .build()
 
-        testUser2 = UserBuilder().setBirthDate(birthDate2)
+        testUser2 = User.Builder()
             .setEmail(email2)
-            .setFirstName(firstName2)
-            .setLastName(lastName2)
-            .setImage(profilePicture)
             .setStats(userStatistics)
             .setPseudo(pseudo2)
+            .setFirstName(firstName2)
+            .setLastName(lastName2)
+            .setBirthDate(birthDate2)
+//            .setImage(profilePicture)
             .build()
+    }
+
+    // =========
+    /* GETTER */
+    // =========
+    @Test
+    fun getEmail() {
+        assertEquals(testUser1.email, email1)
+    }
+
+    @Test
+    fun getUserStatistics() {
+        assertEquals(testUser1.userStatistics.elo, 1000)
     }
 
     @Test
@@ -59,44 +71,83 @@ class UserTest {
     }
 
     @Test
-    fun getEmail() {
-        assertEquals(testUser1.email, email1)
+    fun getBirthDate() {
+        assertEquals(testUser1.birthDate, birthDate1)
     }
 
     @Test
-    fun getScreenName() {
+    fun getPseudo() {
         assertEquals(testUser1.pseudo, pseudo1)
     }
 
+    // =========
+    /* SETTER */
+    // =========
     @Test
-    fun setScreenName() {
-        val testUser = testUser1.builder().setPseudo(pseudo2).build()
-        assertEquals(testUser.pseudo, pseudo2)
+    fun setEmail() {
+        val testUser = User.Builder().setEmail(email1).build()
+        assertEquals(testUser.email, email1)
     }
+
+    @Test
+    fun setStats() {
+        val testUser = User.Builder().setStats(userStatistics).build()
+        assertEquals(testUser.userStatistics, userStatistics)
+    }
+
+    @Test
+    fun setPseudo() {
+        val testUser = User.Builder().setPseudo(pseudo1).build()
+        assertEquals(testUser.pseudo, pseudo1)
+    }
+
+    @Test
+    fun setFirstName() {
+        val testUser = User.Builder().setFirstName(firstName1).build()
+        assertEquals(testUser.firstName, firstName1)
+    }
+
+    @Test
+    fun setLastName() {
+        val testUser = User.Builder().setLastName(lastName1).build()
+        assertEquals(testUser.lastName, lastName1)
+    }
+
+    @Test
+    fun setBirthDate() {
+        val testUser = User.Builder().setBirthDate(birthDate1).build()
+        assertEquals(testUser.birthDate, birthDate1)
+    }
+
     /*
     @Test
-    fun getProfilePicture() {
-        assertNull(testUser1.profilePicture)
+    fun setImage() {
+        val testUser = User.Builder().setImage(profilePicture).build()
+        assertEquals(testUser.profilePicture, profilePicture)
     }
+     */
 
-    @Test
-    fun setProfilePicture() {
-        assertNull(testUser1.profilePicture)
-        assertNull(testUser.profilePicture)
-    }*/
 
+    // =============
+    /* MORE TESTS */
+    // =============
     @Test
-    fun getUserStatistics() {
-        assertEquals(testUser1.userStatistics.elo, 1000)
-    }
-
-    @Test
-    fun setUserStatistics() {
+    fun updateStats() {
         testUser1.userStatistics.eloUpdateWin(1005)
-        val testUser = testUser1.builder()
+        val testUser = User.Builder()
             .setStats(testUser1.userStatistics)
             .build()
-
         assertEquals(testUser.userStatistics, testUser1.userStatistics)
+    }
+
+    @Test
+    fun fromUser() {
+        val testUser = User.Builder().fromUser(testUser1).build()
+        assertEquals(testUser.email, email1)
+        assertEquals(testUser.userStatistics, userStatistics)
+        assertEquals(testUser.pseudo, pseudo1)
+        assertEquals(testUser.firstName, firstName1)
+        assertEquals(testUser.lastName, lastName1)
+//        assertEquals(testUser.profilePicture, profilePicture)
     }
 }

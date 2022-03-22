@@ -5,7 +5,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import android.widget.TextView
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.ui.User
+import ch.epfl.sdp.blindwar.user.User
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
