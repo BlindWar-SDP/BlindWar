@@ -6,20 +6,53 @@ package ch.epfl.sdp.blindwar.domain.game
  * @constructor
  * Construct a class that represent the game logic
  *
- * @param timeToFind Time to find the music
  */
-abstract class Game(protected val timeToFind: Int) {
+abstract class Game(gameInstance: GameInstance) {
+    /** Encapsulates the characteristics of a game instead of its logic **/
+    private val game: GameInstance = gameInstance
+
+    protected val gameParameter: GameParameter = gameInstance
+        .gameConfig
+        .parameter
+
+    protected val gameDifficulty: GameDifficulty = gameInstance
+        .gameConfig
+        .difficulty
+
+    protected val gameFormat: GameFormat = gameInstance
+        .gameConfig
+        .format
+
+    private val gamePlaylist: List<SongMetaData> = gameInstance.playlist
+
+    /** Get the sound data through another layer **/
+    abstract val gameSound: GameSound
+
+    /** Player game score **/
     var score = 0
         protected  set
-    /** Not protected for test purposes **/
-    var currentMetaData: SongMetaData? = SongMetaData("", "", "")
+
+    var round = 0
+        protected set
+
+    /**
+     * Prepares the game following the configuration
+     *
+     */
+    abstract fun init()
+
+    /**
+     * Record the game instance to the player history
+     * clean up player and assets
+     */
+    abstract fun endGame()
 
     /**
      * Pass to the next round
      *
-     * @return The meta data representing the new current music or null if there was an error
+     * @return true if the game is over after this round, false otherwise
      */
-    abstract fun nextRound(): SongMetaData?
+    abstract fun nextRound(): Boolean
 
     /**
      * Try to guess a music by its title

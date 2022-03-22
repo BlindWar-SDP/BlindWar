@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.ui.viewmodel.SongMetadataViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.squareup.picasso.Picasso
@@ -18,6 +21,7 @@ class SongSummaryFragment: Fragment() {
     private lateinit var likeAnim: LottieAnimationView
     private lateinit var confAnim: LottieAnimationView
     private var likeSwitch: Boolean = false
+    private val viewModel: SongMetadataViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,9 +44,20 @@ class SongSummaryFragment: Fragment() {
         //confAnim.playAnimation()
         //confAnim.repeatCount = 0
 
+        /**
         artistText.text = arguments?.get("Artist").toString()
         trackText.text = arguments?.get("Title").toString()
         Picasso.get().load(arguments?.get("Image")!!.toString()).into(artistView)
+            viewModel.selectedMetadata.observe(viewLifecycleOwner) { it ->
+            artistText.text = it.artist
+            trackText.text = it.title
+            Picasso.get().load(it.imageUrl).into(artistView)
+            }
+        **/
+
+        artistText.text = viewModel.selectedMetadata.value?.artist
+        trackText.text = viewModel.selectedMetadata.value?.title
+        Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl).into(artistView)
 
         return view
     }
