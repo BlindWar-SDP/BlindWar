@@ -71,7 +71,6 @@
     <string name="last_name">Last Name</string>
     <string name="birthdate_text">Please, enter your Birthdate</string>
     <string name="confirm">Confirm</string>
-    <string name="statisticsShowText">You have 4 wins and 8 losses</string>
     <string name="example_elo">1435</string>
     <string name="elo">ELO:</string>
 
