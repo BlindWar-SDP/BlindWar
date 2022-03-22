@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.UserDatabase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -16,6 +17,7 @@ import com.google.firebase.database.ktx.getValue
 
 class ProfileActivity : AppCompatActivity() {
     private val database = UserDatabase()
+    private val currentUser = FirebaseAuth.getInstance().currentUser
     private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             // Get User info and use the values to update the UI
@@ -41,7 +43,7 @@ class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // user id should be set according to authentication
-        database.addUserListener("JOJO", userInfoListener)
+        database.addUserListener(currentUser!!.uid, userInfoListener)
         setContentView(R.layout.activity_profile)
     }
 

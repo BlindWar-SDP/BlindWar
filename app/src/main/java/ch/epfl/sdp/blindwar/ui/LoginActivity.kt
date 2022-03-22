@@ -20,7 +20,7 @@ class LoginActivity : AppCompatActivity() {
         val database = UserDatabase()
         val appStatistics = AppStatistics()
         val user = User("Jojo@BlindWar.ch", appStatistics,"JOJO", "jojo", "star", 123123213)
-        database.addUser(user)
+        database.addUser("JOJO", user)
         startActivity(Intent(this, NewUserActivity::class.java))
     }
 }
