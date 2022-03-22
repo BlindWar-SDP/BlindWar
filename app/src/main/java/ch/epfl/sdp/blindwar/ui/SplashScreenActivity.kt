@@ -72,18 +72,22 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
+            Log.i("lastSignin", "OK")
             // Successfully signed in
             val user = FirebaseAuth.getInstance().currentUser // =?= Firebase.auth.currentUser
             // https://www.tabnine.com/code/java/classes/com.google.firebase.auth.FirebaseAuth
+
             if( user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp) {
                 // new user: 1st signIn
                 startActivity(Intent(this, NewUserActivity::class.java))
-            }
-            /*
+                finish()
+            } else {
+                /*
             - should we update the online database with the local cache here ?
              */
-            startActivity(Intent(this, MainMenuActivity::class.java))
-            finish()
+                startActivity(Intent(this, MainMenuActivity::class.java))
+                finish()
+            }
         } else {
             // Sign in failed. If response is null the user canceled the
             // sign-in flow using the back button. Otherwise check

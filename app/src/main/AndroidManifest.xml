@@ -13,9 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BlindWar">
         <activity
-            android:name=".ui.SplashScreenActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.NewUserActivity"
             android:exported="false" />
         <activity
@@ -46,7 +43,7 @@
             android:name=".ui.StatisticsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".ui.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
