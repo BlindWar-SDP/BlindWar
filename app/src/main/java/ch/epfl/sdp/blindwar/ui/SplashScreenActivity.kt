@@ -5,6 +5,7 @@ import ch.epfl.sdp.blindwar.R
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import ch.epfl.sdp.blindwar.BuildConfig
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
@@ -122,24 +123,5 @@ class SplashScreenActivity : AppCompatActivity() {
             }
     }
      */
-
-
-//    open fun catchEmailLink() {
-//        val providers: List<AuthUI.IdpConfig> = emptyList()
-//
-//        if (AuthUI.canHandleIntent(intent)) {
-//            val extras = intent.extras ?: return
-//            // import com.firebase.ui.auth.util.ExtraConstants
-//            val link = extras.getString(ExtraConstants.EMAIL_LINK_SIGN_IN)
-//            if (link != null) {
-//                val signInIntent = AuthUI.getInstance()
-//                    .createSignInIntentBuilder()
-//                    .setEmailLink(link)
-//                    .setAvailableProviders(providers)
-//                    .build()
-//                signInLauncher.launch(signInIntent)
-//            }
-//        }
-//    }
 
 }

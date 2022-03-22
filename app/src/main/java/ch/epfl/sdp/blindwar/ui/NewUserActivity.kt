@@ -1,17 +1,16 @@
 package ch.epfl.sdp.blindwar.ui
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.CalendarView
-import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.user.AppStatistics
 import ch.epfl.sdp.blindwar.user.User
 import com.google.firebase.auth.ktx.auth
@@ -65,14 +64,14 @@ class NewUserActivity : AppCompatActivity() {
 //        checkPseudo(pseudo)
         val user = Firebase.auth.currentUser
         user?.let {
-            /*UserDatabase.addUser(*/User.Builder(
+            UserDatabase().addUser(User.Builder(
             user.email!!,
             AppStatistics(),
             pseudo,
             firstName,
             lastName,
             birthDate /*profilePicture*/
-        ).build() /*)*/
+        ).build())
         }
     }
 
