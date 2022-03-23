@@ -33,6 +33,9 @@
             android:name=".ui.MainMenuActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.solo.SoloMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.SoloActivity"
             android:exported="false" />
         <activity

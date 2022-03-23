@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/tutorial_container"
+    android:layout_height="match_parent"
+    tools:context=".ui.solo.SoloMenuActivity"
+
+    >
+
+    <Button
+        android:id="@+id/soloButton"
+        android:layout_width="137dp"
+        android:layout_height="70dp"
+        android:onClick="yourMusicClick"
+        android:text="@string/your_musics"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.323" />
+
+    <Button
+        android:id="@+id/tutorialButton"
+        android:layout_width="137dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:onClick="onlineMusicClick"
+        android:text="@string/online_music"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/soloButton"
+        app:layout_constraintVertical_bias="0.076" />
+
+    <Button
+        android:id="@+id/SpeechButton"
+        android:layout_width="137dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:onClick="tutorialMusicClick"
+        android:text="@string/tutorial_music_set"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tutorialButton"
+        app:layout_constraintVertical_bias="0.076" />
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="258dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
+        android:text="@string/blind_war"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#FFFFFF"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toTopOf="@+id/soloButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

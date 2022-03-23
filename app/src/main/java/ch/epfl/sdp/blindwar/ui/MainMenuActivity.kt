@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
 
 class MainMenuActivity : AppCompatActivity() {
 
@@ -18,7 +19,7 @@ class MainMenuActivity : AppCompatActivity() {
 
     // Called when the user taps the Solo button
     fun soloButton(view: View) {
-        val intent = Intent(this, SoloActivity::class.java)
+        val intent = Intent(this, SoloMenuActivity::class.java)
         startActivity(intent)
     }
 
