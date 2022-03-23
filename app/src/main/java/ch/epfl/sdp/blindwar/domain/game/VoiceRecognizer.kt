@@ -2,17 +2,15 @@ package ch.epfl.sdp.blindwar.domain.game
 
 import android.os.Bundle
 import android.speech.RecognitionListener
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
-
 import android.speech.RecognizerIntent
-
 import android.speech.SpeechRecognizer
-import androidx.test.core.app.ApplicationProvider
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
 
 
 object VoiceRecognizer : RecognitionListener {
     private val recognizer = this
     private lateinit var sr: SpeechRecognizer
+
     override fun onReadyForSpeech(params: Bundle?) {
         TODO("Not yet implemented")
     }
