@@ -29,7 +29,7 @@ class NewUserActivity : AppCompatActivity() {
         val firstName: String? = findViewById<EditText>(R.id.NU_FirstName).text.toString()
         val lastName: String? = findViewById<EditText>(R.id.NU_LastName).text.toString()
         val birthDate: Long? = findViewById<CalendarView>(R.id.NU_calendar).date
-//        val profilePicture: Uri? = null
+//        var profilePicture: Uri? = null
 
         createUser(pseudo, firstName, lastName, birthDate /*profilePicture*/)
         startActivity(Intent(this, MainMenuActivity::class.java))
@@ -38,7 +38,7 @@ class NewUserActivity : AppCompatActivity() {
     // don't know why, but show message and directly continue to MainMenuActivity
 //    private fun checkPseudo(pseudo:String) {
 //        Log.i("min pseudo Length", R.integer.pseudo_minLength.toString()) // get 2131296307 instead of 5...
-//        if (pseudo.length < 2){ // TODO: replace magic value by value.integers (see above)
+//        if (pseudo.length < 2 || pseudo == R.string.text_pseudo.toString()){ // TODO: replace magic value by value.integers (see above)
 //            Log.i("too short pseudo Length", pseudo.length.toString())
 //            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
 //            val positiveButtonClick = { dialog: DialogInterface, which: Int ->
@@ -55,12 +55,18 @@ class NewUserActivity : AppCompatActivity() {
 //
 //    }
 
+    private fun checkNotDefault(value: String?, default:Int): String?{
+        return  if (value == default.toString()) null else value
+    }
+
     private fun createUser(
         pseudo: String,
         firstName: String?,
         lastName: String?,
         birthDate: Long? /*profilePicture: Uri?*/
     ) {
+        // set default value to null:
+
 //        checkPseudo(pseudo)
         val user = Firebase.auth.currentUser
         user?.let {
@@ -68,8 +74,8 @@ class NewUserActivity : AppCompatActivity() {
             user.email!!,
             AppStatistics(),
             pseudo,
-            firstName,
-            lastName,
+                checkNotDefault(firstName, R.string.first_name),
+                checkNotDefault(lastName, R.string.last_name),
             birthDate /*profilePicture*/
         ).build())
         }
