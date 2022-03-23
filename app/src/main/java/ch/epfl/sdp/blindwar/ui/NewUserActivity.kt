@@ -13,6 +13,7 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.user.AppStatistics
 import ch.epfl.sdp.blindwar.user.User
+import ch.epfl.sdp.blindwar.user.UserAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -31,55 +32,10 @@ class NewUserActivity : AppCompatActivity() {
         val birthDate: Long? = findViewById<CalendarView>(R.id.NU_calendar).date
 //        var profilePicture: Uri? = null
 
-        createUser(pseudo, firstName, lastName, birthDate /*profilePicture*/)
+        UserAuth().createUser(pseudo, firstName, lastName, birthDate /*profilePicture*/)
         startActivity(Intent(this, MainMenuActivity::class.java))
     }
 
-    // don't know why, but show message and directly continue to MainMenuActivity
-//    private fun checkPseudo(pseudo:String) {
-//        Log.i("min pseudo Length", R.integer.pseudo_minLength.toString()) // get 2131296307 instead of 5...
-//        if (pseudo.length < 2 || pseudo == R.string.text_pseudo.toString()){ // TODO: replace magic value by value.integers (see above)
-//            Log.i("too short pseudo Length", pseudo.length.toString())
-//            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-//            val positiveButtonClick = { dialog: DialogInterface, which: Int ->
-//                Toast.makeText(applicationContext,
-//                    android.R.string.ok, Toast.LENGTH_SHORT).show()
-//            }
-//
-//            builder.setTitle("Profile Creation Alert")
-//                .setMessage("Please, enter a valid Pseudo")
-//                .setCancelable(false)
-//                .setPositiveButton(android.R.string.ok, positiveButtonClick)
-//            builder.create().show()
-//        }
-//
-//    }
-
-    private fun checkNotDefault(value: String?, default:Int): String?{
-        return  if (value == default.toString()) null else value
-    }
-
-    private fun createUser(
-        pseudo: String,
-        firstName: String?,
-        lastName: String?,
-        birthDate: Long? /*profilePicture: Uri?*/
-    ) {
-        // set default value to null:
-
-//        checkPseudo(pseudo)
-        val user = Firebase.auth.currentUser
-        user?.let {
-            UserDatabase().addUser(User.Builder(
-            user.email!!,
-            AppStatistics(),
-            pseudo,
-                checkNotDefault(firstName, R.string.first_name),
-                checkNotDefault(lastName, R.string.last_name),
-            birthDate /*profilePicture*/
-        ).build())
-        }
-    }
 
     fun clearPseudo(view:View) {
         clearText(R.id.NU_pseudo, R.string.text_pseudo)

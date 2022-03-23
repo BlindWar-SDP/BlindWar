@@ -44,7 +44,7 @@ class ProfileActivityTest : TestCase() {
     fun testLoginButton() {
         onView(withId(R.id.backToMainButton))
             .perform(click())
-        intended(hasComponent(SplashScreenActivity::class.java.name))
+        intended(hasComponent(MainMenuActivity::class.java.name))
     }
 
     @Test
