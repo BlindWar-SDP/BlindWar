@@ -9,14 +9,14 @@ import org.hamcrest.MatcherAssert.assertThat
 class SongMetaDataTest : TestCase() {
 
     fun testTestToString() {
-        val expected = "Shine On You Crazy Diamond by Pink Floyd"
-        val musicMetaData = SongMetaData("Shine On You Crazy Diamond", "Pink Floyd", "")
+        val expected = "Poker Face by Lady Gaga"
+        val musicMetaData = SongMetaData("Poker Face", "Lady Gaga", "")
         assertThat(musicMetaData.toString(), `is`(expected))
     }
 
     fun testGetTitle() {
-        val expected = "Pink Floyd"
-        val musicMetaData = SongMetaData("Shine On You Crazy Diamond", "Pink Floyd", "")
+        val expected = "Lady Gaga"
+        val musicMetaData = SONG_MAP["Lady Gaga"]!!
         assertThat(musicMetaData.artist, `is`(expected))
     }
 
@@ -28,7 +28,7 @@ class SongMetaDataTest : TestCase() {
 
     fun testGetImageUrl() {
         val expected = "https://i.scdn.co/image/ab67616d00001e02b33d46dfa2635a47eebf63b2"
-        val musicMetaData = SongMetaData("One More Time", "Daft Punk", SONG_MAP["Daft Punk"]!!)
+        val musicMetaData = SONG_MAP["Daft Punk"]!!
         assertThat(musicMetaData.imageUrl, `is`(expected))
     }
 }

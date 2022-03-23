@@ -1,28 +1,22 @@
 package ch.epfl.sdp.blindwar.ui.tutorial
 
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.SystemClock
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.GameSolo
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 import ch.epfl.sdp.blindwar.domain.game.Tutorial.gameInstance
-import ch.epfl.sdp.blindwar.ui.viewmodel.SongMetadataViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.squareup.picasso.Picasso
 
 class DemoActivity: AppCompatActivity() {
     /** TODO: Refactor Game class to avoid this encapsulation leak **/
-    lateinit var game: GameSolo
+    internal lateinit var game: GameSolo
     private var playing = true
     private lateinit var guessEditText: EditText
     private lateinit var scoreTextView: TextView
@@ -33,7 +27,6 @@ class DemoActivity: AppCompatActivity() {
     private lateinit var countDown: TextView
     private lateinit var timer: CountDownTimer
     private var duration: Int = 0
-    private val viewModel: SongMetadataViewModel by viewModels()
 
     private lateinit var gameSummary: GameSummaryFragment
 
@@ -56,15 +49,13 @@ class DemoActivity: AppCompatActivity() {
         game.nextRound()
         game.play()
         songMetaData = game.currentMetadata()!!
-        viewModel.setMeta(songMetaData)
 
         // Create and start countdown
         timer = createCountDown().start()
 
-        /**
+
         // Cache song image
-        Picasso.get().load(songMetaData.imageUrl)
-        **/
+        //Picasso.get().load(songMetaData.imageUrl)
 
         // Create game summary
         gameSummary = GameSummaryFragment()
@@ -164,9 +155,9 @@ class DemoActivity: AppCompatActivity() {
 
     private fun createBundleSongSummary(success: Boolean): Bundle {
         val bundle = Bundle()
-        bundle.putString("artist", viewModel.selectedMetadata.value?.artist)
-        bundle.putString("title", viewModel.selectedMetadata.value?.title)
-        bundle.putString("image", viewModel.selectedMetadata.value?.imageUrl)
+        bundle.putString("artist", songMetaData.artist)
+        bundle.putString("title", songMetaData.title)
+        bundle.putString("image", songMetaData.imageUrl)
         bundle.putBoolean("success", success)
         return bundle
     }
@@ -192,15 +183,24 @@ class DemoActivity: AppCompatActivity() {
                     if (!game.nextRound()) {
                         setVisibilityLayout(View.VISIBLE)
                         // Pass to the next music
-                        viewModel.setMeta(game.currentMetadata()!!)
+                        songMetaData = game.currentMetadata()!!
+
                         // Cache song image
-                        Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
+                        // Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
                         timer.start()
                     } else {
                         launchGameSummary()
                     }
             }
 
-        else super.onBackPressed();
+            else {
+                timer.cancel()
+                super.onBackPressed();
+            }
         }
+
+    override fun onDestroy() {
+        timer.cancel()
+        super.onDestroy()
+    }
 }

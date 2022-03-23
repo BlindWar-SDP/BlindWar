@@ -15,6 +15,7 @@ abstract class Game(gameInstance: GameInstance) {
         .gameConfig
         .parameter
 
+    /** TODO: implement other game format and modes
     protected val gameDifficulty: GameDifficulty = gameInstance
         .gameConfig
         .difficulty
@@ -22,6 +23,7 @@ abstract class Game(gameInstance: GameInstance) {
     protected val gameFormat: GameFormat = gameInstance
         .gameConfig
         .format
+    **/
 
     private val gamePlaylist: List<SongMetaData> = gameInstance.playlist
 
