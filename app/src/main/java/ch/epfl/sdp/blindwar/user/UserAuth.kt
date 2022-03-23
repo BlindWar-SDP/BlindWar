@@ -9,7 +9,6 @@ import ch.epfl.sdp.blindwar.BuildConfig
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.ui.MainMenuActivity
 import ch.epfl.sdp.blindwar.ui.NewUserActivity
-import ch.epfl.sdp.blindwar.ui.SplashScreenActivity
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
@@ -90,9 +89,9 @@ class UserAuth {
             .signOut(context)
     }
 
-    fun delete(context: Context) {
-        AuthUI.getInstance()
-            .delete(context)
-    }
+//    fun delete(context: Context) {
+//        AuthUI.getInstance()
+//            .delete(context)
+//    }
 
 }
