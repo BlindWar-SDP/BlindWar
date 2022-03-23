@@ -5,11 +5,9 @@ import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.SONG_MAP
 
 object Tutorial {
 
-    private val playlist: List<SongMetaData> = arrayListOf(SongMetaData("Mistral gagnant", "Renaud", SONG_MAP["Renaud"]!!),
-    SongMetaData("Poker Face", "Lady Gaga", SONG_MAP["Lady Gaga"]!!)
-    )
+    private val playlist: List<SongMetaData> = SONG_MAP.values.toList()
 
-    private val gameParameter = GameParameter(10, funny = false, hint = true, 5000)
+    private val gameParameter = GameParameter(2, funny = false, hint = true, 20000)
 
     private val gameConfig: GameConfig = GameConfig(GameDifficulty.EASY,
         GameFormat.SOLO, GameMode.REGULAR, gameParameter)

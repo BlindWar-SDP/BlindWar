@@ -17,10 +17,26 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/startButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.271"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.069" />
+        app:layout_constraintVertical_bias="0.046" />
+
+    <TextView
+        android:id="@+id/countdown"
+        android:layout_width="57dp"
+        android:layout_height="49dp"
+        android:fontFamily="@font/public_sans"
+        android:textSize="29dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/audioVisualizer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.631"
+        app:layout_constraintStart_toEndOf="@+id/scoreTextView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/guessEditText"
@@ -82,5 +98,7 @@
         app:lottie_speed="2"
         app:lottie_url="https://assets5.lottiefiles.com/packages/lf20_c8UA8n/play pause.json"
         tools:ignore="SpeakableTextPresentCheck" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

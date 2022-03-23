@@ -1,12 +1,14 @@
 package ch.epfl.sdp.blindwar.ui.tutorial
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.SoundEffectConstants
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -17,11 +19,12 @@ import com.airbnb.lottie.LottieDrawable
 import com.squareup.picasso.Picasso
 import kotlin.properties.Delegates
 
-class SongSummaryFragment: Fragment() {
+class SongSummaryFragment : Fragment() {
     private lateinit var likeAnim: LottieAnimationView
     private lateinit var confAnim: LottieAnimationView
     private var likeSwitch: Boolean = false
-    private val viewModel: SongMetadataViewModel by activityViewModels()
+    private var success: Boolean = false
+    //private val viewModel: SongMetadataViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,11 +38,24 @@ class SongSummaryFragment: Fragment() {
         val artistText = view.findViewById<TextView>(R.id.artistTextView)
         val trackText = view.findViewById<TextView>(R.id.trackTextView)
 
+        /** Like animation **/
         likeAnim = view.findViewById(R.id.likeView)
+
+        likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
+            arguments?.getBoolean("liked")!!
+        }  else false
+
         setLikeListener()
 
-        confAnim = view.findViewById(R.id.particleView)
-        likeSwitch = false
+        /** Background color **/
+        success = arguments?.get("success") as Boolean
+        val background = view.findViewById<ConstraintLayout>(R.id.song_summary_fragment)
+
+        if (success) {
+            background.setBackgroundColor(resources.getColor(R.color.success))
+        } else {
+            background.setBackgroundColor(resources.getColor(R.color.black))
+        }
 
         //confAnim.playAnimation()
         //confAnim.repeatCount = 0
@@ -55,14 +71,25 @@ class SongSummaryFragment: Fragment() {
             }
         **/
 
+        /**
         artistText.text = viewModel.selectedMetadata.value?.artist
         trackText.text = viewModel.selectedMetadata.value?.title
         Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl).into(artistView)
+        **/
+        artistText.text = arguments?.get("artist").toString()
+        trackText.text = arguments?.get("title").toString()
+        Picasso.get().load(arguments?.get("image").toString()).into(artistView)
 
         return view
     }
 
     private fun setLikeListener() {
+        if (likeSwitch) {
+            likeAnim.setMinAndMaxFrame(45, 70)
+        } else {
+            likeAnim.setMinAndMaxFrame(10, 30)
+        }
+
         likeAnim.setOnClickListener{
             if (!likeSwitch) {
                 likeAnim.setMinAndMaxFrame(10, 30)
@@ -79,5 +106,14 @@ class SongSummaryFragment: Fragment() {
 
             likeSwitch = !likeSwitch
         }
+    }
+
+    fun liked(): Boolean {
+        Log.d("ZAMBO ANGUISSA", likeSwitch.toString())
+        return likeSwitch
+    }
+
+    fun success(): Boolean {
+        return success
     }
 }

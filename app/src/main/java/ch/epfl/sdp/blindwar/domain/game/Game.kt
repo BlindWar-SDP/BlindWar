@@ -63,6 +63,12 @@ abstract class Game(gameInstance: GameInstance) {
     abstract fun guess(titleGuess: String): Boolean
 
     /**
+     * Current round has timed out
+     *
+     */
+    abstract fun timeout(): Unit
+
+    /**
      * Play the current music if in pause
      *
      */

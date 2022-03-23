@@ -14,16 +14,17 @@ object SongImageUrlConstants {
     const val RHCP: String = "https://i.scdn.co/image/ab67616d00001e0294d08ab63e57b0cae74e8595"
     const val SUM_41: String = "https://i.scdn.co/image/ab67616d00001e029a482180e6a306229bff49dc"
 
-    val SONG_MAP: Map<String, String> = mutableMapOf<String, String>().let{
-        it["Lady Gaga"] = LADY_GAGA
-        it["Gorillaz"] = GORILLAZ
-        it["ACDC"] = ACDC
-        it["The Notorious BIG"] = THE_NOTORIOUS
-        it["The Clash"] = THE_CLASH
-        it["Renaud"] = RENAUD
-        it["Red Hot Chili Peppers"] = RHCP
-        it["Sum 41"] = SUM_41
-        it["Daft Punk"] = DAFT_PUNK
+    val SONG_MAP: Map<String, SongMetaData> = mutableMapOf<String, SongMetaData>().let{
+        it["Lady Gaga"] = SongMetaData("Poker Face", "Lady Gaga", LADY_GAGA)
+        it["Gorillaz"] = SongMetaData("Feel Good Inc", "Gorillaz", GORILLAZ)
+        it["ACDC"] = SongMetaData("Highway To Hell", "ACDC", ACDC)
+        it["The Notorious BIG"] = SongMetaData("Respect", "The Notorious BIG", THE_NOTORIOUS)
+        it["The Clash"] = SongMetaData("London Calling", "The Clash", THE_CLASH)
+        it["Renaud"] = SongMetaData("Mistral Gagnant", "Renaud", RENAUD)
+        it["Red Hot Chili Peppers"] = SongMetaData("Californication", "Red Hot Chili Peppers", RHCP)
+        it["Sum 41"] = SongMetaData("In Too Deep", "Sum 41", SUM_41)
+        it["Daft Punk"] = SongMetaData("One More Time", "Daft Punk", DAFT_PUNK)
+        //it["Daft Punk"] = SongMetaData("Harder Better Faster Stronger", "Daft Punk", DAFT_PUNK)
 
         it
     }

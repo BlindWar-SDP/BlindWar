@@ -46,16 +46,20 @@ class GameSolo(private val gameInstance: GameInstance,
         }
 
         gameSound.nextRound()
-
         return false
     }
 
     override fun guess(titleGuess: String): Boolean {
         return if (titleGuess.uppercase(Locale.getDefault()) == currentMetadata()?.title?.uppercase(Locale.getDefault())) {
             score += 1
+            round += 1
             true
         } else
             false
+    }
+
+    override fun timeout() {
+        round += 1
     }
 
     override fun play() {

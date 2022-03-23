@@ -4,7 +4,7 @@ import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import android.media.MediaMetadataRetriever
 import androidx.core.content.pm.PermissionInfoCompat
-import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants
+import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.SONG_MAP
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 
 class LocalSoundDataSource(private val assetManager: AssetManager,
@@ -39,11 +39,7 @@ private val mediaMetadataRetriever: MediaMetadataRetriever) {
 
                 return@associateBy Pair(
                     it,
-                    SongMetaData(
-                        title,
-                        author,
-                        SongImageUrlConstants.SONG_MAP[author]!!
-                    )
+                    SONG_MAP[author]!!
                 )
             }) ?: emptyMap()
     }
