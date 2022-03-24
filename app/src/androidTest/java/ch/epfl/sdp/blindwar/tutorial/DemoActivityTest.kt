@@ -78,6 +78,7 @@ class DemoActivityTest {
         }
     }
 
+    /**
     @Test
     fun songSummaryDisplayedAfterCorrectGuess() {
         makeCorrectGuess()
@@ -85,7 +86,6 @@ class DemoActivityTest {
     }
 
     /** 30 seconds to guess **/
-    /**
     @Test
     fun timeOutTest() {
         onView(withId(R.id.guessEditText))
