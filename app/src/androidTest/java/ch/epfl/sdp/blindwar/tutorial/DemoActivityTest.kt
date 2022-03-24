@@ -90,7 +90,6 @@ class DemoActivityTest {
         onView(withId(R.id.guessEditText))
             .perform(clearText(), typeText(longString))
         onView(withId(R.id.song_summary_fragment)).check(matches(isDisplayed()))
-        closeSoftKeyboard()
     }
 
     @Test
