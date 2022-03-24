@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.ui.tutorial
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
@@ -11,7 +12,11 @@ import ch.epfl.sdp.blindwar.domain.game.GameSolo
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 import ch.epfl.sdp.blindwar.domain.game.Tutorial.gameInstance
 import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
+import com.airbnb.lottie.LottieDrawable.RESTART
+import com.airbnb.lottie.LottieDrawable.REVERSE
 import com.squareup.picasso.Picasso
+import kotlin.math.truncate
 
 class DemoActivity: AppCompatActivity() {
     /** TODO: Refactor Game class to avoid this encapsulation leak **/
@@ -21,11 +26,13 @@ class DemoActivity: AppCompatActivity() {
     private lateinit var scoreTextView: TextView
     private lateinit var songMetaData: SongMetaData
     private lateinit var guessButton: Button
+    private lateinit var crossAnim: LottieAnimationView
     private lateinit var startButton: LottieAnimationView
     private lateinit var audioVisualizer: LottieAnimationView
     private lateinit var countDown: TextView
     private lateinit var timer: CountDownTimer
     private var duration: Int = 0
+    private var toggle: Boolean = false
 
     private lateinit var gameSummary: GameSummaryFragment
 
@@ -37,7 +44,6 @@ class DemoActivity: AppCompatActivity() {
         // Game instance tutorial
         game = GameSolo(gameInstance, assets)
         game.init()
-
 
         duration = gameInstance
             .gameConfig
@@ -52,7 +58,6 @@ class DemoActivity: AppCompatActivity() {
         // Create and start countdown
         timer = createCountDown().start()
 
-
         // Cache song image
         //Picasso.get().load(songMetaData.imageUrl)
 
@@ -61,7 +66,11 @@ class DemoActivity: AppCompatActivity() {
 
         // Get the widgets
         guessEditText = findViewById(R.id.guessEditText)
+        guessEditText.hint = songMetaData.artist
         scoreTextView = findViewById(R.id.scoreTextView)
+
+        crossAnim = findViewById(R.id.cross)
+        crossAnim.repeatCount = 1
 
         startButton = findViewById(R.id.startButton)
         audioVisualizer = findViewById(R.id.audioVisualizer)
@@ -99,6 +108,11 @@ class DemoActivity: AppCompatActivity() {
             // Update the number of point view
             scoreTextView.text = game.score.toString()
             launchSongSummary(success = true)
+        } else {
+            /** Resets the base frame value of the animation and keep the reversing mode **/
+            crossAnim.repeatMode = RESTART
+            crossAnim.repeatMode = REVERSE
+            crossAnim.playAnimation()
         }
 
         // Delete the text of the guess
@@ -121,6 +135,7 @@ class DemoActivity: AppCompatActivity() {
     }
 
     private fun setVisibilityLayout(code: Int) {
+        crossAnim.visibility = code
         countDown.visibility = code
         audioVisualizer.visibility = code
         guessButton.visibility = code
@@ -183,7 +198,7 @@ class DemoActivity: AppCompatActivity() {
                         setVisibilityLayout(View.VISIBLE)
                         // Pass to the next music
                         songMetaData = game.currentMetadata()!!
-
+                        guessEditText.hint = songMetaData.artist
                         // Cache song image
                         // Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
                         timer.start()
