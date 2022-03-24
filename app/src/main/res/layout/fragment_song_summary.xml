@@ -13,7 +13,7 @@
         android:layout_marginTop="16dp"
         android:text="TIME"
         android:textColor="@color/white"
-        android:textSize="35dp"
+        android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.068"
@@ -28,7 +28,7 @@
         android:fontFamily="@font/public_sans"
         android:text="ARTIST"
         android:textColor="@color/white"
-        android:textSize="40dp"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/timeTextView"
@@ -43,7 +43,7 @@
         android:color="@color/white"
         android:fontFamily="@font/public_sans"
         android:text="TRACK"
-        android:textSize="45dp"
+        android:textSize="45sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -59,6 +59,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trackTextView"
+        android:contentDescription="@string/song_summary_artist"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageButton

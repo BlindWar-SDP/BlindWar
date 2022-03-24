@@ -90,10 +90,10 @@ class AppStatistics {
     }
 
     override fun toString(): String {
-        return  "hello" +
+        return "hello" +
                 //correctArray.toString() + wrongArray.toString() + correctPercent.toString() +
                 //wrongPercent.toString() +
                 wins.toString() + losses.toString() +
                 winPercent.toString() + lossPercent.toString() + elo.toString()
-     }
+    }
 }

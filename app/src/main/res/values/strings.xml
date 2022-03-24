@@ -50,12 +50,13 @@
     <string name="statisticsShowText">You have 4 wins and 8 losses</string>
     <string name="your_elo_here">Your elo here</string>
     <string name="elo">ELO:</string>
-    
 
-    <!--  to Classify  -->
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="tutorial">TUTORIAL</string>
     <string name="recognize_file">Recognize File</string>
-    <string name="recognize_microphone">Recognize Microphone</string>
+    <string name="recognize_microphone_vosk">Recognize Microphone Offline(Vosk)</string>
+    <string name="recognize_microphone_google">Recognize Microphone Online(Google)</string>
     <string name="stop_microphone">Stop Microphone</string>
     <string name="preparing">Preparing the recognizer\n</string>
     <string name="ready">Ready\n</string>
@@ -85,7 +86,8 @@
     <string name="game_options_textview">Game Options</string>
     <string name="Pseudo_AvailableChars">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
     <string name="birthDate_txt">dd/mm/yyyy</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="song_summary_artist">Artist image view</string>
+    <string name="demo_tutorial_artist">Artist image</string>
+    <string name="editText_VoskActivity_result">Talk to fill</string>
 </resources>

@@ -21,16 +21,18 @@ class SpotifyResponseTest {
         spotifyImage = SpotifyImage(0, "", 0)
         spotifyUrls = SpotifyExternalUrls("SpotifyURL")
         spotifyToken = SpotifyToken("TOKEN", 0, "CREDENTIALS")
-        spotifyArtist = SpotifyArtist(spotifyUrls,
-                                      spotifyFollowers,
+        spotifyArtist = SpotifyArtist(
+            spotifyUrls,
+            spotifyFollowers,
             arrayListOf("POP"),
             "ARTIST_URL",
-        "ARTIST_ID",
-        arrayListOf(spotifyImage),
-        "ARTIST_NAME",
-        10,
-        "ARTIST_TYPE",
-        "ARTIST_URI")
+            "ARTIST_ID",
+            arrayListOf(spotifyImage),
+            "ARTIST_NAME",
+            10,
+            "ARTIST_TYPE",
+            "ARTIST_URI"
+        )
     }
 
     @Test
@@ -61,16 +63,20 @@ class SpotifyResponseTest {
 
 
 
-        assertEquals(spotifyArtist, SpotifyArtist(spotifyUrls,
-            spotifyFollowers,
-            arrayListOf("POP"),
-            "ARTIST_URL",
-            "ARTIST_ID",
-            arrayListOf(spotifyImage),
-            "ARTIST_NAME",
-            10,
-            "ARTIST_TYPE",
-            "ARTIST_URI"))
+        assertEquals(
+            spotifyArtist, SpotifyArtist(
+                spotifyUrls,
+                spotifyFollowers,
+                arrayListOf("POP"),
+                "ARTIST_URL",
+                "ARTIST_ID",
+                arrayListOf(spotifyImage),
+                "ARTIST_NAME",
+                10,
+                "ARTIST_TYPE",
+                "ARTIST_URI"
+            )
+        )
     }
 
     @Test

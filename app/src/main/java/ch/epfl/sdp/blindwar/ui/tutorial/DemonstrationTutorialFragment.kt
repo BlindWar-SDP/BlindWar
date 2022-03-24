@@ -1,33 +1,24 @@
 package ch.epfl.sdp.blindwar.ui.tutorial
 
-import android.content.ContentValues.TAG
+//import com.squareup.picasso.Picasso
+//import retrofit2.HttpException
 import android.os.Bundle
-import android.util.Base64.*
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
-import ch.epfl.sdp.blindwar.domain.game.GameTutorial
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.SpotifyApiConstants.AUTH_TYPE
-import ch.epfl.sdp.blindwar.data.SpotifyApiConstants.credentialsEncoding
-import ch.epfl.sdp.blindwar.data.SpotifyArtist
-import ch.epfl.sdp.blindwar.data.SpotifyService
 import ch.epfl.sdp.blindwar.data.SpotifyToken
-import com.squareup.picasso.Picasso
-import kotlinx.coroutines.withContext
-import retrofit2.HttpException
-import java.io.IOException
+import ch.epfl.sdp.blindwar.domain.game.GameTutorial
 
 /** Fragment used to test metadata fetching through Spotify Api
  * soon to be refactored using a clean architecture **/
 class DemonstrationTutorialFragment : Fragment() {
     private lateinit var gameTutorial: GameTutorial
-    private var logged: Boolean = false
+
+    //private var logged: Boolean = false
     private lateinit var responseToken: SpotifyToken
     private lateinit var artistView: ImageView
 
@@ -40,22 +31,22 @@ class DemonstrationTutorialFragment : Fragment() {
             inflater.inflate(R.layout.fragment_demonstration_tutorial, container, false)
         val btn: Button = view.findViewById(R.id.button)
 
-        gameTutorial = activity?.applicationContext?.let { GameTutorial(it.assets, 5000)}!!
+        gameTutorial = activity?.applicationContext?.let { GameTutorial(it.assets, 5000) }!!
 
         btn.setOnClickListener {
             gameTutorial.nextRound()
         }
 
-        artistView = view.findViewById<ImageView>(R.id.artist)
+        artistView = view.findViewById(R.id.artist)
         responseToken = SpotifyToken("", 0, "")
 
-        fetchToken()
+        //fetchToken()
 
         return view
     }
-
+/*
     private fun fetchToken() {
-        lifecycleScope.launchWhenCreated{
+        lifecycleScope.launchWhenCreated {
             if (!logged) {
                 val auth = try {
                     val credentials = credentialsEncoding()
@@ -92,8 +83,11 @@ class DemonstrationTutorialFragment : Fragment() {
         lifecycleScope.launchWhenCreated {
             if (logged) {
                 val response = try {
-                    SpotifyService.apiMeta.value.getArtist("Bearer ${responseToken.access_token}", "3fMbdgg4jU18AjLCKBhRSm")
-                } catch(e: IOException) {
+                    SpotifyService.apiMeta.value.getArtist(
+                        "Bearer ${responseToken.access_token}",
+                        "3fMbdgg4jU18AjLCKBhRSm"
+                    )
+                } catch (e: IOException) {
                     Log.e(TAG, "IOException, you might not have internet connection")
                     logged = false
                     return@launchWhenCreated
@@ -113,5 +107,5 @@ class DemonstrationTutorialFragment : Fragment() {
                 }
             }
         }
-    }
+    }*/
 }
