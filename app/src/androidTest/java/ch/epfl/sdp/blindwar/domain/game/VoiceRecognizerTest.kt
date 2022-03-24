@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.domain.game
 
+import android.os.Bundle
 import android.widget.TextView
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -59,6 +60,96 @@ class VoiceRecognizerTest : TestCase() {
             voiceRecognizer.init(activity, tv)
             voiceRecognizer.resultsRecognized = "no"
             voiceRecognizer.destroy()
+            Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
+        }
+    }
+
+    @Test
+    fun onReadyForSpeech() {
+        testRule.scenario.onActivity { activity ->
+            val tv = TextView(activity)
+            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.onReadyForSpeech(null)
+            Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
+        }
+    }
+
+    @Test
+    fun onBeginningOfSpeech() {
+        testRule.scenario.onActivity { activity ->
+            val tv = TextView(activity)
+            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.onBeginningOfSpeech()
+            Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
+        }
+    }
+
+    @Test
+    fun onRmsChanged() {
+        testRule.scenario.onActivity { activity ->
+            val tv = TextView(activity)
+            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.onRmsChanged(0f)
+            Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
+        }
+    }
+
+    @Test
+    fun onBufferReceived() {
+        testRule.scenario.onActivity { activity ->
+            val tv = TextView(activity)
+            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.onBufferReceived(null)
+            Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
+        }
+    }
+
+    @Test
+    fun onEndOfSpeech() {
+        testRule.scenario.onActivity { activity ->
+            val tv = TextView(activity)
+            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.onEndOfSpeech()
+            Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
+        }
+    }
+
+    @Test
+    fun onError() {
+        testRule.scenario.onActivity { activity ->
+            val tv = TextView(activity)
+            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.onError(0)
+            Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
+        }
+    }
+
+    @Test
+    fun onResults() {
+        testRule.scenario.onActivity { activity ->
+            val tv = TextView(activity)
+            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.onResults(Bundle())
+            Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
+        }
+    }
+
+    @Test
+    fun onPartialResults() {
+        testRule.scenario.onActivity { activity ->
+            val tv = TextView(activity)
+            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.onPartialResults(null)
+            Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
+        }
+    }
+
+    @Test
+    fun onEvent() {
+        testRule.scenario.onActivity { activity ->
+            val tv = TextView(activity)
+            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.onEvent(0, null)
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
         }
     }

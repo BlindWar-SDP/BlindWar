@@ -39,8 +39,10 @@ class VoiceRecognizer : RecognitionListener {
      */
     override fun onResults(results: Bundle) {
         val data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-        resultsRecognized = data!![0]
-        textViewResult?.text = resultsRecognized
+        if (data!![0] != null) {
+            resultsRecognized = data[0]
+            textViewResult?.text = resultsRecognized
+        }
     }
 
     /**
@@ -50,8 +52,10 @@ class VoiceRecognizer : RecognitionListener {
      */
     override fun onPartialResults(partialResults: Bundle?) {
         val data = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-        resultsRecognized = data!![0]
-        textViewResult?.text = resultsRecognized
+        if (data!![0] != null) {
+            resultsRecognized = data[0]
+            textViewResult?.text = resultsRecognized
+        }
     }
 
     override fun onEvent(eventType: Int, params: Bundle?) {}
