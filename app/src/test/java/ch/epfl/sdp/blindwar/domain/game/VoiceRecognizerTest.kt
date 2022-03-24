@@ -9,7 +9,6 @@ class VoiceRecognizerTest : TestCase() {
 
     @Test
     fun start() {
-        voiceRecognizer.start()
         assert(voiceRecognizer.resultsRecognized == "")
     }
 }
