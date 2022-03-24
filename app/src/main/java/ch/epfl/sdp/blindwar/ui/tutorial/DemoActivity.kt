@@ -19,14 +19,14 @@ import com.squareup.picasso.Picasso
 
 open class DemoActivity: AppCompatActivity() {
     /** TODO: Refactor Game class to avoid this encapsulation leak **/
-    internal lateinit var game: GameSolo
-    private var playing = true
-    private lateinit var guessEditText: EditText
-    private lateinit var scoreTextView: TextView
-    private lateinit var songMetaData: SongMetaData
-    private lateinit var guessButton: Button
-    private lateinit var countDown: TextView
-    private var duration: Int = 0
+    lateinit var game: GameSolo
+    protected var playing = true
+    protected lateinit var guessEditText: EditText
+    protected lateinit var scoreTextView: TextView
+    protected lateinit var songMetaData: SongMetaData
+    protected lateinit var guessButton: Button
+    protected lateinit var countDown: TextView
+    protected var duration: Int = 0
 
     /** Anims and timer
     private lateinit var crossAnim: LottieAnimationView
@@ -80,7 +80,7 @@ open class DemoActivity: AppCompatActivity() {
 
     }
 
-    fun playAndPause(view: View) {
+    open fun playAndPause(view: View) {
         playing = if(playing) {
             game.pause()
             //audioVisualizer.pauseAnimation()
@@ -103,7 +103,7 @@ open class DemoActivity: AppCompatActivity() {
         game.pause()
     }
 
-    fun guess(view: View) {
+    open fun guess(view: View) {
         // Try to guess
         //Log.d("guesses", guessEditText.text.toString())
         if(game.guess(guessEditText.text.toString())) {
@@ -136,7 +136,7 @@ open class DemoActivity: AppCompatActivity() {
         }
     }
 
-    protected fun setVisibilityLayout(code: Int) {
+    open fun setVisibilityLayout(code: Int) {
         //crossAnim.visibility = code
         //countDown.visibility = code
         //audioVisualizer.visibility = code
@@ -162,7 +162,7 @@ open class DemoActivity: AppCompatActivity() {
         transaction.commit()
     }
 
-    protected fun launchGameSummary() {
+    private fun launchGameSummary() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 
