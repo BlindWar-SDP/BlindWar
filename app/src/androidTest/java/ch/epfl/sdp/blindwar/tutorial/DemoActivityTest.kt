@@ -58,15 +58,13 @@ class DemoActivityTest {
 
         //Log.d(TAG, correctMetadata.toString())
         onView(withId(R.id.guessEditText))
-            .perform(clearText(), typeText(correctMetadata.title))
-            .perform(closeSoftKeyboard())
+            .perform(clearText(), typeText(correctMetadata.title), closeSoftKeyboard())
         onView(withId(R.id.guessButton)).perform(click())
     }
 
     private fun makeBadGuess() {
         onView(withId(R.id.guessEditText))
-            .perform(clearText(), typeText("THIS IS NOT CORRECT"))
-            .perform(closeSoftKeyboard())
+            .perform(clearText(), typeText("THIS IS NOT CORRECT"), closeSoftKeyboard())
         onView(withId(R.id.guessButton)).perform(click())
     }
 
@@ -75,12 +73,6 @@ class DemoActivityTest {
         testRule.scenario.onActivity {
             it.onBackPressed()
         }
-    }
-
-
-    @Test
-    fun test() {
-        assertEquals(1, 1)
     }
 
     @Test
