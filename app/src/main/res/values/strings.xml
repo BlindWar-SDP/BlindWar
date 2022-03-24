@@ -83,6 +83,14 @@
     <string name="loss_number">144</string>
     <string name="loss_percent">60%</string>
 
+    <string name="correct">Correct:</string>
+    <string name="correct_number">195</string>
+    <string name="correct_percent">65%</string>
+
+    <string name="wrong">Wrong:</string>
+    <string name="wrong_number">105</string>
+    <string name="wrong_percent">35%</string>
+
     <string name="selected_item">Selected item:</string>
     <string name="select_mode">Select mode</string>
 
