@@ -54,7 +54,7 @@ class ProfileActivityTest : TestCase() {
 
     @Test
     fun testChooseImage() {
-        onView(withId(R.id.profileImageView))
+        onView(withId(R.id.editProfileButton))
             .perform(click())
         val mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         mDevice.pressBack()
