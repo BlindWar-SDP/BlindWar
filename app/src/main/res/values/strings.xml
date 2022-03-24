@@ -1,31 +1,39 @@
 <resources>
+
+    <!--  General  -->
     <string name="app_name">BlindWar</string>
-    <string name="play_button_description">Click here to play or stop the game</string>
+    <string name="blindwar">BLINDWAR</string>
+    <string name="blind_war">Blind War</string>
+
+
+    <!--  Buttons  -->
     <string name="solo">SOLO</string>
     <string name="multi">MULTI</string>
     <string name="profile">PROFILE</string>
     <string name="logout">LOGOUT</string>
     <string name="login">LOGIN</string>
-    <string name="blindwar">BLINDWAR</string>
+    <string name="Btn_email">e-mail</string>
+    <string name="Btn_google">Google</string>
+    <string name="confirm">Confirm</string>
 
+
+    <!--  Tutorial  -->
+    <string name="play_button_description">Click here to play or stop the game</string>
     <string name="logo_description">Logo of the application</string>
     <string name="format_description"> Survival : Description placeholder
     |Against the Clock :
     |Regular : Description placeholder</string>
-
     <string name="opt_description"> Song Selection : Description placeholder
     |Altered audio : Description placeholder</string>
-
     <string name="comm_description"> Dedicated fragment describing the UI elements :
     |Microphone / Pass / Timer / Settings</string>
-
     <string name="modes_description"> Solo Game : Description placeholder
     |Multi Game : Description placeholder</string>
-
     <string name="song_opt_description"> Random Song Sel : Description placeholder| Custom
     playlist </string>
-    <string name="tutorial">TUTORIAL</string>
-    <string name="blind_war">Blind War</string>
+
+
+    <!--  Text  -->
     <string name="backText"><![CDATA[->]]></string>
     <string name="emailText">Your email here</string>
     <string name="statisticsText">Statistics</string>
@@ -33,7 +41,18 @@
     <string name="editProfileText">Edit profile</string>
     <string name="logoutText">:( Logout</string>
     <string name="profilePicDescriptionText">The profile picture of the user</string>
+    <string name="text_pseudo">Pseudo</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="birthdate_text">Please, enter your Birthdate</string>
+    <string name="eloText">ELO: Your ELO is 1435</string>
+    <string name="statisticsShowText">You have 4 wins and 8 losses</string>
+    <string name="your_elo_here">Your elo here</string>
+    <string name="elo">ELO:</string>
 
+
+    <!--  to Classify  -->
+    <string name="tutorial">TUTORIAL</string>
     <string name="recognize_file">Recognize File</string>
     <string name="recognize_microphone_vosk">Recognize Microphone Offline(Vosk)</string>
     <string name="recognize_microphone_google">Recognize Microphone Online(Google)</string>
@@ -64,17 +83,5 @@
     <string name="formats_textview">Formats</string>
     <string name="commands_textview">Commands</string>
     <string name="game_options_textview">Game Options</string>
-
-    <string name="Btn_email">e-mail</string>
-    <string name="Btn_google">Google</string>
-    <string name="text_pseudo">Pseudo</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
-    <string name="birthdate_text">Please, enter your Birthdate</string>
-    <string name="confirm">Confirm</string>
-    <string name="eloText">ELO: Your ELO is 1435</string>
-    <string name="statisticsShowText">You have 4 wins and 8 losses</string>
-    <string name="your_elo_here">Your elo here</string>
-    <string name="elo">ELO:</string>
-
+    
 </resources>
