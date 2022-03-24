@@ -17,15 +17,9 @@ import org.junit.runner.RunWith
 class GameSummaryFragmentTest {
 
     @Test
-    fun test() {
-        assertEquals(1, 1)
-    }
-    /**
-    @Test
     fun testCorrectlySetLayout() {
         launchFragmentInContainer<GameSummaryFragment>()
         onView(ViewMatchers.withId(R.id.title))
             .check(ViewAssertions.matches(ViewMatchers.withText("GAME")))
     }
-    **/
 }

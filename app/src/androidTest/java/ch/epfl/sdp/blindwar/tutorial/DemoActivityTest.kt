@@ -80,12 +80,6 @@ class DemoActivityTest {
     }
 
     @Test
-    fun test() {
-        assertEquals(1, 1)
-    }
-
-    /**
-    @Test
     fun songSummaryDisplayedAfterCorrectGuess() {
         makeCorrectGuess()
         onView(withId(R.id.song_summary_fragment)).check(matches(isDisplayed()))
@@ -161,5 +155,4 @@ class DemoActivityTest {
             //assertThat(it.playing, is(true))
         }
     }
-    **/
 }
