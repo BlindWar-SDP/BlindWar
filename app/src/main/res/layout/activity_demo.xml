@@ -20,7 +20,7 @@
         app:layout_constraintHorizontal_bias="0.29"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.145"
+        app:layout_constraintVertical_bias="0.079"
         app:lottie_autoPlay="false"
         app:lottie_loop="false"
         app:lottie_speed="2" />
@@ -36,11 +36,11 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/scoreTextView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.803"
+        app:layout_constraintVertical_bias="0.642"
         app:lottie_autoPlay="false"
+        app:lottie_fileName="cross.json"
         app:lottie_loop="false"
         app:lottie_speed="2"
-        app:lottie_fileName="cross.json"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
@@ -57,7 +57,7 @@
         app:layout_constraintHorizontal_bias="0.578"
         app:layout_constraintStart_toEndOf="@+id/scoreTextView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.935" />
+        app:layout_constraintVertical_bias="0.62" />
 
     <EditText
         android:id="@+id/guessEditText"
@@ -72,7 +72,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startButton"
-        app:layout_constraintVertical_bias="0.051"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <com.airbnb.lottie.LottieAnimationView
@@ -82,12 +82,11 @@
         android:layout_marginTop="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scoreTextView"
         app:layout_constraintVertical_bias="0.0"
-        app:lottie_fileName="audioVisualizer.json"
         app:lottie_autoPlay="false"
+        app:lottie_fileName="audioVisualizer.json"
         app:lottie_loop="false"
         app:lottie_speed="2"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -103,7 +102,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guessEditText"
-        app:layout_constraintVertical_bias="0.297" />
+        app:layout_constraintVertical_bias="0.288" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/startButton"

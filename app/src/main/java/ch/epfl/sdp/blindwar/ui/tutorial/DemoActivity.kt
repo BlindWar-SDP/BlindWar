@@ -26,13 +26,15 @@ class DemoActivity: AppCompatActivity() {
     private lateinit var scoreTextView: TextView
     private lateinit var songMetaData: SongMetaData
     private lateinit var guessButton: Button
+    private lateinit var countDown: TextView
+    private var duration: Int = 0
+    private var toggle: Boolean = false
+
+    /** Anims and timer **/
     private lateinit var crossAnim: LottieAnimationView
     private lateinit var startButton: LottieAnimationView
     private lateinit var audioVisualizer: LottieAnimationView
-    private lateinit var countDown: TextView
-    //private lateinit var timer: CountDownTimer
-    private var duration: Int = 0
-    private var toggle: Boolean = false
+    private lateinit var timer: CountDownTimer
 
     private lateinit var gameSummary: GameSummaryFragment
 
@@ -56,7 +58,7 @@ class DemoActivity: AppCompatActivity() {
         songMetaData = game.currentMetadata()!!
 
         // Create and start countdown
-       // timer = createCountDown().start()
+        //timer = createCountDown().start()
 
         // Cache song image
         //Picasso.get().load(songMetaData.imageUrl)
@@ -72,9 +74,9 @@ class DemoActivity: AppCompatActivity() {
         //crossAnim = findViewById(R.id.cross)
         //crossAnim.repeatCount = 1
 
-        startButton = findViewById(R.id.startButton)
+        //startButton = findViewById(R.id.startButton)
+        //audioVisualizer = findViewById(R.id.audioVisualizer)
         //startButton.setMinAndMaxFrame(30, 50)
-        audioVisualizer = findViewById(R.id.audioVisualizer)
         guessButton = findViewById(R.id.guessButton)
     }
 
@@ -119,7 +121,6 @@ class DemoActivity: AppCompatActivity() {
         guessEditText.setText("")
     }
 
-    /**
     private fun createCountDown(): CountDownTimer {
         return object : CountDownTimer(duration.toLong(), 1000) {
 
@@ -134,16 +135,15 @@ class DemoActivity: AppCompatActivity() {
             }
         }
     }
-    **/
 
     private fun setVisibilityLayout(code: Int) {
         //crossAnim.visibility = code
-        countDown.visibility = code
+        //countDown.visibility = code
         //audioVisualizer.visibility = code
         guessButton.visibility = code
         scoreTextView.visibility = code
         guessEditText.visibility = code
-        startButton.visibility = code
+        //startButton.visibility = code
     }
 
     private fun launchSongSummary(success: Boolean) {
@@ -182,38 +182,38 @@ class DemoActivity: AppCompatActivity() {
      * TODO: Fix some behaviors depending on the type and number of fragments
      */
     override fun onBackPressed() {
-            // If a song summary fragment is on the screen
-            if (supportFragmentManager.backStackEntryCount > 0
-                && supportFragmentManager.fragments[0] is SongSummaryFragment) {
+        // If a song summary fragment is on the screen
+        if (supportFragmentManager.backStackEntryCount > 0
+            && supportFragmentManager.fragments[0] is SongSummaryFragment) {
 
-                /** Make it as a function **/
-                val songRecord = SongSummaryFragment()
-                val songFragment = (supportFragmentManager.fragments[0] as SongSummaryFragment)
-                val bundle = createBundleSongSummary(songFragment.success())
+            /** Make it as a function **/
+            val songRecord = SongSummaryFragment()
+            val songFragment = (supportFragmentManager.fragments[0] as SongSummaryFragment)
+            val bundle = createBundleSongSummary(songFragment.success())
 
-                //bundle.putBoolean("liked", songFragment.liked())
-                songRecord.arguments = bundle
-                gameSummary.setSongFragment(songRecord)
-                supportFragmentManager.popBackStackImmediate()
+            bundle.putBoolean("liked", songFragment.liked())
+            songRecord.arguments = bundle
+            gameSummary.setSongFragment(songRecord)
+            supportFragmentManager.popBackStackImmediate()
 
-                    if (!game.nextRound()) {
-                        setVisibilityLayout(View.VISIBLE)
-                        // Pass to the next music
-                        songMetaData = game.currentMetadata()!!
-                        guessEditText.hint = songMetaData.artist
-                        // Cache song image
-                        // Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
-                        //timer.start()
-                    } else {
-                        launchGameSummary()
-                    }
-            }
-
-            else {
-                //timer.cancel()
-                super.onBackPressed();
+            if (!game.nextRound()) {
+                setVisibilityLayout(View.VISIBLE)
+                // Pass to the next music
+                songMetaData = game.currentMetadata()!!
+                guessEditText.hint = songMetaData.artist
+                // Cache song image
+                // Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
+                //timer.start()
+            } else {
+                launchGameSummary()
             }
         }
+
+        else {
+            //timer.cancel()
+            super.onBackPressed();
+        }
+    }
 
     override fun onDestroy() {
         //timer.cancel()
