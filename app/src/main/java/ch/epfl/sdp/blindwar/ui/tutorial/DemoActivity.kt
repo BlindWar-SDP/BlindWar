@@ -30,7 +30,7 @@ class DemoActivity: AppCompatActivity() {
     private lateinit var startButton: LottieAnimationView
     private lateinit var audioVisualizer: LottieAnimationView
     private lateinit var countDown: TextView
-    private lateinit var timer: CountDownTimer
+    //private lateinit var timer: CountDownTimer
     private var duration: Int = 0
     private var toggle: Boolean = false
 
@@ -56,7 +56,7 @@ class DemoActivity: AppCompatActivity() {
         songMetaData = game.currentMetadata()!!
 
         // Create and start countdown
-        timer = createCountDown().start()
+       // timer = createCountDown().start()
 
         // Cache song image
         //Picasso.get().load(songMetaData.imageUrl)
@@ -119,6 +119,7 @@ class DemoActivity: AppCompatActivity() {
         guessEditText.setText("")
     }
 
+    /**
     private fun createCountDown(): CountDownTimer {
         return object : CountDownTimer(duration.toLong(), 1000) {
 
@@ -133,6 +134,7 @@ class DemoActivity: AppCompatActivity() {
             }
         }
     }
+    **/
 
     private fun setVisibilityLayout(code: Int) {
         crossAnim.visibility = code
@@ -146,7 +148,7 @@ class DemoActivity: AppCompatActivity() {
 
     private fun launchSongSummary(success: Boolean) {
         setVisibilityLayout(View.GONE)
-        timer.cancel()
+        //timer.cancel()
 
         val transaction = supportFragmentManager.beginTransaction()
         transaction.addToBackStack(SongSummaryFragment::class.java.name)
@@ -189,7 +191,7 @@ class DemoActivity: AppCompatActivity() {
                 val songFragment = (supportFragmentManager.fragments[0] as SongSummaryFragment)
                 val bundle = createBundleSongSummary(songFragment.success())
 
-                bundle.putBoolean("liked", songFragment.liked())
+                //bundle.putBoolean("liked", songFragment.liked())
                 songRecord.arguments = bundle
                 gameSummary.setSongFragment(songRecord)
                 supportFragmentManager.popBackStackImmediate()
@@ -201,20 +203,20 @@ class DemoActivity: AppCompatActivity() {
                         guessEditText.hint = songMetaData.artist
                         // Cache song image
                         // Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
-                        timer.start()
+                        //timer.start()
                     } else {
                         launchGameSummary()
                     }
             }
 
             else {
-                timer.cancel()
+                //timer.cancel()
                 super.onBackPressed();
             }
         }
 
     override fun onDestroy() {
-        timer.cancel()
+        //timer.cancel()
         super.onDestroy()
     }
 }

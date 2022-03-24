@@ -21,12 +21,6 @@ class SongSummaryFragmentTest {
     private lateinit var bundleSuccess: Bundle
     private lateinit var bundleFailure: Bundle
 
-    @Test
-    fun test() {
-        assertEquals(1, 1)
-    }
-
-    /**
     @Before
     fun setUp() {
         bundleSuccess = createBundle(success = true, liked = true)
@@ -52,6 +46,7 @@ class SongSummaryFragmentTest {
         onView((withId(R.id.trackTextView))).check(matches(withText("One More Time")))
     }
 
+    /**
     @Test
     fun testLikeAnimation() {
         val scenario = launchFragmentInContainer<SongSummaryFragment>(bundleSuccess)

@@ -15,8 +15,8 @@ import com.airbnb.lottie.LottieAnimationView
 import com.squareup.picasso.Picasso
 
 class SongSummaryFragment : Fragment() {
-    private lateinit var likeAnim: LottieAnimationView
-    private lateinit var confAnim: LottieAnimationView
+    // private lateinit var likeAnim: LottieAnimationView
+    // private lateinit var confAnim: LottieAnimationView
     private var likeSwitch: Boolean = false
     private var success: Boolean = false
 
@@ -33,13 +33,13 @@ class SongSummaryFragment : Fragment() {
         val trackText = view.findViewById<TextView>(R.id.trackTextView)
 
         /** Like animation **/
-        likeAnim = view.findViewById(R.id.likeView)
+        //likeAnim = view.findViewById(R.id.likeView)
 
         likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
             arguments?.getBoolean("liked")!!
         }  else false
 
-        setLikeListener()
+        //setLikeListener()
 
         /** Background color **/
         success = arguments?.get("success") as Boolean
@@ -79,6 +79,7 @@ class SongSummaryFragment : Fragment() {
         return view
     }
 
+    /**
     private fun setLikeListener() {
         if (likeSwitch) {
             likeAnim.setMinAndMaxFrame(45, 70)
@@ -103,6 +104,7 @@ class SongSummaryFragment : Fragment() {
             likeSwitch = !likeSwitch
         }
     }
+    **/
 
     fun liked(): Boolean {
         return likeSwitch
