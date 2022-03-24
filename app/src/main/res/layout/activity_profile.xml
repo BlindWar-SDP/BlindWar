@@ -39,24 +39,12 @@
         app:srcCompat="@color/opaque_black" />
 
 
-    <Button
-        android:id="@+id/backToMainButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="backToMainButton"
-        android:text="@string/backText"
-        app:layout_constraintBottom_toTopOf="@+id/profileImageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.148" />
-
     <ImageView
         android:id="@+id/profileImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="240dp"
+        android:layout_height="254dp"
         android:contentDescription="@string/profilePicDescriptionText"
+        android:onClick="choosePicture"
         app:layout_constraintBottom_toTopOf="@+id/nameView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -79,30 +67,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.713" />
-
-    <TextView
-        android:id="@+id/eloDeclarationView"
-        android:layout_width="285dp"
-        android:layout_height="65dp"
-        android:text="@string/elo"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/statsButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/eloView"
-        android:layout_width="310dp"
-        android:layout_height="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/statsButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/your_elo_here"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp" />
 
     <Button
         android:id="@+id/statsButton"

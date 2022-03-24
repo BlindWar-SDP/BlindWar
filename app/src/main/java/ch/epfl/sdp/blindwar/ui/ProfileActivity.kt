@@ -24,7 +24,6 @@ class ProfileActivity : AppCompatActivity() {
     private val database = UserDatabase()
     private val imageDatabase = ImageDatabase()
     private val currentUser = FirebaseAuth.getInstance().currentUser
-    private val profilePic = findViewById<ImageView>(R.id.profileImageView)
 
     private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -40,12 +39,34 @@ class ProfileActivity : AppCompatActivity() {
             }
 
         }
+
         override fun onCancelled(databaseError: DatabaseError) {
             // Getting Post failed, log a message
             Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
         }
     }
 
+
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            if (data != null) {
+                if (data.data != null) {
+                    val profilePic = findViewById<ImageView>(R.id.profileImageView)
+                    profilePic!!.setImageURI(data.data)
+
+                    // Upload picture to database
+                    val imagePath = imageDatabase.uploadImage(data.data!!,
+                        findViewById(android.R.id.content))
+
+                    // Update user profilePic
+                    database.addProfilePicture("JOJO", imagePath)
+
+                }
+            }
+
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,35 +75,19 @@ class ProfileActivity : AppCompatActivity() {
         if (currentUser != null) {
             database.addUserListener(currentUser.uid, userInfoListener)
         }
+        setContentView(R.layout.activity_profile)
+        val profilePic = findViewById<ImageView>(R.id.profileImageView)
+        /*
         profilePic.setOnClickListener {
             choosePicture()
-        }
-        setContentView(R.layout.activity_profile)
+        } */
+
     }
 
 
-    fun choosePicture() {
-        var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                if (data != null) {
-                    if (data.data != null) {
-                        profilePic.setImageURI(data.data)
-
-                        // Upload picture to database
-                        val imagePath = imageDatabase.uploadImage(data.data!!,
-                            findViewById(android.R.id.content))
-
-                        // Update user profilePic
-                        database.addProfilePicture("JOJO", imagePath)
-
-                    }
-                }
-
-            }
-        }
+    fun choosePicture(view: View) {
         val intent = Intent()
-        intent.type = "images/*"
+        intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
         resultLauncher.launch(intent)
     }
@@ -91,10 +96,7 @@ class ProfileActivity : AppCompatActivity() {
     fun logoutButton(view: View) {
         startActivity(Intent(this, LoginActivity::class.java))
     }
-
-    fun backToMainButton(view: View) {
-        startActivity(Intent(this, MainMenuActivity::class.java))
-    }
+    
 
     fun statisticsButton(view: View) {
         startActivity(Intent(this, StatisticsActivity::class.java))

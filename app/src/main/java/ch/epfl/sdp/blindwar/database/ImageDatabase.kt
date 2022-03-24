@@ -33,20 +33,20 @@ class ImageDatabase {
         // Create a reference to the image to upload
         val uploadedImageRef = imagesRef.child(randomKey)
         if (view != null) {
-            val pd = ProgressDialog(getApplicationContext())
+            //val pd = ProgressDialog(getApplicationContext())
             uploadedImageRef.putFile(imageURI)
                 .addOnSuccessListener {
-                    pd.dismiss()
+                    //pd.dismiss()
                     Snackbar.make(view, "Image uploaded", Snackbar.LENGTH_LONG).show()
                 }
                 .addOnFailureListener {
-                    pd.dismiss()
+                    //pd.dismiss()
                     Toast.makeText(getApplicationContext(), "Failed to upload file",
                         Toast.LENGTH_LONG).show()
                 }
                 .addOnProgressListener {
                     val progressPercent = (100 * it.bytesTransferred / it.totalByteCount)
-                    pd.setMessage("Progress: $progressPercent%")
+                    //pd.setMessage("Progress: $progressPercent%")
                 }
         }
         else {
