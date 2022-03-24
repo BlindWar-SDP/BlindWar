@@ -134,7 +134,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             '**/BuildConfig.*',
             '**/VoskActivity.*',
             '**/VoskActivityTest.*',
-            '**/AnimatedDemoActivity',
+            '**/AnimatedDemoActivity.*',
             '**/Manifest*.*',
             '**/*Test*.*',
             'android/**/*.*',

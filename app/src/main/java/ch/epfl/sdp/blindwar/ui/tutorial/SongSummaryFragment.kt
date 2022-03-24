@@ -38,7 +38,7 @@ class SongSummaryFragment : Fragment() {
             arguments?.getBoolean("liked")!!
         }  else false
 
-        //setLikeListener()
+        setLikeListener()
 
         /** Background color **/
         success = arguments?.get("success") as Boolean
@@ -58,7 +58,6 @@ class SongSummaryFragment : Fragment() {
         return view
     }
 
-    /**
     private fun setLikeListener() {
         if (likeSwitch) {
             likeAnim.setMinAndMaxFrame(45, 70)
@@ -82,7 +81,7 @@ class SongSummaryFragment : Fragment() {
 
             likeSwitch = !likeSwitch
         }
-    }**/
+    }
 
     fun liked(): Boolean {
         return likeSwitch
