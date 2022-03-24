@@ -114,7 +114,8 @@ dependencies {
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0-RC"
     // Coroutines, and the much-recommended library to add lifecycle-awareness to coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
+
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
 
 }
 
