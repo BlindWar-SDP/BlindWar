@@ -78,6 +78,18 @@ class DemoActivityTest {
     }
 
 
+    @Test
+    fun test() {
+        assertEquals(1, 1)
+    }
+
+    @Test
+    fun songSummaryDisplayedAfterCorrectGuess() {
+        makeCorrectGuess()
+        onView(withId(R.id.song_summary_fragment)).check(matches(isDisplayed()))
+    }
+
+    /**
     /** 30 seconds to guess **/
     @Test
     fun timeOutTest() {
@@ -86,16 +98,11 @@ class DemoActivityTest {
             .perform(closeSoftKeyboard())
         onView(withId(R.id.song_summary_fragment)).check(matches(isDisplayed()))
     }
+    **/
 
     /**
      *
      *
-
-    @Test
-    fun songSummaryDisplayedAfterCorrectGuess() {
-    makeCorrectGuess()
-    onView(withId(R.id.song_summary_fragment)).check(matches(isDisplayed()))
-    }
 
     @Test
     fun perfectGameTest() {
