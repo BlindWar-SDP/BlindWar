@@ -18,7 +18,6 @@ import java.util.*
 class VoiceRecognizer : RecognitionListener {
     private var speechRecognizer: SpeechRecognizer? = null
     var resultsRecognized: String = ""
-        private set
     private var speechRecognizerIntent: Intent? = null
     private var textViewResult: TextView? = null
     override fun onReadyForSpeech(params: Bundle?) {}
@@ -73,6 +72,7 @@ class VoiceRecognizer : RecognitionListener {
                 RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
             )
+            resultsRecognized = ""
             speechRecognizerIntent!!.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
             (speechRecognizer as SpeechRecognizer).setRecognitionListener(this)
         }
