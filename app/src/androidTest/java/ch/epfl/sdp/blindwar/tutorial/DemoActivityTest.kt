@@ -90,11 +90,8 @@ class DemoActivityTest {
             .perform(closeSoftKeyboard())
         onView(withId(R.id.song_summary_fragment)).check(matches(isDisplayed()))
     }
-    **/
 
-    /**
-     *
-     *
+
 
     @Test
     fun perfectGameTest() {
@@ -144,6 +141,7 @@ class DemoActivityTest {
         makeCorrectGuess()
         onView(withId(R.id.guessEditText)).check(matches(withText("")))
     }
+
 
     @Test
     fun pauseGameTest() {

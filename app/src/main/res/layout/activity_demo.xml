@@ -86,9 +86,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scoreTextView"
         app:layout_constraintVertical_bias="0.0"
-        app:lottie_autoPlay="true"
         app:lottie_fileName="audioVisualizer.json"
-        app:lottie_loop="true"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false"
         app:lottie_speed="2"
         tools:ignore="SpeakableTextPresentCheck" />
 

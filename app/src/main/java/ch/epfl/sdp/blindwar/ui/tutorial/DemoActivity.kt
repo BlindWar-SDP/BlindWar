@@ -69,29 +69,29 @@ class DemoActivity: AppCompatActivity() {
         guessEditText.hint = songMetaData.artist
         scoreTextView = findViewById(R.id.scoreTextView)
 
-        crossAnim = findViewById(R.id.cross)
-        crossAnim.repeatCount = 1
+        //crossAnim = findViewById(R.id.cross)
+        //crossAnim.repeatCount = 1
 
         startButton = findViewById(R.id.startButton)
+        //startButton.setMinAndMaxFrame(30, 50)
         audioVisualizer = findViewById(R.id.audioVisualizer)
-        startButton.setMinAndMaxFrame(30, 50)
         guessButton = findViewById(R.id.guessButton)
     }
 
     fun playAndPause(view: View) {
         playing = if(playing) {
             game.pause()
-            audioVisualizer.pauseAnimation()
-            startButton.setMinAndMaxFrame(30, 55)
+            //audioVisualizer.pauseAnimation()
+            //startButton.setMinAndMaxFrame(30, 55)
             //startButton.repeatCount = 0
-            startButton.playAnimation()
+            //startButton.playAnimation()
             false
 
         } else {
             game.play()
-            audioVisualizer.resumeAnimation()
-            startButton.setMinAndMaxFrame(10, 25)
-            startButton.playAnimation()
+            //audioVisualizer.resumeAnimation()
+            //startButton.setMinAndMaxFrame(10, 25)
+            //startButton.playAnimation()
             true
         }
     }
@@ -110,9 +110,9 @@ class DemoActivity: AppCompatActivity() {
             launchSongSummary(success = true)
         } else {
             /** Resets the base frame value of the animation and keep the reversing mode **/
-            crossAnim.repeatMode = RESTART
-            crossAnim.repeatMode = REVERSE
-            crossAnim.playAnimation()
+            //crossAnim.repeatMode = RESTART
+            //crossAnim.repeatMode = REVERSE
+            //crossAnim.playAnimation()
         }
 
         // Delete the text of the guess
@@ -137,9 +137,9 @@ class DemoActivity: AppCompatActivity() {
     **/
 
     private fun setVisibilityLayout(code: Int) {
-        crossAnim.visibility = code
+        //crossAnim.visibility = code
         countDown.visibility = code
-        audioVisualizer.visibility = code
+        //audioVisualizer.visibility = code
         guessButton.visibility = code
         scoreTextView.visibility = code
         guessEditText.visibility = code

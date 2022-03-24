@@ -15,8 +15,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.squareup.picasso.Picasso
 
 class SongSummaryFragment : Fragment() {
-    // private lateinit var likeAnim: LottieAnimationView
-    // private lateinit var confAnim: LottieAnimationView
+    private lateinit var likeAnim: LottieAnimationView
     private var likeSwitch: Boolean = false
     private var success: Boolean = false
 
@@ -33,7 +32,7 @@ class SongSummaryFragment : Fragment() {
         val trackText = view.findViewById<TextView>(R.id.trackTextView)
 
         /** Like animation **/
-        //likeAnim = view.findViewById(R.id.likeView)
+        likeAnim = view.findViewById(R.id.likeView)
 
         likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
             arguments?.getBoolean("liked")!!
@@ -50,26 +49,6 @@ class SongSummaryFragment : Fragment() {
         } else {
             background.setBackgroundColor(resources.getColor(R.color.black))
         }
-
-        //confAnim.playAnimation()
-        //confAnim.repeatCount = 0
-
-        /**
-        artistText.text = arguments?.get("Artist").toString()
-        trackText.text = arguments?.get("Title").toString()
-        Picasso.get().load(arguments?.get("Image")!!.toString()).into(artistView)
-            viewModel.selectedMetadata.observe(viewLifecycleOwner) { it ->
-            artistText.text = it.artist
-            trackText.text = it.title
-            Picasso.get().load(it.imageUrl).into(artistView)
-            }
-        **/
-
-        /**
-        artistText.text = viewModel.selectedMetadata.value?.artist
-        trackText.text = viewModel.selectedMetadata.value?.title
-        Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl).into(artistView)
-        **/
 
         /** TODO: define constant key Strings **/
         artistText.text = arguments?.get("artist").toString()
@@ -103,8 +82,7 @@ class SongSummaryFragment : Fragment() {
 
             likeSwitch = !likeSwitch
         }
-    }
-    **/
+    }**/
 
     fun liked(): Boolean {
         return likeSwitch
