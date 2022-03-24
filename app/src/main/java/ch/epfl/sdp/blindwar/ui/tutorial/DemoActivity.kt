@@ -17,7 +17,7 @@ import com.airbnb.lottie.LottieDrawable.RESTART
 import com.airbnb.lottie.LottieDrawable.REVERSE
 import com.squareup.picasso.Picasso
 
-class DemoActivity: AppCompatActivity() {
+open class DemoActivity: AppCompatActivity() {
     /** TODO: Refactor Game class to avoid this encapsulation leak **/
     internal lateinit var game: GameSolo
     private var playing = true
@@ -27,13 +27,13 @@ class DemoActivity: AppCompatActivity() {
     private lateinit var guessButton: Button
     private lateinit var countDown: TextView
     private var duration: Int = 0
-    private var toggle: Boolean = false
 
-    /** Anims and timer **/
+    /** Anims and timer
     private lateinit var crossAnim: LottieAnimationView
     private lateinit var startButton: LottieAnimationView
     private lateinit var audioVisualizer: LottieAnimationView
     private lateinit var timer: CountDownTimer
+    **/
 
     private lateinit var gameSummary: GameSummaryFragment
 
@@ -69,6 +69,7 @@ class DemoActivity: AppCompatActivity() {
         guessEditText = findViewById(R.id.guessEditText)
         guessEditText.hint = songMetaData.artist
         scoreTextView = findViewById(R.id.scoreTextView)
+        guessButton = findViewById(R.id.guessButton)
 
         //crossAnim = findViewById(R.id.cross)
         //crossAnim.repeatCount = 1
@@ -76,7 +77,7 @@ class DemoActivity: AppCompatActivity() {
         //startButton = findViewById(R.id.startButton)
         //audioVisualizer = findViewById(R.id.audioVisualizer)
         //startButton.setMinAndMaxFrame(30, 50)
-        guessButton = findViewById(R.id.guessButton)
+
     }
 
     fun playAndPause(view: View) {
@@ -120,7 +121,7 @@ class DemoActivity: AppCompatActivity() {
         guessEditText.setText("")
     }
 
-    private fun createCountDown(): CountDownTimer {
+    protected fun createCountDown(): CountDownTimer {
         return object : CountDownTimer(duration.toLong(), 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
@@ -135,7 +136,7 @@ class DemoActivity: AppCompatActivity() {
         }
     }
 
-    private fun setVisibilityLayout(code: Int) {
+    protected fun setVisibilityLayout(code: Int) {
         //crossAnim.visibility = code
         //countDown.visibility = code
         //audioVisualizer.visibility = code
@@ -145,7 +146,7 @@ class DemoActivity: AppCompatActivity() {
         //startButton.visibility = code
     }
 
-    private fun launchSongSummary(success: Boolean) {
+    protected fun launchSongSummary(success: Boolean) {
         setVisibilityLayout(View.GONE)
         //timer.cancel()
 
@@ -161,7 +162,7 @@ class DemoActivity: AppCompatActivity() {
         transaction.commit()
     }
 
-    private fun launchGameSummary() {
+    protected fun launchGameSummary() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
 
