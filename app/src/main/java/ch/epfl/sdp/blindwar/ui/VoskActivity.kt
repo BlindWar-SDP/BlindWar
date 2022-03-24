@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.speech.RecognizerIntent
-import android.speech.SpeechRecognizer
 import android.text.method.ScrollingMovementMethod
 import android.view.MotionEvent
 import android.view.View
@@ -16,6 +15,8 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.domain.game.VoiceRecognizer
 import org.vosk.LibVosk
 import org.vosk.LogLevel
 import org.vosk.Model
@@ -25,16 +26,14 @@ import org.vosk.android.SpeechService
 import org.vosk.android.SpeechStreamService
 import org.vosk.android.StorageService
 import java.io.IOException
-import java.util.*
-import ch.epfl.sdp.blindwar.R
 
 
 class VoskActivity : Activity(), RecognitionListener {
     private var model: Model? = null
     private var speechService: SpeechService? = null
-    private var speechRecognizer: SpeechRecognizer? = null
     private var speechStreamService: SpeechStreamService? = null
     private var resultView: TextView? = null
+    private val voiceRecognizer: VoiceRecognizer = VoiceRecognizer()
     public override fun onCreate(state: Bundle?) {
         super.onCreate(state)
         setContentView(R.layout.main)
@@ -60,41 +59,20 @@ class VoskActivity : Activity(), RecognitionListener {
         } else {
             initModel()
         }
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
+        //recognizer with google
+        voiceRecognizer.init(this, resultView as TextView)
 
-        val speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        speechRecognizerIntent.putExtra(
-            RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-            RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-        )
-        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-
-        (speechRecognizer as SpeechRecognizer).setRecognitionListener(object : android.speech.RecognitionListener {
-            override fun onReadyForSpeech(bundle: Bundle?) {}
-            override fun onBeginningOfSpeech() {
-                (resultView as TextView).text = ""
+        findViewById<View>(R.id.recognize_mic_google).setOnTouchListener { v, event ->
+            when (event?.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    voiceRecognizer.start()
+                }
+                MotionEvent.ACTION_UP -> {
+                    v?.performClick()
+                    voiceRecognizer.stop()
+                }
             }
-
-            override fun onRmsChanged(v: Float) {}
-            override fun onBufferReceived(bytes: ByteArray?) {}
-            override fun onEndOfSpeech() {}
-            override fun onError(i: Int) {}
-            override fun onResults(bundle: Bundle) {
-                val data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                (resultView as TextView).text = data!![0]
-            }
-
-            override fun onPartialResults(bundle: Bundle?) {}
-            override fun onEvent(i: Int, bundle: Bundle?) {}
-        })
-        findViewById<View>(R.id.recognize_mic_google).setOnTouchListener { view, motionEvent ->
-            if (motionEvent.action == MotionEvent.ACTION_UP) {
-                speechRecognizer!!.stopListening()
-            }
-            if (motionEvent.action == MotionEvent.ACTION_DOWN) {
-                speechRecognizer!!.startListening(speechRecognizerIntent)
-            }
-            false
+            v?.onTouchEvent(event) ?: true
         }
     }
 
@@ -108,7 +86,7 @@ class VoskActivity : Activity(), RecognitionListener {
                 val result = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS
                 )
-                resultView?.text = Objects.requireNonNull(result)?.get(0)
+                resultView?.text = result!![0]
             }
         }
     }
@@ -144,7 +122,7 @@ class VoskActivity : Activity(), RecognitionListener {
 
     public override fun onDestroy() {
         super.onDestroy()
-        speechRecognizer?.destroy()
+        voiceRecognizer.destroy()
         if (speechService != null) {
             speechService!!.stop()
             speechService!!.shutdown()

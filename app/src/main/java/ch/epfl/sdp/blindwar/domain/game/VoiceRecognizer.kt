@@ -1,59 +1,108 @@
 package ch.epfl.sdp.blindwar.domain.game
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
+import android.widget.TextView
+import java.util.*
 
+/**
+ * Class used to recognize voice
+ *
+ * could be singleton if doesn't have a textView in it
+ *
+ */
+class VoiceRecognizer : RecognitionListener {
+    private var speechRecognizer: SpeechRecognizer? = null
+    var resultsRecognized: String = ""
+        private set
+    private var speechRecognizerIntent: Intent? = null
+    private var textViewResult: TextView? = null
+    override fun onReadyForSpeech(params: Bundle?) {}
 
-object VoiceRecognizer : RecognitionListener {
-    private val recognizer = this
-    private lateinit var sr: SpeechRecognizer
+    override fun onBeginningOfSpeech() {}
 
-    override fun onReadyForSpeech(params: Bundle?) {
-        TODO("Not yet implemented")
+    override fun onRmsChanged(rmsdB: Float) {}
+
+    override fun onBufferReceived(buffer: ByteArray?) {}
+
+    override fun onEndOfSpeech() {}
+
+    override fun onError(error: Int) {}
+
+    /**
+     * Function used when the SpeechRecognizer recognize something
+     *
+     * @param results
+     */
+    override fun onResults(results: Bundle) {
+        val data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+        resultsRecognized = data!![0]
+        textViewResult?.text = resultsRecognized
     }
 
-    override fun onBeginningOfSpeech() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onRmsChanged(rmsdB: Float) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onBufferReceived(buffer: ByteArray?) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onEndOfSpeech() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onError(error: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onResults(results: Bundle?) {
-        TODO("Not yet implemented")
-    }
-
+    /**
+     * Function used when the SpeechRecognizer recognize partially something
+     *
+     * @param
+     */
     override fun onPartialResults(partialResults: Bundle?) {
-        TODO("Not yet implemented")
+        val data = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+        resultsRecognized = data!![0]
+        textViewResult?.text = resultsRecognized
     }
 
-    override fun onEvent(eventType: Int, params: Bundle?) {
-        TODO("Not yet implemented")
+    override fun onEvent(eventType: Int, params: Bundle?) {}
+
+    /**
+     * Initialize every attributes of the class
+     *
+     * @param context
+     * @param textView
+     */
+    fun init(context: Context, textView: TextView) {
+        if (speechRecognizer == null && speechRecognizerIntent == null) {
+            textViewResult = textView
+            speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
+
+            speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+            speechRecognizerIntent!!.putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+            )
+            speechRecognizerIntent!!.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+            (speechRecognizer as SpeechRecognizer).setRecognitionListener(this)
+        }
     }
 
-    fun startRecognize() {
-        sr = SpeechRecognizer.createSpeechRecognizer(getApplicationContext())
-        sr.setRecognitionListener(recognizer)
-        sr.startListening(RecognizerIntent.getVoiceDetailsIntent(getApplicationContext()))
+    /**
+     * Start to listen
+     *
+     */
+    fun start() {
+        resultsRecognized = ""
+        speechRecognizer!!.startListening(speechRecognizerIntent)
     }
 
-    fun stopRecognize() {
-        sr.stopListening()
+    /**
+     * Stop listening
+     *
+     */
+    fun stop() {
+        speechRecognizer!!.stopListening()
+    }
+
+    /**
+     * Destroy speech recognizer
+     *
+     */
+    fun destroy() {
+        speechRecognizer?.destroy()
+        speechRecognizer = null
+        speechRecognizerIntent = null
+        resultsRecognized = ""
     }
 }
