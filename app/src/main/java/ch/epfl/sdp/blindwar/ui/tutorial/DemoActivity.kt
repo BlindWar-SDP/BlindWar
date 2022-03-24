@@ -157,6 +157,7 @@ class DemoActivity: AppCompatActivity() {
         val songSummary = SongSummaryFragment()
         songSummary.arguments = createBundleSongSummary(success)
 
+        
         transaction.add(R.id.fragment_container, songSummary, "Song Summary")
         transaction.commit()
     }
