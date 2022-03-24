@@ -40,7 +40,7 @@
         app:lottie_autoPlay="false"
         app:lottie_loop="false"
         app:lottie_speed="2"
-        app:lottie_url="https://assets8.lottiefiles.com/packages/lf20_i0zh5psb.json"
+        app:lottie_fileName="cross.json"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
@@ -88,7 +88,7 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_speed="2"
-        app:lottie_url="https://assets9.lottiefiles.com/packages/lf20_kggdlibz.json"
+        app:lottie_fileName="audioVisualizer.json"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
@@ -117,7 +117,7 @@
         app:lottie_autoPlay="false"
         app:lottie_loop="false"
         app:lottie_speed="2"
-        app:lottie_url="https://assets5.lottiefiles.com/packages/lf20_c8UA8n/play pause.json"
+        app:lottie_fileName="playPause.json"
         tools:ignore="SpeakableTextPresentCheck" />
 
 
