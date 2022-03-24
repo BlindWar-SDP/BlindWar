@@ -16,6 +16,7 @@ import ch.epfl.sdp.blindwar.ui.tutorial.DemoActivity
 import org.junit.Rule
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.Tutorial
+import junit.framework.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.TimeUnit
@@ -76,6 +77,11 @@ class DemoActivityTest {
         testRule.scenario.onActivity {
             it.onBackPressed()
         }
+    }
+
+    @Test
+    fun test() {
+        assertEquals(1, 1)
     }
 
     /**
