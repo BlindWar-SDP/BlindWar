@@ -16,7 +16,6 @@ import com.airbnb.lottie.LottieDrawable
 import com.airbnb.lottie.LottieDrawable.RESTART
 import com.airbnb.lottie.LottieDrawable.REVERSE
 import com.squareup.picasso.Picasso
-import kotlin.math.truncate
 
 class DemoActivity: AppCompatActivity() {
     /** TODO: Refactor Game class to avoid this encapsulation leak **/
@@ -157,7 +156,7 @@ class DemoActivity: AppCompatActivity() {
         val songSummary = SongSummaryFragment()
         songSummary.arguments = createBundleSongSummary(success)
 
-        
+
         transaction.add(R.id.fragment_container, songSummary, "Song Summary")
         transaction.commit()
     }
