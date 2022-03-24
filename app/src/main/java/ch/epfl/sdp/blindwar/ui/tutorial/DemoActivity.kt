@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
+//import androidx.appcompat.app.AppCompatActivity
+//import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.GameTutorial
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 import ch.epfl.sdp.blindwar.domain.game.Tutorial.gameInstance
-import com.airbnb.lottie.LottieAnimationView
-import com.airbnb.lottie.LottieDrawable.RESTART
-import com.airbnb.lottie.LottieDrawable.REVERSE
+//import com.airbnb.lottie.LottieAnimationView
+//import com.airbnb.lottie.LottieDrawable.RESTART
+//import com.airbnb.lottie.LottieDrawable.REVERSE
 
 class DemoActivity: AppCompatActivity() {
     /** TODO: Refactor Game class to avoid this encapsulation leak **/
@@ -22,9 +22,9 @@ class DemoActivity: AppCompatActivity() {
     private lateinit var scoreTextView: TextView
     private lateinit var songMetaData: SongMetaData
     private lateinit var guessButton: Button
-    private lateinit var crossAnim: LottieAnimationView
-    private lateinit var startButton: LottieAnimationView
-    private lateinit var audioVisualizer: LottieAnimationView
+    //private lateinit var crossAnim: LottieAnimationView
+    //private lateinit var startButton: LottieAnimationView
+    //private lateinit var audioVisualizer: LottieAnimationView
     private lateinit var countDown: TextView
     private lateinit var timer: CountDownTimer
     private var duration: Int = 0
@@ -68,8 +68,8 @@ class DemoActivity: AppCompatActivity() {
         crossAnim = findViewById(R.id.cross)
         crossAnim.repeatCount = 1
 
-        startButton = findViewById(R.id.startButton)
-        audioVisualizer = findViewById(R.id.audioVisualizer)
+        startButton = findViewById<Button>(R.id.startButton)
+        audioVisualizer = findViewById<LottieAnimationView>(R.id.audioVisualizer)
         startButton.setMinAndMaxFrame(30, 50)
         guessButton = findViewById(R.id.guessButton)
     }

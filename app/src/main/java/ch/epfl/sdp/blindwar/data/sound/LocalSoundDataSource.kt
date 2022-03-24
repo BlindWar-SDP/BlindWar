@@ -6,11 +6,12 @@ import android.media.MediaMetadataRetriever
 import androidx.core.content.pm.PermissionInfoCompat
 import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.SONG_MAP
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
+import java.io.FileDescriptor
 
 class LocalSoundDataSource(private val assetManager: AssetManager,
 private val mediaMetadataRetriever: MediaMetadataRetriever) {
 
-    fun fetchSoundFileDescriptors(playlist: List<SongMetaData>): Map<String, Pair<AssetFileDescriptor, SongMetaData>> {
+    fun fetchSoundFileDescriptors(playlist: List<SongMetaData>): Map<String, Pair<FileDescriptor, SongMetaData>> {
         return assetMatcher(filterAssetsPlaylist(playlist))
     }
 
@@ -18,11 +19,11 @@ private val mediaMetadataRetriever: MediaMetadataRetriever) {
         return assetManager.list("")?.filter { it.endsWith(".mp3") && playlist.any{s -> (it.contains(s.title) && (it.contains(s.artist)))}}
     }
 
-    private fun assetMatcher(assets: List<String>?): Map<String, Pair<AssetFileDescriptor, SongMetaData>>  {
-        return assets?.map { assetManager.openFd(it) }
+    private fun assetMatcher(assets: List<String>?): Map<String, Pair<FileDescriptor, SongMetaData>>  {
+        return assets?.map { assetManager.openFd(it).fileDescriptor }
             ?.associateBy({
                 // Get the title
-                mediaMetadataRetriever.setDataSource(it.fileDescriptor, it.startOffset, it.length)
+                mediaMetadataRetriever.setDataSource(it)
                 return@associateBy mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
                     .toString()
             }, {
