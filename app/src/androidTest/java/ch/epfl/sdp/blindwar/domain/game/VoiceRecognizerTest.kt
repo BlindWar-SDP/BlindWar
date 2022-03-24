@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.domain.game
 
 import android.os.Bundle
+import android.speech.SpeechRecognizer
 import android.widget.TextView
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -129,8 +130,12 @@ class VoiceRecognizerTest : TestCase() {
         testRule.scenario.onActivity { activity ->
             val tv = TextView(activity)
             voiceRecognizer.init(activity, tv)
-            voiceRecognizer.onResults(Bundle())
-            Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
+            val bundle = Bundle()
+            val list = ArrayList<String>()
+            list.add("yo")
+            bundle.putStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION, list)
+            voiceRecognizer.onResults(bundle)
+            Assert.assertTrue(voiceRecognizer.resultsRecognized == "yo")
         }
     }
 
@@ -139,8 +144,11 @@ class VoiceRecognizerTest : TestCase() {
         testRule.scenario.onActivity { activity ->
             val tv = TextView(activity)
             voiceRecognizer.init(activity, tv)
-            voiceRecognizer.onPartialResults(null)
-            Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
+            val bundle = Bundle()
+            val list = ArrayList<String>()
+            list.add("yo")
+            voiceRecognizer.onPartialResults(bundle)
+            Assert.assertTrue(voiceRecognizer.resultsRecognized == "yo")
         }
     }
 
