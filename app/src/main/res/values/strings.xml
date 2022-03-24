@@ -73,5 +73,28 @@
     <string name="confirm">Confirm</string>
     <string name="example_elo">1435</string>
     <string name="elo">ELO:</string>
+    <string name="wins">Wins:</string>
+    <string name="win_number">60</string>
+    <string name="win_percent">25%</string>
+    <string name="draws">Draws:</string>
+    <string name="draw_number">36</string>
+    <string name="draw_percent">15%</string>
+    <string name="losses">Losses:</string>
+    <string name="loss_number">144</string>
+    <string name="loss_percent">60%</string>
+
+    <string name="selected_item">Selected item:</string>
+    <string name="select_mode">Select mode</string>
+
+    <string-array name="modes_array">
+        <item>Solo</item>
+        <item>Multi</item>
+        <item>Funny1</item>
+        <item>Funny2</item>
+        <item>Funny3</item>
+        <item>42</item>
+        <item>NoScrum</item>
+        <item>PlzHelp</item>
+    </string-array>
 
 </resources>
