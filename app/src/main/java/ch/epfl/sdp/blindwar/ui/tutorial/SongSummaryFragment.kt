@@ -25,7 +25,7 @@ class SongSummaryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view: View =
-            inflater!!.inflate(R.layout.fragment_song_summary, container, false)
+            inflater.inflate(R.layout.fragment_song_summary, container, false)
 
         val artistView = view.findViewById<ImageView>(R.id.artistImageView)
         val artistText = view.findViewById<TextView>(R.id.artistTextView)

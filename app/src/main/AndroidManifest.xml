@@ -42,6 +42,9 @@
             android:name=".ui.tutorial.DemoActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.tutorial.AnimatedDemoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.StatisticsActivity"
             android:exported="false" />
         <activity
