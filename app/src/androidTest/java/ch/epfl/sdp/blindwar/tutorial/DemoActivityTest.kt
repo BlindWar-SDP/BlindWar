@@ -99,7 +99,6 @@ class DemoActivityTest {
         for (i in 0 until round) makeGoodGuessGetBack()
         onView(withId(R.id.game_summary_fragment)).check(matches(isDisplayed()))
     }
-    **/
 
     @Test
     fun correctGuessAfterBadGuess() {
@@ -156,4 +155,5 @@ class DemoActivityTest {
             //assertThat(it.playing, is(true))
         }
     }
+    **/
 }
