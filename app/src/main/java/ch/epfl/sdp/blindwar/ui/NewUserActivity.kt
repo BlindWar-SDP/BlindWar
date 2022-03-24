@@ -13,7 +13,6 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.user.AppStatistics
 import ch.epfl.sdp.blindwar.user.User
-import ch.epfl.sdp.blindwar.user.UserAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -32,7 +31,7 @@ class NewUserActivity : AppCompatActivity() {
         val birthDate: Long? = findViewById<CalendarView>(R.id.NU_calendar).date
 //        var profilePicture: Uri? = null
 
-        UserAuth().createUser(pseudo, firstName, lastName, birthDate /*profilePicture*/)
+        createUser(pseudo, firstName, lastName, birthDate /*profilePicture*/)
         startActivity(Intent(this, MainMenuActivity::class.java))
     }
 
@@ -54,5 +53,31 @@ class NewUserActivity : AppCompatActivity() {
         if (baseText == newText){
             textView.text.clear()
         }
+    }
+    private fun createUser(
+        pseudo: String,
+        firstName: String?,
+        lastName: String?,
+        birthDate: Long? /*profilePicture: Uri?*/
+    ) {
+        // set default value to null:
+
+//        checkPseudo(pseudo)
+        val user = Firebase.auth.currentUser
+        user?.let {
+            UserDatabase().addUser(
+                User.Builder(
+                    user.email!!,
+                    AppStatistics(),
+                    pseudo,
+                    checkNotDefault(firstName, R.string.first_name),
+                    checkNotDefault(lastName, R.string.last_name),
+                    birthDate /*profilePicture*/
+                ).build())
+        }
+    }
+
+    private fun checkNotDefault(value: String?, default:Int): String?{
+        return  if (value == default.toString()) null else value
     }
 }

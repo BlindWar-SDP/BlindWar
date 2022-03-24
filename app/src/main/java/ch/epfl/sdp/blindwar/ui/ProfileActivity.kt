@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.user.User
-import ch.epfl.sdp.blindwar.user.UserAuth
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -48,8 +48,9 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     fun logoutButton(view: View) {
-        UserAuth().signOut(this)
-        startActivity(Intent(this, SplashScreenActivity::class.java))
+        AuthUI.getInstance().signOut(this).addOnCompleteListener {
+            startActivity(Intent(this, SplashScreenActivity::class.java))
+        }
 
     }
 

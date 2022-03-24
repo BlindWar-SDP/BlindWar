@@ -8,6 +8,7 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.user.UserAuth
+import com.firebase.ui.auth.AuthUI
 
 class MainMenuActivity : AppCompatActivity() {
 
@@ -38,8 +39,9 @@ class MainMenuActivity : AppCompatActivity() {
 
     // Called when the user taps the Solo button
     fun logoutButton(view: View) {
-        UserAuth().signOut(this)
-        startActivity(Intent(this, SplashScreenActivity::class.java))
+        AuthUI.getInstance().signOut(this).addOnCompleteListener {
+            startActivity(Intent(this, SplashScreenActivity::class.java))
+        }
     }
 
     fun launchSpeechRecognitionActivity(view: View) {
