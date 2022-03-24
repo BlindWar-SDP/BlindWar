@@ -58,7 +58,9 @@ class ProfileActivityTest : TestCase() {
             .perform(click())
         val mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         mDevice.pressBack()
-        intended(hasComponent(ProfileActivity::class.java.name))
+        onView(withId(R.id.statsButton))
+            .perform(click())
+        intended(hasComponent(StatisticsActivity::class.java.name))
     }
 
     @Test
