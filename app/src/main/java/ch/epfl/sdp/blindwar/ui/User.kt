@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar.ui
 
-import android.media.Image
 import android.net.Uri
 
 data class User(
@@ -10,9 +9,9 @@ data class User(
     val firstName: String? = "firstName",
     val lastName: String? = "lastName",
     val birthDate: Long? = 0,
-    val profilePicture: String? = null,
+    val profilePicture: String? = "",
 ) {
-    fun builder(): UserBuilder{
+    fun builder(): UserBuilder {
         return UserBuilder().setBirthDate(birthDate!!)
             .setEmail(email)
             .setFirstName(firstName!!)
@@ -24,13 +23,13 @@ data class User(
 }
 
 class UserBuilder(
-    private var email: String = "",
+    private var email: String = "email",
     private var userStatistics: AppStatistics = AppStatistics(),
-    private var pseudo: String? = null,
-    private var firstName: String? = null,
-    private var lastName: String? = null,
-    var birthDate: Long? = null,
-    private var profilePicture: String? = null,
+    private var pseudo: String? = "pseudo",
+    private var firstName: String? = "firstName",
+    private var lastName: String? = "lastName",
+    private var birthDate: Long? = 0,
+    private var profilePicture: String? = "",
     ) {
     fun setEmail(email:String) = apply {this.email = email}
     fun setStats(stats: AppStatistics) = apply {this.userStatistics = stats}
@@ -38,6 +37,7 @@ class UserBuilder(
     fun setFirstName(name: String) = apply { this.firstName = name }
     fun setBirthDate(date: Long) = apply { this.birthDate = date }
     fun setImage(link: String?) = apply {this.profilePicture = link}
+
     fun setPseudo(pseudo: String) = apply { this.pseudo = pseudo }
 
     fun build(): User {

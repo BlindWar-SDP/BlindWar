@@ -54,7 +54,8 @@
     <!--  to Classify  -->
     <string name="tutorial">TUTORIAL</string>
     <string name="recognize_file">Recognize File</string>
-    <string name="recognize_microphone">Recognize Microphone</string>
+    <string name="recognize_microphone_vosk">Recognize Microphone Offline(Vosk)</string>
+    <string name="recognize_microphone_google">Recognize Microphone Online(Google)</string>
     <string name="stop_microphone">Stop Microphone</string>
     <string name="preparing">Preparing the recognizer\n</string>
     <string name="ready">Ready\n</string>
