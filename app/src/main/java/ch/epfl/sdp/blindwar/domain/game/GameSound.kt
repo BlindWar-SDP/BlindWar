@@ -7,7 +7,7 @@ import android.media.MediaPlayer
 import ch.epfl.sdp.blindwar.data.sound.LocalSoundDataSource
 import java.util.*
 
-class GameSound(assetManager: AssetManager) {
+class GameSound(val assetManager: AssetManager) {
     private val mediaMetadataRetriever = MediaMetadataRetriever()
     private val localSoundDataSource = LocalSoundDataSource(assetManager, mediaMetadataRetriever)
     private val player = MediaPlayer()
@@ -16,9 +16,31 @@ class GameSound(assetManager: AssetManager) {
     private lateinit var playlistNames: MutableSet<String>
     private lateinit var currentMetaData: SongMetaData
 
-    fun soundInit(playlist: List<SongMetaData>) {
+    fun soundInitWithSpotifyMetadata(playlist: List<SongMetaData>) {
         assetFileDescriptorAndMetaDataPerTitle = localSoundDataSource.fetchSoundFileDescriptors(playlist)
         playlistNames = refreshPlaylist()
+        currentMetaData = SongMetaData("", "", "")
+    }
+
+    fun soundInitFromLocalStorage(path: String) {
+        this.assetManager.list(path)?.filter { it.endsWith(".mp3")}?.map { assetManager.openFd(it) }
+            ?.associateBy({
+                // Get the title
+                mediaMetadataRetriever.setDataSource(it.fileDescriptor, it.startOffset, it.length)
+                return@associateBy mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+                    .toString()
+            }, {
+                val author = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+                    .toString()
+                val title = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+                    .toString()
+
+                return@associateBy Pair(
+                    it,
+                    SongImageUrlConstants.SONG_MAP[author]!!
+                )
+            }) ?: emptyMap()
+
         currentMetaData = SongMetaData("", "", "")
     }
 

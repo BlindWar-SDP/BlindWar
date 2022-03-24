@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar.ui.tutorial
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
@@ -8,19 +7,16 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.domain.game.GameSolo
+import ch.epfl.sdp.blindwar.domain.game.GameTutorial
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 import ch.epfl.sdp.blindwar.domain.game.Tutorial.gameInstance
 import com.airbnb.lottie.LottieAnimationView
-import com.airbnb.lottie.LottieDrawable
 import com.airbnb.lottie.LottieDrawable.RESTART
 import com.airbnb.lottie.LottieDrawable.REVERSE
-import com.squareup.picasso.Picasso
-import kotlin.math.truncate
 
 class DemoActivity: AppCompatActivity() {
     /** TODO: Refactor Game class to avoid this encapsulation leak **/
-    internal lateinit var game: GameSolo
+    internal lateinit var game: GameTutorial
     private var playing = true
     private lateinit var guessEditText: EditText
     private lateinit var scoreTextView: TextView
@@ -42,7 +38,7 @@ class DemoActivity: AppCompatActivity() {
 
         countDown = findViewById(R.id.countdown)
         // Game instance tutorial
-        game = GameSolo(gameInstance, assets)
+        game = GameTutorial(gameInstance, assets)
         game.init()
 
         duration = gameInstance
