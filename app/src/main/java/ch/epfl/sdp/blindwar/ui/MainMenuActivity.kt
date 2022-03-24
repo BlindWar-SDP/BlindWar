@@ -38,9 +38,10 @@ class MainMenuActivity : AppCompatActivity() {
 
     // Called when the user taps the Solo button
     fun logoutButton(view: View) {
-        AuthUI.getInstance().signOut(this).addOnCompleteListener {
+        AuthUI.getInstance().signOut(this)
+//            .addOnCompleteListener {
             startActivity(Intent(this, SplashScreenActivity::class.java))
-        }
+//        }
     }
 
     fun launchSpeechRecognitionActivity(view: View) {
