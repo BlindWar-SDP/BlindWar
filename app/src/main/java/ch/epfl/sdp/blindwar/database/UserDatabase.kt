@@ -22,6 +22,10 @@ class UserDatabase {
         return userReference.child(uid).child("userStatistics").child("elo")
     }
 
+    private fun getImageReference(uid: String): DatabaseReference {
+        return userReference.child(uid).child("image")
+    }
+
     // Add user to database
     fun addUser(uid: String, user: User) {
         userReference.child(uid).setValue(user)
@@ -35,6 +39,11 @@ class UserDatabase {
     // Set elo of an user
     fun setElo(uid: String, elo: Int) {
         getEloReference(uid).setValue(elo)
+    }
+
+    // Allow user to select a profile picture and store it in database
+    fun addProfilePicture(uid: String, path: String) {
+        getImageReference(uid).setValue(path)
     }
 
     /*

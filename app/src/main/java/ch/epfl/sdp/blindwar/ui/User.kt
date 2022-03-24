@@ -10,7 +10,7 @@ data class User(
     val firstName: String? = "firstName",
     val lastName: String? = "lastName",
     val birthDate: Long? = 0,
-    //val profilePicture: Uri?,
+    val profilePicture: String? = null,
 ) {
     fun builder(): UserBuilder{
         return UserBuilder().setBirthDate(birthDate!!)
@@ -19,7 +19,7 @@ data class User(
             .setLastName(lastName!!)
             .setPseudo(pseudo!!)
             .setStats(userStatistics)
-            //.setImage(profilePicture)
+            .setImage(profilePicture!!)
     }
 }
 
@@ -30,14 +30,14 @@ class UserBuilder(
     private var firstName: String? = null,
     private var lastName: String? = null,
     var birthDate: Long? = null,
-    private var profilePicture: Uri? = null,
+    private var profilePicture: String? = null,
     ) {
     fun setEmail(email:String) = apply {this.email = email}
     fun setStats(stats: AppStatistics) = apply {this.userStatistics = stats}
     fun setLastName(name: String) = apply { this.lastName = name }
     fun setFirstName(name: String) = apply { this.firstName = name }
     fun setBirthDate(date: Long) = apply { this.birthDate = date }
-    fun setImage(link: Uri?) = apply {this.profilePicture = link}
+    fun setImage(link: String?) = apply {this.profilePicture = link}
     fun setPseudo(pseudo: String) = apply { this.pseudo = pseudo }
 
     fun build(): User {
@@ -48,7 +48,7 @@ class UserBuilder(
             firstName,
             lastName,
             birthDate,
-            //profilePicture
+            profilePicture
         )
     }
 }
