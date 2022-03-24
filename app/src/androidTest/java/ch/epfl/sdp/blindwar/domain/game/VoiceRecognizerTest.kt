@@ -2,7 +2,7 @@ package ch.epfl.sdp.blindwar.domain.game
 
 import android.os.Bundle
 import android.speech.SpeechRecognizer
-import android.widget.TextView
+import android.widget.EditText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.ui.VoskActivity
@@ -26,7 +26,7 @@ class VoiceRecognizerTest : TestCase() {
     fun init() {
         testRule.scenario.onActivity { activity ->
             voiceRecognizer.resultsRecognized = "no"
-            voiceRecognizer.init(activity, TextView(activity))
+            voiceRecognizer.init(activity, EditText(activity))
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
         }
     }
@@ -34,7 +34,7 @@ class VoiceRecognizerTest : TestCase() {
     @Test
     fun start() {
         testRule.scenario.onActivity { activity ->
-            val tv = TextView(activity)
+            val tv = EditText(activity)
             voiceRecognizer.init(activity, tv)
             voiceRecognizer.resultsRecognized = "no"
             voiceRecognizer.start()
@@ -45,7 +45,7 @@ class VoiceRecognizerTest : TestCase() {
     @Test
     fun stop() {
         testRule.scenario.onActivity { activity ->
-            val tv = TextView(activity)
+            val tv = EditText(activity)
             voiceRecognizer.init(activity, tv)
             voiceRecognizer.resultsRecognized = "no"
             voiceRecognizer.start()
@@ -57,7 +57,7 @@ class VoiceRecognizerTest : TestCase() {
     @Test
     fun destroy() {
         testRule.scenario.onActivity { activity ->
-            val tv = TextView(activity)
+            val tv = EditText(activity)
             voiceRecognizer.init(activity, tv)
             voiceRecognizer.resultsRecognized = "no"
             voiceRecognizer.destroy()
@@ -68,7 +68,7 @@ class VoiceRecognizerTest : TestCase() {
     @Test
     fun onReadyForSpeech() {
         testRule.scenario.onActivity { activity ->
-            val tv = TextView(activity)
+            val tv = EditText(activity)
             voiceRecognizer.init(activity, tv)
             voiceRecognizer.onReadyForSpeech(null)
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
@@ -78,7 +78,7 @@ class VoiceRecognizerTest : TestCase() {
     @Test
     fun onBeginningOfSpeech() {
         testRule.scenario.onActivity { activity ->
-            val tv = TextView(activity)
+            val tv = EditText(activity)
             voiceRecognizer.init(activity, tv)
             voiceRecognizer.onBeginningOfSpeech()
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
@@ -88,7 +88,7 @@ class VoiceRecognizerTest : TestCase() {
     @Test
     fun onRmsChanged() {
         testRule.scenario.onActivity { activity ->
-            val tv = TextView(activity)
+            val tv = EditText(activity)
             voiceRecognizer.init(activity, tv)
             voiceRecognizer.onRmsChanged(0f)
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
@@ -98,7 +98,7 @@ class VoiceRecognizerTest : TestCase() {
     @Test
     fun onBufferReceived() {
         testRule.scenario.onActivity { activity ->
-            val tv = TextView(activity)
+            val tv = EditText(activity)
             voiceRecognizer.init(activity, tv)
             voiceRecognizer.onBufferReceived(null)
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
@@ -108,7 +108,7 @@ class VoiceRecognizerTest : TestCase() {
     @Test
     fun onEndOfSpeech() {
         testRule.scenario.onActivity { activity ->
-            val tv = TextView(activity)
+            val tv = EditText(activity)
             voiceRecognizer.init(activity, tv)
             voiceRecognizer.onEndOfSpeech()
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
@@ -118,7 +118,7 @@ class VoiceRecognizerTest : TestCase() {
     @Test
     fun onError() {
         testRule.scenario.onActivity { activity ->
-            val tv = TextView(activity)
+            val tv = EditText(activity)
             voiceRecognizer.init(activity, tv)
             voiceRecognizer.onError(0)
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
@@ -128,7 +128,7 @@ class VoiceRecognizerTest : TestCase() {
     @Test
     fun onResults() {
         testRule.scenario.onActivity { activity ->
-            val tv = TextView(activity)
+            val tv = EditText(activity)
             voiceRecognizer.init(activity, tv)
             val bundle = Bundle()
             val list = ArrayList<String>()
@@ -142,7 +142,7 @@ class VoiceRecognizerTest : TestCase() {
     @Test
     fun onPartialResults() {
         testRule.scenario.onActivity { activity ->
-            val tv = TextView(activity)
+            val tv = EditText(activity)
             voiceRecognizer.init(activity, tv)
             val bundle = Bundle()
             val list = ArrayList<String>()
@@ -156,7 +156,7 @@ class VoiceRecognizerTest : TestCase() {
     @Test
     fun onEvent() {
         testRule.scenario.onActivity { activity ->
-            val tv = TextView(activity)
+            val tv = EditText(activity)
             voiceRecognizer.init(activity, tv)
             voiceRecognizer.onEvent(0, null)
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")

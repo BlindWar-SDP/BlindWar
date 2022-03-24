@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
-import android.widget.TextView
+import android.widget.EditText
 import java.util.*
 
 /**
@@ -19,7 +19,7 @@ class VoiceRecognizer : RecognitionListener {
     private var speechRecognizer: SpeechRecognizer? = null
     var resultsRecognized: String = ""
     private var speechRecognizerIntent: Intent? = null
-    private var textViewResult: TextView? = null
+    private var editTextResult: EditText? = null
     override fun onReadyForSpeech(params: Bundle?) {}
 
     override fun onBeginningOfSpeech() {}
@@ -41,7 +41,7 @@ class VoiceRecognizer : RecognitionListener {
         val data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
         if (data!![0] != null) {
             resultsRecognized = data[0]
-            textViewResult?.text = resultsRecognized
+            editTextResult?.setText(resultsRecognized)
         }
     }
 
@@ -54,7 +54,7 @@ class VoiceRecognizer : RecognitionListener {
         val data = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
         if (data!![0] != null) {
             resultsRecognized = data[0]
-            textViewResult?.text = resultsRecognized
+            editTextResult?.setText(resultsRecognized)
         }
     }
 
@@ -64,11 +64,11 @@ class VoiceRecognizer : RecognitionListener {
      * Initialize every attributes of the class
      *
      * @param context
-     * @param textView
+     * @param editText
      */
-    fun init(context: Context, textView: TextView) {
+    fun init(context: Context, editText: EditText) {
         if (speechRecognizer == null && speechRecognizerIntent == null) {
-            textViewResult = textView
+            editTextResult = editText
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
 
             speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)

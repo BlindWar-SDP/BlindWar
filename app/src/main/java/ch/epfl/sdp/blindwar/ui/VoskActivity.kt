@@ -9,10 +9,7 @@ import android.speech.RecognizerIntent
 import android.text.method.ScrollingMovementMethod
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
-import android.widget.CompoundButton
-import android.widget.TextView
-import android.widget.ToggleButton
+import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import ch.epfl.sdp.blindwar.R
@@ -40,6 +37,7 @@ class VoskActivity : Activity(), RecognitionListener {
 
         // Setup layout
         resultView = findViewById(R.id.result_text)
+        val resultEditText = findViewById<EditText>(R.id.result_text_edit)
         setUiState(STATE_START)
         findViewById<View>(R.id.recognize_mic).setOnClickListener { recognizeMicrophone() }
         (findViewById<View>(R.id.pause) as ToggleButton).setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
@@ -60,7 +58,7 @@ class VoskActivity : Activity(), RecognitionListener {
             initModel()
         }
         //recognizer with google
-        voiceRecognizer.init(this, resultView as TextView)
+        voiceRecognizer.init(this, resultEditText)
 
         findViewById<View>(R.id.recognize_mic_google).setOnTouchListener { v, event ->
             when (event?.action) {

@@ -1,4 +1,5 @@
 package ch.epfl.sdp.blindwar.tutorial
+
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions.*
@@ -47,12 +48,12 @@ class DemoActivityTest {
     /**
     @Test
     fun layoutVisibleAfterPressingBackOnSummary() {
-        makeCorrectGuess()
-        pressBack()
-        onView(withId(R.id.guessButton)).check(matches(isDisplayed()))
-        onView(withId(R.id.guessEditText)).check(matches(isDisplayed()))
+    makeCorrectGuess()
+    pressBack()
+    onView(withId(R.id.guessButton)).check(matches(isDisplayed()))
+    onView(withId(R.id.guessEditText)).check(matches(isDisplayed()))
     }
-    **/
+     **/
 
     private fun makeCorrectGuess() {
         val correctMetadata = SongMetaData("One More Time", "", "")
