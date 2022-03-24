@@ -12,18 +12,18 @@ class GameSound(assetManager: AssetManager) {
     private val localSoundDataSource = LocalSoundDataSource(assetManager, mediaMetadataRetriever)
     private val player = MediaPlayer()
     // Map each title with its asset file descriptor and its important metadata
-    private lateinit var assetFileDescriptor: Map<String, Pair<AssetFileDescriptor, SongMetaData>>
+    private lateinit var assetFileDescriptorAndMetaDataPerTitle: Map<String, Pair<AssetFileDescriptor, SongMetaData>>
     private lateinit var playlistNames: MutableSet<String>
     private lateinit var currentMetaData: SongMetaData
 
     fun soundInit(playlist: List<SongMetaData>) {
-        assetFileDescriptor = localSoundDataSource.fetchSoundFileDescriptors(playlist)
+        assetFileDescriptorAndMetaDataPerTitle = localSoundDataSource.fetchSoundFileDescriptors(playlist)
         playlistNames = refreshPlaylist()
         currentMetaData = SongMetaData("", "", "")
     }
 
     private fun refreshPlaylist(): MutableSet<String> {
-        return assetFileDescriptor.keys.toSet() as MutableSet<String>
+        return assetFileDescriptorAndMetaDataPerTitle.keys.toSet() as MutableSet<String>
     }
 
     fun soundTeardown() {
@@ -46,8 +46,8 @@ class GameSound(assetManager: AssetManager) {
         // Get a random title
         val random = Random()
         val title = playlistNames.elementAt(random.nextInt(playlistNames.size))
-        val afd = assetFileDescriptor[title]?.first
-        currentMetaData = assetFileDescriptor[title]?.second!!
+        val afd = assetFileDescriptorAndMetaDataPerTitle[title]?.first
+        currentMetaData = assetFileDescriptorAndMetaDataPerTitle[title]?.second!!
 
         // Remove it to the playlist
         playlistNames.remove(title)

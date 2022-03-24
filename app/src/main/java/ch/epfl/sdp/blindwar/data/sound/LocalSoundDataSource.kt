@@ -10,12 +10,12 @@ import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 class LocalSoundDataSource(private val assetManager: AssetManager,
 private val mediaMetadataRetriever: MediaMetadataRetriever) {
 
-    fun fetchSoundFileDescriptors(playlist: List<SongMetaData>): Map<String, Pair<AssetFileDescriptor, SongMetaData>> {
-        return assetMatcher(filterAssetsPlaylist(playlist))
+    fun fetchSoundFileDescriptors(playlist: List<SongMetaData>, fromPath: String = ""): Map<String, Pair<AssetFileDescriptor, SongMetaData>> {
+        return assetMatcher(filterAssetsPlaylist(playlist, fromPath))
     }
 
-    private fun filterAssetsPlaylist(playlist: List<SongMetaData>): List<String>? {
-        return assetManager.list("")?.filter { it.endsWith(".mp3") && playlist.any{s -> (it.contains(s.title) && (it.contains(s.artist)))}}
+    private fun filterAssetsPlaylist(playlist: List<SongMetaData>, fromPath: String): List<String>? {
+        return assetManager.list(fromPath)?.filter { it.endsWith(".mp3") && playlist.any{s -> (it.contains(s.title) && (it.contains(s.artist)))}}
     }
 
     private fun assetMatcher(assets: List<String>?): Map<String, Pair<AssetFileDescriptor, SongMetaData>>  {
