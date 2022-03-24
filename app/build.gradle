@@ -60,7 +60,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'androidx.test:monitor:1.5.0'
     implementation 'com.squareup.picasso:picasso:2.8'
-    implementation 'com.google.firebase:firebase-database:19.2.1'
+    implementation 'com.google.firebase:firebase-database:20.0.4'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.4'
 
     // Network
@@ -101,11 +101,11 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:20.1.0'
 //    classpath 'com.google.gms:google-services:4.3.10'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
-    implementation 'com.google.firebase:firebase-database:19.2.1'
+    implementation 'com.google.firebase:firebase-database:20.0.4'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.4'
 
     debugImplementation("androidx.fragment:fragment-testing:1.4.1")
-    debugImplementation("androidx.fragment:fragment-ktx:1.1.0-beta01")
+    debugImplementation("androidx.fragment:fragment-ktx:1.5.0-alpha03")
     debugImplementation("androidx.test:core:1.4.0")
 
     // JVM-based unit tests (that don't need a real device or emulator)
@@ -114,8 +114,8 @@ dependencies {
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0-RC"
     // Coroutines, and the much-recommended library to add lifecycle-awareness to coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
 
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
 
 }
 

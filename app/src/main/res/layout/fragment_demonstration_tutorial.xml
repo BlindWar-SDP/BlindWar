@@ -40,6 +40,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
+        android:contentDescription="@string/demo_tutorial_artist"
         app:srcCompat="@android:drawable/screen_background_light_transparent" />
 
     <TextView
