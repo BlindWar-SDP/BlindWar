@@ -21,6 +21,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:20.0.4'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.4'
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.1'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.0.2'
 }
 
 tasks.register('genUUID') {
