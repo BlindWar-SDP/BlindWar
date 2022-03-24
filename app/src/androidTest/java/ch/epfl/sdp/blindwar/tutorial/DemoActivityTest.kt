@@ -15,6 +15,8 @@ import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 import ch.epfl.sdp.blindwar.ui.tutorial.DemoActivity
 import org.junit.Rule
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.domain.game.Tutorial
+import junit.framework.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.TimeUnit
@@ -27,18 +29,24 @@ class DemoActivityTest {
         DemoActivity::class.java
     )
 
-    @Test
-    fun layoutVisibleAfterPressingBackOnSummary() {
-        makeCorrectGuess()
-        testRule.scenario.onActivity {
-            it.onBackPressed()
-        }
-        checkLayoutVisibility(Visibility.VISIBLE)
-        pressBackUnconditionally()
-        testRule.scenario.onActivity {
-            it.startActivity(Intent(ApplicationProvider.getApplicationContext(), DemoActivity::class.java))
-        }
-    }
+    private val longString = "The mare flattened her ears against her skull and snorted throwing up earth with her hooves she didnt want to go" +
+            "Geralt didnt calm her with the Sign he jumped from the saddle and threw the reins over the horses head " +
+            "He no longer had his old sword in its lizard skin sheath on his back; its place was filled with a shining " +
+            "beautiful weapon with a cruciform and slender well-weighted hilt ending in a spherical pommel made of white metal" +
+            "This time the gate didnt open for him It was already open, just as he had left it" +
+            " He heard singing He didnt understand the words he couldnt even identify the language " +
+            "He didnt need to the witcher felt and understood the very nature the essence of this quiet " +
+            "piercing singing which flowed through the veins in a wave of nauseous overpowering menace"+
+            "This time the gate didnt open for him It was already open, just as he had left it" +
+            " He heard singing He didnt understand the words he couldnt even identify the language " +
+            "He didnt need to the witcher felt and understood the very nature the essence of this quiet " +
+            "piercing singing which flowed through the veins in a wave of nauseous overpowering menace"
+
+    private val round = Tutorial
+        .gameInstance
+        .gameConfig
+        .parameter
+        .round
 
     private fun checkLayoutVisibility(visibility: Visibility) {
         onView(withId(R.id.guessButton)).check(matches(withEffectiveVisibility(visibility)))
@@ -48,10 +56,9 @@ class DemoActivityTest {
     }
 
     private fun makeCorrectGuess() {
-        /** TODO: Refactor Game class to avoid this encapsulation leak **/
         var correctMetadata = SongMetaData("", "", "")
         testRule.scenario.onActivity {
-            correctMetadata = it.game.currentMetaData!!
+            correctMetadata = it.game.currentMetadata()!!
         }
 
         //Log.d(TAG, correctMetadata.toString())
@@ -65,16 +72,32 @@ class DemoActivityTest {
         onView(withId(R.id.guessButton)).perform(closeSoftKeyboard()).perform(click())
     }
 
+    private fun makeGoodGuessGetBack() {
+        makeCorrectGuess()
+        testRule.scenario.onActivity {
+            it.onBackPressed()
+        }
+    }
+
     @Test
     fun songSummaryDisplayedAfterCorrectGuess() {
         makeCorrectGuess()
         onView(withId(R.id.song_summary_fragment)).check(matches(isDisplayed()))
     }
 
+    /** 30 seconds to guess **/
     @Test
-    fun layoutGoneAfterCorrectGuess() {
-        makeCorrectGuess()
-        checkLayoutVisibility(Visibility.GONE)
+    fun timeOutTest() {
+        onView(withId(R.id.guessEditText))
+            .perform(clearText(), typeText(longString))
+        onView(withId(R.id.song_summary_fragment)).check(matches(isDisplayed()))
+    }
+
+
+    @Test
+    fun perfectGameTest() {
+        for (i in 0 until round) makeGoodGuessGetBack()
+        onView(withId(R.id.game_summary_fragment)).check(matches(isDisplayed()))
     }
 
     @Test
@@ -90,13 +113,22 @@ class DemoActivityTest {
     }
 
     @Test
-    fun isPlayClickable() {
-        onView(withId(R.id.startButton)).check(matches(isClickable()))
+    fun layoutVisibleAfterPressingBackOnSummary() {
+        makeCorrectGuess()
+        testRule.scenario.onActivity {
+            it.onBackPressed()
+        }
+        checkLayoutVisibility(Visibility.VISIBLE)
+        pressBackUnconditionally()
+        testRule.scenario.onActivity {
+            it.startActivity(Intent(ApplicationProvider.getApplicationContext(), DemoActivity::class.java))
+        }
     }
 
     @Test
-    fun isGuessClickable() {
-        onView(withId(R.id.guessButton)).check(matches(isClickable()))
+    fun layoutGoneAfterCorrectGuess() {
+        makeCorrectGuess()
+        checkLayoutVisibility(Visibility.GONE)
     }
 
     @Test

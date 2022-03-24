@@ -1,39 +1,38 @@
 package ch.epfl.sdp.blindwar.ui.tutorial
 
-import android.graphics.Color
-import android.os.Build
+import android.opengl.Visibility
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.SystemClock
-import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.GameSolo
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 import ch.epfl.sdp.blindwar.domain.game.Tutorial.gameInstance
-import ch.epfl.sdp.blindwar.ui.viewmodel.SongMetadataViewModel
 import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
+import com.airbnb.lottie.LottieDrawable.RESTART
+import com.airbnb.lottie.LottieDrawable.REVERSE
 import com.squareup.picasso.Picasso
+import kotlin.math.truncate
 
 class DemoActivity: AppCompatActivity() {
     /** TODO: Refactor Game class to avoid this encapsulation leak **/
-    lateinit var game: GameSolo
+    internal lateinit var game: GameSolo
     private var playing = true
     private lateinit var guessEditText: EditText
     private lateinit var scoreTextView: TextView
     private lateinit var songMetaData: SongMetaData
     private lateinit var guessButton: Button
+    private lateinit var crossAnim: LottieAnimationView
     private lateinit var startButton: LottieAnimationView
     private lateinit var audioVisualizer: LottieAnimationView
     private lateinit var countDown: TextView
     private lateinit var timer: CountDownTimer
     private var duration: Int = 0
-    private val viewModel: SongMetadataViewModel by viewModels()
+    private var toggle: Boolean = false
 
     private lateinit var gameSummary: GameSummaryFragment
 
@@ -46,7 +45,6 @@ class DemoActivity: AppCompatActivity() {
         game = GameSolo(gameInstance, assets)
         game.init()
 
-
         duration = gameInstance
             .gameConfig
             .parameter
@@ -56,22 +54,23 @@ class DemoActivity: AppCompatActivity() {
         game.nextRound()
         game.play()
         songMetaData = game.currentMetadata()!!
-        viewModel.setMeta(songMetaData)
 
         // Create and start countdown
         timer = createCountDown().start()
 
-        /**
         // Cache song image
-        Picasso.get().load(songMetaData.imageUrl)
-        **/
+        //Picasso.get().load(songMetaData.imageUrl)
 
         // Create game summary
         gameSummary = GameSummaryFragment()
 
         // Get the widgets
         guessEditText = findViewById(R.id.guessEditText)
+        guessEditText.hint = songMetaData.artist
         scoreTextView = findViewById(R.id.scoreTextView)
+
+        crossAnim = findViewById(R.id.cross)
+        crossAnim.repeatCount = 1
 
         startButton = findViewById(R.id.startButton)
         audioVisualizer = findViewById(R.id.audioVisualizer)
@@ -109,6 +108,11 @@ class DemoActivity: AppCompatActivity() {
             // Update the number of point view
             scoreTextView.text = game.score.toString()
             launchSongSummary(success = true)
+        } else {
+            /** Resets the base frame value of the animation and keep the reversing mode **/
+            crossAnim.repeatMode = RESTART
+            crossAnim.repeatMode = REVERSE
+            crossAnim.playAnimation()
         }
 
         // Delete the text of the guess
@@ -131,6 +135,7 @@ class DemoActivity: AppCompatActivity() {
     }
 
     private fun setVisibilityLayout(code: Int) {
+        crossAnim.visibility = code
         countDown.visibility = code
         audioVisualizer.visibility = code
         guessButton.visibility = code
@@ -164,9 +169,9 @@ class DemoActivity: AppCompatActivity() {
 
     private fun createBundleSongSummary(success: Boolean): Bundle {
         val bundle = Bundle()
-        bundle.putString("artist", viewModel.selectedMetadata.value?.artist)
-        bundle.putString("title", viewModel.selectedMetadata.value?.title)
-        bundle.putString("image", viewModel.selectedMetadata.value?.imageUrl)
+        bundle.putString("artist", songMetaData.artist)
+        bundle.putString("title", songMetaData.title)
+        bundle.putString("image", songMetaData.imageUrl)
         bundle.putBoolean("success", success)
         return bundle
     }
@@ -192,15 +197,24 @@ class DemoActivity: AppCompatActivity() {
                     if (!game.nextRound()) {
                         setVisibilityLayout(View.VISIBLE)
                         // Pass to the next music
-                        viewModel.setMeta(game.currentMetadata()!!)
+                        songMetaData = game.currentMetadata()!!
+                        guessEditText.hint = songMetaData.artist
                         // Cache song image
-                        Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
+                        // Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
                         timer.start()
                     } else {
                         launchGameSummary()
                     }
             }
 
-        else super.onBackPressed();
+            else {
+                timer.cancel()
+                super.onBackPressed();
+            }
         }
+
+    override fun onDestroy() {
+        timer.cancel()
+        super.onDestroy()
+    }
 }

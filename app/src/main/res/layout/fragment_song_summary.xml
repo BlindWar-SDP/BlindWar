@@ -77,6 +77,6 @@
         app:lottie_autoPlay="false"
         app:lottie_loop="false"
         app:lottie_speed="2"
-        app:lottie_url="https://assets2.lottiefiles.com/private_files/lf30_huml8m4r.json" />
+        app:lottie_fileName="likeAnim.json"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

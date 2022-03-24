@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.tutorial.GameSummaryFragment"
-    android:background="@color/success">
+    android:background="@color/success"
+    android:id="@+id/game_summary_fragment">
 
     <FrameLayout
         android:layout_width="369dp"
@@ -29,7 +30,7 @@
         app:layout_constraintVertical_bias="0.496"></androidx.viewpager2.widget.ViewPager2>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/title"
         android:layout_width="149dp"
         android:layout_height="50dp"
         android:fontFamily="@font/public_sans"

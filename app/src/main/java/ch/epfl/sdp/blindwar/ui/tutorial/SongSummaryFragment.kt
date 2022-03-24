@@ -10,21 +10,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.ui.viewmodel.SongMetadataViewModel
 import com.airbnb.lottie.LottieAnimationView
-import com.airbnb.lottie.LottieDrawable
 import com.squareup.picasso.Picasso
-import kotlin.properties.Delegates
 
 class SongSummaryFragment : Fragment() {
     private lateinit var likeAnim: LottieAnimationView
     private lateinit var confAnim: LottieAnimationView
     private var likeSwitch: Boolean = false
     private var success: Boolean = false
-    //private val viewModel: SongMetadataViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,6 +70,8 @@ class SongSummaryFragment : Fragment() {
         trackText.text = viewModel.selectedMetadata.value?.title
         Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl).into(artistView)
         **/
+
+        /** TODO: define constant key Strings **/
         artistText.text = arguments?.get("artist").toString()
         trackText.text = arguments?.get("title").toString()
         Picasso.get().load(arguments?.get("image").toString()).into(artistView)
@@ -109,7 +105,6 @@ class SongSummaryFragment : Fragment() {
     }
 
     fun liked(): Boolean {
-        Log.d("ZAMBO ANGUISSA", likeSwitch.toString())
         return likeSwitch
     }
 

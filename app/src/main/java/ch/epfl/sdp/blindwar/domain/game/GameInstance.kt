@@ -3,7 +3,7 @@ package ch.epfl.sdp.blindwar.domain.game
 data class GameInstance(
     val gameConfig: GameConfig,
     val playlist: List<SongMetaData>,
-    val record: List<SongInstance> // Added at each round of the game
+    //val record: List<SongInstance> // Added at each round of the game
 )
 
 data class GameConfig(
