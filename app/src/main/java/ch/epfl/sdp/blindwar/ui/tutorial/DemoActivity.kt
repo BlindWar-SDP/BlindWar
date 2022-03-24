@@ -9,7 +9,7 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.GameTutorial
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 
-class DemoActivity: AppCompatActivity() {
+class DemoActivity : AppCompatActivity() {
     private lateinit var game: GameTutorial
     private var playing = true
     private lateinit var guessEditText: EditText
@@ -40,7 +40,7 @@ class DemoActivity: AppCompatActivity() {
     }
 
     fun playAndPause(view: View) {
-        playing = if(playing) {
+        playing = if (playing) {
             game.pause()
             false
         } else {
@@ -56,8 +56,7 @@ class DemoActivity: AppCompatActivity() {
 
     fun guess(view: View) {
         // Try to guess
-        //Log.d("guesses", guessEditText.text.toString())
-        if(game.guess(guessEditText.text.toString())) {
+        if (game.guess(guessEditText.text.toString())) {
             // Update the number of point view
             scoreTextView.text = game.score.toString()
             setVisibilityLayout(View.GONE)
@@ -73,7 +72,7 @@ class DemoActivity: AppCompatActivity() {
         transaction.addToBackStack(SongSummaryFragment::class.java.name)
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 
-        val bundle: Bundle = Bundle()
+        val bundle = Bundle()
         bundle.putString("Artist", songMetaData.artist)
         bundle.putString("Title", songMetaData.title)
         bundle.putString("Image", songMetaData.imageUrl)
@@ -98,8 +97,6 @@ class DemoActivity: AppCompatActivity() {
             setVisibilityLayout(View.VISIBLE)
             // Pass to the next music
             songMetaData = game.nextRound()!!
-        }
-
-        else super.onBackPressed();
+        } else super.onBackPressed()
     }
 }

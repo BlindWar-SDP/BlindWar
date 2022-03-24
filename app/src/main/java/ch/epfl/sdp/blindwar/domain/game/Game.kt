@@ -10,7 +10,8 @@ package ch.epfl.sdp.blindwar.domain.game
  */
 abstract class Game(protected val timeToFind: Int) {
     var score = 0
-        protected  set
+        protected set
+
     /** Not protected for test purposes **/
     var currentMetaData: SongMetaData? = SongMetaData("", "", "")
 

@@ -4,10 +4,8 @@ import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
-import android.util.Log
 import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.SONG_MAP
 import java.util.*
-import kotlin.collections.HashMap
 
 
 /**
@@ -31,10 +29,12 @@ class GameTutorial(private val assetManager: AssetManager, timeToFind: Int) : Ga
                 return@associateBy mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
                     .toString()
             }, {
-                val author = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
-                    .toString()
-                val title = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
-                    .toString()
+                val author =
+                    mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+                        .toString()
+                val title =
+                    mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+                        .toString()
 
                 return@associateBy Pair(
                     it,
@@ -70,17 +70,24 @@ class GameTutorial(private val assetManager: AssetManager, timeToFind: Int) : Ga
         playlist.remove(title)
 
         // Get a random time
-        //Log.d("test", super.timeToFind.toString())
         afd?.let { player.setDataSource(afd.fileDescriptor, afd.startOffset, it.length) }
-        afd?.let { mediaMetadataRetriever.setDataSource(afd.fileDescriptor, afd.startOffset, it.length) }
+        afd?.let {
+            mediaMetadataRetriever.setDataSource(
+                afd.fileDescriptor,
+                afd.startOffset,
+                it.length
+            )
+        }
         /**
         val time = random.nextInt(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toInt()
-            ?.minus(this.timeToFind) ?: 1)
-        **/
+        ?.minus(this.timeToFind) ?: 1)
+         **/
 
         // Keep the start time low enough so that at least half the song can be heard (for now)
-        val time = random.nextInt(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toInt()
-            ?.div(2) ?: 1)
+        val time = random.nextInt(
+            mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+                ?.toInt()?.div(2) ?: 1
+        )
 
         // Change the current music
         player.prepare()
@@ -93,11 +100,8 @@ class GameTutorial(private val assetManager: AssetManager, timeToFind: Int) : Ga
     }
 
     override fun guess(titleGuess: String): Boolean {
-        return if (titleGuess.uppercase(Locale.getDefault()) == currentMetaData?.title?.uppercase(Locale.getDefault())) {
-            score += 1
-            true
-        } else
-            false
+        if (titleGuess.uppercase() == currentMetaData?.title?.uppercase()) score += 1
+        return titleGuess.uppercase() == currentMetaData?.title?.uppercase()
     }
 
     override fun play() {
