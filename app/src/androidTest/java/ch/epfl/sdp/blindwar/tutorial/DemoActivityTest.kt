@@ -92,13 +92,14 @@ class DemoActivityTest {
             .perform(clearText(), typeText(longString))
         onView(withId(R.id.song_summary_fragment)).check(matches(isDisplayed()))
     }
-    **/
+
 
     @Test
     fun perfectGameTest() {
         for (i in 0 until round) makeGoodGuessGetBack()
         onView(withId(R.id.game_summary_fragment)).check(matches(isDisplayed()))
     }
+    **/
 
     @Test
     fun correctGuessAfterBadGuess() {
@@ -129,16 +130,6 @@ class DemoActivityTest {
     fun layoutGoneAfterCorrectGuess() {
         makeCorrectGuess()
         checkLayoutVisibility(Visibility.GONE)
-    }
-
-    @Test
-    fun isPlayClickable() {
-        onView(withId(R.id.startButton)).check(matches(isClickable()))
-    }
-
-    @Test
-    fun isGuessClickable() {
-        onView(withId(R.id.guessButton)).check(matches(isClickable()))
     }
 
     @Test
