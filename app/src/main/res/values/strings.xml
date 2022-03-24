@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!--  General  -->
@@ -87,21 +88,21 @@
     <string name="example_elo">1435</string>
     <string name="wins">Wins:</string>
     <string name="win_number">60</string>
-    <string name="win_percent">25%</string>
+    <string name="win_percent" formatted="false">"25%"</string>
     <string name="draws">Draws:</string>
     <string name="draw_number">36</string>
-    <string name="draw_percent">15%</string>
+    <string name="draw_percent" formatted="false">"15%"</string>
     <string name="losses">Losses:</string>
     <string name="loss_number">144</string>
-    <string name="loss_percent">60%</string>
+    <string name="loss_percent" formatted="false">"60%"</string>
 
     <string name="correct">Correct:</string>
     <string name="correct_number">195</string>
-    <string name="correct_percent">65%</string>
+    <string name="correct_percent" formatted="false">"65%"</string>
 
     <string name="wrong">Wrong:</string>
     <string name="wrong_number">105</string>
-    <string name="wrong_percent">35%</string>
+    <string name="wrong_percent" formatted="false">"35%"</string>
 
     <string name="selected_item">Selected item:</string>
     <string name="select_mode">Select mode</string>
