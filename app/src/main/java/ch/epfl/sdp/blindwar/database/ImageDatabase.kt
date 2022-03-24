@@ -9,7 +9,6 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
@@ -37,10 +36,11 @@ class ImageDatabase {
                 .addOnSuccessListener {
                     Snackbar.make(view, "Image uploaded", Snackbar.LENGTH_LONG).show()
                 }
+                    /*
                 .addOnFailureListener {
                     Toast.makeText(getApplicationContext(), "Failed to upload file",
                         Toast.LENGTH_LONG).show()
-                }
+                }*/
         }
         else {
             uploadedImageRef.putFile(imageURI)
