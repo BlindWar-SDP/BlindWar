@@ -147,6 +147,7 @@ class VoiceRecognizerTest : TestCase() {
             val bundle = Bundle()
             val list = ArrayList<String>()
             list.add("yo")
+            bundle.putStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION, list)
             voiceRecognizer.onPartialResults(bundle)
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "yo")
         }
