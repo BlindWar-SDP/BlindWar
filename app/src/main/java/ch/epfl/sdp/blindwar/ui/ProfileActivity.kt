@@ -96,7 +96,7 @@ class ProfileActivity : AppCompatActivity() {
     fun logoutButton(view: View) {
         startActivity(Intent(this, LoginActivity::class.java))
     }
-    
+
 
     fun statisticsButton(view: View) {
         startActivity(Intent(this, StatisticsActivity::class.java))

@@ -8,8 +8,9 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.UiDevice
 import ch.epfl.sdp.blindwar.ui.LoginActivity
-import ch.epfl.sdp.blindwar.ui.MainMenuActivity
 import ch.epfl.sdp.blindwar.ui.ProfileActivity
 import ch.epfl.sdp.blindwar.ui.StatisticsActivity
 import junit.framework.TestCase
@@ -18,6 +19,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
 
 @RunWith(AndroidJUnit4::class)
 class ProfileActivityTest : TestCase() {
@@ -42,12 +44,21 @@ class ProfileActivityTest : TestCase() {
             .perform(click())
         intended(hasComponent(LoginActivity::class.java.name))
     }
-
+    /*
     @Test
     fun testLoginButton() {
         onView(withId(R.id.backToMainButton))
             .perform(click())
         intended(hasComponent(MainMenuActivity::class.java.name))
+    } */
+
+    @Test
+    fun testChooseImage() {
+        onView(withId(R.id.profileImageView))
+            .perform(click())
+        val mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        mDevice.pressBack()
+        intended(hasComponent(ProfileActivity::class.java.name))
     }
 
     @Test
