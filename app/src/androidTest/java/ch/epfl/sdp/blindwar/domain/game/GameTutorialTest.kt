@@ -61,7 +61,7 @@ class GameTutorialTest {
     @Test
     fun testUpperCaseGuess() {
         val gameTutorial =
-            GameTutorial(ApplicationProvider.getApplicationContext<Context>().assets, 5000)
+            GameTutorial(ApplicationProvider.getApplicationContext<Context>().assets, timeToFind)
         val music1 = gameTutorial.nextRound()
         music1?.let { gameTutorial.guess(it.title.uppercase(Locale.getDefault())) }
 
