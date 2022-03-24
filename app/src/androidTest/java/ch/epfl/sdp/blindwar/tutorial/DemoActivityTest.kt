@@ -85,17 +85,19 @@ class DemoActivityTest {
     }
 
     /** 30 seconds to guess **/
+    /**
     @Test
     fun timeOutTest() {
         onView(withId(R.id.guessEditText))
             .perform(clearText(), typeText(longString))
         onView(withId(R.id.song_summary_fragment)).check(matches(isDisplayed()))
     }
+    **/
 
     @Test
     fun perfectGameTest() {
-    for (i in 0 until round) makeGoodGuessGetBack()
-    onView(withId(R.id.game_summary_fragment)).check(matches(isDisplayed()))
+        for (i in 0 until round) makeGoodGuessGetBack()
+        onView(withId(R.id.game_summary_fragment)).check(matches(isDisplayed()))
     }
 
     @Test
@@ -122,8 +124,6 @@ class DemoActivityTest {
             it.startActivity(Intent(ApplicationProvider.getApplicationContext(), DemoActivity::class.java))
         }
     }
-
-
 
     @Test
     fun layoutGoneAfterCorrectGuess() {
