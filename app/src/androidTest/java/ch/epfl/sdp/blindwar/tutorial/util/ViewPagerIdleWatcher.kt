@@ -1,4 +1,5 @@
 package ch.epfl.sdp.blindwar.tutorial.util
+
 /** Source :
  * https://github.com/android/views-widgets-samples/blob/master/ViewPager2/app/src/androidTest/java/androidx/viewpager2/integration/testapp/test/util/ViewPagerIdleWatcher.kt
  */

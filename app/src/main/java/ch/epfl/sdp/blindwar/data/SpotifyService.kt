@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar.data
 
-import ch.epfl.sdp.blindwar.data.SpotifyApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

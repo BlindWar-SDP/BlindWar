@@ -25,10 +25,11 @@
             android:textOn="@string/continueRecognition"/>
 
         <EditText
+            android:inputType="text"
+            android:labelFor="@string/editText_VoskActivity_result"
             android:id="@+id/result_text_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
         </EditText>
         <TextView
             android:id="@+id/result_text"

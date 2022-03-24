@@ -19,7 +19,8 @@ class LoginActivity : AppCompatActivity() {
     fun loginButton(view: View) {
         val database = UserDatabase()
         val appStatistics = AppStatistics()
-        val user = User("Jojo@BlindWar.ch", appStatistics,"JoestAAr", "jojo", "star", 123123213, null)
+        val user =
+            User("Jojo@BlindWar.ch", appStatistics, "JoestAAr", "jojo", "star", 123123213, null)
         database.addUser(user)
         startActivity(Intent(this, NewUserActivity::class.java))
     }
