@@ -6,6 +6,7 @@ import android.media.MediaMetadataRetriever
 import androidx.core.content.pm.PermissionInfoCompat
 import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.SONG_MAP
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
+import java.io.FileDescriptor
 
 class LocalSoundDataSource(private val assetManager: AssetManager,
                            private val mediaMetadataRetriever: MediaMetadataRetriever) {

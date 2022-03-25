@@ -58,13 +58,13 @@ abstract class Game(gameInstance: GameInstance) {
      *
      * @return true if the game is over after this round, false otherwise
      */
-    fun nextRound(): Boolean {
+    fun nextRound(fromLocalStorage: Boolean = false): Boolean {
         if (round >= gameParameter.round) {
             endGame()
             return true
         }
 
-        gameSound.nextRound()
+        gameSound.nextRound(fromLocalStorage)
         return false
     }
 

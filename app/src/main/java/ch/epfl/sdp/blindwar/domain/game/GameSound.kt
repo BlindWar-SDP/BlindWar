@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.domain.game
 
 import android.content.ContentResolver
+import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
@@ -15,13 +16,18 @@ class GameSound(val assetManager: AssetManager) {
     private val player = MediaPlayer()
 
     // Map each title with its asset file descriptor and its important metadata
+    // File descriptor for files in local storage
+    private lateinit var assetFileDescriptorAndMetaDataPerTitle: Map<String, Pair<AssetFileDescriptor, SongMetaData>>
+
+    // File descriptor for files in assets folder
     private lateinit var fileDescriptorAndMetaDataPerTitle: Map<String, Pair<FileDescriptor, SongMetaData>>
     private lateinit var playlistNames: MutableSet<String>
     private lateinit var currentMetaData: SongMetaData
 
     fun soundInitWithSpotifyMetadata(playlist: List<SongMetaData>) {
         // Convert asset file descriptor to file descriptor
-        fileDescriptorAndMetaDataPerTitle = localSoundDataSource.fetchSoundFileDescriptors(playlist).mapValues { entry -> Pair(entry.value.first.fileDescriptor, entry.value.second)}
+        assetFileDescriptorAndMetaDataPerTitle =
+            localSoundDataSource.fetchSoundFileDescriptors(playlist)
         playlistNames = refreshPlaylist()
         currentMetaData = SongMetaData("", "", "")
     }
@@ -29,38 +35,37 @@ class GameSound(val assetManager: AssetManager) {
     fun soundInitFromLocalStorage(from: DocumentFile, contentResolver: ContentResolver) {
         val pdf = contentResolver.openFileDescriptor(from.listFiles()[0].uri, "r")
         mediaMetadataRetriever.setDataSource(pdf!!.fileDescriptor)
-
         val title =
-            mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
-                .toString()
-
-        fileDescriptorAndMetaDataPerTitle = from.listFiles().filter { it.isFile }.filter { it.name?.endsWith("mp3") ?: false }
-            ?.map { contentResolver.openFileDescriptor(it.uri, "r") }
-            ?.associateBy({
-                // Get the title
-                mediaMetadataRetriever.setDataSource(it!!.fileDescriptor)
-                return@associateBy mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
-                    .toString()
-            }, {
-                val author =
-                    mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+        mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+            .toString()
+        fileDescriptorAndMetaDataPerTitle =
+            from.listFiles().filter { it.isFile }.filter { it.name?.endsWith("mp3") ?: false }
+                ?.map { contentResolver.openFileDescriptor(it.uri, "r") }
+                ?.associateBy({
+                    // Get the title
+                    mediaMetadataRetriever.setDataSource(it!!.fileDescriptor)
+                    return@associateBy mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
                         .toString()
-                val title =
-                    mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
-                        .toString()
+                }, {
+                    val author =
+                        mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+                            .toString()
+                    val title =
+                        mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+                            .toString()
 
-                return@associateBy Pair(
-                    it!!.fileDescriptor,
-                    SongMetaData(title, author, "")
-                )
-            }) ?: emptyMap()
+                    return@associateBy Pair(
+                        it!!.fileDescriptor,
+                        SongMetaData(title, author, "")
+                    )
+                }) ?: emptyMap()
 
-        playlistNames = refreshPlaylist()
+        playlistNames = refreshPlaylist(true)
         currentMetaData = SongMetaData("", "", "")
     }
 
-    private fun refreshPlaylist(): MutableSet<String> {
-        return fileDescriptorAndMetaDataPerTitle.keys.toSet() as MutableSet<String>
+    private fun refreshPlaylist(fromLocalStorage: Boolean = false): MutableSet<String> {
+        return (if (fromLocalStorage)  fileDescriptorAndMetaDataPerTitle else assetFileDescriptorAndMetaDataPerTitle).keys.toSet() as MutableSet<String>
     }
 
     fun soundTeardown() {
@@ -72,27 +77,37 @@ class GameSound(val assetManager: AssetManager) {
         return currentMetaData
     }
 
-    fun nextRound(): SongMetaData {
+    fun nextRound(fromLocalStorage: Boolean = false): SongMetaData {
         // Stop the music
         pause()
         reset()
 
         if (playlistNames.isEmpty())
-            playlistNames = refreshPlaylist()
+            playlistNames = refreshPlaylist(fromLocalStorage)
 
         // Get a random title
         val random = Random()
         val title = playlistNames.elementAt(random.nextInt(playlistNames.size))
-        val fileDescriptor = fileDescriptorAndMetaDataPerTitle[title]?.first
-        currentMetaData = fileDescriptorAndMetaDataPerTitle[title]?.second!!
 
         // Remove it to the playlist
         playlistNames.remove(title)
 
         // Get a random time
-        //Log.d("test", super.timeToFind.toString())
-        fileDescriptor?.let { player.setDataSource(fileDescriptor) }
-        fileDescriptor?.let { mediaMetadataRetriever.setDataSource(fileDescriptor) }
+        if(fromLocalStorage){
+            val fileDescriptor = fileDescriptorAndMetaDataPerTitle[title]?.first
+            currentMetaData = fileDescriptorAndMetaDataPerTitle[title]?.second!!
+
+            fileDescriptor?.let { player.setDataSource(fileDescriptor) }
+            fileDescriptor?.let { mediaMetadataRetriever.setDataSource(fileDescriptor) }
+        }
+        else {
+            val assetFileDescriptor = assetFileDescriptorAndMetaDataPerTitle[title]?.first
+            currentMetaData = assetFileDescriptorAndMetaDataPerTitle[title]?.second!!
+
+            assetFileDescriptor?.let { player.setDataSource(assetFileDescriptor.fileDescriptor, assetFileDescriptor.startOffset, assetFileDescriptor.length) }
+            assetFileDescriptor?.let { mediaMetadataRetriever.setDataSource(assetFileDescriptor.fileDescriptor, assetFileDescriptor.startOffset, assetFileDescriptor.length) }
+        }
+
         /**
         val time = random.nextInt(mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toInt()
         ?.minus(this.timeToFind) ?: 1)
