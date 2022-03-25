@@ -2,7 +2,6 @@ package ch.epfl.sdp.blindwar.ui.tutorial
 
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -12,7 +11,6 @@ import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.GameSolo
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
-
 import ch.epfl.sdp.blindwar.domain.game.Tutorial.gameInstance
 
 open class DemoActivity: AppCompatActivity() {
