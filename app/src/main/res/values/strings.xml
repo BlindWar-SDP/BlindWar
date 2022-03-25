@@ -50,8 +50,7 @@
     <string name="statisticsShowText">You have 4 wins and 8 losses</string>
     <string name="your_elo_here">Your elo here</string>
     <string name="elo">ELO:</string>
-
-
+    
     <!-- TODO: Remove or change this placeholder text -->
     <string name="tutorial">TUTORIAL</string>
     <string name="recognize_file">Recognize File</string>
