@@ -7,11 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import ch.epfl.sdp.blindwar.database.UserDatabase
-<<<<<<< HEAD
 import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
-=======
 import com.firebase.ui.auth.AuthUI
->>>>>>> main
 
 class MainMenuActivity : AppCompatActivity() {
 
