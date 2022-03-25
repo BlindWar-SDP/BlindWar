@@ -60,7 +60,7 @@ class MainMenuActivityTest : TestCase() {
     fun testLogoutButton() {
         onView(withId(R.id.logoutButton))
             .perform(click())
-        intended(hasComponent(LoginActivity::class.java.name))
+        intended(hasComponent(SplashScreenActivity::class.java.name))
     }
 
     @Test

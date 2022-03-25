@@ -15,6 +15,7 @@
     <string name="Btn_email">e-mail</string>
     <string name="Btn_google">Google</string>
     <string name="confirm">Confirm</string>
+    <string name="ok">OK</string>
 
     <!--  Tutorial  -->
     <string name="play_button_description">Click here to play or stop the game</string>
@@ -51,7 +52,7 @@
     <string name="elo">ELO:</string>
 
 
-    <!--  to Classify  -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="tutorial">TUTORIAL</string>
     <string name="recognize_file">Recognize File</string>
     <string name="recognize_microphone_vosk">Recognize Microphone Offline(Vosk)</string>
@@ -83,9 +84,18 @@
     <string name="formats_textview">Formats</string>
     <string name="commands_textview">Commands</string>
     <string name="game_options_textview">Game Options</string>
+<<<<<<< HEAD
     <string name="tutorial_music_set">Tutorial music set</string>
     <string name="online_music">Online Music</string>
     <string name="your_musics">Your musics</string>
+=======
+    <string name="Pseudo_AvailableChars">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
+    <string name="birthDate_txt">dd/mm/yyyy</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="song_summary_artist">Artist image view</string>
+    <string name="demo_tutorial_artist">Artist image</string>
+    <string name="editText_VoskActivity_result">Talk to fill</string>
+>>>>>>> main
 
     <string name="example_elo">1435</string>
     <string name="wins">Wins:</string>
@@ -119,10 +129,4 @@
         <item>NoScrum</item>
         <item>PlzHelp</item>
     </string-array>
-
-    <string name="song_summary_artist">Artist image view</string>
-    <string name="demo_tutorial_artist">Artist image</string>
-    <string name="editText_VoskActivity_result">Talk to fill</string>
-
-
 </resources>

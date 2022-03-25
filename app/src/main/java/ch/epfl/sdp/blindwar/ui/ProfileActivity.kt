@@ -10,10 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.user.User
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -94,7 +95,10 @@ class ProfileActivity : AppCompatActivity() {
 
 
     fun logoutButton(view: View) {
-        startActivity(Intent(this, LoginActivity::class.java))
+        AuthUI.getInstance().signOut(this).addOnCompleteListener {
+            startActivity(Intent(this, SplashScreenActivity::class.java))
+        }
+
     }
 
 
