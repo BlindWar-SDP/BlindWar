@@ -20,20 +20,21 @@ class GameSound(val assetManager: AssetManager) {
     private lateinit var currentMetaData: SongMetaData
 
     fun soundInitWithSpotifyMetadata(playlist: List<SongMetaData>) {
-        fileDescriptorAndMetaDataPerTitle = localSoundDataSource.fetchSoundFileDescriptors(playlist)
+        // Convert asset file descriptor to file descriptor
+        fileDescriptorAndMetaDataPerTitle = localSoundDataSource.fetchSoundFileDescriptors(playlist).mapValues { entry -> Pair(entry.value.first.fileDescriptor, entry.value.second)}
         playlistNames = refreshPlaylist()
         currentMetaData = SongMetaData("", "", "")
     }
 
     fun soundInitFromLocalStorage(from: DocumentFile, contentResolver: ContentResolver) {
         val pdf = contentResolver.openFileDescriptor(from.listFiles()[0].uri, "r")
-        val mmr = MediaMetadataRetriever()
         mediaMetadataRetriever.setDataSource(pdf!!.fileDescriptor)
 
         val title =
             mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
                 .toString()
-        from.listFiles().filter { it.isFile }.filter { it.name?.endsWith("mp3") ?: false }
+
+        fileDescriptorAndMetaDataPerTitle = from.listFiles().filter { it.isFile }.filter { it.name?.endsWith("mp3") ?: false }
             ?.map { contentResolver.openFileDescriptor(it.uri, "r") }
             ?.associateBy({
                 // Get the title
@@ -49,11 +50,12 @@ class GameSound(val assetManager: AssetManager) {
                         .toString()
 
                 return@associateBy Pair(
-                    it,
-                    SongImageUrlConstants.SONG_MAP[author]!!
+                    it!!.fileDescriptor,
+                    SongMetaData(title, author, "")
                 )
             }) ?: emptyMap()
 
+        playlistNames = refreshPlaylist()
         currentMetaData = SongMetaData("", "", "")
     }
 

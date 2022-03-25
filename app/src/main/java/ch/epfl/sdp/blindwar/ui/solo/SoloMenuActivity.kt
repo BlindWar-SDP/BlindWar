@@ -44,6 +44,7 @@ class SoloMenuActivity : AppCompatActivity() {
 
                     val game = GameSoloFromLocalStorage(gameInstance, assets, pickedDir, applicationContext.contentResolver).also { it.init() }
                     game.play()
+                    game.nextRound()
                 }
             }
         }
