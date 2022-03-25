@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.ui
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import ch.epfl.sdp.blindwar.user.AppStatistics
 import ch.epfl.sdp.blindwar.user.User
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import java.util.*
 
 
 class NewUserActivity : AppCompatActivity() {
@@ -23,16 +25,35 @@ class NewUserActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_user)
 
     }
+    companion object{
+        private var birthDate0: Long? = null
+        private const val minAge = 5
+        private const val maxAge = 100
+    }
 
     fun confirm(view: View){
         val pseudo: String = findViewById<EditText>(R.id.NU_pseudo).text.toString()
         val firstName: String? = findViewById<EditText>(R.id.NU_FirstName).text.toString()
         val lastName: String? = findViewById<EditText>(R.id.NU_LastName).text.toString()
-        val birthDate: Long? = findViewById<CalendarView>(R.id.NU_calendar).date
+        val birthDate: Long? = birthDate0
 //        var profilePicture: Uri? = null
 
         createUser(pseudo, firstName, lastName, birthDate /*profilePicture*/)
         startActivity(Intent(this, MainMenuActivity::class.java))
+    }
+
+    fun selectBirthdate(view: View) {
+        val calendar: Calendar = Calendar.getInstance() // current date
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH)
+        calendar.add(Calendar.YEAR, -minAge)
+        val year = calendar.get(Calendar.YEAR)
+        val datePickerDialog =
+            DatePickerDialog(this, { _, mYear, mDay, mMonth -> setDate(mYear, mMonth+1, mDay) }, year, month,day)
+        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
+        calendar.add(Calendar.YEAR, -maxAge)
+        datePickerDialog.datePicker.minDate = calendar.timeInMillis
+        datePickerDialog.show()
     }
 
 
@@ -80,5 +101,11 @@ class NewUserActivity : AppCompatActivity() {
 
     private fun checkNotDefault(value: String?, default:Int): String?{
         return  if (value == default.toString()) null else value
+    }
+
+    private fun setDate(year:Int, month:Int, day:Int) {
+        val cal: Calendar = Calendar.getInstance()
+        cal.set(year, month, day)
+        birthDate0 = cal.timeInMillis
     }
 }
