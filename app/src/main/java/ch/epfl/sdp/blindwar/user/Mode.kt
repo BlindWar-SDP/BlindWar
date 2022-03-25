@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.ui
+package ch.epfl.sdp.blindwar.user
 
 enum class Mode {
     SOLO, MULTI

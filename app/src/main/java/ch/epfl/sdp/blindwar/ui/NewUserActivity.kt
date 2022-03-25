@@ -1,10 +1,21 @@
 package ch.epfl.sdp.blindwar.ui
 
+import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.CalendarView
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.user.AppStatistics
+import ch.epfl.sdp.blindwar.user.User
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+
 
 class NewUserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,31 +24,61 @@ class NewUserActivity : AppCompatActivity() {
 
     }
 
-    fun confirm(view: View) {
-//        val pseudo: String? = findViewById<EditText>(R.id.NU_pseudo).text.toString()
-//        val firstName: String? = findViewById<EditText>(R.id.NU_FirstName).text.toString()
-//        val lastName: String? = findViewById<EditText>(R.id.NU_LastName).text.toString()
-//        val birthDate: Long? = findViewById<CalendarView>(R.id.NU_birthdate).date
-//        createUser(pseudo, firstName, lastName, birthDate)
+    fun confirm(view: View){
+        val pseudo: String = findViewById<EditText>(R.id.NU_pseudo).text.toString()
+        val firstName: String? = findViewById<EditText>(R.id.NU_FirstName).text.toString()
+        val lastName: String? = findViewById<EditText>(R.id.NU_LastName).text.toString()
+        val birthDate: Long? = findViewById<CalendarView>(R.id.NU_calendar).date
+//        var profilePicture: Uri? = null
+
+        createUser(pseudo, firstName, lastName, birthDate /*profilePicture*/)
         startActivity(Intent(this, MainMenuActivity::class.java))
     }
 
-//    private fun createUser(pseudo: String?, firstName: String?, lastName: String?, birthDate: Long?) {
-//        val user = Firebase.auth.currentUser
-//        user?.let {
-//            // Name, email address, and profile photo Url
-////            val name = user.displayName
-////            val email = user.email
-////            val photoUrl = user.photoUrl
-//
-//            // Check if user's email is verified
-////            val emailVerified = user.isEmailVerified
-//
-//            // The user's ID, unique to the Firebase project. Do NOT use this value to
-//            // authenticate with your backend server, if you have one. Use
-//            // FirebaseUser.getToken() instead.
-////            val uid = user.uid
-//            User.Builder(user.email!!, AppStatistics(), pseudo, firstName, lastName, birthDate, null).build().registerUser()
-//        }
-//    }
+
+    fun clearPseudo(view:View) {
+        clearText(R.id.NU_pseudo, R.string.text_pseudo)
+    }
+    fun clearFirstName(view:View) {
+        clearText(R.id.NU_FirstName, R.string.first_name)
+    }
+    fun clearLastName(view:View) {
+        clearText(R.id.NU_LastName, R.string.last_name)
+    }
+
+    private fun clearText(id:Int, str:Int){
+        val textView = findViewById<EditText>(id)
+        val baseText = getText(str).toString()
+        val newText = textView.text.toString()
+        if (baseText == newText){
+            textView.text.clear()
+        }
+    }
+    private fun createUser(
+        pseudo: String,
+        firstName: String?,
+        lastName: String?,
+        birthDate: Long? /*profilePicture: Uri?*/
+    ) {
+        // set default value to null:
+
+//        checkPseudo(pseudo)
+        val user = Firebase.auth.currentUser
+        user?.let {
+            UserDatabase().addUser(
+                user.uid,
+                User.Builder(
+                    user.email!!,
+                    AppStatistics(),
+                    pseudo,
+                    checkNotDefault(firstName, R.string.first_name),
+                    checkNotDefault(lastName, R.string.last_name),
+                    birthDate /*profilePicture*/
+                ).build())
+        }
+    }
+
+    private fun checkNotDefault(value: String?, default:Int): String?{
+        return  if (value == default.toString()) null else value
+    }
 }
