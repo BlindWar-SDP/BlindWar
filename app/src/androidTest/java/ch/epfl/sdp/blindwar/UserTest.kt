@@ -21,7 +21,7 @@ class UserTest {
     private var birthDate1: Long = 1312341234
     private var birthDate2: Long = 1312341234
     private var userStatistics: AppStatistics = AppStatistics()
-    private var profilePicture: Uri? = null
+    private var profilePicture: String? = ""
 
     private lateinit var testUser1: User
 

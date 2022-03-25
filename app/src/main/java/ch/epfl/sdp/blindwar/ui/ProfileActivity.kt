@@ -1,14 +1,20 @@
 package ch.epfl.sdp.blindwar.ui
 
+import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -16,6 +22,9 @@ import com.google.firebase.database.ktx.getValue
 
 class ProfileActivity : AppCompatActivity() {
     private val database = UserDatabase()
+    private val imageDatabase = ImageDatabase()
+    private val currentUser = FirebaseAuth.getInstance().currentUser
+
     private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             // Get User info and use the values to update the UI
@@ -38,20 +47,56 @@ class ProfileActivity : AppCompatActivity() {
     }
 
 
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            if (data != null) {
+                if (data.data != null) {
+                    val profilePic = findViewById<ImageView>(R.id.profileImageView)
+                    profilePic!!.setImageURI(data.data)
+
+                    // Upload picture to database
+                    val imagePath = imageDatabase.uploadImage(data.data!!,
+                        findViewById(android.R.id.content))
+
+                    // Update user profilePic
+                    database.addProfilePicture("JOJO", imagePath)
+
+                }
+            }
+
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // user id should be set according to authentication
-        database.addUserListener("JOJO", userInfoListener)
+        if (currentUser != null) {
+            database.addUserListener(currentUser.uid, userInfoListener)
+        }
         setContentView(R.layout.activity_profile)
+        val profilePic = findViewById<ImageView>(R.id.profileImageView)
+        /*
+        profilePic.setOnClickListener {
+            choosePicture()
+        } */
+
     }
+
+
+    fun choosePicture(view: View) {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        resultLauncher.launch(intent)
+    }
+
 
     fun logoutButton(view: View) {
         startActivity(Intent(this, LoginActivity::class.java))
     }
 
-    fun backToMainButton(view: View) {
-        startActivity(Intent(this, MainMenuActivity::class.java))
-    }
 
     fun statisticsButton(view: View) {
         startActivity(Intent(this, StatisticsActivity::class.java))
