@@ -17,13 +17,13 @@ import ch.epfl.sdp.blindwar.domain.game.Tutorial.gameInstance
 open class DemoActivity: AppCompatActivity() {
     /** TODO: Refactor Game class to avoid this encapsulation leak **/
     lateinit var game: GameSolo
-    private var playing = true
+    protected var playing = true
     protected lateinit var guessEditText: EditText
     protected lateinit var scoreTextView: TextView
     protected lateinit var songMetaData: SongMetaData
     private lateinit var guessButton: Button
     protected lateinit var countDown: TextView
-    protected var duration: Int = 0
+    private var duration: Int = 0
     private lateinit var timer: CountDownTimer
 
     private lateinit var gameSummary: GameSummaryFragment
@@ -63,26 +63,13 @@ open class DemoActivity: AppCompatActivity() {
         guessButton = findViewById(R.id.guessButton)
     }
 
-    open fun playAndPause(view: View) {
-        playing = if(playing) {
-            game.pause()
-            pauseAnim()
-            false
-
-        } else {
-            game.play()
-            resumeAnim()
-            true
-        }
-    }
-
     override fun onPause() {
         super.onPause()
         game.pause()
     }
 
     open fun guess(view: View) {
-        Log.d("ZAMBO ANGUISSA", guessEditText.text.toString())
+        //Log.d("ZAMBO ANGUISSA", guessEditText.text.toString())
         if(game.guess(guessEditText.text.toString())) {
             // Update the number of point view
             scoreTextView.text = game.score.toString()

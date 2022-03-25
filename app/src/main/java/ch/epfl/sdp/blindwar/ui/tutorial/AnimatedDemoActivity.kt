@@ -35,6 +35,19 @@ class AnimatedDemoActivity : DemoActivity() {
         super.countDown = findViewById(R.id.countdown)
     }
 
+    fun playAndPause(view: View) {
+        super.playing = if(playing) {
+            super.game.pause()
+            pauseAnim()
+            false
+
+        } else {
+            super.game.play()
+            resumeAnim()
+            true
+        }
+    }
+
     /** Override animation hooks **/
     override fun disableAnim(code: Int) {
         crossAnim.visibility = code
