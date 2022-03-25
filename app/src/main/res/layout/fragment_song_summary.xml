@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/success">
+    android:id="@+id/song_summary_fragment"
+    android:background="@color/black">
+
 
     <TextView
         android:id="@+id/timeTextView"
@@ -13,40 +15,41 @@
         android:layout_marginTop="16dp"
         android:text="TIME"
         android:textColor="@color/white"
-        android:textSize="35sp"
+        android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
+        app:layout_constraintHorizontal_bias="0.052"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/artistTextView"
-        android:layout_width="366dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="402dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/public_sans"
+        android:gravity="center"
         android:text="ARTIST"
         android:textColor="@color/white"
-        android:textSize="40sp"
+        app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/timeTextView"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timeTextView" />
-
 
     <TextView
         android:id="@+id/trackTextView"
-        android:layout_width="368dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="401dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="8dp"
         android:color="@color/white"
-        android:fontFamily="@font/public_sans"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
         android:text="TRACK"
-        android:textSize="45sp"
         android:textStyle="bold"
+        app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="@+id/artistTextView"
         app:layout_constraintTop_toBottomOf="@+id/artistTextView" />
 
@@ -59,22 +62,21 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trackTextView"
-        android:contentDescription="@string/song_summary_artist"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="66dp"
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/likeView"
+        android:layout_width="65dp"
         android:layout_height="63dp"
-        android:layout_marginTop="64dp"
-        android:contentDescription="@string/blindwar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/artistImageView"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/circle_button" />
-
+        app:layout_constraintVertical_bias="0.239"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false"
+        app:lottie_speed="2"
+        app:lottie_fileName="likeAnim.json"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
