@@ -14,6 +14,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isClickable
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.ui.tutorial.AnimatedDemoActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.DemoActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialContinueToDemoFragment
 import org.junit.Test
@@ -27,6 +28,6 @@ class TutorialContinueToDemoFragmentTest {
         launchFragmentInContainer<TutorialContinueToDemoFragment>()
         init()
         onView(withId(R.id.continueDemoButton)).perform(click())
-        intended(hasComponent(DemoActivity::class.java.name))
+        intended(hasComponent(AnimatedDemoActivity::class.java.name))
     }
 }

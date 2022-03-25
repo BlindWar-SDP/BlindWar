@@ -16,7 +16,6 @@ import com.squareup.picasso.Picasso
 
 class SongSummaryFragment : Fragment() {
     private lateinit var likeAnim: LottieAnimationView
-    private lateinit var confAnim: LottieAnimationView
     private var likeSwitch: Boolean = false
     private var success: Boolean = false
 
@@ -26,7 +25,7 @@ class SongSummaryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view: View =
-            inflater!!.inflate(R.layout.fragment_song_summary, container, false)
+            inflater.inflate(R.layout.fragment_song_summary, container, false)
 
         val artistView = view.findViewById<ImageView>(R.id.artistImageView)
         val artistText = view.findViewById<TextView>(R.id.artistTextView)
@@ -39,7 +38,7 @@ class SongSummaryFragment : Fragment() {
             arguments?.getBoolean("liked")!!
         }  else false
 
-        setLikeListener()
+        //setLikeListener()
 
         /** Background color **/
         success = arguments?.get("success") as Boolean
@@ -51,26 +50,6 @@ class SongSummaryFragment : Fragment() {
             background.setBackgroundColor(resources.getColor(R.color.black))
         }
 
-        //confAnim.playAnimation()
-        //confAnim.repeatCount = 0
-
-        /**
-        artistText.text = arguments?.get("Artist").toString()
-        trackText.text = arguments?.get("Title").toString()
-        Picasso.get().load(arguments?.get("Image")!!.toString()).into(artistView)
-            viewModel.selectedMetadata.observe(viewLifecycleOwner) { it ->
-            artistText.text = it.artist
-            trackText.text = it.title
-            Picasso.get().load(it.imageUrl).into(artistView)
-            }
-        **/
-
-        /**
-        artistText.text = viewModel.selectedMetadata.value?.artist
-        trackText.text = viewModel.selectedMetadata.value?.title
-        Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl).into(artistView)
-        **/
-
         /** TODO: define constant key Strings **/
         artistText.text = arguments?.get("artist").toString()
         trackText.text = arguments?.get("title").toString()
@@ -79,6 +58,7 @@ class SongSummaryFragment : Fragment() {
         return view
     }
 
+    /**
     private fun setLikeListener() {
         if (likeSwitch) {
             likeAnim.setMinAndMaxFrame(45, 70)
@@ -102,7 +82,7 @@ class SongSummaryFragment : Fragment() {
 
             likeSwitch = !likeSwitch
         }
-    }
+    }**/
 
     fun liked(): Boolean {
         return likeSwitch

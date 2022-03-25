@@ -16,7 +16,7 @@ private val mediaMetadataRetriever: MediaMetadataRetriever) {
     }
 
     private fun filterAssetsPlaylist(playlist: List<SongMetaData>): List<String>? {
-        return assetManager.list("")?.filter { it.endsWith(".mp3") && playlist.any{s -> (it.contains(s.title) && (it.contains(s.artist)))}}
+        return assetManager.list("")?.filter { it.endsWith(".mp3")}
     }
 
     private fun assetMatcher(assets: List<String>?): Map<String, Pair<FileDescriptor, SongMetaData>>  {

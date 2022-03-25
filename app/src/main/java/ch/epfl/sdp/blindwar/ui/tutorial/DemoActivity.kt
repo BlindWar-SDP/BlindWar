@@ -2,33 +2,29 @@ package ch.epfl.sdp.blindwar.ui.tutorial
 
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
-import android.widget.*
-//import androidx.appcompat.app.AppCompatActivity
-//import androidx.fragment.app.FragmentTransaction
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.GameTutorial
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 import ch.epfl.sdp.blindwar.domain.game.Tutorial.gameInstance
-//import com.airbnb.lottie.LottieAnimationView
-//import com.airbnb.lottie.LottieDrawable.RESTART
-//import com.airbnb.lottie.LottieDrawable.REVERSE
 
-class DemoActivity: AppCompatActivity() {
+open class DemoActivity: AppCompatActivity() {
     /** TODO: Refactor Game class to avoid this encapsulation leak **/
-    internal lateinit var game: GameTutorial
+    lateinit var game: GameTutorial
     private var playing = true
-    private lateinit var guessEditText: EditText
-    private lateinit var scoreTextView: TextView
-    private lateinit var songMetaData: SongMetaData
+    protected lateinit var guessEditText: EditText
+    protected lateinit var scoreTextView: TextView
+    protected lateinit var songMetaData: SongMetaData
     private lateinit var guessButton: Button
-    //private lateinit var crossAnim: LottieAnimationView
-    //private lateinit var startButton: LottieAnimationView
-    //private lateinit var audioVisualizer: LottieAnimationView
-    private lateinit var countDown: TextView
+    protected lateinit var countDown: TextView
+    protected var duration: Int = 0
     private lateinit var timer: CountDownTimer
-    private var duration: Int = 0
-    private var toggle: Boolean = false
 
     private lateinit var gameSummary: GameSummaryFragment
 
@@ -36,7 +32,6 @@ class DemoActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_demo)
 
-        countDown = findViewById(R.id.countdown)
         // Game instance tutorial
         game = GameTutorial(gameInstance, assets)
         game.init()
@@ -53,6 +48,7 @@ class DemoActivity: AppCompatActivity() {
 
         // Create and start countdown
         timer = createCountDown().start()
+        countDown = findViewById(R.id.countdown)
 
         // Cache song image
         //Picasso.get().load(songMetaData.imageUrl)
@@ -64,30 +60,18 @@ class DemoActivity: AppCompatActivity() {
         guessEditText = findViewById(R.id.guessEditText)
         guessEditText.hint = songMetaData.artist
         scoreTextView = findViewById(R.id.scoreTextView)
-
-        crossAnim = findViewById(R.id.cross)
-        crossAnim.repeatCount = 1
-
-        startButton = findViewById<Button>(R.id.startButton)
-        audioVisualizer = findViewById<LottieAnimationView>(R.id.audioVisualizer)
-        startButton.setMinAndMaxFrame(30, 50)
         guessButton = findViewById(R.id.guessButton)
     }
 
-    fun playAndPause(view: View) {
+    open fun playAndPause(view: View) {
         playing = if(playing) {
             game.pause()
-            audioVisualizer.pauseAnimation()
-            startButton.setMinAndMaxFrame(30, 55)
-            //startButton.repeatCount = 0
-            startButton.playAnimation()
+            pauseAnim()
             false
 
         } else {
             game.play()
-            audioVisualizer.resumeAnimation()
-            startButton.setMinAndMaxFrame(10, 25)
-            startButton.playAnimation()
+            resumeAnim()
             true
         }
     }
@@ -97,18 +81,14 @@ class DemoActivity: AppCompatActivity() {
         game.pause()
     }
 
-    fun guess(view: View) {
-        // Try to guess
-        //Log.d("guesses", guessEditText.text.toString())
+    open fun guess(view: View) {
+        Log.d("ZAMBO ANGUISSA", guessEditText.text.toString())
         if(game.guess(guessEditText.text.toString())) {
             // Update the number of point view
             scoreTextView.text = game.score.toString()
             launchSongSummary(success = true)
         } else {
-            /** Resets the base frame value of the animation and keep the reversing mode **/
-            crossAnim.repeatMode = RESTART
-            crossAnim.repeatMode = REVERSE
-            crossAnim.playAnimation()
+            animNotFound()
         }
 
         // Delete the text of the guess
@@ -131,16 +111,13 @@ class DemoActivity: AppCompatActivity() {
     }
 
     private fun setVisibilityLayout(code: Int) {
-        crossAnim.visibility = code
-        countDown.visibility = code
-        audioVisualizer.visibility = code
         guessButton.visibility = code
         scoreTextView.visibility = code
         guessEditText.visibility = code
-        startButton.visibility = code
+        disableAnim(code)
     }
 
-    private fun launchSongSummary(success: Boolean) {
+    protected fun launchSongSummary(success: Boolean) {
         setVisibilityLayout(View.GONE)
         timer.cancel()
 
@@ -176,41 +153,47 @@ class DemoActivity: AppCompatActivity() {
      * TODO: Fix some behaviors depending on the type and number of fragments
      */
     override fun onBackPressed() {
-            // If a song summary fragment is on the screen
-            if (supportFragmentManager.backStackEntryCount > 0
-                && supportFragmentManager.fragments[0] is SongSummaryFragment) {
+        // If a song summary fragment is on the screen
+        if (supportFragmentManager.backStackEntryCount > 0
+            && supportFragmentManager.fragments[0] is SongSummaryFragment) {
 
-                /** Make it as a function **/
-                val songRecord = SongSummaryFragment()
-                val songFragment = (supportFragmentManager.fragments[0] as SongSummaryFragment)
-                val bundle = createBundleSongSummary(songFragment.success())
+            /** Make it as a function **/
+            val songRecord = SongSummaryFragment()
+            val songFragment = (supportFragmentManager.fragments[0] as SongSummaryFragment)
+            val bundle = createBundleSongSummary(songFragment.success())
 
-                bundle.putBoolean("liked", songFragment.liked())
-                songRecord.arguments = bundle
-                gameSummary.setSongFragment(songRecord)
-                supportFragmentManager.popBackStackImmediate()
+            bundle.putBoolean("liked", songFragment.liked())
+            songRecord.arguments = bundle
+            gameSummary.setSongFragment(songRecord)
+            supportFragmentManager.popBackStackImmediate()
 
-                    if (!game.nextRound()) {
-                        setVisibilityLayout(View.VISIBLE)
-                        // Pass to the next music
-                        songMetaData = game.currentMetadata()!!
-                        guessEditText.hint = songMetaData.artist
-                        // Cache song image
-                        // Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
-                        timer.start()
-                    } else {
-                        launchGameSummary()
-                    }
-            }
-
-            else {
-                timer.cancel()
-                super.onBackPressed();
+            if (!game.nextRound()) {
+                setVisibilityLayout(View.VISIBLE)
+                // Pass to the next music
+                songMetaData = game.currentMetadata()!!
+                guessEditText.hint = songMetaData.artist
+                // Cache song image
+                // Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
+                timer.start()
+            } else {
+                launchGameSummary()
             }
         }
+
+        else {
+            timer.cancel()
+            super.onBackPressed();
+        }
+    }
 
     override fun onDestroy() {
         timer.cancel()
         super.onDestroy()
     }
+
+    /** Temporary solution : Animation hooks **/
+    open fun animNotFound() {}
+    open fun disableAnim(code: Int) {}
+    open fun pauseAnim() {}
+    open fun resumeAnim() {}
 }

@@ -39,7 +39,6 @@ class TutorialActivityTest {
      */
     @Before
     fun setUp() {
-        val layoutId = R.layout.activity_tutorial
         testRule.scenario.onActivity {
             viewPager = it.findViewById(R.id.pager)
         }

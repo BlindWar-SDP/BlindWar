@@ -22,7 +22,7 @@ class GameSummaryFragment : Fragment() {
     ): View {
 
         val view: View =
-            inflater!!.inflate(R.layout.fragment_game_summary, container, false)
+            inflater.inflate(R.layout.fragment_game_summary, container, false)
 
         viewPager = view.findViewById(R.id.pager)
         adapter = ViewPagerAdapter(fragments, requireActivity())
