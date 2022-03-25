@@ -19,41 +19,45 @@ interface SpotifyApi {
         ACCEPT,
         CONTENT_TYPE,
     )
-    suspend fun getArtist(@Header(AUTH) token: String,
-                          @Path(ARTIST_ID) artist_id: String): Response<SpotifyArtist>
+    suspend fun getArtist(
+        @Header(AUTH) token: String,
+        @Path(ARTIST_ID) artist_id: String
+    ): Response<SpotifyArtist>
 
     @POST(API_PATH)
     @FormUrlEncoded
     @Headers(URL_ENCODED_FORM)
-    suspend fun getToken(@Header(AUTH) credentials: String,
-                         @Field(GRANT_TYPE) grant_type:String): Response<SpotifyToken>
+    suspend fun getToken(
+        @Header(AUTH) credentials: String,
+        @Field(GRANT_TYPE) grant_type: String
+    ): Response<SpotifyToken>
 
     /**
     @GET(ARTIST_PATH)
     @Headers(
-        ACCEPT,
-        CONTENT_TYPE,
+    ACCEPT,
+    CONTENT_TYPE,
     )
     suspend fun searchArtist(@Header(AUTH) token: String,
-                             @Path(ARTIST_ID) artist_id: String,
-                             @Query(LIMIT) limit: Int): Response<SpotifyArtist>
-    
+    @Path(ARTIST_ID) artist_id: String,
+    @Query(LIMIT) limit: Int): Response<SpotifyArtist>
+
     @GET(TRACK_PATH)
     @Headers(
-        ACCEPT,
-        CONTENT_TYPE
+    ACCEPT,
+    CONTENT_TYPE
     )
     suspend fun getTrack(@Header(AUTH) token: String,
-                         @Path(TRACK_ID) track_id: String): Response<SpotifyTrack>
+    @Path(TRACK_ID) track_id: String): Response<SpotifyTrack>
 
     @GET(TRACK_PATH)
     @Headers(
-        ACCEPT,
-        CONTENT_TYPE
+    ACCEPT,
+    CONTENT_TYPE
     )
     suspend fun searchTrack(@Header(AUTH) token: String,
-                            @Path(TRACK_ID) track_id: String,
-                            @Query(LIMIT) limit: Int): Response<SpotifyTrack>
+    @Path(TRACK_ID) track_id: String,
+    @Query(LIMIT) limit: Int): Response<SpotifyTrack>
 
-    **/
+     **/
 }

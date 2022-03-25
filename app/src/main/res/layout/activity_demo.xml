@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_container">
@@ -13,7 +12,7 @@
         android:fontFamily="@font/public_sans"
         android:text="@string/zero"
         android:textAlignment="center"
-        android:textSize="29dp"
+        android:textSize="29sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guessEditText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +43,6 @@
         android:id="@+id/guessEditText"
         android:layout_width="258dp"
         android:layout_height="52dp"
-        android:layout_marginTop="28dp"
         android:ems="10"
         android:gravity="center"
         android:inputType="textPersonName"
@@ -52,9 +50,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/guessButton"
+        app:layout_constraintVertical_bias="0.272" />
 
     <Button
         android:id="@+id/guessButton"
@@ -66,8 +63,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guessEditText"
-        app:layout_constraintVertical_bias="0.301" />
-
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.707" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,6 +28,7 @@
         </activity>
         <activity
             android:name=".ui.tutorial.TutorialActivity"
+            android:parentActivityName=".ui.MainMenuActivity"
             android:exported="false"/>
         <activity
             android:name=".ui.MainMenuActivity"
@@ -37,18 +38,22 @@
             android:exported="false" />
         <activity
             android:name=".ui.SoloActivity"
+            android:parentActivityName=".ui.MainMenuActivity"
             android:exported="false" />
         <activity
             android:name=".ui.ProfileActivity"
+            android:parentActivityName=".ui.MainMenuActivity"
             android:exported="false" />
         <activity
             android:name=".ui.tutorial.DemoActivity"
+            android:parentActivityName=".ui.MainMenuActivity"
             android:exported="false" />
         <activity
             android:name=".ui.tutorial.AnimatedDemoActivity"
             android:exported="false" />
         <activity
             android:name=".ui.StatisticsActivity"
+            android:parentActivityName=".ui.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".ui.LoginActivity"

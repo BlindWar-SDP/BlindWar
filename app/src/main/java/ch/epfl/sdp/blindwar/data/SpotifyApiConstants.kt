@@ -9,10 +9,12 @@ object SpotifyApiConstants {
     const val AUTH_TYPE = "client_credentials"
 
     fun credentialsEncoding(): String {
-        return "Basic ${Base64.encodeToString(
+        return "Basic ${
+            Base64.encodeToString(
                 "$CLIENT_ID:$CLIENT_SECRET".toByteArray(Charsets.UTF_8),
                 Base64.NO_WRAP
-            )}"
+            )
+        }"
     }
 
     fun tokenParameter(responseToken: SpotifyToken): String {

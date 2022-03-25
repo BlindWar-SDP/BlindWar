@@ -24,6 +24,7 @@ class NewUserActivityTest : TestCase() {
     var testRule = ActivityScenarioRule(
         NewUserActivity::class.java
     )
+
     @Before
     fun setup() {
         Intents.init()
@@ -38,6 +39,6 @@ class NewUserActivityTest : TestCase() {
     fun testConfirmButton() {
         onView(withId(R.id.NU_Confirm_Btn))
             .perform(ViewActions.click())
-            intended(IntentMatchers.hasComponent(MainMenuActivity::class.java.name))
+        intended(IntentMatchers.hasComponent(MainMenuActivity::class.java.name))
     }
 }
