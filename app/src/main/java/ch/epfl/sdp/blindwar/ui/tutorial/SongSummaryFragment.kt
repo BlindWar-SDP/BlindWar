@@ -10,7 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
 import com.airbnb.lottie.LottieAnimationView
-import com.squareup.picasso.Picasso
+//import com.squareup.picasso.Picasso
 
 class SongSummaryFragment : Fragment() {
     private lateinit var likeAnim: LottieAnimationView
@@ -51,7 +51,7 @@ class SongSummaryFragment : Fragment() {
         /** TODO: define constant key Strings **/
         artistText.text = arguments?.get("artist").toString()
         trackText.text = arguments?.get("title").toString()
-        Picasso.get().load(arguments?.get("image").toString()).into(artistView)
+        //Picasso.get().load(arguments?.get("image").toString()).into(artistView)
 
         return view
     }
