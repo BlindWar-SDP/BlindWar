@@ -80,8 +80,7 @@ private class SwipeAction(val direction: Direction) : ViewAction {
             parent as ViewPager2
         }
         val isForward = direction == Direction.FORWARD
-        val swipeAction: ViewAction
-        swipeAction = if (vp.orientation == ViewPager2.ORIENTATION_HORIZONTAL) {
+        val swipeAction: ViewAction = if (vp.orientation == ViewPager2.ORIENTATION_HORIZONTAL) {
             if (isForward == vp.isRtl()) swipeRight() else swipeLeft()
         } else {
             if (isForward) swipeUp() else swipeDown()

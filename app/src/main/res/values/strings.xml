@@ -1,33 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--  General  -->
     <string name="app_name">BlindWar</string>
-    <string name="play_button_description">Click here to play or stop the game</string>
+    <string name="blindwar">BLINDWAR</string>
+    <string name="blind_war">Blind War</string>
+    
+    <!--  Buttons  -->
     <string name="solo">SOLO</string>
     <string name="multi">MULTI</string>
     <string name="profile">PROFILE</string>
     <string name="logout">LOGOUT</string>
     <string name="login">LOGIN</string>
-    <string name="blindwar">BLINDWAR</string>
+    <string name="Btn_email">e-mail</string>
+    <string name="Btn_google">Google</string>
+    <string name="confirm">Confirm</string>
 
-    <string name="disk_anim">https://assets2.lottiefiles.com/packages/lf20_X1YA9O/29 - Music.json</string>
-
+    <!--  Tutorial  -->
+    <string name="play_button_description">Click here to play or stop the game</string>
     <string name="logo_description">Logo of the application</string>
     <string name="format_description"> Survival : Description placeholder
     |Against the Clock :
     |Regular : Description placeholder</string>
-
     <string name="opt_description"> Song Selection : Description placeholder
     |Altered audio : Description placeholder</string>
-
     <string name="comm_description"> Dedicated fragment describing the UI elements :
     |Microphone / Pass / Timer / Settings</string>
-
     <string name="modes_description"> Solo Game : Description placeholder
     |Multi Game : Description placeholder</string>
-
     <string name="song_opt_description"> Random Song Sel : Description placeholder| Custom
     playlist </string>
-    <string name="tutorial">TUTORIAL</string>
-    <string name="blind_war">Blind War</string>
+
+
+    <!--  Text  -->
     <string name="backText"><![CDATA[->]]></string>
     <string name="emailText">Your email here</string>
     <string name="statisticsText">Statistics</string>
@@ -36,9 +41,21 @@
     <string name="logoutText">:( Logout</string>
     <string name="profilePicDescriptionText">The profile picture of the user</string>
     <string name="game">GAME</string>
+    <string name="text_pseudo">Pseudo</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="birthdate_text">Please, enter your Birthdate</string>
+    <string name="eloText">ELO: Your ELO is 1435</string>
+    <string name="statisticsShowText">You have 4 wins and 8 losses</string>
+    <string name="your_elo_here">Your elo here</string>
+    <string name="elo">ELO:</string>
 
+
+    <!--  to Classify  -->
+    <string name="tutorial">TUTORIAL</string>
     <string name="recognize_file">Recognize File</string>
-    <string name="recognize_microphone">Recognize Microphone</string>
+    <string name="recognize_microphone_vosk">Recognize Microphone Offline(Vosk)</string>
+    <string name="recognize_microphone_google">Recognize Microphone Online(Google)</string>
     <string name="stop_microphone">Stop Microphone</string>
     <string name="preparing">Preparing the recognizer\n</string>
     <string name="ready">Ready\n</string>
@@ -67,16 +84,42 @@
     <string name="commands_textview">Commands</string>
     <string name="game_options_textview">Game Options</string>
 
-    <string name="Btn_email">e-mail</string>
-    <string name="Btn_google">Google</string>
-    <string name="text_pseudo">Pseudo</string>
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
-    <string name="birthdate_text">Please, enter your Birthdate</string>
-    <string name="confirm">Confirm</string>
-    <string name="eloText">ELO: Your ELO is 1435</string>
-    <string name="statisticsShowText">You have 4 wins and 8 losses</string>
-    <string name="your_elo_here">Your elo here</string>
-    <string name="elo">ELO:</string>
+    <string name="example_elo">1435</string>
+    <string name="wins">Wins:</string>
+    <string name="win_number">60</string>
+    <string name="win_percent" formatted="false">"25%"</string>
+    <string name="draws">Draws:</string>
+    <string name="draw_number">36</string>
+    <string name="draw_percent" formatted="false">"15%"</string>
+    <string name="losses">Losses:</string>
+    <string name="loss_number">144</string>
+    <string name="loss_percent" formatted="false">"60%"</string>
+
+    <string name="correct">Correct:</string>
+    <string name="correct_number">195</string>
+    <string name="correct_percent" formatted="false">"65%"</string>
+
+    <string name="wrong">Wrong:</string>
+    <string name="wrong_number">105</string>
+    <string name="wrong_percent" formatted="false">"35%"</string>
+
+    <string name="selected_item">Selected item:</string>
+    <string name="select_mode">Select mode</string>
+
+    <string-array name="modes_array">
+        <item>Solo</item>
+        <item>Multi</item>
+        <item>Funny1</item>
+        <item>Funny2</item>
+        <item>Funny3</item>
+        <item>42</item>
+        <item>NoScrum</item>
+        <item>PlzHelp</item>
+    </string-array>
+
+    <string name="song_summary_artist">Artist image view</string>
+    <string name="demo_tutorial_artist">Artist image</string>
+    <string name="editText_VoskActivity_result">Talk to fill</string>
+
 
 </resources>

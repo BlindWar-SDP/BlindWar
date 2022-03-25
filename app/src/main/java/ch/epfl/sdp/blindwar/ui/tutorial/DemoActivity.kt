@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.GameSolo
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
+
 import ch.epfl.sdp.blindwar.domain.game.Tutorial.gameInstance
 
 open class DemoActivity: AppCompatActivity() {

@@ -13,7 +13,7 @@ class NewUserActivity : AppCompatActivity() {
 
     }
 
-    fun confirm(view: View){
+    fun confirm(view: View) {
 //        val pseudo: String? = findViewById<EditText>(R.id.NU_pseudo).text.toString()
 //        val firstName: String? = findViewById<EditText>(R.id.NU_FirstName).text.toString()
 //        val lastName: String? = findViewById<EditText>(R.id.NU_LastName).text.toString()
