@@ -4,24 +4,21 @@ import android.content.Context
 import android.util.Log
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.SONG_MAP
-import junit.framework.Assert.assertEquals
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.Matchers.empty
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
-class GameSoloTest {
+class GameTutorialTest {
     // All possible musics during tutorial
 
     private val assets = ApplicationProvider.getApplicationContext<Context>().assets
 
     @Test
     fun testNextRound() {
-        val gameTutorial = GameSolo(Tutorial.gameInstance, assets)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets)
         gameTutorial.init()
         val round = Tutorial
             .gameInstance
@@ -41,7 +38,7 @@ class GameSoloTest {
 
     @Test
     fun testTwoGoodGuesses() {
-        val gameTutorial = GameSolo(Tutorial.gameInstance, assets)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets)
         gameTutorial.init()
         goodGuess(gameTutorial)
         goodGuess(gameTutorial)
@@ -51,7 +48,7 @@ class GameSoloTest {
 
     @Test
     fun testUpperCaseGuess() {
-        val gameTutorial = GameSolo(Tutorial.gameInstance, assets)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets)
         gameTutorial.init()
         gameTutorial.nextRound()
         val music1 = gameTutorial.currentMetadata()
@@ -62,7 +59,7 @@ class GameSoloTest {
 
     @Test
     fun testTwoGoodAndOneBadGuesses() {
-        val gameTutorial = GameSolo(Tutorial.gameInstance, assets)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets)
         gameTutorial.init()
         goodGuess(gameTutorial)
         goodGuess(gameTutorial)
@@ -71,12 +68,12 @@ class GameSoloTest {
         assertThat(gameTutorial.score, `is`(2))
     }
 
-    private fun goodGuess(gameTutorial: GameSolo) {
+    private fun goodGuess(gameTutorial: GameTutorial) {
         gameTutorial.nextRound()
         gameTutorial.guess(gameTutorial.currentMetadata()?.title!!)
     }
 
-    private fun badGuess(gameTutorial: GameSolo) {
+    private fun badGuess(gameTutorial: GameTutorial) {
         gameTutorial.nextRound()
         gameTutorial.guess("THIS IS NOT A CORRECT TITLE")
     }
