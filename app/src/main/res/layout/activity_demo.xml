@@ -7,52 +7,51 @@
 
     <TextView
         android:id="@+id/scoreTextView"
-        android:layout_width="46dp"
-        android:layout_height="51dp"
+        android:layout_width="36dp"
+        android:layout_height="48dp"
         android:fontFamily="@font/public_sans"
         android:text="@string/zero"
         android:textAlignment="center"
         android:textSize="29sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/startButton"
+        app:layout_constraintBottom_toTopOf="@+id/guessEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.202"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.158" />
+        app:layout_constraintVertical_bias="0.132"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="false"
+        app:lottie_speed="2" />
 
-    <ImageButton
-        android:id="@+id/startButton"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_margin="50dp"
-        android:background="@drawable/circle_button"
-        android:contentDescription="@string/play_button_description"
-        android:onClick="playAndPause"
-        android:padding="15dp"
-        android:src="@drawable/play_arrow"
-        android:textAppearance="?android:textAppearanceLarge"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/countdown"
+        android:layout_width="57dp"
+        android:layout_height="49dp"
+        android:fontFamily="@font/public_sans"
+        android:textAlignment="center"
+        android:textSize="29dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guessEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.681"
+        app:layout_constraintStart_toEndOf="@+id/scoreTextView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.129" />
 
     <EditText
         android:id="@+id/guessEditText"
         android:layout_width="258dp"
         android:layout_height="52dp"
-        android:layout_marginTop="12dp"
         android:ems="10"
-        android:hint="@string/hint_guess"
+        android:gravity="center"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startButton"
-        app:layout_constraintVertical_bias="0.107" />
+        app:layout_constraintTop_toBottomOf="@+id/guessButton"
+        app:layout_constraintVertical_bias="0.272" />
 
     <Button
         android:id="@+id/guessButton"
@@ -62,8 +61,8 @@
         android:text="@string/guess_button_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guessEditText"
-        app:layout_constraintVertical_bias="0.145" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.707" />
 </androidx.constraintlayout.widget.ConstraintLayout>

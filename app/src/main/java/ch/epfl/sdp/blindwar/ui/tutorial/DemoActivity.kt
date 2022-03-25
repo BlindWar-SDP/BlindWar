@@ -1,52 +1,65 @@
 package ch.epfl.sdp.blindwar.ui.tutorial
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.domain.game.GameTutorial
+import ch.epfl.sdp.blindwar.domain.game.GameSolo
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
+import ch.epfl.sdp.blindwar.domain.game.Tutorial.gameInstance
 
-class DemoActivity : AppCompatActivity() {
-    private lateinit var game: GameTutorial
-    private var playing = true
-    private lateinit var guessEditText: EditText
-    private lateinit var scoreTextView: TextView
-    private lateinit var songMetaData: SongMetaData
+open class DemoActivity: AppCompatActivity() {
+    /** TODO: Refactor Game class to avoid this encapsulation leak **/
+    lateinit var game: GameSolo
+    protected var playing = true
+    protected lateinit var guessEditText: EditText
+    protected lateinit var scoreTextView: TextView
+    protected lateinit var songMetaData: SongMetaData
     private lateinit var guessButton: Button
-    private lateinit var startButton: ImageButton
+    protected lateinit var countDown: TextView
+    private var duration: Int = 0
+    private lateinit var timer: CountDownTimer
+
+    private lateinit var gameSummary: GameSummaryFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_demo)
 
-        // Create the game instance with difficulty easy
-        game = GameTutorial(assets, 5000)
+        // Game instance tutorial
+        game = GameSolo(gameInstance, assets)
+        game.init()
+
+        duration = gameInstance
+            .gameConfig
+            .parameter
+            .timeToFind
 
         // Start a music
         game.nextRound()
         game.play()
-        songMetaData = game.currentMetaData!!
+        songMetaData = game.currentMetadata()!!
+
+        // Create and start countdown
+        timer = createCountDown().start()
+        countDown = findViewById(R.id.countdown)
+
+        // Cache song image
+        //Picasso.get().load(songMetaData.imageUrl)
+
+        // Create game summary
+        gameSummary = GameSummaryFragment()
 
         // Get the widgets
-        /** TODO : enable databindings **/
         guessEditText = findViewById(R.id.guessEditText)
+        guessEditText.hint = songMetaData.artist
         scoreTextView = findViewById(R.id.scoreTextView)
-
-        startButton = findViewById(R.id.startButton)
         guessButton = findViewById(R.id.guessButton)
-    }
-
-    fun playAndPause(view: View) {
-        playing = if (playing) {
-            game.pause()
-            false
-        } else {
-            game.play()
-            true
-        }
     }
 
     override fun onPause() {
@@ -54,49 +67,119 @@ class DemoActivity : AppCompatActivity() {
         game.pause()
     }
 
-    fun guess(view: View) {
-        // Try to guess
-        if (game.guess(guessEditText.text.toString())) {
+    open fun guess(view: View) {
+        //Log.d("ZAMBO ANGUISSA", guessEditText.text.toString())
+        if(game.guess(guessEditText.text.toString())) {
             // Update the number of point view
             scoreTextView.text = game.score.toString()
-            setVisibilityLayout(View.GONE)
-            launchSongSummary()
+            launchSongSummary(success = true)
+        } else {
+            animNotFound()
         }
 
         // Delete the text of the guess
         guessEditText.setText("")
     }
 
-    private fun launchSongSummary() {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.addToBackStack(SongSummaryFragment::class.java.name)
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+    private fun createCountDown(): CountDownTimer {
+        return object : CountDownTimer(duration.toLong(), 1000) {
 
-        val bundle = Bundle()
-        bundle.putString("Artist", songMetaData.artist)
-        bundle.putString("Title", songMetaData.title)
-        bundle.putString("Image", songMetaData.imageUrl)
+            override fun onTick(millisUntilFinished: Long) {
+                countDown.text = (millisUntilFinished / 1000).toString()
+            }
 
-        val songSummary = SongSummaryFragment()
-        songSummary.arguments = bundle
-        transaction.add(R.id.fragment_container, songSummary, "Song Summary")
-        transaction.commit()
+            override fun onFinish() {
+                game.timeout()
+                this.cancel()
+                launchSongSummary(success = false)
+            }
+        }
     }
 
     private fun setVisibilityLayout(code: Int) {
         guessButton.visibility = code
         scoreTextView.visibility = code
         guessEditText.visibility = code
-        startButton.visibility = code
+        disableAnim(code)
     }
 
+    protected fun launchSongSummary(success: Boolean) {
+        setVisibilityLayout(View.GONE)
+        timer.cancel()
+
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.addToBackStack(SongSummaryFragment::class.java.name)
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+
+        val songSummary = SongSummaryFragment()
+        songSummary.arguments = createBundleSongSummary(success)
+
+        transaction.add(R.id.fragment_container, songSummary, "Song Summary")
+        transaction.commit()
+    }
+
+    private fun launchGameSummary() {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+
+        transaction.add(R.id.fragment_container, gameSummary, "Game Summary")
+        transaction.commit()
+    }
+
+    private fun createBundleSongSummary(success: Boolean): Bundle {
+        val bundle = Bundle()
+        bundle.putString("artist", songMetaData.artist)
+        bundle.putString("title", songMetaData.title)
+        bundle.putString("image", songMetaData.imageUrl)
+        bundle.putBoolean("success", success)
+        return bundle
+    }
+
+    /**
+     * TODO: Fix some behaviors depending on the type and number of fragments
+     */
     override fun onBackPressed() {
         // If a song summary fragment is on the screen
-        if (supportFragmentManager.backStackEntryCount > 0) {
+        if (supportFragmentManager.backStackEntryCount > 0
+            && supportFragmentManager.fragments[0] is SongSummaryFragment) {
+
+            /** Make it as a function **/
+            val songRecord = SongSummaryFragment()
+            val songFragment = (supportFragmentManager.fragments[0] as SongSummaryFragment)
+            val bundle = createBundleSongSummary(songFragment.success())
+
+            bundle.putBoolean("liked", songFragment.liked())
+            songRecord.arguments = bundle
+            gameSummary.setSongFragment(songRecord)
             supportFragmentManager.popBackStackImmediate()
-            setVisibilityLayout(View.VISIBLE)
-            // Pass to the next music
-            songMetaData = game.nextRound()!!
-        } else super.onBackPressed()
+
+            if (!game.nextRound()) {
+                setVisibilityLayout(View.VISIBLE)
+                // Pass to the next music
+                songMetaData = game.currentMetadata()!!
+                guessEditText.hint = songMetaData.artist
+                // Cache song image
+                // Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
+                timer.start()
+            } else {
+                launchGameSummary()
+            }
+        }
+
+        else {
+            timer.cancel()
+            super.onBackPressed();
+        }
     }
+
+    override fun onDestroy() {
+        timer.cancel()
+        super.onDestroy()
+    }
+
+    /** Temporary solution : Animation hooks **/
+    open fun animNotFound() {}
+    open fun disableAnim(code: Int) {}
+    open fun pauseAnim() {}
+    open fun resumeAnim() {}
 }

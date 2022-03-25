@@ -4,8 +4,8 @@ import android.util.Base64
 
 object SpotifyApiConstants {
     /** Credentials constants **/
-    const val CLIENT_ID = "66f4e3c14d6e425caed973ba62bb2077"
-    const val CLIENT_SECRET = "c0d9389a443646ba8b47496d84862075"
+    const val CLIENT_ID = "66f4e3c14d6e425caed973ba62bb2077";
+    const val CLIENT_SECRET = "8b654e6a74a54dd5a6300bfadecc3c8a";
     const val AUTH_TYPE = "client_credentials"
 
     fun credentialsEncoding(): String {
@@ -17,6 +17,10 @@ object SpotifyApiConstants {
         }"
     }
 
+    fun tokenParameter(responseToken: SpotifyToken): String {
+        return "Bearer ${responseToken.access_token}"
+    }
+
     /** Headers constants **/
     const val AUTH = "Authorization"
     const val ACCEPT = "Accept: application/json"
@@ -24,6 +28,8 @@ object SpotifyApiConstants {
     const val URL_ENCODED_FORM = "Content-Type: application/x-www-form-urlencoded"
 
     /** URL path constants **/
+    const val SPOTIFY_META_END_POINT = "https://api.spotify.com/v1/"
+    const val SPOTIFY_AUTH_END_POINT = "https://accounts.spotify.com/"
     const val API_PATH = "api/token/"
     const val ARTIST_PATH = "artists/{artist_id}"
     //const val TRACK_PATH = "tracks/{track_id}"

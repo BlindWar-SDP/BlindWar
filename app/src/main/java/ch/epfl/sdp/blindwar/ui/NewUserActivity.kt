@@ -66,6 +66,7 @@ class NewUserActivity : AppCompatActivity() {
         val user = Firebase.auth.currentUser
         user?.let {
             UserDatabase().addUser(
+                user.uid,
                 User.Builder(
                     user.email!!,
                     AppStatistics(),

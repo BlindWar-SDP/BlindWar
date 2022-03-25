@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ch.epfl.sdp.blindwar">
+    package="ch.epfl.sdp.blindwar" >
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_base"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round_base"
+        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BlindWar">
-        <activity
+        android:theme="@style/Theme.BlindWar" >
+
+         <activity
             android:name=".ui.NewUserActivity"
             android:exported="false" />
         <activity
             android:name=".ui.VoskActivity"
             android:parentActivityName=".ui.MainMenuActivity">
-
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -26,31 +28,38 @@
         </activity>
         <activity
             android:name=".ui.tutorial.TutorialActivity"
-            android:exported="false" />
+            android:parentActivityName=".ui.MainMenuActivity"
+            android:exported="false"/>
         <activity
             android:name=".ui.MainMenuActivity"
             android:exported="false" />
         <activity
             android:name=".ui.SoloActivity"
+            android:parentActivityName=".ui.MainMenuActivity"
             android:exported="false" />
         <activity
             android:name=".ui.ProfileActivity"
+            android:parentActivityName=".ui.MainMenuActivity"
             android:exported="false" />
         <activity
             android:name=".ui.tutorial.DemoActivity"
+            android:parentActivityName=".ui.MainMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.tutorial.AnimatedDemoActivity"
             android:exported="false" />
         <activity
             android:name=".ui.StatisticsActivity"
+            android:parentActivityName=".ui.ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".ui.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+    </application>
 </manifest>

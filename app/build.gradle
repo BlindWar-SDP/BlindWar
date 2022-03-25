@@ -62,6 +62,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'com.google.firebase:firebase-database:20.0.4'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.4'
+    implementation 'com.airbnb.android:lottie:5.0.3'
 
     // Network
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
@@ -69,10 +70,11 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'com.squareup.okhttp3:mockwebserver:4.9.3'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.0.1'
+    androidTestImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:4.9.3'
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
-
-
 
     implementation 'net.java.dev.jna:jna:5.8.0@aar'
     implementation 'io.github.gautamchibde:audiovisualizer:2.2.5'
@@ -95,6 +97,10 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
     implementation 'com.google.firebase:firebase-database:19.2.1'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.4'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.0.2'
+    implementation platform('com.google.firebase:firebase-bom:29.0.1')
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+
     }
 
     // Firebase
@@ -137,6 +143,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             '**/BuildConfig.*',
             '**/VoskActivity.*',
             '**/VoskActivityTest.*',
+            '**/AnimatedDemoActivity.*',
             '**/Manifest*.*',
             '**/*Test*.*',
             'android/**/*.*',
