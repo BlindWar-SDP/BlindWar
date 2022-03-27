@@ -7,9 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import ch.epfl.sdp.blindwar.BuildConfig
-import ch.epfl.sdp.blindwar.database.UserDatabase
-import ch.epfl.sdp.blindwar.user.AppStatistics
-import ch.epfl.sdp.blindwar.user.User
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
@@ -38,9 +35,14 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-
         checkCurrentUser()
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//        checkCurrentUser()
+//    }
+
 
     private fun checkCurrentUser() {
         if (isSignedIn()) {
@@ -76,19 +78,18 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun onSignInResult(activity: Activity, result: FirebaseAuthUIAuthenticationResult): Intent? {
         val response = result.idpResponse
         if (result.resultCode == AppCompatActivity.RESULT_OK) {
-            Log.i("lastSignin", "OK")
             // Successfully signed in
             val user = FirebaseAuth.getInstance().currentUser // =?= Firebase.auth.currentUser
             // https://www.tabnine.com/code/java/classes/com.google.firebase.auth.FirebaseAuth
 
-            if( user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp) {
+            return if( user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp) {
                 // new user: 1st signIn
-                return Intent(activity, NewUserActivity::class.java)
+                Intent(activity, NewUserActivity::class.java)
             } else {
                 /*
-            - should we update the online database with the local cache here ?
-             */
-                return Intent(activity, MainMenuActivity::class.java)
+                    - should we update the online database with the local cache here ?
+                     */
+                Intent(activity, MainMenuActivity::class.java)
             }
         } else {
             // Sign in failed. If response is null the user canceled the

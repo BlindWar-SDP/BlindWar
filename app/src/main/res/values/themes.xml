@@ -5,6 +5,8 @@
         <item name="colorPrimary">@color/light_red</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="background">@color/prussian_blue</item>
+        <item name="android:textColor">@color/green_blue_crayola</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
@@ -12,5 +14,9 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <!-- new user birthdate selection -->
+        <item name="android:datePickerStyle">@style/datePickerAsSpinner</item>
+<!--        <item name="alertDialogStyle">@style/Theme.AppCompat</item>-->
     </style>
 </resources>

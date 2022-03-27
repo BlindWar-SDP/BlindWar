@@ -21,6 +21,7 @@
         android:inputType="textFilter"
         android:maxLength="@integer/pseudo_maxLength"
         android:text="@string/text_pseudo"
+        android:hint="@string/text_pseudo"
         android:onClick="clearPseudo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,6 +37,7 @@
         android:inputType="textPersonName"
         android:onClick="clearFirstName"
         android:text="@string/first_name"
+        android:hint="@string/first_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NU_pseudo" />
 
@@ -50,6 +52,7 @@
         android:inputType="textPersonName"
         android:onClick="clearLastName"
         android:text="@string/last_name"
+        android:hint="@string/last_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NU_FirstName" />
 

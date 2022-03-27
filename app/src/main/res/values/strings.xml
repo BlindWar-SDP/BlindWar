@@ -55,7 +55,12 @@
     <!-- chars for Pseudo -->
     <string name="Pseudo_AvailableChars">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
 
+    <!-- Alert Dialogue-->
+    <string name="new_user_wrong_pseudo_title">Profile Creation Alert</string>
+    <string name="new_user_wrong_pseudo_text">Please, <b>enter a valid Pseudo</b>\n\nYour pseudo should be at least <b>2</b> characters, but <b>not \"Pseudo\"</b></string>
 
+    <!-- DatePicker -->
+    <string name="new_user_birthdatePicker">Please, enter your Birthdate.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="tutorial">TUTORIAL</string>
@@ -115,6 +120,8 @@
 
     <string name="selected_item">Selected item:</string>
     <string name="select_mode">Select mode</string>
+    <string name="chose_sign_in_text">Sign In with:</string>
+    <string name="signin_welcome_text">Welcome to BlindWar</string>
 
     <string-array name="modes_array">
         <item>Solo</item>
