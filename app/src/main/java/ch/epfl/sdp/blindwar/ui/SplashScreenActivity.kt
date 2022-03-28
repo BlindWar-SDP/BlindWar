@@ -39,10 +39,10 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-        if (haveNetwork()) {
-//            startActivity(Intent(this, Tutorial::class.java))
+        if (haveInternet()) {
+            checkCurrentUser()
         } else {
-        checkCurrentUser()
+//            startActivity(Intent(this, Tutorial::class.java))
         }
     }
 
@@ -128,7 +128,7 @@ class SplashScreenActivity : AppCompatActivity() {
         return Firebase.auth.currentUser != null
     }
 
-    private fun haveNetwork(): Boolean {
+    private fun haveInternet(): Boolean {
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return connectivityManager.activeNetworkInfo?.isConnected ?: false
     }
