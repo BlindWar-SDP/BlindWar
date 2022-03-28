@@ -28,7 +28,7 @@ abstract class Game(gameInstance: GameInstance) {
     private val gamePlaylist: List<SongMetaData> = gameInstance.playlist
 
     /** Get the sound data through another layer **/
-    abstract val gameSound: GameSound
+    abstract val gameSoundController: GameSoundController
 
     /** Player game score **/
     var score = 0

@@ -1,11 +1,15 @@
 package ch.epfl.sdp.blindwar.data.sound
 
+import android.content.ContentResolver
 import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
+import android.database.Cursor
 import android.media.MediaMetadataRetriever
-import androidx.core.content.pm.PermissionInfoCompat
+import android.net.Uri
+import android.provider.MediaStore.Audio
 import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.SONG_MAP
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
+
 
 class LocalSoundDataSource(private val assetManager: AssetManager,
 private val mediaMetadataRetriever: MediaMetadataRetriever) {
@@ -36,5 +40,9 @@ private val mediaMetadataRetriever: MediaMetadataRetriever) {
                     SONG_MAP[author]!!
                 )
             }) ?: emptyMap()
+    }
+
+    private fun getAudioFiles() {
+
     }
 }

@@ -15,14 +15,14 @@ import java.util.*
 class GameSolo(private val gameInstance: GameInstance,
                    private val assetManager: AssetManager) : Game(gameInstance) {
 
-    override val gameSound = GameSound(assetManager)
+    override val gameSoundController = GameSoundController(assetManager)
 
     override fun init() {
-        gameSound.soundInit(gameInstance.playlist)
+        gameSoundController.soundInit(gameInstance.playlist)
     }
 
     override fun endGame() {
-        gameSound.soundTeardown()
+        gameSoundController.soundTeardown()
     }
 
     /**
@@ -30,7 +30,7 @@ class GameSolo(private val gameInstance: GameInstance,
      */
     fun currentMetadata(): SongMetaData? {
         if (gameParameter.hint) {
-            return gameSound.getCurrentMetadata()
+            return gameSoundController.getCurrentMetadata()
         }
 
         return null
@@ -45,7 +45,7 @@ class GameSolo(private val gameInstance: GameInstance,
             return true
         }
 
-        gameSound.nextRound()
+        gameSoundController.nextRound()
         return false
     }
 
@@ -63,10 +63,10 @@ class GameSolo(private val gameInstance: GameInstance,
     }
 
     override fun play() {
-        gameSound.play()
+        gameSoundController.play()
     }
 
     override fun pause() {
-        gameSound.pause()
+        gameSoundController.pause()
     }
 }

@@ -7,7 +7,7 @@ import android.media.MediaPlayer
 import ch.epfl.sdp.blindwar.data.sound.LocalSoundDataSource
 import java.util.*
 
-class GameSound(assetManager: AssetManager) {
+class GameSoundController(assetManager: AssetManager) {
     private val mediaMetadataRetriever = MediaMetadataRetriever()
     private val localSoundDataSource = LocalSoundDataSource(assetManager, mediaMetadataRetriever)
     private val player = MediaPlayer()

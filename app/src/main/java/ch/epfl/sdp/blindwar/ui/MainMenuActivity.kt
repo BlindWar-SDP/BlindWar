@@ -19,8 +19,12 @@ class MainMenuActivity : AppCompatActivity() {
 
     // Called when the user taps the Solo button
     fun soloButton(view: View) {
-        val intent = Intent(this, SoloActivity::class.java)
-        startActivity(intent)
+        //val intent = Intent(this, SoloActivity::class.java)
+        //startActivity(intent)
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, ModeSelectionFragment())
+            .commit()
     }
 
     // Called when the user taps the Tutorial button

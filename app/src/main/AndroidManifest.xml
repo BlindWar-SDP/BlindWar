@@ -32,7 +32,13 @@
             android:exported="false"/>
         <activity
             android:name=".ui.MainMenuActivity"
-            android:exported="false" />
+            android:exported="true" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.SoloActivity"
             android:parentActivityName=".ui.MainMenuActivity"
@@ -55,10 +61,6 @@
         <activity
             android:name=".ui.SplashScreenActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
     </application>
