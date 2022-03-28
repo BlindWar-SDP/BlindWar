@@ -9,10 +9,11 @@ import android.net.Uri
 import android.provider.MediaStore.Audio
 import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.SONG_MAP
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
+import java.io.FileDescriptor
 
 
 class LocalSoundDataSource(private val assetManager: AssetManager,
-private val mediaMetadataRetriever: MediaMetadataRetriever) {
+                           private val mediaMetadataRetriever: MediaMetadataRetriever) {
 
     fun fetchSoundFileDescriptors(playlist: List<SongMetaData>): Map<String, Pair<AssetFileDescriptor, SongMetaData>> {
         return assetMatcher(filterAssetsPlaylist(playlist))

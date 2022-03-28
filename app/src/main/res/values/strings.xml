@@ -50,8 +50,7 @@
     <string name="statisticsShowText">You have 4 wins and 8 losses</string>
     <string name="your_elo_here">Your elo here</string>
     <string name="elo">ELO:</string>
-
-
+    
     <!-- TODO: Remove or change this placeholder text -->
     <string name="tutorial">TUTORIAL</string>
     <string name="recognize_file">Recognize File</string>
@@ -84,6 +83,9 @@
     <string name="formats_textview">Formats</string>
     <string name="commands_textview">Commands</string>
     <string name="game_options_textview">Game Options</string>
+    <string name="tutorial_music_set">Tutorial music set</string>
+    <string name="online_music">Online Music</string>
+    <string name="your_musics">Your musics</string>
     <string name="Pseudo_AvailableChars">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
     <string name="birthDate_txt">dd/mm/yyyy</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>

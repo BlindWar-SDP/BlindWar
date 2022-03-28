@@ -1,13 +1,17 @@
-package ch.epfl.sdp.blindwar
+package ch.epfl.sdp.blindwar.solo
 
+import android.content.Intent
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.matcher.ViewMatchers.isClickable
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.ui.*
 import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
@@ -19,10 +23,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class MainMenuActivityTest : TestCase() {
+class SoloMenuActivityTest : TestCase() {
     @get:Rule
     var testRule = ActivityScenarioRule(
-        MainMenuActivity::class.java
+        SoloMenuActivity::class.java
     )
 
     @Before
@@ -36,36 +40,18 @@ class MainMenuActivityTest : TestCase() {
     }
 
     @Test
-    fun testSoloButton() {
-        onView(withId(R.id.soloButton))
-            .perform(click())
-        intended(hasComponent(SoloMenuActivity::class.java.name))
+    fun testOnlineMusicButton() {
+        onView(withId(R.id.onlineMusicButton)).check(matches(isClickable()));
     }
 
     @Test
-    fun testTutorialButton() {
-        onView(withId(R.id.tutorialButton))
-            .perform(click())
-        intended(hasComponent(TutorialActivity::class.java.name))
+    fun testLocalMusicButton() {
+        onView(withId(R.id.localMusicButton)).check(matches(isClickable()));
     }
 
     @Test
-    fun testProfileButton() {
-        onView(withId(R.id.profileButton))
-            .perform(click())
-        intended(hasComponent(ProfileActivity::class.java.name))
+    fun testTutorialMusicButton() {
+        onView(withId(R.id.tutorialMusicButton)).check(matches(isClickable()));
     }
 
-    @Test
-    fun testLogoutButton() {
-        onView(withId(R.id.logoutButton))
-            .perform(click())
-        intended(hasComponent(SplashScreenActivity::class.java.name))
-    }
-
-    @Test
-    fun testLaunchVosk() {
-        onView(withId(R.id.SpeechButton)).perform(click())
-        intended(hasComponent(VoskActivity::class.java.name))
-    }
 }
