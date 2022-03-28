@@ -50,7 +50,7 @@ abstract class Game(gameInstance: GameInstance) {
      * clean up player and assets
      */
     fun endGame() {
-        gameSound.soundTeardown()
+        gameSoundController.soundTeardown()
     }
 
     /**
@@ -64,7 +64,7 @@ abstract class Game(gameInstance: GameInstance) {
             return true
         }
 
-        gameSound.nextRound(fromLocalStorage)
+        gameSoundController.nextRound(fromLocalStorage)
         return false
     }
 
@@ -73,7 +73,7 @@ abstract class Game(gameInstance: GameInstance) {
      */
     fun currentMetadata(): SongMetaData? {
         if (gameParameter.hint) {
-            return gameSound.getCurrentMetadata()
+            return gameSoundController.getCurrentMetadata()
         }
 
         return null
@@ -108,7 +108,7 @@ abstract class Game(gameInstance: GameInstance) {
      *
      */
     fun play() {
-        gameSound.play()
+        gameSoundController.play()
     }
 
     /**
@@ -116,6 +116,6 @@ abstract class Game(gameInstance: GameInstance) {
      *
      */
     fun pause() {
-        gameSound.pause()
+        gameSoundController.pause()
     }
 }

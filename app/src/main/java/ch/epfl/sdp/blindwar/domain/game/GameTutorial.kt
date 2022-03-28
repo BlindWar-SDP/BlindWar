@@ -15,9 +15,9 @@ import java.util.*
 class GameTutorial(private val gameInstance: GameInstance,
                    private val assetManager: AssetManager) : Game(gameInstance) {
 
-    override val gameSound = GameSound(assetManager)
+    override val gameSoundController = GameSoundController(assetManager)
 
     override fun init() {
-        gameSound.soundInitWithSpotifyMetadata(gameInstance.playlist)
+        gameSoundController.soundInitWithSpotifyMetadata(gameInstance.playlist)
     }
 }
