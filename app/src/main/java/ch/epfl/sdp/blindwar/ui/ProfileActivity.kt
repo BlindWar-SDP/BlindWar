@@ -63,10 +63,10 @@ class ProfileActivity : AppCompatActivity() {
                     //profilePic!!.setImageURI(data.data)
 
                     // Upload picture to database
-                    val imagePath = imageDatabase.uploadImage(
-                        data.data!!, findViewById(android.R.id.content))
-
-                    //imageDatabase.dowloadProfilePicture(imagePath, profilePic, applicationContext)
+                    val imagePath = imageDatabase.uploadProfilePicture(
+                        currentUser, data.data!!, findViewById(android.R.id.content)
+                    )
+                }
 
 
             }
