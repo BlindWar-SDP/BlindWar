@@ -23,6 +23,7 @@ import org.vosk.android.SpeechService
 import org.vosk.android.SpeechStreamService
 import org.vosk.android.StorageService
 import java.io.IOException
+import java.util.*
 
 
 class VoskActivity : Activity(), RecognitionListener {
@@ -56,7 +57,7 @@ class VoskActivity : Activity(), RecognitionListener {
             )
         } else initModel()
         //recognizer with google
-        voiceRecognizer.init(this, resultEditText)
+        voiceRecognizer.init(this, resultEditText, Locale.ENGLISH.toLanguageTag())
 
         findViewById<View>(R.id.recognize_mic_google).setOnTouchListener { v, event ->
             when (event?.action) {
