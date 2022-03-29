@@ -15,8 +15,11 @@ object GameHelper {
      * @return Boolean
      */
     fun isTheCorrectTitle(answerString: String, title: String, isVocal: Boolean): Boolean {
-        return if (isVocal) levensteinDistance(answerString, title) < vocalCostMax
-        else levensteinDistance(answerString, title) < keyboardCostMax
+        return if (isVocal) levensteinDistance(
+            answerString.lowercase(),
+            title.lowercase()
+        ) < vocalCostMax
+        else levensteinDistance(answerString.lowercase(), title.lowercase()) < keyboardCostMax
     }
 
     /**

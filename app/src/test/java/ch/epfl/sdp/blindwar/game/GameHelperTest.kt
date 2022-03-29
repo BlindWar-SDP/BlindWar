@@ -55,7 +55,7 @@ class GameHelperTest : TestCase() {
     fun testCloseCorrectTitleVocal() {
         assertTrue(
             gameHelper.isTheCorrectTitle(
-                "bohemain rhapsody de Queen",
+                "bohemian rhapsody de Queen",
                 "bohemian rhapsody Queen",
                 true
             )
