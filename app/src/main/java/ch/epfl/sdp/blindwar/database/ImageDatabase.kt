@@ -27,7 +27,7 @@ object ImageDatabase {
     private val imagesRef = storageRef.child("images")
 
 
-
+    /*
     fun uploadImage(imageURI: Uri, view: View? = null): String {
         val randomKey = UUID.randomUUID().toString()
 
@@ -48,7 +48,7 @@ object ImageDatabase {
             uploadedImageRef.putFile(imageURI)
         }
         return uploadedImageRef.path
-    }
+    } */
 
     fun uploadProfilePicture(user: FirebaseUser?, imageURI: Uri, view: View? = null): String {
         val randomKey = UUID.randomUUID().toString()

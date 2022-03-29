@@ -9,4 +9,5 @@ class UserDatabaseTest : TestCase() {
     fun testAddUser() {
         Assert.assertEquals(4, 2 + 2)
     }
+
 }
