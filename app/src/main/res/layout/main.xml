@@ -5,38 +5,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_vertical">
 
         <Button
-            android:id="@+id/recognize_mic"
+            android:id="@+id/recognize_mic_fr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/recognize_microphone_vosk"/>
+            android:text="@string/recognize_microphone_fr"
+            android:layout_margin="20dp"/>
         <Button
-            android:id="@+id/recognize_mic_google"
+            android:id="@+id/recognize_mic_en"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/recognize_microphone_google"/>
-        <ToggleButton
-            android:id="@+id/pause"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textOff="@string/pause"
-            android:textOn="@string/continueRecognition"/>
+            android:text="@string/recognize_microphone_en"
+            android:layout_margin="20dp"/>
 
         <EditText
             android:inputType="text"
             android:labelFor="@string/editText_VoskActivity_result"
             android:id="@+id/result_text_edit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </EditText>
-        <TextView
-            android:id="@+id/result_text"
-            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="bottom"
-            android:scrollbars="vertical"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_margin="20dp">
+        </EditText>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
