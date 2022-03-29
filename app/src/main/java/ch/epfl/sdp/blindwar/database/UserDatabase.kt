@@ -1,6 +1,6 @@
 package ch.epfl.sdp.blindwar.database
 
-import ch.epfl.sdp.blindwar.ui.User
+import ch.epfl.sdp.blindwar.user.User
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener

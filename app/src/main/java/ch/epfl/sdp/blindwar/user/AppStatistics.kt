@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.ui
+package ch.epfl.sdp.blindwar.user
 
 class AppStatistics {
     private val numberOfMode = Mode.values().size

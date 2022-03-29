@@ -9,6 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.ui.*
+import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import junit.framework.TestCase
 import org.junit.After
@@ -38,7 +39,7 @@ class MainMenuActivityTest : TestCase() {
     fun testSoloButton() {
         onView(withId(R.id.soloButton))
             .perform(click())
-        intended(hasComponent(SoloActivity::class.java.name))
+        intended(hasComponent(SoloMenuActivity::class.java.name))
     }
 
     @Test
@@ -59,7 +60,7 @@ class MainMenuActivityTest : TestCase() {
     fun testLogoutButton() {
         onView(withId(R.id.logoutButton))
             .perform(click())
-        intended(hasComponent(LoginActivity::class.java.name))
+        intended(hasComponent(SplashScreenActivity::class.java.name))
     }
 
     @Test

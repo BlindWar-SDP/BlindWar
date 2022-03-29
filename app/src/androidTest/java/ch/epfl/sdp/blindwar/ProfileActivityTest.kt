@@ -8,9 +8,9 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import ch.epfl.sdp.blindwar.ui.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
-import ch.epfl.sdp.blindwar.ui.LoginActivity
 import ch.epfl.sdp.blindwar.ui.ProfileActivity
 import ch.epfl.sdp.blindwar.ui.StatisticsActivity
 import junit.framework.TestCase
@@ -42,7 +42,7 @@ class ProfileActivityTest : TestCase() {
     fun testLogoutButton() {
         onView(withId(R.id.logoutButton))
             .perform(click())
-        intended(hasComponent(LoginActivity::class.java.name))
+        intended(hasComponent(SplashScreenActivity::class.java.name))
     }
     /*
     @Test

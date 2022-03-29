@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.NewUserActivity">
-
-    <!--    <CalendarView-->
-    <!--        android:id="@+id/NU_birthdate"-->
-    <!--        android:layout_width="272dp"-->
-    <!--        android:layout_height="237dp"-->
-    <!--        android:layout_marginStart="16dp"-->
-    <!--        android:maxDate="01/01/2022"-->
-    <!--        android:minDate="01/01/1922"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        tools:layout_editor_absoluteY="428dp" />-->
 
     <EditText
         android:id="@+id/NU_pseudo"
@@ -24,8 +15,11 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="28dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:digits="@string/Pseudo_AvailableChars"
+        android:inputType="textFilter"
+        android:maxLength="@integer/pseudo_maxLength"
         android:text="@string/text_pseudo"
+        android:onClick="clearPseudo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,9 +28,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:onClick="clearFirstName"
         android:text="@string/first_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NU_pseudo" />
@@ -46,36 +41,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:onClick="clearLastName"
         android:text="@string/last_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NU_FirstName" />
 
     <TextView
-        android:id="@+id/NU_birthdate_text"
+        android:id="@+id/NU_birthdate"
         android:layout_width="210dp"
         android:layout_height="22dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/birthdate_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NU_LastName" />
-
-    <DatePicker
-        android:id="@+id/datePicker"
-        android:layout_width="216dp"
-        android:layout_height="129dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="4dp"
-        android:calendarViewShown="false"
-        android:datePickerMode="spinner"
-        android:maxDate="01/01/2022"
-        android:minDate="01/01/1922"
-        android:spinnersShown="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NU_birthdate_text" />
 
     <Button
         android:id="@+id/NU_Confirm_Btn"
@@ -88,11 +70,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier2"
+    <CalendarView
+        android:id="@+id/NU_calendar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:barrierDirection="left" />
+        android:layout_marginStart="16dp"
+        android:maxDate="01/01/2022"
+        android:minDate="01/01/1922"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NU_birthdate" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

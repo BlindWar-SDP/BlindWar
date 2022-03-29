@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
+import com.firebase.ui.auth.AuthUI
 
 class MainMenuActivity : AppCompatActivity() {
 
@@ -18,7 +20,7 @@ class MainMenuActivity : AppCompatActivity() {
 
     // Called when the user taps the Solo button
     fun soloButton(view: View) {
-        val intent = Intent(this, SoloActivity::class.java)
+        val intent = Intent(this, SoloMenuActivity::class.java)
         startActivity(intent)
     }
 
@@ -37,9 +39,10 @@ class MainMenuActivity : AppCompatActivity() {
 
     // Called when the user taps the Solo button
     fun logoutButton(view: View) {
-        val intent = Intent(this, LoginActivity::class.java)
-        database.setElo("JOJO", 0)
-        startActivity(intent)
+        AuthUI.getInstance().signOut(this)
+//            .addOnCompleteListener {
+            startActivity(Intent(this, SplashScreenActivity::class.java))
+//        }
     }
 
     fun launchSpeechRecognitionActivity(view: View) {

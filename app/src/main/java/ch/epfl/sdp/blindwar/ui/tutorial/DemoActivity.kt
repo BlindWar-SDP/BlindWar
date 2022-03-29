@@ -9,13 +9,13 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.domain.game.GameSolo
+import ch.epfl.sdp.blindwar.domain.game.GameTutorial
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 import ch.epfl.sdp.blindwar.domain.game.Tutorial.gameInstance
 
 open class DemoActivity: AppCompatActivity() {
     /** TODO: Refactor Game class to avoid this encapsulation leak **/
-    lateinit var game: GameSolo
+    lateinit var game: GameTutorial
     protected var playing = true
     protected lateinit var guessEditText: EditText
     protected lateinit var scoreTextView: TextView
@@ -32,7 +32,7 @@ open class DemoActivity: AppCompatActivity() {
         setContentView(R.layout.activity_demo)
 
         // Game instance tutorial
-        game = GameSolo(gameInstance, assets)
+        game = GameTutorial(gameInstance, assets)
         game.init()
 
         duration = gameInstance
