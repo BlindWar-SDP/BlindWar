@@ -36,7 +36,7 @@ data class User(
             this.firstName      = user.firstName
             this.lastName       = user.lastName
             this.birthDate      = user.birthDate
-//            this.profilePicture = user.profilePicture
+            this.profilePicture = user.profilePicture
         }
 
         fun build(): User {

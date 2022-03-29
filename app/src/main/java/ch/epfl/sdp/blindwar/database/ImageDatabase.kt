@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import java.util.*
 
 object ImageDatabase {
 
@@ -19,9 +20,10 @@ object ImageDatabase {
 
 
     fun uploadImage(uid: String, imageURI: Uri, view: View? = null): String {
+        val randomKey = UUID.randomUUID().toString()
 
         // Create a reference to the image to upload
-        val uploadedImageRef = imagesRef.child(uid)
+        val uploadedImageRef = imagesRef.child(randomKey)
         if (view != null) {
             uploadedImageRef.putFile(imageURI)
                 .addOnSuccessListener {
@@ -40,14 +42,14 @@ object ImageDatabase {
     }
 
 
-    fun dowloadProfilePicture(uid: String, imageView: ImageView, view: View?): String {
-        val downloadImageRef = imagesRef.child(uid)
+    fun dowloadProfilePicture(imagePath: String, imageView: ImageView, view: View?): String {
+        val downloadImageRef = imagesRef.child(imagePath)
         if (view != null) {
             Glide.with(view)
                 .load(downloadImageRef)
                 .into(imageView)
         }
-
+        return downloadImageRef.path
     }
 
 

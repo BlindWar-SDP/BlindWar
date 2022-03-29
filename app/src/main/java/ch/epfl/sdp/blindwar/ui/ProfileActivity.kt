@@ -33,10 +33,17 @@ class ProfileActivity : AppCompatActivity() {
             val nameView = findViewById<TextView>(R.id.nameView)
             val emailView = findViewById<TextView>(R.id.emailView)
             val eloView = findViewById<TextView>(R.id.eloDeclarationView)
+            val profileImageView = findViewById<ImageView>(R.id.profileImageView)
+            val view = findViewById<View>(R.id.content)
             if (user != null) {
                 nameView.text = user.firstName
                 emailView.text = user.email
                 eloView.text = user.userStatistics.elo.toString()
+
+                val imagePath = user.profilePicture
+                if (imagePath != null) {
+                    imageDatabase.dowloadProfilePicture(imagePath, profileImageView, view)
+                }
             }
 
         }
@@ -54,12 +61,15 @@ class ProfileActivity : AppCompatActivity() {
             if (data != null) {
                 if (data.data != null) {
                     val profilePic = findViewById<ImageView>(R.id.profileImageView)
-                    profilePic!!.setImageURI(data.data)
+                    val view = findViewById<View>(R.id.content)
+                    //profilePic!!.setImageURI(data.data)
 
                     // Upload picture to database
                     val imagePath = imageDatabase.uploadImage(
                         currentUser!!.uid,
                         data.data!!, findViewById(android.R.id.content))
+
+                    imageDatabase.dowloadProfilePicture(imagePath, profilePic, view)
 
                     // Update user profilePic
                     currentUser?.let {
@@ -78,11 +88,6 @@ class ProfileActivity : AppCompatActivity() {
             database.addUserListener(currentUser.uid, userInfoListener)
         }
         setContentView(R.layout.activity_profile)
-        val profilePic = findViewById<ImageView>(R.id.profileImageView)
-        /*
-        profilePic.setOnClickListener {
-            choosePicture()
-        } */
 
     }
 
