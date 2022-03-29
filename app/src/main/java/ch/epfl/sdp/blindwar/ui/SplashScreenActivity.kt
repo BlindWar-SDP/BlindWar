@@ -65,7 +65,7 @@ class SplashScreenActivity : AppCompatActivity() {
         // Create and launch sign-in intent
         return AuthUI.getInstance()
             .createSignInIntentBuilder()
-            .setIsSmartLockEnabled(!BuildConfig.DEBUG /* credentials */, true /* hints */) // -> for TESTs only
+            //.setIsSmartLockEnabled(!BuildConfig.DEBUG /* credentials */, true /* hints */) // -> for TESTs only
             .setAvailableProviders(providers)
             .setLogo(R.drawable.logo) // still used if setAuthMethodPickerLayout(customLayout) ?
             .setTheme(R.style.Theme_BlindWar) // Set theme

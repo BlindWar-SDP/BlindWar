@@ -22,8 +22,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 
 class ProfileActivity : AppCompatActivity() {
-    private val database = UserDatabase()
-    private val imageDatabase = ImageDatabase()
+    private val database = UserDatabase
+    private val imageDatabase = ImageDatabase
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
     private val userInfoListener = object : ValueEventListener {
@@ -32,7 +32,7 @@ class ProfileActivity : AppCompatActivity() {
             val user = dataSnapshot.getValue<User>()
             val nameView = findViewById<TextView>(R.id.nameView)
             val emailView = findViewById<TextView>(R.id.emailView)
-            val eloView = findViewById<TextView>(R.id.eloView)
+            val eloView = findViewById<TextView>(R.id.eloDeclarationView)
             if (user != null) {
                 nameView.text = user.firstName
                 emailView.text = user.email
@@ -48,7 +48,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
 
-    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
             if (data != null) {
@@ -57,12 +57,13 @@ class ProfileActivity : AppCompatActivity() {
                     profilePic!!.setImageURI(data.data)
 
                     // Upload picture to database
-                    val imagePath = imageDatabase.uploadImage(data.data!!,
-                        findViewById(android.R.id.content))
+                    val imagePath = imageDatabase.uploadImage(
+                        currentUser!!.uid,
+                        data.data!!, findViewById(android.R.id.content))
 
                     // Update user profilePic
-                    database.addProfilePicture("JOJO", imagePath)
-
+                    currentUser?.let {
+                        database.addProfilePicture(it.uid, imagePath) }
                 }
             }
 

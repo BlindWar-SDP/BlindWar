@@ -100,6 +100,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx:24.0.2'
     implementation platform('com.google.firebase:firebase-bom:29.0.1')
     implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
 
     }
 

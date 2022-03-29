@@ -13,7 +13,7 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
 // Currently: it's possible to add an user, set it's elo and add listener
-class UserDatabase {
+object UserDatabase {
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private val userReference = database.getReference("Users")
 

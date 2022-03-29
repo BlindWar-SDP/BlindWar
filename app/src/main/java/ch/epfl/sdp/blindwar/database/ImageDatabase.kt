@@ -1,22 +1,14 @@
 package ch.epfl.sdp.blindwar.database
 
-import android.app.Activity
-import android.app.ProgressDialog
-import android.content.Intent
 import android.net.Uri
 import android.view.View
-import android.widget.ProgressBar
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat.startActivityForResult
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
-import java.net.URI
-import java.util.*
 
-class ImageDatabase {
+object ImageDatabase {
 
     private val storage = Firebase.storage
 
@@ -26,11 +18,10 @@ class ImageDatabase {
 
 
 
-    fun uploadImage(imageURI: Uri, view: View? = null): String {
-        val randomKey = UUID.randomUUID().toString()
+    fun uploadImage(uid: String, imageURI: Uri, view: View? = null): String {
 
         // Create a reference to the image to upload
-        val uploadedImageRef = imagesRef.child(randomKey)
+        val uploadedImageRef = imagesRef.child(uid)
         if (view != null) {
             uploadedImageRef.putFile(imageURI)
                 .addOnSuccessListener {
@@ -46,6 +37,17 @@ class ImageDatabase {
             uploadedImageRef.putFile(imageURI)
         }
         return uploadedImageRef.path
+    }
+
+
+    fun dowloadProfilePicture(uid: String, imageView: ImageView, view: View?): String {
+        val downloadImageRef = imagesRef.child(uid)
+        if (view != null) {
+            Glide.with(view)
+                .load(downloadImageRef)
+                .into(imageView)
+        }
+
     }
 
 

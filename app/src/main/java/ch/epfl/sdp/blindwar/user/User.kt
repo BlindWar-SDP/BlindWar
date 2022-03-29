@@ -3,13 +3,13 @@ package ch.epfl.sdp.blindwar.user
 import android.net.Uri
 
 data class User(
-    val email: String,
-    val userStatistics: AppStatistics,
-    val pseudo: String,
-    val firstName: String?,
-    val lastName: String?,
-    val birthDate: Long?,
-//    val profilePicture: Uri?,
+    val email: String = "",
+    val userStatistics: AppStatistics = AppStatistics(),
+    val pseudo: String = "",
+    val firstName: String? = "",
+    val lastName: String? = "",
+    val birthDate: Long? = 0,
+    val profilePicture: String?,
 ) {
 
     class Builder(
@@ -19,7 +19,7 @@ data class User(
         private var firstName: String? = null,
         private var lastName: String? = null,
         private var birthDate: Long? = null,
-//        private var profilePicture: Uri? = null,
+        private var profilePicture: String? = null,
     ) {
         fun setEmail(email: String) = apply { this.email = email }
         fun setStats(stats: AppStatistics) = apply { this.userStatistics = stats }
@@ -27,7 +27,7 @@ data class User(
         fun setFirstName(name: String?) = apply { this.firstName = name }
         fun setLastName(name: String?) = apply { this.lastName = name }
         fun setBirthDate(date: Long?) = apply { this.birthDate = date }
-//        fun setImage(link: Uri?) = apply { this.profilePicture = link }
+        fun setImage(imagePath: String) = apply { this.profilePicture = imagePath }
 
         fun fromUser(user: User) = apply {
             this.email          = user.email
@@ -47,7 +47,7 @@ data class User(
                 firstName,
                 lastName,
                 birthDate,
-//                profilePicture
+                profilePicture
             )
         }
     }
