@@ -54,9 +54,7 @@ class VoskActivity : Activity(), RecognitionListener {
                 arrayOf(Manifest.permission.RECORD_AUDIO),
                 PERMISSIONS_REQUEST_RECORD_AUDIO
             )
-        } else {
-            initModel()
-        }
+        } else initModel()
         //recognizer with google
         voiceRecognizer.init(this, resultEditText)
 
@@ -131,11 +129,11 @@ class VoskActivity : Activity(), RecognitionListener {
     }
 
     override fun onResult(hypothesis: String) {
-        resultView!!.append(hypothesis.trimIndent())
+        resultView!!.text = hypothesis.trimIndent()
     }
 
     override fun onFinalResult(hypothesis: String) {
-        resultView!!.append(hypothesis.trimIndent())
+        resultView!!.text = hypothesis.trimIndent()
         setUiState(STATE_DONE)
         if (speechStreamService != null) {
             speechStreamService = null
@@ -143,7 +141,6 @@ class VoskActivity : Activity(), RecognitionListener {
     }
 
     override fun onPartialResult(hypothesis: String) {
-        resultView!!.append(hypothesis.trimIndent())
     }
 
     override fun onError(e: Exception) {

@@ -76,8 +76,20 @@ class VoiceRecognizer : RecognitionListener {
                 RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
             )
+
+            /*speechRecognizerIntent!!.putExtra(
+                "android.speech.extra.EXTRA_ADDITIONAL_LANGUAGES",
+                arrayOf("en_US", "en_UK", "fr_FR")
+            )*/
+            speechRecognizerIntent!!.putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE,
+                Locale.FRENCH.toLanguageTag()
+            )
+            speechRecognizerIntent!!.putExtra(
+                "android.speech.extra.MASK_OFFENSIVE_WORDS",
+                false
+            ) //only for android 13
             resultsRecognized = ""
-            speechRecognizerIntent!!.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
             (speechRecognizer as SpeechRecognizer).setRecognitionListener(this)
         }
     }
@@ -88,6 +100,7 @@ class VoiceRecognizer : RecognitionListener {
      */
     fun start() {
         resultsRecognized = ""
+        editTextResult!!.setText("start")
         speechRecognizer!!.startListening(speechRecognizerIntent)
     }
 
@@ -96,6 +109,7 @@ class VoiceRecognizer : RecognitionListener {
      *
      */
     fun stop() {
+        editTextResult!!.setText("stop")
         speechRecognizer!!.stopListening()
     }
 
