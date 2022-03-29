@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'jacoco'
     id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
 }
 
 jacoco {
@@ -101,6 +102,9 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:29.0.1')
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.13.0'
+    kapt 'com.github.bumptech.glide:compiler:4.13.0'
 
     }
 

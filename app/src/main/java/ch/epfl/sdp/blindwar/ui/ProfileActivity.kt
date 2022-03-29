@@ -34,7 +34,6 @@ class ProfileActivity : AppCompatActivity() {
             val emailView = findViewById<TextView>(R.id.emailView)
             val eloView = findViewById<TextView>(R.id.eloDeclarationView)
             val profileImageView = findViewById<ImageView>(R.id.profileImageView)
-            val view = findViewById<View>(R.id.content)
             if (user != null) {
                 nameView.text = user.firstName
                 emailView.text = user.email
@@ -42,7 +41,7 @@ class ProfileActivity : AppCompatActivity() {
 
                 val imagePath = user.profilePicture
                 if (imagePath != null) {
-                    imageDatabase.dowloadProfilePicture(imagePath, profileImageView, view)
+                    imageDatabase.dowloadProfilePicture(imagePath, profileImageView, applicationContext)
                 }
             }
 
@@ -61,20 +60,15 @@ class ProfileActivity : AppCompatActivity() {
             if (data != null) {
                 if (data.data != null) {
                     val profilePic = findViewById<ImageView>(R.id.profileImageView)
-                    val view = findViewById<View>(R.id.content)
                     //profilePic!!.setImageURI(data.data)
 
                     // Upload picture to database
                     val imagePath = imageDatabase.uploadImage(
-                        currentUser!!.uid,
                         data.data!!, findViewById(android.R.id.content))
 
-                    imageDatabase.dowloadProfilePicture(imagePath, profilePic, view)
+                    //imageDatabase.dowloadProfilePicture(imagePath, profilePic, applicationContext)
 
-                    // Update user profilePic
-                    currentUser?.let {
-                        database.addProfilePicture(it.uid, imagePath) }
-                }
+
             }
 
         }

@@ -23,7 +23,7 @@ object UserDatabase {
     }
 
     private fun getImageReference(uid: String): DatabaseReference {
-        return userReference.child(uid).child("image")
+        return userReference.child(uid).child("profilePicture")
     }
 
     // Add user to database

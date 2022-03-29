@@ -1,12 +1,19 @@
 package ch.epfl.sdp.blindwar.database
 
+import android.content.Context
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Registry
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
+import com.firebase.ui.storage.images.FirebaseImageLoader
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import java.io.InputStream
 import java.util.*
 
 object ImageDatabase {
@@ -19,7 +26,7 @@ object ImageDatabase {
 
 
 
-    fun uploadImage(uid: String, imageURI: Uri, view: View? = null): String {
+    fun uploadImage(imageURI: Uri, view: View? = null): String {
         val randomKey = UUID.randomUUID().toString()
 
         // Create a reference to the image to upload
@@ -41,16 +48,21 @@ object ImageDatabase {
         return uploadedImageRef.path
     }
 
+    fun uploadProfilePicture(imageURI: Uri, view: View? = null): String {
 
-    fun dowloadProfilePicture(imagePath: String, imageView: ImageView, view: View?): String {
-        val downloadImageRef = imagesRef.child(imagePath)
-        if (view != null) {
-            Glide.with(view)
-                .load(downloadImageRef)
-                .into(imageView)
-        }
-        return downloadImageRef.path
     }
 
 
+    fun dowloadProfilePicture(imagePath: String, imageView: ImageView, context: Context): String {
+        val profilePictureRef = storageRef.child(imagePath)
+        GlideApp.with(context)
+            .load(profilePictureRef)
+            .into(imageView)
+        return profilePictureRef.path
+    }
+
 }
+
+
+
+
