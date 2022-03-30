@@ -19,13 +19,13 @@ abstract class Game(gameInstance: GameInstance) {
 
     /** TODO: implement other game format and modes
     protected val gameDifficulty: GameDifficulty = gameInstance
-        .gameConfig
-        .difficulty
+    .gameConfig
+    .difficulty
 
     protected val gameFormat: GameFormat = gameInstance
-        .gameConfig
-        .format
-    **/
+    .gameConfig
+    .format
+     **/
 
     private val gamePlaylist: List<SongMetaData> = gameInstance.playlist
 
@@ -34,7 +34,7 @@ abstract class Game(gameInstance: GameInstance) {
 
     /** Player game score **/
     var score = 0
-        protected  set
+        protected set
 
     var round = 0
         protected set
@@ -87,7 +87,9 @@ abstract class Game(gameInstance: GameInstance) {
      */
     fun guess(titleGuess: String): Boolean {
         return if (titleGuess.uppercase(Locale.getDefault()) == currentMetadata()?.title?.uppercase(
-                Locale.getDefault())) {
+                Locale.getDefault()
+            )
+        ) {
             score += 1
             round += 1
             true

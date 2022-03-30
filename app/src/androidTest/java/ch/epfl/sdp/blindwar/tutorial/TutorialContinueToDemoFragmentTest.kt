@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar.tutorial
 
-import androidx.fragment.app.testing.launchFragment
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -11,7 +10,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.ui.tutorial.AnimatedDemoActivity
-import ch.epfl.sdp.blindwar.ui.tutorial.DemoActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialContinueToDemoFragment
 import org.junit.Test
 import org.junit.runner.RunWith

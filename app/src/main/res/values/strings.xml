@@ -120,6 +120,11 @@
     <string name="edit_text_hint_pseudo">Write your pseudo</string>
     <string name="edit_text_hint_firstName">Write your first name</string>
     <string name="edit_text_hint_lastName">Write your last name</string>
+    <string name="demo">DEMO</string>
+    <string name="button">BUTTON</string>
+    <string name="time">TIME</string>
+    <string name="artist">ARTIST</string>
+    <string name="track">TRACK</string>
 
     <string-array name="modes_array">
         <item>Solo</item>

@@ -41,7 +41,7 @@ class MainMenuActivity : AppCompatActivity() {
     fun logoutButton(view: View) {
         AuthUI.getInstance().signOut(this)
 //            .addOnCompleteListener {
-            startActivity(Intent(this, SplashScreenActivity::class.java))
+        startActivity(Intent(this, SplashScreenActivity::class.java))
 //        }
     }
 

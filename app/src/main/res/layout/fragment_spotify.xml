@@ -8,14 +8,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="0dp"
+        android:layout_marginStart="0dp"
         android:orientation="vertical"
-        tools:context=".ui.tutorial.TutorialActivity">
-
+        tools:context=".ui.tutorial.TutorialActivity"
+        tools:ignore="ScrollViewSize">
         <WebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
     </LinearLayout>
 </ScrollView>

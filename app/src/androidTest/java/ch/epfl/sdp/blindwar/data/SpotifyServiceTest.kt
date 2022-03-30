@@ -14,7 +14,6 @@ import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -105,7 +104,7 @@ class SpotifyServiceTest {
         assertEquals("GET", response.method.toString())
         assertEquals("application/json", response.getHeader("Content-Type").toString())
         assertNotNull(response.getHeader("Authorization"))
-        assertEquals("/${testPath}${artistPath}${artistId}",response.path.toString())
+        assertEquals("/${testPath}${artistPath}${artistId}", response.path.toString())
 
         mockWebServer.shutdown()
     }
@@ -128,7 +127,10 @@ class SpotifyServiceTest {
 
         Log.d(TAG, response.headers.toString())
         assertEquals("POST", response.method.toString())
-        assertEquals("application/x-www-form-urlencoded", response.getHeader("Content-Type").toString())
+        assertEquals(
+            "application/x-www-form-urlencoded",
+            response.getHeader("Content-Type").toString()
+        )
         assertNotNull(response.getHeader("Authorization"))
         assertEquals("/${testPath}${tokenPath}", response.path.toString())
     }

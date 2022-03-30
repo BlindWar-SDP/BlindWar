@@ -31,7 +31,8 @@ class SoloMenuActivity : AppCompatActivity() {
                     }
 
 
-                    val playlist: List<SongMetaData> = SongImageUrlConstants.SONG_MAP.values.toList()
+                    val playlist: List<SongMetaData> =
+                        SongImageUrlConstants.SONG_MAP.values.toList()
 
                     val gameParameter = GameParameter(3, funny = false, hint = true, 30000)
 
@@ -42,7 +43,12 @@ class SoloMenuActivity : AppCompatActivity() {
 
                     val gameInstance = GameInstance(gameConfig, playlist)
 
-                    val game = GameSoloFromLocalStorage(gameInstance, assets, pickedDir, applicationContext.contentResolver).also { it.init() }
+                    val game = GameSoloFromLocalStorage(
+                        gameInstance,
+                        assets,
+                        pickedDir,
+                        applicationContext.contentResolver
+                    ).also { it.init() }
                     game.play()
                     game.nextRound(true)
                 }
