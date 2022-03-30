@@ -24,10 +24,10 @@ class GameSound(private val assetManager: AssetManager) {
     private lateinit var playlistNames: MutableSet<String>
     private lateinit var currentMetaData: SongMetaData
 
-    fun soundInitWithSpotifyMetadata(playlist: List<SongMetaData>) {
+    fun soundInitWithSpotifyMetadata() {
         // Convert asset file descriptor to file descriptor
         assetFileDescriptorAndMetaDataPerTitle =
-            localSoundDataSource.fetchSoundFileDescriptors(playlist)
+            localSoundDataSource.fetchSoundAssetFileDescriptorsAndMetaDataPerTitleForTutorial()
         playlistNames = refreshPlaylist()
         currentMetaData = SongMetaData("", "", "")
     }

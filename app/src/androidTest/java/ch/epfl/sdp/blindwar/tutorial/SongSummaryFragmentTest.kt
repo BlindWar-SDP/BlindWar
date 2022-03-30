@@ -3,14 +3,12 @@ package ch.epfl.sdp.blindwar.tutorial
 import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.SONG_MAP
+import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.META_DATA_TUTORIL_MUSICS_PER_AUTHOR
 import ch.epfl.sdp.blindwar.ui.tutorial.SongSummaryFragment
-import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,7 +27,7 @@ class SongSummaryFragmentTest {
 
     private fun createBundle(success: Boolean, liked: Boolean): Bundle {
         return Bundle().let {
-            val meta = SONG_MAP["Daft Punk"]
+            val meta = META_DATA_TUTORIL_MUSICS_PER_AUTHOR["Daft Punk"]
             it.putString("artist", meta?.artist)
             it.putString("title", meta?.title)
             it.putString("image", meta?.imageUrl)

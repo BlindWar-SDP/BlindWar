@@ -31,7 +31,7 @@ class SoloMenuActivity : AppCompatActivity() {
                     }
 
 
-                    val playlist: List<SongMetaData> = SongImageUrlConstants.SONG_MAP.values.toList()
+                    val playlist: List<SongMetaData> = SongImageUrlConstants.META_DATA_TUTORIL_MUSICS_PER_AUTHOR.values.toList()
 
                     val gameParameter = GameParameter(3, funny = false, hint = true, 30000)
 

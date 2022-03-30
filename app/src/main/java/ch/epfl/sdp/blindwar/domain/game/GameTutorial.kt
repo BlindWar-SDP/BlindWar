@@ -13,10 +13,10 @@ import java.util.*
  * @param assetManager AssetManager instance to get the mp3 files
  */
 class GameTutorial(
-    private val gameInstance: GameInstance, assetManager: AssetManager,
+    gameInstance: GameInstance, assetManager: AssetManager,
 ) : Game(gameInstance, assetManager) {
 
     override fun init() {
-        this.gameSound.soundInitWithSpotifyMetadata(gameInstance.playlist)
+        this.gameSound.soundInitWithSpotifyMetadata()
     }
 }
