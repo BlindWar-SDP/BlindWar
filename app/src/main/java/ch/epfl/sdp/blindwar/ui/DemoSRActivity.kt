@@ -15,8 +15,8 @@ import java.util.*
 
 
 class DemoSRActivity : Activity() {
-    private val voiceRecognizerEnglish: VoiceRecognizer = VoiceRecognizer()
-    private val voiceRecognizerFrench: VoiceRecognizer = VoiceRecognizer()
+    val voiceRecognizerEnglish: VoiceRecognizer = VoiceRecognizer()
+    val voiceRecognizerFrench: VoiceRecognizer = VoiceRecognizer()
 
     public override fun onCreate(state: Bundle?) {
         super.onCreate(state)
@@ -62,6 +62,12 @@ class DemoSRActivity : Activity() {
             }
             v?.onTouchEvent(event) ?: true
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        voiceRecognizerEnglish.destroy()
+        voiceRecognizerFrench.destroy()
     }
 
     companion object {

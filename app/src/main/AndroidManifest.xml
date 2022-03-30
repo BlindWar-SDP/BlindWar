@@ -19,7 +19,7 @@
             android:name=".ui.NewUserActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.demoSRActivity"
+            android:name=".ui.DemoSRActivity"
             android:parentActivityName=".ui.MainMenuActivity">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
