@@ -51,7 +51,8 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guessButton"
-        app:layout_constraintVertical_bias="0.272" />
+        app:layout_constraintVertical_bias="0.272"
+        android:hint="@string/edit_text_hint_title" />
 
     <Button
         android:id="@+id/guessButton"

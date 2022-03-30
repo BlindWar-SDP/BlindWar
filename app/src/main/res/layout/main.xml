@@ -26,7 +26,7 @@
 
         <EditText
             android:inputType="text"
-            android:labelFor="@string/editText_VoskActivity_result"
+            android:hint="@string/edit_text_hint_title"
             android:id="@+id/result_text_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

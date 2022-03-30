@@ -114,13 +114,18 @@
 
     <string name="selected_item">Selected item:</string>
     <string name="select_mode">Select mode</string>
+    <string name="avatar_description">Avatar image</string>
+    <string name="edit_text_hint_title">Please write your guess</string>
+    <string name="edit_text_hint_pseudo">Write your pseudo</string>
+    <string name="edit_text_hint_firstName">Write your first name</string>
+    <string name="edit_text_hint_lastName">Write your last name</string>
 
     <string-array name="modes_array">
         <item>Solo</item>
         <item>Multi</item>
-        <item>Funny1</item>
-        <item>Funny2</item>
-        <item>Funny3</item>
+        <item>Funny 1</item>
+        <item>Funny 2</item>
+        <item>Funny 3</item>
         <item>42</item>
         <item>NoScrum</item>
         <item>PlzHelp</item>
