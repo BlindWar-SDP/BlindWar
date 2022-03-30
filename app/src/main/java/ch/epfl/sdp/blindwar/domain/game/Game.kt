@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.domain.game
 
+import android.content.res.AssetManager
 import java.util.*
 
 /**
@@ -9,28 +10,16 @@ import java.util.*
  * Construct a class that represent the game logic
  *
  */
-abstract class Game(gameInstance: GameInstance) {
+abstract class Game(gameInstance: GameInstance, private val assetManager: AssetManager) {
     /** Encapsulates the characteristics of a game instead of its logic **/
     private val game: GameInstance = gameInstance
 
-    protected val gameParameter: GameParameter = gameInstance
+    private val gameParameter: GameParameter = gameInstance
         .gameConfig
         .parameter
 
-    /** TODO: implement other game format and modes
-    protected val gameDifficulty: GameDifficulty = gameInstance
-        .gameConfig
-        .difficulty
-
-    protected val gameFormat: GameFormat = gameInstance
-        .gameConfig
-        .format
-    **/
-
-    private val gamePlaylist: List<SongMetaData> = gameInstance.playlist
-
     /** Get the sound data through another layer **/
-    abstract val gameSound: GameSound
+    protected val gameSound = GameSound(assetManager)
 
     /** Player game score **/
     var score = 0

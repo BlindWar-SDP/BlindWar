@@ -10,7 +10,7 @@ import ch.epfl.sdp.blindwar.data.sound.LocalSoundDataSource
 import java.io.FileDescriptor
 import java.util.*
 
-class GameSound(val assetManager: AssetManager) {
+class GameSound(private val assetManager: AssetManager) {
     private val mediaMetadataRetriever = MediaMetadataRetriever()
     private val localSoundDataSource = LocalSoundDataSource(assetManager, mediaMetadataRetriever)
     private val player = MediaPlayer()
