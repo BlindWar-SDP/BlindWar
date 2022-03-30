@@ -21,6 +21,8 @@ class DemoSRActivityTest : TestCase() {
 
     @Test
     fun initWorks() {
-        onView(withId(R.id.result_text_edit)).check(matches(withText("")))
+        testRule.scenario.onActivity {
+            onView(withId(R.id.result_text_edit)).check(matches(withText("")))
+        }
     }
 }
