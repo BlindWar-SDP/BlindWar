@@ -11,6 +11,8 @@ import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.*
+import kotlin.collections.ArrayList
 
 @RunWith(AndroidJUnit4::class)
 class VoiceRecognizerTest : TestCase() {
@@ -26,7 +28,7 @@ class VoiceRecognizerTest : TestCase() {
     fun init() {
         testRule.scenario.onActivity { activity ->
             voiceRecognizer.resultsRecognized = "no"
-            voiceRecognizer.init(activity, EditText(activity))
+            voiceRecognizer.init(activity, EditText(activity), Locale.ENGLISH.toLanguageTag())
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
         }
     }
@@ -35,7 +37,7 @@ class VoiceRecognizerTest : TestCase() {
     fun start() {
         testRule.scenario.onActivity { activity ->
             val tv = EditText(activity)
-            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.init(activity, tv, Locale.ENGLISH.toLanguageTag())
             voiceRecognizer.resultsRecognized = "no"
             voiceRecognizer.start()
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
@@ -46,7 +48,7 @@ class VoiceRecognizerTest : TestCase() {
     fun stop() {
         testRule.scenario.onActivity { activity ->
             val tv = EditText(activity)
-            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.init(activity, tv, Locale.ENGLISH.toLanguageTag())
             voiceRecognizer.resultsRecognized = "no"
             voiceRecognizer.start()
             voiceRecognizer.stop()
@@ -58,7 +60,7 @@ class VoiceRecognizerTest : TestCase() {
     fun destroy() {
         testRule.scenario.onActivity { activity ->
             val tv = EditText(activity)
-            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.init(activity, tv, Locale.ENGLISH.toLanguageTag())
             voiceRecognizer.resultsRecognized = "no"
             voiceRecognizer.destroy()
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
@@ -69,7 +71,7 @@ class VoiceRecognizerTest : TestCase() {
     fun onReadyForSpeech() {
         testRule.scenario.onActivity { activity ->
             val tv = EditText(activity)
-            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.init(activity, tv, Locale.ENGLISH.toLanguageTag())
             voiceRecognizer.onReadyForSpeech(null)
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
         }
@@ -79,7 +81,7 @@ class VoiceRecognizerTest : TestCase() {
     fun onBeginningOfSpeech() {
         testRule.scenario.onActivity { activity ->
             val tv = EditText(activity)
-            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.init(activity, tv, Locale.ENGLISH.toLanguageTag())
             voiceRecognizer.onBeginningOfSpeech()
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
         }
@@ -89,7 +91,7 @@ class VoiceRecognizerTest : TestCase() {
     fun onRmsChanged() {
         testRule.scenario.onActivity { activity ->
             val tv = EditText(activity)
-            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.init(activity, tv, Locale.ENGLISH.toLanguageTag())
             voiceRecognizer.onRmsChanged(0f)
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
         }
@@ -99,7 +101,7 @@ class VoiceRecognizerTest : TestCase() {
     fun onBufferReceived() {
         testRule.scenario.onActivity { activity ->
             val tv = EditText(activity)
-            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.init(activity, tv, Locale.ENGLISH.toLanguageTag())
             voiceRecognizer.onBufferReceived(null)
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
         }
@@ -109,7 +111,7 @@ class VoiceRecognizerTest : TestCase() {
     fun onEndOfSpeech() {
         testRule.scenario.onActivity { activity ->
             val tv = EditText(activity)
-            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.init(activity, tv, Locale.ENGLISH.toLanguageTag())
             voiceRecognizer.onEndOfSpeech()
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
         }
@@ -119,7 +121,7 @@ class VoiceRecognizerTest : TestCase() {
     fun onError() {
         testRule.scenario.onActivity { activity ->
             val tv = EditText(activity)
-            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.init(activity, tv, Locale.ENGLISH.toLanguageTag())
             voiceRecognizer.onError(0)
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
         }
@@ -129,7 +131,7 @@ class VoiceRecognizerTest : TestCase() {
     fun onResults() {
         testRule.scenario.onActivity { activity ->
             val tv = EditText(activity)
-            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.init(activity, tv, Locale.ENGLISH.toLanguageTag())
             val bundle = Bundle()
             val list = ArrayList<String>()
             list.add("yo")
@@ -143,7 +145,7 @@ class VoiceRecognizerTest : TestCase() {
     fun onPartialResults() {
         testRule.scenario.onActivity { activity ->
             val tv = EditText(activity)
-            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.init(activity, tv, Locale.ENGLISH.toLanguageTag())
             val bundle = Bundle()
             val list = ArrayList<String>()
             list.add("yo")
@@ -157,7 +159,7 @@ class VoiceRecognizerTest : TestCase() {
     fun onEvent() {
         testRule.scenario.onActivity { activity ->
             val tv = EditText(activity)
-            voiceRecognizer.init(activity, tv)
+            voiceRecognizer.init(activity, tv, Locale.ENGLISH.toLanguageTag())
             voiceRecognizer.onEvent(0, null)
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
         }

@@ -47,4 +47,18 @@ class GameHelperTest : TestCase() {
             )
         )
     }
+
+    fun testCloseCorrectTitleKeyboard() {
+        assertTrue(gameHelper.isTheCorrectTitle("Les lacasd", "les lacs", false))
+    }
+
+    fun testCloseCorrectTitleVocal() {
+        assertTrue(
+            gameHelper.isTheCorrectTitle(
+                "bohemian rhapsody de Queen",
+                "bohemian rhapsody Queen",
+                true
+            )
+        )
+    }
 }

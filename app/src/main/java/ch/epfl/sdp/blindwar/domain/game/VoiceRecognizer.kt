@@ -7,7 +7,6 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.widget.EditText
-import java.util.*
 
 /**
  * Class used to recognize voice
@@ -66,7 +65,7 @@ class VoiceRecognizer : RecognitionListener {
      * @param context
      * @param editText
      */
-    fun init(context: Context, editText: EditText) {
+    fun init(context: Context, editText: EditText, language: String) {
         if (speechRecognizer == null && speechRecognizerIntent == null) {
             editTextResult = editText
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
@@ -76,8 +75,15 @@ class VoiceRecognizer : RecognitionListener {
                 RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
             )
+            speechRecognizerIntent!!.putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE,
+                language
+            )
+            speechRecognizerIntent!!.putExtra(
+                "android.speech.extra.MASK_OFFENSIVE_WORDS",
+                false
+            ) //only for android 13
             resultsRecognized = ""
-            speechRecognizerIntent!!.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
             (speechRecognizer as SpeechRecognizer).setRecognitionListener(this)
         }
     }
