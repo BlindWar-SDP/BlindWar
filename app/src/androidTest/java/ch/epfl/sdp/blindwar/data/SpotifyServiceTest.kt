@@ -6,15 +6,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.data.SpotifyApiConstants.GRANT_TYPE
 import ch.epfl.sdp.blindwar.data.SpotifyApiConstants.credentialsEncoding
 import ch.epfl.sdp.blindwar.data.SpotifyApiConstants.tokenParameter
-import ch.epfl.sdp.blindwar.data.SpotifyService.apiAuth
-import ch.epfl.sdp.blindwar.data.SpotifyService.apiMeta
 import ch.epfl.sdp.blindwar.data.SpotifyService.spotifyApiFactory
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -86,7 +84,7 @@ class SpotifyServiceTest {
     @Test
     fun correctRequestGetArtist() {
         val mockSpotifyApi = spotifyApiFactory(mockWebServer.url(testPath).toString()).value
-        val metaSpotifyApi = apiMeta.value
+        //val metaSpotifyApi = apiMeta.value
 
         val mockResponse = MockResponse()
             .addHeader("Content-Type", "application/json")
@@ -112,7 +110,7 @@ class SpotifyServiceTest {
     @Test
     fun correctRequestGetToken() {
         val mockSpotifyApi = spotifyApiFactory(mockWebServer.url(testPath).toString()).value
-        val tokenSpotifyApi = apiAuth.value
+        //val tokenSpotifyApi = apiAuth.value
 
         val mockResponse = MockResponse()
             .addHeader("Content-Type", "application/json")
