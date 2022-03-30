@@ -1,16 +1,12 @@
 package ch.epfl.sdp.blindwar.domain.game
 
-import kotlin.math.absoluteValue
-
 object GameHelper {
 
-    private const val keyboardRatio = 0.9
-    private const val vocalRatio = 0.75
-    private const val wordEpsilon = 50
+    private const val vocalCostMax = 5
+    private const val keyboardCostMax = 3
 
     /**
      *
-     * TODO : upgrade it with lemmatisation
      * Check if the typed or speech recognized title is the good one
      *
      * @param answerString
@@ -19,17 +15,45 @@ object GameHelper {
      * @return Boolean
      */
     fun isTheCorrectTitle(answerString: String, title: String, isVocal: Boolean): Boolean {
-        var counter = 0.0
-        val wordsTitle = title.uppercase().split(" ")
-        for (word in wordsTitle) {
-            for (answer in answerString.uppercase().split(" ")) {
-                if (word.compareTo(answer).absoluteValue < wordEpsilon)
-                    counter++
+        return if (isVocal) levensteinDistance(
+            answerString.lowercase(),
+            title.lowercase()
+        ) < vocalCostMax
+        else levensteinDistance(answerString.lowercase(), title.lowercase()) < keyboardCostMax
+    }
+
+    /**
+     * Boolean to Int
+     *
+     * @return true = 1 / false = 0
+     */
+    private fun Boolean.toInt() = if (this) 1 else 0
+
+
+    /**
+     * Levenstein function to calculate distance between 2 strings
+     *
+     * @param x
+     * @param y
+     * @return the cost to go from x to y
+     */
+    private fun levensteinDistance(x: String, y: String): Int {
+        val dp = Array(x.length + 1) { IntArray(y.length + 1) }
+        for (i in 0..x.length) {
+            for (j in 0..y.length) {
+                when {
+                    i == 0 -> dp[i][j] = j
+                    j == 0 -> dp[i][j] = i
+                    else ->
+                        dp[i][j] = minOf(
+                            dp[i - 1][j - 1]
+                                    + (x[i - 1] != y[j - 1]).toInt(),
+                            dp[i - 1][j] + 1,
+                            dp[i][j - 1] + 1
+                        )
+                }
             }
         }
-        counter /= wordsTitle.size
-        if (counter > 1) return false
-        if (isVocal) return counter >= vocalRatio
-        return counter >= keyboardRatio
+        return dp[x.length][y.length]
     }
 }

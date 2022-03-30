@@ -2,14 +2,11 @@ package ch.epfl.sdp.blindwar.ui
 
 import android.app.Activity
 import android.content.Intent
-import ch.epfl.sdp.blindwar.R
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.BuildConfig
-import ch.epfl.sdp.blindwar.database.UserDatabase
-import ch.epfl.sdp.blindwar.user.AppStatistics
-import ch.epfl.sdp.blindwar.user.User
+import ch.epfl.sdp.blindwar.R
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
@@ -33,7 +30,7 @@ class SplashScreenActivity : AppCompatActivity() {
     // See: https://developer.android.com/training/basics/intents/result
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
-    ) { res -> startActivity(onSignInResult(this, res))}
+    ) { res -> startActivity(onSignInResult(this, res)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,10 +47,11 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
-    private fun createSignInIntent(): Intent{
+    private fun createSignInIntent(): Intent {
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().setRequireName(false).build(),
-            AuthUI.IdpConfig.GoogleBuilder().build())
+            AuthUI.IdpConfig.GoogleBuilder().build()
+        )
 //            AuthUI.IdpConfig.AnonymousBuilder().build())
 
         val customLayout = AuthMethodPickerLayout
@@ -65,7 +63,10 @@ class SplashScreenActivity : AppCompatActivity() {
         // Create and launch sign-in intent
         return AuthUI.getInstance()
             .createSignInIntentBuilder()
-            .setIsSmartLockEnabled(!BuildConfig.DEBUG /* credentials */, true /* hints */) // -> for TESTs only
+            .setIsSmartLockEnabled(
+                !BuildConfig.DEBUG /* credentials */,
+                true /* hints */
+            ) // -> for TESTs only
             .setAvailableProviders(providers)
             .setLogo(R.drawable.logo) // still used if setAuthMethodPickerLayout(customLayout) ?
             .setTheme(R.style.Theme_BlindWar) // Set theme
@@ -73,22 +74,25 @@ class SplashScreenActivity : AppCompatActivity() {
             .build()
     }
 
-    private fun onSignInResult(activity: Activity, result: FirebaseAuthUIAuthenticationResult): Intent? {
+    private fun onSignInResult(
+        activity: Activity,
+        result: FirebaseAuthUIAuthenticationResult
+    ): Intent? {
         val response = result.idpResponse
-        if (result.resultCode == AppCompatActivity.RESULT_OK) {
+        if (result.resultCode == RESULT_OK) {
             Log.i("lastSignin", "OK")
             // Successfully signed in
             val user = FirebaseAuth.getInstance().currentUser // =?= Firebase.auth.currentUser
             // https://www.tabnine.com/code/java/classes/com.google.firebase.auth.FirebaseAuth
 
-            if( user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp) {
+            return if (user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp) {
                 // new user: 1st signIn
-                return Intent(activity, NewUserActivity::class.java)
+                Intent(activity, NewUserActivity::class.java)
             } else {
                 /*
-            - should we update the online database with the local cache here ?
-             */
-                return Intent(activity, MainMenuActivity::class.java)
+                    - should we update the online database with the local cache here ?
+                     */
+                Intent(activity, MainMenuActivity::class.java)
             }
         } else {
             // Sign in failed. If response is null the user canceled the

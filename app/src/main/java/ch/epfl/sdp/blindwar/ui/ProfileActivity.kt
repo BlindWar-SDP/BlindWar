@@ -18,6 +18,7 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 
@@ -29,7 +30,11 @@ class ProfileActivity : AppCompatActivity() {
     private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             // Get User info and use the values to update the UI
-            val user = dataSnapshot.getValue<User>()
+            val user: User? = try {
+                dataSnapshot.getValue<User>()
+            } catch (e: DatabaseException) {
+                null
+            }
             val nameView = findViewById<TextView>(R.id.nameView)
             val emailView = findViewById<TextView>(R.id.emailView)
             val eloView = findViewById<TextView>(R.id.eloView)
@@ -38,7 +43,6 @@ class ProfileActivity : AppCompatActivity() {
                 emailView.text = user.email
                 eloView.text = user.userStatistics.elo.toString()
             }
-
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
@@ -48,26 +52,29 @@ class ProfileActivity : AppCompatActivity() {
     }
 
 
-    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data: Intent? = result.data
-            if (data != null) {
-                if (data.data != null) {
-                    val profilePic = findViewById<ImageView>(R.id.profileImageView)
-                    profilePic!!.setImageURI(data.data)
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                if (data != null) {
+                    if (data.data != null) {
+                        val profilePic = findViewById<ImageView>(R.id.profileImageView)
+                        profilePic!!.setImageURI(data.data)
 
-                    // Upload picture to database
-                    val imagePath = imageDatabase.uploadImage(data.data!!,
-                        findViewById(android.R.id.content))
+                        // Upload picture to database
+                        val imagePath = imageDatabase.uploadImage(
+                            data.data!!,
+                            findViewById(android.R.id.content)
+                        )
 
-                    // Update user profilePic
-                    database.addProfilePicture("JOJO", imagePath)
+                        // Update user profilePic
+                        database.addProfilePicture("JOJO", imagePath)
 
+                    }
                 }
-            }
 
+            }
         }
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
