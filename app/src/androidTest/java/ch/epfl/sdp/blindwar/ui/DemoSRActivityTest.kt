@@ -7,6 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.GrantPermissionRule
 import ch.epfl.sdp.blindwar.R
 import junit.framework.TestCase
 import org.junit.After
@@ -17,6 +18,10 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class DemoSRActivityTest : TestCase() {
+
+    @get:Rule
+    var permissionRule: GrantPermissionRule =
+        GrantPermissionRule.grant(android.Manifest.permission.RECORD_AUDIO)
 
     @get:Rule
     var testRule = ActivityScenarioRule(
@@ -35,6 +40,6 @@ class DemoSRActivityTest : TestCase() {
 
     @Test
     fun initializationWorks() {
-        onView(withId(R.id.result_text_edit)).check(matches(withText("")))
+        onView(withId(R.id.result_text_edit_sr)).check(matches(withText("")))
     }
 }

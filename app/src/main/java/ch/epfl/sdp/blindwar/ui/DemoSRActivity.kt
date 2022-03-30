@@ -15,14 +15,14 @@ import java.util.*
 
 
 class DemoSRActivity : Activity() {
-    val voiceRecognizerEnglish: VoiceRecognizer = VoiceRecognizer()
-    val voiceRecognizerFrench: VoiceRecognizer = VoiceRecognizer()
+    private val voiceRecognizerEnglish: VoiceRecognizer = VoiceRecognizer()
+    private val voiceRecognizerFrench: VoiceRecognizer = VoiceRecognizer()
 
     public override fun onCreate(state: Bundle?) {
         super.onCreate(state)
         setContentView(R.layout.activity_sr)
         // Setup layout
-        val resultEditText = findViewById<EditText>(R.id.result_text_edit)
+        val resultEditText = findViewById<EditText>(R.id.result_text_edit_sr)
 
         // Check if user has given permission to record audio, init the model after permission is granted
         val permissionCheck =
