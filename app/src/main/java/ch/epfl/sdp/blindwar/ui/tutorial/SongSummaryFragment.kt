@@ -34,7 +34,7 @@ class SongSummaryFragment : Fragment() {
 
         likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
             arguments?.getBoolean("liked")!!
-        }  else false
+        } else false
 
         setLikeListener()
 
@@ -63,15 +63,13 @@ class SongSummaryFragment : Fragment() {
             likeAnim.setMinAndMaxFrame(10, 30)
         }
 
-        likeAnim.setOnClickListener{
+        likeAnim.setOnClickListener {
             if (!likeSwitch) {
                 likeAnim.setMinAndMaxFrame(10, 30)
                 likeAnim.repeatCount = 0
                 //likeAnim.speed = 1f
                 likeAnim.playAnimation()
-            }
-
-            else {
+            } else {
                 likeAnim.setMinAndMaxFrame(45, 70)
                 likeAnim.repeatCount = 0
                 likeAnim.playAnimation()

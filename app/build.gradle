@@ -112,11 +112,11 @@ dependencies {
     debugImplementation("androidx.test:core:1.4.0")
 
     // JVM-based unit tests (that don't need a real device or emulator)
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0-RC"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"
     // Instrumentation unit tests (that will require a real device or emulator)
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0-RC"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"
     // Coroutines, and the much-recommended library to add lifecycle-awareness to coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
 
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
 
@@ -129,15 +129,14 @@ tasks.withType(Test) {
 
 task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
     reports {
-        xml.enabled = true
-        html.enabled = true
+        xml.required = true
+        html.required = true
     }
 
     def fileFilter = [
             '**/R.class',
             '**/R$*.class',
             '**/BuildConfig.*',
-            '**/VoskActivity.*',
             '**/AnimatedDemoActivity.*',
             '**/Manifest*.*',
             '**/*Test*.*',
