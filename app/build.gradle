@@ -137,7 +137,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             '**/R.class',
             '**/R$*.class',
             '**/BuildConfig.*',
-            '**/VoskActivity.*',
+            '**/demoSRActivity.*',
             '**/AnimatedDemoActivity.*',
             '**/Manifest*.*',
             '**/*Test*.*',

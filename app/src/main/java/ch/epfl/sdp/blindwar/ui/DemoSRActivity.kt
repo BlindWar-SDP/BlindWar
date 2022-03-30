@@ -14,14 +14,13 @@ import ch.epfl.sdp.blindwar.domain.game.VoiceRecognizer
 import java.util.*
 
 
-class VoskActivity : Activity() {
+class DemoSRActivity : Activity() {
     private val voiceRecognizerEnglish: VoiceRecognizer = VoiceRecognizer()
     private val voiceRecognizerFrench: VoiceRecognizer = VoiceRecognizer()
 
     public override fun onCreate(state: Bundle?) {
         super.onCreate(state)
-        setContentView(R.layout.main)
-
+        setContentView(R.layout.activity_sr)
         // Setup layout
         val resultEditText = findViewById<EditText>(R.id.result_text_edit)
 
