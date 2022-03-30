@@ -1,7 +1,5 @@
 package ch.epfl.sdp.blindwar.user
 
-import android.net.Uri
-
 data class User(
     val email: String,
     val userStatistics: AppStatistics,
