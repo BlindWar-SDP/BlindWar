@@ -69,4 +69,5 @@ class ProfileActivityTest : TestCase() {
             .perform(click())
         intended(hasComponent(StatisticsActivity::class.java.name))
     }
+
 }
