@@ -2,6 +2,8 @@ package ch.epfl.sdp.blindwar
 
 import ch.epfl.sdp.blindwar.user.AppStatistics
 import ch.epfl.sdp.blindwar.user.Mode
+import ch.epfl.sdp.blindwar.user.Result
+import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
 class AppStatisticsTest {
@@ -100,38 +102,60 @@ class AppStatisticsTest {
 
     @Test
     fun getWinsInitial() {
-        assert(testStats.wins == 0)
+        assert(testStats.wins[soloIndex] == 0)
+        assert(testStats.wins[multiIndex] == 0)
     }
 
     @Test
     fun multiWinLossCountUpdateWin() {
-        testStats.multiWinLossCountUpdate(true)
-        assert(testStats.wins == 1)
+        testStats.multiWinLossCountUpdate(Result.WIN, Mode.MULTI)
+        assert(testStats.wins[multiIndex] == 1)
     }
 
     @Test
     fun getLossesInitial() {
-        assert(testStats.losses == 0)
+        assert(testStats.losses[soloIndex] == 0)
+        assert(testStats.losses[multiIndex] == 0)
     }
 
     @Test
     fun multiWinLossCountUpdateLoss() {
-        testStats.multiWinLossCountUpdate(false)
-        assert(testStats.losses == 1)
+        testStats.multiWinLossCountUpdate(Result.LOSS, Mode.MULTI)
+        assert(testStats.losses[multiIndex] == 1)
+    }
+
+    @Test
+    fun getDrawsInitial() {
+        assert(testStats.draws[soloIndex] == 0)
+        assert(testStats.draws[multiIndex] == 0)
+    }
+
+    @Test
+    fun multiWinLossCountUpdateDraw() {
+        testStats.multiWinLossCountUpdate(Result.DRAW, Mode.MULTI)
+        assert(testStats.draws[multiIndex] == 1)
     }
 
     @Test
     fun getWinPercent() {
-        testStats2.multiWinLossCountUpdate(true)
-        testStats2.multiWinLossCountUpdate(false)
-        assert(testStats2.winPercent == 50.0F)
+        testStats2.multiWinLossCountUpdate(Result.WIN, Mode.MULTI)
+        testStats2.multiWinLossCountUpdate(Result.LOSS, Mode.MULTI)
+        assertEquals(50.0F, testStats2.winPercent[multiIndex])
     }
 
     @Test
     fun getLossPercent() {
-        testStats3.multiWinLossCountUpdate(true)
-        testStats3.multiWinLossCountUpdate(false)
-        assert(testStats3.lossPercent == 50.0F)
+        testStats3.multiWinLossCountUpdate(Result.WIN, Mode.MULTI)
+        testStats3.multiWinLossCountUpdate(Result.LOSS, Mode.MULTI)
+        assertEquals(50.0F, testStats3.lossPercent[multiIndex])
+    }
+
+    @Test
+    fun getDrawPercent() {
+        testStats3 = AppStatistics()
+        testStats3.multiWinLossCountUpdate(Result.DRAW, Mode.MULTI)
+        testStats3.multiWinLossCountUpdate(Result.LOSS, Mode.MULTI)
+        assertEquals(50.0F, testStats3.drawPercent[multiIndex])
     }
 
     @Test
@@ -139,10 +163,7 @@ class AppStatisticsTest {
         assert(testStats.elo == 1000)
     }
 
-    @Test
-    fun getEloAfterStrongWin() {
-        assert(testStats.elo == 1000)
-    }
+
 
     @Test
     fun resetStatistics() {
@@ -150,8 +171,9 @@ class AppStatisticsTest {
         testStats4.correctnessUpdate(false, Mode.SOLO)
         testStats4.correctnessUpdate(true, Mode.MULTI)
         testStats4.correctnessUpdate(false, Mode.MULTI)
-        testStats4.multiWinLossCountUpdate(true)
-        testStats4.multiWinLossCountUpdate(false)
+        testStats4.multiWinLossCountUpdate(Result.DRAW, Mode.MULTI)
+        testStats4.multiWinLossCountUpdate(Result.WIN, Mode.MULTI)
+        testStats4.multiWinLossCountUpdate(Result.LOSS, Mode.MULTI)
         testStats4.resetStatistics()
         assert(testStats4.correctArray[soloIndex] == 0)
         assert(testStats4.wrongArray[soloIndex] == 0)
@@ -161,30 +183,130 @@ class AppStatisticsTest {
         assert(testStats4.wrongArray[multiIndex] == 0)
         assert(testStats4.correctPercent[multiIndex] == 0.0F)
         assert(testStats4.wrongPercent[multiIndex] == 0.0F)
-        assert(testStats4.wins == 0)
-        assert(testStats4.losses == 0)
-        assert(testStats4.winPercent == 0.0F)
-        assert(testStats4.lossPercent == 0.0F)
+
+        assert(testStats4.wins[soloIndex] == 0)
+        assert(testStats4.wins[multiIndex] == 0)
+        assert(testStats4.draws[soloIndex] == 0)
+        assert(testStats4.draws[multiIndex] == 0)
+        assert(testStats4.losses[soloIndex] == 0)
+        assert(testStats4.losses[multiIndex] == 0)
+
+        assert(testStats4.winPercent[soloIndex] == 0.0F)
+        assert(testStats4.winPercent[multiIndex] == 0.0F)
+        assert(testStats4.drawPercent[soloIndex] == 0.0F)
+        assert(testStats4.drawPercent[multiIndex] == 0.0F)
+        assert(testStats4.lossPercent[soloIndex] == 0.0F)
+        assert(testStats4.lossPercent[multiIndex] == 0.0F)
+
+    }
+
+    @Test
+    fun eloUpdateNegative() {
+        testStats5 = AppStatistics()
+        testStats5.eloSetter(-2)
+        testStats5.eloUpdate(Result.LOSS, 10)
+        assertEquals(0, testStats5.elo)
     }
 
 
     @Test
-    fun eloUpdateWin() {
-        testStats5.eloUpdateWin(1100)
-        assert(testStats5.elo == 1015)
-        testStats5.eloUpdateWin(1015)
-        assert(testStats5.elo == 1025)
-        testStats5.eloUpdateWin(1015)
-        assert(testStats5.elo == 1030)
+    fun eloEqualLossNormal() {
+        testStats5 = AppStatistics()
+        testStats5.eloUpdate(Result.LOSS, 1000)
+        assertEquals(992,testStats5.elo)
     }
 
     @Test
-    fun eloUpdateLoss() {
-        testStats4.eloUpdateLoss(1100)
-        assert(testStats4.elo == 995)
-        testStats4.eloUpdateLoss(995)
-        assert(testStats4.elo == 985)
-        testStats4.eloUpdateLoss(900)
-        assert(testStats4.elo == 970)
+    fun eloEqualLossCorner() {
+        testStats5 = AppStatistics()
+        testStats5.eloSetter(6)
+        testStats5.eloUpdate(Result.LOSS, 6)
+        assertEquals(0,testStats5.elo)
+    }
+
+    @Test
+    fun eloEqualDraw() {
+        testStats5 = AppStatistics()
+        testStats5.eloUpdate(Result.DRAW, 1000)
+        assertEquals(1000,testStats5.elo)
+    }
+
+    @Test
+    fun eloEqualWin() {
+        testStats5 = AppStatistics()
+        testStats5.eloUpdate(Result.WIN, 1000)
+        assertEquals(1008,testStats5.elo)
+    }
+
+    @Test
+    fun eloSmallerLossNormal() {
+        testStats5 = AppStatistics()
+        testStats5.eloUpdate(Result.LOSS, 1200)
+        assertEquals(995,testStats5.elo)
+    }
+
+    @Test
+    fun eloSmallerLossCorner() {
+        testStats5 = AppStatistics()
+        testStats5.eloSetter(2)
+        testStats5.eloUpdate(Result.LOSS, 3)
+        assertEquals(0,testStats5.elo)
+    }
+
+    @Test
+    fun eloSmallerDraw() {
+        testStats5 = AppStatistics()
+        testStats5.eloUpdate(Result.DRAW, 1200)
+        assertEquals(1010,testStats5.elo)
+    }
+
+    @Test
+    fun eloSmallerWin() {
+        testStats5 = AppStatistics()
+        testStats5.eloUpdate(Result.WIN, 1200)
+        assertEquals(1012,testStats5.elo)
+    }
+
+    @Test
+    fun eloGreaterLossNormal() {
+        testStats5 = AppStatistics()
+        testStats5.eloUpdate(Result.LOSS, 800)
+        assertEquals(988,testStats5.elo)
+    }
+
+    @Test
+    fun eloGreaterLossCorner() {
+        testStats5 = AppStatistics()
+        testStats5.eloSetter(6)
+        testStats5.eloUpdate(Result.LOSS, 5)
+        assertEquals(0,testStats5.elo)
+    }
+
+    @Test
+    fun eloGreaterDrawNormal() {
+        testStats5 = AppStatistics()
+        testStats5.eloUpdate(Result.DRAW, 800)
+        assertEquals(990,testStats5.elo)
+    }
+
+    @Test
+    fun eloGreaterDrawCorner() {
+        testStats5 = AppStatistics()
+        testStats5.eloSetter(6)
+        testStats5.eloUpdate(Result.DRAW, 5)
+        assertEquals(0,testStats5.elo)
+    }
+
+    @Test
+    fun eloGreaterWinNormal() {
+        testStats5 = AppStatistics()
+        testStats5.eloUpdate(Result.WIN, 800)
+        assertEquals(1004,testStats5.elo)
+    }
+
+    @Test
+    fun toStringTest() {
+        testStats5 = AppStatistics()
+        assertEquals("hello 1000", testStats5.toString())
     }
 }
