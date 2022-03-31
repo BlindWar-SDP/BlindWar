@@ -123,15 +123,5 @@
     <string name="time">TIME</string>
     <string name="artist">ARTIST</string>
     <string name="track">TRACK</string>
-
-    <string-array name="modes_array">
-        <item>Solo</item>
-        <item>Multi</item>
-        <item>Funny 1</item>
-        <item>Funny 2</item>
-        <item>Funny 3</item>
-        <item>42</item>
-        <item>NoScrum</item>
-        <item>PlzHelp</item>
-    </string-array>
+    
 </resources>
