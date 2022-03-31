@@ -65,6 +65,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx:20.0.4'
     implementation 'com.airbnb.android:lottie:5.0.3'
 
+    // ViewModel
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+    androidTestImplementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+
     // Network
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
