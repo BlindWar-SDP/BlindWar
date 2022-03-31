@@ -3,14 +3,13 @@ package ch.epfl.sdp.blindwar.tutorial
 import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.SONG_MAP
 import ch.epfl.sdp.blindwar.ui.tutorial.SongSummaryFragment
-import junit.framework.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -49,24 +48,24 @@ class SongSummaryFragmentTest {
     /**
     @Test
     fun testLikeAnimation() {
-        val scenario = launchFragmentInContainer<SongSummaryFragment>(bundleSuccess)
-        onView(withId(R.id.likeView)).perform(click())
-        scenario.onFragment{
-            assertEquals(false, it.liked())
-        }
+    val scenario = launchFragmentInContainer<SongSummaryFragment>(bundleSuccess)
+    onView(withId(R.id.likeView)).perform(click())
+    scenario.onFragment{
+    assertEquals(false, it.liked())
+    }
 
-        onView(withId(R.id.likeView)).perform(click())
-        scenario.onFragment{
-            assertEquals(true, it.liked())
-        }
+    onView(withId(R.id.likeView)).perform(click())
+    scenario.onFragment{
+    assertEquals(true, it.liked())
+    }
     }
 
     @Test
     fun testSuccess() {
-        val scenario = launchFragmentInContainer<SongSummaryFragment>(bundleSuccess)
-        scenario.onFragment{
-            assertEquals(true, it.success())
-        }
+    val scenario = launchFragmentInContainer<SongSummaryFragment>(bundleSuccess)
+    scenario.onFragment{
+    assertEquals(true, it.success())
     }
-    **/
+    }
+     **/
 }

@@ -3,22 +3,27 @@ package ch.epfl.sdp.blindwar.data.sound
 import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import android.media.MediaMetadataRetriever
-import androidx.core.content.pm.PermissionInfoCompat
 import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.SONG_MAP
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 
-class LocalSoundDataSource(private val assetManager: AssetManager,
-private val mediaMetadataRetriever: MediaMetadataRetriever) {
+class LocalSoundDataSource(
+    private val assetManager: AssetManager,
+    private val mediaMetadataRetriever: MediaMetadataRetriever
+) {
 
     fun fetchSoundFileDescriptors(playlist: List<SongMetaData>): Map<String, Pair<AssetFileDescriptor, SongMetaData>> {
         return assetMatcher(filterAssetsPlaylist(playlist))
     }
 
     private fun filterAssetsPlaylist(playlist: List<SongMetaData>): List<String>? {
-        return assetManager.list("")?.filter { it.endsWith(".mp3") && playlist.any{s -> (it.contains(s.title) && (it.contains(s.artist)))}}
+        return assetManager.list("")?.filter {
+            it.endsWith(".mp3") && playlist.any { s ->
+                (it.contains(s.title) && (it.contains(s.artist)))
+            }
+        }
     }
 
-    private fun assetMatcher(assets: List<String>?): Map<String, Pair<AssetFileDescriptor, SongMetaData>>  {
+    private fun assetMatcher(assets: List<String>?): Map<String, Pair<AssetFileDescriptor, SongMetaData>> {
         return assets?.map { assetManager.openFd(it) }
             ?.associateBy({
                 // Get the title
@@ -26,10 +31,12 @@ private val mediaMetadataRetriever: MediaMetadataRetriever) {
                 return@associateBy mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
                     .toString()
             }, {
-                val author = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
-                    .toString()
-                val title = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
-                    .toString()
+                val author =
+                    mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+                        .toString()
+                val title =
+                    mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+                        .toString()
 
                 return@associateBy Pair(
                     it,

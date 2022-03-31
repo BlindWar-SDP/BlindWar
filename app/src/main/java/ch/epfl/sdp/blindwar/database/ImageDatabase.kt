@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.database
 
+
 import android.content.Context
 import android.net.Uri
 import android.view.View
@@ -19,7 +20,7 @@ object ImageDatabase {
     private val imagesRef = storageRef.child("images")
 
 
-    /*
+
     fun uploadImage(imageURI: Uri, view: View? = null): String {
         val randomKey = UUID.randomUUID().toString()
 
@@ -30,17 +31,16 @@ object ImageDatabase {
                 .addOnSuccessListener {
                     Snackbar.make(view, "Image uploaded", Snackbar.LENGTH_LONG).show()
                 }
-                    /*
+            /*
                 .addOnFailureListener {
                     Toast.makeText(getApplicationContext(), "Failed to upload file",
                         Toast.LENGTH_LONG).show()
                 }*/
-        }
-        else {
+        } else {
             uploadedImageRef.putFile(imageURI)
         }
         return uploadedImageRef.path
-    } */
+    }
 
     fun uploadProfilePicture(user: FirebaseUser?, imageURI: Uri, view: View? = null): String {
         val randomKey = UUID.randomUUID().toString()

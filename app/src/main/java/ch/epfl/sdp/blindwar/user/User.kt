@@ -1,7 +1,5 @@
 package ch.epfl.sdp.blindwar.user
 
-import android.net.Uri
-
 data class User(
     var email: String = "",
     var userStatistics: AppStatistics = AppStatistics(),
@@ -30,7 +28,7 @@ data class User(
         fun setProfilePicture(imagePath: String) = apply { this.profilePicture = imagePath }
 
         fun fromUser(user: User) = apply {
-            this.email          = user.email
+            this.email = user.email
             this.userStatistics = user.userStatistics
             this.pseudo         = user.pseudo
             this.firstName      = user.firstName

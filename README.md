@@ -3,6 +3,9 @@ Blind Test project for CS-306 EPFL course
 
 [![Build Status](https://api.cirrus-ci.com/github/BlindWar-SDP/BlindWar.svg)](https://cirrus-ci.com/github/BlindWar-SDP/BlindWar)
 
+<a href="https://codeclimate.com/github/BlindWar-SDP/BlindWar/maintainability"><img src="https://api.codeclimate.com/v1/badges/fc79bfce250af51b3b7e/maintainability" /></a>
+
+<a href="https://codeclimate.com/github/BlindWar-SDP/BlindWar/test_coverage"><img src="https://api.codeclimate.com/v1/badges/fc79bfce250af51b3b7e/test_coverage" /></a>
 
 ## Team Member
 | name | GitHub |

@@ -18,6 +18,7 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 
@@ -29,7 +30,11 @@ class ProfileActivity : AppCompatActivity() {
     private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             // Get User info and use the values to update the UI
-            val user = dataSnapshot.getValue<User>()
+            val user: User? = try {
+                dataSnapshot.getValue<User>()
+            } catch (e: DatabaseException) {
+                null
+            }
             val nameView = findViewById<TextView>(R.id.nameView)
             val emailView = findViewById<TextView>(R.id.emailView)
             val eloView = findViewById<TextView>(R.id.eloDeclarationView)
@@ -44,7 +49,6 @@ class ProfileActivity : AppCompatActivity() {
                     imageDatabase.dowloadProfilePicture(imagePath, profileImageView, applicationContext)
                 }
             }
-
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
@@ -54,29 +58,27 @@ class ProfileActivity : AppCompatActivity() {
     }
 
 
+
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
             if (data != null) {
                 if (data.data != null) {
-                    val profilePic = findViewById<ImageView>(R.id.profileImageView)
-                    //profilePic!!.setImageURI(data.data)
 
                     // Upload picture to database
-                    val imagePath = imageDatabase.uploadProfilePicture(
-                        currentUser, data.data!!, findViewById(android.R.id.content)
+                    imageDatabase.uploadProfilePicture(currentUser, data.data!!,
+                        findViewById(android.R.id.content)
                     )
                 }
-
-
             }
 
+            }
         }
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         // user id should be set according to authentication
         if (currentUser != null) {
             database.addUserListener(currentUser.uid, userInfoListener)

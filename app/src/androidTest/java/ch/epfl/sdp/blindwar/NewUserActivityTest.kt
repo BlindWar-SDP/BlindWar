@@ -33,6 +33,7 @@ class NewUserActivityTest : TestCase() {
     fun setup() {
         Intents.init()
     }
+
     @After
     fun cleanup() {
         Intents.release()
@@ -49,21 +50,23 @@ class NewUserActivityTest : TestCase() {
     // Delete default value when click on it
     @Test
     fun testClearPseudo() {
-        val id=R.id.NU_pseudo
+        val id = R.id.NU_pseudo
         onView(withId(id))
             .perform(click(), click()) // TODO: Why should click twice to delete text
         onView(withId(id)).check(matches(withText("")))
     }
+
     @Test
     fun testClearFirstName() {
-        val id=R.id.NU_FirstName
+        val id = R.id.NU_FirstName
         onView(withId(id))
             .perform(click(), click())
         onView(withId(id)).check(matches(withText("")))
     }
+
     @Test
     fun testClearLastName() {
-        val id=R.id.NU_LastName
+        val id = R.id.NU_LastName
         onView(withId(id))
             .perform(click(), click())
         onView(withId(id)).check(matches(withText("")))
@@ -73,21 +76,23 @@ class NewUserActivityTest : TestCase() {
     // Don't delete text when not default value
     @Test
     fun testNotClearPseudo() {
-        val id=R.id.NU_pseudo
+        val id = R.id.NU_pseudo
         onView(withId(id))
             .perform(replaceText(strNotDefault), closeSoftKeyboard())
         onView(withId(id)).check(matches(withText(strNotDefault)))
     }
+
     @Test
     fun testNotClearFirstName() {
-        val id=R.id.NU_FirstName
+        val id = R.id.NU_FirstName
         onView(withId(id))
             .perform(replaceText(strNotDefault), closeSoftKeyboard())
         onView(withId(id)).check(matches(withText(strNotDefault)))
     }
+
     @Test
     fun testNotClearLastName() {
-        val id=R.id.NU_LastName
+        val id = R.id.NU_LastName
         onView(withId(id))
             .perform(replaceText(strNotDefault), closeSoftKeyboard())
         onView(withId(id)).check(matches(withText(strNotDefault)))

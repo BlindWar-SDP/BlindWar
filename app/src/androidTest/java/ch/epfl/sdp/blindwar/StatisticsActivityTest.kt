@@ -14,7 +14,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class StatisticsActivityTest : TestCase() {
 
-    private val placeholder = 1;
+    private val placeholder = 1
 
     @get:Rule
     var testRule = ActivityScenarioRule(

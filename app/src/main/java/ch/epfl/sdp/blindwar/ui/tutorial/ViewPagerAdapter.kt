@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar.ui.tutorial
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter

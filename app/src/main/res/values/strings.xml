@@ -50,13 +50,12 @@
     <string name="statisticsShowText">You have 4 wins and 8 losses</string>
     <string name="your_elo_here">Your elo here</string>
     <string name="elo">ELO:</string>
-
-
+    
     <!-- TODO: Remove or change this placeholder text -->
     <string name="tutorial">TUTORIAL</string>
     <string name="recognize_file">Recognize File</string>
-    <string name="recognize_microphone_vosk">Recognize Microphone Offline(Vosk)</string>
-    <string name="recognize_microphone_google">Recognize Microphone Online(Google)</string>
+    <string name="recognize_microphone_en">Recognize Microphone english</string>
+    <string name="recognize_microphone_fr">Recognize Microphone french</string>
     <string name="stop_microphone">Stop Microphone</string>
     <string name="preparing">Preparing the recognizer\n</string>
     <string name="ready">Ready\n</string>
@@ -84,12 +83,14 @@
     <string name="formats_textview">Formats</string>
     <string name="commands_textview">Commands</string>
     <string name="game_options_textview">Game Options</string>
+    <string name="tutorial_music_set">Tutorial music set</string>
+    <string name="online_music">Online Music</string>
+    <string name="your_musics">Your musics</string>
     <string name="Pseudo_AvailableChars">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
     <string name="birthDate_txt">dd/mm/yyyy</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="song_summary_artist">Artist image view</string>
     <string name="demo_tutorial_artist">Artist image</string>
-    <string name="editText_VoskActivity_result">Talk to fill</string>
 
     <string name="example_elo">1435</string>
     <string name="wins">Wins:</string>
@@ -112,13 +113,23 @@
 
     <string name="selected_item">Selected item:</string>
     <string name="select_mode">Select mode</string>
+    <string name="avatar_description">Avatar image</string>
+    <string name="edit_text_hint_title">Please write your guess</string>
+    <string name="edit_text_hint_pseudo">Write your pseudo</string>
+    <string name="edit_text_hint_firstName">Write your first name</string>
+    <string name="edit_text_hint_lastName">Write your last name</string>
+    <string name="demo">DEMO</string>
+    <string name="button">BUTTON</string>
+    <string name="time">TIME</string>
+    <string name="artist">ARTIST</string>
+    <string name="track">TRACK</string>
 
     <string-array name="modes_array">
         <item>Solo</item>
         <item>Multi</item>
-        <item>Funny1</item>
-        <item>Funny2</item>
-        <item>Funny3</item>
+        <item>Funny 1</item>
+        <item>Funny 2</item>
+        <item>Funny 3</item>
         <item>42</item>
         <item>NoScrum</item>
         <item>PlzHelp</item>

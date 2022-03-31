@@ -1,5 +1,7 @@
 package ch.epfl.sdp.blindwar.domain.game
 
+import java.util.*
+
 /**
  * Class representing an instance of a game
  *
@@ -17,13 +19,13 @@ abstract class Game(gameInstance: GameInstance) {
 
     /** TODO: implement other game format and modes
     protected val gameDifficulty: GameDifficulty = gameInstance
-        .gameConfig
-        .difficulty
+    .gameConfig
+    .difficulty
 
     protected val gameFormat: GameFormat = gameInstance
-        .gameConfig
-        .format
-    **/
+    .gameConfig
+    .format
+     **/
 
     private val gamePlaylist: List<SongMetaData> = gameInstance.playlist
 
@@ -32,7 +34,7 @@ abstract class Game(gameInstance: GameInstance) {
 
     /** Player game score **/
     var score = 0
-        protected  set
+        protected set
 
     var round = 0
         protected set
@@ -47,14 +49,35 @@ abstract class Game(gameInstance: GameInstance) {
      * Record the game instance to the player history
      * clean up player and assets
      */
-    abstract fun endGame()
+    fun endGame() {
+        gameSound.soundTeardown()
+    }
 
     /**
      * Pass to the next round
      *
      * @return true if the game is over after this round, false otherwise
      */
-    abstract fun nextRound(): Boolean
+    fun nextRound(fromLocalStorage: Boolean = false): Boolean {
+        if (round >= gameParameter.round) {
+            endGame()
+            return true
+        }
+
+        gameSound.nextRound(fromLocalStorage)
+        return false
+    }
+
+    /**
+     * Depends on the game instance parameter
+     */
+    fun currentMetadata(): SongMetaData? {
+        if (gameParameter.hint) {
+            return gameSound.getCurrentMetadata()
+        }
+
+        return null
+    }
 
     /**
      * Try to guess a music by its title
@@ -62,23 +85,39 @@ abstract class Game(gameInstance: GameInstance) {
      * @param titleGuess Title that the user guesses
      * @return True if the guess is correct
      */
-    abstract fun guess(titleGuess: String): Boolean
+    fun guess(titleGuess: String): Boolean {
+        return if (titleGuess.uppercase(Locale.getDefault()) == currentMetadata()?.title?.uppercase(
+                Locale.getDefault()
+            )
+        ) {
+            score += 1
+            round += 1
+            true
+        } else
+            false
+    }
 
     /**
      * Current round has timed out
      *
      */
-    abstract fun timeout(): Unit
+    fun timeout() {
+        round += 1
+    }
 
     /**
      * Play the current music if in pause
      *
      */
-    abstract fun play()
+    fun play() {
+        gameSound.play()
+    }
 
     /**
      * Pause the current music if playing
      *
      */
-    abstract fun pause()
+    fun pause() {
+        gameSound.pause()
+    }
 }
