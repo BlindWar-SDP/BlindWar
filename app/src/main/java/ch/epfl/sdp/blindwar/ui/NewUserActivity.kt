@@ -23,12 +23,12 @@ class NewUserActivity : AppCompatActivity() {
 
     fun confirm(view: View) {
         val pseudo: String = findViewById<EditText>(R.id.NU_pseudo).text.toString()
-        val firstName: String = findViewById<EditText>(R.id.NU_FirstName).text.toString()
-        val lastName: String = findViewById<EditText>(R.id.NU_LastName).text.toString()
-        val birthDate: Long = findViewById<CalendarView>(R.id.NU_calendar).date
-//        var profilePicture: Uri? = null
+        val firstName: String? = findViewById<EditText>(R.id.NU_FirstName).text.toString()
+        val lastName: String? = findViewById<EditText>(R.id.NU_LastName).text.toString()
+        val birthDate: Long? = findViewById<CalendarView>(R.id.NU_calendar).date
+        var profilePicture: String? = null
 
-        createUser(pseudo, firstName, lastName, birthDate /*profilePicture*/)
+        createUser(pseudo, firstName, lastName, birthDate, profilePicture)
         startActivity(Intent(this, MainMenuActivity::class.java))
     }
 
@@ -58,14 +58,15 @@ class NewUserActivity : AppCompatActivity() {
         pseudo: String,
         firstName: String?,
         lastName: String?,
-        birthDate: Long? /*profilePicture: Uri?*/
+        birthDate: Long?,
+        profilePicture: String?
     ) {
         // set default value to null:
 
 //        checkPseudo(pseudo)
         val user = Firebase.auth.currentUser
         user?.let {
-            UserDatabase().addUser(
+            UserDatabase.addUser(
                 user.uid,
                 User.Builder(
                     user.email!!,
@@ -73,9 +74,9 @@ class NewUserActivity : AppCompatActivity() {
                     pseudo,
                     checkNotDefault(firstName, R.string.first_name),
                     checkNotDefault(lastName, R.string.last_name),
-                    birthDate /*profilePicture*/
-                ).build()
-            )
+                    birthDate,
+                    profilePicture
+                ).build())
         }
     }
 

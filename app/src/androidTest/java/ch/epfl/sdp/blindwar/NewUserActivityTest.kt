@@ -102,6 +102,8 @@ class NewUserActivityTest : TestCase() {
         onView(withId(id)).check(matches(withText(strNotDefault)))
     }
 
+
+
     // check No Default Values:
 
 
