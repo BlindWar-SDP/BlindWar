@@ -28,6 +28,10 @@ class AnimatedDemoActivityTest {
         AnimatedDemoActivity::class.java
     )
 
+    private fun checkLayoutVisibility(visibility: Visibility) {
+        onView(withId(R.id.startButton)).check(matches(withEffectiveVisibility(visibility)))
+    }
+
     @Test
     fun pauseGameTest() {
         onView(withId(R.id.startButton)).perform(click())
