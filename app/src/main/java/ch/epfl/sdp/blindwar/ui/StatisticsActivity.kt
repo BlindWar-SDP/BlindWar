@@ -24,7 +24,6 @@ class StatisticsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
         // access the items of the list
-        val modes3 = resources.getStringArray(R.array.modes_array)
         var modes = Mode.values()
 
 
