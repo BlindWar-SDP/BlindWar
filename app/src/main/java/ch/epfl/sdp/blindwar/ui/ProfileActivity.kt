@@ -108,4 +108,5 @@ class ProfileActivity : AppCompatActivity() {
         startActivity(Intent(this, StatisticsActivity::class.java))
     }
 
+
 }
