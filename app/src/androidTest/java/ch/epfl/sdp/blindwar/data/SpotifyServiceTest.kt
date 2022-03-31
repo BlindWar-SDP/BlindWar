@@ -95,10 +95,8 @@ class SpotifyServiceTest {
         val token = SpotifyToken("NgCXRKcMzYjw", 3600, "bearer")
 
         val artist = runBlocking { mockSpotifyApi.getArtist(tokenParameter(token), artistId) }
-        Log.d(TAG, artist.body().toString())
         val response = mockWebServer.takeRequest()
 
-        //Log.d(TAG, request1.method.toString())
         assertEquals("GET", response.method.toString())
         assertEquals("application/json", response.getHeader("Content-Type").toString())
         assertNotNull(response.getHeader("Authorization"))
@@ -118,12 +116,9 @@ class SpotifyServiceTest {
 
         mockWebServer.enqueue(mockResponse)
 
-        Log.d(TAG, credentialsEncoding())
         val token = runBlocking { mockSpotifyApi.getToken(credentialsEncoding(), GRANT_TYPE) }
-        Log.d(TAG, token.body().toString())
         val response = mockWebServer.takeRequest()
 
-        Log.d(TAG, response.headers.toString())
         assertEquals("POST", response.method.toString())
         assertEquals(
             "application/x-www-form-urlencoded",

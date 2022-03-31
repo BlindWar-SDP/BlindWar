@@ -23,8 +23,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 
 class ProfileActivity : AppCompatActivity() {
-    private val database = UserDatabase()
-    private val imageDatabase = ImageDatabase()
+    private val database = UserDatabase
+    private val imageDatabase = ImageDatabase
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
     private val userInfoListener = object : ValueEventListener {
@@ -37,11 +37,17 @@ class ProfileActivity : AppCompatActivity() {
             }
             val nameView = findViewById<TextView>(R.id.nameView)
             val emailView = findViewById<TextView>(R.id.emailView)
-            val eloView = findViewById<TextView>(R.id.eloView)
+            val eloView = findViewById<TextView>(R.id.eloDeclarationView)
+            val profileImageView = findViewById<ImageView>(R.id.profileImageView)
             if (user != null) {
                 nameView.text = user.firstName
                 emailView.text = user.email
                 eloView.text = user.userStatistics.elo.toString()
+
+                val imagePath = user.profilePicture
+                if (imagePath != null) {
+                    imageDatabase.dowloadProfilePicture(imagePath, profileImageView, applicationContext)
+                }
             }
         }
 
@@ -50,48 +56,29 @@ class ProfileActivity : AppCompatActivity() {
             Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
         }
     }
+    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data: Intent? = result.data
+            if (data != null) {
+                if (data.data != null) {
 
-
-    var resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                if (data != null) {
-                    if (data.data != null) {
-                        val profilePic = findViewById<ImageView>(R.id.profileImageView)
-                        profilePic!!.setImageURI(data.data)
-
-                        // Upload picture to database
-                        val imagePath = imageDatabase.uploadImage(
-                            data.data!!,
-                            findViewById(android.R.id.content)
-                        )
-
-                        // Update user profilePic
-                        database.addProfilePicture("JOJO", imagePath)
-
-                    }
+                    // Upload picture to database
+                    imageDatabase.uploadProfilePicture(currentUser, data.data!!,
+                        findViewById(android.R.id.content)
+                    )
                 }
-
+                }
             }
         }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         // user id should be set according to authentication
         if (currentUser != null) {
             database.addUserListener(currentUser.uid, userInfoListener)
         }
         setContentView(R.layout.activity_profile)
-        val profilePic = findViewById<ImageView>(R.id.profileImageView)
-        /*
-        profilePic.setOnClickListener {
-            choosePicture()
-        } */
-
     }
-
 
     fun choosePicture(view: View) {
         val intent = Intent()
@@ -100,17 +87,14 @@ class ProfileActivity : AppCompatActivity() {
         resultLauncher.launch(intent)
     }
 
-
     fun logoutButton(view: View) {
         AuthUI.getInstance().signOut(this).addOnCompleteListener {
             startActivity(Intent(this, SplashScreenActivity::class.java))
         }
-
     }
 
 
     fun statisticsButton(view: View) {
         startActivity(Intent(this, StatisticsActivity::class.java))
     }
-
 }

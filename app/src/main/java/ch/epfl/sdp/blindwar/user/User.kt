@@ -1,13 +1,13 @@
 package ch.epfl.sdp.blindwar.user
 
 data class User(
-    val email: String,
-    val userStatistics: AppStatistics,
-    val pseudo: String,
-    val firstName: String?,
-    val lastName: String?,
-    val birthDate: Long?,
-//    val profilePicture: Uri?,
+    var email: String = "",
+    var userStatistics: AppStatistics = AppStatistics(),
+    var pseudo: String = "",
+    var firstName: String? = null,
+    var lastName: String? = null,
+    var birthDate: Long? = 0,
+    var profilePicture: String? = null
 ) {
 
     class Builder(
@@ -17,7 +17,7 @@ data class User(
         private var firstName: String? = null,
         private var lastName: String? = null,
         private var birthDate: Long? = null,
-//        private var profilePicture: Uri? = null,
+        private var profilePicture: String? = null,
     ) {
         fun setEmail(email: String) = apply { this.email = email }
         fun setStats(stats: AppStatistics) = apply { this.userStatistics = stats }
@@ -25,16 +25,16 @@ data class User(
         fun setFirstName(name: String?) = apply { this.firstName = name }
         fun setLastName(name: String?) = apply { this.lastName = name }
         fun setBirthDate(date: Long?) = apply { this.birthDate = date }
-//        fun setImage(link: Uri?) = apply { this.profilePicture = link }
+        fun setProfilePicture(imagePath: String) = apply { this.profilePicture = imagePath }
 
         fun fromUser(user: User) = apply {
             this.email = user.email
             this.userStatistics = user.userStatistics
-            this.pseudo = user.pseudo
-            this.firstName = user.firstName
-            this.lastName = user.lastName
-            this.birthDate = user.birthDate
-//            this.profilePicture = user.profilePicture
+            this.pseudo         = user.pseudo
+            this.firstName      = user.firstName
+            this.lastName       = user.lastName
+            this.birthDate      = user.birthDate
+            this.profilePicture = user.profilePicture
         }
 
         fun build(): User {
@@ -45,7 +45,7 @@ data class User(
                 firstName,
                 lastName,
                 birthDate,
-//                profilePicture
+                profilePicture
             )
         }
     }

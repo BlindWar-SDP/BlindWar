@@ -38,7 +38,7 @@ class NewUserActivity : AppCompatActivity() {
         val firstName: String = findViewById<EditText>(R.id.NU_FirstName).text.toString()
         val lastName: String = findViewById<EditText>(R.id.NU_LastName).text.toString()
         val birthDate: Long = birthDate0
-//        var profilePicture: Uri? = null
+        var profilePicture: String? = null
 
         // check validity of pseudo
         if (pseudo.length < resources.getInteger(R.integer.pseudo_minLength) || pseudo == resources.getString(
@@ -65,7 +65,7 @@ class NewUserActivity : AppCompatActivity() {
             Toast.makeText(this, R.string.new_user_wrong_pseudo_text, Toast.LENGTH_SHORT).show()
 
         } else {
-//            createUser(pseudo, firstName, lastName, birthDate /*profilePicture*/) // TODO : Comment for TESTing -> need to uncomment
+//            createUser(pseudo, firstName, lastName, birthDate profilePicture) // TODO : Comment for TESTing -> need to uncomment
             AuthUI.getInstance().delete(this) // TODO : for TESTing -> need to delete line
             startActivity(Intent(this, MainMenuActivity::class.java))
         }
@@ -119,13 +119,14 @@ class NewUserActivity : AppCompatActivity() {
         pseudo: String,
         firstName: String?,
         lastName: String?,
-        birthDate: Long? /*profilePicture: Uri?*/
+        birthDate: Long?,
+        profilePicture: String?
     ) {
         // set default value to null:
 
         val user = Firebase.auth.currentUser
         user?.let {
-            UserDatabase().addUser(
+            UserDatabase.addUser(
                 user.uid,
                 User.Builder(
                     user.email!!,
@@ -133,9 +134,9 @@ class NewUserActivity : AppCompatActivity() {
                     pseudo,
                     checkNotDefault(firstName, R.string.first_name),
                     checkNotDefault(lastName, R.string.last_name),
-                    birthDate /*profilePicture*/
-                ).build()
-            )
+                    birthDate,
+                    profilePicture
+                ).build())
         }
     }
 

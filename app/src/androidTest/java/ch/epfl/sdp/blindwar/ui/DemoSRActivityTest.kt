@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.ui
 
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -40,6 +41,18 @@ class DemoSRActivityTest : TestCase() {
 
     @Test
     fun initializationWorks() {
+        onView(withId(R.id.result_text_edit_sr)).check(matches(withText("")))
+    }
+
+    @Test
+    fun testButtonEnglish() {
+        onView(withId(R.id.recognize_mic_en)).perform(click())
+        onView(withId(R.id.result_text_edit_sr)).check(matches(withText("")))
+    }
+
+    @Test
+    fun testButtonFrench() {
+        onView(withId(R.id.recognize_mic_fr)).perform(click())
         onView(withId(R.id.result_text_edit_sr)).check(matches(withText("")))
     }
 }

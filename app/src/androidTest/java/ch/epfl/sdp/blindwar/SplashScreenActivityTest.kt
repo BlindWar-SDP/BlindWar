@@ -1,10 +1,21 @@
 package ch.epfl.sdp.blindwar
 
+
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.NoMatchingViewException
+import androidx.test.espresso.ViewInteraction
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.ui.SplashScreenActivity
+import com.google.firebase.auth.FirebaseAuth
 import junit.framework.TestCase
+import org.hamcrest.Matchers
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -29,6 +40,9 @@ class SplashScreenActivityTest : TestCase() {
         Intents.release()
     }
 
+
+
+
     @Test
     fun testOnCreate() {
         // What The FFF
@@ -37,5 +51,5 @@ class SplashScreenActivityTest : TestCase() {
 //        } else {
 //            Intents.intended(IntentMatchers.hasComponent(NewUserActivityTest::class.java.name))
 //        }
-    }
+   }
 }

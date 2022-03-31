@@ -22,7 +22,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class NewUserActivityTest : TestCase() {
 
-    val strNotDefault = "notDefaultText"
+    private val strNotDefault = "notDefaultText"
 
     @get:Rule
     var testRule = ActivityScenarioRule(
@@ -95,7 +95,11 @@ class NewUserActivityTest : TestCase() {
     fun testClearPseudo() {
         val id = R.id.NU_pseudo
         onView(withId(id))
-            .perform(click(), click()) // TODO: Why should click twice to delete text
+            .perform(
+                click(),
+                click(),
+                closeSoftKeyboard()
+            ) // TODO: Why should click twice to delete text
         onView(withId(id)).check(matches(withText("")))
     }
 
@@ -103,7 +107,7 @@ class NewUserActivityTest : TestCase() {
     fun testClearFirstName() {
         val id = R.id.NU_FirstName
         onView(withId(id))
-            .perform(click(), click())
+            .perform(click(), click(), closeSoftKeyboard())
         onView(withId(id)).check(matches(withText("")))
     }
 
@@ -111,7 +115,7 @@ class NewUserActivityTest : TestCase() {
     fun testClearLastName() {
         val id = R.id.NU_LastName
         onView(withId(id))
-            .perform(click(), click())
+            .perform(click(), click(), closeSoftKeyboard())
         onView(withId(id)).check(matches(withText("")))
     }
 

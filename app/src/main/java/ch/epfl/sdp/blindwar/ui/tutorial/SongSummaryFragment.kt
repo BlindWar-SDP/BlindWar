@@ -13,7 +13,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.squareup.picasso.Picasso
 
 class SongSummaryFragment : Fragment() {
-    private lateinit var likeAnim: LottieAnimationView
+    private lateinit var likeAnimation: LottieAnimationView
     private var likeSwitch: Boolean = false
     private var success: Boolean = false
 
@@ -30,7 +30,7 @@ class SongSummaryFragment : Fragment() {
         val trackText = view.findViewById<TextView>(R.id.trackTextView)
 
         /** Like animation **/
-        likeAnim = view.findViewById(R.id.likeView)
+        likeAnimation = view.findViewById(R.id.likeView)
 
         likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
             arguments?.getBoolean("liked")!!
@@ -58,21 +58,21 @@ class SongSummaryFragment : Fragment() {
 
     private fun setLikeListener() {
         if (likeSwitch) {
-            likeAnim.setMinAndMaxFrame(45, 70)
+            likeAnimation.setMinAndMaxFrame(45, 70)
         } else {
-            likeAnim.setMinAndMaxFrame(10, 30)
+            likeAnimation.setMinAndMaxFrame(10, 30)
         }
 
-        likeAnim.setOnClickListener {
+        likeAnimation.setOnClickListener {
             if (!likeSwitch) {
-                likeAnim.setMinAndMaxFrame(10, 30)
-                likeAnim.repeatCount = 0
+                likeAnimation.setMinAndMaxFrame(10, 30)
+                likeAnimation.repeatCount = 0
                 //likeAnim.speed = 1f
-                likeAnim.playAnimation()
+                likeAnimation.playAnimation()
             } else {
-                likeAnim.setMinAndMaxFrame(45, 70)
-                likeAnim.repeatCount = 0
-                likeAnim.playAnimation()
+                likeAnimation.setMinAndMaxFrame(45, 70)
+                likeAnimation.repeatCount = 0
+                likeAnimation.playAnimation()
             }
 
             likeSwitch = !likeSwitch
