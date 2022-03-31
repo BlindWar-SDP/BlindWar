@@ -71,10 +71,9 @@ dependencies {
     implementation 'com.airbnb.android:lottie:5.0.3'
 
     // ViewModel
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
-    androidTestImplementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
-    implementation 'androidx.fragment:fragment-ktx:1.5.0-alpha03@aar'
-    androidTestImplementation 'androidx.fragment:fragment-ktx:1.5.0-alpha03@aar'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0-alpha05"
+    //implementation 'androidx.fragment:fragment-ktx:1.5.0-alpha03@aar'
+    //androidTestImplementation 'androidx.fragment:fragment-ktx:1.5.0-alpha03@aar'
 
     // Network
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
