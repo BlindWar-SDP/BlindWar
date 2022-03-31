@@ -3,50 +3,48 @@ package ch.epfl.sdp.blindwar.ui.tutorial
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.GameTutorial
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 import ch.epfl.sdp.blindwar.domain.game.Tutorial.gameInstance
+import ch.epfl.sdp.blindwar.ui.solo.GameInstanceViewModel
 
 open class DemoActivity: AppCompatActivity() {
-    /** TODO: Refactor Game class to avoid this encapsulation leak **/
     lateinit var game: GameTutorial
     protected var playing = true
     protected lateinit var guessEditText: EditText
     protected lateinit var scoreTextView: TextView
     protected lateinit var songMetaData: SongMetaData
-    private lateinit var guessButton: Button
+    private lateinit var guessButton: ImageButton
     protected lateinit var countDown: TextView
     private var duration: Int = 0
     private lateinit var timer: CountDownTimer
 
     private lateinit var gameSummary: GameSummaryFragment
+    private val gameInstanceViewModel: GameInstanceViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_demo)
 
+        /** Set up the interface **/
         // Game instance tutorial
         game = GameTutorial(gameInstance, assets)
         game.init()
 
         duration = gameInstance
             .gameConfig
-            .parameter
+            .difficulty
             .timeToFind
 
-        // Start a music
-        game.nextRound()
-        game.play()
-        songMetaData = game.currentMetadata()!!
-
         // Create and start countdown
-        timer = createCountDown().start()
+        timer = createCountDown()
         countDown = findViewById(R.id.countdown)
 
         // Cache song image
@@ -55,11 +53,23 @@ open class DemoActivity: AppCompatActivity() {
         // Create game summary
         gameSummary = GameSummaryFragment()
 
+        /** Fetch round metadata **/
+        game.nextRound()
+        /** Start the game **/
+        game.play()
+        timer.start()
+
+        songMetaData = game.currentMetadata()!!
+
         // Get the widgets
         guessEditText = findViewById(R.id.guessEditText)
         guessEditText.hint = songMetaData.artist
         scoreTextView = findViewById(R.id.scoreTextView)
-        guessButton = findViewById(R.id.guessButton)
+        guessButton = findViewById<ImageButton>(R.id.guessButtonDemo).also{
+            it.setOnClickListener{
+                guess()
+            }
+        }
     }
 
     override fun onPause() {
@@ -67,8 +77,7 @@ open class DemoActivity: AppCompatActivity() {
         game.pause()
     }
 
-    open fun guess(view: View) {
-        //Log.d("ZAMBO ANGUISSA", guessEditText.text.toString())
+    open fun guess() {
         if(game.guess(guessEditText.text.toString())) {
             // Update the number of point view
             scoreTextView.text = game.score.toString()

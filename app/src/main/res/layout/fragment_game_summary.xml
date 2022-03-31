@@ -8,40 +8,92 @@
     android:background="@color/success"
     android:id="@+id/game_summary_fragment">
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="251dp"
+        android:layout_height="78dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/bungee_inline"
+        android:gravity="center_horizontal"
+        android:text="@string/game"
+        android:textSize="45sp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <FrameLayout
-        android:layout_width="369dp"
-        android:layout_height="620dp"
-        android:background="@color/white"
+        android:id="@+id/frameLayout"
+        android:layout_width="364dp"
+        android:layout_height="618dp"
+        android:background="@drawable/back_frame_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
-        android:layout_width="337dp"
-        android:layout_height="579dp"
+        android:layout_width="350dp"
+        android:layout_height="600dp"
+        android:background="@drawable/border_button"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.496"></androidx.viewpager2.widget.ViewPager2>
+        app:layout_constraintVertical_bias="0.496" />
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="149dp"
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="57dp"
         android:layout_height="50dp"
-        android:fontFamily="@font/public_sans"
-        android:gravity="center"
-        android:text="@string/game"
-        android:textSize="45sp"
+        android:layout_marginBottom="20dp"
+        android:background="@null"
+        android:src="@drawable/ic_baseline_list_24"
         app:layout_constraintBottom_toTopOf="@+id/pager"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.272"
+        app:layout_constraintStart_toEndOf="@+id/title"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/replay"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/border_button_white"
+        android:src="@drawable/ic_baseline_replay_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/quit"
+        android:layout_width="53dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="32dp"
+        android:background="@null"
+        android:src="@drawable/ic_baseline_cancel_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toEndOf="@+id/replay"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

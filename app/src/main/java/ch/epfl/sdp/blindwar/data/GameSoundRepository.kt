@@ -6,6 +6,4 @@ import ch.epfl.sdp.blindwar.data.sound.RemoteSoundDataSource
 class GameSoundRepository(val localSource: LocalSoundDataSource,
 val remoteSource: RemoteSoundDataSource) {
 
-
-
 }

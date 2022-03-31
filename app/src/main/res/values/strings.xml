@@ -6,7 +6,7 @@
     <string name="blindwar">BLINDWAR</string>
     <string name="blind_war">Blind War</string>
 
-    <!--  Buttons  -->
+    <!-- Buttons  -->
     <string name="solo">SOLO</string>
     <string name="multi">MULTI</string>
     <string name="profile">PROFILE</string>
@@ -32,6 +32,18 @@
     <string name="song_opt_description"> Random Song Sel : Description placeholder| Custom
     playlist </string>
 
+    <!--  Modes  -->
+    <string name="survival">SURVIVAL</string>
+    <string name="classic">CLASSIC</string>
+    <string name="timed">TIMED</string>
+    <string name="mode_selection">MODE SELECTION</string>
+    <string name="funny">FUNNY</string>
+    <string name="timedDescription">"Faster higher stronger"</string>
+    <string name="survivalDescription">"We are the Walking Dead"</string>
+    <string name="classicDescription">"Just a normal game lel"</string>
+
+    <!--  Playlist selection  -->
+    <string name="playlist_selection">PLAYLIST SELECTION</string>
 
     <!--  Text  -->
     <string name="backText"><![CDATA[->]]></string>
@@ -52,8 +64,11 @@
     <string name="elo">ELO:</string>
     
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="tutorial">TUTORIAL</string>
     <string name="recognize_file">Recognize File</string>
+    <string name="recognize_microphone_en">Recognize Microphone english</string>
+    <string name="recognize_microphone_fr">Recognize Microphone french</string>
+    <string name="tutorial">TUTORIAL</string>
+    <string name="edit_text_hint_title">Please write your guess</string>
     <string name="recognize_microphone_vosk">Recognize Microphone Offline(Vosk)</string>
     <string name="recognize_microphone_google">Recognize Microphone Online(Google)</string>
     <string name="stop_microphone">Stop Microphone</string>

@@ -33,7 +33,7 @@ class SoloMenuActivity : AppCompatActivity() {
 
                     val playlist: List<SongMetaData> = SongImageUrlConstants.SONG_MAP.values.toList()
 
-                    val gameParameter = GameParameter(3, funny = false, hint = true, 30000)
+                    val gameParameter = GameParameter(3, funny = false)
 
                     val gameConfig = GameConfig(
                         GameDifficulty.EASY,

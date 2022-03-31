@@ -7,8 +7,8 @@ object Tutorial {
 
     private val playlist: List<SongMetaData> = SONG_MAP.values.toList()
 
-    private val gameParameter = GameParameter(3, funny = false, hint = true, 31000)
-    private val gameParameterTest = GameParameter(1, funny = false, hint = true, timeToFind = 1000)
+    private val gameParameter = GameParameter(3, funny = false)
+    private val gameParameterTest = GameParameter(1, funny = false)
 
     private val gameConfig = GameConfig(GameDifficulty.EASY,
         GameFormat.SOLO, GameMode.REGULAR, gameParameter)

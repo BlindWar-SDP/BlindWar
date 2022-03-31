@@ -13,6 +13,10 @@ abstract class Game(gameInstance: GameInstance) {
     /** Encapsulates the characteristics of a game instead of its logic **/
     private val game: GameInstance = gameInstance
 
+    protected val gameDifficulty: GameDifficulty = gameInstance
+        .gameConfig
+        .difficulty
+
     protected val gameParameter: GameParameter = gameInstance
         .gameConfig
         .parameter
@@ -72,7 +76,7 @@ abstract class Game(gameInstance: GameInstance) {
      * Depends on the game instance parameter
      */
     fun currentMetadata(): SongMetaData? {
-        if (gameParameter.hint) {
+        if (gameDifficulty.hint) {
             return gameSoundController.getCurrentMetadata()
         }
 

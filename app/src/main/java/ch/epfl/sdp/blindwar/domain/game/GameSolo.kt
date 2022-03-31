@@ -11,7 +11,7 @@ import java.util.*
  * Create an instance of the tutorial's game logic
  *
  * @param assetManager AssetManager instance to get the mp3 files
- */
+
 class GameSolo(private val gameInstance: GameInstance,
                    private val assetManager: AssetManager) : Game(gameInstance) {
 
@@ -69,4 +69,4 @@ class GameSolo(private val gameInstance: GameInstance,
     override fun pause() {
         gameSoundController.pause()
     }
-}
+}**/

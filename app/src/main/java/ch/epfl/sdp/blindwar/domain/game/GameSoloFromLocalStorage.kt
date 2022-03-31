@@ -18,12 +18,12 @@ class GameSoloFromLocalStorage(
     private val gameInstance: GameInstance,
     private val assetManager: AssetManager,
     private val from: DocumentFile,
-    private val contentResolver: ContentResolver
+    private val contentResolver: ContentResolver,
 ) : Game(gameInstance) {
 
-    override val gameSound = GameSound(assetManager)
+    override val gameSoundController = GameSoundController(assetManager)
 
     override fun init() {
-        gameSound.soundInitFromLocalStorage(this.from, this.contentResolver)
+        gameSoundController.soundInitFromLocalStorage(this.from, this.contentResolver)
     }
 }

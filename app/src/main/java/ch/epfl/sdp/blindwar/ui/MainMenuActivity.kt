@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.ui.solo.ModeSelectionFragment
+import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
 import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
 import com.firebase.ui.auth.AuthUI
 
@@ -20,12 +22,8 @@ class MainMenuActivity : AppCompatActivity() {
 
     // Called when the user taps the Solo button
     fun soloButton(view: View) {
-        //val intent = Intent(this, SoloMenuActivity::class.java)
-        //startActivity(intent)
-
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, ModeSelectionFragment())
-            .commit()
+        val intent = Intent(this, PlayActivity::class.java)
+        startActivity(intent)
     }
 
     // Called when the user taps the Tutorial button
@@ -50,6 +48,6 @@ class MainMenuActivity : AppCompatActivity() {
     }
 
     fun launchSpeechRecognitionActivity(view: View) {
-        startActivity(Intent(this, VoskActivity::class.java))
+        startActivity(Intent(this, DemoSRActivity::class.java))
     }
 }

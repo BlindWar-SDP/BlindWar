@@ -19,6 +19,12 @@ configurations.all{
     }
 }
 
+def apikeyPropertiesFile = rootProject.file("spotifyKeys.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+def String spotify_client = apikeyProperties['SPOTIFY_CLIENT']
+def String spotify_secret = apikeyProperties['SPOTIFY_KEY']
+
 android {
     compileSdk 31
 
@@ -28,6 +34,8 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
+        buildConfigField 'String', 'spotifyClient', "$spotify_client"
+        buildConfigField 'String', 'spotifySecret', "$spotify_secret"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

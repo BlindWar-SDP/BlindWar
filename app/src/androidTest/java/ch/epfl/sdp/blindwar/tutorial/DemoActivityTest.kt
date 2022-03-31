@@ -2,10 +2,7 @@ package ch.epfl.sdp.blindwar.tutorial
 
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.IdlingPolicies
-import androidx.test.espresso.IdlingResource
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -16,10 +13,8 @@ import ch.epfl.sdp.blindwar.ui.tutorial.DemoActivity
 import org.junit.Rule
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.Tutorial
-import junit.framework.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class DemoActivityTest {
@@ -44,7 +39,7 @@ class DemoActivityTest {
         .round
 
     private fun checkLayoutVisibility(visibility: Visibility) {
-        onView(withId(R.id.guessButton)).check(matches(withEffectiveVisibility(visibility)))
+        onView(withId(R.id.guessButtonDemo)).check(matches(withEffectiveVisibility(visibility)))
         onView(withId(R.id.guessEditText)).check(matches(withEffectiveVisibility(visibility)))
         onView(withId(R.id.scoreTextView)).check(matches(withEffectiveVisibility(visibility)))
         //onView(withId(R.id.startButton)).check(matches(withEffectiveVisibility(visibility)))
@@ -59,13 +54,13 @@ class DemoActivityTest {
         //Log.d(TAG, correctMetadata.toString())
         onView(withId(R.id.guessEditText))
             .perform(clearText(), typeText(correctMetadata.title), closeSoftKeyboard())
-        onView(withId(R.id.guessButton)).perform(click())
+        onView(withId(R.id.guessButtonDemo)).perform(click())
     }
 
     private fun makeBadGuess() {
         onView(withId(R.id.guessEditText))
             .perform(clearText(), typeText("THIS IS NOT CORRECT"), closeSoftKeyboard())
-        onView(withId(R.id.guessButton)).perform(click())
+        onView(withId(R.id.guessButtonDemo)).perform(click())
     }
 
     private fun makeGoodGuessGetBack() {

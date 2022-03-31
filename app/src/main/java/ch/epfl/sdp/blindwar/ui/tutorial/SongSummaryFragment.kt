@@ -1,9 +1,11 @@
 package ch.epfl.sdp.blindwar.ui.tutorial
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -29,15 +31,6 @@ class SongSummaryFragment : Fragment() {
         val artistText = view.findViewById<TextView>(R.id.artistTextView)
         val trackText = view.findViewById<TextView>(R.id.trackTextView)
 
-        /** Like animation **/
-        likeAnim = view.findViewById(R.id.likeView)
-
-        likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
-            arguments?.getBoolean("liked")!!
-        }  else false
-
-        setLikeListener()
-
         /** Background color **/
         success = arguments?.get("success") as Boolean
         val background = view.findViewById<ConstraintLayout>(R.id.song_summary_fragment)
@@ -47,6 +40,23 @@ class SongSummaryFragment : Fragment() {
         } else {
             background.setBackgroundColor(resources.getColor(R.color.black))
         }
+
+        /** Like animation **/
+        likeAnim = view.findViewById(R.id.likeView)
+
+        likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
+            val layout = view.findViewById<ConstraintLayout>(R.id.song_summary_fragment)
+            view.findViewById<ImageButton>(R.id.skip_next_summary).visibility = View.GONE
+            layout.background =
+                if (success)
+                    view.resources.getDrawable(R.drawable.back_frame_success)
+                else
+                    view.resources.getDrawable(R.drawable.back_frame_failure)
+            arguments?.getBoolean("liked")!!
+        }  else
+            false
+
+        setLikeListener()
 
         /** TODO: define constant key Strings **/
         artistText.text = arguments?.get("artist").toString()
