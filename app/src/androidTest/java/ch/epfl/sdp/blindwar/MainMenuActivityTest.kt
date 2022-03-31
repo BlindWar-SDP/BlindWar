@@ -19,7 +19,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.ui.DemoSRActivity
 import ch.epfl.sdp.blindwar.ui.MainMenuActivity
 import ch.epfl.sdp.blindwar.ui.ProfileActivity
-import ch.epfl.sdp.blindwar.ui.SplashScreenActivity
 import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -68,13 +67,6 @@ class MainMenuActivityTest : TestCase() {
         onView(withId(R.id.profileButton))
             .perform(click())
         intended(hasComponent(ProfileActivity::class.java.name))
-    }
-
-    @Test
-    fun testLogoutButton() {
-        onView(withId(R.id.logoutButton))
-            .perform(click())
-        intended(hasComponent(SplashScreenActivity::class.java.name))
     }
 
     @Test

@@ -56,9 +56,6 @@ class ProfileActivity : AppCompatActivity() {
             Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
         }
     }
-
-
-
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
@@ -70,11 +67,9 @@ class ProfileActivity : AppCompatActivity() {
                         findViewById(android.R.id.content)
                     )
                 }
-            }
-
+                }
             }
         }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,9 +79,7 @@ class ProfileActivity : AppCompatActivity() {
             database.addUserListener(currentUser.uid, userInfoListener)
         }
         setContentView(R.layout.activity_profile)
-
     }
-
 
     fun choosePicture(view: View) {
         val intent = Intent()
@@ -95,18 +88,14 @@ class ProfileActivity : AppCompatActivity() {
         resultLauncher.launch(intent)
     }
 
-
     fun logoutButton(view: View) {
         AuthUI.getInstance().signOut(this).addOnCompleteListener {
             startActivity(Intent(this, SplashScreenActivity::class.java))
         }
-
     }
 
 
     fun statisticsButton(view: View) {
         startActivity(Intent(this, StatisticsActivity::class.java))
     }
-
-
 }

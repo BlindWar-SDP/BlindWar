@@ -43,6 +43,7 @@ class ProfileActivityTest : TestCase() {
     fun testLogoutButton() {
         onView(withId(R.id.logoutButton))
             .perform(click())
+        Thread.sleep(1000)
         intended(hasComponent(SplashScreenActivity::class.java.name))
     }
     /*

@@ -115,5 +115,4 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun isSignedIn(): Boolean {
         return Firebase.auth.currentUser != null
     }
-
 }
