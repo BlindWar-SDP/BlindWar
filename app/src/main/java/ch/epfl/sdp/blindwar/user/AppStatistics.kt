@@ -1,7 +1,13 @@
 package ch.epfl.sdp.blindwar.user
 
+import java.lang.Exception
+import kotlin.math.pow
+import kotlin.math.round
+
 class AppStatistics {
     private val numberOfMode = Mode.values().size
+    private val hundredPercent = 100
+    private val standardEqualValue = 8
 
     var correctArray = IntArray(numberOfMode).toMutableList()
         private set
@@ -11,31 +17,55 @@ class AppStatistics {
         private set
     var wrongPercent = FloatArray(numberOfMode).toMutableList()
         private set
-    var wins: Int = 0
+    var wins = IntArray(numberOfMode).toMutableList()
         private set
-    var losses: Int = 0
+    var losses = IntArray(numberOfMode).toMutableList()
         private set
-    var winPercent: Float = 0.0F
+    var draws = IntArray(numberOfMode).toMutableList()
         private set
-    var lossPercent: Float = 0.0F
+    var winPercent = FloatArray(numberOfMode).toMutableList()
+        private set
+    var lossPercent = FloatArray(numberOfMode).toMutableList()
+        private set
+    var drawPercent = FloatArray(numberOfMode).toMutableList()
         private set
     var elo: Int = 1000
         private set
 
-    //function for resetting stats to 0 (except for elo)
+    /**
+     * Sets ELO
+     *
+     * @param newElo the new ELO to set
+     */
+    fun eloSetter(newElo: Int) {
+        elo = newElo
+    }
+
+    /**
+     * Resets all the statistics except for the ELO
+     *
+     */
     fun resetStatistics() {
         correctArray = IntArray(numberOfMode).toMutableList()
         wrongArray = IntArray(numberOfMode).toMutableList()
         correctPercent = FloatArray(numberOfMode).toMutableList()
         wrongPercent = FloatArray(numberOfMode).toMutableList()
-        wins = 0
-        losses = 0
-        winPercent = 0.0F
-        lossPercent = 0.0F
+        wins = IntArray(numberOfMode).toMutableList()
+        losses = IntArray(numberOfMode).toMutableList()
+        draws = IntArray(numberOfMode).toMutableList()
+        winPercent = FloatArray(numberOfMode).toMutableList()
+        lossPercent = FloatArray(numberOfMode).toMutableList()
+        drawPercent = FloatArray(numberOfMode).toMutableList()
     }
 
-    // general function for updating percentages
-    private fun percentUpdate(good: Int, bad: Int): Pair<Float, Float> {
+    /**
+     * Updates correct and wrong percentages
+     *
+     * @param good the number of correct guesses
+     * @param bad the number of wrong guesses
+     * @return a pair of newly calculated <correctPercent, wrongPercent>
+     */
+    private fun correctnessPercentUpdate(good: Int, bad: Int): Pair<Float, Float> {
         val total = good + bad
         val goodPercent = (good * 100 / total).toFloat()
         val badPercent = 100 - goodPercent
@@ -43,9 +73,10 @@ class AppStatistics {
     }
 
     /**
-     * function for updating correct/wrong stats
+     * Updates correct/wrong count and calls correctnessPercentUpdate
      *
-     * @param correct
+     * @param correct true if guess was correct, false if wrong
+     * @param mode the current game mode
      */
     fun correctnessUpdate(correct: Boolean, mode: Mode) {
         if (correct) {
@@ -53,47 +84,113 @@ class AppStatistics {
         } else {
             wrongArray[mode.ordinal]++
         }
-        val (a, b) = percentUpdate(correctArray[mode.ordinal], wrongArray[mode.ordinal])
+        val (a, b) = correctnessPercentUpdate(correctArray[mode.ordinal], wrongArray[mode.ordinal])
         correctPercent[mode.ordinal] = a
         wrongPercent[mode.ordinal] = b
     }
 
-    // function for updating win/loss numbers
-    fun multiWinLossCountUpdate(win: Boolean) {
-        if (win) {
-            wins++
+    /**
+     * Updates win/draw/loss count and percentages
+     *
+     * @param result the result of the game
+     * @param mode the current mode
+     */
+    fun multiWinLossCountUpdate(result: Result, mode: Mode) {
+        if (result == Result.WIN) {
+            wins[mode.ordinal]++
+        } else if (result == Result.DRAW) {
+            draws[mode.ordinal]++
         } else {
-            losses++
+            losses[mode.ordinal]++
         }
-        val (a, b) = percentUpdate(wins, losses)
-        winPercent = a
-        lossPercent = b
+        val total = wins[mode.ordinal] + draws[mode.ordinal] + losses[mode.ordinal]
+        winPercent[mode.ordinal] = (wins[mode.ordinal].toFloat() / total.toFloat() * hundredPercent)
+        drawPercent[mode.ordinal] = (draws[mode.ordinal].toFloat() / total.toFloat() * hundredPercent)
+        lossPercent[mode.ordinal] = 100F - winPercent[mode.ordinal] - drawPercent[mode.ordinal]
     }
 
 
-    // function for updating elo in case of win (very simple version)
-    fun eloUpdateWin(opponentElo: Int) {
-        elo += when {
-            opponentElo > elo -> 15
-            opponentElo == elo -> 10
-            else -> 5
+    /**
+     * Updates ELO
+     *
+     * @param opponentElo the ELO of the opponent
+     */
+    fun eloUpdate(result: Result, opponentElo: Int) {
+        if (elo < 0){
+            elo = 0;
+        }
+        elo = if (opponentElo == elo) {
+                equalElo(result)
+            } else if (opponentElo > elo) {
+                smallerElo(result, opponentElo)
+            } else {
+                greaterElo(result, opponentElo)
+            }
+
+    }
+
+    /**
+     * Calculates ELO in case of ELO equality
+     *
+     * @param result the result of the game
+     * @return the new elo of the user
+     */
+    private fun equalElo(result: Result): Int {
+        if (result == Result.LOSS) {
+            return if (elo < standardEqualValue) {
+                0
+            } else {
+                elo - standardEqualValue
+            }
+        } else if (result == Result.WIN) {
+            return elo + standardEqualValue
+        }
+        return elo
+    }
+
+    /**
+     * Calculates ELO in case of elo is smaller than the opponent's
+     *
+     * @param result the result of the game
+     * @return the new elo of the user
+     */
+    private fun smallerElo(result: Result, opponentElo: Int): Int {
+        var ratio = 0 - (opponentElo.toFloat()/ elo.toFloat())
+        if (result == Result.LOSS) {
+            ratio = 0 - ((1/ratio).pow(3))
+        } else if (result == Result.WIN) {
+            ratio = 0 - (ratio).pow(2)
+        }
+        val diff = round((ratio * standardEqualValue)).toInt()
+        return if (elo - diff <= 0) {
+            0
+        } else {
+            elo - diff
         }
     }
 
-    // function for updating elo in case of loss (very simple version)
-    fun eloUpdateLoss(opponentElo: Int) {
-        elo -= when {
-            opponentElo > elo -> 5
-            opponentElo == elo -> 10
-            else -> 15
+    /**
+     * Calculates ELO in case of elo is greater than the opponent's
+     *
+     * @param result the result of the game
+     * @return the new elo of the user
+     */
+    private fun greaterElo(result: Result, opponentElo: Int): Int {
+        var ratio = (elo.toFloat() / opponentElo.toFloat())
+        if (result == Result.LOSS) {
+            ratio = ratio.pow(2)
+        } else if (result == Result.WIN)
+            ratio = 0 - ((1/ratio).pow(3))
+        val diff = round((ratio * standardEqualValue)).toInt()
+        return if (elo - diff < 0) {
+            0
+        } else {
+            elo - diff
         }
     }
+
 
     override fun toString(): String {
-        return "hello" +
-                //correctArray.toString() + wrongArray.toString() + correctPercent.toString() +
-                //wrongPercent.toString() +
-                wins.toString() + losses.toString() +
-                winPercent.toString() + lossPercent.toString() + elo.toString()
+        return "hello " + elo
     }
 }
