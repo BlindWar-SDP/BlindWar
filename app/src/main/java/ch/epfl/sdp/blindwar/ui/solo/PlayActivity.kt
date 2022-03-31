@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.GameTutorial
@@ -48,19 +49,16 @@ class PlayActivity: AppCompatActivity() {
         }
     }
 
-
-    private fun removeFragment(tag: String) {
+    private fun removeFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .remove(supportFragmentManager.findFragmentByTag(tag)!!)
+            .remove(fragment)
             .commit()
     }
 
-    private fun removeAllFragments() {
+    fun removeAllFragments() {
         for (fragment in supportFragmentManager.fragments) {
-            removeFragment(fragment.tag!!)
+            removeFragment(fragment)
         }
-
-        super.onBackPressed()
     }
 }

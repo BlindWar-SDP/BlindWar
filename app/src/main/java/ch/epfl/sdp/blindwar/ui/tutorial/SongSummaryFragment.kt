@@ -16,8 +16,10 @@ import com.squareup.picasso.Picasso
 
 class SongSummaryFragment : Fragment() {
     private lateinit var likeAnim: LottieAnimationView
+    private lateinit var skip: ImageButton
     private var likeSwitch: Boolean = false
     private var success: Boolean = false
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,9 +46,15 @@ class SongSummaryFragment : Fragment() {
         /** Like animation **/
         likeAnim = view.findViewById(R.id.likeView)
 
+        skip = view.findViewById<ImageButton>(R.id.skip_next_summary).also { button ->
+            button.setOnClickListener{
+                activity?.onBackPressed()
+            }
+        }
+
         likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
             val layout = view.findViewById<ConstraintLayout>(R.id.song_summary_fragment)
-            view.findViewById<ImageButton>(R.id.skip_next_summary).visibility = View.GONE
+            skip.visibility = View.GONE
             layout.background =
                 if (success)
                     view.resources.getDrawable(R.drawable.back_frame_success)
@@ -77,7 +85,6 @@ class SongSummaryFragment : Fragment() {
             if (!likeSwitch) {
                 likeAnim.setMinAndMaxFrame(10, 30)
                 likeAnim.repeatCount = 0
-                //likeAnim.speed = 1f
                 likeAnim.playAnimation()
             }
 
