@@ -28,7 +28,9 @@ class MainMenuActivity : AppCompatActivity() {
     // Called when the user taps the Tutorial button
     fun tutorialButton(view: View) {
         val currentUser = FirebaseAuth.getInstance().currentUser
-        database.setElo(currentUser!!.uid, 1100)
+        if (currentUser != null) {
+            database.setElo(currentUser!!.uid, 1100)
+        }
         val intent = Intent(this, TutorialActivity::class.java)
         startActivity(intent)
     }
