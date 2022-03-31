@@ -38,12 +38,14 @@ class ProfileActivityTest : TestCase() {
         Intents.release()
     }
 
+    /**
     @Test
     fun testLogoutButton() {
         onView(withId(R.id.logoutButton))
             .perform(click())
         intended(hasComponent(SplashScreenActivity::class.java.name))
     }
+    **/
     /*
     @Test
     fun testLoginButton() {
