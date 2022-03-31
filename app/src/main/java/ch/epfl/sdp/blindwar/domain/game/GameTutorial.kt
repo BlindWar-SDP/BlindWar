@@ -1,5 +1,8 @@
 package ch.epfl.sdp.blindwar.domain.game
 
+import android.content.ContentResolver
+import android.content.Context
+import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 
 
@@ -12,13 +15,11 @@ import android.content.res.AssetManager
  * @param assetManager AssetManager instance to get the mp3 files
  */
 class GameTutorial(
-    private val gameInstance: GameInstance,
-    private val assetManager: AssetManager
-) : Game(gameInstance) {
-
-    override val gameSound = GameSound(assetManager)
+    gameInstance: GameInstance, assetManager: AssetManager, contentResolver: ContentResolver
+) : Game<AssetFileDescriptor>(gameInstance, assetManager, contentResolver) {
 
     override fun init() {
-        gameSound.soundInitWithSpotifyMetadata(gameInstance.playlist)
+        this.gameSound = GameSoundTutorial(assetManager, this.contentResolver)
+        (this.gameSound as GameSoundTutorial).init()
     }
 }
