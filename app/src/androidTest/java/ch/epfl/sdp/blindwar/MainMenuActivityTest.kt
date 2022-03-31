@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar
 
-import android.content.Intent
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
@@ -90,6 +89,9 @@ class MainMenuActivityTest : TestCase() {
         Thread.sleep(1000)
         onView(ViewMatchers.withId(R.id.profileButton))
             .perform(ViewActions.click())
+        onView(ViewMatchers.withId(R.id.emailView))
+            .perform(ViewActions.closeSoftKeyboard())
+        Thread.sleep(1000)
         onView(ViewMatchers.withId(R.id.emailView))
             .check(matches(ViewMatchers.withText(Matchers.containsString("test@bot.ch"))))
         onView(ViewMatchers.withId(R.id.logoutButton)).perform(ViewActions.click())
