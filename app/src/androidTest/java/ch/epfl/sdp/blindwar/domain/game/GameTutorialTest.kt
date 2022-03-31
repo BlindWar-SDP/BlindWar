@@ -1,7 +1,6 @@
 package ch.epfl.sdp.blindwar.domain.game
 
 import android.content.Context
-import android.util.Log
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.hamcrest.MatcherAssert.assertThat
@@ -14,11 +13,13 @@ import java.util.*
 class GameTutorialTest {
     // All possible musics during tutorial
 
-    private val assets = ApplicationProvider.getApplicationContext<Context>().assets
+    private val context = ApplicationProvider.getApplicationContext<Context>()
+    private val assets = context.assets
+    private val contentResolver = context.contentResolver
 
     @Test
     fun testNextRound() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, contentResolver)
         gameTutorial.init()
         val round = Tutorial
             .gameInstance
@@ -37,7 +38,7 @@ class GameTutorialTest {
 
     @Test
     fun testTwoGoodGuesses() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, contentResolver)
         gameTutorial.init()
         goodGuess(gameTutorial)
         goodGuess(gameTutorial)
@@ -47,7 +48,7 @@ class GameTutorialTest {
 
     @Test
     fun testUpperCaseGuess() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, contentResolver)
         gameTutorial.init()
         gameTutorial.nextRound()
         val music1 = gameTutorial.currentMetadata()
@@ -58,7 +59,7 @@ class GameTutorialTest {
 
     @Test
     fun testTwoGoodAndOneBadGuesses() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, contentResolver)
         gameTutorial.init()
         goodGuess(gameTutorial)
         goodGuess(gameTutorial)

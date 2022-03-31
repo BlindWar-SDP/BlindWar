@@ -32,7 +32,7 @@ open class DemoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_demo)
 
         // Game instance tutorial
-        game = GameTutorial(gameInstance, assets)
+        game = GameTutorial(gameInstance, assets, applicationContext.contentResolver)
         game.init()
 
         duration = gameInstance

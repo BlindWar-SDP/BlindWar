@@ -1,8 +1,11 @@
 package ch.epfl.sdp.blindwar.domain.game
 
 import android.content.ContentResolver
+import android.content.Context
+import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import androidx.documentfile.provider.DocumentFile
+import java.io.FileDescriptor
 
 
 /**
@@ -13,13 +16,14 @@ import androidx.documentfile.provider.DocumentFile
  *
  * @param assetManager AssetManager instance to get the mp3 files
  */
-class GameSoloFromLocalStorage(
+class GameSoloLocalStorage(
     gameInstance: GameInstance,
     assetManager: AssetManager,
     private val from: DocumentFile,
-    private val contentResolver: ContentResolver
-) : Game(gameInstance, assetManager) {
+    contentResolver: ContentResolver
+) : Game<FileDescriptor>(gameInstance, assetManager, contentResolver) {
     override fun init() {
-        gameSound.soundInitFromLocalStorage(this.from, this.contentResolver)
+        this.gameSound = GameSoundLocalStorage(this.assetManager)
+        (this.gameSound as GameSoundLocalStorage).init(this.from, this.contentResolver)
     }
 }

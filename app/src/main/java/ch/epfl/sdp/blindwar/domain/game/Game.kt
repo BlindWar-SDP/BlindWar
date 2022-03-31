@@ -1,5 +1,7 @@
 package ch.epfl.sdp.blindwar.domain.game
 
+import android.content.ContentResolver
+import android.content.Context
 import android.content.res.AssetManager
 import java.util.*
 
@@ -10,16 +12,19 @@ import java.util.*
  * Construct a class that represent the game logic
  *
  */
-abstract class Game(gameInstance: GameInstance, assetManager: AssetManager) {
+abstract class Game<FileDescriptorT>(
+    gameInstance: GameInstance,
+    protected val assetManager: AssetManager,
+    protected val contentResolver: ContentResolver
+) {
     /** Encapsulates the characteristics of a game instead of its logic **/
     private val game: GameInstance = gameInstance
+
+    protected lateinit var gameSound: GameSound<FileDescriptorT>
 
     private val gameParameter: GameParameter = gameInstance
         .gameConfig
         .parameter
-
-    /** Get the sound data through another layer **/
-    protected val gameSound = GameSound(assetManager)
 
     /** Player game score **/
     var score = 0
@@ -46,13 +51,13 @@ abstract class Game(gameInstance: GameInstance, assetManager: AssetManager) {
      *
      * @return true if the game is over after this round, false otherwise
      */
-    fun nextRound(fromLocalStorage: Boolean = false): Boolean {
+    fun nextRound(): Boolean {
         if (round >= gameParameter.round) {
             endGame()
             return true
         }
 
-        gameSound.nextRound(fromLocalStorage)
+        gameSound.nextRound()
         return false
     }
 
