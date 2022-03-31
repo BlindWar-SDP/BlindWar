@@ -8,6 +8,8 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.user.Mode
+import java.util.*
 
 
 class StatisticsActivity : AppCompatActivity() {
@@ -22,7 +24,9 @@ class StatisticsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
         // access the items of the list
-        val modes = resources.getStringArray(R.array.modes_array)
+        val modes3 = resources.getStringArray(R.array.modes_array)
+        var modes = Mode.values()
+
 
         // access the spinner
         val spinner = findViewById<Spinner>(R.id.modes_spinner)
