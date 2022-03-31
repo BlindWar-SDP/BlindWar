@@ -1,5 +1,3 @@
-@file:Suppress("KDocUnresolvedReference")
-
 package ch.epfl.sdp.blindwar.data.sound
 
 import android.content.ContentProviderClient
