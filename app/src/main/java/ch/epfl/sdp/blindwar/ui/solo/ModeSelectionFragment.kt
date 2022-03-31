@@ -39,25 +39,28 @@ open class ModeSelectionFragment: Fragment() {
         raceButton = view.findViewById<Button>(R.id.raceButton_).also{selectMode(it)}
         survivalButton = view.findViewById<Button>(R.id.survivalButton_).also{selectMode(it)}
 
+        /** TODO: Correct bug in next sprint
         backButton = view.findViewById<ImageButton>(R.id.back_button).also{
             it.setOnClickListener{
                 //activity?.onBackPressed()
             }
         }
+        **/
 
         return view
     }
 
-    protected fun selectMode(view: View) {
-        view.setOnClickListener{
-            gameInstance.setGameMode(when(view.id) {
+
+    protected fun selectMode(button: View) {
+        button.setOnClickListener{
+            gameInstance.setGameMode(when(button.id) {
                 R.id.raceButton_ -> GameMode.TIMED
                 R.id.survivalButton_ -> GameMode.SURVIVAL
                 else -> GameMode.REGULAR
             })
 
         activity?.supportFragmentManager?.beginTransaction()
-            ?.replace(R.id.play_container, PlaylistSelectionFragment(), "PLAYLIST")
+            ?.replace((view?.parent as ViewGroup).id, PlaylistSelectionFragment(), "PLAYLIST")
             ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             ?.commit()
         }

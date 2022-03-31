@@ -10,7 +10,7 @@ object Tutorial {
     private val gameParameter = GameParameter(3, funny = false)
     private val gameParameterTest = GameParameter(1, funny = false)
 
-    private val gameConfig = GameConfig(GameDifficulty.EASY,
+    private val gameConfig = GameConfig(GameDifficulty.DIFFICULT,
         GameFormat.SOLO, GameMode.REGULAR, gameParameter)
 
     val gameInstance = GameInstance(gameConfig, playlist)

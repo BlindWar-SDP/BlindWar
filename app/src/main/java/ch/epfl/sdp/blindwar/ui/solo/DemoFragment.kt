@@ -142,7 +142,6 @@ open class DemoFragment: Fragment() {
                 }
             }
         }
-
     }
 
     fun guess() {
@@ -175,7 +174,7 @@ open class DemoFragment: Fragment() {
         val songSummary = SongSummaryFragment()
         songSummary.arguments = createBundleSongSummary(success)
 
-        transaction?.add(R.id.play_container, songSummary, "Song Summary")
+        transaction?.add((view?.parent as ViewGroup).id, songSummary, "Song Summary")
         transaction?.commit()
     }
 
@@ -183,8 +182,7 @@ open class DemoFragment: Fragment() {
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         //transaction?.addToBackStack(GameSummaryFragment::class.java.name)
         transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-
-        transaction?.replace(R.id.play_container, gameSummary, "Game Summary")
+        transaction?.replace((view?.parent as ViewGroup).id, gameSummary, "Game Summary")
         transaction?.commit()
     }
 

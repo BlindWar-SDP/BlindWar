@@ -13,9 +13,10 @@ import androidx.fragment.app.activityViewModels
 import ch.epfl.sdp.blindwar.R
 
 class PlaylistSelectionFragment: Fragment() {
-    private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
+    /** Keep : Useful for the next sprint **/
+    //private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
+    //private lateinit var backButton: ImageButton
     private lateinit var startButton: Button
-    private lateinit var backButton: ImageButton
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,17 +31,18 @@ class PlaylistSelectionFragment: Fragment() {
                 // Start a Game depending on the Game Mode
 
                 activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.play_container, AnimatedDemoFragment(), "DEMO")
+                    ?.replace((view?.parent as ViewGroup).id, DemoFragment(), "DEMO")
                     ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     ?.commit()
             }
         }
 
+        /** TODO: Test in the next sprint
         backButton = view.findViewById<ImageButton>(R.id.back_button_playlist).also {
             it.setOnClickListener{
                 activity?.onBackPressed()
             }
-        }
+        } **/
 
         return view
     }

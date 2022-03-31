@@ -14,15 +14,15 @@ import ch.epfl.sdp.blindwar.ui.tutorial.SongSummaryFragment
 
 class PlayActivity: AppCompatActivity() {
 
-    private val gameInstanceViewModel: GameInstanceViewModel by viewModels()
-//    private val gameControl: GameViewModel by viewModels()
+    val gameInstanceViewModel: GameInstanceViewModel by viewModels()
 
+    // Add boolean animated configuration
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.play_container, AnimatedModeSelectionFragment(), "MODE")
+            .replace(R.id.play_container, ModeSelectionFragment(), "MODE")
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .commit()
     }

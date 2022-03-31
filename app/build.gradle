@@ -43,6 +43,11 @@ android {
             testCoverageEnabled true
         }
     }
+
+    testOptions {
+        animationsDisabled = true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -149,7 +154,6 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             '**/R.class',
             '**/R$*.class',
             '**/BuildConfig.*',
-            '**/AnimatedDemoActivity.*',
             '**/Manifest*.*',
             '**/*Test*.*',
             'android/**/*.*',
@@ -157,7 +161,11 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             '**/*Hilt*.*',
             'hilt_aggregated_deps/**',
             '**/*_Factory.class',
-            '**/*_MembersInjector.class'
+            '**/*_MembersInjector.class',
+            // Animated UI is only problematic on Cirrus
+            '**/AnimatedDemoActivity.*',
+            '**/AnimatedModeSelectionFragment.*',
+            '**/AnimatedDemoFragment.*'
     ]
     def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
