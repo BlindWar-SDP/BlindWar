@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar.domain.game
 
-import ch.epfl.sdp.blindwar.domain.game.GameInstance
 import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.SONG_MAP
 
 object Tutorial {
@@ -10,8 +9,10 @@ object Tutorial {
     private val gameParameter = GameParameter(3, funny = false, hint = true, 31000)
     private val gameParameterTest = GameParameter(1, funny = false, hint = true, timeToFind = 1000)
 
-    private val gameConfig = GameConfig(GameDifficulty.EASY,
-        GameFormat.SOLO, GameMode.REGULAR, gameParameter)
+    private val gameConfig = GameConfig(
+        GameDifficulty.EASY,
+        GameFormat.SOLO, GameMode.REGULAR, gameParameter
+    )
 
     val gameInstance = GameInstance(gameConfig, playlist)
 }

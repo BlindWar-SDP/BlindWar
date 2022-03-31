@@ -5,8 +5,6 @@ import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.view.KeyEvent
-import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -33,21 +31,24 @@ class NewUserActivity : AppCompatActivity() {
         AuthUI.getInstance().delete(this)
     }
 
-    companion object{
-        private var birthDate0: Long? = null
+    companion object {
+        private var birthDate0: Long = 0
         private const val minAge = 5
         private const val maxAge = 100
     }
 
-    fun confirm(view: View){
+    fun confirm(view: View) {
         val pseudo: String = findViewById<EditText>(R.id.NU_pseudo).text.toString()
-        val firstName: String? = findViewById<EditText>(R.id.NU_FirstName).text.toString()
-        val lastName: String? = findViewById<EditText>(R.id.NU_LastName).text.toString()
-        val birthDate: Long? = birthDate0
+        val firstName: String = findViewById<EditText>(R.id.NU_FirstName).text.toString()
+        val lastName: String = findViewById<EditText>(R.id.NU_LastName).text.toString()
+        val birthDate: Long = birthDate0
 //        var profilePicture: Uri? = null
 
         // check validity of pseudo
-        if (pseudo.length < resources.getInteger(R.integer.pseudo_minLength) || pseudo == resources.getString(R.string.text_pseudo)) {
+        if (pseudo.length < resources.getInteger(R.integer.pseudo_minLength) || pseudo == resources.getString(
+                R.string.text_pseudo
+            )
+        ) {
             val builder: AlertDialog.Builder = AlertDialog.Builder(this)
             val positiveButtonClick = { _: DialogInterface, _: Int ->
                 Toast.makeText(
@@ -75,7 +76,13 @@ class NewUserActivity : AppCompatActivity() {
         calendar.add(Calendar.YEAR, -minAge)
         val year = calendar.get(Calendar.YEAR)
         val datePickerDialog =
-            DatePickerDialog(this, { _, mYear, mDay, mMonth -> setDate(mYear, mMonth+1, mDay) }, year, month,day)
+            DatePickerDialog(
+                this,
+                { _, mYear, mDay, mMonth -> setDate(mYear, mMonth + 1, mDay) },
+                year,
+                month,
+                day
+            )
         datePickerDialog.datePicker.maxDate = calendar.timeInMillis
         calendar.add(Calendar.YEAR, -maxAge)
         datePickerDialog.datePicker.minDate = calendar.timeInMillis
@@ -85,24 +92,27 @@ class NewUserActivity : AppCompatActivity() {
     }
 
 
-    fun clearPseudo(view:View) {
+    fun clearPseudo(v: View) {
         clearText(R.id.NU_pseudo, R.string.text_pseudo)
     }
-    fun clearFirstName(view:View) {
+
+    fun clearFirstName(view: View) {
         clearText(R.id.NU_FirstName, R.string.first_name)
     }
-    fun clearLastName(view:View) {
+
+    fun clearLastName(view: View) {
         clearText(R.id.NU_LastName, R.string.last_name)
     }
 
-    private fun clearText(id:Int, str:Int){
+    private fun clearText(id: Int, str: Int) {
         val textView = findViewById<EditText>(id)
         val baseText = getText(str).toString()
         val newText = textView.text.toString()
-        if (baseText == newText){
+        if (baseText == newText) {
             textView.text.clear()
         }
     }
+
     private fun createUser(
         pseudo: String,
         firstName: String?,
@@ -122,15 +132,16 @@ class NewUserActivity : AppCompatActivity() {
                     checkNotDefault(firstName, R.string.first_name),
                     checkNotDefault(lastName, R.string.last_name),
                     birthDate /*profilePicture*/
-                ).build())
+                ).build()
+            )
         }
     }
 
-    private fun checkNotDefault(value: String?, default:Int): String?{
-        return  if (value == default.toString()) null else value
+    private fun checkNotDefault(value: String?, default: Int): String? {
+        return if (value == default.toString()) null else value
     }
 
-    private fun setDate(year:Int, month:Int, day:Int) {
+    private fun setDate(year: Int, month: Int, day: Int) {
         val cal: Calendar = Calendar.getInstance()
         cal.set(year, month, day)
         birthDate0 = cal.timeInMillis

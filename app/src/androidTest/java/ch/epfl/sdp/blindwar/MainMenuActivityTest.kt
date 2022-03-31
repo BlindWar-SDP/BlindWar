@@ -8,7 +8,10 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import ch.epfl.sdp.blindwar.ui.*
+import ch.epfl.sdp.blindwar.ui.DemoSRActivity
+import ch.epfl.sdp.blindwar.ui.MainMenuActivity
+import ch.epfl.sdp.blindwar.ui.ProfileActivity
+import ch.epfl.sdp.blindwar.ui.SplashScreenActivity
 import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import junit.framework.TestCase
@@ -64,8 +67,8 @@ class MainMenuActivityTest : TestCase() {
     }
 
     @Test
-    fun testLaunchVosk() {
+    fun testLaunchSRDemo() {
         onView(withId(R.id.SpeechButton)).perform(click())
-        intended(hasComponent(VoskActivity::class.java.name))
+        intended(hasComponent(DemoSRActivity::class.java.name))
     }
 }

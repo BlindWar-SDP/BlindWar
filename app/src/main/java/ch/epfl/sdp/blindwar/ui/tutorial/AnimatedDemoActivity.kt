@@ -1,11 +1,9 @@
 package ch.epfl.sdp.blindwar.ui.tutorial
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import ch.epfl.sdp.blindwar.R
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable.RESTART
@@ -27,7 +25,7 @@ class AnimatedDemoActivity : DemoActivity() {
         audioVisualizer = findViewById(R.id.audioVisualizer)
         startButton.setMinAndMaxFrame(30, 50)
 
-        super.guessEditText = findViewById<EditText>(R.id.guessEditText).let{
+        super.guessEditText = findViewById<EditText>(R.id.guessEditText).let {
             it.hint = super.game.currentMetadata()?.artist
             it
         }
@@ -36,7 +34,7 @@ class AnimatedDemoActivity : DemoActivity() {
     }
 
     fun playAndPause(view: View) {
-        super.playing = if(playing) {
+        super.playing = if (playing) {
             super.game.pause()
             pauseAnim()
             false

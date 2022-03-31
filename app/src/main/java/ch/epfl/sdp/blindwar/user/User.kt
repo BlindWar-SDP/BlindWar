@@ -1,7 +1,5 @@
 package ch.epfl.sdp.blindwar.user
 
-import android.net.Uri
-
 data class User(
     val email: String,
     val userStatistics: AppStatistics,
@@ -30,12 +28,12 @@ data class User(
 //        fun setImage(link: Uri?) = apply { this.profilePicture = link }
 
         fun fromUser(user: User) = apply {
-            this.email          = user.email
+            this.email = user.email
             this.userStatistics = user.userStatistics
-            this.pseudo         = user.pseudo
-            this.firstName      = user.firstName
-            this.lastName       = user.lastName
-            this.birthDate      = user.birthDate
+            this.pseudo = user.pseudo
+            this.firstName = user.firstName
+            this.lastName = user.lastName
+            this.birthDate = user.birthDate
 //            this.profilePicture = user.profilePicture
         }
 

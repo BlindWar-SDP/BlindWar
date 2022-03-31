@@ -27,12 +27,12 @@ enum class GameDifficulty {
     SHAZAM
 }
 
-enum class GameFormat{
+enum class GameFormat {
     SOLO,
     TEAM
 }
 
-enum class GameMode{
+enum class GameMode {
     REGULAR,
     SURVIVAL,
     TIMED
