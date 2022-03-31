@@ -48,6 +48,7 @@ class SongSummaryFragmentTest {
         onView((withId(R.id.trackTextView))).check(matches(withText("One More Time")))
     }
 
+    /*
     @Test
     fun testLikeAnimation() {
         val scenario = launchFragmentInContainer<SongSummaryFragment>(bundleSuccess)
@@ -62,6 +63,7 @@ class SongSummaryFragmentTest {
             assertTrue(it.liked())
         }
     }
+     */
 
     @Test
     fun testSuccess() {
