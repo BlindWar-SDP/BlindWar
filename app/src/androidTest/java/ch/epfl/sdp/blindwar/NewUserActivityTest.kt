@@ -2,13 +2,13 @@ package ch.epfl.sdp.blindwar
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.ui.MainMenuActivity
 import ch.epfl.sdp.blindwar.ui.NewUserActivity
@@ -22,7 +22,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class NewUserActivityTest : TestCase() {
 
-    val strNotDefault = "notDefaultText"
+    private val strNotDefault = "notDefaultText"
 
     @get:Rule
     var testRule = ActivityScenarioRule(
@@ -52,7 +52,11 @@ class NewUserActivityTest : TestCase() {
     fun testClearPseudo() {
         val id = R.id.NU_pseudo
         onView(withId(id))
-            .perform(click(), click()) // TODO: Why should click twice to delete text
+            .perform(
+                click(),
+                click(),
+                closeSoftKeyboard()
+            ) // TODO: Why should click twice to delete text
         onView(withId(id)).check(matches(withText("")))
     }
 
@@ -60,7 +64,7 @@ class NewUserActivityTest : TestCase() {
     fun testClearFirstName() {
         val id = R.id.NU_FirstName
         onView(withId(id))
-            .perform(click(), click())
+            .perform(click(), click(), closeSoftKeyboard())
         onView(withId(id)).check(matches(withText("")))
     }
 
@@ -68,7 +72,7 @@ class NewUserActivityTest : TestCase() {
     fun testClearLastName() {
         val id = R.id.NU_LastName
         onView(withId(id))
-            .perform(click(), click())
+            .perform(click(), click(), closeSoftKeyboard())
         onView(withId(id)).check(matches(withText("")))
     }
 
