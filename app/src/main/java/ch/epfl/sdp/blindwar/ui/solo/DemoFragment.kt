@@ -120,6 +120,11 @@ open class DemoFragment: Fragment() {
                     (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
                 val bundle = createBundleSongSummary(songFragment.success())
 
+                duration = Tutorial.gameInstance
+                    .gameConfig
+                    .difficulty
+                    .timeToFind
+
                 bundle.putBoolean("liked", songFragment.liked())
                 songRecord.arguments = bundle
                 gameSummary.setSongFragment(songRecord)

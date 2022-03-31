@@ -18,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/presentation"
             android:layout_width="match_parent"
             android:layout_height="57dp">
 
@@ -70,6 +71,7 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/funny"
             android:layout_width="match_parent"
             android:layout_height="68dp">
 
@@ -102,22 +104,9 @@
 
         <!--                    TIMED MODE                         -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/race"
             android:layout_width="match_parent"
             android:layout_height="200dp">
-
-            <TextView
-                android:id="@+id/timedDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/oxygen"
-                android:text="@string/timedDescription"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@+id/raceButton"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.49" />
 
             <ImageButton
                 android:id="@+id/raceInfoButton"
@@ -133,8 +122,22 @@
                 app:srcCompat="@drawable/ic_baseline_info_24"
                 tools:ignore="SpeakableTextPresentCheck" />
 
+            <TextView
+                android:id="@+id/timedDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/oxygen"
+                android:text="@string/timedDescription"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/raceButton_"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.49" />
+
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/raceButton"
+                android:id="@+id/raceButton_"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
@@ -158,9 +161,24 @@
 
         <!--                    SURVIVAL MODE                         -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/survival"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_marginTop="8dp">
+
+            <ImageButton
+                android:id="@+id/infoSurvival"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@null"
+                app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
+                app:layout_constraintEnd_toEndOf="@+id/survivalButton_"
+                app:layout_constraintHorizontal_bias="0.521"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/survivalButton_"
+                app:layout_constraintVertical_bias="0.29"
+                app:srcCompat="@drawable/ic_baseline_info_24"
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/survivalDescription"
@@ -170,28 +188,14 @@
                 android:text="@string/survivalDescription"
                 android:textColor="@color/black"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@+id/survivalButton"
+                app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.559" />
 
-            <ImageButton
-                android:id="@+id/infoSurvival"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@null"
-                app:layout_constraintBottom_toBottomOf="@+id/survivalButton"
-                app:layout_constraintEnd_toEndOf="@+id/survivalButton"
-                app:layout_constraintHorizontal_bias="0.521"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/survivalButton"
-                app:layout_constraintVertical_bias="0.29"
-                app:srcCompat="@drawable/ic_baseline_info_24"
-                tools:ignore="SpeakableTextPresentCheck" />
-
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/survivalButton"
+                android:id="@+id/survivalButton_"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
@@ -214,6 +218,7 @@
 
         <!--                    REGULAR MODE                         -->
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/classic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="8dp">
@@ -240,14 +245,14 @@
                 android:text="@string/classicDescription"
                 android:textColor="@color/black"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@+id/regularButton"
+                app:layout_constraintBottom_toBottomOf="@+id/regularButton_"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/regularButton"
+                app:layout_constraintTop_toTopOf="@+id/regularButton_"
                 app:layout_constraintVertical_bias="0.453" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/regularButton"
+                android:id="@+id/regularButton_"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"

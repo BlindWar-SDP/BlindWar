@@ -35,14 +35,13 @@ open class ModeSelectionFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_mode_selection, container, false)
-        regularButton = view.findViewById<Button>(R.id.regularButton).also{selectMode(it)}
-        raceButton = view.findViewById<Button>(R.id.raceButton).also{selectMode(it)}
-        survivalButton = view.findViewById<Button>(R.id.survivalButton).also{selectMode(it)}
+        regularButton = view.findViewById<Button>(R.id.regularButton_).also{selectMode(it)}
+        raceButton = view.findViewById<Button>(R.id.raceButton_).also{selectMode(it)}
+        survivalButton = view.findViewById<Button>(R.id.survivalButton_).also{selectMode(it)}
 
         backButton = view.findViewById<ImageButton>(R.id.back_button).also{
             it.setOnClickListener{
                 //activity?.onBackPressed()
-                Log.d("FRAG", "TI BOUG")
             }
         }
 
@@ -52,8 +51,8 @@ open class ModeSelectionFragment: Fragment() {
     protected fun selectMode(view: View) {
         view.setOnClickListener{
             gameInstance.setGameMode(when(view.id) {
-                R.id.raceButton -> GameMode.TIMED
-                R.id.survivalButton -> GameMode.SURVIVAL
+                R.id.raceButton_ -> GameMode.TIMED
+                R.id.survivalButton_ -> GameMode.SURVIVAL
                 else -> GameMode.REGULAR
             })
 

@@ -1,7 +1,6 @@
 package ch.epfl.sdp.blindwar.ui.solo
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,6 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageButton
 import ch.epfl.sdp.blindwar.R
-import com.airbnb.lottie.Lottie
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable.RESTART
 import com.airbnb.lottie.LottieDrawable.REVERSE
@@ -28,9 +26,9 @@ class AnimatedModeSelectionFragment: ModeSelectionFragment() {
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_animated_mode_selection, container, false)
-        super.regularButton = view.findViewById<Button>(R.id.regularButton).also {selectMode(it)}
-        super.survivalButton = view.findViewById<Button>(R.id.survivalButton).also {selectMode(it)}
-        super.raceButton = view.findViewById<Button>(R.id.raceButton).also{selectMode(it)}
+        super.regularButton = view.findViewById<Button>(R.id.regularButton_).also {selectMode(it)}
+        super.survivalButton = view.findViewById<Button>(R.id.survivalButton_).also {selectMode(it)}
+        super.raceButton = view.findViewById<Button>(R.id.raceButton_).also{selectMode(it)}
         super.backButton = view.findViewById<ImageButton>(R.id.back_button).also{
             it.setOnClickListener{
                 activity?.onBackPressed()
