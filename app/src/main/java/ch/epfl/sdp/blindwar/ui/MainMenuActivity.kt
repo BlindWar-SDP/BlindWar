@@ -8,6 +8,7 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class MainMenuActivity : AppCompatActivity() {
 
