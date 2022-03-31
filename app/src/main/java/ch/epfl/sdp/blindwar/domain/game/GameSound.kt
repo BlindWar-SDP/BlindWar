@@ -10,7 +10,7 @@ import ch.epfl.sdp.blindwar.data.sound.LocalSoundDataSource
 import java.io.FileDescriptor
 import java.util.*
 
-class GameSound(private val assetManager: AssetManager) {
+class GameSound(assetManager: AssetManager) {
     private val mediaMetadataRetriever = MediaMetadataRetriever()
     private val localSoundDataSource = LocalSoundDataSource(assetManager, mediaMetadataRetriever)
     private val player = MediaPlayer()
@@ -35,13 +35,10 @@ class GameSound(private val assetManager: AssetManager) {
     fun soundInitFromLocalStorage(from: DocumentFile, contentResolver: ContentResolver) {
         val pdf = contentResolver.openFileDescriptor(from.listFiles()[0].uri, "r")
         mediaMetadataRetriever.setDataSource(pdf!!.fileDescriptor)
-        val title =
-        mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
-            .toString()
         fileDescriptorAndMetaDataPerTitle =
             from.listFiles().filter { it.isFile }.filter { it.name?.endsWith("mp3") ?: false }
-                ?.map { contentResolver.openFileDescriptor(it.uri, "r") }
-                ?.associateBy({
+                .map { contentResolver.openFileDescriptor(it.uri, "r") }
+                .associateBy({
                     // Get the title
                     mediaMetadataRetriever.setDataSource(it!!.fileDescriptor)
                     return@associateBy mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
@@ -58,14 +55,14 @@ class GameSound(private val assetManager: AssetManager) {
                         it!!.fileDescriptor,
                         SongMetaData(title, author, "")
                     )
-                }) ?: emptyMap()
+                })
 
         playlistNames = refreshPlaylist(true)
         currentMetaData = SongMetaData("", "", "")
     }
 
     private fun refreshPlaylist(fromLocalStorage: Boolean = false): MutableSet<String> {
-        return (if (fromLocalStorage)  fileDescriptorAndMetaDataPerTitle else assetFileDescriptorAndMetaDataPerTitle).keys.toSet() as MutableSet<String>
+        return (if (fromLocalStorage) fileDescriptorAndMetaDataPerTitle else assetFileDescriptorAndMetaDataPerTitle).keys.toSet() as MutableSet<String>
     }
 
     fun soundTeardown() {
@@ -93,19 +90,30 @@ class GameSound(private val assetManager: AssetManager) {
         playlistNames.remove(title)
 
         // Get a random time
-        if(fromLocalStorage){
+        if (fromLocalStorage) {
             val fileDescriptor = fileDescriptorAndMetaDataPerTitle[title]?.first
             currentMetaData = fileDescriptorAndMetaDataPerTitle[title]?.second!!
 
             fileDescriptor?.let { player.setDataSource(fileDescriptor) }
             fileDescriptor?.let { mediaMetadataRetriever.setDataSource(fileDescriptor) }
-        }
-        else {
+        } else {
             val assetFileDescriptor = assetFileDescriptorAndMetaDataPerTitle[title]?.first
             currentMetaData = assetFileDescriptorAndMetaDataPerTitle[title]?.second!!
 
-            assetFileDescriptor?.let { player.setDataSource(assetFileDescriptor.fileDescriptor, assetFileDescriptor.startOffset, assetFileDescriptor.length) }
-            assetFileDescriptor?.let { mediaMetadataRetriever.setDataSource(assetFileDescriptor.fileDescriptor, assetFileDescriptor.startOffset, assetFileDescriptor.length) }
+            assetFileDescriptor?.let {
+                player.setDataSource(
+                    assetFileDescriptor.fileDescriptor,
+                    assetFileDescriptor.startOffset,
+                    assetFileDescriptor.length
+                )
+            }
+            assetFileDescriptor?.let {
+                mediaMetadataRetriever.setDataSource(
+                    assetFileDescriptor.fileDescriptor,
+                    assetFileDescriptor.startOffset,
+                    assetFileDescriptor.length
+                )
+            }
         }
 
         /**

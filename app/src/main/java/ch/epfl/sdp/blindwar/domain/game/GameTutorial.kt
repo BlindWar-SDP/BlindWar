@@ -1,7 +1,6 @@
 package ch.epfl.sdp.blindwar.domain.game
 
 import android.content.res.AssetManager
-import java.util.*
 
 
 /**

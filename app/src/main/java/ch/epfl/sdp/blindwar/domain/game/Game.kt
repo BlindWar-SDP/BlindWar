@@ -23,7 +23,7 @@ abstract class Game(gameInstance: GameInstance, private val assetManager: AssetM
 
     /** Player game score **/
     var score = 0
-        protected  set
+        protected set
 
     var round = 0
         protected set
@@ -76,7 +76,9 @@ abstract class Game(gameInstance: GameInstance, private val assetManager: AssetM
      */
     fun guess(titleGuess: String): Boolean {
         return if (titleGuess.uppercase(Locale.getDefault()) == currentMetadata()?.title?.uppercase(
-                Locale.getDefault())) {
+                Locale.getDefault()
+            )
+        ) {
             score += 1
             round += 1
             true

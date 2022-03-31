@@ -1,14 +1,14 @@
-package ch.epfl.sdp.blindwar.solo
+package ch.epfl.sdp.blindwar.ui
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.matcher.ViewMatchers.isClickable
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.GrantPermissionRule
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
 import junit.framework.TestCase
 import org.junit.After
 import org.junit.Before
@@ -17,10 +17,15 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class SoloMenuActivityTest : TestCase() {
+class DemoSRActivityTest : TestCase() {
+
+    @get:Rule
+    var permissionRule: GrantPermissionRule =
+        GrantPermissionRule.grant(android.Manifest.permission.RECORD_AUDIO)
+
     @get:Rule
     var testRule = ActivityScenarioRule(
-        SoloMenuActivity::class.java
+        DemoSRActivity::class.java
     )
 
     @Before
@@ -34,18 +39,7 @@ class SoloMenuActivityTest : TestCase() {
     }
 
     @Test
-    fun testOnlineMusicButton() {
-        onView(withId(R.id.onlineMusicButton)).check(matches(isClickable()))
+    fun initializationWorks() {
+        onView(withId(R.id.result_text_edit_sr)).check(matches(withText("")))
     }
-
-    @Test
-    fun testLocalMusicButton() {
-        onView(withId(R.id.localMusicButton)).check(matches(isClickable()))
-    }
-
-    @Test
-    fun testTutorialMusicButton() {
-        onView(withId(R.id.tutorialMusicButton)).check(matches(isClickable()))
-    }
-
 }
