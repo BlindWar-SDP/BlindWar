@@ -3,7 +3,6 @@ package ch.epfl.sdp.blindwar.domain.game
 import android.content.ContentResolver
 import android.content.res.AssetManager
 import androidx.documentfile.provider.DocumentFile
-import java.util.*
 
 
 /**

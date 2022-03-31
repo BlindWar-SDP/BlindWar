@@ -15,7 +15,7 @@ object SongImageUrlConstants {
     const val RHCP: String = "https://i.scdn.co/image/ab67616d00001e0294d08ab63e57b0cae74e8595"
     const val SUM_41: String = "https://i.scdn.co/image/ab67616d00001e029a482180e6a306229bff49dc"
 
-    val META_DATA_TUTORIL_MUSICS_PER_AUTHOR: Map<String, SongMetaData> = mutableMapOf<String, SongMetaData>().let{
+    val META_DATA_TUTORIAL_MUSICS_PER_AUTHOR: Map<String, SongMetaData> = mutableMapOf<String, SongMetaData>().let{
         it["Lady Gaga"] = SongMetaData("Poker Face", "Lady Gaga", LADY_GAGA)
         it["Gorillaz"] = SongMetaData("Feel Good Inc", "Gorillaz", GORILLAZ)
         it["ACDC"] = SongMetaData("Highway To Hell", "ACDC", ACDC)

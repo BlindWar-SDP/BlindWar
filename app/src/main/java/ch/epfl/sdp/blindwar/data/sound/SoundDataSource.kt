@@ -1,12 +1,14 @@
+@file:Suppress("KDocUnresolvedReference")
+
 package ch.epfl.sdp.blindwar.data.sound
 
 import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import android.media.MediaMetadataRetriever
-import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.META_DATA_TUTORIL_MUSICS_PER_AUTHOR
+import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.META_DATA_TUTORIAL_MUSICS_PER_AUTHOR
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 
-class LocalSoundDataSource(
+class SoundDataSource(
     private val assetManager: AssetManager,
     private val mediaMetadataRetriever: MediaMetadataRetriever
 ) {
@@ -14,7 +16,7 @@ class LocalSoundDataSource(
     /**
      * Fetch the sound from a specific path in the local storage
      *
-     * @param metaDataMusics Path to load the data from. By default it's equal to the musics tutorial location
+     * @param loadPath Path to load the data from. By default it's equal to the musics tutorial location
      * @return Return a map who maps each title with a pair containing the asset file descriptor and the metadata of the song
      */
     fun fetchSoundAssetFileDescriptorsAndMetaDataPerTitle(
@@ -38,7 +40,7 @@ class LocalSoundDataSource(
     fun fetchSoundAssetFileDescriptorsAndMetaDataPerTitleForTutorial(
     ): Map<String, Pair<AssetFileDescriptor, SongMetaData>> {
         return fetchSoundAssetFileDescriptorsAndSetMetaDataPerTitle("tutorialMusicsSet/") {
-            META_DATA_TUTORIL_MUSICS_PER_AUTHOR[it.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+            META_DATA_TUTORIAL_MUSICS_PER_AUTHOR[it.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
                 .toString()]!!
         }
     }

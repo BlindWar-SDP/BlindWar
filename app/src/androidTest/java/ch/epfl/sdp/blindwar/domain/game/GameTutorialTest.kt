@@ -30,7 +30,6 @@ class GameTutorialTest {
         val toPlay: MutableSet<SongMetaData> = Tutorial.gameInstance.playlist.toMutableSet()
         for (i in 0 until round) {
             gameTutorial.nextRound()
-            Log.d("BLAISE MATUIDI", gameTutorial.currentMetadata().toString())
             assertThat(toPlay.remove(gameTutorial.currentMetadata()), `is`(true))
         }
     }

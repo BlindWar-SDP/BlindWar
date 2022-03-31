@@ -14,16 +14,15 @@ import ch.epfl.sdp.blindwar.domain.game.VoiceRecognizer
 import java.util.*
 
 
-class VoskActivity : Activity() {
+class DemoSRActivity : Activity() {
     private val voiceRecognizerEnglish: VoiceRecognizer = VoiceRecognizer()
     private val voiceRecognizerFrench: VoiceRecognizer = VoiceRecognizer()
 
     public override fun onCreate(state: Bundle?) {
         super.onCreate(state)
-        setContentView(R.layout.main)
-
+        setContentView(R.layout.activity_sr)
         // Setup layout
-        val resultEditText = findViewById<EditText>(R.id.result_text_edit)
+        val resultEditText = findViewById<EditText>(R.id.result_text_edit_sr)
 
         // Check if user has given permission to record audio, init the model after permission is granted
         val permissionCheck =
@@ -63,6 +62,12 @@ class VoskActivity : Activity() {
             }
             v?.onTouchEvent(event) ?: true
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        voiceRecognizerEnglish.destroy()
+        voiceRecognizerFrench.destroy()
     }
 
     companion object {

@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
+import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import com.firebase.ui.auth.AuthUI
 
 class MainMenuActivity : AppCompatActivity() {
@@ -41,11 +41,11 @@ class MainMenuActivity : AppCompatActivity() {
     fun logoutButton(view: View) {
         AuthUI.getInstance().signOut(this)
 //            .addOnCompleteListener {
-            startActivity(Intent(this, SplashScreenActivity::class.java))
+        startActivity(Intent(this, SplashScreenActivity::class.java))
 //        }
     }
 
     fun launchSpeechRecognitionActivity(view: View) {
-        startActivity(Intent(this, VoskActivity::class.java))
+        startActivity(Intent(this, DemoSRActivity::class.java))
     }
 }

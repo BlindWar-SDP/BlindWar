@@ -23,8 +23,8 @@
 
         <EditText
             android:inputType="text"
-            android:labelFor="@string/editText_VoskActivity_result"
-            android:id="@+id/result_text_edit"
+            android:hint="@string/edit_text_hint_title"
+            android:id="@+id/result_text_edit_sr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp">

@@ -10,7 +10,7 @@ import java.util.*
  * Construct a class that represent the game logic
  *
  */
-abstract class Game(gameInstance: GameInstance, private val assetManager: AssetManager) {
+abstract class Game(gameInstance: GameInstance, assetManager: AssetManager) {
     /** Encapsulates the characteristics of a game instead of its logic **/
     private val game: GameInstance = gameInstance
 
@@ -23,10 +23,9 @@ abstract class Game(gameInstance: GameInstance, private val assetManager: AssetM
 
     /** Player game score **/
     var score = 0
-        protected  set
-
-    var round = 0
         protected set
+
+    private var round = 0
 
     /**
      * Prepares the game following the configuration
@@ -38,7 +37,7 @@ abstract class Game(gameInstance: GameInstance, private val assetManager: AssetM
      * Record the game instance to the player history
      * clean up player and assets
      */
-    fun endGame() {
+    private fun endGame() {
         gameSound.soundTeardown()
     }
 
@@ -76,7 +75,9 @@ abstract class Game(gameInstance: GameInstance, private val assetManager: AssetM
      */
     fun guess(titleGuess: String): Boolean {
         return if (titleGuess.uppercase(Locale.getDefault()) == currentMetadata()?.title?.uppercase(
-                Locale.getDefault())) {
+                Locale.getDefault()
+            )
+        ) {
             score += 1
             round += 1
             true

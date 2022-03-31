@@ -2,24 +2,24 @@ package ch.epfl.sdp.blindwar.tutorial
 
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.IdlingPolicies
-import androidx.test.espresso.IdlingResource
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import ch.epfl.sdp.blindwar.domain.game.SongMetaData
-import ch.epfl.sdp.blindwar.ui.tutorial.DemoActivity
-import org.junit.Rule
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 import ch.epfl.sdp.blindwar.domain.game.Tutorial
-import junit.framework.Assert.assertEquals
+import ch.epfl.sdp.blindwar.ui.tutorial.AnimatedDemoActivity
+import ch.epfl.sdp.blindwar.ui.tutorial.DemoActivity
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.CoreMatchers.`is`
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class DemoActivityTest {
@@ -28,14 +28,15 @@ class DemoActivityTest {
         DemoActivity::class.java
     )
 
-    private val longString = "The mare flattened her ears against her skull and snorted throwing up earth with her hooves she didnt want to go" +
-            "Geralt didnt calm her with the Sign he jumped from the saddle and threw the reins over the horses head " +
-            "He no longer had his old sword in its lizard skin sheath on his back; its place was filled with a shining " +
-            "beautiful weapon with a cruciform and slender well-weighted hilt ending in a spherical pommel made of white metal" +
-            "This time the gate didnt open for him It was already open, just as he had left it" +
-            " He heard singing He didnt understand the words he couldnt even identify the language " +
-            "He didnt need to the witcher felt and understood the very nature the essence of this quiet " +
-            "piercing singing which flowed through the veins in a wave of nauseous overpowering menace"
+    /*private val longString =
+        "The mare flattened her ears against her skull and snorted throwing up earth with her hooves she didn't want to go" +
+                "Marty didn't calm her with the Sign he jumped from the saddle and threw the reins over the horses head " +
+                "He no longer had his old sword in its lizard skin sheath on his back; its place was filled with a shining " +
+                "beautiful weapon with a cruciform and slender well-weighted hilt ending in a spherical pommel made of white metal" +
+                "This time the gate didn't open for him It was already open, just as he had left it" +
+                " He heard singing He didn't understand the words he couldn't even identify the language " +
+                "He didn't need to the witcher felt and understood the very nature the essence of this quiet " +
+                "piercing singing which flowed through the veins in a wave of nauseous overpowering menace"*/
 
     private val round = Tutorial
         .gameInstance
@@ -56,7 +57,6 @@ class DemoActivityTest {
             correctMetadata = it.game.currentMetadata()!!
         }
 
-        //Log.d(TAG, correctMetadata.toString())
         onView(withId(R.id.guessEditText))
             .perform(clearText(), typeText(correctMetadata.title), closeSoftKeyboard())
         onView(withId(R.id.guessButton)).perform(click())
@@ -86,12 +86,12 @@ class DemoActivityTest {
     /** 30 seconds to guess **/
     @Test
     fun timeOutTest() {
-        onView(withId(R.id.guessEditText))
-            .perform(clearText(), typeText(longString))
-            .perform(closeSoftKeyboard())
-        onView(withId(R.id.song_summary_fragment)).check(matches(isDisplayed()))
+    onView(withId(R.id.guessEditText))
+    .perform(clearText(), typeText(longString))
+    .perform(closeSoftKeyboard())
+    onView(withId(R.id.song_summary_fragment)).check(matches(isDisplayed()))
     }
-    **/
+     **/
 
     @Test
     fun perfectGameTest() {
@@ -120,7 +120,12 @@ class DemoActivityTest {
         checkLayoutVisibility(Visibility.VISIBLE)
         pressBackUnconditionally()
         testRule.scenario.onActivity {
-            it.startActivity(Intent(ApplicationProvider.getApplicationContext(), DemoActivity::class.java))
+            it.startActivity(
+                Intent(
+                    ApplicationProvider.getApplicationContext(),
+                    DemoActivity::class.java
+                )
+            )
         }
     }
 
@@ -142,19 +147,17 @@ class DemoActivityTest {
         onView(withId(R.id.guessEditText)).check(matches(withText("")))
     }
 
-
-    /**
     @Test
     fun pauseGameTest() {
         onView(withId(R.id.startButton)).perform(click())
         testRule.scenario.onActivity {
-            //assertEquals(it.playin, is(false))
+            assertFalse(it.playing)
         }
 
         onView(withId(R.id.startButton)).perform(click())
         testRule.scenario.onActivity {
-            //assertThat(it.playing, is(true))
+            assertTrue(it.playing)
         }
     }
-    **/
+
 }

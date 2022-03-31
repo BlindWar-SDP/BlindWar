@@ -14,7 +14,7 @@ import ch.epfl.sdp.blindwar.domain.game.*
 
 class SoloMenuActivity : AppCompatActivity() {
 
-    val localMusicModeHandler =
+    private val localMusicModeHandler =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val intent = result.data
@@ -30,8 +30,7 @@ class SoloMenuActivity : AppCompatActivity() {
                         )
                     }
 
-
-                    val playlist: List<SongMetaData> = SongImageUrlConstants.META_DATA_TUTORIL_MUSICS_PER_AUTHOR.values.toList()
+                    val playlist: List<SongMetaData> = SongImageUrlConstants.META_DATA_TUTORIAL_MUSICS_PER_AUTHOR.values.toList()
 
                     val gameParameter = GameParameter(3, funny = false, hint = true, 30000)
 
@@ -42,7 +41,12 @@ class SoloMenuActivity : AppCompatActivity() {
 
                     val gameInstance = GameInstance(gameConfig, playlist)
 
-                    val game = GameSoloFromLocalStorage(gameInstance, assets, pickedDir, applicationContext.contentResolver).also { it.init() }
+                    val game = GameSoloFromLocalStorage(
+                        gameInstance,
+                        assets,
+                        pickedDir,
+                        applicationContext.contentResolver
+                    ).also { it.init() }
                     game.play()
                     game.nextRound(true)
                 }

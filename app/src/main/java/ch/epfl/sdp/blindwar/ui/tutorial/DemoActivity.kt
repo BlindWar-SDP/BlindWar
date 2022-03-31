@@ -13,10 +13,10 @@ import ch.epfl.sdp.blindwar.domain.game.GameTutorial
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 import ch.epfl.sdp.blindwar.domain.game.Tutorial.gameInstance
 
-open class DemoActivity: AppCompatActivity() {
+open class DemoActivity : AppCompatActivity() {
     /** TODO: Refactor Game class to avoid this encapsulation leak **/
     lateinit var game: GameTutorial
-    protected var playing = true
+    var playing = true
     protected lateinit var guessEditText: EditText
     protected lateinit var scoreTextView: TextView
     protected lateinit var songMetaData: SongMetaData
@@ -68,8 +68,7 @@ open class DemoActivity: AppCompatActivity() {
     }
 
     open fun guess(view: View) {
-        //Log.d("ZAMBO ANGUISSA", guessEditText.text.toString())
-        if(game.guess(guessEditText.text.toString())) {
+        if (game.guess(guessEditText.text.toString())) {
             // Update the number of point view
             scoreTextView.text = game.score.toString()
             launchSongSummary(success = true)
@@ -141,7 +140,8 @@ open class DemoActivity: AppCompatActivity() {
     override fun onBackPressed() {
         // If a song summary fragment is on the screen
         if (supportFragmentManager.backStackEntryCount > 0
-            && supportFragmentManager.fragments[0] is SongSummaryFragment) {
+            && supportFragmentManager.fragments[0] is SongSummaryFragment
+        ) {
 
             /** Make it as a function **/
             val songRecord = SongSummaryFragment()
@@ -164,11 +164,9 @@ open class DemoActivity: AppCompatActivity() {
             } else {
                 launchGameSummary()
             }
-        }
-
-        else {
+        } else {
             timer.cancel()
-            super.onBackPressed();
+            super.onBackPressed()
         }
     }
 

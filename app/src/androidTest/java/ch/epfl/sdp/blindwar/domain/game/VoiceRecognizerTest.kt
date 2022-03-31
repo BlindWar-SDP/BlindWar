@@ -5,7 +5,7 @@ import android.speech.SpeechRecognizer
 import android.widget.EditText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import ch.epfl.sdp.blindwar.ui.VoskActivity
+import ch.epfl.sdp.blindwar.ui.DemoSRActivity
 import junit.framework.TestCase
 import org.junit.Assert
 import org.junit.Rule
@@ -21,7 +21,7 @@ class VoiceRecognizerTest : TestCase() {
 
     @get:Rule
     var testRule = ActivityScenarioRule(
-        VoskActivity::class.java
+        DemoSRActivity::class.java
     )
 
     @Test
