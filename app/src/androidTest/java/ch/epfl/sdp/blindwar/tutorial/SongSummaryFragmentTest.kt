@@ -52,11 +52,13 @@ class SongSummaryFragmentTest {
     fun testLikeAnimation() {
         val scenario = launchFragmentInContainer<SongSummaryFragment>(bundleSuccess)
         onView(withId(R.id.likeView)).perform(click())
+        Thread.sleep(1000)
         scenario.onFragment {
             assertFalse(it.liked())
         }
 
         onView(withId(R.id.likeView)).perform(click())
+        Thread.sleep(1000)
         scenario.onFragment {
             assertTrue(it.liked())
         }
