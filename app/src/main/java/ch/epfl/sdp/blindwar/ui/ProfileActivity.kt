@@ -51,7 +51,6 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-
     private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -76,7 +75,6 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // user id should be set according to authentication
@@ -84,14 +82,13 @@ class ProfileActivity : AppCompatActivity() {
             database.addUserListener(currentUser.uid, userInfoListener)
         }
         setContentView(R.layout.activity_profile)
-        val profilePic = findViewById<ImageView>(R.id.profileImageView)
+        //val profilePic = findViewById<ImageView>(R.id.profileImageView)
         /*
         profilePic.setOnClickListener {
             choosePicture()
         } */
 
     }
-
 
     fun choosePicture(view: View) {
         val intent = Intent()
@@ -100,17 +97,14 @@ class ProfileActivity : AppCompatActivity() {
         resultLauncher.launch(intent)
     }
 
-
     fun logoutButton(view: View) {
         AuthUI.getInstance().signOut(this).addOnCompleteListener {
             startActivity(Intent(this, SplashScreenActivity::class.java))
         }
-
     }
 
 
     fun statisticsButton(view: View) {
         startActivity(Intent(this, StatisticsActivity::class.java))
     }
-
 }
