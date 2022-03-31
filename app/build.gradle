@@ -49,6 +49,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    testOptions {
+        animationsDisabled = true
+    }
     compileSdkVersion 31
     buildToolsVersion '31.0.0'
 }

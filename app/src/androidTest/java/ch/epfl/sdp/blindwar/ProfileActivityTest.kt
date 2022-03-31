@@ -56,10 +56,19 @@ class ProfileActivityTest : TestCase() {
 
     @Test
     fun testChooseImage() {
+        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        val oldPackageName = device.currentPackageName
+
         onView(withId(R.id.editProfileButton))
             .perform(click())
-        val mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        mDevice.pressBack()
+
+        // Press back until we get back to our activity
+        var currentPackageName: String
+        do {
+            device.pressBack()
+            currentPackageName = device.currentPackageName
+        } while (currentPackageName != oldPackageName)
+
         onView(withId(R.id.statsButton))
             .perform(click())
         intended(hasComponent(StatisticsActivity::class.java.name))

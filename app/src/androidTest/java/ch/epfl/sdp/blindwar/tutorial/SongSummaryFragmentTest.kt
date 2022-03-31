@@ -3,13 +3,16 @@ package ch.epfl.sdp.blindwar.tutorial
 import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.SONG_MAP
+import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.META_DATA_TUTORIAL_MUSICS_PER_AUTHOR
 import ch.epfl.sdp.blindwar.ui.tutorial.SongSummaryFragment
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -28,7 +31,7 @@ class SongSummaryFragmentTest {
 
     private fun createBundle(success: Boolean, liked: Boolean): Bundle {
         return Bundle().let {
-            val meta = SONG_MAP["Daft Punk"]
+            val meta = META_DATA_TUTORIAL_MUSICS_PER_AUTHOR["Daft Punk"]
             it.putString("artist", meta?.artist)
             it.putString("title", meta?.title)
             it.putString("image", meta?.imageUrl)
@@ -45,27 +48,28 @@ class SongSummaryFragmentTest {
         onView((withId(R.id.trackTextView))).check(matches(withText("One More Time")))
     }
 
-    /**
+    /*
     @Test
     fun testLikeAnimation() {
-    val scenario = launchFragmentInContainer<SongSummaryFragment>(bundleSuccess)
-    onView(withId(R.id.likeView)).perform(click())
-    scenario.onFragment{
-    assertEquals(false, it.liked())
-    }
+        val scenario = launchFragmentInContainer<SongSummaryFragment>(bundleSuccess)
 
-    onView(withId(R.id.likeView)).perform(click())
-    scenario.onFragment{
-    assertEquals(true, it.liked())
+        onView(withId(R.id.likeView)).perform(click())
+        scenario.onFragment {
+            assertFalse(it.liked())
+        }
+
+        onView(withId(R.id.likeView)).perform(click())
+        scenario.onFragment {
+            assertTrue(it.liked())
+        }
     }
-    }
+     */
 
     @Test
     fun testSuccess() {
-    val scenario = launchFragmentInContainer<SongSummaryFragment>(bundleSuccess)
-    scenario.onFragment{
-    assertEquals(true, it.success())
+        val scenario = launchFragmentInContainer<SongSummaryFragment>(bundleSuccess)
+        scenario.onFragment {
+            assertTrue(it.success())
+        }
     }
-    }
-     **/
 }
