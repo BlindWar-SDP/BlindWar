@@ -12,6 +12,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.ui.MainMenuActivity
 import ch.epfl.sdp.blindwar.ui.NewUserActivity
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import junit.framework.TestCase
 import org.junit.After
 import org.junit.Before
@@ -48,7 +49,6 @@ class NewUserActivityTest : TestCase() {
             R.id.NU_birthdate,
             R.id.NU_Confirm_Btn
         )
-        val i = 0
         for (id in visible_ids) {
             onView(withId(id))
                 .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
@@ -70,7 +70,7 @@ class NewUserActivityTest : TestCase() {
             .perform(replaceText(""))
         onView(withId(R.id.NU_Confirm_Btn))
             .perform(click())
-        // TODO: check Toast appear
+        assertDisplayed(R.string.new_user_wrong_pseudo_text)
     }
 
     @Test
@@ -79,7 +79,7 @@ class NewUserActivityTest : TestCase() {
             .perform(replaceText("Pseudo"))
         onView(withId(R.id.NU_Confirm_Btn))
             .perform(click())
-        // TODO: check Toast appear
+        assertDisplayed(R.string.new_user_wrong_pseudo_text)
     }
 
     @Test

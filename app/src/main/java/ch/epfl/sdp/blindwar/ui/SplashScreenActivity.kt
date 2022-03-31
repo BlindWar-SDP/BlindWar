@@ -17,6 +17,7 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlin.concurrent.thread
 
 class SplashScreenActivity : AppCompatActivity() {
     // inspired by :
@@ -37,7 +38,7 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-        checkCurrentUser()
+//        checkCurrentUser() // TODO: uncomment!! Just commented for testing
     }
 
 //    override fun onResume() {

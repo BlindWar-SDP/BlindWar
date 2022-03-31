@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar
 
-import android.content.Intent
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
@@ -74,6 +73,7 @@ class MainMenuActivityTest : TestCase() {
         onView(withId(R.id.SpeechButton)).perform(click())
         intended(hasComponent(DemoSRActivity::class.java.name))
     }
+
     @Test
     fun testUserProfile() {
         val testEmail = "test@bot.ch"

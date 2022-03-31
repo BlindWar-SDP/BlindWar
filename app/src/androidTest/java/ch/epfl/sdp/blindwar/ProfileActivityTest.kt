@@ -46,13 +46,6 @@ class ProfileActivityTest : TestCase() {
         Thread.sleep(1000)
         intended(hasComponent(SplashScreenActivity::class.java.name))
     }
-    /*
-    @Test
-    fun testLoginButton() {
-        onView(withId(R.id.backToMainButton))
-            .perform(click())
-        intended(hasComponent(MainMenuActivity::class.java.name))
-    } */
 
     @Test
     fun testChooseImage() {
