@@ -12,7 +12,6 @@
     <EditText
         android:id="@+id/NU_pseudo"
         android:layout_width="wrap_content"
-        android:hint="@string/edit_text_hint_pseudo"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="28dp"
@@ -29,7 +28,6 @@
 
     <EditText
         android:id="@+id/NU_FirstName"
-        android:hint="@string/edit_text_hint_firstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -45,7 +43,6 @@
 
     <EditText
         android:id="@+id/NU_LastName"
-        android:hint="@string/edit_text_hint_lastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

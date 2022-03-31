@@ -1,14 +1,14 @@
 package ch.epfl.sdp.blindwar
 
+
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.ui.MainMenuActivity
 import ch.epfl.sdp.blindwar.ui.NewUserActivity
@@ -40,10 +40,53 @@ class NewUserActivityTest : TestCase() {
     }
 
     @Test
-    fun testConfirm() {
+    fun testLayoutVisibility() {
+        val visible_ids = listOf<Int>(
+            R.id.NU_pseudo,
+            R.id.NU_FirstName,
+            R.id.NU_LastName,
+            R.id.NU_birthdate,
+            R.id.NU_Confirm_Btn
+        )
+        val i = 0
+        for (id in visible_ids) {
+            onView(withId(id))
+                .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        }
+    }
+
+    @Test
+    fun testConfirm_allGood() {
+        onView(withId(R.id.NU_pseudo))
+            .perform(replaceText("ValidPseudo"))
         onView(withId(R.id.NU_Confirm_Btn))
             .perform(click())
         intended(IntentMatchers.hasComponent(MainMenuActivity::class.java.name))
+    }
+
+    @Test
+    fun testConfirm_PseudoTooShort() {
+        onView(withId(R.id.NU_pseudo))
+            .perform(replaceText(""))
+        onView(withId(R.id.NU_Confirm_Btn))
+            .perform(click())
+        // TODO: check Toast appear
+    }
+
+    @Test
+    fun testConfirm_PseudoIsPseudo() {
+        onView(withId(R.id.NU_pseudo))
+            .perform(replaceText("Pseudo"))
+        onView(withId(R.id.NU_Confirm_Btn))
+            .perform(click())
+        // TODO: check Toast appear
+    }
+
+    @Test
+    fun testBirthDateBtn() {
+        onView(withId(R.id.NU_birthdate))
+            .perform(click())
+        // need to check that datePicker appear...
     }
 
     // =====================================

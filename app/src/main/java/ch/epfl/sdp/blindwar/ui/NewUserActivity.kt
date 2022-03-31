@@ -1,8 +1,6 @@
 package ch.epfl.sdp.blindwar.ui
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -31,11 +29,9 @@ class NewUserActivity : AppCompatActivity() {
         AuthUI.getInstance().delete(this)
     }
 
-    companion object {
-        private var birthDate0: Long = 0
-        private const val minAge = 5
-        private const val maxAge = 100
-    }
+    private var birthDate0: Long = 0
+    private val minAge = 5
+    private val maxAge = 100
 
     fun confirm(view: View) {
         val pseudo: String = findViewById<EditText>(R.id.NU_pseudo).text.toString()
@@ -49,19 +45,25 @@ class NewUserActivity : AppCompatActivity() {
                 R.string.text_pseudo
             )
         ) {
-            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-            val positiveButtonClick = { _: DialogInterface, _: Int ->
-                Toast.makeText(
-                    this,
-                    android.R.string.ok, Toast.LENGTH_SHORT
-                ).show()
-            }
 
-            builder.setTitle(R.string.new_user_wrong_pseudo_title)
-                .setMessage(R.string.new_user_wrong_pseudo_text)
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, positiveButtonClick)
-            builder.create().show()
+            // Alert Dialog
+//            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+//            val positiveButtonClick = { _: DialogInterface, _: Int ->
+//                Toast.makeText(
+//                    this,
+//                    android.R.string.ok, Toast.LENGTH_SHORT
+//                ).show()
+//            }
+//
+//            builder.setTitle(R.string.new_user_wrong_pseudo_title)
+//                .setMessage(R.string.new_user_wrong_pseudo_text)
+//                .setCancelable(false)
+//                .setPositiveButton(android.R.string.ok, positiveButtonClick)
+//            builder.create().show()
+
+            // Or Toast
+            Toast.makeText(this, R.string.new_user_wrong_pseudo_text, Toast.LENGTH_SHORT).show()
+
         } else {
 //            createUser(pseudo, firstName, lastName, birthDate /*profilePicture*/) // TODO : Comment for TESTing -> need to uncomment
             AuthUI.getInstance().delete(this) // TODO : for TESTing -> need to delete line
