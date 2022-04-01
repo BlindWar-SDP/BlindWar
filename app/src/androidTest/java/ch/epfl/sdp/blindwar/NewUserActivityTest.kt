@@ -1,17 +1,18 @@
 package ch.epfl.sdp.blindwar
 
+
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.ui.MainMenuActivity
 import ch.epfl.sdp.blindwar.ui.NewUserActivity
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import junit.framework.TestCase
 import org.junit.After
 import org.junit.Before
@@ -40,10 +41,52 @@ class NewUserActivityTest : TestCase() {
     }
 
     @Test
-    fun testConfirm() {
+    fun testLayoutVisibility() {
+        val visible_ids = listOf<Int>(
+            R.id.NU_pseudo,
+            R.id.NU_FirstName,
+            R.id.NU_LastName,
+            R.id.NU_birthdate,
+            R.id.NU_Confirm_Btn
+        )
+        for (id in visible_ids) {
+            onView(withId(id))
+                .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        }
+    }
+
+    @Test
+    fun testConfirm_allGood() {
+        onView(withId(R.id.NU_pseudo))
+            .perform(replaceText("ValidPseudo"))
         onView(withId(R.id.NU_Confirm_Btn))
             .perform(click())
         intended(IntentMatchers.hasComponent(MainMenuActivity::class.java.name))
+    }
+
+    @Test
+    fun testConfirm_PseudoTooShort() {
+        onView(withId(R.id.NU_pseudo))
+            .perform(replaceText(""))
+        onView(withId(R.id.NU_Confirm_Btn))
+            .perform(click())
+        assertDisplayed(R.string.new_user_wrong_pseudo_text)
+    }
+
+    @Test
+    fun testConfirm_PseudoIsPseudo() {
+        onView(withId(R.id.NU_pseudo))
+            .perform(replaceText("Pseudo"))
+        onView(withId(R.id.NU_Confirm_Btn))
+            .perform(click())
+        assertDisplayed(R.string.new_user_wrong_pseudo_text)
+    }
+
+    @Test
+    fun testBirthDateBtn() {
+        onView(withId(R.id.NU_birthdate))
+            .perform(click())
+        // need to check that datePicker appear...
     }
 
     // =====================================
@@ -101,8 +144,6 @@ class NewUserActivityTest : TestCase() {
             .perform(replaceText(strNotDefault), closeSoftKeyboard())
         onView(withId(id)).check(matches(withText(strNotDefault)))
     }
-
-
 
     // check No Default Values:
 

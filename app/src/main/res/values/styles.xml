@@ -5,4 +5,8 @@
         <item name="colorAccent">@color/light_red</item>
     </style>
 
+    <style name="datePickerAsSpinner">
+        <item name="android:datePickerMode">spinner</item>
+    </style>
+
 </resources>

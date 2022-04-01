@@ -149,4 +149,9 @@ class UserTest {
         assertEquals(testUser.lastName, lastName1)
 //        assertEquals(testUser.profilePicture, profilePicture)
     }
+
+    @Test
+    fun testToString() {
+        assertEquals(testUser1.toString(), testUser1.pseudo)
+    }
 }
