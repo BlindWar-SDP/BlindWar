@@ -6,6 +6,11 @@ import ch.epfl.sdp.blindwar.R
 
 class MultiPlayerFriendActivity : AppCompatActivity(){
 
+    /**
+     * Creates basic layout according to xml
+     *
+     * @param savedInstanceState
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_multifriend)
