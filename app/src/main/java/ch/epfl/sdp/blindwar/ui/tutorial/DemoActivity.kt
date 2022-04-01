@@ -17,7 +17,7 @@ import ch.epfl.sdp.blindwar.ui.solo.GameInstanceViewModel
 
 open class DemoActivity: AppCompatActivity() {
     lateinit var game: GameTutorial
-    protected var playing = true
+    var playing = true
     protected lateinit var guessEditText: EditText
     protected lateinit var scoreTextView: TextView
     protected lateinit var songMetaData: SongMetaData
@@ -35,7 +35,7 @@ open class DemoActivity: AppCompatActivity() {
 
         /** Set up the interface **/
         // Game instance tutorial
-        game = GameTutorial(gameInstance, assets)
+        game = GameTutorial(gameInstance, assets, applicationContext.contentResolver)
         game.init()
 
         duration = gameInstance
@@ -77,8 +77,9 @@ open class DemoActivity: AppCompatActivity() {
         game.pause()
     }
 
+
     open fun guess() {
-        if(game.guess(guessEditText.text.toString())) {
+        if (game.guess(guessEditText.text.toString())) {
             // Update the number of point view
             scoreTextView.text = game.score.toString()
             launchSongSummary(success = true)
@@ -150,7 +151,8 @@ open class DemoActivity: AppCompatActivity() {
     override fun onBackPressed() {
         // If a song summary fragment is on the screen
         if (supportFragmentManager.backStackEntryCount > 0
-            && supportFragmentManager.fragments[0] is SongSummaryFragment) {
+            && supportFragmentManager.fragments[0] is SongSummaryFragment
+        ) {
 
             /** Make it as a function **/
             val songRecord = SongSummaryFragment()
@@ -173,11 +175,9 @@ open class DemoActivity: AppCompatActivity() {
             } else {
                 launchGameSummary()
             }
-        }
-
-        else {
+        } else {
             timer.cancel()
-            super.onBackPressed();
+            super.onBackPressed()
         }
     }
 

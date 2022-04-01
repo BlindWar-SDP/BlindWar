@@ -60,7 +60,7 @@
         android:layout_height="49dp"
         android:fontFamily="@font/oxygen"
         android:textAlignment="center"
-        android:textSize="29dp"
+        android:textSize="29sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guessEditText"
         app:layout_constraintEnd_toEndOf="parent"

@@ -15,7 +15,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.squareup.picasso.Picasso
 
 class SongSummaryFragment : Fragment() {
-    private lateinit var likeAnim: LottieAnimationView
+    private lateinit var likeAnimation: LottieAnimationView
     private lateinit var skip: ImageButton
     private var likeSwitch: Boolean = false
     private var success: Boolean = false
@@ -33,6 +33,15 @@ class SongSummaryFragment : Fragment() {
         val artistText = view.findViewById<TextView>(R.id.artistTextView)
         val trackText = view.findViewById<TextView>(R.id.trackTextView)
 
+        /** Like animation **/
+        likeAnimation = view.findViewById(R.id.likeView)
+
+        likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
+            arguments?.getBoolean("liked")!!
+        } else false
+
+        setLikeListener()
+
         /** Background color **/
         success = arguments?.get("success") as Boolean
         val background = view.findViewById<ConstraintLayout>(R.id.song_summary_fragment)
@@ -44,7 +53,7 @@ class SongSummaryFragment : Fragment() {
         }
 
         /** Like animation **/
-        likeAnim = view.findViewById(R.id.likeView)
+        likeAnimation = view.findViewById(R.id.likeView)
 
         skip = view.findViewById<ImageButton>(R.id.skip_next_summary).also { button ->
             button.setOnClickListener{
@@ -76,22 +85,21 @@ class SongSummaryFragment : Fragment() {
 
     private fun setLikeListener() {
         if (likeSwitch) {
-            likeAnim.setMinAndMaxFrame(45, 70)
+            likeAnimation.setMinAndMaxFrame(45, 70)
         } else {
-            likeAnim.setMinAndMaxFrame(10, 30)
+            likeAnimation.setMinAndMaxFrame(10, 30)
         }
 
-        likeAnim.setOnClickListener{
+        likeAnimation.setOnClickListener {
             if (!likeSwitch) {
-                likeAnim.setMinAndMaxFrame(10, 30)
-                likeAnim.repeatCount = 0
-                likeAnim.playAnimation()
-            }
-
-            else {
-                likeAnim.setMinAndMaxFrame(45, 70)
-                likeAnim.repeatCount = 0
-                likeAnim.playAnimation()
+                likeAnimation.setMinAndMaxFrame(10, 30)
+                likeAnimation.repeatCount = 0
+                //likeAnim.speed = 1f
+                likeAnimation.playAnimation()
+            } else {
+                likeAnimation.setMinAndMaxFrame(45, 70)
+                likeAnimation.repeatCount = 0
+                likeAnimation.playAnimation()
             }
 
             likeSwitch = !likeSwitch

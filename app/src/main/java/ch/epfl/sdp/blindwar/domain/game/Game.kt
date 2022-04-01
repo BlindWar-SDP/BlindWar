@@ -1,5 +1,8 @@
 package ch.epfl.sdp.blindwar.domain.game
 
+import android.content.ContentResolver
+import android.content.Context
+import android.content.res.AssetManager
 import java.util.*
 
 /**
@@ -9,39 +12,29 @@ import java.util.*
  * Construct a class that represent the game logic
  *
  */
-abstract class Game(gameInstance: GameInstance) {
+abstract class Game<FileDescriptorT>(
+    gameInstance: GameInstance,
+    protected val assetManager: AssetManager,
+    protected val contentResolver: ContentResolver
+) {
     /** Encapsulates the characteristics of a game instead of its logic **/
     private val game: GameInstance = gameInstance
 
-    protected val gameDifficulty: GameDifficulty = gameInstance
-        .gameConfig
-        .difficulty
+    protected lateinit var gameSound: GameSound<FileDescriptorT>
 
-    protected val gameParameter: GameParameter = gameInstance
+    private val gameParameter: GameParameter = gameInstance
         .gameConfig
         .parameter
 
-    /** TODO: implement other game format and modes
-    protected val gameDifficulty: GameDifficulty = gameInstance
+    private val gameDifficulty: GameDifficulty = gameInstance
         .gameConfig
         .difficulty
 
-    protected val gameFormat: GameFormat = gameInstance
-        .gameConfig
-        .format
-    **/
-
-    private val gamePlaylist: List<SongMetaData> = gameInstance.playlist
-
-    /** Get the sound data through another layer **/
-    abstract val gameSoundController: GameSoundController
-
     /** Player game score **/
     var score = 0
-        protected  set
-
-    var round = 0
         protected set
+
+    private var round = 0
 
     /**
      * Prepares the game following the configuration
@@ -53,8 +46,8 @@ abstract class Game(gameInstance: GameInstance) {
      * Record the game instance to the player history
      * clean up player and assets
      */
-    fun endGame() {
-        gameSoundController.soundTeardown()
+    private fun endGame() {
+        gameSound.soundTeardown()
     }
 
     /**
@@ -62,13 +55,13 @@ abstract class Game(gameInstance: GameInstance) {
      *
      * @return true if the game is over after this round, false otherwise
      */
-    fun nextRound(fromLocalStorage: Boolean = false): Boolean {
+    fun nextRound(): Boolean {
         if (round >= gameParameter.round) {
             endGame()
             return true
         }
 
-        gameSoundController.nextRound(fromLocalStorage)
+        gameSound.nextRound()
         return false
     }
 
@@ -77,7 +70,7 @@ abstract class Game(gameInstance: GameInstance) {
      */
     fun currentMetadata(): SongMetaData? {
         if (gameDifficulty.hint) {
-            return gameSoundController.getCurrentMetadata()
+            return gameSound.getCurrentMetadata()
         }
 
         return null
@@ -91,7 +84,9 @@ abstract class Game(gameInstance: GameInstance) {
      */
     fun guess(titleGuess: String): Boolean {
         return if (titleGuess.uppercase(Locale.getDefault()) == currentMetadata()?.title?.uppercase(
-                Locale.getDefault())) {
+                Locale.getDefault()
+            )
+        ) {
             score += 1
             round += 1
             true
@@ -112,7 +107,7 @@ abstract class Game(gameInstance: GameInstance) {
      *
      */
     fun play() {
-        gameSoundController.play()
+        gameSound.play()
     }
 
     /**
@@ -120,6 +115,6 @@ abstract class Game(gameInstance: GameInstance) {
      *
      */
     fun pause() {
-        gameSoundController.pause()
+        gameSound.pause()
     }
 }

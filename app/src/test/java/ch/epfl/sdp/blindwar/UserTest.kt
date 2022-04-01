@@ -2,7 +2,6 @@ package ch.epfl.sdp.blindwar
 
 import ch.epfl.sdp.blindwar.user.AppStatistics
 import ch.epfl.sdp.blindwar.user.User
-import android.net.Uri
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -16,8 +15,8 @@ class UserTest {
     private var lastName2 = "lastName2"
     private var pseudo1 = "Screen Name1"
     private var pseudo2 = "Screen Name2"
-    private var birthDate1: Long= 1312341234
-    private var birthDate2: Long= 1312311111
+    private var birthDate1: Long = 1312341234
+    private var birthDate2: Long = 1312311111
     private var userStatistics: AppStatistics = AppStatistics()
 //    private var profilePicture: Uri? = null
 
@@ -133,7 +132,7 @@ class UserTest {
     // =============
     @Test
     fun updateStats() {
-        testUser1.userStatistics.eloUpdateWin(1005)
+        testUser1.userStatistics.eloSetter(1005)
         val testUser = User.Builder()
             .setStats(testUser1.userStatistics)
             .build()

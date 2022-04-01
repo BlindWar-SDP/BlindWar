@@ -81,12 +81,12 @@ enum class GameDifficulty(val timeToFind: Int, val hint: Boolean) {
     //SHAZAM(15, false)
 }
 
-enum class GameFormat{
+enum class GameFormat {
     SOLO,
     TEAM
 }
 
-enum class GameMode{
+enum class GameMode {
     REGULAR,
     SURVIVAL,
     TIMED

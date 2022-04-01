@@ -5,17 +5,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.ui.solo.ModeSelectionFragment
 import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
 import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
 import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
-import com.firebase.ui.auth.AuthUI
+import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class MainMenuActivity : AppCompatActivity() {
 
-    private val database = UserDatabase()
+    private val database = UserDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
@@ -29,7 +29,10 @@ class MainMenuActivity : AppCompatActivity() {
 
     // Called when the user taps the Tutorial button
     fun tutorialButton(view: View) {
-        database.setElo("JOJO", 1100)
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            database.setElo(currentUser!!.uid, 1100)
+        }
         val intent = Intent(this, TutorialActivity::class.java)
         startActivity(intent)
     }
@@ -38,14 +41,6 @@ class MainMenuActivity : AppCompatActivity() {
     fun profileButton(view: View) {
         val intent = Intent(this, ProfileActivity::class.java)
         startActivity(intent)
-    }
-
-    // Called when the user taps the Solo button
-    fun logoutButton(view: View) {
-        AuthUI.getInstance().signOut(this)
-//            .addOnCompleteListener {
-            startActivity(Intent(this, SplashScreenActivity::class.java))
-//        }
     }
 
     fun launchSpeechRecognitionActivity(view: View) {
