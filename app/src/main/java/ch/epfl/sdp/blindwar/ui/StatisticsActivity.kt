@@ -2,29 +2,25 @@ package ch.epfl.sdp.blindwar.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.user.Mode
-import java.util.*
 
 
 class StatisticsActivity : AppCompatActivity() {
 
-    //Float values for stats (only for demo)
-    private var wins = 45
-    private var losses = 35
-    private var draws = 100 - wins - losses
+    private val test = 59
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
+
         // access the items of the list
-        var modes = Mode.values()
+        val modes = Mode.values()
 
 
         // access the spinner
@@ -47,6 +43,9 @@ class StatisticsActivity : AppCompatActivity() {
                         getString(R.string.selected_item) + " " +
                                 "" + modes[position], Toast.LENGTH_SHORT
                     ).show()
+
+                    val textView = findViewById<View>(R.id.winNumberView) as TextView
+                    textView.text = modes[position].toString()
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
