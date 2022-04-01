@@ -10,15 +10,16 @@
 
     <TextView
         android:id="@+id/timeTextView"
-        android:layout_width="109dp"
-        android:layout_height="54dp"
+        android:layout_width="107dp"
+        android:layout_height="59dp"
         android:layout_marginTop="16dp"
-        android:text="@string/time"
+        android:fontFamily="@font/bungee_inline"
+        android:gravity="bottom"
+        android:text="TIME"
         android:textColor="@color/white"
         android:textSize="35sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintHorizontal_bias="0.085"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,7 +28,7 @@
         android:layout_width="402dp"
         android:layout_height="46dp"
         android:layout_marginTop="12dp"
-        android:fontFamily="@font/public_sans"
+        android:fontFamily="@font/oxygen"
         android:gravity="center"
         android:text="@string/artist"
         android:textColor="@color/white"
@@ -39,13 +40,13 @@
 
     <TextView
         android:id="@+id/trackTextView"
-        android:layout_width="401dp"
-        android:layout_height="59dp"
+        android:layout_width="384dp"
+        android:layout_height="67dp"
         android:layout_marginTop="8dp"
-        android:color="@color/white"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/oxygen"
         android:gravity="center"
-        android:text="@string/track"
+        android:text="TRACK"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,5 +80,19 @@
         app:lottie_loop="false"
         app:lottie_speed="2"
         app:lottie_fileName="likeAnim.json"/>
+
+    <ImageButton
+        android:id="@+id/skip_next_summary"
+        android:layout_width="51dp"
+        android:layout_height="58dp"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/likeView"
+        app:layout_constraintVertical_bias="0.381"
+        app:srcCompat="@drawable/ic_baseline_skip_next_24"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

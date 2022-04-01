@@ -58,6 +58,5 @@ interface SpotifyApi {
     suspend fun searchTrack(@Header(AUTH) token: String,
     @Path(TRACK_ID) track_id: String,
     @Query(LIMIT) limit: Int): Response<SpotifyTrack>
-
      **/
 }

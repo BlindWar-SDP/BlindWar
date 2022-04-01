@@ -11,3 +11,4 @@ local.properties
 /models/src/main/assets/heavy-us
 /models/src/main/assets/middle-us
 /models/build/*
+spotifyKeys.properties

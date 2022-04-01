@@ -39,6 +39,7 @@ class ProfileActivityTest : TestCase() {
         Intents.release()
     }
 
+    /**
     @Test
     fun testLogoutButton() {
         onView(withId(R.id.logoutButton))
@@ -46,6 +47,7 @@ class ProfileActivityTest : TestCase() {
         Thread.sleep(1000)
         intended(hasComponent(SplashScreenActivity::class.java.name))
     }
+    **/
     /*
     @Test
     fun testLoginButton() {
