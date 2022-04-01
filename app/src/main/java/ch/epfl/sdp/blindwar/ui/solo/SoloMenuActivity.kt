@@ -14,6 +14,7 @@ import ch.epfl.sdp.blindwar.domain.game.*
 
 class SoloMenuActivity : AppCompatActivity() {
 
+    /** TODO: Reuse for the next sprint
     private val localMusicModeHandler =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -33,7 +34,7 @@ class SoloMenuActivity : AppCompatActivity() {
                     val playlist: List<SongMetaData> =
                         SongImageUrlConstants.META_DATA_TUTORIAL_MUSICS_PER_AUTHOR.values.toList()
 
-                    val gameParameter = GameParameter(3, funny = false, hint = true, 30000)
+                    val gameParameter = GameParameter(3, funny = false)
 
                     val gameConfig = GameConfig(
                         GameDifficulty.EASY,
@@ -66,4 +67,5 @@ class SoloMenuActivity : AppCompatActivity() {
 
     fun onlineMusicClick(view: View) {}
     fun tutorialMusicClick(view: View) {}
+    **/
 }

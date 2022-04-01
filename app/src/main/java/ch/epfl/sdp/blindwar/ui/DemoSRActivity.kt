@@ -50,6 +50,7 @@ class DemoSRActivity : Activity() {
             }
             v?.onTouchEvent(event) ?: true
         }
+
         findViewById<View>(R.id.recognize_mic_en).setOnTouchListener { v, event ->
             when (event?.action) {
                 MotionEvent.ACTION_DOWN -> {

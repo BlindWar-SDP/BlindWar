@@ -2,123 +2,213 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_container">
+    android:background="@color/black">
 
-    <TextView
-        android:id="@+id/scoreTextView"
-        android:layout_width="36dp"
-        android:layout_height="48dp"
-        android:fontFamily="@font/public_sans"
-        android:text="@string/zero"
-        android:textAlignment="center"
-        android:textSize="29sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/startButton"
+
+    <ImageButton
+        android:id="@+id/frameGuess"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/guessButton"
+        app:layout_constraintEnd_toEndOf="@+id/guessButton"
+        app:layout_constraintStart_toStartOf="@+id/guessButton"
+        app:layout_constraintTop_toTopOf="@+id/guessButton"
+        app:srcCompat="@drawable/back_frame_white"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/guessButton"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:background="@null"
+        android:text="@string/guess_button_text"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/guessEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.29"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.145"
-        app:lottie_autoPlay="false"
-        app:lottie_loop="false"
-        app:lottie_speed="2" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/cross"
-        android:layout_width="61dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="72dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/audioVisualizer"
-        app:layout_constraintEnd_toStartOf="@+id/countdown"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/scoreTextView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.803"
-        app:lottie_autoPlay="false"
-        app:lottie_loop="false"
-        app:lottie_speed="2"
-        app:lottie_fileName="cross.json"
+        app:layout_constraintTop_toBottomOf="@+id/microphone"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/border_button_white"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <TextView
-        android:id="@+id/countdown"
-        android:layout_width="57dp"
-        android:layout_height="49dp"
-        android:layout_marginBottom="24dp"
-        android:fontFamily="@font/public_sans"
-        android:textAlignment="center"
-        android:textSize="29sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/audioVisualizer"
+    <ImageButton
+        android:id="@+id/microphone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.578"
-        app:layout_constraintStart_toEndOf="@+id/scoreTextView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.935" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startButton"
+        app:layout_constraintVertical_bias="0.366"
+        app:srcCompat="@drawable/ic_baseline_mic_24"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/skip_next_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/guessEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.448"
+        app:layout_constraintStart_toEndOf="@+id/guessEditText"
+        app:layout_constraintTop_toTopOf="@+id/guessEditText"
+        app:layout_constraintVertical_bias="0.764"
+        app:srcCompat="@drawable/ic_baseline_skip_next_24"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayoutCompat"
+        android:layout_width="402dp"
+        android:layout_height="57dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/helpButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="2dp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/scoreTextView"
+            app:layout_constraintHorizontal_bias="0.076"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_baseline_help_24"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageButton
+            android:id="@+id/imageButton6"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="2dp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.923"
+            app:layout_constraintStart_toEndOf="@+id/countdown"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/baseline_settings_24_white"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/countdown"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/oxygen"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.563"
+            app:layout_constraintStart_toEndOf="@+id/scoreTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.857" />
+
+        <TextView
+            android:id="@+id/scoreTextView"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/oxygen_light"
+            android:text="@string/zero"
+            android:textAlignment="center"
+            android:textSize="30dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.274"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.444"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="false"
+            app:lottie_speed="2" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/cross"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/countdown"
+            app:layout_constraintHorizontal_bias="0.478"
+            app:layout_constraintStart_toEndOf="@+id/scoreTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.608"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="cross.json"
+            app:lottie_loop="false"
+            app:lottie_speed="2"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/audioVisualizer"
+        android:layout_width="336dp"
+        android:layout_height="338dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat"
+        app:layout_constraintVertical_bias="0.0"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="audioVisualizer.json"
+        app:lottie_loop="true"
+        app:lottie_speed="2"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/startButton"
+        android:layout_width="70dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="114dp"
+        android:background="@drawable/circle_button_play"
+        app:layout_constraintBottom_toBottomOf="@+id/audioVisualizer"
+        app:layout_constraintEnd_toEndOf="@+id/audioVisualizer"
+        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintStart_toStartOf="@+id/audioVisualizer"
+        app:layout_constraintTop_toTopOf="@+id/audioVisualizer"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="playPause.json"
+        app:lottie_loop="false"
+        app:lottie_speed="2"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/guessEditText"
         android:layout_width="258dp"
         android:layout_height="52dp"
-        android:hint="@string/edit_text_hint_title"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
         android:ems="10"
+        android:fontFamily="@font/oxygen"
         android:gravity="center"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/audioVisualizer"
-        app:layout_constraintVertical_bias="0.54"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/audioVisualizer"
-        android:layout_width="336dp"
-        android:layout_height="338dp"
-        android:layout_marginTop="28dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoreTextView"
-        app:layout_constraintVertical_bias="0.0"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_speed="2"
-        app:lottie_fileName="audioVisualizer.json"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <Button
-        android:id="@+id/guessButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="guess"
-        android:text="@string/guess_button_text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guessEditText"
-        app:layout_constraintVertical_bias="0.235" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/startButton"
-        android:layout_width="121dp"
-        android:layout_height="118dp"
-        android:onClick="playAndPause"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.74"
-        app:lottie_autoPlay="false"
-        app:lottie_loop="false"
-        app:lottie_speed="2"
-        app:lottie_fileName="playPause.json"
+        app:layout_constraintTop_toBottomOf="@+id/guessButton"
         tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

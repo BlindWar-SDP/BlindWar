@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/container">
 
 
     <ImageView
@@ -75,9 +76,10 @@
 
     <TextView
         android:id="@+id/titleText"
-        android:layout_width="258dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="60dp"
+        android:layout_width="274dp"
+        android:layout_height="159dp"
+        android:layout_marginBottom="36dp"
+        android:fontFamily="@font/bungee_inline"
         android:gravity="center"
         android:text="@string/blind_war"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -85,6 +87,7 @@
         android:textSize="48sp"
         app:layout_constraintBottom_toTopOf="@+id/soloButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import ch.epfl.sdp.blindwar.ui.ProfileActivity
-import ch.epfl.sdp.blindwar.ui.SplashScreenActivity
 import ch.epfl.sdp.blindwar.ui.StatisticsActivity
 import junit.framework.TestCase
 import org.junit.After
@@ -39,13 +38,13 @@ class ProfileActivityTest : TestCase() {
         Intents.release()
     }
 
+    /*
     @Test
-    fun testLogoutButton() {
-        onView(withId(R.id.logoutButton))
+    fun testLoginButton() {
+        onView(withId(R.id.backToMainButton))
             .perform(click())
-        Thread.sleep(1000)
-        intended(hasComponent(SplashScreenActivity::class.java.name))
-    }
+        intended(hasComponent(MainMenuActivity::class.java.name))
+    } */
 
     @Test
     fun testChooseImage() {

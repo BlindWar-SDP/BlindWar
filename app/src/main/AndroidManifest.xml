@@ -19,37 +19,38 @@
             android:name=".ui.NewUserActivity"
             android:exported="false"/>
         <activity
-            android:name=".ui.DemoSRActivity"
-            android:parentActivityName=".ui.MainMenuActivity">
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainMenuActivity" />
-        </activity>
+            android:name=".ui.solo.PlayActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.solo.animated.AnimatedPlayActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.tutorial.TutorialActivity"
             android:parentActivityName=".ui.MainMenuActivity"
             android:exported="false"/>
         <activity
+            android:name=".ui.DemoSRActivity"
+            android:parentActivityName=".ui.MainMenuActivity"
+            android:exported="false"/>
+
+        <activity
             android:name=".ui.MainMenuActivity"
-            android:exported="false" />
+            android:exported="true" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.solo.SoloMenuActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SoloActivity"
-            android:parentActivityName=".ui.MainMenuActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.ProfileActivity"
             android:parentActivityName=".ui.MainMenuActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.tutorial.DemoActivity"
-            android:parentActivityName=".ui.MainMenuActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.tutorial.AnimatedDemoActivity"
             android:exported="false" />
         <activity
             android:name=".ui.StatisticsActivity"
@@ -58,11 +59,10 @@
         <activity
             android:name=".ui.SplashScreenActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
     </application>
 </manifest>
