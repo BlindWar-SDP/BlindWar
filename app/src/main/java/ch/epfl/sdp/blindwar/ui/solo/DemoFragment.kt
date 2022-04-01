@@ -22,7 +22,7 @@ import ch.epfl.sdp.blindwar.ui.tutorial.SongSummaryFragment
 
 open class DemoFragment: Fragment() {
     // Game view model to pass to the next round
-    lateinit var game: Game
+    lateinit var game: GameTutorial
     protected var playing = true
     protected lateinit var guessEditText: EditText
     protected lateinit var scoreTextView: TextView
@@ -43,7 +43,10 @@ open class DemoFragment: Fragment() {
         val view = inflater.inflate(R.layout.activity_demo, container, false)
         /** Set up the interface **/
         // Game instance tutorial
-        game = GameTutorial(gameInstanceViewModel.gameInstance.value!!, activity?.assets!!)
+        game = GameTutorial(gameInstanceViewModel.gameInstance.value!!,
+            activity?.assets!!,
+            activity?.applicationContext?.contentResolver!!)
+
         game.init()
 
         duration = Tutorial.gameInstance

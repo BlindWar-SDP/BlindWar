@@ -49,10 +49,6 @@
             android:name=".ui.solo.SoloMenuActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SoloActivity"
-            android:parentActivityName=".ui.MainMenuActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.ProfileActivity"
             android:parentActivityName=".ui.MainMenuActivity"
             android:exported="false" />

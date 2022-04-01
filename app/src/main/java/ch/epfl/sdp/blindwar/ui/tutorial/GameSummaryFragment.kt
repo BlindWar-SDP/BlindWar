@@ -42,7 +42,7 @@ class GameSummaryFragment : Fragment() {
 
         replay = view.findViewById<ImageButton>(R.id.replay).also{ button ->
             button.setOnClickListener{
-                (activity!! as AnimatedPlayActivity).removeAllFragments()
+                (requireActivity() as AnimatedPlayActivity).removeAllFragments()
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.play_container, AnimatedDemoFragment(), "DEMO")
                     ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

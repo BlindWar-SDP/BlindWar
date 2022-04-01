@@ -14,6 +14,7 @@ import ch.epfl.sdp.blindwar.domain.game.*
 
 class SoloMenuActivity : AppCompatActivity() {
 
+    /** TODO: Reuse for the next sprint
     private val localMusicModeHandler =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -66,4 +67,5 @@ class SoloMenuActivity : AppCompatActivity() {
 
     fun onlineMusicClick(view: View) {}
     fun tutorialMusicClick(view: View) {}
+    **/
 }

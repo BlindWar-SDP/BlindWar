@@ -78,15 +78,11 @@ class DemoActivityTest {
     /** 30 seconds to guess **/
     @Test
     fun timeOutTest() {
-
         // Write in a edit text to ensure that screen doesn't lock
-        for(i in 1..3) {
-            onView(withId(R.id.guessEditText))
-                .perform(clearText(), typeText("here"))
-                .perform(closeSoftKeyboard())
-            Thread.sleep(10000L)
-        }
-        Thread.sleep(100)
+        onView(withId(R.id.guessEditText))
+            .perform(clearText(), typeText("here"))
+            .perform(closeSoftKeyboard())
+        Thread.sleep(15000L)
 
         onView(withId(R.id.song_summary_fragment)).check(matches(isDisplayed()))
     }
