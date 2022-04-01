@@ -12,7 +12,7 @@ class TutorialActivity : AppCompatActivity() {
 
         val viewPager: ViewPager2 = findViewById(R.id.pager)
         val fragments =
-            arrayListOf(TutorialFragment(), TutorialFragment(), TutorialContinueToDemoFragment())
+            arrayListOf(TutorialFragment(), TutorialFragment())
         val adapter = ViewPagerAdapter(fragments, this)
 
         viewPager.adapter = adapter

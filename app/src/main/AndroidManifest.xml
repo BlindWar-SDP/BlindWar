@@ -53,13 +53,6 @@
             android:parentActivityName=".ui.MainMenuActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.tutorial.DemoActivity"
-            android:parentActivityName=".ui.MainMenuActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.tutorial.AnimatedDemoActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.StatisticsActivity"
             android:parentActivityName=".ui.ProfileActivity"
             android:exported="false" />

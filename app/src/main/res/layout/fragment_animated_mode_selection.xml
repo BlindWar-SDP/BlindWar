@@ -334,6 +334,7 @@
                 android:id="@+id/classicDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
                 android:fontFamily="@font/oxygen"
                 android:text="@string/classicDescription"
                 android:textColor="@color/black"
@@ -342,7 +343,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/regularButton_"
-                app:layout_constraintVertical_bias="0.453" />
+                app:layout_constraintVertical_bias="0.417" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/vinyl2"

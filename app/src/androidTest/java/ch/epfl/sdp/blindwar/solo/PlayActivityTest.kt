@@ -1,13 +1,9 @@
 package ch.epfl.sdp.blindwar.solo
 
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBackUnconditionally
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.pressBack
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -15,7 +11,6 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.GameDifficulty
 import ch.epfl.sdp.blindwar.domain.game.GameMode
 import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
-import ch.epfl.sdp.blindwar.ui.tutorial.DemoActivity
 import junit.framework.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
