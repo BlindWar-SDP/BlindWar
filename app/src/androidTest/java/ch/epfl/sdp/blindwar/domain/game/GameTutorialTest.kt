@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.domain.game
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,11 +16,10 @@ class GameTutorialTest {
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
     private val assets = context.assets
-    private val contentResolver = context.contentResolver
 
     @Test
     fun testNextRound() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, contentResolver)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, context, context.resources)
         gameTutorial.init()
         val round = Tutorial
             .gameInstance
@@ -28,7 +28,7 @@ class GameTutorialTest {
             .round
 
         // Iterate 10 times since we have 10 different musics in tutorial
-        val toPlay: MutableSet<SongMetaData> = Tutorial.gameInstance.playlist.toMutableSet()
+        val toPlay: MutableSet<MusicMetadata> = Tutorial.gameInstance.playlist.toMutableSet()
         for (i in 0 until round) {
             gameTutorial.nextRound()
             assertThat(toPlay.remove(gameTutorial.currentMetadata()), `is`(true))
@@ -38,7 +38,7 @@ class GameTutorialTest {
 
     @Test
     fun testTwoGoodGuesses() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, contentResolver)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, context, context.resources)
         gameTutorial.init()
         goodGuess(gameTutorial)
         goodGuess(gameTutorial)
@@ -48,7 +48,7 @@ class GameTutorialTest {
 
     @Test
     fun testUpperCaseGuess() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, contentResolver)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, context, context.resources)
         gameTutorial.init()
         gameTutorial.nextRound()
         val music1 = gameTutorial.currentMetadata()
@@ -59,7 +59,7 @@ class GameTutorialTest {
 
     @Test
     fun testTwoGoodAndOneBadGuesses() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, contentResolver)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, context, context.resources)
         gameTutorial.init()
         goodGuess(gameTutorial)
         goodGuess(gameTutorial)

@@ -6,7 +6,7 @@ import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.domain.game.SongMetaData
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.ui.solo.DemoFragment
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,7 +25,7 @@ class DemoFragmentTest {
     @Test
     fun makeCorrectGuess() {
         val scenario = launchFragmentInContainer<DemoFragment>()
-        var correctMetadata = SongMetaData("", "", "")
+        var correctMetadata = MusicMetadata("", "", "", 0)
         scenario.onFragment {
             correctMetadata = it.game.currentMetadata()!!
         }

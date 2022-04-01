@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.domain.game
 import android.content.ContentResolver
 import android.content.Context
 import android.content.res.AssetManager
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import java.util.*
 
 /**
@@ -12,15 +13,15 @@ import java.util.*
  * Construct a class that represent the game logic
  *
  */
-abstract class Game<FileDescriptorT>(
+abstract class Game(
     gameInstance: GameInstance,
     protected val assetManager: AssetManager,
-    protected val contentResolver: ContentResolver
+    protected val context: Context
 ) {
     /** Encapsulates the characteristics of a game instead of its logic **/
     private val game: GameInstance = gameInstance
 
-    protected lateinit var gameSound: GameSound<FileDescriptorT>
+    protected lateinit var gameSound: GameSound
 
     private val gameParameter: GameParameter = gameInstance
         .gameConfig
@@ -68,7 +69,7 @@ abstract class Game<FileDescriptorT>(
     /**
      * Depends on the game instance parameter
      */
-    fun currentMetadata(): SongMetaData? {
+    fun currentMetadata(): MusicMetadata? {
         if (gameDifficulty.hint) {
             return gameSound.getCurrentMetadata()
         }
