@@ -1,23 +1,73 @@
 package ch.epfl.sdp.blindwar.ui
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.user.AppStatistics
 import ch.epfl.sdp.blindwar.user.Mode
+import ch.epfl.sdp.blindwar.user.Result
+import ch.epfl.sdp.blindwar.user.User
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
 
 
 class StatisticsActivity : AppCompatActivity() {
 
-    private val test = 59
+    val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
+    val databaseReference = firebaseDatabase.getReference("Data")
 
-
+    var userStatistics: AppStatistics = AppStatistics()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
+
+        var eloView = findViewById<TextView>(R.id.eloExampleView)
+        eloView.text = "geh"
+        val winView = findViewById<TextView>(R.id.winNumberView)
+        winView.text = "geh"
+        val drawView = findViewById<TextView>(R.id.drawNumberView)
+        drawView.text = "geh"
+        val lossView = findViewById<TextView>(R.id.lossNumberView)
+        lossView.text = "geh"
+        val winPercent = findViewById<TextView>(R.id.winPercentView)
+        winPercent.text = "geh"
+        val drawPercent = findViewById<TextView>(R.id.drawPercentView)
+        drawPercent.text = "geh"
+        val lossPercent = findViewById<TextView>(R.id.lossPercentView)
+        lossPercent.text = "geh"
+        val correctView = findViewById<TextView>(R.id.correctNumberView)
+        correctView.text = "geh"
+        val wrongView = findViewById<TextView>(R.id.wrongNumberView)
+        wrongView.text = "geh"
+        val correctPercent = findViewById<TextView>(R.id.correctnessPercentView)
+        correctPercent.text = "geh"
+        val wrongPercent = findViewById<TextView>(R.id.wrongPercentView)
+        wrongPercent.text = "geh"
+
+        databaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val user: User? = try {
+                    dataSnapshot.getValue<User>()
+                } catch (e: DatabaseException) {
+                    null
+                }
+
+                if (user != null) {
+                    userStatistics = user.userStatistics
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+
 
         // access the items of the list
         val modes = Mode.values()
@@ -44,16 +94,29 @@ class StatisticsActivity : AppCompatActivity() {
                                 "" + modes[position], Toast.LENGTH_SHORT
                     ).show()
 
-                    val textView = findViewById<View>(R.id.winNumberView) as TextView
-                    textView.text = modes[position].toString()
+                    userStatistics.eloUpdate(Result.WIN, 1300)
+                    userStatistics.multiWinLossCountUpdate(Result.WIN, Mode.MULTI)
+                    userStatistics.correctnessUpdate(true, Mode.SOLO)
+                    eloView.text = userStatistics.elo.toString()
+                    winView.text = userStatistics.wins[position].toString()
+                    drawView.text = userStatistics.draws[position].toString()
+                    lossView.text = userStatistics.losses[position].toString()
+                    winPercent.text = userStatistics.winPercent[position].toString()
+                    drawPercent.text = userStatistics.drawPercent[position].toString()
+                    lossPercent.text = userStatistics.lossPercent[position].toString()
+                    correctView.text = userStatistics.correctArray[position].toString()
+                    wrongView.text = userStatistics.wrongArray[position].toString()
+                    correctPercent.text = userStatistics.correctPercent[position].toString()
+                    wrongPercent.text = userStatistics.wrongPercent[position].toString()
+
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
                     // write code to perform some action
                 }
+
             }
         }
     }
-
 
 }
