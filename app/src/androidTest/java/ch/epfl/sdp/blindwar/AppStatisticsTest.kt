@@ -29,7 +29,7 @@ class AppStatisticsTest {
 
     @Test
     fun soloCorrectnessUpdateCorrect() {
-        testStats.correctnessUpdate(true, Mode.SOLO)
+        testStats.correctnessUpdate(1, 0, Mode.SOLO)
         assert(testStats.correctArray[soloIndex] == 1)
     }
 
@@ -45,21 +45,21 @@ class AppStatisticsTest {
 
     @Test
     fun soloCorrectnessUpdateWrong() {
-        testStats.correctnessUpdate(false, Mode.SOLO)
+        testStats.correctnessUpdate(0, 1, Mode.SOLO)
         assert(testStats.wrongArray[soloIndex] == 1)
     }
 
     @Test
     fun getSoloCorrectPercent() {
-        testStats2.correctnessUpdate(true, Mode.SOLO)
-        testStats2.correctnessUpdate(false, Mode.SOLO)
+        testStats2.correctnessUpdate(1,0,  Mode.SOLO)
+        testStats2.correctnessUpdate(0, 1, Mode.SOLO)
         assert(testStats2.correctPercent[soloIndex] == 50.0F)
     }
 
     @Test
     fun getSoloWrongPercent() {
-        testStats3.correctnessUpdate(true, Mode.SOLO)
-        testStats3.correctnessUpdate(false, Mode.SOLO)
+        testStats3.correctnessUpdate(1, 0,  Mode.SOLO)
+        testStats3.correctnessUpdate(0, 1,  Mode.SOLO)
         assert(testStats3.wrongPercent[soloIndex] == 50.0F)
         
     }
@@ -71,7 +71,7 @@ class AppStatisticsTest {
 
     @Test
     fun multiCorrectnessUpdateCorrect() {
-        testStats.correctnessUpdate(true, Mode.MULTI)
+        testStats.correctnessUpdate(1, 0, Mode.MULTI)
         assert(testStats.correctArray[multiIndex] == 1)
     }
 
@@ -82,21 +82,21 @@ class AppStatisticsTest {
 
     @Test
     fun multiCorrectnessUpdateWrong() {
-        testStats.correctnessUpdate(false, Mode.MULTI)
+        testStats.correctnessUpdate(0, 1, Mode.MULTI)
         assert(testStats.wrongArray[multiIndex] == 1)
     }
 
     @Test
     fun getMultiCorrectPercent() {
-        testStats2.correctnessUpdate(true, Mode.MULTI)
-        testStats2.correctnessUpdate(false, Mode.MULTI)
+        testStats2.correctnessUpdate(1, 0,  Mode.MULTI)
+        testStats2.correctnessUpdate(0, 1,  Mode.MULTI)
         assert(testStats2.correctPercent[multiIndex] == 50.0F)
     }
 
     @Test
     fun getMultiWrongPercent() {
-        testStats3.correctnessUpdate(true, Mode.MULTI)
-        testStats3.correctnessUpdate(false, Mode.MULTI)
+        testStats3.correctnessUpdate(1, 0, Mode.MULTI)
+        testStats3.correctnessUpdate(0, 1,  Mode.MULTI)
         assert(testStats3.correctPercent[multiIndex] == 50.0F)
     }
 
@@ -167,10 +167,10 @@ class AppStatisticsTest {
 
     @Test
     fun resetStatistics() {
-        testStats4.correctnessUpdate(true, Mode.SOLO)
-        testStats4.correctnessUpdate(false, Mode.SOLO)
-        testStats4.correctnessUpdate(true, Mode.MULTI)
-        testStats4.correctnessUpdate(false, Mode.MULTI)
+        testStats4.correctnessUpdate(1, 0, Mode.SOLO)
+        testStats4.correctnessUpdate(0, 1, Mode.SOLO)
+        testStats4.correctnessUpdate(1, 0, Mode.MULTI)
+        testStats4.correctnessUpdate(0, 1, Mode.MULTI)
         testStats4.multiWinLossCountUpdate(Result.DRAW, Mode.MULTI)
         testStats4.multiWinLossCountUpdate(Result.WIN, Mode.MULTI)
         testStats4.multiWinLossCountUpdate(Result.LOSS, Mode.MULTI)

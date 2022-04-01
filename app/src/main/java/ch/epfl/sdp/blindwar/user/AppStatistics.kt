@@ -78,12 +78,9 @@ class AppStatistics {
      * @param correct true if guess was correct, false if wrong
      * @param mode the current game mode
      */
-    fun correctnessUpdate(correct: Boolean, mode: Mode) {
-        if (correct) {
-            correctArray[mode.ordinal]++
-        } else {
-            wrongArray[mode.ordinal]++
-        }
+    fun correctnessUpdate(correct: Int, wrong: Int, mode: Mode) {
+        correctArray[mode.ordinal] += correct
+        wrongArray[mode.ordinal] += wrong
         val (a, b) = correctnessPercentUpdate(correctArray[mode.ordinal], wrongArray[mode.ordinal])
         correctPercent[mode.ordinal] = a
         wrongPercent[mode.ordinal] = b

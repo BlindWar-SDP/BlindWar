@@ -3,6 +3,8 @@ package ch.epfl.sdp.blindwar.domain.game
 import android.content.ContentResolver
 import android.content.Context
 import android.content.res.AssetManager
+import ch.epfl.sdp.blindwar.database.UserDatabase
+import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 
 /**
@@ -47,8 +49,12 @@ abstract class Game<FileDescriptorT>(
      * clean up player and assets
      */
     private fun endGame() {
-        gameSound.soundTeardown()
-    }
+        val fails = score - round
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
+            gameSound.soundTeardown()
+        }
 
     /**
      * Pass to the next round
@@ -99,6 +105,7 @@ abstract class Game<FileDescriptorT>(
      *
      */
     fun timeout() {
+
         round += 1
     }
 
