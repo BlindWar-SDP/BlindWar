@@ -91,6 +91,9 @@ class MainMenuActivityTest : TestCase() {
         onView(ViewMatchers.withId(R.id.profileButton))
             .perform(ViewActions.click())
         onView(ViewMatchers.withId(R.id.emailView))
+            .perform(ViewActions.closeSoftKeyboard())
+        Thread.sleep(1000)
+        onView(ViewMatchers.withId(R.id.emailView))
             .check(matches(ViewMatchers.withText(Matchers.containsString("test@bot.ch"))))
         onView(ViewMatchers.withId(R.id.logoutButton)).perform(ViewActions.click())
     }

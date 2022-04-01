@@ -132,7 +132,7 @@ class UserTest {
     // =============
     @Test
     fun updateStats() {
-        testUser1.userStatistics.eloUpdateWin(1005)
+        testUser1.userStatistics.eloSetter(1005)
         val testUser = User.Builder()
             .setStats(testUser1.userStatistics)
             .build()
