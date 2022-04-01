@@ -1,19 +1,16 @@
-package ch.epfl.sdp.blindwar.ui.solo
+package ch.epfl.sdp.blindwar.ui.solo.animated
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.activityViewModels
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedDemoFragment
+import ch.epfl.sdp.blindwar.ui.solo.DemoFragment
 
-class PlaylistSelectionFragment: Fragment() {
+class AnimatedPlaylistSelectionFragment: Fragment() {
     /** Keep : Useful for the next sprint **/
     //private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
     //private lateinit var backButton: ImageButton
@@ -32,7 +29,7 @@ class PlaylistSelectionFragment: Fragment() {
                 // Start a Game depending on the Game Mode
 
                 activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace((view?.parent as ViewGroup).id, DemoFragment(), "DEMO")
+                    ?.replace((view?.parent as ViewGroup).id, AnimatedDemoFragment(), "DEMO")
                     ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     ?.commit()
             }
@@ -40,9 +37,9 @@ class PlaylistSelectionFragment: Fragment() {
 
         /** TODO: Test in the next sprint
         backButton = view.findViewById<ImageButton>(R.id.back_button_playlist).also {
-            it.setOnClickListener{
-                activity?.onBackPressed()
-            }
+        it.setOnClickListener{
+        activity?.onBackPressed()
+        }
         } **/
 
         return view

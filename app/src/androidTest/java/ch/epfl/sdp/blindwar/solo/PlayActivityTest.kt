@@ -74,7 +74,9 @@ class PlayActivityTest {
             simulateLostRound()
         }
 
-        pressBackUnconditionally()
+        testRule.scenario.onActivity {
+            it.onBackPressed()
+        }
     }
 
     private fun simulateLostRound() {

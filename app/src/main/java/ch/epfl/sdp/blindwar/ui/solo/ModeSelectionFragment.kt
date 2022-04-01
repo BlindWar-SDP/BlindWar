@@ -15,7 +15,7 @@ import ch.epfl.sdp.blindwar.domain.game.GameMode
 
 open class ModeSelectionFragment: Fragment() {
 
-    private val gameInstance: GameInstanceViewModel by activityViewModels()
+    protected val gameInstance: GameInstanceViewModel by activityViewModels()
     protected lateinit var regularButton: Button
     protected lateinit var survivalButton: Button
     protected lateinit var raceButton: Button
@@ -51,7 +51,7 @@ open class ModeSelectionFragment: Fragment() {
     }
 
 
-    protected fun selectMode(button: View) {
+    open fun selectMode(button: View) {
         button.setOnClickListener{
             gameInstance.setGameMode(when(button.id) {
                 R.id.raceButton_ -> GameMode.TIMED

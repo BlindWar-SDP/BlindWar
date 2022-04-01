@@ -10,6 +10,7 @@ import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.ui.solo.ModeSelectionFragment
 import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
 import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
+import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
 import com.firebase.ui.auth.AuthUI
 
 class MainMenuActivity : AppCompatActivity() {
@@ -22,7 +23,7 @@ class MainMenuActivity : AppCompatActivity() {
 
     // Called when the user taps the Solo button
     fun soloButton(view: View) {
-        val intent = Intent(this, PlayActivity::class.java)
+        val intent = Intent(this, AnimatedPlayActivity::class.java)
         startActivity(intent)
     }
 

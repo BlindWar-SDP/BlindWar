@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.widget.ViewPager2
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.ui.solo.AnimatedDemoFragment
+import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedDemoFragment
 import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
+import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
 
 class GameSummaryFragment : Fragment() {
 
@@ -42,7 +42,7 @@ class GameSummaryFragment : Fragment() {
 
         replay = view.findViewById<ImageButton>(R.id.replay).also{ button ->
             button.setOnClickListener{
-                (activity!! as PlayActivity).removeAllFragments()
+                (activity!! as AnimatedPlayActivity).removeAllFragments()
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.play_container, AnimatedDemoFragment(), "DEMO")
                     ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

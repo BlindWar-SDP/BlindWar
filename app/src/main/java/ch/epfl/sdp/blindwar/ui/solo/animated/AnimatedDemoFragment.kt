@@ -1,15 +1,13 @@
-package ch.epfl.sdp.blindwar.ui.solo
+package ch.epfl.sdp.blindwar.ui.solo.animated
 
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import ch.epfl.sdp.blindwar.R
-import com.airbnb.lottie.Lottie
+import ch.epfl.sdp.blindwar.ui.solo.DemoFragment
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 

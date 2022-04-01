@@ -22,6 +22,11 @@
             android:name=".ui.solo.PlayActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.solo.animated.AnimatedPlayActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.tutorial.TutorialActivity"
             android:parentActivityName=".ui.MainMenuActivity"

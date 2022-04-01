@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.ui.solo
+package ch.epfl.sdp.blindwar.ui.solo.animated
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageButton
+import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.domain.game.GameMode
+import ch.epfl.sdp.blindwar.ui.solo.ModeSelectionFragment
+import ch.epfl.sdp.blindwar.ui.solo.PlaylistSelectionFragment
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable.RESTART
 import com.airbnb.lottie.LottieDrawable.REVERSE
@@ -44,7 +48,7 @@ class AnimatedModeSelectionFragment: ModeSelectionFragment() {
                                  view.findViewById(R.id.chrono), view.findViewById(R.id.chrono2))
 
         funnyCheck = view.findViewById<CheckBox>(R.id.checkBox).also { checkBox ->
-            checkBox.setOnClickListener{
+            checkBox.setOnClickListener {
                 checked = !checked
                 for (animation in animations) {
                     if (checked)
@@ -69,5 +73,20 @@ class AnimatedModeSelectionFragment: ModeSelectionFragment() {
         }
 
         return view
+    }
+
+    override fun selectMode(button: View) {
+        button.setOnClickListener{
+            gameInstance.setGameMode(when(button.id) {
+                R.id.raceButton_ -> GameMode.TIMED
+                R.id.survivalButton_ -> GameMode.SURVIVAL
+                else -> GameMode.REGULAR
+            })
+
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace((view?.parent as ViewGroup).id, AnimatedPlaylistSelectionFragment(), "PLAYLIST")
+                ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                ?.commit()
+        }
     }
 }
