@@ -27,28 +27,28 @@ class StatisticsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
 
-        var eloView = findViewById<TextView>(R.id.eloExampleView)
-        eloView.text = "geh"
+        val eloView = findViewById<TextView>(R.id.eloExampleView)
+        eloView.text = "eloView"
         val winView = findViewById<TextView>(R.id.winNumberView)
-        winView.text = "geh"
+        winView.text = "winView"
         val drawView = findViewById<TextView>(R.id.drawNumberView)
-        drawView.text = "geh"
+        drawView.text = "drawView"
         val lossView = findViewById<TextView>(R.id.lossNumberView)
-        lossView.text = "geh"
+        lossView.text = "lossView"
         val winPercent = findViewById<TextView>(R.id.winPercentView)
-        winPercent.text = "geh"
+        winPercent.text = "winPercent"
         val drawPercent = findViewById<TextView>(R.id.drawPercentView)
-        drawPercent.text = "geh"
+        drawPercent.text = "drawPercent"
         val lossPercent = findViewById<TextView>(R.id.lossPercentView)
-        lossPercent.text = "geh"
+        lossPercent.text = "lossPercent"
         val correctView = findViewById<TextView>(R.id.correctNumberView)
-        correctView.text = "geh"
+        correctView.text = "correctView"
         val wrongView = findViewById<TextView>(R.id.wrongNumberView)
-        wrongView.text = "geh"
+        wrongView.text = "wrongView"
         val correctPercent = findViewById<TextView>(R.id.correctnessPercentView)
-        correctPercent.text = "geh"
+        correctPercent.text = "correctPercent"
         val wrongPercent = findViewById<TextView>(R.id.wrongPercentView)
-        wrongPercent.text = "geh"
+        wrongPercent.text = "wrongPercent"
 
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
