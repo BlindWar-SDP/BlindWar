@@ -38,9 +38,9 @@
     <string name="timed">TIMED</string>
     <string name="mode_selection">MODE SELECTION</string>
     <string name="funny">FUNNY</string>
-    <string name="timedDescription">"Faster higher stronger"</string>
-    <string name="survivalDescription">"We are the Walking Dead"</string>
-    <string name="classicDescription">"Just a normal game lel"</string>
+    <string name="timedDescription">Faster, Higher, Stronger</string>
+    <string name="survivalDescription">Good luck</string>
+    <string name="classicDescription">Just a normal game</string>
 
     <!--  Playlist selection  -->
     <string name="playlist_selection">PLAYLIST SELECTION</string>

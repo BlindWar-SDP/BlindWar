@@ -9,6 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.domain.game.GameDifficulty
 import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 import ch.epfl.sdp.blindwar.domain.game.Tutorial
 import ch.epfl.sdp.blindwar.ui.tutorial.DemoActivity
@@ -82,7 +83,7 @@ class DemoActivityTest {
         onView(withId(R.id.guessEditText))
             .perform(clearText(), typeText("here"))
             .perform(closeSoftKeyboard())
-        Thread.sleep(15000L)
+        Thread.sleep(GameDifficulty.DIFFICULT.timeToFind.toLong())
 
         onView(withId(R.id.song_summary_fragment)).check(matches(isDisplayed()))
     }
