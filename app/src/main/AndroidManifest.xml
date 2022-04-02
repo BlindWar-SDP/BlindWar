@@ -24,6 +24,22 @@
             android:screenOrientation="portrait"/>
 
         <activity
+            android:name=".ui.multi.MultiPlayerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.multi.MultiPlayerFriendActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".ui.multi.MultiPlayerRandomActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+
+
+        <activity
             android:name=".ui.solo.animated.AnimatedPlayActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
