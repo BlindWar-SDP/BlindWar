@@ -1,29 +1,30 @@
 package ch.epfl.sdp.blindwar.domain.game
 
 import android.content.res.AssetManager
-import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
-import ch.epfl.sdp.blindwar.data.sound.SoundDataSource
+import ch.epfl.sdp.blindwar.data.music.MusicController
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.data.music.Playlist
 import java.util.*
 
-abstract class GameSound<FileDescriptorT>(assetManager: AssetManager) {
-    protected val mediaMetadataRetriever = MediaMetadataRetriever()
-    protected val localSoundDataSource = SoundDataSource(assetManager, mediaMetadataRetriever)
-    protected val player = MediaPlayer()
+class GameSound(assetManager: AssetManager, val playlist: Playlist) {
 
-    // Map each title with its asset file descriptor and its important metadata
-    // File descriptor for files in local storage
-    //private lateinit var assetFileDescriptorAndMetaDataPerTitle: Map<String, Pair<AssetFileDescriptor, SongMetaData>>
+    // Mutable collection of musics
+    var mutableFetchers = playlist.fetchers.toMutableList()
 
-    // File descriptor for files in assets folder
-    protected lateinit var fileDescriptorAndMetaDataPerTitle: Map<String, Pair<FileDescriptorT, SongMetaData>>
-    protected lateinit var playlistNames: MutableSet<String>
-    private var currentMetaData: SongMetaData = SongMetaData("", "", "")
+    // Current metadata
+    private var currentMusicMetadata: MusicMetadata? = null
 
-    abstract fun loadMusicAndMetaDataSource(fileDescriptor: FileDescriptorT)
+    // Current player
+    private var currentMediaPlayer: MediaPlayer? = null
 
-    protected fun refreshPlaylist(): MutableSet<String> {
-        return fileDescriptorAndMetaDataPerTitle.keys.toSet() as MutableSet<String>
+    init{
+        // Fetch the music from the music controller
+        MusicController.fetchMusics(playlist)
+    }
+
+    protected fun refreshFetchers() {
+        mutableFetchers = playlist.fetchers.toMutableList()
     }
 
     fun soundTeardown() {
@@ -31,45 +32,44 @@ abstract class GameSound<FileDescriptorT>(assetManager: AssetManager) {
         reset()
     }
 
-    fun getCurrentMetadata(): SongMetaData {
-        return currentMetaData
+    fun getCurrentMetadata(): MusicMetadata? {
+        return currentMusicMetadata
     }
 
-    fun nextRound(): SongMetaData {
+    fun nextRound(): MusicMetadata? {
         // Stop the music
         pause()
         reset()
 
-        if (playlistNames.isEmpty())
-            playlistNames = refreshPlaylist()
+        if (mutableFetchers.isEmpty())
+            refreshFetchers()
 
         // Get a random title
         val random = Random()
-        val title = playlistNames.elementAt(random.nextInt(playlistNames.size))
+        val fetcher = mutableFetchers.elementAt(random.nextInt(mutableFetchers.size))
 
         // Remove it to the playlist
-        playlistNames.remove(title)
+        mutableFetchers.remove(fetcher)
 
-
-        val fileDescriptor = fileDescriptorAndMetaDataPerTitle[title]?.first
-        currentMetaData = fileDescriptorAndMetaDataPerTitle[title]?.second!!
-        fileDescriptor?.let { this.loadMusicAndMetaDataSource(it) }
 
         // Keep the start time low enough so that at least half the song can be heard (for now)
         val time = random.nextInt(
-            mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+            fetcher.musicMetadata.duration
                 ?.toInt()
                 ?.div(2) ?: 1
         )
 
+        // Set the current metadata and the current player
+        currentMusicMetadata = fetcher.musicMetadata
+        currentMediaPlayer = fetcher.mediaPlayer
+
         // Change the current music
-        player.prepare()
-        player.seekTo(time)
+        currentMediaPlayer?.seekTo(time)
 
         // Play the music
-        player.start()
+        currentMediaPlayer?.start()
 
-        return currentMetaData
+        return currentMusicMetadata
     }
 
     /** Game Sound Controls **/
@@ -78,14 +78,14 @@ abstract class GameSound<FileDescriptorT>(assetManager: AssetManager) {
      */
 
     private fun reset() {
-        player.reset()
+        currentMediaPlayer?.reset()
     }
 
     fun play() {
-        player.start()
+        currentMediaPlayer?.start()
     }
 
     fun pause() {
-        player.pause()
+        currentMediaPlayer?.pause()
     }
 }
