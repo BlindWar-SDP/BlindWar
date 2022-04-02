@@ -53,8 +53,9 @@ abstract class Game<FileDescriptorT>(
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
             UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
-            gameSound.soundTeardown()
         }
+        gameSound.soundTeardown()
+    }
 
     /**
      * Pass to the next round

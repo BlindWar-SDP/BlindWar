@@ -11,6 +11,7 @@ import ch.epfl.sdp.blindwar.user.AppStatistics
 import ch.epfl.sdp.blindwar.user.Mode
 import ch.epfl.sdp.blindwar.user.Result
 import ch.epfl.sdp.blindwar.user.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
 
@@ -19,6 +20,7 @@ class StatisticsActivity : AppCompatActivity() {
 
     val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
     val databaseReference = firebaseDatabase.getReference("Data")
+    private val currentUser = FirebaseAuth.getInstance().currentUser
 
     var userStatistics: AppStatistics = AppStatistics()
 
@@ -26,30 +28,42 @@ class StatisticsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
-
         val eloView = findViewById<TextView>(R.id.eloExampleView)
-        eloView.text = "eloView"
         val winView = findViewById<TextView>(R.id.winNumberView)
-        winView.text = "winView"
         val drawView = findViewById<TextView>(R.id.drawNumberView)
-        drawView.text = "drawView"
         val lossView = findViewById<TextView>(R.id.lossNumberView)
-        lossView.text = "lossView"
         val winPercent = findViewById<TextView>(R.id.winPercentView)
-        winPercent.text = "winPercent"
         val drawPercent = findViewById<TextView>(R.id.drawPercentView)
-        drawPercent.text = "drawPercent"
         val lossPercent = findViewById<TextView>(R.id.lossPercentView)
-        lossPercent.text = "lossPercent"
         val correctView = findViewById<TextView>(R.id.correctNumberView)
-        correctView.text = "correctView"
         val wrongView = findViewById<TextView>(R.id.wrongNumberView)
-        wrongView.text = "wrongView"
         val correctPercent = findViewById<TextView>(R.id.correctnessPercentView)
-        correctPercent.text = "correctPercent"
         val wrongPercent = findViewById<TextView>(R.id.wrongPercentView)
-        wrongPercent.text = "wrongPercent"
-
+        if (currentUser != null) {
+            eloView.text = userStatistics.elo.toString()
+            winView.text = userStatistics.wins.toString()
+            drawView.text = userStatistics.draws.toString()
+            lossView.text = userStatistics.losses.toString()
+            winPercent.text = userStatistics.winPercent.toString()
+            drawPercent.text = userStatistics.drawPercent.toString()
+            lossPercent.text = userStatistics.lossPercent.toString()
+            correctView.text = userStatistics.correctArray.toString()
+            wrongView.text = userStatistics.wrongArray.toString()
+            correctPercent.text = userStatistics.correctPercent.toString()
+            wrongPercent.text = userStatistics.wrongPercent.toString()
+        } else {
+            eloView.text = "eloView"
+            winView.text = "winView"
+            drawView.text = "drawView"
+            lossView.text = "lossView"
+            winPercent.text = "winPercent"
+            drawPercent.text = "drawPercent"
+            lossPercent.text = "lossPercent"
+            correctView.text = "correctView"
+            wrongView.text = "wrongView"
+            correctPercent.text = "correctPercent"
+            wrongPercent.text = "wrongPercent"
+        }
         databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val user: User? = try {
@@ -93,10 +107,10 @@ class StatisticsActivity : AppCompatActivity() {
                         getString(R.string.selected_item) + " " +
                                 "" + modes[position], Toast.LENGTH_SHORT
                     ).show()
-
+                    /*
                     userStatistics.eloUpdate(Result.WIN, 1300)
                     userStatistics.multiWinLossCountUpdate(Result.WIN, Mode.MULTI)
-                    userStatistics.correctnessUpdate(true, Mode.SOLO)
+                    userStatistics.correctnessUpdate(1, 0, Mode.SOLO)*/
                     eloView.text = userStatistics.elo.toString()
                     winView.text = userStatistics.wins[position].toString()
                     drawView.text = userStatistics.draws[position].toString()
