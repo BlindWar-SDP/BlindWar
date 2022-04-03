@@ -53,7 +53,6 @@ class VoiceRecognizer : RecognitionListener {
         val data = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
         if (data!![0] != null) {
             resultsRecognized = data[0]
-            editTextResult?.setText(resultsRecognized)
         }
     }
 

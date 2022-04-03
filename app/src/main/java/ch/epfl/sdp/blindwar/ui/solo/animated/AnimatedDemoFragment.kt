@@ -47,15 +47,17 @@ class AnimatedDemoFragment : DemoFragment() {
             it.hint = super.game.currentMetadata()?.artist
             it
         }
-        super.guessEditText.doOnTextChanged { _, _, _, _ ->
-            isVocal = voiceRecognizer.resultsRecognized != ""
-            super.guess(false) //guess as a keyboard at every change
+        super.guessEditText.doOnTextChanged { text, _, _, _ ->
+            if (text != "" && (text!!.length > super.game.currentMetadata()?.title!!.length / 2.0)) {
+                isVocal = voiceRecognizer.resultsRecognized != ""
+                super.guess(false, isAuto = true) //guess as a keyboard at every change
+            }
         }
         super.scoreTextView = view.findViewById(R.id.scoreTextView)
         super.countDown = view.findViewById(R.id.countdown)
         super.guessButton = view.findViewById<ImageButton>(R.id.guessButton).also {
             it.setOnClickListener {
-                guess()
+                super.guess(isVocal, isAuto = false)
             }
         }
 
@@ -80,14 +82,6 @@ class AnimatedDemoFragment : DemoFragment() {
     override fun onDestroy() {
         super.onDestroy()
         voiceRecognizer.destroy()
-    }
-
-    /**
-     * Guess the title
-     *
-     */
-    private fun guess() {
-        super.guess(isVocal)
     }
 
     private fun playAndPause() {

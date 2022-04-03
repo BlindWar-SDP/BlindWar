@@ -1,11 +1,13 @@
 package ch.epfl.sdp.blindwar.ui.solo
 
+import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -80,7 +82,10 @@ open class DemoFragment : Fragment() {
         scoreTextView = view.findViewById(R.id.scoreTextView)
         guessButton = view.findViewById<ImageButton>(R.id.guessButtonDemo).also {
             it.setOnClickListener {
-                guess(false)
+                guess(false, isAuto = false)
+
+                // Delete the text of the guess
+                guessEditText.setText("")
             }
         }
 
@@ -144,6 +149,7 @@ open class DemoFragment : Fragment() {
                     // Pass to the next music
                     musicMetadata = game.currentMetadata()!!
                     guessEditText.hint = musicMetadata.artist
+                    guessEditText.setText("")
                     // Cache song image
                     // Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
                     timer.start()
@@ -154,17 +160,16 @@ open class DemoFragment : Fragment() {
         }
     }
 
-    fun guess(isVocal: Boolean) {
+    fun guess(isVocal: Boolean, isAuto: Boolean) {
         if (game.guess(guessEditText.text.toString(), isVocal)) {
             // Update the number of point view
             scoreTextView.text = game.score.toString()
+            (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
+                .hideSoftInputFromWindow(view?.windowToken, 0)
             launchSongSummary(success = true)
-        } else {
+        } else if (!isAuto) {
             animNotFound()
         }
-
-        // Delete the text of the guess
-        guessEditText.setText("")
     }
 
     override fun onPause() {
