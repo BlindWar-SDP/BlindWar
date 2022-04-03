@@ -1,10 +1,8 @@
 package ch.epfl.sdp.blindwar.domain.game
 
-import android.content.ContentResolver
 import android.content.Context
 import android.content.res.AssetManager
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
-import java.util.*
 
 /**
  * Class representing an instance of a game
@@ -73,7 +71,6 @@ abstract class Game(
         if (gameDifficulty.hint) {
             return gameSound.getCurrentMetadata()
         }
-
         return null
     }
 
@@ -83,10 +80,9 @@ abstract class Game(
      * @param titleGuess Title that the user guesses
      * @return True if the guess is correct
      */
-    fun guess(titleGuess: String): Boolean {
-        return if (titleGuess.uppercase(Locale.getDefault()) == currentMetadata()?.title?.uppercase(
-                Locale.getDefault()
-            )
+    fun guess(titleGuess: String, isVocal: Boolean): Boolean {
+        return if (
+            GameHelper.isTheCorrectTitle(titleGuess, currentMetadata()!!.title, isVocal)
         ) {
             score += 1
             round += 1

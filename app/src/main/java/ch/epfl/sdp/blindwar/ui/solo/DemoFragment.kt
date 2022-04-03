@@ -13,13 +13,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.domain.game.GameTutorial
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.domain.game.GameTutorial
 import ch.epfl.sdp.blindwar.domain.game.Tutorial
 import ch.epfl.sdp.blindwar.ui.tutorial.GameSummaryFragment
 import ch.epfl.sdp.blindwar.ui.tutorial.SongSummaryFragment
 
-open class DemoFragment: Fragment() {
+open class DemoFragment : Fragment() {
     // Game view model to pass to the next round
     lateinit var game: GameTutorial
     protected var playing = true
@@ -43,10 +43,12 @@ open class DemoFragment: Fragment() {
         /** Set up the interface **/
         // Game instance tutorial
         game = context?.let {
-            GameTutorial(gameInstanceViewModel.gameInstance.value!!,
+            GameTutorial(
+                gameInstanceViewModel.gameInstance.value!!,
                 activity?.assets!!,
                 it,
-                resources)
+                resources
+            )
         }!!
 
         game.init()
@@ -76,9 +78,9 @@ open class DemoFragment: Fragment() {
         guessEditText = view.findViewById(R.id.guessEditText)
         guessEditText.hint = musicMetadata.artist
         scoreTextView = view.findViewById(R.id.scoreTextView)
-        guessButton = view.findViewById<ImageButton>(R.id.guessButtonDemo).also{
-            it.setOnClickListener{
-                guess()
+        guessButton = view.findViewById<ImageButton>(R.id.guessButtonDemo).also {
+            it.setOnClickListener {
+                guess(false)
             }
         }
 
@@ -119,7 +121,10 @@ open class DemoFragment: Fragment() {
 
         //if (activity?.supportFragmentManager?.fragments?.size!! > 1) {
         if (activity?.supportFragmentManager?.fragments!!.size > 1) {
-            Log.d("RESUME DEMO", activity?.supportFragmentManager?.fragments?.get(1)?.tag.toString())
+            Log.d(
+                "RESUME DEMO",
+                activity?.supportFragmentManager?.fragments?.get(1)?.tag.toString()
+            )
             if (activity?.supportFragmentManager?.fragments?.get(1) is SongSummaryFragment) {
                 val songFragment =
                     (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
@@ -149,8 +154,8 @@ open class DemoFragment: Fragment() {
         }
     }
 
-    fun guess() {
-        if(game.guess(guessEditText.text.toString())) {
+    fun guess(isVocal: Boolean) {
+        if (game.guess(guessEditText.text.toString(), isVocal)) {
             // Update the number of point view
             scoreTextView.text = game.score.toString()
             launchSongSummary(success = true)
