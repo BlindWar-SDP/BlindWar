@@ -67,11 +67,13 @@ class AnimatedDemoFragment : DemoFragment() {
         microphoneButton.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    super.game.pause()
                     voiceRecognizer.start()
                     isVocal = true
                 }
                 MotionEvent.ACTION_UP -> {
                     voiceRecognizer.stop()
+                    super.game.play()
                 }
             }
             true

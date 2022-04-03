@@ -50,10 +50,7 @@ class VoiceRecognizer : RecognitionListener {
      * @param
      */
     override fun onPartialResults(partialResults: Bundle?) {
-        val data = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-        if (data!![0] != null) {
-            resultsRecognized = data[0]
-        }
+        //val data = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
     }
 
     override fun onEvent(eventType: Int, params: Bundle?) {}
