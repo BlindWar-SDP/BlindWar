@@ -115,6 +115,7 @@ class NewUserActivityTest : TestCase() {
     @Test
     fun testClearLastName() {
         val id = R.id.NU_LastName
+        closeSoftKeyboard()
         onView(withId(id))
             .perform(click(), click(), closeSoftKeyboard())
         onView(withId(id)).check(matches(withText("")))
