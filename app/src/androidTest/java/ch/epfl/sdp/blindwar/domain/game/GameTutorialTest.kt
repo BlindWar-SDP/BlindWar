@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.hamcrest.CoreMatchers.`is`
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
@@ -52,7 +52,7 @@ class GameTutorialTest {
         gameTutorial.init()
         gameTutorial.nextRound()
         val music1 = gameTutorial.currentMetadata()
-        music1?.let { gameTutorial.guess(it.title.uppercase(Locale.getDefault())) }
+        music1?.let { gameTutorial.guess(it.title.uppercase(Locale.getDefault()), false) }
 
         assertThat(gameTutorial.score, `is`(1))
     }
@@ -70,11 +70,11 @@ class GameTutorialTest {
 
     private fun goodGuess(gameTutorial: GameTutorial) {
         gameTutorial.nextRound()
-        gameTutorial.guess(gameTutorial.currentMetadata()?.title!!)
+        gameTutorial.guess(gameTutorial.currentMetadata()?.title!!, false)
     }
 
     private fun badGuess(gameTutorial: GameTutorial) {
         gameTutorial.nextRound()
-        gameTutorial.guess("THIS IS NOT A CORRECT TITLE")
+        gameTutorial.guess("THIS IS NOT A CORRECT TITLE", false)
     }
 }
