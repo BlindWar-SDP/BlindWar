@@ -5,7 +5,7 @@ import android.content.res.AssetManager
 import android.content.res.Resources
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.Playlist
-import ch.epfl.sdp.blindwar.data.music.fetcher.ResourceFetcher
+import ch.epfl.sdp.blindwar.data.music.fetcher.ResourceMusicReference
 
 
 /**
@@ -38,7 +38,7 @@ class GameTutorial(
 
         this.musicSound = MusicSound(
             Playlist(
-                ids.map {ResourceFetcher(context, it, resources)}
+                ids.map {ResourceMusicReference(context, it, resources)}
             )
         )
     }

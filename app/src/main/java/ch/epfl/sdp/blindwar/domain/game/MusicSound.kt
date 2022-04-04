@@ -8,8 +8,11 @@ import java.util.*
 
 class MusicSound(val playlist: Playlist) {
 
+    // Collection of musics
+    private val mediaPlayerPerMusic = MusicController.fetchMusics(playlist)
+
     // Mutable collection of musics
-    private var mutableFetchers = playlist.fetchers.toMutableList()
+    private var mutableMediaPlayerPerMusic = MusicController.fetchMusics(playlist).toMutableMap()
 
     // Current metadata
     private var currentMusicMetadata: MusicMetadata? = null
@@ -23,7 +26,7 @@ class MusicSound(val playlist: Playlist) {
     }
 
     private fun refreshFetchers() {
-        mutableFetchers = playlist.fetchers.toMutableList()
+        mutableMediaPlayerPerMusic = mediaPlayerPerMusic.toMutableMap()
     }
 
     fun soundTeardown() {
@@ -40,26 +43,23 @@ class MusicSound(val playlist: Playlist) {
         pause()
         reset()
 
-        if (mutableFetchers.isEmpty())
+        if (mutableMediaPlayerPerMusic.isEmpty())
             refreshFetchers()
 
         // Get a random title
         val random = Random()
-        val fetcher = mutableFetchers.elementAt(random.nextInt(mutableFetchers.size))
+        val musicMetadata =
+            mutableMediaPlayerPerMusic.keys.elementAt(random.nextInt(mutableMediaPlayerPerMusic.size))
 
         // Remove it to the playlist
-        mutableFetchers.remove(fetcher)
-
+        mutableMediaPlayerPerMusic.remove(musicMetadata)
 
         // Keep the start time low enough so that at least half the song can be heard (for now)
-        val time = random.nextInt(
-            fetcher.musicMetadata.duration
-                .div(2)
-        )
+        val time = random.nextInt(musicMetadata.duration.div(2))
 
         // Set the current metadata and the current player
-        currentMusicMetadata = fetcher.musicMetadata
-        currentMediaPlayer = fetcher.mediaPlayer
+        currentMusicMetadata = musicMetadata
+        currentMediaPlayer = mediaPlayerPerMusic[musicMetadata]
 
         // Change the current music
         currentMediaPlayer?.seekTo(time)

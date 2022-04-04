@@ -4,7 +4,7 @@ import android.content.Context
 import android.media.MediaPlayer
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 
-abstract class Fetcher(protected val context: Context)
+abstract class MusicReference(protected val context: Context)
 {
     /**
      * Is the music already fetched ?
@@ -19,15 +19,9 @@ abstract class Fetcher(protected val context: Context)
         protected set
 
     /**
-     * MediaPlayer that can play the music once the object is fetched
-     */
-    lateinit var  mediaPlayer: MediaPlayer
-        protected set
-
-    /**
-     * Fetch the music and the metadata give an ID
+     * Fetch the media player
      *
-     * @return Return the metadata of the fetched music
+     * @return Media player of the fetched music
      */
-    abstract fun fetch()
+    abstract fun getMediaPlayer(): MediaPlayer
 }
