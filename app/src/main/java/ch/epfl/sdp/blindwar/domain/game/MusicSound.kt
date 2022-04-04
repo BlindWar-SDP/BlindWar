@@ -1,16 +1,15 @@
 package ch.epfl.sdp.blindwar.domain.game
 
-import android.content.res.AssetManager
 import android.media.MediaPlayer
 import ch.epfl.sdp.blindwar.data.music.MusicController
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.data.music.Playlist
 import java.util.*
 
-class GameSound(assetManager: AssetManager, val playlist: Playlist) {
+class MusicSound(val playlist: Playlist) {
 
     // Mutable collection of musics
-    var mutableFetchers = playlist.fetchers.toMutableList()
+    private var mutableFetchers = playlist.fetchers.toMutableList()
 
     // Current metadata
     private var currentMusicMetadata: MusicMetadata? = null
@@ -18,12 +17,12 @@ class GameSound(assetManager: AssetManager, val playlist: Playlist) {
     // Current player
     private var currentMediaPlayer: MediaPlayer? = null
 
-    init{
+    init {
         // Fetch the music from the music controller
         MusicController.fetchMusics(playlist)
     }
 
-    protected fun refreshFetchers() {
+    private fun refreshFetchers() {
         mutableFetchers = playlist.fetchers.toMutableList()
     }
 
@@ -55,8 +54,7 @@ class GameSound(assetManager: AssetManager, val playlist: Playlist) {
         // Keep the start time low enough so that at least half the song can be heard (for now)
         val time = random.nextInt(
             fetcher.musicMetadata.duration
-                ?.toInt()
-                ?.div(2) ?: 1
+                .div(2)
         )
 
         // Set the current metadata and the current player

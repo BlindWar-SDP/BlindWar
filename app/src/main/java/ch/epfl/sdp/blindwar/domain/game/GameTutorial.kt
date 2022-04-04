@@ -36,8 +36,7 @@ class GameTutorial(
             R.raw.the_notorious_big_respect
         )
 
-        this.gameSound = GameSound(
-            assetManager,
+        this.musicSound = MusicSound(
             Playlist(
                 ids.map {ResourceFetcher(context, it, resources)}
             )

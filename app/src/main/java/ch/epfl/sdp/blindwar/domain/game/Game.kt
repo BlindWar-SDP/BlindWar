@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar.domain.game
 
-import android.content.ContentResolver
 import android.content.Context
 import android.content.res.AssetManager
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
@@ -21,7 +20,7 @@ abstract class Game(
     /** Encapsulates the characteristics of a game instead of its logic **/
     private val game: GameInstance = gameInstance
 
-    protected lateinit var gameSound: GameSound
+    protected lateinit var musicSound: MusicSound
 
     private val gameParameter: GameParameter = gameInstance
         .gameConfig
@@ -48,7 +47,7 @@ abstract class Game(
      * clean up player and assets
      */
     private fun endGame() {
-        gameSound.soundTeardown()
+        musicSound.soundTeardown()
     }
 
     /**
@@ -62,7 +61,7 @@ abstract class Game(
             return true
         }
 
-        gameSound.nextRound()
+        musicSound.nextRound()
         return false
     }
 
@@ -71,7 +70,7 @@ abstract class Game(
      */
     fun currentMetadata(): MusicMetadata? {
         if (gameDifficulty.hint) {
-            return gameSound.getCurrentMetadata()
+            return musicSound.getCurrentMetadata()
         }
 
         return null
@@ -108,7 +107,7 @@ abstract class Game(
      *
      */
     fun play() {
-        gameSound.play()
+        musicSound.play()
     }
 
     /**
@@ -116,6 +115,6 @@ abstract class Game(
      *
      */
     fun pause() {
-        gameSound.pause()
+        musicSound.pause()
     }
 }
