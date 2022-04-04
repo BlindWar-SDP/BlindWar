@@ -151,7 +151,7 @@ class VoiceRecognizerTest : TestCase() {
             list.add("yo")
             bundle.putStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION, list)
             voiceRecognizer.onPartialResults(bundle)
-            Assert.assertTrue(voiceRecognizer.resultsRecognized == "yo")
+            Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
         }
     }
 

@@ -42,14 +42,14 @@ class NewUserActivityTest : TestCase() {
 
     @Test
     fun testLayoutVisibility() {
-        val visible_ids = listOf<Int>(
+        val visibleIds = listOf(
             R.id.NU_pseudo,
             R.id.NU_FirstName,
             R.id.NU_LastName,
             R.id.NU_birthdate,
             R.id.NU_Confirm_Btn
         )
-        for (id in visible_ids) {
+        for (id in visibleIds) {
             onView(withId(id))
                 .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
         }
@@ -82,18 +82,19 @@ class NewUserActivityTest : TestCase() {
         assertDisplayed(R.string.new_user_wrong_pseudo_text)
     }
 
-    @Test
+    /*@Test
     fun testBirthDateBtn() {
         onView(withId(R.id.NU_birthdate))
             .perform(click())
         // need to check that datePicker appear...
-    }
+    }*/
 
     // =====================================
     // Delete default value when click on it
     @Test
     fun testClearPseudo() {
         val id = R.id.NU_pseudo
+        closeSoftKeyboard()
         onView(withId(id))
             .perform(
                 click(),
@@ -114,6 +115,7 @@ class NewUserActivityTest : TestCase() {
     @Test
     fun testClearLastName() {
         val id = R.id.NU_LastName
+        closeSoftKeyboard()
         onView(withId(id))
             .perform(click(), click(), closeSoftKeyboard())
         onView(withId(id)).check(matches(withText("")))
