@@ -1,405 +1,410 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mode_container"
-    android:layout_marginTop="4dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="0dp"
     android:background="@color/white"
     android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="57dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/back_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/mode_selection"
-                app:layout_constraintHorizontal_bias="0.375"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.555"
-                app:srcCompat="@drawable/baseline_navigate_before_24"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/mode_selection"
+            app:layout_constraintHorizontal_bias="0.375"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.555"
+            app:srcCompat="@drawable/baseline_navigate_before_24"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-            <ImageButton
-                android:id="@+id/info"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="6dp"
-                android:background="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/mode_selection"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/baseline_settings_24"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <ImageButton
+            android:id="@+id/info"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="6dp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/mode_selection"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/baseline_settings_24"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-            <TextView
-                android:id="@+id/mode_selection"
-                android:layout_width="283dp"
-                android:layout_height="68dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/bungee_inline"
-                android:text="@string/mode_selection"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/black"
-                android:textSize="30sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.333" />
+        <TextView
+            android:id="@+id/mode_selection"
+            android:layout_width="283dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/bungee_inline"
+            android:text="@string/mode_selection"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.333" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="68dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-            <CheckBox
-                android:id="@+id/checkBox"
-                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
-                android:layout_width="97dp"
-                android:layout_height="49dp"
-                android:fontFamily="@font/bungee_inline"
-                android:text="@string/funny"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <CheckBox
+            android:id="@+id/checkBox"
+            style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+            android:layout_width="97dp"
+            android:layout_height="49dp"
+            android:fontFamily="@font/bungee_inline"
+            android:text="@string/funny"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
-                android:id="@+id/imageButton4"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.647"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_info_24"
-                tools:ignore="SpeakableTextPresentCheck" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.647"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_info_24"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!--                    TIMED MODE                         -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp">
+    <!--                    TIMED MODE                         -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="205dp">
 
-            <TextView
-                android:id="@+id/timedDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/oxygen"
-                android:text="@string/timedDescription"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@+id/raceButton_"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.49" />
+        <ImageButton
+            android:id="@+id/raceInfoButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.302"
+            app:srcCompat="@drawable/ic_baseline_info_24"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-            <ImageButton
-                android:id="@+id/raceInfoButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.302"
-                app:srcCompat="@drawable/ic_baseline_info_24"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <TextView
+            android:id="@+id/timedDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/oxygen"
+            android:text="@string/timedDescription"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/raceButton_"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.49" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/chrono2"
-                android:layout_width="139dp"
-                android:layout_height="146dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.578"
-                app:layout_constraintStart_toEndOf="@+id/timedDescription"
-                app:layout_constraintTop_toTopOf="parent"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="chronometer.json"
-                app:lottie_loop="true"
-                app:lottie_speed="0.5"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/raceButton_"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/border_button"
+            android:fontFamily="@font/bungee_inline"
+            android:gravity="center_horizontal"
+            android:text="@string/timed"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/chrono"
-                android:layout_width="139dp"
-                android:layout_height="146dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/timedDescription"
-                app:layout_constraintHorizontal_bias="0.275"
-                app:layout_constraintStart_toStartOf="@+id/raceButton_"
-                app:layout_constraintTop_toTopOf="parent"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="chronometer.json"
-                app:lottie_loop="true"
-                app:lottie_speed="0.5"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/chrono"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/raceButton_"
+            app:layout_constraintEnd_toStartOf="@+id/timedDescription"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/raceButton_"
+            app:layout_constraintTop_toTopOf="@+id/raceButton_"
+            app:layout_constraintVertical_bias="0.511"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="chronometer.json"
+            app:lottie_loop="true"
+            app:lottie_speed="0.5"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/particles2"
-                android:layout_width="591dp"
-                android:layout_height="186dp"
-                app:layout_constraintBottom_toBottomOf="@+id/raceButton_"
-                app:layout_constraintEnd_toEndOf="@+id/raceButton_"
-                app:layout_constraintStart_toStartOf="@+id/raceButton_"
-                app:layout_constraintTop_toTopOf="@+id/raceButton_"
-                app:lottie_autoPlay="false"
-                app:lottie_fileName="particles.json"
-                app:lottie_loop="true"
-                app:lottie_speed="1.0"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/particles2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/raceButton_"
+            app:layout_constraintEnd_toEndOf="@+id/raceButton_"
+            app:layout_constraintStart_toStartOf="@+id/raceButton_"
+            app:layout_constraintTop_toTopOf="@+id/raceButton_"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="particles.json"
+            app:lottie_loop="true"
+            app:lottie_speed="1.0"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/raceButton_"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/border_button"
-                android:fontFamily="@font/bungee_inline"
-                android:gravity="center_horizontal"
-                android:text="@string/timed"
-                android:textColor="@color/black"
-                android:textSize="25sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/chrono2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/raceButton_"
+            app:layout_constraintEnd_toEndOf="@+id/raceButton_"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/timedDescription"
+            app:layout_constraintTop_toTopOf="@+id/raceButton_"
+            app:layout_constraintVertical_bias="0.488"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="chronometer.json"
+            app:lottie_loop="true"
+            app:lottie_speed="0.5"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!--                    SURVIVAL MODE                         -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_marginTop="8dp">
+    <!--                    SURVIVAL MODE                         -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="258dp"
+        android:layout_marginTop="0dp">
 
-            <TextView
-                android:id="@+id/survivalDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/oxygen"
-                android:text="@string/survivalDescription"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.559" />
+        <ImageButton
+            android:id="@+id/infoSurvival"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
+            app:layout_constraintEnd_toEndOf="@+id/survivalButton_"
+            app:layout_constraintHorizontal_bias="0.521"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/survivalButton_"
+            app:layout_constraintVertical_bias="0.29"
+            app:srcCompat="@drawable/ic_baseline_info_24"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-            <ImageButton
-                android:id="@+id/infoSurvival"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@null"
-                app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
-                app:layout_constraintEnd_toEndOf="@+id/survivalButton_"
-                app:layout_constraintHorizontal_bias="0.521"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/survivalButton_"
-                app:layout_constraintVertical_bias="0.29"
-                app:srcCompat="@drawable/ic_baseline_info_24"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <TextView
+            android:id="@+id/survivalDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/oxygen"
+            android:text="@string/survivalDescription"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.559" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/particles"
-                android:layout_width="590dp"
-                android:layout_height="177dp"
-                app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
-                app:layout_constraintEnd_toEndOf="@+id/survivalButton_"
-                app:layout_constraintStart_toStartOf="@+id/survivalButton_"
-                app:layout_constraintTop_toTopOf="@+id/survivalButton_"
-                app:lottie_autoPlay="false"
-                app:lottie_fileName="particles.json"
-                app:lottie_loop="true"
-                app:lottie_speed="1.0"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/survivalButton_"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/border_button"
+            android:fontFamily="@font/bungee_inline"
+            android:gravity="center_horizontal"
+            android:text="@string/survival"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/health2"
-                android:layout_width="139dp"
-                android:layout_height="146dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/survivalDescription"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/survivalButton_"
-                app:layout_constraintTop_toTopOf="parent"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="health.json"
-                app:lottie_loop="true"
-                app:lottie_repeatMode="reverse"
-                app:lottie_speed="0.5"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/particles"
+            android:layout_width="590dp"
+            android:layout_height="177dp"
+            app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
+            app:layout_constraintEnd_toEndOf="@+id/survivalButton_"
+            app:layout_constraintStart_toStartOf="@+id/survivalButton_"
+            app:layout_constraintTop_toTopOf="@+id/survivalButton_"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="particles.json"
+            app:lottie_loop="true"
+            app:lottie_speed="1.0"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/health"
-                android:layout_width="139dp"
-                android:layout_height="146dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/survivalDescription"
-                app:layout_constraintTop_toTopOf="parent"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="health.json"
-                app:lottie_loop="true"
-                app:lottie_repeatMode="reverse"
-                app:lottie_speed="0.5"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/health2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
+            app:layout_constraintEnd_toStartOf="@+id/survivalDescription"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/survivalButton_"
+            app:layout_constraintTop_toTopOf="@+id/survivalButton_"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="health.json"
+            app:lottie_loop="true"
+            app:lottie_repeatMode="reverse"
+            app:lottie_speed="0.5"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/survivalButton_"
-                android:layout_width="374dp"
-                android:layout_height="143dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/border_button"
-                android:fontFamily="@font/bungee_inline"
-                android:gravity="center_horizontal"
-                android:text="@string/survival"
-                android:textColor="@color/black"
-                android:textSize="25sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/health"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
+            app:layout_constraintEnd_toEndOf="@+id/survivalButton_"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/survivalDescription"
+            app:layout_constraintTop_toTopOf="@+id/survivalButton_"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="health.json"
+            app:lottie_loop="true"
+            app:lottie_repeatMode="reverse"
+            app:lottie_speed="0.5"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!--                    REGULAR MODE                         -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp">
+    <!--                    REGULAR MODE                         -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp">
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/particles3"
-                android:layout_width="600dp"
-                android:layout_height="217dp"
-                app:layout_constraintBottom_toBottomOf="@+id/regularButton_"
-                app:layout_constraintEnd_toEndOf="@+id/regularButton_"
-                app:layout_constraintHorizontal_bias="0.48"
-                app:layout_constraintStart_toStartOf="@+id/regularButton_"
-                app:layout_constraintTop_toTopOf="@+id/regularButton_"
-                app:lottie_autoPlay="false"
-                app:lottie_fileName="particles.json"
-                app:lottie_loop="true"
-                app:lottie_speed="1.0"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <ImageButton
+            android:id="@+id/regularInfoButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.282"
+            app:srcCompat="@drawable/ic_baseline_info_24"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-            <ImageButton
-                android:id="@+id/regularInfoButton"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:background="@null"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.282"
-                app:srcCompat="@drawable/ic_baseline_info_24"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <TextView
+            android:id="@+id/classicDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/oxygen"
+            android:text="@string/classicDescription"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/regularButton_"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/regularButton_"
+            app:layout_constraintVertical_bias="0.417" />
 
-            <TextView
-                android:id="@+id/classicDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/oxygen"
-                android:text="@string/classicDescription"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@+id/regularButton_"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/regularButton_"
-                app:layout_constraintVertical_bias="0.417" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/regularButton_"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/border_button"
+            android:fontFamily="@font/bungee_inline"
+            android:gravity="center_horizontal"
+            android:text="@string/classic"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.235" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/vinyl2"
-                android:layout_width="108dp"
-                android:layout_height="121dp"
-                android:layout_marginStart="100dp"
-                android:layout_marginBottom="11dp"
-                app:layout_constraintBottom_toBottomOf="@+id/regularButton_"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.794"
-                app:layout_constraintStart_toEndOf="@+id/vinyl"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.307"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="vinyl.json"
-                app:lottie_loop="true"
-                app:lottie_speed="0.75"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/vinyl2"
+            android:layout_width="134dp"
+            android:layout_height="116dp"
+            android:layout_marginStart="100dp"
+            app:layout_constraintBottom_toBottomOf="@+id/regularButton_"
+            app:layout_constraintEnd_toEndOf="@+id/regularButton_"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/vinyl"
+            app:layout_constraintTop_toTopOf="@+id/regularButton_"
+            app:layout_constraintVertical_bias="0.084"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="vinyl.json"
+            app:lottie_loop="true"
+            app:lottie_speed="0.75"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/vinyl"
-                android:layout_width="109dp"
-                android:layout_height="109dp"
-                app:layout_constraintBottom_toBottomOf="@+id/regularButton_"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.054"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/regularButton_"
-                app:layout_constraintVertical_bias="0.14"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="vinyl.json"
-                app:lottie_loop="true"
-                app:lottie_speed="0.75"
-                tools:ignore="SpeakableTextPresentCheck" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/vinyl"
+            android:layout_width="133dp"
+            android:layout_height="116dp"
+            app:layout_constraintBottom_toBottomOf="@+id/regularButton_"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.053"
+            app:layout_constraintStart_toStartOf="@+id/regularButton_"
+            app:layout_constraintTop_toTopOf="@+id/regularButton_"
+            app:layout_constraintVertical_bias="0.083"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="vinyl.json"
+            app:lottie_loop="true"
+            app:lottie_speed="0.75"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/regularButton_"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/border_button"
-                android:fontFamily="@font/bungee_inline"
-                android:gravity="center_horizontal"
-                android:text="@string/classic"
-                android:textColor="@color/black"
-                android:textSize="25sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.6"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.235" />
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/particles3"
+            android:layout_width="600dp"
+            android:layout_height="217dp"
+            app:layout_constraintBottom_toBottomOf="@+id/regularButton_"
+            app:layout_constraintEnd_toEndOf="@+id/regularButton_"
+            app:layout_constraintHorizontal_bias="0.48"
+            app:layout_constraintStart_toStartOf="@+id/regularButton_"
+            app:layout_constraintTop_toTopOf="@+id/regularButton_"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="particles.json"
+            app:lottie_loop="true"
+            app:lottie_speed="1.0"
+            tools:ignore="SpeakableTextPresentCheck" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
