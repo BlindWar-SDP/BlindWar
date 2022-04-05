@@ -1,70 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mode_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="0dp"
+    android:layout_marginTop="4dp"
     android:background="@color/white"
     android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageButton
-            android:id="@+id/back_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@null"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/mode_selection"
-            app:layout_constraintHorizontal_bias="0.375"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.555"
-            app:srcCompat="@drawable/baseline_navigate_before_24"
-            tools:ignore="SpeakableTextPresentCheck" />
-
-        <ImageButton
-            android:id="@+id/info"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="6dp"
-            android:background="@null"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/mode_selection"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/baseline_settings_24"
-            tools:ignore="SpeakableTextPresentCheck" />
-
-        <TextView
-            android:id="@+id/mode_selection"
-            android:layout_width="283dp"
-            android:layout_height="68dp"
-            android:layout_marginBottom="8dp"
-            android:fontFamily="@font/bungee_inline"
-            android:text="@string/mode_selection"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/black"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.333" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/funnyLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="68dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/modeGuideline">
 
         <CheckBox
             android:id="@+id/checkBox"
@@ -84,19 +37,32 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@null"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/checkBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.647"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/checkBox"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/ic_baseline_info_24"
             tools:ignore="SpeakableTextPresentCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--                    TIMED MODE                         -->
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/raceLayout"
         android:layout_width="match_parent"
-        android:layout_height="205dp">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/survivalGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timedGuideline">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/chronoGuidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.62" />
 
         <ImageButton
             android:id="@+id/raceInfoButton"
@@ -131,9 +97,9 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/border_button"
             android:fontFamily="@font/bungee_inline"
             android:gravity="center_horizontal"
@@ -147,26 +113,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/chrono"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/raceButton_"
-            app:layout_constraintEnd_toStartOf="@+id/timedDescription"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/raceButton_"
-            app:layout_constraintTop_toTopOf="@+id/raceButton_"
-            app:layout_constraintVertical_bias="0.511"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="chronometer.json"
-            app:lottie_loop="true"
-            app:lottie_speed="0.5"
-            tools:ignore="SpeakableTextPresentCheck" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/chronoGuidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.38" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/particles2"
-            android:layout_width="0dp"
+            android:layout_width="600dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/raceButton_"
             app:layout_constraintEnd_toEndOf="@+id/raceButton_"
@@ -179,16 +135,30 @@
             tools:ignore="SpeakableTextPresentCheck" />
 
         <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/chrono"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/raceButton_"
+            app:layout_constraintEnd_toStartOf="@+id/chronoGuidelineStart"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/raceButton_"
+            app:layout_constraintTop_toTopOf="@+id/raceButton_"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="chronometer.json"
+            app:lottie_loop="true"
+            app:lottie_speed="0.5"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/chrono2"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/raceButton_"
             app:layout_constraintEnd_toEndOf="@+id/raceButton_"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/timedDescription"
+            app:layout_constraintStart_toEndOf="@+id/chronoGuidelineEnd"
             app:layout_constraintTop_toTopOf="@+id/raceButton_"
-            app:layout_constraintVertical_bias="0.488"
+            app:layout_constraintVertical_bias="0.0"
             app:lottie_autoPlay="true"
             app:lottie_fileName="chronometer.json"
             app:lottie_loop="true"
@@ -199,9 +169,27 @@
 
     <!--                    SURVIVAL MODE                         -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="258dp"
-        android:layout_marginTop="0dp">
+        android:id="@+id/survivalLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/survivalGuideline">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/survivalGuidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.62" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/survivalGuidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.38" />
 
         <ImageButton
             android:id="@+id/infoSurvival"
@@ -253,8 +241,8 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/particles"
-            android:layout_width="590dp"
-            android:layout_height="177dp"
+            android:layout_width="600dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
             app:layout_constraintEnd_toEndOf="@+id/survivalButton_"
             app:layout_constraintStart_toStartOf="@+id/survivalButton_"
@@ -267,11 +255,10 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/health2"
-            android:layout_width="0dp"
+            android:layout_width="139dp"
             android:layout_height="0dp"
-            android:layout_marginStart="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
-            app:layout_constraintEnd_toStartOf="@+id/survivalDescription"
+            app:layout_constraintEnd_toStartOf="@+id/survivalGuidelineStart"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/survivalButton_"
             app:layout_constraintTop_toTopOf="@+id/survivalButton_"
@@ -284,14 +271,14 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/health"
-            android:layout_width="0dp"
+            android:layout_width="139dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
             app:layout_constraintEnd_toEndOf="@+id/survivalButton_"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/survivalDescription"
+            app:layout_constraintStart_toEndOf="@+id/survivalGuidelineEnd"
             app:layout_constraintTop_toTopOf="@+id/survivalButton_"
+            app:layout_constraintVertical_bias="0.0"
             app:lottie_autoPlay="true"
             app:lottie_fileName="health.json"
             app:lottie_loop="true"
@@ -303,9 +290,13 @@
 
     <!--                    REGULAR MODE                         -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="0dp">
+        android:id="@+id/regularLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/timedGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/funnyLayout">
 
         <ImageButton
             android:id="@+id/regularInfoButton"
@@ -316,7 +307,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/regularButton_"
             app:layout_constraintVertical_bias="0.282"
             app:srcCompat="@drawable/ic_baseline_info_24"
             tools:ignore="SpeakableTextPresentCheck" />
@@ -331,10 +322,10 @@
             android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/regularButton_"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/regularButton_"
+            app:layout_constraintStart_toStartOf="@+id/regularButton_"
             app:layout_constraintTop_toTopOf="@+id/regularButton_"
-            app:layout_constraintVertical_bias="0.417" />
+            app:layout_constraintVertical_bias="0.496" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/regularButton_"
@@ -352,48 +343,43 @@
             android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.235" />
+            app:layout_constraintVertical_bias="1.0" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/vinyl2"
-            android:layout_width="134dp"
-            android:layout_height="116dp"
-            android:layout_marginStart="100dp"
-            app:layout_constraintBottom_toBottomOf="@+id/regularButton_"
-            app:layout_constraintEnd_toEndOf="@+id/regularButton_"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/vinyl"
-            app:layout_constraintTop_toTopOf="@+id/regularButton_"
-            app:layout_constraintVertical_bias="0.084"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="vinyl.json"
-            app:lottie_loop="true"
-            app:lottie_speed="0.75"
-            tools:ignore="SpeakableTextPresentCheck" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vinylGuidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.20" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/vinyl"
-            android:layout_width="133dp"
-            android:layout_height="116dp"
-            app:layout_constraintBottom_toBottomOf="@+id/regularButton_"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.053"
-            app:layout_constraintStart_toStartOf="@+id/regularButton_"
-            app:layout_constraintTop_toTopOf="@+id/regularButton_"
-            app:layout_constraintVertical_bias="0.083"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="vinyl.json"
-            app:lottie_loop="true"
-            app:lottie_speed="0.75"
-            tools:ignore="SpeakableTextPresentCheck" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vinylGuidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.80" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vinylVerticalGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.30" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vinylVerticalGuidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.70" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/particles3"
             android:layout_width="600dp"
-            android:layout_height="217dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/regularButton_"
             app:layout_constraintEnd_toEndOf="@+id/regularButton_"
             app:layout_constraintHorizontal_bias="0.48"
@@ -405,6 +391,119 @@
             app:lottie_speed="1.0"
             tools:ignore="SpeakableTextPresentCheck" />
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/vinyl2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/vinylGuidelineEnd"
+            app:layout_constraintEnd_toEndOf="@+id/regularButton_"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/vinylVerticalGuidelineEnd"
+            app:layout_constraintTop_toTopOf="@+id/vinylGuidelineStart"
+            app:layout_constraintVertical_bias="0.387"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="vinyl.json"
+            app:lottie_loop="true"
+            app:lottie_speed="0.75"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/vinyl"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/vinylGuidelineEnd"
+            app:layout_constraintEnd_toStartOf="@+id/vinylVerticalGuideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/regularButton_"
+            app:layout_constraintTop_toTopOf="@+id/vinylGuidelineStart"
+            app:layout_constraintVertical_bias="0.508"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="vinyl.json"
+            app:lottie_loop="true"
+            app:lottie_speed="0.75"
+            tools:ignore="SpeakableTextPresentCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+    <!-- Mode layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/modeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/modeGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/mode_selection"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_navigate_before_24"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageButton
+            android:id="@+id/info"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/mode_selection"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_settings_24"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/mode_selection"
+            android:layout_width="283dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/bungee_inline"
+            android:text="@string/mode_selection"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/modeGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.09" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/classicGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.18982118" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/timedGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4607978" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/survivalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.73" />
+</androidx.constraintlayout.widget.ConstraintLayout>

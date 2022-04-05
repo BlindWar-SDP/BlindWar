@@ -77,7 +77,7 @@ data class GameParameter(
 enum class GameDifficulty(val timeToFind: Int, val hint: Boolean) {
     EASY(46000, true),
     MEDIUM(31000, true),
-    DIFFICULT(21000, true)
+    DIFFICULT(1000, true)
     //SHAZAM(15, false)
 }
 

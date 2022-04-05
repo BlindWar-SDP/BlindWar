@@ -84,7 +84,7 @@ class AnimatedModeSelectionFragment: ModeSelectionFragment() {
             })
 
             activity?.supportFragmentManager?.beginTransaction()
-                ?.replace((view?.parent as ViewGroup).id, AnimatedPlaylistSelectionFragment(), "PLAYLIST")
+                ?.replace((view?.parent as ViewGroup).id, PlaylistSelectionFragment(), "PLAYLIST")
                 ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 ?.commit()
         }

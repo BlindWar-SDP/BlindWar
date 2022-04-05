@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
 
 
     <application
@@ -21,6 +23,7 @@
         <activity
             android:name=".ui.solo.PlayActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -33,6 +36,10 @@
             android:exported="false"/>
         <activity
             android:name=".ui.DemoSRActivity"
+            android:parentActivityName=".ui.MainMenuActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".ui.SpotifyActivity"
             android:parentActivityName=".ui.MainMenuActivity"
             android:exported="false"/>
 
@@ -50,6 +57,10 @@
             android:exported="false" />
         <activity
             android:name=".ui.ProfileActivity"
+            android:parentActivityName=".ui.MainMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.PlaylistCreationActivity"
             android:parentActivityName=".ui.MainMenuActivity"
             android:exported="false" />
         <activity

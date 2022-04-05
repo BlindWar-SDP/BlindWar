@@ -139,6 +139,7 @@ open class DemoFragment: Fragment() {
                     guessEditText.hint = songMetaData.artist
                     // Cache song image
                     // Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
+                    timer = createCountDown()
                     timer.start()
                 } else {
                     launchGameSummary()
