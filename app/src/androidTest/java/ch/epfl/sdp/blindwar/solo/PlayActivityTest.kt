@@ -8,7 +8,6 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.domain.game.GameDifficulty
 import ch.epfl.sdp.blindwar.domain.game.GameMode
 import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
 import junit.framework.Assert.assertEquals
@@ -76,7 +75,7 @@ class PlayActivityTest {
     }
 
     private fun simulateLostRound() {
-        Thread.sleep(GameDifficulty.DIFFICULT.timeToFind.toLong())
+        //Thread.sleep(GameDifficulty.DIFFICULT.timeToFind.toLong())
         pressBackUnconditionally()
     }
 

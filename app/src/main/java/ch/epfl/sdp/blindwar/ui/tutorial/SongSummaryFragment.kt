@@ -44,12 +44,12 @@ class SongSummaryFragment : Fragment() {
 
         /** Background color **/
         success = arguments?.get("success") as Boolean
-        val background = view.findViewById<ConstraintLayout>(R.id.song_summary_fragment)
+        val layout = view.findViewById<ConstraintLayout>(R.id.song_summary_fragment)
 
         if (success) {
-            background.setBackgroundColor(resources.getColor(R.color.success))
+            layout.setBackgroundColor(resources.getColor(R.color.success))
         } else {
-            background.setBackgroundColor(resources.getColor(R.color.black))
+            layout.setBackgroundColor(resources.getColor(R.color.black))
         }
 
         /** Like animation **/
@@ -62,7 +62,6 @@ class SongSummaryFragment : Fragment() {
         }
 
         likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
-            val layout = view.findViewById<ConstraintLayout>(R.id.song_summary_fragment)
             skip.visibility = View.GONE
             layout.background =
                 if (success)

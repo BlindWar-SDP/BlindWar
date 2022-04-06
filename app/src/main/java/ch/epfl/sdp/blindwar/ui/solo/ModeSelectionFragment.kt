@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -15,10 +16,11 @@ import ch.epfl.sdp.blindwar.domain.game.GameMode
 
 open class ModeSelectionFragment: Fragment() {
 
-    protected val gameInstance: GameInstanceViewModel by activityViewModels()
+    private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
     protected lateinit var regularButton: Button
     protected lateinit var survivalButton: Button
     protected lateinit var raceButton: Button
+    protected lateinit var funnyButton: CheckBox
 
     protected lateinit var backButton: ImageButton
 
@@ -39,7 +41,8 @@ open class ModeSelectionFragment: Fragment() {
         raceButton = view.findViewById<Button>(R.id.raceButton_).also{selectMode(it)}
         survivalButton = view.findViewById<Button>(R.id.survivalButton_).also{selectMode(it)}
 
-        /** TODO: Correct bug in next sprint
+        funnyButton = view.findViewById(R.id.checkBox)
+        /** TODO: Correct back buttons bugs in next sprint
         backButton = view.findViewById<ImageButton>(R.id.back_button).also{
             it.setOnClickListener{
                 //activity?.onBackPressed()
@@ -50,23 +53,31 @@ open class ModeSelectionFragment: Fragment() {
         return view
     }
 
-
     open fun selectMode(button: View) {
         button.setOnClickListener{
-            gameInstance.setGameMode(when(button.id) {
+            gameInstanceViewModel.setGameMode(when(button.id) {
                 R.id.raceButton_ -> GameMode.TIMED
                 R.id.survivalButton_ -> GameMode.SURVIVAL
                 else -> GameMode.REGULAR
             })
 
-        activity?.supportFragmentManager?.beginTransaction()
-            ?.replace((view?.parent as ViewGroup).id, PlaylistSelectionFragment(), "PLAYLIST")
-            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            ?.commit()
+            gameInstanceViewModel.setGameFunny(funnyButton.isChecked)
+            launchPlaylistSelection()
         }
     }
 
-    /** TODO: Create the Info fragments and implement the fun
+    open fun launchPlaylistSelection() {
+        val bundle = Bundle().apply { this.putBoolean("animated", false) }
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace((view?.parent as ViewGroup).id,
+                PlaylistSelectionFragment().apply{
+                this.arguments = bundle},
+                "PLAYLIST")
+            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            ?.commit()
+    }
+
+    /** TODO: Create the Info fragments
     private fun showInfo(view: View) {
         view.setOnClickListener{
             // Use a Dialog or a new fragment that presents the mode to the User

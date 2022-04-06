@@ -40,30 +40,19 @@ class GameInstanceBuilder() {
 
     fun setGameInstance(gameInstance: GameInstance): GameInstanceBuilder {
         setPlaylist(gameInstance.playlist)
-        setDifficulty(gameInstance.gameConfig.difficulty)
         setFormat(gameInstance.gameConfig.format)
         setParameter(gameInstance.gameConfig.parameter)
         setMode(gameInstance.gameConfig.mode)
         return this
     }
 
-    private var gameDifficulty: GameDifficulty = Tutorial.gameInstance
-        .gameConfig
-        .difficulty
-
-    fun setDifficulty(gameDifficulty: GameDifficulty): GameInstanceBuilder {
-        this.gameDifficulty = gameDifficulty
-        return this
-    }
-
     fun build(): GameInstance {
-        return GameInstance(GameConfig(gameDifficulty, gameFormat, gameMode, gameParameter),
+        return GameInstance(GameConfig(gameFormat, gameMode, gameParameter),
                             playlist)
     }
 }
 
 data class GameConfig(
-    val difficulty: GameDifficulty,
     val format: GameFormat,
     val mode: GameMode,
     val parameter: GameParameter
@@ -71,15 +60,10 @@ data class GameConfig(
 
 data class GameParameter(
     val round: Int,
+    val timeToFind: Int,
     val funny: Boolean,
+    val hint: Boolean
 )
-
-enum class GameDifficulty(val timeToFind: Int, val hint: Boolean) {
-    EASY(46000, true),
-    MEDIUM(31000, true),
-    DIFFICULT(1000, true)
-    //SHAZAM(15, false)
-}
 
 enum class GameFormat {
     SOLO,

@@ -49,10 +49,12 @@ open class DemoFragment: Fragment() {
 
         game.init()
 
-        duration = Tutorial.gameInstance
-            .gameConfig
-            .difficulty
-            .timeToFind
+        duration = gameInstanceViewModel
+            .gameInstance
+            .value
+            ?.gameConfig
+            ?.parameter
+            ?.timeToFind!!
 
         // Create and start countdown
         timer = createCountDown()
@@ -112,12 +114,8 @@ open class DemoFragment: Fragment() {
          * that indicates a round change **/
         super.onResume()
         val songRecord = SongSummaryFragment()
-        Log.d("RESUME DEMO", activity?.supportFragmentManager?.fragments?.size!!.toString())
-        Log.d("RESUME DEMO", activity?.supportFragmentManager?.fragments?.get(0)?.tag.toString())
 
-        //if (activity?.supportFragmentManager?.fragments?.size!! > 1) {
         if (activity?.supportFragmentManager?.fragments!!.size > 1) {
-            Log.d("RESUME DEMO", activity?.supportFragmentManager?.fragments?.get(1)?.tag.toString())
             if (activity?.supportFragmentManager?.fragments?.get(1) is SongSummaryFragment) {
                 val songFragment =
                     (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
@@ -125,13 +123,12 @@ open class DemoFragment: Fragment() {
 
                 duration = Tutorial.gameInstance
                     .gameConfig
-                    .difficulty
+                    .parameter
                     .timeToFind
 
                 bundle.putBoolean("liked", songFragment.liked())
                 songRecord.arguments = bundle
                 gameSummary.setSongFragment(songRecord)
-                //Log.d("RESUMED", activity?.supportFragmentManager?.fragments?.get(1).toString())
                 if (!game.nextRound()) {
                     setVisibilityLayout(View.VISIBLE)
                     // Pass to the next music

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
+import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class MainMenuActivity : AppCompatActivity() {
@@ -29,7 +30,7 @@ class MainMenuActivity : AppCompatActivity() {
         if (currentUser != null) {
             database.setElo(currentUser!!.uid, 1100)
         }
-        val intent = Intent(this, SpotifyActivity::class.java)
+        val intent = Intent(this, TutorialActivity::class.java)
         startActivity(intent)
     }
 

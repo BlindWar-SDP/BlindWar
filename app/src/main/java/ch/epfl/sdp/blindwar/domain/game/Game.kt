@@ -26,10 +26,6 @@ abstract class Game<FileDescriptorT>(
         .gameConfig
         .parameter
 
-    private val gameDifficulty: GameDifficulty = gameInstance
-        .gameConfig
-        .difficulty
-
     /** Player game score **/
     var score = 0
         protected set
@@ -69,7 +65,7 @@ abstract class Game<FileDescriptorT>(
      * Depends on the game instance parameter
      */
     fun currentMetadata(): SongMetaData? {
-        if (gameDifficulty.hint) {
+        if (gameParameter.hint) {
             return gameSound.getCurrentMetadata()
         }
 

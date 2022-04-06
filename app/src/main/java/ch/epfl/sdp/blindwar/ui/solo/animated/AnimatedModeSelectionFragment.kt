@@ -30,9 +30,11 @@ class AnimatedModeSelectionFragment: ModeSelectionFragment() {
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         val view = inflater.inflate(R.layout.fragment_animated_mode_selection, container, false)
+
         super.regularButton = view.findViewById<Button>(R.id.regularButton_).also {selectMode(it)}
         super.survivalButton = view.findViewById<Button>(R.id.survivalButton_).also {selectMode(it)}
         super.raceButton = view.findViewById<Button>(R.id.raceButton_).also{selectMode(it)}
+
         super.backButton = view.findViewById<ImageButton>(R.id.back_button).also{
             it.setOnClickListener{
                 activity?.onBackPressed()
@@ -59,11 +61,12 @@ class AnimatedModeSelectionFragment: ModeSelectionFragment() {
 
                 for (particle in particles) {
                     if (checked) {
+                        particle.visibility = View.VISIBLE
                         particle.speed = 2.0f
                         particle.repeatMode = REVERSE
                         particle.playAnimation()
                     } else {
-                        //particle.cancelAnimation()
+                        particle.visibility = View.INVISIBLE
                         particle.repeatMode = RESTART
                         particle.repeatMode = REVERSE
                         particle.pauseAnimation()
@@ -72,21 +75,19 @@ class AnimatedModeSelectionFragment: ModeSelectionFragment() {
             }
         }
 
+        funnyButton = funnyCheck
+
         return view
     }
 
-    override fun selectMode(button: View) {
-        button.setOnClickListener{
-            gameInstance.setGameMode(when(button.id) {
-                R.id.raceButton_ -> GameMode.TIMED
-                R.id.survivalButton_ -> GameMode.SURVIVAL
-                else -> GameMode.REGULAR
-            })
-
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace((view?.parent as ViewGroup).id, PlaylistSelectionFragment(), "PLAYLIST")
-                ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                ?.commit()
-        }
+    override fun launchPlaylistSelection() {
+        val bundle = Bundle().apply { this.putBoolean("animated", true) }
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace((view?.parent as ViewGroup).id,
+                PlaylistSelectionFragment().apply{
+                    this.arguments = bundle},
+                "PLAYLIST")
+            ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            ?.commit()
     }
 }

@@ -5,8 +5,8 @@ import ch.epfl.sdp.blindwar.BuildConfig
 
 object SpotifyApiConstants {
     /** Credentials constants **/
-    const val CLIENT_ID = "66f4e3c14d6e425caed973ba62bb2077"
-    private const val CLIENT_SECRET = "99d7580ea9a9481f9577ff263de333ef"
+    private const val CLIENT_ID = ""
+    private const val CLIENT_SECRET = ""
     const val AUTH_TYPE = "client_credentials"
 
     fun credentialsEncoding(): String {
