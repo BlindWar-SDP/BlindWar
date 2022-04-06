@@ -36,4 +36,12 @@ class StatisticsActivityTest : TestCase() {
         assertEquals(placeholder, 1)
     }
 
+    /**
+     * Logs in.Goes to solo mode. Pass every(fail everything quickly)
+     * and go statistics page again.
+     */
+    @Test
+    fun statisticsUpdatedCorrectly() {
+
+    }
 }

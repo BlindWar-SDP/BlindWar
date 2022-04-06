@@ -1,16 +1,14 @@
 package ch.epfl.sdp.blindwar.database
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import ch.epfl.sdp.blindwar.user.AppStatistics
 import ch.epfl.sdp.blindwar.user.Mode
 import ch.epfl.sdp.blindwar.user.User
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 
 
 object UserDatabase {
@@ -90,14 +88,14 @@ object UserDatabase {
      * @param uid
      * @return Task<DataSnapshot>
      */
-    private fun getUserStatistics(uid: String): Task<DataSnapshot> {
+    fun getUserStatistics(uid: String): Task<DataSnapshot> {
         val userStatisticsRef = getUserStatisticsReference(uid)
         return userStatisticsRef.get()
     }
 
     fun updateSoloUserStatistics(uid: String, score: Int, fails: Int) {
         getUserStatistics(uid).addOnSuccessListener {
-            val userStatistics: AppStatistics = it.value as AppStatistics
+            var userStatistics: AppStatistics? = it.getValue(AppStatistics::class.java)
             if (userStatistics != null) {
                 userStatistics.correctnessUpdate(score, fails, Mode.SOLO)
                 setUserStatistics(uid, userStatistics)

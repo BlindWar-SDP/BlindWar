@@ -51,6 +51,7 @@ abstract class Game<FileDescriptorT>(
     private fun endGame() {
         val fails = score - round
         val currentUser = FirebaseAuth.getInstance().currentUser
+
         if (currentUser != null) {
             UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
         }
