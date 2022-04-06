@@ -88,7 +88,7 @@ object UserDatabase {
      * @param uid
      * @return Task<DataSnapshot>
      */
-    fun getUserStatistics(uid: String): Task<DataSnapshot> {
+    private fun getUserStatistics(uid: String): Task<DataSnapshot> {
         val userStatisticsRef = getUserStatisticsReference(uid)
         return userStatisticsRef.get()
     }
