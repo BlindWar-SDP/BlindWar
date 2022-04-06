@@ -42,7 +42,7 @@ class MainMenuActivity : AppCompatActivity() {
 
     // Called when the user taps the Solo button
     fun profileButton(view: View) {
-        val intent = Intent(this, PlaylistCreationActivity::class.java)
+        val intent = Intent(this, ProfileActivity::class.java)
         startActivity(intent)
     }
 

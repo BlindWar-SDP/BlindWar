@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageButton
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doOnTextChanged
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.VoiceRecognizer
@@ -39,6 +41,10 @@ class AnimatedDemoFragment : DemoFragment() {
             }
         }
 
+        view.findViewById<ConstraintLayout>(R.id.fragment_container).setOnClickListener{
+            super.guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
+        }
+
         voiceRecognizer = VoiceRecognizer()
         audioVisualizer = view.findViewById(R.id.audioVisualizer)
         startButton.setMinAndMaxFrame(30, 50)
@@ -47,16 +53,20 @@ class AnimatedDemoFragment : DemoFragment() {
             it.hint = super.game.currentMetadata()?.artist
             it
         }
-        super.guessEditText.doOnTextChanged { text, _, _, _ ->
+
+        /** TODO: Implement Settings menu to activate auto guessing **/
+        /** super.guessEditText.doOnTextChanged { text, _, _, _ ->
             if (text != "" && (text!!.length > super.game.currentMetadata()?.title!!.length / 2.0)) {
                 isVocal = voiceRecognizer.resultsRecognized != ""
                 super.guess(false, isAuto = true) //guess as a keyboard at every change
             }
-        }
+        } **/
+
         super.scoreTextView = view.findViewById(R.id.scoreTextView)
         super.countDown = view.findViewById(R.id.countdown)
         super.guessButton = view.findViewById<ImageButton>(R.id.guessButton).also {
             it.setOnClickListener {
+                super.guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
                 super.guess(isVocal, isAuto = false)
             }
         }
@@ -74,6 +84,8 @@ class AnimatedDemoFragment : DemoFragment() {
                 MotionEvent.ACTION_UP -> {
                     voiceRecognizer.stop()
                     super.game.play()
+                    super.guess(isVocal, isAuto = false)
+                    isVocal = false
                 }
             }
             true
@@ -108,6 +120,7 @@ class AnimatedDemoFragment : DemoFragment() {
         countDown.visibility = code
         audioVisualizer.visibility = code
         startButton.visibility = code
+        microphoneButton.visibility = code
         view?.findViewById<ImageButton>(R.id.guessButton)?.visibility = code
     }
 

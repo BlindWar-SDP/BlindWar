@@ -57,6 +57,19 @@
                     app:srcCompat="@drawable/baseline_navigate_before_24"
                     tools:ignore="SpeakableTextPresentCheck" />
 
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progress_preview"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:layout_centerInParent="true"
+                    app:indicatorColor="@color/opaque_black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/likeView"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="@+id/coverCard"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5" />
+
                 <ImageButton
                     android:id="@+id/playPreview"
                     android:layout_width="24dp"
@@ -189,19 +202,6 @@
                     app:lottie_loop="false"
                     app:lottie_speed="2" />
 
-                <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/progress_preview"
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
-                    android:layout_centerInParent="true"
-                    app:indicatorColor="@color/opaque_black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/likeView"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@+id/coverCard"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.5" />
-
                 <TextView
                     android:id="@+id/difficultyLabel"
                     android:layout_width="wrap_content"
@@ -256,6 +256,10 @@
                     android:id="@+id/startGame"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginBottom="2dp"
                     android:background="@drawable/border_button"
                     android:backgroundTint="@color/opaque_black"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -270,8 +274,8 @@
                     android:id="@+id/timerPicker"
                     android:layout_width="60dp"
                     android:layout_height="0dp"
-                    android:theme="@style/AppTheme.Picker"
                     android:backgroundTint="@color/ivory"
+                    android:theme="@style/AppTheme.Picker"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/timerTextView"
@@ -285,8 +289,8 @@
                     android:layout_width="60dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="16dp"
-                    android:theme="@style/AppTheme.Picker"
                     android:backgroundTint="@color/ivory"
+                    android:theme="@style/AppTheme.Picker"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/roundTextView"

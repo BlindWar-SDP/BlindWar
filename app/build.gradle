@@ -202,10 +202,8 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             '**/*_Factory.class',
             '**/*_MembersInjector.class',
             // Animated UI is only problematic on Cirrus
-            '**/AnimatedModeSelectionFragment.*',
-            '**/AnimatedDemoFragment.*',
-            '**/AnimatedPlayActivity.*',
-            '**/AnimatedPlaylistSelectionFragment.*'
+            '**/animated/*.*',
+
 
     ]
     def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)

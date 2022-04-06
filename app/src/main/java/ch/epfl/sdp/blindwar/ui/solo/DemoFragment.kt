@@ -47,7 +47,6 @@ open class DemoFragment : Fragment() {
         game = context?.let {
             GameTutorial(
                 gameInstanceViewModel.gameInstance.value!!,
-                activity?.assets!!,
                 it,
                 resources
             )
@@ -159,8 +158,8 @@ open class DemoFragment : Fragment() {
         if (game.guess(guessEditText.text.toString(), isVocal)) {
             // Update the number of point view
             scoreTextView.text = game.score.toString()
-            (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
-                .hideSoftInputFromWindow(view?.windowToken, 0)
+              (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
+              .hideSoftInputFromWindow(view?.windowToken, 0)
             launchSongSummary(success = true)
         } else if (!isAuto) {
             animNotFound()
@@ -174,9 +173,8 @@ open class DemoFragment : Fragment() {
     }
 
     protected fun launchSongSummary(success: Boolean) {
-        //setVisibilityLayout(View.GONE)
+        setVisibilityLayout(View.GONE)
         timer.cancel()
-        game.endGame()
 
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         transaction?.addToBackStack("DEMO")

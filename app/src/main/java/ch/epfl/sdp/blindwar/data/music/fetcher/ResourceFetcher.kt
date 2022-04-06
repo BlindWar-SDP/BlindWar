@@ -1,17 +1,17 @@
-package ch.epfl.sdp.blindwar.data.music
+package ch.epfl.sdp.blindwar.data.music.fetcher
 
 import android.content.Context
 import android.content.res.Resources
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
+import ch.epfl.sdp.blindwar.data.music.MusicImageUrlConstants
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.data.music.ResourceMusicMetadata
 import java.util.*
 
-interface Fetcher {
-    fun fetchMusic(musicMetadata: MusicMetadata): Pair<MusicMetadata, MediaPlayer>
-}
-
 class ResourceFetcher(private val context: Context,
-                      private val resources: Resources) : Fetcher {
+                      private val resources: Resources
+) : Fetcher {
     override fun fetchMusic(musicMetadata: MusicMetadata): Pair<MusicMetadata, MediaPlayer> {
 
         // Create a file descriptor to get the author from
@@ -59,24 +59,5 @@ class ResourceFetcher(private val context: Context,
 
         // Return a new media player from the give resource id
         return Pair(updateMetadata, player)
-    }
-}
-
-class URIFetcher: Fetcher {
-    override fun fetchMusic(musicMetadata: MusicMetadata): Pair<MusicMetadata, MediaPlayer> {
-        val player = MediaPlayer()
-        player.setDataSource((musicMetadata as URIMusicMetadata).uri)
-        player.prepare()
-
-        return Pair(musicMetadata, player)
-    }
-}
-
-class FetcherFactory(private val context: Context,
-                     private val resources: Resources) {
-
-    fun getFetcher(musicMetadata: MusicMetadata): Fetcher {
-        return if (musicMetadata is URIMusicMetadata) URIFetcher()
-        else ResourceFetcher(context, resources)
     }
 }

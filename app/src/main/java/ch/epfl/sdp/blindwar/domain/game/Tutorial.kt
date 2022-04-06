@@ -12,10 +12,13 @@ import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 
 object Tutorial {
 
+    const val TIME_TO_FIND = 20000
+    const val ROUND = 3
+
     private val PLAYLIST: List<ResourceMusicMetadata> = METADATA_TUTORIAL_MUSICS_PER_AUTHOR.values.toList()
 
     private val gameParameter =
-        GameParameter(round = 3, funny = false, timeToFind = 30000, hint = true)
+        GameParameter(round = 3, funny = false, timeToFind = TIME_TO_FIND, hint = true)
 
     private val gameConfig =
         GameConfig(
@@ -29,6 +32,9 @@ object Tutorial {
 
     private const val URL_FIFA_SONG_2 =
         "https://p.scdn.co/mp3-preview/7c53994cfbd98e4fe15c319ed23862a3bf24ac81?cid=774b29d4f13844c495f206cafdad9c86"
+
+    private const val URL_FIFA_SONG_3 =
+        "https://p.scdn.co/mp3-preview/9cb161a377591d24bfae1763c9d53c22549bddc5?cid=774b29d4f13844c495f206cafdad9c86"
 
     private const val URL_PREVIEW_TUTORIAL =
     //    "https://p.scdn.co/mp3-preview/83a6425e6cf360bff80cb93fa3fbc8799cac3894?cid=774b29d4f13844c495f206cafdad9c86"
@@ -49,13 +55,20 @@ object Tutorial {
             COVER_URL_SONG,
             30000,
             URL_PREVIEW_FIFA),
-        URIMusicMetadata(
-            "Us Against the World",
-            "Clement Marfo",
-            "https://i.scdn.co/image/ab67616d00001e02b6e0b1707eea74cd006df458",
-            30000,
-            URL_FIFA_SONG_2
-        ),
+            URIMusicMetadata(
+                "Us Against the World",
+                "Clement Marfo",
+                "https://i.scdn.co/image/ab67616d00001e02b6e0b1707eea74cd006df458",
+                30000,
+                URL_FIFA_SONG_2
+            ),
+            URIMusicMetadata(
+                "Fly Or Die",
+                "Rock Mafia",
+                "https://i.scdn.co/image/ab67616d00001e02711f517eabfb36486a6d96f2",
+                30000,
+                URL_FIFA_SONG_3
+            ),
             ResourceMusicMetadata("Poker Face", "Lady Gaga",
                 MusicImageUrlConstants.LADY_GAGA, 214000, resourceId = MusicImageUrlConstants.ids[0])
         ),

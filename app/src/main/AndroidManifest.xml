@@ -64,14 +64,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.solo.SoloMenuActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.ProfileActivity"
-            android:parentActivityName=".ui.MainMenuActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.PlaylistCreationActivity"
             android:parentActivityName=".ui.MainMenuActivity"
             android:exported="false" />
         <activity

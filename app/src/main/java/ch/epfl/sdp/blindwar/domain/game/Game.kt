@@ -13,13 +13,12 @@ import ch.epfl.sdp.blindwar.data.music.MusicMetadata
  */
 abstract class Game(
     gameInstance: GameInstance,
-    protected val assetManager: AssetManager,
     protected val context: Context
 ) {
     /** Encapsulates the characteristics of a game instead of its logic **/
     protected val game: GameInstance = gameInstance
 
-    protected lateinit var gameSound: GameSound
+    protected lateinit var musicController: MusicController
 
     private val gameParameter: GameParameter = gameInstance
         .gameConfig
@@ -42,7 +41,7 @@ abstract class Game(
      * clean up player and assets
      */
     fun endGame() {
-        gameSound.soundTeardown()
+        musicController.soundTeardown()
     }
 
     /**
@@ -56,7 +55,8 @@ abstract class Game(
             return true
         }
 
-        gameSound.nextRound()
+        musicController.nextRound()
+        musicController.normalMode()
         return false
     }
 
@@ -65,8 +65,9 @@ abstract class Game(
      */
     fun currentMetadata(): MusicMetadata? {
         if (gameParameter.hint) {
-            return gameSound.getCurrentMetadata()
+            return musicController.getCurrentMetadata()
         }
+
         return null
     }
 
@@ -82,6 +83,7 @@ abstract class Game(
         ) {
             score += 1
             round += 1
+            musicController.summaryMode()
             true
         } else
             false
@@ -100,7 +102,7 @@ abstract class Game(
      *
      */
     fun play() {
-        gameSound.play()
+        musicController.play()
     }
 
     /**
@@ -108,6 +110,6 @@ abstract class Game(
      *
      */
     fun pause() {
-        gameSound.pause()
+        musicController.pause()
     }
 }

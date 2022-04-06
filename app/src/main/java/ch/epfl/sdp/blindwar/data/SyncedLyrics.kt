@@ -1,5 +1,5 @@
 package ch.epfl.sdp.blindwar.data
-
+/**
 data class SyncedLyrics(
     val colors: Colors,
     val hasVocalRemoval: Boolean,
@@ -31,4 +31,4 @@ data class Colors(
     val background: Int,
     val highlightText: Int,
     val text: Int
-)
+)**/

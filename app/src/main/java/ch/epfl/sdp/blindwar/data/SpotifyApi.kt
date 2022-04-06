@@ -49,6 +49,8 @@ interface SpotifyApi {
     @Path(ARTIST_ID) artist_id: String,
     @Query(LIMIT) limit: Int): Response<SpotifyArtist>
 
+    /**
+
     @GET(TRACK_PATH)
     @Headers(
     ACCEPT,
@@ -67,4 +69,5 @@ interface SpotifyApi {
                             @Query(QUERY) query: String,
                             @Query("market") market: String = "FR",
                             @Query(LIMIT) limit: Int = 1): Response<SpotifySearchTrackResult>
+    **/
 }

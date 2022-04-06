@@ -1,7 +1,6 @@
 package ch.epfl.sdp.blindwar.ui.solo
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.SyncedLyrics
 import ch.epfl.sdp.blindwar.domain.game.Tutorial.fifaPlaylist
 import ch.epfl.sdp.blindwar.domain.game.Tutorial.tutorialPlaylist
-import com.google.gson.Gson
 
 open class PlaylistSelectionFragment: Fragment() {
     //private lateinit var backButton: ImageButton
@@ -32,10 +29,11 @@ open class PlaylistSelectionFragment: Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_playlist_selection, container, false)
 
-        /** Lyrics parser**/
+        /** Lyrics parser
         val lyricsString = activity?.assets?.open("syncedLyrics/wegue_lrc.json")?.bufferedReader().use { it?.readText() }
         val lyrics = Gson().fromJson(lyricsString, SyncedLyrics::class.java)
         Log.d("LYRICS", lyrics.lyrics.toString())
+        **/
 
         searchBar = view.findViewById(R.id.searchBar)
 

@@ -13,15 +13,6 @@ data class SpotifyArtist(
     val uri: String
 )
 
-data class ArtistX(
-    val external_urls: ExternalUrlsXX,
-    val href: String,
-    val id: String,
-    val name: String,
-    val type: String,
-    val uri: String
-)
-
 data class SpotifyImage(
     val height: Int,
     val url: String,
@@ -44,6 +35,7 @@ data class SpotifyToken(
 )
 
 /** Spotify Track dependencies**/
+/**
 data class SpotifySearchTrackResult(
     val href: String,
     val tracks: SpotifySearchTrack,
@@ -120,4 +112,14 @@ val name: String,
 val type: String,
 val uri: String
 )
+
+data class ArtistX(
+val external_urls: ExternalUrlsXX,
+val href: String,
+val id: String,
+val name: String,
+val type: String,
+val uri: String
+)
+ **/
 

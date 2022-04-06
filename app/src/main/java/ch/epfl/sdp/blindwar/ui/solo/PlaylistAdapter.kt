@@ -11,6 +11,7 @@ import android.widget.Filter
 import android.widget.ImageButton
 import android.widget.NumberPicker
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +20,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.data.AudioHelper
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.domain.game.Tutorial
 import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedDemoFragment
 import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
 import ch.epfl.sdp.blindwar.ui.solo.animated.AnimationSetterHelper
@@ -92,9 +95,11 @@ class PlaylistAdapter(private var playlistModelSet: ArrayList<PlaylistModel>,
             /**TODO: Remove magic values **/
             roundPicker.maxValue = playlistModel.songs.size
             roundPicker.minValue = 1
+            roundPicker.value = Tutorial.ROUND
 
             timerPicker.minValue = 1
             timerPicker.maxValue = 9
+            timerPicker.value = Tutorial.TIME_TO_FIND / 5000
             timerPicker.displayedValues = ((1 until 10).map{ (5 * it).toString()}).toTypedArray()
 
             name.text = playlistModel.name.uppercase()
@@ -138,7 +143,7 @@ class PlaylistAdapter(private var playlistModelSet: ArrayList<PlaylistModel>,
                     timeChosen = (timerPicker.value * 5 + 1) * 1000,
                     roundChosen = roundPicker.value)
 
-                (context as AnimatedPlayActivity).supportFragmentManager.beginTransaction()
+                (context as AppCompatActivity).supportFragmentManager.beginTransaction()
                     .replace((viewFragment.parent as ViewGroup).id,
                              if (animated) AnimatedDemoFragment() else DemoFragment(),
                          "DEMO")
@@ -179,12 +184,7 @@ class PlaylistAdapter(private var playlistModelSet: ArrayList<PlaylistModel>,
                     player.setDataSource(playlistModel.previewUrl)
 
                     /** Modify the music preview to not spoil the playlist too much **/
-                    val params = player.playbackParams
-                    /** TODO: Remove magic values **/
-                    params.speed = 1.5F
-                    params.pitch = 1.25F
-                    //player.isLooping = true
-                    player.playbackParams = params
+                    AudioHelper.soundAlter(player, AudioHelper.HIGH, AudioHelper.FAST)
 
                     /** Create util object **/
                     val duration = 20000L
