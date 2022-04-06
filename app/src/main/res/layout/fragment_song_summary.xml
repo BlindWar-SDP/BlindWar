@@ -2,84 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/song_summary_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/song_summary_fragment"
     android:background="@color/black">
 
-
-    <TextView
-        android:id="@+id/timeTextView"
-        android:layout_width="107dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/bungee_inline"
-        android:gravity="bottom"
-        android:text="TIME"
-        android:textColor="@color/white"
-        android:textSize="35sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.085"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/artistTextView"
-        android:layout_width="402dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/oxygen"
-        android:gravity="center"
-        android:text="@string/artist"
-        android:textColor="@color/white"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeTextView" />
-
-    <TextView
-        android:id="@+id/trackTextView"
-        android:layout_width="384dp"
-        android:layout_height="67dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/oxygen"
-        android:gravity="center"
-        android:text="TRACK"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
-        app:layout_constraintStart_toStartOf="@+id/artistTextView"
-        app:layout_constraintTop_toBottomOf="@+id/artistTextView" />
-
-    <ImageView
-        android:id="@+id/artistImageView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trackTextView"
-        tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="@string/avatar_description" />
-
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/likeView"
-        android:layout_width="65dp"
-        android:layout_height="63dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/artistImageView"
-        app:layout_constraintVertical_bias="0.239"
-        app:lottie_autoPlay="false"
-        app:lottie_loop="false"
-        app:lottie_speed="2"
-        app:lottie_fileName="likeAnim.json"/>
 
     <ImageButton
         android:id="@+id/skip_next_summary"
@@ -94,5 +21,92 @@
         app:layout_constraintVertical_bias="0.381"
         app:srcCompat="@drawable/ic_baseline_skip_next_24"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageView
+        android:id="@+id/artistImageView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="24dp"
+        android:contentDescription="@string/avatar_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/trackTextView"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/trackTextView"
+        android:layout_width="0dp"
+        android:layout_height="67dp"
+        android:fontFamily="@font/oxygen"
+        android:gravity="center"
+        android:text="TRACK"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="@id/frameEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/frameStart"
+        app:layout_constraintTop_toBottomOf="@+id/artistTextView" />
+
+    <TextView
+        android:id="@+id/timeTextView"
+        android:layout_width="107dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/bungee_inline"
+        android:gravity="bottom"
+        android:text="TIME"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/frameStart"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/artistTextView"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/oxygen"
+        android:gravity="center"
+        android:text="@string/artist"
+        android:textColor="@color/white"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="@id/frameEnd"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="@id/frameStart"
+        app:layout_constraintTop_toBottomOf="@+id/timeTextView" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/frameEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/frameStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/likeView"
+        android:layout_width="65dp"
+        android:layout_height="63dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/artistImageView"
+        app:layout_constraintVertical_bias="0.239"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="likeAnim.json"
+        app:lottie_loop="false"
+        app:lottie_speed="2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

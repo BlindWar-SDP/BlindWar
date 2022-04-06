@@ -176,6 +176,7 @@ open class DemoFragment : Fragment() {
     protected fun launchSongSummary(success: Boolean) {
         //setVisibilityLayout(View.GONE)
         timer.cancel()
+        game.endGame()
 
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         transaction?.addToBackStack("DEMO")

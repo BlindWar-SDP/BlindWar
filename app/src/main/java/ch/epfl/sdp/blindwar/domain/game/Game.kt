@@ -17,7 +17,7 @@ abstract class Game(
     protected val context: Context
 ) {
     /** Encapsulates the characteristics of a game instead of its logic **/
-    private val game: GameInstance = gameInstance
+    protected val game: GameInstance = gameInstance
 
     protected lateinit var gameSound: GameSound
 
@@ -41,7 +41,7 @@ abstract class Game(
      * Record the game instance to the player history
      * clean up player and assets
      */
-    private fun endGame() {
+    fun endGame() {
         gameSound.soundTeardown()
     }
 

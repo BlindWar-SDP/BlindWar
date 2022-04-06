@@ -1,16 +1,21 @@
 package ch.epfl.sdp.blindwar.domain.game
 
-import android.content.res.AssetManager
+import android.content.Context
+import android.content.res.Resources
 import android.media.MediaPlayer
 import ch.epfl.sdp.blindwar.data.music.MusicController
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.data.music.Playlist
+import ch.epfl.sdp.blindwar.ui.solo.PlaylistModel
 import java.util.*
 
-class GameSound(assetManager: AssetManager, val playlist: Playlist) {
+class GameSound(val playlist: PlaylistModel, val context: Context, val resources: Resources) {
+
+    // Collection of musics
+    private val mediaPlayerPerMusic = MusicController(resources, context).fetchMusics(playlist)
 
     // Mutable collection of musics
-    var mutableFetchers = playlist.fetchers.toMutableList()
+    private var mutableMediaPlayerPerMusic = mediaPlayerPerMusic.toMutableMap()
 
     // Current metadata
     private var currentMusicMetadata: MusicMetadata? = null
@@ -18,13 +23,8 @@ class GameSound(assetManager: AssetManager, val playlist: Playlist) {
     // Current player
     private var currentMediaPlayer: MediaPlayer? = null
 
-    init{
-        // Fetch the music from the music controller
-        MusicController.fetchMusics(playlist)
-    }
-
-    protected fun refreshFetchers() {
-        mutableFetchers = playlist.fetchers.toMutableList()
+    private fun refreshFetchers() {
+        mutableMediaPlayerPerMusic = mediaPlayerPerMusic.toMutableMap()
     }
 
     fun soundTeardown() {
@@ -41,30 +41,24 @@ class GameSound(assetManager: AssetManager, val playlist: Playlist) {
         pause()
         reset()
 
-        if (mutableFetchers.isEmpty())
+        if (mutableMediaPlayerPerMusic.isEmpty())
             refreshFetchers()
 
         // Get a random title
         val random = Random()
-        val fetcher = mutableFetchers.elementAt(random.nextInt(mutableFetchers.size))
+        val musicMetadata =
+            mutableMediaPlayerPerMusic.keys.elementAt(random.nextInt(mutableMediaPlayerPerMusic.size))
 
         // Remove it to the playlist
-        mutableFetchers.remove(fetcher)
+        mutableMediaPlayerPerMusic.remove(musicMetadata)
 
 
-        // Keep the start time low enough so that at least half the song can be heard (for now)
-        val time = random.nextInt(
-            fetcher.musicMetadata.duration
-                ?.toInt()
-                ?.div(2) ?: 1
-        )
 
         // Set the current metadata and the current player
-        currentMusicMetadata = fetcher.musicMetadata
-        currentMediaPlayer = fetcher.mediaPlayer
+        currentMusicMetadata = musicMetadata
+        currentMediaPlayer = mediaPlayerPerMusic[musicMetadata]
 
-        // Change the current music
-        currentMediaPlayer?.seekTo(time)
+
 
         // Play the music
         currentMediaPlayer?.start()

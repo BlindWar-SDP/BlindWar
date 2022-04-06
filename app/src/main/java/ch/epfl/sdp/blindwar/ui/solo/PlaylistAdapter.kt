@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.domain.game.SongMetaData
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedDemoFragment
 import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
 import ch.epfl.sdp.blindwar.ui.solo.animated.AnimationSetterHelper
@@ -117,7 +117,7 @@ class PlaylistAdapter(private var playlistModelSet: ArrayList<PlaylistModel>,
             setLikeListener()
             setExpansionListener()
             setPreviewListener(playlistModel)
-            setStartGameListener(playlistModel.songs)
+            setStartGameListener(playlistModel)
         }
 
         /** Duplicated function, create Animation object/class setter **/
@@ -130,10 +130,10 @@ class PlaylistAdapter(private var playlistModelSet: ArrayList<PlaylistModel>,
             }
         }
 
-        private fun setStartGameListener(songs: List<SongMetaData>) {
+        private fun setStartGameListener(playlistModel: PlaylistModel) {
             playButton.setOnClickListener{
                 player.pause()
-                gameInstanceViewModel.setGamePlaylist(songs)
+                gameInstanceViewModel.setGamePlaylist(playlistModel)
                 gameInstanceViewModel.setGameTimeRound(
                     timeChosen = (timerPicker.value * 5 + 1) * 1000,
                     roundChosen = roundPicker.value)

@@ -1,22 +1,21 @@
 package ch.epfl.sdp.blindwar.data.music.fetcher
 
-import android.R
 import android.content.Context
 import android.content.res.Resources
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
-import android.net.Uri
 import ch.epfl.sdp.blindwar.data.music.MusicImageUrlConstants.METADATA_TUTORIAL_MUSICS_PER_AUTHOR
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
-import java.io.FileDescriptor
+import ch.epfl.sdp.blindwar.data.music.ResourceMusicMetadata
 
 
-class ResourceFetcher(
+class ResourceMusicReference(
     context: Context,
     private val resourceId: Int,
     private val resources: Resources
-) : Fetcher(context) {
-    override fun fetch() {
+) : MusicReference(context) {
+
+    override fun getMediaPlayer(): MediaPlayer {
         // Create a file descriptor to get the author from
         val mediaMetadataRetriever = MediaMetadataRetriever()
         val assetFileDescriptor = resources.openRawResourceFd(resourceId)
@@ -26,10 +25,17 @@ class ResourceFetcher(
         val author = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
             .toString()
 
-        // Create a new media player from the give resource id
-        this.mediaPlayer = MediaPlayer.create(this.context, resourceId)
-
         // Set the metadata
-        this.musicMetadata = METADATA_TUTORIAL_MUSICS_PER_AUTHOR[author] ?: MusicMetadata("", "", null, 0)
+        this.musicMetadata = METADATA_TUTORIAL_MUSICS_PER_AUTHOR[author] ?: ResourceMusicMetadata(artist = "",
+            title = "",
+            imageUrl = null,
+            duration = 0,
+            resourceId = resourceId)
+
+        val player = MediaPlayer.create(this.context, resourceId)
+        isPrepared = true
+
+        // Return a new media player from the give resource id
+        return player
     }
 }

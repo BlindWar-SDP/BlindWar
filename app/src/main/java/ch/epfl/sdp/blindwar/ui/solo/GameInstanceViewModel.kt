@@ -2,6 +2,7 @@ package ch.epfl.sdp.blindwar.ui.solo
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.domain.game.*
 
 class GameInstanceViewModel: ViewModel() {
@@ -46,7 +47,7 @@ class GameInstanceViewModel: ViewModel() {
             .build()
     }
 
-    fun setGamePlaylist(playlist: List<SongMetaData>) {
+    fun setGamePlaylist(playlist: PlaylistModel) {
         gameInstance.value = GameInstanceBuilder().setGameInstance(gameInstance.value!!)
             .setPlaylist(playlist)
             .build()

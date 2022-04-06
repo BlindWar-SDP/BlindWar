@@ -36,7 +36,7 @@ class AnimatedModeSelectionFragment: ModeSelectionFragment() {
         super.raceButton = view.findViewById<Button>(R.id.raceButton_).also{selectMode(it)}
 
         super.backButton = view.findViewById<ImageButton>(R.id.back_button).also{
-            it.setOnClickListener{
+            it.setOnClickListener {
                 activity?.onBackPressed()
             }
         }
@@ -80,6 +80,7 @@ class AnimatedModeSelectionFragment: ModeSelectionFragment() {
         return view
     }
 
+    /** Code duplication : refactor **/
     override fun launchPlaylistSelection() {
         val bundle = Bundle().apply { this.putBoolean("animated", true) }
         activity?.supportFragmentManager?.beginTransaction()

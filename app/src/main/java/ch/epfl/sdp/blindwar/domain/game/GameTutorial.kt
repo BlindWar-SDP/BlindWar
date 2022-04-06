@@ -5,7 +5,10 @@ import android.content.res.AssetManager
 import android.content.res.Resources
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.Playlist
-import ch.epfl.sdp.blindwar.data.music.fetcher.ResourceFetcher
+import ch.epfl.sdp.blindwar.data.music.fetcher.ResourceMusicReference
+import ch.epfl.sdp.blindwar.data.music.fetcher.URIMusicReference
+import ch.epfl.sdp.blindwar.domain.game.Tutorial.gameInstance
+import ch.epfl.sdp.blindwar.ui.solo.PlaylistModel
 
 
 /**
@@ -24,23 +27,19 @@ class GameTutorial(
 ) : Game(gameInstance, assetManager, context) {
 
     override fun init() {
-        val ids = listOf(
-            R.raw.acdc_highway_to_hell,
-            R.raw.daft_punk_one_more_time,
-            R.raw.gorillaz_feel_good,
-            R.raw.lady_gaga_poker_face,
-            R.raw.red_hot_chili_peppers_californication,
-            R.raw.renaud_mistral_gagnant,
-            R.raw.sum_41_in_too_deep,
-            R.raw.the_clash_london_calling,
-            R.raw.the_notorious_big_respect
+
+
+        /**
+        this.gameSound = GameSound(
+            Playlist(
+            ids.map {ResourceMusicReference(context, it, resources)}
+            )
         )
+        **/
 
         this.gameSound = GameSound(
-            assetManager,
-            Playlist(
-                ids.map {ResourceFetcher(context, it, resources)}
-            )
+            game.playlist,
+            context, resources
         )
     }
 }
