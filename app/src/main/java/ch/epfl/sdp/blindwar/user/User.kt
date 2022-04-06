@@ -1,7 +1,5 @@
 package ch.epfl.sdp.blindwar.user
 
-import android.net.Uri
-
 data class User(
     var uid: String = "",
     var email: String = "",
@@ -10,7 +8,9 @@ data class User(
     var firstName: String? = null,
     var lastName: String? = null,
     var birthDate: Long? = 0,
-    var profilePicture: String? = null
+    var profilePicture: String? = null,
+    var gender: String? = null,
+    var description: String? = null
 ) {
 
     class Builder(
@@ -22,7 +22,10 @@ data class User(
         private var lastName: String? = null,
         private var birthDate: Long? = null,
         private var profilePicture: String? = null,
+        private var gender: String? = null,
+        private var description: String? = null
     ) {
+
         fun setUid(uid: String) = apply { this.uid = uid }
         fun setEmail(email: String) = apply { this.email = email }
         fun setStats(stats: AppStatistics) = apply { this.userStatistics = stats }
@@ -31,16 +34,20 @@ data class User(
         fun setLastName(name: String?) = apply { this.lastName = name }
         fun setBirthDate(date: Long?) = apply { this.birthDate = date }
         fun setProfilePicture(imagePath: String) = apply { this.profilePicture = imagePath }
+        fun setGender(gender: String) = apply { this.gender = gender }
+        fun setDescription(desc: String) = apply { this.description = desc }
 
         fun fromUser(user: User) = apply {
             this.uid = user.uid
             this.email = user.email
             this.userStatistics = user.userStatistics
-            this.pseudo         = user.pseudo
-            this.firstName      = user.firstName
-            this.lastName       = user.lastName
-            this.birthDate      = user.birthDate
+            this.pseudo = user.pseudo
+            this.firstName = user.firstName
+            this.lastName = user.lastName
+            this.birthDate = user.birthDate
             this.profilePicture = user.profilePicture
+            this.gender = user.gender
+            this.description = user.description
         }
 
         fun build(): User {
@@ -52,7 +59,9 @@ data class User(
                 firstName,
                 lastName,
                 birthDate,
-                profilePicture
+                profilePicture,
+                gender,
+                description
             )
         }
     }

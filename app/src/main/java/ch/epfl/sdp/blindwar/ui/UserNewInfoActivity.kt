@@ -2,7 +2,6 @@ package ch.epfl.sdp.blindwar.ui
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
@@ -19,8 +18,8 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.user.AppStatistics
+import ch.epfl.sdp.blindwar.user.Gender
 import ch.epfl.sdp.blindwar.user.User
-import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -29,18 +28,14 @@ import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import java.util.*
 
 
 class UserNewInfoActivity : AppCompatActivity() {
     private val database = UserDatabase
     private val imageDatabase = ImageDatabase
     private val currentUser = FirebaseAuth.getInstance().currentUser
-
-    private var birthDate0: Long = -1
     private var profilePicture0: Uri? = null
-    private var minAge = -1
-    private var maxAge = -1
+
 
     private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -54,11 +49,11 @@ class UserNewInfoActivity : AppCompatActivity() {
             val lastName = findViewById<EditText>(R.id.NU_LastName)
             val pseudo = findViewById<EditText>(R.id.NU_pseudo)
             val profileImageView = findViewById<ImageView>(R.id.NU_profileImageView)
-            user?.let{
+            user?.let {
                 firstName.setText(it.firstName)
                 lastName.setText(it.lastName)
                 pseudo.setText(it.pseudo)
-                it.profilePicture?.let{ pp ->
+                it.profilePicture?.let { pp ->
                     if (!intent.getBooleanExtra("newUser", false) && pp != "null") {
                         imageDatabase.dowloadProfilePicture(
                             pp,
@@ -81,11 +76,8 @@ class UserNewInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_new_info)
 
-        minAge = resources.getInteger(R.integer.age_min)
-        maxAge = resources.getInteger(R.integer.age_max)
-
         // user id should be set according to authentication
-        currentUser?.let{
+        currentUser?.let {
             database.addUserListener(it.uid, userInfoListener)
         }
     }
@@ -96,12 +88,21 @@ class UserNewInfoActivity : AppCompatActivity() {
 //        AuthUI.getInstance().delete(this)
 //    }
 
-    fun confirm(view: View) {
+    fun confirm(v: View) {
         val pseudo: String = findViewById<EditText>(R.id.NU_pseudo).text.toString()
-        val firstName: String? = checkNotDefault(findViewById<EditText>(R.id.NU_FirstName).text.toString(), R.string.first_name)
-        val lastName: String? = checkNotDefault(findViewById<EditText>(R.id.NU_LastName).text.toString(), R.string.last_name)
-        val birthDate: Long = birthDate0
+        val firstName: String? = checkNotDefault(
+            findViewById<EditText>(R.id.NU_FirstName).text.toString(),
+            R.string.first_name
+        )
+        val lastName: String? = checkNotDefault(
+            findViewById<EditText>(R.id.NU_LastName).text.toString(),
+            R.string.last_name
+        )
+        val birthDate: Long = intent.getLongExtra("birthdate", -1)
         var profilePicture: Uri? = profilePicture0
+        var gender = intent.getStringExtra("gender") ?: Gender.None.toString()
+        var description = intent.getStringExtra("description") ?: ""
+        val isNewUser = intent.getBooleanExtra("newUser", false)
 
         // check validity of pseudo
         if (pseudo.length < resources.getInteger(R.integer.pseudo_minLength) || pseudo == resources.getString(
@@ -128,21 +129,27 @@ class UserNewInfoActivity : AppCompatActivity() {
 
         } else {
             // check if new user or update already existing user
-            if (intent.getBooleanExtra("newUser", false)) {
+            if (isNewUser) {
                 createUser(
                     pseudo,
                     firstName,
                     lastName,
                     birthDate,
-                    profilePicture.toString()
+                    profilePicture.toString(),
+                    gender,
+                    description
                 ) // TODO : Comment for TESTing -> need to uncomment
 //            AuthUI.getInstance().delete(this) // TODO : uncomment for TESTing
             } else {
                 val uid = currentUser?.uid!!
                 UserDatabase.setPseudo(uid, pseudo)
-                firstName?.let{UserDatabase.setFirstName(uid, it)}
-                lastName?.let{UserDatabase.setLastName(uid, it)}
-                profilePicture?.let{UserDatabase.setProfilePicture(uid, it.toString())}
+                firstName?.let { UserDatabase.setFirstName(uid, it) }
+                lastName?.let { UserDatabase.setLastName(uid, it) }
+                profilePicture?.let { UserDatabase.setProfilePicture(uid, it.toString()) }
+                gender?.let { UserDatabase.setGender(uid, it) }
+                birthDate?.let { UserDatabase.setBirthdate(uid, it) }
+                description?.let { UserDatabase.setDescription(uid, it) }
+
             }
 
             // Upload picture to database
@@ -152,43 +159,34 @@ class UserNewInfoActivity : AppCompatActivity() {
                     findViewById(android.R.id.content)
                 )
             }
-            startActivity(Intent(this, MainMenuActivity::class.java))
+            startActivity(Intent(this, ProfileActivity::class.java))
         }
     }
 
-    fun selectBirthdate(view: View) {
-        val calendar: Calendar = Calendar.getInstance() // current date
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val month = calendar.get(Calendar.MONTH)
-        calendar.add(Calendar.YEAR, -minAge)
-        val year = calendar.get(Calendar.YEAR)
-        val datePickerDialog =
-            DatePickerDialog(
-                this,
-                { _, mYear, mDay, mMonth -> setDate(mYear, mMonth + 1, mDay) },
-                year,
-                month,
-                day
-            )
-        datePickerDialog.datePicker.maxDate = calendar.timeInMillis
-        calendar.add(Calendar.YEAR, -maxAge)
-        datePickerDialog.datePicker.minDate = calendar.timeInMillis
-        datePickerDialog.setIcon(R.drawable.logo);
-        datePickerDialog.setTitle(R.string.new_user_birthdatePicker)
-        datePickerDialog.show()
+    fun provideMoreInfo(v: View) {
+        startActivity(
+            Intent(this, UserAdditionalInfoActivity::class.java)
+                .putExtra("newUser", intent.getBooleanExtra("newUser", false))
+        )
     }
-
 
     fun clearPseudo(v: View) {
         clearText(R.id.NU_pseudo, R.string.text_pseudo)
     }
 
-    fun clearFirstName(view: View) {
+    fun clearFirstName(v: View) {
         clearText(R.id.NU_FirstName, R.string.first_name)
     }
 
-    fun clearLastName(view: View) {
+    fun clearLastName(v: View) {
         clearText(R.id.NU_LastName, R.string.last_name)
+    }
+
+    fun choosePicture(v: View) {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        resultLauncher.launch(intent)
     }
 
     private fun clearText(id: Int, str: Int) {
@@ -205,7 +203,9 @@ class UserNewInfoActivity : AppCompatActivity() {
         firstName: String?,
         lastName: String?,
         birthDate: Long?,
-        profilePicture: String?
+        profilePicture: String?,
+        gender: String,
+        description: String?
     ) {
 
         val user = Firebase.auth.currentUser
@@ -219,7 +219,9 @@ class UserNewInfoActivity : AppCompatActivity() {
                     firstName,
                     lastName,
                     birthDate,
-                    profilePicture
+                    profilePicture,
+                    gender,
+                    description
                 ).build()
             )
         }
@@ -227,12 +229,6 @@ class UserNewInfoActivity : AppCompatActivity() {
 
     private fun checkNotDefault(value: String?, default: Int): String? {
         return if (value == default.toString()) null else value
-    }
-
-    private fun setDate(year: Int, month: Int, day: Int) {
-        val cal: Calendar = Calendar.getInstance()
-        cal.set(year, month, day)
-        birthDate0 = cal.timeInMillis
     }
 
     private var resultLauncher =
@@ -249,11 +245,4 @@ class UserNewInfoActivity : AppCompatActivity() {
                 }
             }
         }
-
-    fun choosePicture(view: View) {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        resultLauncher.launch(intent)
-    }
 }

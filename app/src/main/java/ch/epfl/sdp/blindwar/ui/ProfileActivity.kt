@@ -126,7 +126,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         builder.setTitle(getString(R.string.account_deletion_title))
-            .setMessage(getString(R.string.acount_deletion_text))
+            .setMessage(getString(R.string.account_deletion_text))
             .setCancelable(false)
             .setPositiveButton(android.R.string.ok, positiveButtonClick)
             .setNegativeButton(android.R.string.cancel, negativeButtonClick)

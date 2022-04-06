@@ -6,4 +6,5 @@
     <string name="nu_chose_profile_picture">chose profile\npicture</string>
     <string name="delete_profile">Delete\nProfile</string>
     <string name="deletion_success">account successfully deleted</string>
+    <string name="select_your_gender">Please, select your gender</string>
 </resources>

@@ -57,7 +57,7 @@
     <string name="text_pseudo">Pseudo</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    <string name="birthdate_text">click here to enter your Birthdate</string>
+    <string name="additional_info_text">provide more info</string>
     <string name="eloText">ELO: Your ELO is 1435</string>
     <string name="statisticsShowText">You have 4 wins and 8 losses</string>
     <string name="your_elo_here">Your elo here</string>
@@ -160,6 +160,8 @@
     <string name="account_deletion_confirm_text">Are you <b>really</b> sure you want to delete your account and <b>quite</b> the great game <b>BlindWar</b></string>
     <string name="account_not_deleted_toast">deletion cancelled</string>
     <string name="account_deletion_title">Account Deletion</string>
-    <string name="acount_deletion_text">Are you sure you want to delete your account?</string>
-
+    <string name="account_deletion_text">Are you sure you want to delete your account?</string>
+    <string name="select_birthdate">select birthdate</string>
+    <string name="select_your_gender">Please, select your gender</string>
+    
 </resources>

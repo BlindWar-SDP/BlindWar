@@ -44,6 +44,15 @@ object UserDatabase {
     fun setProfilePicture(uid: String, pp: String) {
         userReference.child(uid).child("profilePicture").setValue(pp)
     }
+    fun setBirthdate(uid: String, date: Long) {
+        userReference.child(uid).child("birthDate").setValue(date)
+    }
+    fun setGender(uid: String, gender: String) {
+        userReference.child(uid).child("gender").setValue(gender)
+    }
+    fun setDescription(uid: String, desc: String) {
+        userReference.child(uid).child("description").setValue(desc)
+    }
 
     // Allow user to select a profile picture and store it in database
     fun addProfilePicture(uid: String, path: String) {

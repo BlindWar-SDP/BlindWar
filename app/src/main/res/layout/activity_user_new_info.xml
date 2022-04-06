@@ -13,7 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
         android:digits="@string/Pseudo_AvailableChars"
         android:ems="10"
         android:hint="@string/text_pseudo"
@@ -22,6 +21,7 @@
         android:onClick="clearPseudo"
         android:text="@string/text_pseudo"
         android:textColor="@color/green_blue_crayola"
+        app:layout_constraintBottom_toTopOf="@+id/NU_FirstName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,78 +30,82 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="@string/first_name"
         android:inputType="textPersonName"
         android:onClick="clearFirstName"
         android:text="@string/first_name"
         android:textColor="@color/green_blue_crayola"
+        app:layout_constraintBottom_toTopOf="@+id/NU_LastName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NU_pseudo" />
-
-    <EditText
-        android:id="@+id/NU_LastName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="40dp"
-        android:ems="10"
-        android:hint="@string/last_name"
-        android:inputType="textPersonName"
-        android:onClick="clearLastName"
-        android:text="@string/last_name"
-        android:textColor="@color/green_blue_crayola"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NU_FirstName" />
-
-    <Button
-        android:id="@+id/NU_birthdate"
-        android:layout_width="210dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="204dp"
-        android:backgroundTint="@color/green_blue_crayola"
-        android:onClick="selectBirthdate"
-        android:text="@string/birthdate_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NU_LastName" />
 
     <Button
         android:id="@+id/NU_Confirm_Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="72dp"
-        android:layout_marginBottom="64dp"
         android:onClick="confirm"
         android:text="@string/confirm"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/NU_additional_info"
+        app:layout_constraintTop_toBottomOf="@+id/NU_profileImageView" />
+
+    <Button
+        android:id="@+id/NU_additional_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/green_blue_crayola"
+        android:onClick="provideMoreInfo"
+        android:text="@string/additional_info_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/NU_Confirm_Btn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NU_editProfilePicture" />
 
     <Button
         android:id="@+id/NU_editProfilePicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:backgroundTint="@color/green_blue_crayola"
         android:onClick="choosePicture"
         android:text="@string/nu_chose_profile_picture"
-        app:layout_constraintBottom_toTopOf="@+id/NU_birthdate"
+        app:layout_constraintBottom_toTopOf="@+id/NU_additional_info"
+        app:layout_constraintEnd_toStartOf="@+id/NU_profileImageView"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NU_LastName"
-        app:layout_constraintVertical_bias="0.479" />
+        app:layout_constraintTop_toBottomOf="@+id/NU_LastName" />
 
     <ImageView
         android:id="@+id/NU_profileImageView"
         android:layout_width="158dp"
         android:layout_height="158dp"
         android:contentDescription="@string/profilePicDescriptionText"
-        app:layout_constraintBottom_toTopOf="@+id/NU_birthdate"
+        app:layout_constraintBottom_toTopOf="@+id/NU_additional_info"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/NU_editProfilePicture"
         app:layout_constraintTop_toBottomOf="@+id/NU_LastName"
+        app:layout_constraintVertical_bias="0.354"
         tools:ignore="ImageContrastCheck"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <EditText
+        android:id="@+id/NU_LastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:hint="@string/last_name"
+        android:inputType="textPersonName"
+        android:onClick="clearLastName"
+        android:text="@string/last_name"
+        android:textColor="@color/green_blue_crayola"
+        app:layout_constraintBottom_toTopOf="@+id/NU_editProfilePicture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NU_FirstName" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
