@@ -74,7 +74,7 @@ class MainMenuActivityTest : TestCase() {
         onView(withId(R.id.SpeechButton)).perform(click())
         intended(hasComponent(DemoSRActivity::class.java.name))
     }
-
+    /*
     @Test
     fun testUserProfile() {
         val testEmail = "test@bot.ch"
@@ -97,5 +97,5 @@ class MainMenuActivityTest : TestCase() {
         onView(ViewMatchers.withId(R.id.emailView))
             .check(matches(ViewMatchers.withText(Matchers.containsString("test@bot.ch"))))
         onView(ViewMatchers.withId(R.id.logoutButton)).perform(ViewActions.click())
-    }
+    }*/
 }

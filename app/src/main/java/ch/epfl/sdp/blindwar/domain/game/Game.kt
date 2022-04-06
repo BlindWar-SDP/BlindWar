@@ -49,7 +49,7 @@ abstract class Game<FileDescriptorT>(
      * clean up player and assets
      */
     private fun endGame() {
-        val fails = score - round
+        val fails = round - score
         val currentUser = FirebaseAuth.getInstance().currentUser
 
         if (currentUser != null) {
