@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.ui.multi.MultiPlayerActivity
 import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -21,6 +22,11 @@ class MainMenuActivity : AppCompatActivity() {
     // Called when the user taps the Solo button
     fun soloButton(view: View) {
         val intent = Intent(this, AnimatedPlayActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun multiButton(view: View) {
+        val intent = Intent(this, MultiPlayerActivity::class.java)
         startActivity(intent)
     }
 

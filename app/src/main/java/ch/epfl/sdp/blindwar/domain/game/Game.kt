@@ -1,9 +1,8 @@
 package ch.epfl.sdp.blindwar.domain.game
 
-import android.content.ContentResolver
 import android.content.Context
 import android.content.res.AssetManager
-import java.util.*
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 
 /**
  * Class representing an instance of a game
@@ -12,15 +11,15 @@ import java.util.*
  * Construct a class that represent the game logic
  *
  */
-abstract class Game<FileDescriptorT>(
+abstract class Game(
     gameInstance: GameInstance,
     protected val assetManager: AssetManager,
-    protected val contentResolver: ContentResolver
+    protected val context: Context
 ) {
     /** Encapsulates the characteristics of a game instead of its logic **/
     private val game: GameInstance = gameInstance
 
-    protected lateinit var gameSound: GameSound<FileDescriptorT>
+    protected lateinit var gameSound: GameSound
 
     private val gameParameter: GameParameter = gameInstance
         .gameConfig
@@ -64,11 +63,10 @@ abstract class Game<FileDescriptorT>(
     /**
      * Depends on the game instance parameter
      */
-    fun currentMetadata(): SongMetaData? {
+    fun currentMetadata(): MusicMetadata? {
         if (gameParameter.hint) {
             return gameSound.getCurrentMetadata()
         }
-
         return null
     }
 
@@ -78,10 +76,9 @@ abstract class Game<FileDescriptorT>(
      * @param titleGuess Title that the user guesses
      * @return True if the guess is correct
      */
-    fun guess(titleGuess: String): Boolean {
-        return if (titleGuess.uppercase(Locale.getDefault()) == currentMetadata()?.title?.uppercase(
-                Locale.getDefault()
-            )
+    fun guess(titleGuess: String, isVocal: Boolean): Boolean {
+        return if (
+            GameHelper.isTheCorrectTitle(titleGuess, currentMetadata()!!.title, isVocal)
         ) {
             score += 1
             round += 1

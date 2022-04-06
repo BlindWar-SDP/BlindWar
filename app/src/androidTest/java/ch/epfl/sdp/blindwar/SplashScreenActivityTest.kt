@@ -1,21 +1,13 @@
 package ch.epfl.sdp.blindwar
 
 
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.NoMatchingViewException
-import androidx.test.espresso.ViewInteraction
-import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.ui.SplashScreenActivity
-import com.google.firebase.auth.FirebaseAuth
+import com.adevinta.android.barista.assertion.BaristaImageViewAssertions.assertHasDrawable
+import com.adevinta.android.barista.assertion.BaristaProgressBarAssertions.assertProgressIsMin
 import junit.framework.TestCase
-import org.hamcrest.Matchers
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -40,16 +32,10 @@ class SplashScreenActivityTest : TestCase() {
         Intents.release()
     }
 
-
-
-
     @Test
-    fun testOnCreate() {
-        // What The FFF
-//        if (UserAuth().isSignedIn()) {
-//            Intents.intended(IntentMatchers.hasComponent(MainMenuActivityTest::class.java.name))
-//        } else {
-//            Intents.intended(IntentMatchers.hasComponent(NewUserActivityTest::class.java.name))
-//        }
-   }
+    fun testLayoutVisibility() {
+        // the activity pass to the next one too early, don't have time to run tests
+//        assertHasDrawable(R.id.logo_splash_screen, R.drawable.logo)
+//        assertProgressIsMin(R.id.progressBar)
+    }
 }

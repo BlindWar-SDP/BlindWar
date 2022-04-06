@@ -1,7 +1,9 @@
 package ch.epfl.sdp.blindwar.ui
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +17,7 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlin.concurrent.thread
 
 class SplashScreenActivity : AppCompatActivity() {
     // inspired by :
@@ -35,9 +38,14 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-
         checkCurrentUser()
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//        checkCurrentUser()
+//    }
+
 
     private fun checkCurrentUser() {
         if (isSignedIn()) {
@@ -80,7 +88,6 @@ class SplashScreenActivity : AppCompatActivity() {
     ): Intent? {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
-            Log.i("lastSignin", "OK")
             // Successfully signed in
             val user = FirebaseAuth.getInstance().currentUser // =?= Firebase.auth.currentUser
             // https://www.tabnine.com/code/java/classes/com.google.firebase.auth.FirebaseAuth

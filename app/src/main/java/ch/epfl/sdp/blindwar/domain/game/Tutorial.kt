@@ -1,12 +1,13 @@
 package ch.epfl.sdp.blindwar.domain.game
 
-import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.META_DATA_TUTORIAL_MUSICS_PER_AUTHOR
 import ch.epfl.sdp.blindwar.ui.solo.Genre
 import ch.epfl.sdp.blindwar.ui.solo.PlaylistModel
+import ch.epfl.sdp.blindwar.data.music.MusicImageUrlConstants.METADATA_TUTORIAL_MUSICS_PER_AUTHOR
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 
 object Tutorial {
 
-    private val playlist: List<SongMetaData> = META_DATA_TUTORIAL_MUSICS_PER_AUTHOR.values.toList()
+    private val PLAYLIST: List<MusicMetadata> = METADATA_TUTORIAL_MUSICS_PER_AUTHOR.values.toList()
 
     private val gameParameter =
         GameParameter(round = 3, funny = false, timeToFind = 30000, hint = true)
@@ -31,7 +32,7 @@ object Tutorial {
         "FIFA 13 OST",
         "EA Sports",
         arrayListOf(Genre.POP),
-        arrayListOf(SongMetaData("name", "author", URL_PREVIEW_FIFA)),
+        arrayListOf(MusicMetadata("name", "author", URL_PREVIEW_FIFA, 0)),
         "https://i.scdn.co/image/ab67706c0000bebba1371bd946a7bc3f61f83db4",
         URL_PREVIEW_FIFA
     )
@@ -40,10 +41,10 @@ object Tutorial {
         "Tutorial",
         "BlindWar",
         arrayListOf(Genre.POP),
-        playlist,
+        PLAYLIST,
         "",
         URL_PREVIEW_TUTORIAL
     )
 
-    val gameInstance = GameInstance(gameConfig, playlist)
+    val gameInstance = GameInstance(gameConfig, PLAYLIST)
 }

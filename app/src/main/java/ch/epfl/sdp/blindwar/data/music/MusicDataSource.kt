@@ -1,19 +1,17 @@
-package ch.epfl.sdp.blindwar.data.sound
+/*
+package ch.epfl.sdp.blindwar.data.music
 
-import android.content.ContentProviderClient
 import android.content.ContentResolver
 import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import android.media.MediaMetadataRetriever
-import android.util.Log
 import androidx.documentfile.provider.DocumentFile
-import ch.epfl.sdp.blindwar.domain.game.SongImageUrlConstants.META_DATA_TUTORIAL_MUSICS_PER_AUTHOR
-import ch.epfl.sdp.blindwar.domain.game.SongMetaData
+import ch.epfl.sdp.blindwar.data.music.MusicImageUrlConstants.METADATA_TUTORIAL_MUSICS_PER_AUTHOR
 import java.io.File
 import java.io.FileDescriptor
 
 
-class SoundDataSource(
+class MusicDataSource(
     private val assetManager: AssetManager,
     private val mediaMetadataRetriever: MediaMetadataRetriever
 ) {
@@ -27,7 +25,7 @@ class SoundDataSource(
     fun fetchSoundFileDescriptorsAndMetaDataPerTitle(
         from: DocumentFile,
         contentResolver: ContentResolver,
-    ): Map<String, Pair<FileDescriptor, SongMetaData>> {
+    ): Map<String, Pair<FileDescriptor, MusicMetadata>> {
 
         return fetchSoundFileDescriptorsAndSetMetaDataPerTitleFromFileDescriptor(filterDocumentFiles(from.listFiles()).map {
             contentResolver.openFileDescriptor(
@@ -35,7 +33,7 @@ class SoundDataSource(
                 "r"
             )!!.fileDescriptor
         }) {
-            SongMetaData(
+            MusicMetadata(
                 it.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
                     .toString(),
                 it.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
@@ -51,8 +49,8 @@ class SoundDataSource(
      */
     fun fetchSoundAssetFileDescriptorsAndMetaDataPerTitleForTutorial(
         contentResolver: ContentResolver
-    ): Map<String, Pair<AssetFileDescriptor, SongMetaData>> {
-        val tutorialMusicsDirectoryPath = "tutorialMusicsSet"
+    ): Map<String, Pair<AssetFileDescriptor, MusicMetadata>> {
+        val tutorialMusicsDirectoryPath = "raw/tutorialMusicsSet"
 
         assetManager.list(
             tutorialMusicsDirectoryPath
@@ -65,7 +63,7 @@ class SoundDataSource(
             ) {
                 val test = it.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
                     .toString()
-                META_DATA_TUTORIAL_MUSICS_PER_AUTHOR[it.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+                METADATA_TUTORIAL_MUSICS_PER_AUTHOR[it.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
                     .toString()]!!
             }
         }
@@ -80,8 +78,8 @@ class SoundDataSource(
 
     private fun fetchAssetSoundFileDescriptorsAndSetMetaDataPerTitleFromAssetFileDescriptor(
         assetFileDescriptors: List<AssetFileDescriptor>,
-        setMetadataFromRetriever: (mediaMetadataRetriever: MediaMetadataRetriever) -> SongMetaData
-    ): Map<String, Pair<AssetFileDescriptor, SongMetaData>> {
+        setMetadataFromRetriever: (mediaMetadataRetriever: MediaMetadataRetriever) -> MusicMetadata
+    ): Map<String, Pair<AssetFileDescriptor, MusicMetadata>> {
         return assetFileDescriptors
             .associateBy({
                 // Get the title
@@ -98,8 +96,8 @@ class SoundDataSource(
 
     private fun fetchSoundFileDescriptorsAndSetMetaDataPerTitleFromFileDescriptor(
         fileDescriptors: List<FileDescriptor>,
-        setMetadataFromRetriever: (mediaMetadataRetriever: MediaMetadataRetriever) -> SongMetaData
-    ): Map<String, Pair<FileDescriptor, SongMetaData>> {
+        setMetadataFromRetriever: (mediaMetadataRetriever: MediaMetadataRetriever) -> MusicMetadata
+    ): Map<String, Pair<FileDescriptor, MusicMetadata>> {
         return fileDescriptors
             .associateBy({
                 // Get the title
@@ -117,3 +115,4 @@ class SoundDataSource(
             })
     }
 }
+*/
