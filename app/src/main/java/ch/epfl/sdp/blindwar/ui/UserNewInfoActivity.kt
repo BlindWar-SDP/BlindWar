@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
@@ -34,7 +35,7 @@ class UserNewInfoActivity : AppCompatActivity() {
     private val database = UserDatabase
     private val imageDatabase = ImageDatabase
     private val currentUser = FirebaseAuth.getInstance().currentUser
-    private var profilePicture0: Uri? = null
+    private var profilePictureUri: Uri? = null
 
 
     private val userInfoListener = object : ValueEventListener {
@@ -53,10 +54,10 @@ class UserNewInfoActivity : AppCompatActivity() {
                 firstName.setText(it.firstName)
                 lastName.setText(it.lastName)
                 pseudo.setText(it.pseudo)
-                it.profilePicture?.let { pp ->
-                    if (!intent.getBooleanExtra("newUser", false) && pp != "null") {
+                if( !intent.getBooleanExtra("newUser", false)){
+                    if (it.profilePicture != "null") {
                         imageDatabase.dowloadProfilePicture(
-                            pp,
+                            it.profilePicture!!,
                             profileImageView,
                             applicationContext
                         )
@@ -90,18 +91,18 @@ class UserNewInfoActivity : AppCompatActivity() {
 
     fun confirm(v: View) {
         val pseudo: String = findViewById<EditText>(R.id.NU_pseudo).text.toString()
-        val firstName: String? = checkNotDefault(
+        val firstName: String = checkNotDefault(
             findViewById<EditText>(R.id.NU_FirstName).text.toString(),
             R.string.first_name
         )
-        val lastName: String? = checkNotDefault(
+        val lastName: String = checkNotDefault(
             findViewById<EditText>(R.id.NU_LastName).text.toString(),
             R.string.last_name
         )
         val birthDate: Long = intent.getLongExtra("birthdate", -1)
-        var profilePicture: Uri? = profilePicture0
-        var gender = intent.getStringExtra("gender") ?: Gender.None.toString()
-        var description = intent.getStringExtra("description") ?: ""
+        val profilePicture: String = profilePictureUri.toString()
+        val gender = intent.getStringExtra("gender") ?: Gender.None.toString()
+        val description = intent.getStringExtra("description") ?: ""
         val isNewUser = intent.getBooleanExtra("newUser", false)
 
         // check validity of pseudo
@@ -140,26 +141,26 @@ class UserNewInfoActivity : AppCompatActivity() {
                     description
                 ) // TODO : Comment for TESTing -> need to uncomment
 //            AuthUI.getInstance().delete(this) // TODO : uncomment for TESTing
+                startActivity(Intent(this, MainMenuActivity::class.java))
             } else {
                 val uid = currentUser?.uid!!
                 UserDatabase.setPseudo(uid, pseudo)
-                firstName?.let { UserDatabase.setFirstName(uid, it) }
-                lastName?.let { UserDatabase.setLastName(uid, it) }
-                profilePicture?.let { UserDatabase.setProfilePicture(uid, it.toString()) }
-                gender?.let { UserDatabase.setGender(uid, it) }
-                birthDate?.let { UserDatabase.setBirthdate(uid, it) }
-                description?.let { UserDatabase.setDescription(uid, it) }
-
+                UserDatabase.setFirstName(uid, firstName)
+                UserDatabase.setLastName(uid, lastName)
+                UserDatabase.setProfilePicture(uid, profilePicture)
+                UserDatabase.setGender(uid, gender)
+                UserDatabase.setBirthdate(uid, birthDate)
+                UserDatabase.setDescription(uid, description)
+                startActivity(Intent(this, ProfileActivity::class.java))
             }
 
             // Upload picture to database
-            profilePicture?.let {
+            profilePictureUri?.let {
                 imageDatabase.uploadProfilePicture(
                     currentUser, it,
                     findViewById(android.R.id.content)
                 )
             }
-            startActivity(Intent(this, ProfileActivity::class.java))
         }
     }
 
@@ -203,7 +204,7 @@ class UserNewInfoActivity : AppCompatActivity() {
         firstName: String?,
         lastName: String?,
         birthDate: Long?,
-        profilePicture: String?,
+        profilePicture: String,
         gender: String,
         description: String?
     ) {
@@ -227,8 +228,8 @@ class UserNewInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkNotDefault(value: String?, default: Int): String? {
-        return if (value == default.toString()) null else value
+    private fun checkNotDefault(value: String, default: Int): String {
+        return if (value == default.toString()) "" else value
     }
 
     private var resultLauncher =
@@ -237,9 +238,9 @@ class UserNewInfoActivity : AppCompatActivity() {
                 val data: Intent? = result.data
                 if (data != null) {
                     if (data.data != null) {
-                        profilePicture0 = data.data
+                        profilePictureUri = data.data
                         findViewById<ImageView>(R.id.NU_profileImageView).setImageURI(
-                            profilePicture0
+                            profilePictureUri
                         )
                     }
                 }

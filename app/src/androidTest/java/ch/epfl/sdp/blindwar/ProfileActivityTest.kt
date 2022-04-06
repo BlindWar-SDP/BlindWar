@@ -9,8 +9,6 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.uiautomator.UiDevice
 import ch.epfl.sdp.blindwar.ui.ProfileActivity
 import ch.epfl.sdp.blindwar.ui.StatisticsActivity
 import junit.framework.TestCase
@@ -38,33 +36,25 @@ class ProfileActivityTest : TestCase() {
         Intents.release()
     }
 
-    /*
-    @Test
-    fun testLoginButton() {
-        onView(withId(R.id.backToMainButton))
-            .perform(click())
-        intended(hasComponent(MainMenuActivity::class.java.name))
-    } */
-
-    @Test
-    fun testChooseImage() {
-        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        val oldPackageName = device.currentPackageName
-
-        onView(withId(R.id.editProfileButton))
-            .perform(click())
-
-        // Press back until we get back to our activity
-        var currentPackageName: String
-        do {
-            device.pressBack()
-            currentPackageName = device.currentPackageName
-        } while (currentPackageName != oldPackageName)
-
-        onView(withId(R.id.statsButton))
-            .perform(click())
-        intended(hasComponent(StatisticsActivity::class.java.name))
-    }
+//    @Test
+//    fun testChooseImage() {
+//        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+//        val oldPackageName = device.currentPackageName
+//
+//        onView(withId(R.id.editProfileButton))
+//            .perform(click())
+//
+//        // Press back until we get back to our activity
+//        var currentPackageName: String
+//        do {
+//            device.pressBack()
+//            currentPackageName = device.currentPackageName
+//        } while (currentPackageName != oldPackageName)
+//
+//        onView(withId(R.id.statsButton))
+//            .perform(click())
+//        intended(hasComponent(StatisticsActivity::class.java.name))
+//    }
 
     @Test
     fun testStatisticsButton() {

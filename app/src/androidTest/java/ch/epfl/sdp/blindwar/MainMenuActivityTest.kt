@@ -15,7 +15,6 @@ import ch.epfl.sdp.blindwar.ui.DemoSRActivity
 import ch.epfl.sdp.blindwar.ui.MainMenuActivity
 import ch.epfl.sdp.blindwar.ui.ProfileActivity
 import ch.epfl.sdp.blindwar.ui.multi.MultiPlayerActivity
-import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
 import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import com.google.android.gms.tasks.Task
@@ -85,25 +84,25 @@ class MainMenuActivityTest : TestCase() {
 
     @Test
     fun testUserProfile() {
-        val testEmail = "test@bot.ch"
-        val testPassword = "testtest"
+        val testEmail = "test@test.test"
+        val testPassword = "testTest"
         val login: Task<AuthResult> = FirebaseAuth.getInstance()
             .signInWithEmailAndPassword(testEmail, testPassword)
         try {
-            Tasks.await<AuthResult>(login)
+            Tasks.await(login)
         } catch (e: ExecutionException) {
             e.printStackTrace()
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
         Thread.sleep(1000)
-        onView(ViewMatchers.withId(R.id.profileButton))
-            .perform(ViewActions.click())
-        onView(ViewMatchers.withId(R.id.emailView))
+        onView(withId(R.id.profileButton))
+            .perform(click())
+        onView(withId(R.id.emailView))
             .perform(ViewActions.closeSoftKeyboard())
         Thread.sleep(1000)
-        onView(ViewMatchers.withId(R.id.emailView))
-            .check(matches(ViewMatchers.withText(Matchers.containsString("test@bot.ch"))))
-        onView(ViewMatchers.withId(R.id.logoutButton)).perform(ViewActions.click())
+        onView(withId(R.id.emailView))
+            .check(matches(ViewMatchers.withText(Matchers.containsString(testEmail))))
+        onView(withId(R.id.logoutButton)).perform(ViewActions.click())
     }
 }

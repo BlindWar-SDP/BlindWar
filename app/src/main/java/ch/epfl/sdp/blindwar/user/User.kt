@@ -8,7 +8,7 @@ data class User(
     var firstName: String? = null,
     var lastName: String? = null,
     var birthDate: Long? = 0,
-    var profilePicture: String? = null,
+    var profilePicture: String = "",
     var gender: String? = null,
     var description: String? = null
 ) {
@@ -21,7 +21,7 @@ data class User(
         private var firstName: String? = null,
         private var lastName: String? = null,
         private var birthDate: Long? = null,
-        private var profilePicture: String? = null,
+        private var profilePicture: String = "",
         private var gender: String? = null,
         private var description: String? = null
     ) {

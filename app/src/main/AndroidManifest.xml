@@ -14,9 +14,6 @@
         android:theme="@style/Theme.BlindWar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.UserAdditionalInfoActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait">
@@ -26,6 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.UserAdditionalInfoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.UserNewInfoActivity"
             android:exported="false"
