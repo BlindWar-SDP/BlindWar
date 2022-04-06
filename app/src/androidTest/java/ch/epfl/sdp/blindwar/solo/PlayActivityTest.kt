@@ -7,6 +7,7 @@ import androidx.test.espresso.Espresso.pressBackUnconditionally
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -123,6 +124,7 @@ class PlayActivityTest {
         launchPlaylistSelection(btnId = R.id.raceButton_, position = 0, 1)
         onView(withId(R.id.searchBar)).perform(click())
         onView(withId(R.id.searchBar)).perform(typeSearchViewText("Fifa"))
+        closeSoftKeyboard()
 
         onView(allOf(withId(R.id.playPreview), withEffectiveVisibility(Visibility.VISIBLE)))
             .perform(click())
