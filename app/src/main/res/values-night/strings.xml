@@ -3,4 +3,7 @@
     <string name="birthDate_txt">dd/mm/yyyy</string>
     <string name="chose_sign_in_text">Sign In with:</string>
     <string name="signin_welcome_text">Welcome to BlindWar</string>
+    <string name="nu_chose_profile_picture">chose profile\npicture</string>
+    <string name="delete_profile">Delete\nProfile</string>
+    <string name="deletion_success">account successfully deleted</string>
 </resources>

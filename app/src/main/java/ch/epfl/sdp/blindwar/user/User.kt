@@ -1,6 +1,9 @@
 package ch.epfl.sdp.blindwar.user
 
+import android.net.Uri
+
 data class User(
+    var uid: String = "",
     var email: String = "",
     var userStatistics: AppStatistics = AppStatistics(),
     var pseudo: String = "",
@@ -11,6 +14,7 @@ data class User(
 ) {
 
     class Builder(
+        private var uid: String = "",
         private var email: String = "",
         private var userStatistics: AppStatistics = AppStatistics(),
         private var pseudo: String = "",
@@ -19,6 +23,7 @@ data class User(
         private var birthDate: Long? = null,
         private var profilePicture: String? = null,
     ) {
+        fun setUid(uid: String) = apply { this.uid = uid }
         fun setEmail(email: String) = apply { this.email = email }
         fun setStats(stats: AppStatistics) = apply { this.userStatistics = stats }
         fun setPseudo(pseudo: String) = apply { this.pseudo = pseudo }
@@ -28,6 +33,7 @@ data class User(
         fun setProfilePicture(imagePath: String) = apply { this.profilePicture = imagePath }
 
         fun fromUser(user: User) = apply {
+            this.uid = user.uid
             this.email = user.email
             this.userStatistics = user.userStatistics
             this.pseudo         = user.pseudo
@@ -39,6 +45,7 @@ data class User(
 
         fun build(): User {
             return User(
+                uid,
                 email,
                 userStatistics,
                 pseudo,
@@ -48,9 +55,5 @@ data class User(
                 profilePicture
             )
         }
-    }
-
-    override fun toString(): String{
-        return pseudo
     }
 }

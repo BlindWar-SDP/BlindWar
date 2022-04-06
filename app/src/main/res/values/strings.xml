@@ -50,7 +50,7 @@
     <string name="emailText">Your email here</string>
     <string name="statisticsText">Statistics</string>
     <string name="nameText">Your name here</string>
-    <string name="editProfileText">Edit profile</string>
+    <string name="editProfileText">Edit\nProfile</string>
     <string name="logoutText">:( Logout</string>
     <string name="profilePicDescriptionText">The profile picture of the user</string>
     <string name="game">GAME</string>
@@ -152,5 +152,14 @@
     <string name="play_with_random">Play with random</string>
     <string name="icon_for_playing_with_friends">Icon for playing with friends</string>
     <string name="icon_for_playing_with_random_people">Icon for playing with random people</string>
+    <string name="nu_chose_profile_picture">chose profile\npicture</string>
+    <string name="delete_profile">Delete\nProfile</string>
+    <string name="deletion_success">account successfully deleted, <b>Bye Bye</b></string>
+    <string name="account_not_deleted_confirm_toast">ouf, you still are family member</string>
+    <string name="account_deletion_confirm_title"><b>Account Deletion</b></string>
+    <string name="account_deletion_confirm_text">Are you <b>really</b> sure you want to delete your account and <b>quite</b> the great game <b>BlindWar</b></string>
+    <string name="account_not_deleted_toast">deletion cancelled</string>
+    <string name="account_deletion_title">Account Deletion</string>
+    <string name="acount_deletion_text">Are you sure you want to delete your account?</string>
 
 </resources>

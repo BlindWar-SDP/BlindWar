@@ -3,4 +3,6 @@
     <integer name="pseudo_maxLength">20</integer>
     <integer name="pseudo_minLength">2</integer>
     <integer name="max_length_date">10</integer>
+    <integer name="age_min">5</integer>
+    <integer name="age_max">100</integer>
 </resources>

@@ -11,7 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.ui.MainMenuActivity
-import ch.epfl.sdp.blindwar.ui.NewUserActivity
+import ch.epfl.sdp.blindwar.ui.UserNewInfoActivity
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import junit.framework.TestCase
 import org.junit.After
@@ -27,7 +27,7 @@ class NewUserActivityTest : TestCase() {
 
     @get:Rule
     var testRule = ActivityScenarioRule(
-        NewUserActivity::class.java
+        UserNewInfoActivity::class.java
     )
 
     @Before
