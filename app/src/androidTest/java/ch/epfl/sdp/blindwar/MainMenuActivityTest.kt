@@ -81,29 +81,4 @@ class MainMenuActivityTest : TestCase() {
         onView(withId(R.id.SpeechButton)).perform(click())
         intended(hasComponent(DemoSRActivity::class.java.name))
     }
-
-    @Test
-    fun testUserProfile() {
-        val testEmail = "test@test.test"
-        val testPassword = "testTest"
-        val login: Task<AuthResult> = FirebaseAuth.getInstance()
-            .signInWithEmailAndPassword(testEmail, testPassword)
-        try {
-            Tasks.await(login)
-        } catch (e: ExecutionException) {
-            e.printStackTrace()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-        Thread.sleep(1000)
-        onView(withId(R.id.profileButton))
-            .perform(click())
-
-        onView(withId(R.id.emailView))
-            .perform(ViewActions.closeSoftKeyboard())
-        Thread.sleep(1000)
-        onView(withId(R.id.emailView))
-            .check(matches(ViewMatchers.withText(Matchers.containsString(testEmail))))
-        onView(withId(R.id.logoutButton)).perform(ViewActions.click())
-    }
 }

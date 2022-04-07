@@ -2,6 +2,8 @@ package ch.epfl.sdp.blindwar.domain.game
 
 import android.content.Context
 import android.content.res.AssetManager
+import ch.epfl.sdp.blindwar.database.UserDatabase
+import com.google.firebase.auth.FirebaseAuth
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 
 /**
@@ -29,6 +31,7 @@ abstract class Game(
         protected set
 
     var round = 0
+        protected set
 
     /**
      * Prepares the game following the configuration
@@ -40,7 +43,13 @@ abstract class Game(
      * Record the game instance to the player history
      * clean up player and assets
      */
-    fun endGame() {
+    private fun endGame() {
+        val fails = round - score
+        val currentUser = FirebaseAuth.getInstance().currentUser
+
+        if (currentUser != null) {
+            UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
+        }
         musicController.soundTeardown()
     }
 
@@ -94,6 +103,7 @@ abstract class Game(
      *
      */
     fun timeout() {
+
         round += 1
     }
 

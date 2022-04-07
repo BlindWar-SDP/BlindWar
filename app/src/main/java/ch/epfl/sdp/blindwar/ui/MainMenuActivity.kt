@@ -9,6 +9,9 @@ import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.ui.multi.MultiPlayerActivity
 import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
+import ch.epfl.sdp.blindwar.user.AppStatistics
+import ch.epfl.sdp.blindwar.user.Mode
+import ch.epfl.sdp.blindwar.user.User
 import com.google.firebase.auth.FirebaseAuth
 
 class MainMenuActivity : AppCompatActivity() {
@@ -34,7 +37,7 @@ class MainMenuActivity : AppCompatActivity() {
     fun tutorialButton(view: View) {
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
-            database.setElo(currentUser!!.uid, 1100)
+            UserDatabase.setElo(currentUser.uid, 1000)
         }
         val intent = Intent(this, TutorialActivity::class.java)
         startActivity(intent)
