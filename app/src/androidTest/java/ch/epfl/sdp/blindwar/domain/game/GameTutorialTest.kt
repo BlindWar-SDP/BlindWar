@@ -3,11 +3,16 @@ package ch.epfl.sdp.blindwar.domain.game
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.hamcrest.CoreMatchers.`is`
 import java.util.*
+import java.util.concurrent.ExecutionException
 
 @RunWith(AndroidJUnit4::class)
 class GameTutorialTest {
@@ -34,6 +39,37 @@ class GameTutorialTest {
             assertThat(toPlay.remove(gameTutorial.currentMetadata()), `is`(true))
         }
     }
+
+    @Test
+    fun gameWithLogin() {
+        val testEmail = "test@bot.ch"
+        val testPassword = "testtest"
+        val login: Task<AuthResult> = FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(testEmail, testPassword)
+        try {
+            Tasks.await<AuthResult>(login)
+        } catch (e: ExecutionException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, contentResolver)
+        gameTutorial.init()
+        goodGuess(gameTutorial)
+
+        assertThat(gameTutorial.score, `is`(1))
+        val round = 2
+        for (i in 0 until round) {
+            gameTutorial.nextRound()
+            val fails = i + 1 - gameTutorial.score
+            assertThat(fails, `is`(i))
+        }
+        FirebaseAuth.getInstance().signOut()
+        val logout: Unit = FirebaseAuth.getInstance().signOut()
+        Thread.sleep(1000)
+
+    }
+
 
 
     @Test
