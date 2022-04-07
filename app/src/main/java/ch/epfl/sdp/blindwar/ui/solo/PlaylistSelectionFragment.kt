@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.Tutorial.fifaPlaylist
+import ch.epfl.sdp.blindwar.domain.game.Tutorial.testingPlaylist
 import ch.epfl.sdp.blindwar.domain.game.Tutorial.tutorialPlaylist
 
 open class PlaylistSelectionFragment: Fragment() {
@@ -38,7 +39,7 @@ open class PlaylistSelectionFragment: Fragment() {
         searchBar = view.findViewById(R.id.searchBar)
 
         val playlistCopy = ArrayList<PlaylistModel>().apply {
-            addAll(arrayListOf(fifaPlaylist, tutorialPlaylist))
+            addAll(arrayListOf(fifaPlaylist, tutorialPlaylist, testingPlaylist))
         }
 
         playlistRecyclerView = view.findViewById(R.id.playlistRecyclerView)

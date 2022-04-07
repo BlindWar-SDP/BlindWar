@@ -19,12 +19,12 @@ import com.airbnb.lottie.LottieDrawable
 open class ModeSelectionFragment: Fragment() {
 
     private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
-    protected lateinit var regularButton: Button
-    protected lateinit var survivalButton: Button
-    protected lateinit var raceButton: Button
-    protected lateinit var funnyButton: CheckBox
+    private lateinit var regularButton: Button
+    private lateinit var survivalButton: Button
+    private lateinit var raceButton: Button
+    private lateinit var funnyButton: CheckBox
 
-    protected lateinit var backButton: ImageButton
+    private lateinit var backButton: ImageButton
 
     private lateinit var animations: List<LottieAnimationView>
     private lateinit var funnyCheck: CheckBox

@@ -85,5 +85,29 @@ object Tutorial {
         URL_PREVIEW_TUTORIAL
     )
 
+    private const val COVER_TESTING =
+        "https://i.scdn.co/image/ab67616d0000b273df756f52b91b4dcd656760b0"
+
+    const val SONG_TESTING =
+        "Silver for Monsters"
+
+    const val URL_PREVIEW_TESTING =
+        "https://p.scdn.co/mp3-preview/ecfd294001cbeea0811b78b35b5a1da80bf3ef98?cid=774b29d4f13844c495f206cafdad9c86"
+
+    val testingPlaylist = PlaylistModel(
+        "The Witcher 3 OST",
+        "Marcin Przybyłowicz",
+        arrayListOf(Genre.POP),
+        arrayListOf(
+            URIMusicMetadata(
+                SONG_TESTING,
+                "Marcin Przybyłowicz",
+                COVER_TESTING,
+                30000,
+                URL_PREVIEW_TESTING)),
+        COVER_TESTING,
+        "https://p.scdn.co/mp3-preview/b2e959350596fc2d3f9ca80e855c51db9a5c5453?cid=774b29d4f13844c495f206cafdad9c86"
+    )
+
     val gameInstance = GameInstance(gameConfig, tutorialPlaylist)
 }

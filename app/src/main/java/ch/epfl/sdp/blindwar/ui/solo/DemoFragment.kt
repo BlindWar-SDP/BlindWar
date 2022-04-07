@@ -27,16 +27,16 @@ import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import java.util.*
 
-open class DemoFragment : Fragment() {
+class DemoFragment : Fragment() {
     // Game view model to pass to the next round
     lateinit var game: GameTutorial
     private var playing = true
     private lateinit var guessEditText: EditText
     private lateinit var scoreTextView: TextView
-    protected lateinit var musicMetadata: MusicMetadata
+    private lateinit var musicMetadata: MusicMetadata
     private lateinit var guessButton: ImageButton
-    protected lateinit var countDown: TextView
-    protected var duration: Int = 0
+    private lateinit var countDown: TextView
+    private var duration: Int = 0
     private lateinit var timer: CountDownTimer
     private var isVocal = false
 
@@ -143,7 +143,7 @@ open class DemoFragment : Fragment() {
         return view
     }
 
-    protected fun createCountDown(): CountDownTimer {
+    private fun createCountDown(): CountDownTimer {
         return object : CountDownTimer(duration.toLong(), 1000) {
 
             override fun onTick(millisUntilFinished: Long) {
@@ -220,7 +220,7 @@ open class DemoFragment : Fragment() {
         }
     }
 
-    fun guess(isVocal: Boolean, isAuto: Boolean) {
+    private fun guess(isVocal: Boolean, isAuto: Boolean) {
         if (game.guess(guessEditText.text.toString(), isVocal)) {
             // Update the number of point view
             scoreTextView.text = game.score.toString()
@@ -238,7 +238,7 @@ open class DemoFragment : Fragment() {
         timer.cancel()
     }
 
-    protected fun launchSongSummary(success: Boolean) {
+    private fun launchSongSummary(success: Boolean) {
         setVisibilityLayout(View.GONE)
         timer.cancel()
 
