@@ -73,18 +73,36 @@ class PlayActivityTest {
 
     @Test
     fun testLostThenWonGame() {
-        testCompleteGame(playlistIndex = 2, round = 1)
+        searchPlaylist("The witcher", 2)
+        onView(withId(R.id.playlistRecyclerView))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<PlaylistAdapter.PlaylistViewHolder>(
+                    0,
+                    click(),
+                )
+            )
+
+        onView(allOf(withId(R.id.startGame),
+            withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+
+        onView(withId(R.id.guessButton)).check(matches(isDisplayed()))
+        simulateLostRound()
+
         onView(withId(R.id.replay)).perform(click())
         onView(withId(R.id.audioVisualizer)).check(matches(isDisplayed()))
 
         onView(withId(R.id.guessEditText)).perform(typeText("NOT CORRECT"))
+        onView(withId(R.id.guessButton)).perform(click())
+
         onView(withId(R.id.guessEditText)).perform(typeText(Tutorial.SONG_TESTING))
         onView(withId(R.id.guessButton)).perform(click())
+
         onView(withId(R.id.skip_next_summary)).perform(click())
         onView(withId(R.id.game_summary_fragment)).check(matches(isDisplayed()))
+
         onView(withId(R.id.quit)).perform(click())
     }
-
+    
     @Test
     fun testLostGameConnected() {
         testCompleteGame(0, Tutorial.ROUND)
@@ -98,6 +116,7 @@ class PlayActivityTest {
         testCompleteGame(1, Tutorial.ROUND)
         onView(withId(R.id.quit)).perform(click())
     }
+
 
     private fun testCompleteGame(playlistIndex: Int, round: Int) {
         launchDemoWithMode(R.id.raceButton_, playlistIndex)
@@ -125,7 +144,7 @@ class PlayActivityTest {
 
     @Test
     fun likeTest() {
-        searchPlaylist("Fifa")
+        searchPlaylist("Fifa", 0)
         onView(allOf(withId(R.id.likeView),
             withEffectiveVisibility(Visibility.VISIBLE))).perform(click(), click())
                                                          .check(matches(isClickable()))
@@ -145,8 +164,8 @@ class PlayActivityTest {
         }
     }
 
-    private fun searchPlaylist(search: String) {
-        launchPlaylistSelection(btnId = R.id.raceButton_, position = 0, 1)
+    private fun searchPlaylist(search: String, position: Int) {
+        launchPlaylistSelection(btnId = R.id.raceButton_, position = position, 1)
         onView(withId(R.id.searchBar)).perform(click())
         onView(withId(R.id.searchBar)).perform(typeSearchViewText(search))
         closeSoftKeyboard()
@@ -154,7 +173,7 @@ class PlayActivityTest {
 
     @Test
     fun testListenPreviewAfterSearch() {
-        searchPlaylist("Fifa")
+        searchPlaylist("Fifa", 0)
 
         onView(allOf(withId(R.id.playPreview), withEffectiveVisibility(Visibility.VISIBLE)))
             .perform(click())
