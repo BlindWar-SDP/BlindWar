@@ -18,6 +18,7 @@ import ch.epfl.sdp.blindwar.domain.game.GameMode
 import ch.epfl.sdp.blindwar.domain.game.Tutorial
 import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
 import ch.epfl.sdp.blindwar.ui.solo.PlaylistAdapter
+import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
 import junit.framework.Assert.assertEquals
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
@@ -29,7 +30,7 @@ import org.junit.runner.RunWith
 class PlayActivityTest {
     @get:Rule
     var testRule = ActivityScenarioRule(
-        PlayActivity::class.java
+            PlayActivity::class.java
     )
 
     @Test
@@ -70,7 +71,7 @@ class PlayActivityTest {
             assertEquals(expectedMode, observedMode)
         }
     }
-
+    
     @Test
     fun testLostGameConnected() {
         testCompleteGame(0)
@@ -105,6 +106,14 @@ class PlayActivityTest {
             withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
     }
 
+    @Test
+    fun likeTest() {
+        searchPlaylist("Fifa")
+        onView(allOf(withId(R.id.likeView),
+            withEffectiveVisibility(Visibility.VISIBLE))).perform(click(), click())
+                                                         .check(matches(isClickable()))
+    }
+
 
     private fun launchPlaylistSelection(btnId: Int, position: Int, chainClick: Int) {
         onView(withId(btnId)).perform(click())
@@ -119,13 +128,18 @@ class PlayActivityTest {
         }
     }
 
-
-    @Test
-    fun testListenPreviewAfterSearch() {
+    private fun searchPlaylist(search: String) {
         launchPlaylistSelection(btnId = R.id.raceButton_, position = 0, 1)
         onView(withId(R.id.searchBar)).perform(click())
         onView(withId(R.id.searchBar)).perform(typeSearchViewText("Fifa"))
         closeSoftKeyboard()
+    }
+
+
+
+    @Test
+    fun testListenPreviewAfterSearch() {
+        searchPlaylist("Fifa")
 
         onView(allOf(withId(R.id.playPreview), withEffectiveVisibility(Visibility.VISIBLE)))
             .perform(click())

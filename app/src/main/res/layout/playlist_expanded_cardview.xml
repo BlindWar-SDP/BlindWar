@@ -162,6 +162,7 @@
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="4dp"
+                    app:layout_constraintDimensionRatio="1:1"
                     android:layout_marginBottom="4dp"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
@@ -179,6 +180,7 @@
                         android:layout_marginTop="0dp"
                         android:layout_marginEnd="0dp"
                         android:layout_marginBottom="0dp"
+                        app:layout_constraintDimensionRatio="1:1"
                         android:clipToOutline="true"
                         android:contentDescription="@string/app_name"
                         android:visibility="gone"
@@ -246,24 +248,29 @@
                 android:id="@+id/expanded"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/base_cardview">
 
-                <NumberPicker
-                    android:id="@+id/timerPicker"
+                <ImageButton
+                    android:id="@+id/startGame"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:backgroundTint="@color/ivory"
-                    android:theme="@style/AppTheme.Picker"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/border_button"
+                    android:backgroundTint="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/timerTextView"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/roundTextView"
+                    app:layout_constraintStart_toEndOf="@+id/guideline8"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0" />
+                    app:srcCompat="@drawable/play_arrow"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <NumberPicker
                     android:id="@+id/roundPicker"
@@ -279,14 +286,46 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
 
+                <NumberPicker
+                    android:id="@+id/timerPicker"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:backgroundTint="@color/ivory"
+                    android:theme="@style/AppTheme.Picker"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/timerTextView"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/roundTextView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0" />
+
+                <TextView
+                    android:id="@+id/roundTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/oxygen"
+                    android:text="ROUNDS"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@+id/roundPicker"
+                    app:layout_constraintEnd_toStartOf="@+id/timerPicker"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/roundPicker"
+                    app:layout_constraintTop_toTopOf="@+id/roundPicker"
+                    app:layout_constraintVertical_bias="0.5"
+                    tools:text="ROUNDS" />
+
                 <TextView
                     android:id="@+id/timerTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:fontFamily="@font/oxygen"
                     android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/oxygen"
                     android:text="TIMER"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/timerPicker"
@@ -302,41 +341,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layout_constraintGuide_percent="0.82" />
-
-                <TextView
-                    android:id="@+id/roundTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:fontFamily="@font/oxygen"
-                    android:autoSizeTextType="uniform"
-                    android:text="ROUNDS"
-                    android:textColor="@color/black"
-                    app:layout_constraintBottom_toBottomOf="@+id/roundPicker"
-                    app:layout_constraintEnd_toStartOf="@+id/timerPicker"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/roundPicker"
-                    app:layout_constraintTop_toTopOf="@+id/roundPicker"
-                    app:layout_constraintVertical_bias="0.5"
-                    tools:text="ROUNDS" />
-
-                <ImageButton
-                    android:id="@+id/startGame"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="2dp"
-                    android:background="@drawable/border_button"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/guideline8"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/play_arrow"
-                    tools:ignore="SpeakableTextPresentCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
