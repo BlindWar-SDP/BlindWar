@@ -65,4 +65,8 @@ data class User(
             )
         }
     }
+
+    override fun toString(): String{
+        return pseudo
+    }
 }

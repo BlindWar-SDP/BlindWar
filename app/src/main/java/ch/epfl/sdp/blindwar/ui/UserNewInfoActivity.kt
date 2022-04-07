@@ -11,10 +11,8 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
@@ -34,7 +32,6 @@ import com.google.firebase.ktx.Firebase
 class UserNewInfoActivity : AppCompatActivity() {
     private val database = UserDatabase
     private val imageDatabase = ImageDatabase
-    private val currentUser = FirebaseAuth.getInstance().currentUser
     private var profilePictureUri: Uri? = null
 
 
@@ -54,7 +51,7 @@ class UserNewInfoActivity : AppCompatActivity() {
                 firstName.setText(it.firstName)
                 lastName.setText(it.lastName)
                 pseudo.setText(it.pseudo)
-                if( !intent.getBooleanExtra("newUser", false)){
+                if (!intent.getBooleanExtra("newUser", false)) {
                     if (it.profilePicture != "null") {
                         imageDatabase.dowloadProfilePicture(
                             it.profilePicture!!,
@@ -78,7 +75,7 @@ class UserNewInfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user_new_info)
 
         // user id should be set according to authentication
-        currentUser?.let {
+        FirebaseAuth.getInstance().currentUser?.let {
             database.addUserListener(it.uid, userInfoListener)
         }
     }
@@ -113,10 +110,6 @@ class UserNewInfoActivity : AppCompatActivity() {
             // Alert Dialog
             val builder: AlertDialog.Builder = AlertDialog.Builder(this)
             val positiveButtonClick = { _: DialogInterface, _: Int ->
-                Toast.makeText(
-                    this,
-                    android.R.string.ok, Toast.LENGTH_SHORT
-                ).show()
             }
 
             builder.setTitle(R.string.new_user_wrong_pseudo_title)
@@ -143,21 +136,22 @@ class UserNewInfoActivity : AppCompatActivity() {
 //            AuthUI.getInstance().delete(this) // TODO : uncomment for TESTing
                 startActivity(Intent(this, MainMenuActivity::class.java))
             } else {
-                val uid = currentUser?.uid!!
-                UserDatabase.setPseudo(uid, pseudo)
-                UserDatabase.setFirstName(uid, firstName)
-                UserDatabase.setLastName(uid, lastName)
-                UserDatabase.setProfilePicture(uid, profilePicture)
-                UserDatabase.setGender(uid, gender)
-                UserDatabase.setBirthdate(uid, birthDate)
-                UserDatabase.setDescription(uid, description)
-                startActivity(Intent(this, ProfileActivity::class.java))
+                FirebaseAuth.getInstance().currentUser?.let {
+                    UserDatabase.setPseudo(it.uid, pseudo)
+                    UserDatabase.setFirstName(it.uid, firstName)
+                    UserDatabase.setLastName(it.uid, lastName)
+                    UserDatabase.setProfilePicture(it.uid, profilePicture)
+                    UserDatabase.setGender(it.uid, gender)
+                    UserDatabase.setBirthdate(it.uid, birthDate)
+                    UserDatabase.setDescription(it.uid, description)
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                }
             }
 
             // Upload picture to database
             profilePictureUri?.let {
                 imageDatabase.uploadProfilePicture(
-                    currentUser, it,
+                    FirebaseAuth.getInstance().currentUser, it,
                     findViewById(android.R.id.content)
                 )
             }
