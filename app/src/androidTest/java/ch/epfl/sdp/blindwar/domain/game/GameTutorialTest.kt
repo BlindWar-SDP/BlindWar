@@ -53,7 +53,7 @@ class GameTutorialTest {
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, contentResolver)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, context, context.resources)
         gameTutorial.init()
         val round = 4
         for (i in 0 until round) {
@@ -65,7 +65,6 @@ class GameTutorialTest {
         FirebaseAuth.getInstance().signOut()
         val logout: Unit = FirebaseAuth.getInstance().signOut()
         Thread.sleep(1000)
-
     }
 
 
