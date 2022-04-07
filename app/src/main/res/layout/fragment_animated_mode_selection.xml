@@ -22,8 +22,8 @@
         <CheckBox
             android:id="@+id/checkBox"
             style="@style/Widget.AppCompat.CompoundButton.CheckBox"
-            android:layout_width="97dp"
-            android:layout_height="49dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:fontFamily="@font/bungee_inline"
             android:text="@string/funny"
             android:textColor="@color/black"
@@ -39,10 +39,9 @@
             android:background="@null"
             app:layout_constraintBottom_toBottomOf="@+id/checkBox"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.647"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.464"
+            app:layout_constraintStart_toStartOf="@+id/checkBox"
             app:layout_constraintTop_toTopOf="@+id/checkBox"
-            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/ic_baseline_info_24"
             tools:ignore="SpeakableTextPresentCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -320,12 +319,11 @@
             android:fontFamily="@font/oxygen"
             android:text="@string/classicDescription"
             android:textColor="@color/black"
-            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/regularButton_"
             app:layout_constraintEnd_toEndOf="@+id/regularButton_"
             app:layout_constraintStart_toStartOf="@+id/regularButton_"
             app:layout_constraintTop_toTopOf="@+id/regularButton_"
-            app:layout_constraintVertical_bias="0.496" />
+            app:layout_constraintVertical_bias="0.5" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/regularButton_"
@@ -395,6 +393,7 @@
             android:id="@+id/vinyl2"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/vinylGuidelineEnd"
             app:layout_constraintEnd_toEndOf="@+id/regularButton_"
             app:layout_constraintHorizontal_bias="1.0"
@@ -411,6 +410,7 @@
             android:id="@+id/vinyl"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginStart="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/vinylGuidelineEnd"
             app:layout_constraintEnd_toStartOf="@+id/vinylVerticalGuideline"
             app:layout_constraintHorizontal_bias="0.0"
@@ -444,6 +444,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/baseline_navigate_before_24"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -457,22 +458,23 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/mode_selection"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/baseline_settings_24"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
             android:id="@+id/mode_selection"
-            android:layout_width="283dp"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/bungee_inline"
+            android:gravity="bottom"
             android:text="@string/mode_selection"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="@color/black"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />

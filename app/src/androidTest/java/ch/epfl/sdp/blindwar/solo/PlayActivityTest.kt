@@ -2,6 +2,7 @@ package ch.epfl.sdp.blindwar.solo
 
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.Lifecycle
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBackUnconditionally
 import androidx.test.espresso.UiController
@@ -18,6 +19,7 @@ import ch.epfl.sdp.blindwar.domain.game.Tutorial
 import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
 import ch.epfl.sdp.blindwar.ui.solo.PlaylistAdapter
 import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertTrue
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.junit.Rule
@@ -30,6 +32,12 @@ class PlayActivityTest {
     var testRule = ActivityScenarioRule(
             PlayActivity::class.java
     )
+
+    @Test
+    fun testBackButton() {
+        onView(withId(R.id.back_button)).perform(click())
+        assertTrue(testRule.scenario.state == Lifecycle.State.DESTROYED)
+    }
 
     @Test
     fun testModeSelectionDisplayedOnLaunch() {
@@ -71,6 +79,7 @@ class PlayActivityTest {
         }
     }
 
+    /** TODO: Clean up the following methods **/
     @Test
     fun testLostThenWonGame() {
         searchPlaylist("The witcher", 2)
@@ -102,7 +111,7 @@ class PlayActivityTest {
 
         onView(withId(R.id.quit)).perform(click())
     }
-    
+
     @Test
     fun testLostGameConnected() {
         testCompleteGame(0, Tutorial.ROUND)
@@ -116,7 +125,6 @@ class PlayActivityTest {
         testCompleteGame(1, Tutorial.ROUND)
         onView(withId(R.id.quit)).perform(click())
     }
-
 
     private fun testCompleteGame(playlistIndex: Int, round: Int) {
         launchDemoWithMode(R.id.raceButton_, playlistIndex)
