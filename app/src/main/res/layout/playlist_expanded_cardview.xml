@@ -57,19 +57,6 @@
                     app:srcCompat="@drawable/baseline_navigate_before_24"
                     tools:ignore="SpeakableTextPresentCheck" />
 
-                <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/progress_preview"
-                    android:layout_width="52dp"
-                    android:layout_height="52dp"
-                    android:layout_centerInParent="true"
-                    app:indicatorColor="@color/opaque_black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/likeView"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@+id/coverCard"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.5" />
-
                 <ImageButton
                     android:id="@+id/playPreview"
                     android:layout_width="24dp"
@@ -82,7 +69,6 @@
                     app:srcCompat="@drawable/play_arrow_small"
                     app:tint="@color/opaque_black" />
 
-
                 <ImageView
                     android:id="@+id/authorIcon"
                     android:layout_width="24dp"
@@ -94,6 +80,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/playlistName"
                     app:layout_constraintVertical_bias="0.0"
                     app:srcCompat="@drawable/ic_baseline_check_24" />
+
 
                 <TextView
                     android:id="@+id/playlistName"
@@ -130,6 +117,43 @@
                     app:layout_constraintTop_toTopOf="@+id/nameGuideline"
                     app:layout_constraintVertical_bias="0.0"
                     tools:text="AUTHOR" />
+
+                <TextView
+                    android:id="@+id/difficultyLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/hard_label_frame"
+                    android:fontFamily="@font/oxygen_light"
+                    android:text="HARD"
+                    android:textColor="@color/ivory"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/nameSeparationGuideline"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/coverGuideline"
+                    app:layout_constraintTop_toBottomOf="@+id/authorTextview"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:text="HARD" />
+
+                <TextView
+                    android:id="@+id/genreLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/genre_label_frame"
+                    android:fontFamily="@font/oxygen_light"
+                    android:text="POP"
+                    android:textColor="@color/ivory"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/nameSeparationGuideline"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/difficultyLabel"
+                    app:layout_constraintTop_toBottomOf="@+id/authorTextview"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:text="POP" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/coverCard"
@@ -202,42 +226,18 @@
                     app:lottie_loop="false"
                     app:lottie_speed="2" />
 
-                <TextView
-                    android:id="@+id/difficultyLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:textSize="11sp"
-                    android:background="@drawable/hard_label_frame"
-                    android:fontFamily="@font/oxygen_light"
-                    android:text="HARD"
-                    android:textColor="@color/ivory"
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progress_preview"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:layout_centerInParent="true"
+                    app:indicatorColor="@color/opaque_black"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/nameSeparationGuideline"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/coverGuideline"
-                    app:layout_constraintTop_toBottomOf="@+id/authorTextview"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:text="HARD" />
-
-                <TextView
-                    android:id="@+id/genreLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="6dp"
-                    android:background="@drawable/genre_label_frame"
-                    android:fontFamily="@font/oxygen_light"
-                    android:text="POP"
-                    android:textColor="@color/ivory"
-                    android:textSize="11sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/nameSeparationGuideline"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toEndOf="@+id/difficultyLabel"
-                    app:layout_constraintTop_toBottomOf="@+id/authorTextview"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:text="POP" />
+                    app:layout_constraintEnd_toStartOf="@+id/likeView"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="@+id/coverCard"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -246,33 +246,14 @@
                 android:id="@+id/expanded"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/base_cardview">
 
-                <ImageButton
-                    android:id="@+id/startGame"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginBottom="2dp"
-                    android:background="@drawable/border_button"
-                    android:backgroundTint="@color/opaque_black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/timerTextView"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/play_arrow"
-                    tools:ignore="SpeakableTextPresentCheck" />
-
                 <NumberPicker
                     android:id="@+id/timerPicker"
-                    android:layout_width="60dp"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:backgroundTint="@color/ivory"
                     android:theme="@style/AppTheme.Picker"
@@ -286,17 +267,17 @@
 
                 <NumberPicker
                     android:id="@+id/roundPicker"
-                    android:layout_width="60dp"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="16dp"
                     android:backgroundTint="@color/ivory"
                     android:theme="@style/AppTheme.Picker"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/roundTextView"
-                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/timerTextView"
@@ -305,22 +286,31 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
                     android:fontFamily="@font/oxygen"
+                    android:autoSizeTextType="uniform"
                     android:text="TIMER"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/timerPicker"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/startGame"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline8"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/timerPicker"
                     app:layout_constraintTop_toTopOf="@+id/timerPicker"
                     tools:text="TIMER" />
 
-                <TextView
-                    android:id="@+id/roundTextView"
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.82" />
+
+                <TextView
+                    android:id="@+id/roundTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:fontFamily="@font/oxygen"
+                    android:autoSizeTextType="uniform"
                     android:text="ROUNDS"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/roundPicker"
@@ -330,6 +320,23 @@
                     app:layout_constraintTop_toTopOf="@+id/roundPicker"
                     app:layout_constraintVertical_bias="0.5"
                     tools:text="ROUNDS" />
+
+                <ImageButton
+                    android:id="@+id/startGame"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/border_button"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/guideline8"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/play_arrow"
+                    tools:ignore="SpeakableTextPresentCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
