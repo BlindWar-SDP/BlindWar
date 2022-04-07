@@ -55,14 +55,12 @@ class GameTutorialTest {
         }
         val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, contentResolver)
         gameTutorial.init()
-        goodGuess(gameTutorial)
-
-        assertThat(gameTutorial.score, `is`(1))
-        val round = 2
+        val round = 4
         for (i in 0 until round) {
-            gameTutorial.nextRound()
-            val fails = i + 1 - gameTutorial.score
-            assertThat(fails, `is`(i))
+            goodGuess(gameTutorial)
+            val round = gameTutorial.round
+            val fails = gameTutorial.round - gameTutorial.score
+            assertThat(fails, `is`(0))
         }
         FirebaseAuth.getInstance().signOut()
         val logout: Unit = FirebaseAuth.getInstance().signOut()

@@ -36,7 +36,8 @@ abstract class Game<FileDescriptorT>(
     var score = 0
         protected set
 
-    private var round = 0
+    var round = 0
+        protected set
 
     /**
      * Prepares the game following the configuration
