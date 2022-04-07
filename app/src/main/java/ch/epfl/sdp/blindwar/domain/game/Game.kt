@@ -1,11 +1,10 @@
 package ch.epfl.sdp.blindwar.domain.game
 
-import android.content.ContentResolver
 import android.content.Context
 import android.content.res.AssetManager
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import com.google.firebase.auth.FirebaseAuth
-import java.util.*
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 
 /**
  * Class representing an instance of a game
@@ -14,15 +13,15 @@ import java.util.*
  * Construct a class that represent the game logic
  *
  */
-abstract class Game<FileDescriptorT>(
+abstract class Game(
     gameInstance: GameInstance,
     protected val assetManager: AssetManager,
-    protected val contentResolver: ContentResolver
+    protected val context: Context
 ) {
     /** Encapsulates the characteristics of a game instead of its logic **/
     private val game: GameInstance = gameInstance
 
-    protected lateinit var gameSound: GameSound<FileDescriptorT>
+    protected lateinit var musicSound: MusicSound
 
     private val gameParameter: GameParameter = gameInstance
         .gameConfig
@@ -56,7 +55,7 @@ abstract class Game<FileDescriptorT>(
         if (currentUser != null) {
             UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
         }
-        gameSound.soundTeardown()
+        musicSound.soundTeardown()
     }
 
     /**
@@ -70,18 +69,17 @@ abstract class Game<FileDescriptorT>(
             return true
         }
 
-        gameSound.nextRound()
+        musicSound.nextRound()
         return false
     }
 
     /**
      * Depends on the game instance parameter
      */
-    fun currentMetadata(): SongMetaData? {
+    fun currentMetadata(): MusicMetadata? {
         if (gameDifficulty.hint) {
-            return gameSound.getCurrentMetadata()
+            return musicSound.getCurrentMetadata()
         }
-
         return null
     }
 
@@ -91,10 +89,9 @@ abstract class Game<FileDescriptorT>(
      * @param titleGuess Title that the user guesses
      * @return True if the guess is correct
      */
-    fun guess(titleGuess: String): Boolean {
-        return if (titleGuess.uppercase(Locale.getDefault()) == currentMetadata()?.title?.uppercase(
-                Locale.getDefault()
-            )
+    fun guess(titleGuess: String, isVocal: Boolean): Boolean {
+        return if (
+            GameHelper.isTheCorrectTitle(titleGuess, currentMetadata()!!.title, isVocal)
         ) {
             score += 1
             round += 1
@@ -117,7 +114,7 @@ abstract class Game<FileDescriptorT>(
      *
      */
     fun play() {
-        gameSound.play()
+        musicSound.play()
     }
 
     /**
@@ -125,6 +122,6 @@ abstract class Game<FileDescriptorT>(
      *
      */
     fun pause() {
-        gameSound.pause()
+        musicSound.pause()
     }
 }

@@ -14,6 +14,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.ui.DemoSRActivity
 import ch.epfl.sdp.blindwar.ui.MainMenuActivity
 import ch.epfl.sdp.blindwar.ui.ProfileActivity
+import ch.epfl.sdp.blindwar.ui.multi.MultiPlayerActivity
 import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
 import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
@@ -53,6 +54,13 @@ class MainMenuActivityTest : TestCase() {
         onView(withId(R.id.soloButton))
             .perform(click())
         intended(hasComponent(AnimatedPlayActivity::class.java.name))
+    }
+
+    @Test
+    fun testMultiButton() {
+        onView(withId(R.id.multiButton))
+            .perform(click())
+        intended(hasComponent(MultiPlayerActivity::class.java.name))
     }
 
     @Test

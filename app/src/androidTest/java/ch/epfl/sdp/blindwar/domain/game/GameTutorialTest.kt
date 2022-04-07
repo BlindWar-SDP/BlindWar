@@ -7,10 +7,11 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.hamcrest.CoreMatchers.`is`
 import java.util.*
 import java.util.concurrent.ExecutionException
 
@@ -20,11 +21,10 @@ class GameTutorialTest {
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
     private val assets = context.assets
-    private val contentResolver = context.contentResolver
 
     @Test
     fun testNextRound() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, contentResolver)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, context, context.resources)
         gameTutorial.init()
         val round = Tutorial
             .gameInstance
@@ -33,7 +33,7 @@ class GameTutorialTest {
             .round
 
         // Iterate 10 times since we have 10 different musics in tutorial
-        val toPlay: MutableSet<SongMetaData> = Tutorial.gameInstance.playlist.toMutableSet()
+        val toPlay: MutableSet<MusicMetadata> = Tutorial.gameInstance.playlist.toMutableSet()
         for (i in 0 until round) {
             gameTutorial.nextRound()
             assertThat(toPlay.remove(gameTutorial.currentMetadata()), `is`(true))
@@ -72,7 +72,7 @@ class GameTutorialTest {
 
     @Test
     fun testTwoGoodGuesses() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, contentResolver)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, context, context.resources)
         gameTutorial.init()
         goodGuess(gameTutorial)
         goodGuess(gameTutorial)
@@ -82,18 +82,18 @@ class GameTutorialTest {
 
     @Test
     fun testUpperCaseGuess() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, contentResolver)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, context, context.resources)
         gameTutorial.init()
         gameTutorial.nextRound()
         val music1 = gameTutorial.currentMetadata()
-        music1?.let { gameTutorial.guess(it.title.uppercase(Locale.getDefault())) }
+        music1?.let { gameTutorial.guess(it.title.uppercase(Locale.getDefault()), false) }
 
         assertThat(gameTutorial.score, `is`(1))
     }
 
     @Test
     fun testTwoGoodAndOneBadGuesses() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, contentResolver)
+        val gameTutorial = GameTutorial(Tutorial.gameInstance, assets, context, context.resources)
         gameTutorial.init()
         goodGuess(gameTutorial)
         goodGuess(gameTutorial)
@@ -104,11 +104,11 @@ class GameTutorialTest {
 
     private fun goodGuess(gameTutorial: GameTutorial) {
         gameTutorial.nextRound()
-        gameTutorial.guess(gameTutorial.currentMetadata()?.title!!)
+        gameTutorial.guess(gameTutorial.currentMetadata()?.title!!, false)
     }
 
     private fun badGuess(gameTutorial: GameTutorial) {
         gameTutorial.nextRound()
-        gameTutorial.guess("THIS IS NOT A CORRECT TITLE")
+        gameTutorial.guess("THIS IS NOT A CORRECT TITLE", false)
     }
 }

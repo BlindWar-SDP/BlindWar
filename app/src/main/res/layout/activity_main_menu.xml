@@ -33,6 +33,19 @@
         app:layout_constraintVertical_bias="0.323" />
 
     <Button
+        android:id="@+id/multiButton"
+        android:layout_width="137dp"
+        android:layout_height="70dp"
+        android:onClick="multiButton"
+        android:text="@string/multi"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.481" />
+
+    <Button
         android:id="@+id/tutorialButton"
         android:layout_width="137dp"
         android:layout_height="70dp"
@@ -43,22 +56,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/soloButton"
-        app:layout_constraintVertical_bias="0.076" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.617" />
 
     <Button
         android:id="@+id/SpeechButton"
         android:layout_width="137dp"
         android:layout_height="70dp"
-        android:layout_marginTop="20dp"
         android:onClick="launchSpeechRecognitionActivity"
         android:text="@string/speechRecognition"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tutorialButton"
-        app:layout_constraintVertical_bias="0.076" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.786" />
 
     <Button
         android:id="@+id/profileButton"
@@ -70,9 +82,10 @@
         android:theme="@style/Button.Red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.841" />
+        app:layout_constraintVertical_bias="0.91" />
 
     <TextView
         android:id="@+id/titleText"

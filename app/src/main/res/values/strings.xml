@@ -148,5 +148,9 @@
     <string name="time">TIME</string>
     <string name="artist">ARTIST</string>
     <string name="track">TRACK</string>
+    <string name="play_with_friends">Play with friends</string>
+    <string name="play_with_random">Play with random</string>
+    <string name="icon_for_playing_with_friends">Icon for playing with friends</string>
+    <string name="icon_for_playing_with_random_people">Icon for playing with random people</string>
 
 </resources>

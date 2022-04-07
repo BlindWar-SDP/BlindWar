@@ -1,11 +1,13 @@
 package ch.epfl.sdp.blindwar.ui.solo
 
+import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
@@ -13,20 +15,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.domain.game.Game
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.domain.game.GameTutorial
-import ch.epfl.sdp.blindwar.domain.game.SongMetaData
 import ch.epfl.sdp.blindwar.domain.game.Tutorial
 import ch.epfl.sdp.blindwar.ui.tutorial.GameSummaryFragment
 import ch.epfl.sdp.blindwar.ui.tutorial.SongSummaryFragment
 
-open class DemoFragment: Fragment() {
+open class DemoFragment : Fragment() {
     // Game view model to pass to the next round
     lateinit var game: GameTutorial
     protected var playing = true
     protected lateinit var guessEditText: EditText
     protected lateinit var scoreTextView: TextView
-    protected lateinit var songMetaData: SongMetaData
+    protected lateinit var musicMetadata: MusicMetadata
     protected lateinit var guessButton: ImageButton
     protected lateinit var countDown: TextView
     protected var duration: Int = 0
@@ -43,9 +44,14 @@ open class DemoFragment: Fragment() {
         val view = inflater.inflate(R.layout.activity_demo, container, false)
         /** Set up the interface **/
         // Game instance tutorial
-        game = GameTutorial(gameInstanceViewModel.gameInstance.value!!,
-            activity?.assets!!,
-            activity?.applicationContext?.contentResolver!!)
+        game = context?.let {
+            GameTutorial(
+                gameInstanceViewModel.gameInstance.value!!,
+                activity?.assets!!,
+                it,
+                resources
+            )
+        }!!
 
         game.init()
 
@@ -67,16 +73,19 @@ open class DemoFragment: Fragment() {
         /** Start the game **/
         game.nextRound()
         game.play()
-        songMetaData = game.currentMetadata()!!
+        musicMetadata = game.currentMetadata()!!
         timer.start()
 
         // Get the widgets
         guessEditText = view.findViewById(R.id.guessEditText)
-        guessEditText.hint = songMetaData.artist
+        guessEditText.hint = musicMetadata.artist
         scoreTextView = view.findViewById(R.id.scoreTextView)
-        guessButton = view.findViewById<ImageButton>(R.id.guessButtonDemo).also{
-            it.setOnClickListener{
-                guess()
+        guessButton = view.findViewById<ImageButton>(R.id.guessButtonDemo).also {
+            it.setOnClickListener {
+                guess(false, isAuto = false)
+
+                // Delete the text of the guess
+                guessEditText.setText("")
             }
         }
 
@@ -117,7 +126,10 @@ open class DemoFragment: Fragment() {
 
         //if (activity?.supportFragmentManager?.fragments?.size!! > 1) {
         if (activity?.supportFragmentManager?.fragments!!.size > 1) {
-            Log.d("RESUME DEMO", activity?.supportFragmentManager?.fragments?.get(1)?.tag.toString())
+            Log.d(
+                "RESUME DEMO",
+                activity?.supportFragmentManager?.fragments?.get(1)?.tag.toString()
+            )
             if (activity?.supportFragmentManager?.fragments?.get(1) is SongSummaryFragment) {
                 val songFragment =
                     (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
@@ -135,8 +147,9 @@ open class DemoFragment: Fragment() {
                 if (!game.nextRound()) {
                     setVisibilityLayout(View.VISIBLE)
                     // Pass to the next music
-                    songMetaData = game.currentMetadata()!!
-                    guessEditText.hint = songMetaData.artist
+                    musicMetadata = game.currentMetadata()!!
+                    guessEditText.hint = musicMetadata.artist
+                    guessEditText.setText("")
                     // Cache song image
                     // Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
                     timer.start()
@@ -147,17 +160,16 @@ open class DemoFragment: Fragment() {
         }
     }
 
-    fun guess() {
-        if(game.guess(guessEditText.text.toString())) {
+    fun guess(isVocal: Boolean, isAuto: Boolean) {
+        if (game.guess(guessEditText.text.toString(), isVocal)) {
             // Update the number of point view
             scoreTextView.text = game.score.toString()
+            (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
+                .hideSoftInputFromWindow(view?.windowToken, 0)
             launchSongSummary(success = true)
-        } else {
+        } else if (!isAuto) {
             animNotFound()
         }
-
-        // Delete the text of the guess
-        guessEditText.setText("")
     }
 
     override fun onPause() {
@@ -191,9 +203,9 @@ open class DemoFragment: Fragment() {
 
     private fun createBundleSongSummary(success: Boolean): Bundle {
         val bundle = Bundle()
-        bundle.putString("artist", songMetaData.artist)
-        bundle.putString("title", songMetaData.title)
-        bundle.putString("image", songMetaData.imageUrl)
+        bundle.putString("artist", musicMetadata.artist)
+        bundle.putString("title", musicMetadata.title)
+        bundle.putString("image", musicMetadata.imageUrl)
         bundle.putBoolean("success", success)
         return bundle
     }

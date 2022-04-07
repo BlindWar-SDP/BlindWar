@@ -1,11 +1,13 @@
 package ch.epfl.sdp.blindwar.domain.game
 
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+
 data class GameInstance(
     val gameConfig: GameConfig,
-    val playlist: List<SongMetaData>)
+    val playlist: List<MusicMetadata>)
 
 class GameInstanceBuilder() {
-    private var playlist: List<SongMetaData> = Tutorial.gameInstance
+    private var playlist: List<MusicMetadata> = Tutorial.gameInstance
         .playlist
 
     private var gameFormat: GameFormat = GameFormat.SOLO
@@ -18,7 +20,7 @@ class GameInstanceBuilder() {
         .gameConfig
         .mode
 
-    fun setPlaylist(playlist: List<SongMetaData>): GameInstanceBuilder {
+    fun setPlaylist(playlist: List<MusicMetadata>): GameInstanceBuilder {
         this.playlist = playlist
         return this
     }
