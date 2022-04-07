@@ -1,9 +1,7 @@
 package ch.epfl.sdp.blindwar.ui
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +15,6 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlin.concurrent.thread
 
 class SplashScreenActivity : AppCompatActivity() {
     // inspired by :
@@ -94,7 +91,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
             return if (user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp) {
                 // new user: 1st signIn
-                Intent(activity, NewUserActivity::class.java)
+                Intent(activity, UserNewInfoActivity::class.java).putExtra("newUser", true)
             } else {
                 /*
                     - should we update the online database with the local cache here ?

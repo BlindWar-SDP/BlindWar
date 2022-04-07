@@ -20,18 +20,38 @@ object UserDatabase {
     }
 
     // Add user to database
-    fun addUser(uid: String, user: User) {
-        userReference.child(uid).setValue(user)
+    fun addUser(user: User) {
+        userReference.child(user.uid).setValue(user)
     }
-    /*
     // Remove user from database
     fun removeUser(uid: String) {
         userReference.child(uid).removeValue()
-    }*/
+    }
 
     // Set elo of an user
     fun setElo(uid: String, elo: Int) {
         getEloReference(uid).setValue(elo)
+    }
+    fun setFirstName(uid: String, fn: String) {
+        userReference.child(uid).child("firstName").setValue(fn)
+    }
+    fun setLastName(uid: String, ln: String) {
+        userReference.child(uid).child("lastName").setValue(ln)
+    }
+    fun setPseudo(uid: String, pseudo: String) {
+        userReference.child(uid).child("pseudo").setValue(pseudo)
+    }
+    fun setProfilePicture(uid: String, pp: String) {
+        userReference.child(uid).child("profilePicture").setValue(pp)
+    }
+    fun setBirthdate(uid: String, date: Long) {
+        userReference.child(uid).child("birthDate").setValue(date)
+    }
+    fun setGender(uid: String, gender: String) {
+        userReference.child(uid).child("gender").setValue(gender)
+    }
+    fun setDescription(uid: String, desc: String) {
+        userReference.child(uid).child("description").setValue(desc)
     }
 
     // Allow user to select a profile picture and store it in database
