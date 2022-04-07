@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
@@ -119,6 +120,14 @@ class DemoFragment : Fragment() {
         voiceRecognizer = VoiceRecognizer()
         audioVisualizer = view.findViewById(R.id.audioVisualizer)
         startButton.setMinAndMaxFrame(30, 50)
+
+        /** TODO : Settings menu
+        guessEditText.doOnTextChanged { text, _, _, _ ->
+            if (text != "" && (text!!.length > game.currentMetadata()?.title!!.length / 2.0)) {
+                isVocal = voiceRecognizer.resultsRecognized != ""
+                guess(false, isAuto = true) //guess as a keyboard at every change
+            }
+        }**/
 
         microphoneButton = view.findViewById(R.id.microphone)
         context?.let { voiceRecognizer.init(it, guessEditText, Locale.ENGLISH.toLanguageTag()) }

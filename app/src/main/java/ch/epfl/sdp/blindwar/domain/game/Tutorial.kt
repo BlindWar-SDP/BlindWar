@@ -13,7 +13,7 @@ import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 object Tutorial {
 
     const val TIME_TO_FIND = 5000
-    const val ROUND = 1
+    const val ROUND = 2
 
     private val PLAYLIST: List<ResourceMusicMetadata> = METADATA_TUTORIAL_MUSICS_PER_AUTHOR.values.toList()
 
@@ -68,9 +68,7 @@ object Tutorial {
                 "https://i.scdn.co/image/ab67616d00001e02711f517eabfb36486a6d96f2",
                 30000,
                 URL_FIFA_SONG_3
-            ),
-            ResourceMusicMetadata("Poker Face", "Lady Gaga",
-                MusicImageUrlConstants.LADY_GAGA, 214000, resourceId = MusicImageUrlConstants.ids[0])
+            )
         ),
         "https://i.scdn.co/image/ab67706c0000bebba1371bd946a7bc3f61f83db4",
         URL_PREVIEW_FIFA
