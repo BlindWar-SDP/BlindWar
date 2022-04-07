@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.ui
 
+import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.intent.Intents
@@ -42,6 +43,7 @@ class UserAdditionalInfoActivityTest : TestCase() {
     @Test
     fun testDescription() {
         typeTo(R.id.NUA_description,"My Description")
+        closeSoftKeyboard()
         clickOn(R.id.NUA_Confirm_Btn)
         intended(hasComponent(UserNewInfoActivity::class.java.name))
     }
