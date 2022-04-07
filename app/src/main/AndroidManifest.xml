@@ -4,29 +4,27 @@
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_base"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round_base"
+        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BlindWar"
-        android:usesCleartextTraffic="true">
+        android:theme="@style/Theme.BlindWar">
         <activity
             android:name=".ui.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.UserAdditionalInfoActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.UserNewInfoActivity"
             android:exported="false"
@@ -34,6 +32,12 @@
         <activity
             android:name=".ui.solo.PlayActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.UserAdditionalInfoActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.UserNewInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.multi.MultiPlayerActivity"
@@ -48,32 +52,24 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.solo.animated.AnimatedPlayActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.tutorial.TutorialActivity"
-            android:exported="false"
             android:parentActivityName=".ui.MainMenuActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.DemoSRActivity"
-            android:exported="false"
             android:parentActivityName=".ui.MainMenuActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.solo.SoloMenuActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ProfileActivity"
-            android:exported="false"
             android:parentActivityName=".ui.MainMenuActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.StatisticsActivity"
-            android:exported="false"
             android:parentActivityName=".ui.ProfileActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MainMenuActivity"
@@ -84,5 +80,4 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
 </manifest>

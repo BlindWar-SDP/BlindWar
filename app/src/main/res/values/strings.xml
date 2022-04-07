@@ -36,7 +36,7 @@
     <string name="survival">SURVIVAL</string>
     <string name="classic">CLASSIC</string>
     <string name="timed">TIMED</string>
-    <string name="mode_selection">MODE SELECTION</string>
+    <string name="mode_selection">MODE</string>
     <string name="funny">FUNNY</string>
     <string name="timedDescription">Faster, Higher, Stronger</string>
     <string name="survivalDescription">Good luck</string>

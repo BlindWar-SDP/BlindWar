@@ -1,18 +1,24 @@
 package ch.epfl.sdp.blindwar.domain.game
 
+import android.content.Context
+import android.content.res.Resources
 import android.media.MediaPlayer
-import ch.epfl.sdp.blindwar.data.music.MusicController
+import android.provider.MediaStore
+import ch.epfl.sdp.blindwar.data.AudioHelper
+import ch.epfl.sdp.blindwar.data.music.MusicRepository
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
-import ch.epfl.sdp.blindwar.data.music.Playlist
+import ch.epfl.sdp.blindwar.ui.solo.PlaylistModel
 import java.util.*
 
-class MusicSound(val playlist: Playlist) {
+class MusicController(playlist: PlaylistModel,
+                      context: Context,
+                      resources: Resources) {
 
     // Collection of musics
-    private val mediaPlayerPerMusic = MusicController.fetchMusics(playlist)
+    private val mediaPlayerPerMusic = MusicRepository(resources, context).fetchMusics(playlist)
 
     // Mutable collection of musics
-    private var mutableMediaPlayerPerMusic = MusicController.fetchMusics(playlist).toMutableMap()
+    private var mutableMediaPlayerPerMusic = mediaPlayerPerMusic.toMutableMap()
 
     // Current metadata
     private var currentMusicMetadata: MusicMetadata? = null
@@ -20,14 +26,11 @@ class MusicSound(val playlist: Playlist) {
     // Current player
     private var currentMediaPlayer: MediaPlayer? = null
 
-    init {
-        // Fetch the music from the music controller
-        MusicController.fetchMusics(playlist)
-    }
-
+    /**
     private fun refreshFetchers() {
         mutableMediaPlayerPerMusic = mediaPlayerPerMusic.toMutableMap()
     }
+    **/
 
     fun soundTeardown() {
         pause()
@@ -43,8 +46,10 @@ class MusicSound(val playlist: Playlist) {
         pause()
         reset()
 
+        /**
         if (mutableMediaPlayerPerMusic.isEmpty())
             refreshFetchers()
+        **/
 
         // Get a random title
         val random = Random()
@@ -54,26 +59,20 @@ class MusicSound(val playlist: Playlist) {
         // Remove it to the playlist
         mutableMediaPlayerPerMusic.remove(musicMetadata)
 
-        // Keep the start time low enough so that at least half the song can be heard (for now)
-        val time = random.nextInt(musicMetadata.duration.div(2))
 
         // Set the current metadata and the current player
         currentMusicMetadata = musicMetadata
         currentMediaPlayer = mediaPlayerPerMusic[musicMetadata]
 
-        // Change the current music
-        currentMediaPlayer?.seekTo(time)
 
         // Play the music
         currentMediaPlayer?.start()
+        currentMediaPlayer?.isLooping = true
 
         return currentMusicMetadata
     }
 
     /** Game Sound Controls **/
-    /**
-     * TODO: Other sound controls : Sound alteration...
-     */
 
     private fun reset() {
         currentMediaPlayer?.reset()
@@ -85,5 +84,13 @@ class MusicSound(val playlist: Playlist) {
 
     fun pause() {
         currentMediaPlayer?.pause()
+    }
+
+    fun summaryMode() {
+        AudioHelper.soundAlter(currentMediaPlayer!!, AudioHelper.SLOWED, AudioHelper.LOW)
+    }
+
+    fun normalMode() {
+        AudioHelper.soundAlter(currentMediaPlayer!!, AudioHelper.NORMAL, AudioHelper.NORMAL)
     }
 }

@@ -7,7 +7,7 @@ object SpotifyApiConstants {
     /** Credentials constants **/
     private const val CLIENT_ID = ""
     private const val CLIENT_SECRET = ""
-    const val AUTH_TYPE = ""
+    const val AUTH_TYPE = "client_credentials"
 
     fun credentialsEncoding(): String {
         return "Basic ${
@@ -33,11 +33,14 @@ object SpotifyApiConstants {
     const val SPOTIFY_AUTH_END_POINT = "https://accounts.spotify.com/"
     const val API_PATH = "api/token/"
     const val ARTIST_PATH = "artists/{artist_id}"
-    //const val TRACK_PATH = "tracks/{track_id}"
+    const val TRACK_PATH = "tracks/{track_id}"
+    const val SEARCH_PATH="search"
 
     /** Query and field constants **/
     const val ARTIST_ID = "artist_id"
     const val GRANT_TYPE = "grant_type"
-    //const val TRACK_ID = "track_id"
-    //const val LIMIT = "limit"
+    const val TRACK_ID = "track_id"
+    const val TYPE = "type"
+    const val QUERY = "q"
+    const val LIMIT = "limit"
 }

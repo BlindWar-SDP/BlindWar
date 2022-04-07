@@ -1,5 +1,7 @@
 package ch.epfl.sdp.blindwar.data.music
 
+import ch.epfl.sdp.blindwar.R
+
 /**
  * Hard coded constants for demo purposes
  */
@@ -15,16 +17,28 @@ object MusicImageUrlConstants {
     const val RHCP: String = "https://i.scdn.co/image/ab67616d00001e0294d08ab63e57b0cae74e8595"
     const val SUM_41: String = "https://i.scdn.co/image/ab67616d00001e029a482180e6a306229bff49dc"
 
-    val METADATA_TUTORIAL_MUSICS_PER_AUTHOR: Map<String, MusicMetadata> = mutableMapOf<String, MusicMetadata>().let{
-        it["Lady Gaga"] = MusicMetadata("Poker Face", "Lady Gaga", LADY_GAGA, 214000)
-        it["Gorillaz"] = MusicMetadata("Feel Good Inc", "Gorillaz", GORILLAZ, 254000)
-        it["ACDC"] = MusicMetadata("Highway To Hell", "ACDC", ACDC, 207000)
-        it["The Notorious BIG"] = MusicMetadata("Respect", "The Notorious BIG", THE_NOTORIOUS, 3200000)
-        it["The Clash"] = MusicMetadata("London Calling", "The Clash", THE_CLASH, 203000)
-        it["Renaud"] = MusicMetadata("Mistral Gagnant", "Renaud", RENAUD, 162000)
-        it["Red Hot Chili Peppers"] = MusicMetadata("Californication", "Red Hot Chili Peppers", RHCP, 321000)
-        it["Sum 41"] = MusicMetadata("In Too Deep", "Sum 41", SUM_41, 222000)
-        it["Daft Punk"] = MusicMetadata("One More Time", "Daft Punk", DAFT_PUNK, 321000)
+    val ids = listOf(
+        R.raw.lady_gaga_poker_face,
+        R.raw.gorillaz_feel_good,
+        R.raw.acdc_highway_to_hell,
+        R.raw.the_notorious_big_respect,
+        R.raw.the_clash_london_calling,
+        R.raw.renaud_mistral_gagnant,
+        R.raw.red_hot_chili_peppers_californication,
+        R.raw.sum_41_in_too_deep,
+        R.raw.daft_punk_one_more_time
+    )
+
+    val METADATA_TUTORIAL_MUSICS_PER_AUTHOR: Map<String, ResourceMusicMetadata> = mutableMapOf<String, ResourceMusicMetadata>().let{
+        it["Lady Gaga"] = ResourceMusicMetadata("Poker Face", "Lady Gaga", LADY_GAGA, 214000, resourceId = ids[0])
+        it["Gorillaz"] = ResourceMusicMetadata("Feel Good Inc", "Gorillaz", GORILLAZ, 254000, ids[1])
+        it["ACDC"] = ResourceMusicMetadata("Highway To Hell", "ACDC", ACDC, 207000, ids[2])
+        it["The Notorious BIG"] = ResourceMusicMetadata("Respect", "The Notorious BIG", THE_NOTORIOUS, 3200000, ids[3])
+        it["The Clash"] = ResourceMusicMetadata("London Calling", "The Clash", THE_CLASH, 203000, ids[4])
+        it["Renaud"] = ResourceMusicMetadata("Mistral Gagnant", "Renaud", RENAUD, 162000, ids[5])
+        it["Red Hot Chili Peppers"] = ResourceMusicMetadata("Californication", "Red Hot Chili Peppers", RHCP, 321000, ids[6])
+        it["Sum 41"] = ResourceMusicMetadata("In Too Deep", "Sum 41", SUM_41, 222000, ids[7])
+        it["Daft Punk"] = ResourceMusicMetadata("One More Time", "Daft Punk", DAFT_PUNK, 321000, ids[8])
 
         it
     }

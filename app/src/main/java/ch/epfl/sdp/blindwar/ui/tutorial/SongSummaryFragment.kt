@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar.ui.tutorial
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +10,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.ui.solo.animated.AnimationSetterHelper
 import com.airbnb.lottie.LottieAnimationView
 import com.squareup.picasso.Picasso
 
@@ -44,12 +44,12 @@ class SongSummaryFragment : Fragment() {
 
         /** Background color **/
         success = arguments?.get("success") as Boolean
-        val background = view.findViewById<ConstraintLayout>(R.id.song_summary_fragment)
+        val layout = view.findViewById<ConstraintLayout>(R.id.song_summary_fragment)
 
         if (success) {
-            background.setBackgroundColor(resources.getColor(R.color.success))
+            layout.setBackgroundColor(resources.getColor(R.color.success))
         } else {
-            background.setBackgroundColor(resources.getColor(R.color.black))
+            layout.setBackgroundColor(resources.getColor(R.color.black))
         }
 
         /** Like animation **/
@@ -62,7 +62,6 @@ class SongSummaryFragment : Fragment() {
         }
 
         likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
-            val layout = view.findViewById<ConstraintLayout>(R.id.song_summary_fragment)
             skip.visibility = View.GONE
             layout.background =
                 if (success)
@@ -84,24 +83,10 @@ class SongSummaryFragment : Fragment() {
     }
 
     private fun setLikeListener() {
-        if (likeSwitch) {
-            likeAnimation.setMinAndMaxFrame(45, 70)
-        } else {
-            likeAnimation.setMinAndMaxFrame(10, 30)
-        }
+        AnimationSetterHelper.setLikeListener(likeSwitch, likeAnimation)
 
         likeAnimation.setOnClickListener {
-            if (!likeSwitch) {
-                likeAnimation.setMinAndMaxFrame(10, 30)
-                likeAnimation.repeatCount = 0
-                //likeAnim.speed = 1f
-                likeAnimation.playAnimation()
-            } else {
-                likeAnimation.setMinAndMaxFrame(45, 70)
-                likeAnimation.repeatCount = 0
-                likeAnimation.playAnimation()
-            }
-
+            AnimationSetterHelper.playLikeAnimation(likeSwitch, likeAnimation)
             likeSwitch = !likeSwitch
         }
     }
