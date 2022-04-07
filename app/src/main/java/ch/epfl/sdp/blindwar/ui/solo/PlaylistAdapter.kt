@@ -90,11 +90,11 @@ class PlaylistAdapter(private var playlistModelSet: ArrayList<PlaylistModel>,
             /**TODO: Remove magic values **/
             roundPicker.maxValue = playlistModel.songs.size
             roundPicker.minValue = 1
-            roundPicker.value = Tutorial.ROUND
+            roundPicker.value = 1
 
             timerPicker.minValue = 1
             timerPicker.maxValue = 9
-            timerPicker.value = Tutorial.TIME_TO_FIND / 5000
+            timerPicker.value = 1
             timerPicker.displayedValues = ((1 until 10).map{ (5 * it).toString()}).toTypedArray()
 
             name.text = playlistModel.name.uppercase()

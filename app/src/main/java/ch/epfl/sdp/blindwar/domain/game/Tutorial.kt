@@ -12,16 +12,16 @@ import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 
 object Tutorial {
 
-    const val TIME_TO_FIND = 20000
-    const val ROUND = 3
+    const val TIME_TO_FIND = 5000
+    const val ROUND = 1
 
     private val PLAYLIST: List<ResourceMusicMetadata> = METADATA_TUTORIAL_MUSICS_PER_AUTHOR.values.toList()
 
     private val gameParameter =
-        GameParameter(round = 3, funny = false, timeToFind = TIME_TO_FIND, hint = true)
+        GameParameter(round = ROUND, funny = false, timeToFind = TIME_TO_FIND, hint = true)
 
     private val gameConfig =
-        GameConfig(
+        GameConfig (
             GameFormat.SOLO,
             GameMode.REGULAR,
             gameParameter

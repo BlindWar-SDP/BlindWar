@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar.domain.game
 
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.ui.solo.PlaylistModel
 
 data class GameInstance(
