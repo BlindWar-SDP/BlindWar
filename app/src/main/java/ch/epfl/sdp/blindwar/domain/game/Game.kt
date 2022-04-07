@@ -28,7 +28,7 @@ abstract class Game(
     var score = 0
         protected set
 
-    private var round = 0
+    var round = 0
 
     /**
      * Prepares the game following the configuration
