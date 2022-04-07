@@ -156,19 +156,19 @@ class PlaylistAdapter(private var playlistModelSet: ArrayList<PlaylistModel>,
             cardView.setOnClickListener{
                 when (expansionView.visibility) {
                     View.VISIBLE -> {
-                        TransitionManager.beginDelayedTransition(
-                            cardView,
-                            AutoTransition()
-                        )
+                        //TransitionManager.beginDelayedTransition(
+                        //    cardView,
+                        //    AutoTransition()
+                        //)
                         expandButton.rotation = -90F
                         expansionView.visibility = View.GONE
                     }
 
                     else -> {
-                        TransitionManager.beginDelayedTransition(
-                            cardView,
-                            AutoTransition()
-                        )
+                        //TransitionManager.beginDelayedTransition(
+                        //    cardView,
+                        //    AutoTransition()
+                        //)
                         expandButton.rotation = 90F
                         expansionView.visibility = View.VISIBLE
                     }

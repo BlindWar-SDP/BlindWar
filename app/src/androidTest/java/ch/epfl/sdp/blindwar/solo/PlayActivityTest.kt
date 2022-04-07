@@ -70,9 +70,7 @@ class PlayActivityTest {
             assertEquals(expectedMode, observedMode)
         }
     }
-
-    /**
-
+    
     @Test
     fun testLostGameConnected() {
         testCompleteGame(0)
@@ -80,10 +78,9 @@ class PlayActivityTest {
 
     @Test
     fun testLostGameLocal() {
+        closeSoftKeyboard()
         testCompleteGame(1)
     }
-
-    **/
 
     private fun testCompleteGame(playlistIndex: Int) {
         launchDemoWithMode(R.id.regularButton_, playlistIndex)
