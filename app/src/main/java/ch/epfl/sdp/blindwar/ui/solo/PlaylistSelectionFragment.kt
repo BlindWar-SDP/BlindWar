@@ -64,10 +64,7 @@ open class PlaylistSelectionFragment: Fragment() {
 
     private fun setUpSearchView() {
         searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                adapter.getFilter().filter(query)
-                return true
-            }
+            override fun onQueryTextSubmit(query: String?): Boolean = onQueryTextChange(query)
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 adapter.getFilter().filter(newText);

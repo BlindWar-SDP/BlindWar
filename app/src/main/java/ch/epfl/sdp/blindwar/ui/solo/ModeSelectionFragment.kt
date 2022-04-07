@@ -66,26 +66,8 @@ open class ModeSelectionFragment: Fragment() {
         funnyCheck = view.findViewById<CheckBox>(R.id.checkBox).also { checkBox ->
             checkBox.setOnClickListener {
                 checked = !checked
-                for (animation in animations) {
-                    if (checked)
-                        animation.speed = 2.0f
-                    else
-                        animation.speed = 0.75f
-                }
-
-                for (particle in particles) {
-                    if (checked) {
-                        particle.visibility = View.VISIBLE
-                        particle.speed = 2.0f
-                        particle.repeatMode = LottieDrawable.REVERSE
-                        particle.playAnimation()
-                    } else {
-                        particle.visibility = View.INVISIBLE
-                        particle.repeatMode = LottieDrawable.RESTART
-                        particle.repeatMode = LottieDrawable.REVERSE
-                        particle.pauseAnimation()
-                    }
-                }
+                setAnimationsSpeed()
+                toggleParticles()
             }
         }
 
@@ -123,4 +105,29 @@ open class ModeSelectionFragment: Fragment() {
         }
     }
     **/
+
+    private fun setAnimationsSpeed() {
+        for (animation in animations) {
+            if (checked)
+                animation.speed = 2.0f
+            else
+                animation.speed = 0.75f
+        }
+    }
+
+    private fun toggleParticles() {
+        for (particle in particles) {
+            if (checked) {
+                particle.visibility = View.VISIBLE
+                particle.speed = 2.0f
+                particle.repeatMode = LottieDrawable.REVERSE
+                particle.playAnimation()
+            } else {
+                particle.visibility = View.INVISIBLE
+                particle.repeatMode = LottieDrawable.RESTART
+                particle.repeatMode = LottieDrawable.REVERSE
+                particle.pauseAnimation()
+            }
+        }
+    }
 }
