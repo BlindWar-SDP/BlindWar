@@ -200,9 +200,8 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             '**/*Hilt*.*',
             'hilt_aggregated_deps/**',
             '**/*_Factory.class',
-            '**/*_MembersInjector.class',
-            // Animated UI is only problematic on Cirrus
-            '**/animated/*.*',
+            '**/*_MembersInjector.class'
+
 
 
     ]

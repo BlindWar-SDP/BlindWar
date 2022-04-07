@@ -18,7 +18,6 @@ import ch.epfl.sdp.blindwar.domain.game.GameMode
 import ch.epfl.sdp.blindwar.domain.game.Tutorial
 import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
 import ch.epfl.sdp.blindwar.ui.solo.PlaylistAdapter
-import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
 import junit.framework.Assert.assertEquals
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf

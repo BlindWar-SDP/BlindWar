@@ -47,7 +47,6 @@ open class PlaylistSelectionFragment: Fragment() {
         //attach adapter to list
         playlistRecyclerView.adapter = PlaylistAdapter(playlistCopy, requireActivity(), view, gameInstanceViewModel)
         adapter = playlistRecyclerView.adapter as PlaylistAdapter
-        adapter.animated = arguments?.getBoolean("animated")!!
 
         setUpSearchView()
 

@@ -1,15 +1,11 @@
 package ch.epfl.sdp.blindwar.ui.solo
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.domain.game.GameTutorial
-import ch.epfl.sdp.blindwar.domain.game.Tutorial
-import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedModeSelectionFragment
 import ch.epfl.sdp.blindwar.ui.tutorial.GameSummaryFragment
 import ch.epfl.sdp.blindwar.ui.tutorial.SongSummaryFragment
 
@@ -17,13 +13,12 @@ class PlayActivity: AppCompatActivity() {
 
     val gameInstanceViewModel: GameInstanceViewModel by viewModels()
 
-    // Add boolean animated configuration
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.play_container, AnimatedModeSelectionFragment(), "MODE")
+            .replace(R.id.play_container, ModeSelectionFragment(), "MODE")
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .commit()
     }

@@ -3,14 +3,16 @@ package ch.epfl.sdp.blindwar.ui.solo
 import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
@@ -18,20 +20,31 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.domain.game.GameTutorial
 import ch.epfl.sdp.blindwar.domain.game.Tutorial
+import ch.epfl.sdp.blindwar.domain.game.VoiceRecognizer
 import ch.epfl.sdp.blindwar.ui.tutorial.GameSummaryFragment
 import ch.epfl.sdp.blindwar.ui.tutorial.SongSummaryFragment
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
+import java.util.*
 
 open class DemoFragment : Fragment() {
     // Game view model to pass to the next round
     lateinit var game: GameTutorial
-    protected var playing = true
-    protected lateinit var guessEditText: EditText
-    protected lateinit var scoreTextView: TextView
+    private var playing = true
+    private lateinit var guessEditText: EditText
+    private lateinit var scoreTextView: TextView
     protected lateinit var musicMetadata: MusicMetadata
-    protected lateinit var guessButton: ImageButton
+    private lateinit var guessButton: ImageButton
     protected lateinit var countDown: TextView
     protected var duration: Int = 0
-    protected lateinit var timer: CountDownTimer
+    private lateinit var timer: CountDownTimer
+    private var isVocal = false
+
+    private lateinit var crossAnim: LottieAnimationView
+    private lateinit var startButton: LottieAnimationView
+    private lateinit var audioVisualizer: LottieAnimationView
+    private lateinit var microphoneButton: ImageButton
+    private lateinit var voiceRecognizer: VoiceRecognizer
 
     private lateinit var gameSummary: GameSummaryFragment
     private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
@@ -41,7 +54,7 @@ open class DemoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(R.layout.activity_demo, container, false)
+        val view = inflater.inflate(R.layout.activity_animated_demo, container, false)
         /** Set up the interface **/
         // Game instance tutorial
         game = context?.let {
@@ -81,13 +94,50 @@ open class DemoFragment : Fragment() {
         guessEditText = view.findViewById(R.id.guessEditText)
         guessEditText.hint = musicMetadata.artist
         scoreTextView = view.findViewById(R.id.scoreTextView)
-        guessButton = view.findViewById<ImageButton>(R.id.guessButtonDemo).also {
+        guessButton = view.findViewById<ImageButton>(R.id.guessButton).also {
             it.setOnClickListener {
-                guess(false, isAuto = false)
-
+                guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
+                guess(isVocal, isAuto = false)
                 // Delete the text of the guess
                 guessEditText.setText("")
             }
+        }
+
+        startButton = view.findViewById<LottieAnimationView>(R.id.startButton).also {
+            it.setOnClickListener {
+                playAndPause()
+            }
+        }
+
+        crossAnim = view.findViewById(R.id.cross)
+        crossAnim.repeatCount = 1
+
+        view.findViewById<ConstraintLayout>(R.id.fragment_container).setOnClickListener{
+            guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
+        }
+
+        voiceRecognizer = VoiceRecognizer()
+        audioVisualizer = view.findViewById(R.id.audioVisualizer)
+        startButton.setMinAndMaxFrame(30, 50)
+
+        microphoneButton = view.findViewById(R.id.microphone)
+        context?.let { voiceRecognizer.init(it, guessEditText, Locale.ENGLISH.toLanguageTag()) }
+        //warning seems ok, no need to override performClick
+        microphoneButton.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    game.pause()
+                    voiceRecognizer.start()
+                    isVocal = true
+                }
+                MotionEvent.ACTION_UP -> {
+                    voiceRecognizer.stop()
+                    game.play()
+                    guess(isVocal, isAuto = false)
+                    isVocal = false
+                }
+            }
+            true
         }
 
         return view
@@ -115,6 +165,22 @@ open class DemoFragment : Fragment() {
         scoreTextView.visibility = code
         guessEditText.visibility = code
         setAnimVisibility(code)
+    }
+
+    private fun playAndPause() {
+        playing = if (playing) {
+            game.pause()
+            pauseAnim()
+            timer.cancel()
+            timer = createCountDown()
+            false
+
+        } else {
+            game.play()
+            resumeAnim()
+            timer.start()
+            true
+        }
     }
 
     override fun onResume() {
@@ -206,12 +272,37 @@ open class DemoFragment : Fragment() {
 
     override fun onDestroy() {
         timer.cancel()
+        voiceRecognizer.destroy()
         super.onDestroy()
     }
 
-    /** Temporary solution : Animation hooks **/
-    open fun animNotFound() {}
-    open fun setAnimVisibility(code: Int) {}
-    open fun pauseAnim() {}
-    open fun resumeAnim() {}
+    /** Animation hooks **/
+    private fun setAnimVisibility(code: Int) {
+        crossAnim.visibility = code
+        countDown.visibility = code
+        audioVisualizer.visibility = code
+        startButton.visibility = code
+        microphoneButton.visibility = code
+        view?.findViewById<ImageButton>(R.id.guessButton)?.visibility = code
+    }
+
+     private fun animNotFound() {
+        /** Resets the base frame value of the animation and keep the reversing mode **/
+        crossAnim.repeatMode = LottieDrawable.RESTART
+        crossAnim.repeatMode = LottieDrawable.REVERSE
+        crossAnim.playAnimation()
+    }
+
+    private fun pauseAnim() {
+        audioVisualizer.pauseAnimation()
+        startButton.setMinAndMaxFrame(30, 55)
+        startButton.repeatCount = 0
+        startButton.playAnimation()
+    }
+
+    private fun resumeAnim() {
+        audioVisualizer.resumeAnimation()
+        startButton.setMinAndMaxFrame(10, 25)
+        startButton.playAnimation()
+    }
 }

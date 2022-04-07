@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.GameMode
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 
 open class ModeSelectionFragment: Fragment() {
 
@@ -23,6 +25,11 @@ open class ModeSelectionFragment: Fragment() {
     protected lateinit var funnyButton: CheckBox
 
     protected lateinit var backButton: ImageButton
+
+    private lateinit var animations: List<LottieAnimationView>
+    private lateinit var funnyCheck: CheckBox
+    private lateinit var particles: List<LottieAnimationView>
+    private var checked: Boolean = false
 
     /** TODO: Create the Info fragments and set listeners
     private lateinit var settingsButton: ImageButton
@@ -36,19 +43,53 @@ open class ModeSelectionFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(R.layout.fragment_mode_selection, container, false)
+        val view = inflater.inflate(R.layout.fragment_animated_mode_selection, container, false)
         regularButton = view.findViewById<Button>(R.id.regularButton_).also{selectMode(it)}
         raceButton = view.findViewById<Button>(R.id.raceButton_).also{selectMode(it)}
         survivalButton = view.findViewById<Button>(R.id.survivalButton_).also{selectMode(it)}
 
         funnyButton = view.findViewById(R.id.checkBox)
-        /** TODO: Correct back buttons bugs in next sprint
         backButton = view.findViewById<ImageButton>(R.id.back_button).also{
             it.setOnClickListener{
-                //activity?.onBackPressed()
+                activity?.onBackPressed()
             }
         }
-        **/
+
+        particles = arrayListOf(view.findViewById(R.id.particles),
+            view.findViewById(R.id.particles2),
+            view.findViewById(R.id.particles3))
+
+        animations = arrayListOf(view.findViewById(R.id.vinyl), view.findViewById(R.id.vinyl2),
+            view.findViewById(R.id.health), view.findViewById(R.id.health2),
+            view.findViewById(R.id.chrono), view.findViewById(R.id.chrono2))
+
+        funnyCheck = view.findViewById<CheckBox>(R.id.checkBox).also { checkBox ->
+            checkBox.setOnClickListener {
+                checked = !checked
+                for (animation in animations) {
+                    if (checked)
+                        animation.speed = 2.0f
+                    else
+                        animation.speed = 0.75f
+                }
+
+                for (particle in particles) {
+                    if (checked) {
+                        particle.visibility = View.VISIBLE
+                        particle.speed = 2.0f
+                        particle.repeatMode = LottieDrawable.REVERSE
+                        particle.playAnimation()
+                    } else {
+                        particle.visibility = View.INVISIBLE
+                        particle.repeatMode = LottieDrawable.RESTART
+                        particle.repeatMode = LottieDrawable.REVERSE
+                        particle.pauseAnimation()
+                    }
+                }
+            }
+        }
+
+        funnyButton = funnyCheck
 
         return view
     }
@@ -67,11 +108,9 @@ open class ModeSelectionFragment: Fragment() {
     }
 
     open fun launchPlaylistSelection() {
-        val bundle = Bundle().apply { this.putBoolean("animated", false) }
         activity?.supportFragmentManager?.beginTransaction()
             ?.replace((view?.parent as ViewGroup).id,
-                PlaylistSelectionFragment().apply{
-                this.arguments = bundle},
+                PlaylistSelectionFragment(),
                 "PLAYLIST")
             ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             ?.commit()

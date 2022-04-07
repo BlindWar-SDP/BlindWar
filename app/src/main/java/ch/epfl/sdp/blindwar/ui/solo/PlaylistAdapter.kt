@@ -21,10 +21,7 @@ import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.AudioHelper
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.domain.game.Tutorial
-import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedDemoFragment
-import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
 import ch.epfl.sdp.blindwar.ui.solo.animated.AnimationSetterHelper
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.progressindicator.CircularProgressIndicator
@@ -39,8 +36,6 @@ class PlaylistAdapter(private var playlistModelSet: ArrayList<PlaylistModel>,
                       private val viewFragment: View,
                       private val gameInstanceViewModel: GameInstanceViewModel) :
     RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>() {
-
-    var animated: Boolean = false
 
     private val initialPlaylists = ArrayList<PlaylistModel>().apply {
         addAll(playlistModelSet)
@@ -145,7 +140,7 @@ class PlaylistAdapter(private var playlistModelSet: ArrayList<PlaylistModel>,
 
                 (context as AppCompatActivity).supportFragmentManager.beginTransaction()
                     .replace((viewFragment.parent as ViewGroup).id,
-                             if (animated) AnimatedDemoFragment() else DemoFragment(),
+                             DemoFragment(),
                          "DEMO")
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
@@ -156,19 +151,19 @@ class PlaylistAdapter(private var playlistModelSet: ArrayList<PlaylistModel>,
             cardView.setOnClickListener{
                 when (expansionView.visibility) {
                     View.VISIBLE -> {
-                        //TransitionManager.beginDelayedTransition(
-                        //    cardView,
-                        //    AutoTransition()
-                        //)
+                        TransitionManager.beginDelayedTransition(
+                            cardView,
+                            AutoTransition()
+                        )
                         expandButton.rotation = -90F
                         expansionView.visibility = View.GONE
                     }
 
                     else -> {
-                        //TransitionManager.beginDelayedTransition(
-                        //    cardView,
-                        //    AutoTransition()
-                        //)
+                        TransitionManager.beginDelayedTransition(
+                            cardView,
+                            AutoTransition()
+                        )
                         expandButton.rotation = 90F
                         expansionView.visibility = View.VISIBLE
                     }

@@ -15,7 +15,7 @@ import ch.epfl.sdp.blindwar.ui.DemoSRActivity
 import ch.epfl.sdp.blindwar.ui.MainMenuActivity
 import ch.epfl.sdp.blindwar.ui.ProfileActivity
 import ch.epfl.sdp.blindwar.ui.multi.MultiPlayerActivity
-import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
+import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -52,7 +52,7 @@ class MainMenuActivityTest : TestCase() {
     fun testSoloButton() {
         onView(withId(R.id.soloButton))
             .perform(click())
-        intended(hasComponent(AnimatedPlayActivity::class.java.name))
+        intended(hasComponent(PlayActivity::class.java.name))
     }
 
     @Test
