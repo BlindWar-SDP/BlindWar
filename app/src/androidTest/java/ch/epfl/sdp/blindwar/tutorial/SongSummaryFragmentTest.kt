@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.tutorial
 import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -10,6 +11,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.MusicImageUrlConstants.METADATA_TUTORIAL_MUSICS_PER_AUTHOR
 import ch.epfl.sdp.blindwar.ui.tutorial.SongSummaryFragment
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -46,7 +48,7 @@ class SongSummaryFragmentTest {
         onView((withId(R.id.trackTextView))).check(matches(withText("One More Time")))
     }
 
-    /*
+
     @Test
     fun testLikeAnimation() {
         val scenario = launchFragmentInContainer<SongSummaryFragment>(bundleSuccess)
@@ -61,7 +63,7 @@ class SongSummaryFragmentTest {
             assertTrue(it.liked())
         }
     }
-     */
+
 
     @Test
     fun testSuccess() {

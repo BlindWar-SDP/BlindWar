@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.ui.ProfileActivity
 
-class MultiPlayerActivity : AppCompatActivity(){
+class MultiPlayerActivity : AppCompatActivity() {
 
     /**
      * Creates basic layout according to xml
