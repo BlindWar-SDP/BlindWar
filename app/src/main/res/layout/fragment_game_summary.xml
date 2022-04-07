@@ -68,7 +68,6 @@
         android:layout_marginBottom="12dp"
         android:fontFamily="@font/bungee_inline"
         android:text="@string/game"
-        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="45sp"
         app:layout_constraintBottom_toTopOf="@+id/frameLayout"
