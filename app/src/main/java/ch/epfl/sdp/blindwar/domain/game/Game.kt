@@ -13,27 +13,22 @@ import ch.epfl.sdp.blindwar.data.music.MusicMetadata
  */
 abstract class Game(
     gameInstance: GameInstance,
-    protected val assetManager: AssetManager,
     protected val context: Context
 ) {
     /** Encapsulates the characteristics of a game instead of its logic **/
-    private val game: GameInstance = gameInstance
+    protected val game: GameInstance = gameInstance
 
-    protected lateinit var musicSound: MusicSound
+    protected lateinit var musicController: MusicController
 
     private val gameParameter: GameParameter = gameInstance
         .gameConfig
         .parameter
 
-    private val gameDifficulty: GameDifficulty = gameInstance
-        .gameConfig
-        .difficulty
-
     /** Player game score **/
     var score = 0
         protected set
 
-    private var round = 0
+    var round = 0
 
     /**
      * Prepares the game following the configuration
@@ -45,8 +40,8 @@ abstract class Game(
      * Record the game instance to the player history
      * clean up player and assets
      */
-    private fun endGame() {
-        musicSound.soundTeardown()
+    fun endGame() {
+        musicController.soundTeardown()
     }
 
     /**
@@ -60,7 +55,8 @@ abstract class Game(
             return true
         }
 
-        musicSound.nextRound()
+        musicController.nextRound()
+        musicController.normalMode()
         return false
     }
 
@@ -68,9 +64,10 @@ abstract class Game(
      * Depends on the game instance parameter
      */
     fun currentMetadata(): MusicMetadata? {
-        if (gameDifficulty.hint) {
-            return musicSound.getCurrentMetadata()
+        if (gameParameter.hint) {
+            return musicController.getCurrentMetadata()
         }
+
         return null
     }
 
@@ -86,6 +83,7 @@ abstract class Game(
         ) {
             score += 1
             round += 1
+            musicController.summaryMode()
             true
         } else
             false
@@ -104,7 +102,7 @@ abstract class Game(
      *
      */
     fun play() {
-        musicSound.play()
+        musicController.play()
     }
 
     /**
@@ -112,6 +110,6 @@ abstract class Game(
      *
      */
     fun pause() {
-        musicSound.pause()
+        musicController.pause()
     }
 }

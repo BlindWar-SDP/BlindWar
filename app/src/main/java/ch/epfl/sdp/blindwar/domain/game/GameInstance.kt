@@ -1,13 +1,13 @@
 package ch.epfl.sdp.blindwar.domain.game
 
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.ui.solo.PlaylistModel
 
 data class GameInstance(
     val gameConfig: GameConfig,
-    val playlist: List<MusicMetadata>)
+    val playlist: PlaylistModel)
 
 class GameInstanceBuilder() {
-    private var playlist: List<MusicMetadata> = Tutorial.gameInstance
+    private var playlist: PlaylistModel = Tutorial.gameInstance
         .playlist
 
     private var gameFormat: GameFormat = GameFormat.SOLO
@@ -20,7 +20,7 @@ class GameInstanceBuilder() {
         .gameConfig
         .mode
 
-    fun setPlaylist(playlist: List<MusicMetadata>): GameInstanceBuilder {
+    fun setPlaylist(playlist: PlaylistModel): GameInstanceBuilder {
         this.playlist = playlist
         return this
     }
@@ -42,30 +42,19 @@ class GameInstanceBuilder() {
 
     fun setGameInstance(gameInstance: GameInstance): GameInstanceBuilder {
         setPlaylist(gameInstance.playlist)
-        setDifficulty(gameInstance.gameConfig.difficulty)
         setFormat(gameInstance.gameConfig.format)
         setParameter(gameInstance.gameConfig.parameter)
         setMode(gameInstance.gameConfig.mode)
         return this
     }
 
-    private var gameDifficulty: GameDifficulty = Tutorial.gameInstance
-        .gameConfig
-        .difficulty
-
-    fun setDifficulty(gameDifficulty: GameDifficulty): GameInstanceBuilder {
-        this.gameDifficulty = gameDifficulty
-        return this
-    }
-
     fun build(): GameInstance {
-        return GameInstance(GameConfig(gameDifficulty, gameFormat, gameMode, gameParameter),
+        return GameInstance(GameConfig(gameFormat, gameMode, gameParameter),
                             playlist)
     }
 }
 
 data class GameConfig(
-    val difficulty: GameDifficulty,
     val format: GameFormat,
     val mode: GameMode,
     val parameter: GameParameter
@@ -73,15 +62,10 @@ data class GameConfig(
 
 data class GameParameter(
     val round: Int,
+    val timeToFind: Int,
     val funny: Boolean,
+    val hint: Boolean
 )
-
-enum class GameDifficulty(val timeToFind: Int, val hint: Boolean) {
-    EASY(46000, true),
-    MEDIUM(31000, true),
-    DIFFICULT(21000, true)
-    //SHAZAM(15, false)
-}
 
 enum class GameFormat {
     SOLO,

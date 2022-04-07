@@ -9,9 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.widget.ViewPager2
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedDemoFragment
+import ch.epfl.sdp.blindwar.ui.solo.DemoFragment
 import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
-import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
 
 class GameSummaryFragment : Fragment() {
 
@@ -42,9 +41,9 @@ class GameSummaryFragment : Fragment() {
 
         replay = view.findViewById<ImageButton>(R.id.replay).also{ button ->
             button.setOnClickListener{
-                (requireActivity() as AnimatedPlayActivity).removeAllFragments()
+                (requireActivity() as PlayActivity).removeAllFragments()
                 activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.play_container, AnimatedDemoFragment(), "DEMO")
+                    ?.replace(R.id.play_container, DemoFragment(), "DEMO")
                     ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     ?.commit()
             }

@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +21,7 @@
         <activity
             android:name=".ui.solo.PlayActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -38,11 +39,6 @@
             android:exported="false"
             android:screenOrientation="portrait"/>
 
-
-        <activity
-            android:name=".ui.solo.animated.AnimatedPlayActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.tutorial.TutorialActivity"
             android:parentActivityName=".ui.MainMenuActivity"
@@ -62,9 +58,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.solo.SoloMenuActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.ProfileActivity"
             android:parentActivityName=".ui.MainMenuActivity"
             android:exported="false" />
@@ -79,6 +72,5 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
     </application>
 </manifest>

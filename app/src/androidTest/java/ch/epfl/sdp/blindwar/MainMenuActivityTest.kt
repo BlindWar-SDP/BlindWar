@@ -15,8 +15,7 @@ import ch.epfl.sdp.blindwar.ui.DemoSRActivity
 import ch.epfl.sdp.blindwar.ui.MainMenuActivity
 import ch.epfl.sdp.blindwar.ui.ProfileActivity
 import ch.epfl.sdp.blindwar.ui.multi.MultiPlayerActivity
-import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
-import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
+import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -53,7 +52,7 @@ class MainMenuActivityTest : TestCase() {
     fun testSoloButton() {
         onView(withId(R.id.soloButton))
             .perform(click())
-        intended(hasComponent(AnimatedPlayActivity::class.java.name))
+        intended(hasComponent(PlayActivity::class.java.name))
     }
 
     @Test
@@ -97,13 +96,13 @@ class MainMenuActivityTest : TestCase() {
             e.printStackTrace()
         }
         Thread.sleep(1000)
-        onView(ViewMatchers.withId(R.id.profileButton))
+        onView(withId(R.id.profileButton))
             .perform(ViewActions.click())
-        onView(ViewMatchers.withId(R.id.emailView))
+        onView(withId(R.id.emailView))
             .perform(ViewActions.closeSoftKeyboard())
         Thread.sleep(1000)
-        onView(ViewMatchers.withId(R.id.emailView))
+        onView(withId(R.id.emailView))
             .check(matches(ViewMatchers.withText(Matchers.containsString("test@bot.ch"))))
-        onView(ViewMatchers.withId(R.id.logoutButton)).perform(ViewActions.click())
+        onView(withId(R.id.logoutButton)).perform(ViewActions.click())
     }
 }
