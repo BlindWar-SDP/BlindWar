@@ -81,5 +81,4 @@ class MainMenuActivityTest : TestCase() {
         onView(withId(R.id.SpeechButton)).perform(click())
         intended(hasComponent(DemoSRActivity::class.java.name))
     }
-
 }

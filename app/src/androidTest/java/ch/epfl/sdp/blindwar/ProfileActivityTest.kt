@@ -4,7 +4,6 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
@@ -15,13 +14,16 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import ch.epfl.sdp.blindwar.ui.ProfileActivity
+import ch.epfl.sdp.blindwar.ui.SplashScreenActivity
 import ch.epfl.sdp.blindwar.ui.StatisticsActivity
+import ch.epfl.sdp.blindwar.ui.UserNewInfoActivity
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
+import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import junit.framework.TestCase
-import org.hamcrest.Matchers
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -45,34 +47,6 @@ class ProfileActivityTest : TestCase() {
     @After
     fun cleanup() {
         Intents.release()
-    }
-
-    /*
-    @Test
-    fun testLoginButton() {
-        onView(withId(R.id.backToMainButton))
-            .perform(click())
-        intended(hasComponent(MainMenuActivity::class.java.name))
-    } */
-
-    @Test
-    fun testChooseImage() {
-        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        val oldPackageName = device.currentPackageName
-
-        onView(withId(R.id.editProfileButton))
-            .perform(click())
-
-        // Press back until we get back to our activity
-        var currentPackageName: String
-        do {
-            device.pressBack()
-            currentPackageName = device.currentPackageName
-        } while (currentPackageName != oldPackageName)
-
-        onView(withId(R.id.statsButton))
-            .perform(click())
-        intended(hasComponent(StatisticsActivity::class.java.name))
     }
 
     @Test
@@ -105,5 +79,52 @@ class ProfileActivityTest : TestCase() {
         val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         device.pressBack()
         Espresso.onView(ViewMatchers.withId(R.id.logoutButton)).perform(ViewActions.click())
+    }
+    fun testDeleteButton_cancel() {
+        Espresso.closeSoftKeyboard()
+        onView(withId(R.id.deleteProfile))
+            .perform(click())
+        BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_text)
+        clickOn(android.R.string.cancel)
+    }
+
+    @Test
+    fun testDeleteButton_ok_cancel() {
+        Espresso.closeSoftKeyboard()
+        onView(withId(R.id.deleteProfile))
+            .perform(click())
+        BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_text)
+        clickOn(android.R.string.ok)
+        BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_confirm_text)
+        clickOn(android.R.string.cancel)
+    }
+
+    @Test
+    fun testDeleteButton_ok_ok() {
+        Espresso.closeSoftKeyboard()
+        onView(withId(R.id.deleteProfile))
+            .perform(click())
+        BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_text)
+        clickOn(android.R.string.ok)
+        BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_confirm_text)
+        clickOn(android.R.string.ok)
+//        BaristaVisibilityAssertions.assertDisplayed(R.string.deletion_success) // toast not detected
+        intended(hasComponent(SplashScreenActivity::class.java.name))
+    }
+
+    @Test
+    fun testLogoutButton() {
+        Espresso.closeSoftKeyboard()
+        onView(withId(R.id.logoutButton))
+            .perform(click())
+        intended(hasComponent(SplashScreenActivity::class.java.name))
+    }
+
+    @Test
+    fun testEditProfileButton() {
+        Espresso.closeSoftKeyboard()
+        onView(withId(R.id.editProfileButton))
+            .perform(click())
+        intended(hasComponent(UserNewInfoActivity::class.java.name))
     }
 }

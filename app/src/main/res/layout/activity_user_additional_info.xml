@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/prussian_blue"
+    android:orientation="vertical"
+    tools:context=".ui.UserAdditionalInfoActivity">
+
+    <EditText
+        android:id="@+id/NUA_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="52dp"
+        android:ems="10"
+        android:hint="Describe yourself"
+        android:inputType="textMultiLine"
+        android:maxLength="@integer/self_description_max_length"
+        android:textColor="@color/green_blue_crayola"
+        app:layout_constraintBottom_toTopOf="@+id/gender_spinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/gender_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autofillHints="Gender"
+        android:backgroundTint="@color/cadet_blue_crayola"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/NUA_select_birthdate"
+        app:layout_constraintEnd_toEndOf="@+id/select_gender"
+        app:layout_constraintStart_toStartOf="@+id/select_gender"
+        app:layout_constraintTop_toBottomOf="@+id/NUA_description" />
+
+    <Button
+        android:id="@+id/NUA_select_birthdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:onClick="selectBirthdate"
+        android:text="@string/select_birthdate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gender_spinner" />
+
+    <Button
+        android:id="@+id/NUA_Confirm_Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="64dp"
+        android:onClick="confirm"
+        android:text="@string/confirm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <TextView
+        android:id="@+id/select_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/select_your_gender"
+        app:layout_constraintBottom_toTopOf="@+id/gender_spinner"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
