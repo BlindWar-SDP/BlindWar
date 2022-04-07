@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.domain.game.GameTutorial
 import ch.epfl.sdp.blindwar.domain.game.Tutorial
+import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedModeSelectionFragment
 import ch.epfl.sdp.blindwar.ui.tutorial.GameSummaryFragment
 import ch.epfl.sdp.blindwar.ui.tutorial.SongSummaryFragment
 
@@ -22,7 +23,7 @@ class PlayActivity: AppCompatActivity() {
         setContentView(R.layout.activity_play)
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.play_container, ModeSelectionFragment(), "MODE")
+            .replace(R.id.play_container, AnimatedModeSelectionFragment(), "MODE")
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .commit()
     }

@@ -71,7 +71,7 @@ class PlayActivityTest {
             assertEquals(expectedMode, observedMode)
         }
     }
-    
+
     @Test
     fun testLostGameConnected() {
         testCompleteGame(0)
@@ -85,7 +85,7 @@ class PlayActivityTest {
 
     private fun testCompleteGame(playlistIndex: Int) {
         launchDemoWithMode(R.id.raceButton_, playlistIndex)
-        onView(withId(R.id.guessButtonDemo)).check(matches(isDisplayed()))
+        onView(withId(R.id.guessButton)).check(matches(isDisplayed()))
         for (i in 0 until 3) {
             simulateLostRound()
         }
