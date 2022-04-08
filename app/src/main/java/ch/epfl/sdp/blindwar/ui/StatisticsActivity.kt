@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.ui
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -42,6 +43,16 @@ class StatisticsActivity : AppCompatActivity() {
         override fun onCancelled(databaseError: DatabaseError) {
             Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 
@@ -111,6 +122,9 @@ class StatisticsActivity : AppCompatActivity() {
 
             }
         }
+
+        // showing the back button in action bar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
 }
