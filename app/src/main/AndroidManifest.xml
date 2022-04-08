@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ch.epfl.sdp.blindwar" >
+    package="ch.epfl.sdp.blindwar">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
         android:allowBackup="true"
@@ -13,72 +13,71 @@
         android:roundIcon="@mipmap/ic_launcher_round_base"
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BlindWar" >
-
-         <activity
-            android:name=".ui.NewUserActivity"
-            android:exported="false"/>
+        android:theme="@style/Theme.BlindWar">
         <activity
-            android:name=".ui.solo.PlayActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".ui.multi.MultiPlayerActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".ui.multi.MultiPlayerFriendActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".ui.multi.MultiPlayerRandomActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-
-
-        <activity
-            android:name=".ui.solo.animated.AnimatedPlayActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".ui.tutorial.TutorialActivity"
-            android:parentActivityName=".ui.MainMenuActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".ui.DemoSRActivity"
-            android:parentActivityName=".ui.MainMenuActivity"
-            android:exported="false"/>
-
-        <activity
-            android:name=".ui.MainMenuActivity"
-            android:exported="true" >
+            android:name=".ui.SplashScreenActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".ui.solo.SoloMenuActivity"
-            android:exported="false" />
+            android:name=".ui.UserNewInfoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.solo.PlayActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.UserAdditionalInfoActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.UserNewInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.multi.MultiPlayerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.multi.MultiPlayerFriendActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.multi.MultiPlayerRandomActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.tutorial.TutorialActivity"
+            android:parentActivityName=".ui.MainMenuActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.DemoSRActivity"
+            android:parentActivityName=".ui.MainMenuActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ProfileActivity"
             android:parentActivityName=".ui.MainMenuActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.StatisticsActivity"
             android:parentActivityName=".ui.ProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.SplashScreenActivity"
-            android:exported="true">
-        </activity>
+            android:name=".ui.MainMenuActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
     </application>
 </manifest>

@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.domain.game
 object GameHelper {
 
     private const val vocalCostMax = 5
+    private const val keyboardCostRatio = 0.2F
     private const val keyboardCostMax = 3
 
     /**
@@ -15,11 +16,15 @@ object GameHelper {
      * @return Boolean
      */
     fun isTheCorrectTitle(answerString: String, title: String, isVocal: Boolean): Boolean {
+        val keyboardDistance = (keyboardCostRatio * answerString.length).let {
+             if (it <= 3) it.toInt() else keyboardCostMax
+        }
+
         return if (isVocal) levensteinDistance(
-            answerString.lowercase(),
-            title.lowercase()
+            answerString.lowercase().trim(),
+            title.lowercase().trim()
         ) < vocalCostMax
-        else levensteinDistance(answerString.lowercase(), title.lowercase()) < keyboardCostMax
+        else levensteinDistance(answerString.lowercase(), title.lowercase()) <= keyboardDistance
     }
 
     /**

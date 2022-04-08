@@ -1,14 +1,16 @@
 package ch.epfl.sdp.blindwar.ui
 
-import android.app.Activity
+import android.app.AlertDialog
 import android.content.ContentValues
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.ImageDatabase
@@ -25,7 +27,8 @@ import com.google.firebase.database.ktx.getValue
 class ProfileActivity : AppCompatActivity() {
     private val database = UserDatabase
     private val imageDatabase = ImageDatabase
-    private val currentUser = FirebaseAuth.getInstance().currentUser
+    private val auth = FirebaseAuth.getInstance()
+    private val currentUser = auth.currentUser
 
     private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -44,9 +47,13 @@ class ProfileActivity : AppCompatActivity() {
                 emailView.text = user.email
                 eloView.text = user.userStatistics.elo.toString()
 
-                val imagePath = user.profilePicture
-                if (imagePath != null) {
-                    imageDatabase.dowloadProfilePicture(imagePath, profileImageView, applicationContext)
+                val imagePath = user.profilePicture.toString()
+                if (imagePath != null && imagePath != "null") {
+                    imageDatabase.dowloadProfilePicture(
+                        imagePath,
+                        profileImageView,
+                        applicationContext
+                    )
                 }
             }
         }
@@ -56,20 +63,17 @@ class ProfileActivity : AppCompatActivity() {
             Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
         }
     }
-    private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data: Intent? = result.data
-            if (data != null) {
-                if (data.data != null) {
 
-                    // Upload picture to database
-                    imageDatabase.uploadProfilePicture(currentUser, data.data!!,
-                        findViewById(android.R.id.content)
-                    )
-                }
-                }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
             }
         }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -78,19 +82,69 @@ class ProfileActivity : AppCompatActivity() {
             database.addUserListener(currentUser.uid, userInfoListener)
         }
         setContentView(R.layout.activity_profile)
+
+        // showing the back button in action bar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    fun choosePicture(view: View) {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        resultLauncher.launch(intent)
+    fun editProfile(view: View) {
+        startActivity(Intent(this, UserNewInfoActivity::class.java))
     }
 
     fun logoutButton(view: View) {
-        AuthUI.getInstance().signOut(this).addOnCompleteListener {
-            startActivity(Intent(this, SplashScreenActivity::class.java))
+        auth.signOut()
+        startActivity(Intent(this, SplashScreenActivity::class.java))
+//        AuthUI.getInstance().signOut(this).addOnCompleteListener {
+//            startActivity(Intent(this, SplashScreenActivity::class.java))
+//        }
+    }
+
+    fun deleteProfile(view: View) {
+        // Alert Dialog
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val positiveButtonClick = { _: DialogInterface, _: Int ->
+            // new Alert Dialogue to ensure deletion
+            val builderSecond: AlertDialog.Builder = AlertDialog.Builder(this)
+            val secondPositiveButtonClick = { _: DialogInterface, _: Int ->
+
+                currentUser?.let{UserDatabase.removeUser(it.uid)}
+                AuthUI.getInstance().delete(this).addOnCompleteListener {
+                    startActivity(Intent(this, SplashScreenActivity::class.java))
+                }
+
+                Toast.makeText(
+                    this,
+                    getString(R.string.deletion_success), Toast.LENGTH_SHORT
+                ).show()
+            }
+            val secondNegativeButtonClick = { _: DialogInterface, _: Int ->
+                Toast.makeText(
+                    this,
+                    getString(R.string.account_not_deleted_confirm_toast), Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            builderSecond.setTitle(getString(R.string.account_deletion_confirm_title))
+                .setMessage(getString(R.string.account_deletion_confirm_text))
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.ok, secondPositiveButtonClick)
+                .setNegativeButton(android.R.string.cancel, secondNegativeButtonClick)
+            builderSecond.create().show()
+
         }
+        val negativeButtonClick = { _: DialogInterface, _: Int ->
+            Toast.makeText(
+                this,
+                getString(R.string.account_not_deleted_toast), Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        builder.setTitle(getString(R.string.account_deletion_title))
+            .setMessage(getString(R.string.account_deletion_text))
+            .setCancelable(false)
+            .setPositiveButton(android.R.string.ok, positiveButtonClick)
+            .setNegativeButton(android.R.string.cancel, negativeButtonClick)
+        builder.create().show()
     }
 
 

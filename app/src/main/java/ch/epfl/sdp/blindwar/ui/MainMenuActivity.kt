@@ -7,16 +7,18 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.ui.multi.MultiPlayerActivity
-import ch.epfl.sdp.blindwar.ui.solo.ModeSelectionFragment
 import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
-import ch.epfl.sdp.blindwar.ui.solo.SoloMenuActivity
-import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
+import ch.epfl.sdp.blindwar.user.AppStatistics
+import ch.epfl.sdp.blindwar.user.Mode
+import ch.epfl.sdp.blindwar.user.User
 import com.google.firebase.auth.FirebaseAuth
 
 class MainMenuActivity : AppCompatActivity() {
 
     private val database = UserDatabase
+    private val auth = FirebaseAuth.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
@@ -24,7 +26,7 @@ class MainMenuActivity : AppCompatActivity() {
 
     // Called when the user taps the Solo button
     fun soloButton(view: View) {
-        val intent = Intent(this, AnimatedPlayActivity::class.java)
+        val intent = Intent(this, PlayActivity::class.java)
         startActivity(intent)
     }
 
@@ -37,7 +39,7 @@ class MainMenuActivity : AppCompatActivity() {
     fun tutorialButton(view: View) {
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
-            database.setElo(currentUser!!.uid, 1100)
+            UserDatabase.setElo(currentUser.uid, 1000)
         }
         val intent = Intent(this, TutorialActivity::class.java)
         startActivity(intent)
@@ -51,5 +53,11 @@ class MainMenuActivity : AppCompatActivity() {
 
     fun launchSpeechRecognitionActivity(view: View) {
         startActivity(Intent(this, DemoSRActivity::class.java))
+    }
+
+    override fun onBackPressed() {
+        auth.signOut()
+        val intent = Intent(this, SplashScreenActivity::class.java)
+        startActivity(intent)
     }
 }

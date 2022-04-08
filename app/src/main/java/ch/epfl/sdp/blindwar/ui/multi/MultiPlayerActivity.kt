@@ -2,12 +2,13 @@ package ch.epfl.sdp.blindwar.ui.multi
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.ui.ProfileActivity
 
-class MultiPlayerActivity : AppCompatActivity(){
+class MultiPlayerActivity : AppCompatActivity() {
 
     /**
      * Creates basic layout according to xml
@@ -17,6 +18,19 @@ class MultiPlayerActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_multi)
+
+        // showing the back button in action bar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     /**

@@ -7,8 +7,6 @@ import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.ui.ProfileActivity
-import ch.epfl.sdp.blindwar.ui.solo.animated.AnimatedPlayActivity
 import org.junit.Assert.*
 
 import org.junit.After

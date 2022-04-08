@@ -7,27 +7,43 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.UiDevice
 import ch.epfl.sdp.blindwar.ui.MainMenuActivity
-import ch.epfl.sdp.blindwar.ui.NewUserActivity
+import ch.epfl.sdp.blindwar.ui.ProfileActivity
+import ch.epfl.sdp.blindwar.ui.UserAdditionalInfoActivity
+import ch.epfl.sdp.blindwar.ui.UserNewInfoActivity
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.adevinta.android.barista.interaction.BaristaClickInteractions
+import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
 import junit.framework.TestCase
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.ExecutionException
+
 
 @RunWith(AndroidJUnit4::class)
-class NewUserActivityTest : TestCase() {
+class UserNewInfoActivityTest : TestCase() {
 
     private val strNotDefault = "notDefaultText"
+    private val email = "test@test.test"
+    private val password = "testTest"
+    private val validPseudo = "validPseudo"
 
     @get:Rule
     var testRule = ActivityScenarioRule(
-        NewUserActivity::class.java
+        UserNewInfoActivity::class.java
     )
 
     @Before
@@ -42,26 +58,17 @@ class NewUserActivityTest : TestCase() {
 
     @Test
     fun testLayoutVisibility() {
-        val visible_ids = listOf<Int>(
+        val visibleIds = listOf(
             R.id.NU_pseudo,
             R.id.NU_FirstName,
             R.id.NU_LastName,
-            R.id.NU_birthdate,
+            R.id.NU_additional_info,
             R.id.NU_Confirm_Btn
         )
-        for (id in visible_ids) {
+        for (id in visibleIds) {
             onView(withId(id))
                 .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
         }
-    }
-
-    @Test
-    fun testConfirm_allGood() {
-        onView(withId(R.id.NU_pseudo))
-            .perform(replaceText("ValidPseudo"))
-        onView(withId(R.id.NU_Confirm_Btn))
-            .perform(click())
-        intended(IntentMatchers.hasComponent(MainMenuActivity::class.java.name))
     }
 
     @Test
@@ -71,6 +78,8 @@ class NewUserActivityTest : TestCase() {
         onView(withId(R.id.NU_Confirm_Btn))
             .perform(click())
         assertDisplayed(R.string.new_user_wrong_pseudo_text)
+        clickOn(android.R.string.ok)
+
     }
 
     @Test
@@ -80,13 +89,13 @@ class NewUserActivityTest : TestCase() {
         onView(withId(R.id.NU_Confirm_Btn))
             .perform(click())
         assertDisplayed(R.string.new_user_wrong_pseudo_text)
+        clickOn(android.R.string.ok)
     }
 
-    @Test
-    fun testBirthDateBtn() {
-        onView(withId(R.id.NU_birthdate))
+    fun testAdditionalInfoBtn() {
+        onView(withId(R.id.NU_additional_info))
             .perform(click())
-        // need to check that datePicker appear...
+        intended(hasComponent(UserAdditionalInfoActivity::class.java.name))
     }
 
     // =====================================
@@ -96,6 +105,7 @@ class NewUserActivityTest : TestCase() {
         val id = R.id.NU_pseudo
         onView(withId(id))
             .perform(
+                replaceText("Pseudo"),
                 click(),
                 click(),
                 closeSoftKeyboard()
@@ -107,15 +117,22 @@ class NewUserActivityTest : TestCase() {
     fun testClearFirstName() {
         val id = R.id.NU_FirstName
         onView(withId(id))
-            .perform(click(), click(), closeSoftKeyboard())
+            .perform(
+                replaceText("First Name"),
+                click(), click(), closeSoftKeyboard()
+            )
         onView(withId(id)).check(matches(withText("")))
     }
 
     @Test
     fun testClearLastName() {
         val id = R.id.NU_LastName
+        closeSoftKeyboard()
         onView(withId(id))
-            .perform(click(), click(), closeSoftKeyboard())
+            .perform(
+                replaceText("Last Name"),
+                click(), click(), closeSoftKeyboard()
+            )
         onView(withId(id)).check(matches(withText("")))
     }
 
@@ -147,5 +164,56 @@ class NewUserActivityTest : TestCase() {
 
     // check No Default Values:
 
+    @Test
+    fun testChooseImage() {
+        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        val oldPackageName = device.currentPackageName
 
+        onView(withId(R.id.NU_editProfilePicture))
+            .perform(click())
+
+        // Press back until we get back to our activity
+        var currentPackageName: String
+        do {
+            device.pressBack()
+            currentPackageName = device.currentPackageName
+        } while (currentPackageName != oldPackageName)
+
+//        onView(withId(R.id.statsButton))
+//            .perform(click())
+//        intended(hasComponent(StatisticsActivity::class.java.name))
+    }
+
+    @Test
+    fun testNewUser() {
+        testRule.scenario.onActivity { it.intent.putExtra("newUser", true) }
+        onView(withId(R.id.NU_pseudo))
+            .perform(replaceText(validPseudo), closeSoftKeyboard())
+        clickOn(R.id.NU_Confirm_Btn)
+        intended(hasComponent(MainMenuActivity::class.java.name))
+    }
+
+    @Test
+    fun testUpdateUser() {
+        val login: Task<AuthResult> = FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(email, password)
+        try {
+            Tasks.await(login)
+        } catch (e: ExecutionException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        testRule.scenario.onActivity { it.intent.putExtra("newUser", false) }
+        onView(withId(R.id.NU_pseudo))
+            .perform(replaceText(validPseudo))
+        clickOn(R.id.NU_Confirm_Btn)
+        intended(hasComponent(ProfileActivity::class.java.name))
+    }
+
+    @Test
+    fun testAdditionalInfo() {
+        clickOn(R.id.NU_additional_info)
+        intended(hasComponent(UserAdditionalInfoActivity::class.java.name))
+    }
 }

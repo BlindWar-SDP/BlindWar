@@ -1,10 +1,10 @@
 package ch.epfl.sdp.blindwar.domain.game
 
-import android.content.ContentResolver
 import android.content.Context
 import android.content.res.AssetManager
+import ch.epfl.sdp.blindwar.database.UserDatabase
+import com.google.firebase.auth.FirebaseAuth
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
-import java.util.*
 
 /**
  * Class representing an instance of a game
@@ -15,27 +15,23 @@ import java.util.*
  */
 abstract class Game(
     gameInstance: GameInstance,
-    protected val assetManager: AssetManager,
     protected val context: Context
 ) {
     /** Encapsulates the characteristics of a game instead of its logic **/
-    private val game: GameInstance = gameInstance
+    protected val game: GameInstance = gameInstance
 
-    protected lateinit var gameSound: GameSound
+    protected lateinit var musicController: MusicController
 
     private val gameParameter: GameParameter = gameInstance
         .gameConfig
         .parameter
 
-    private val gameDifficulty: GameDifficulty = gameInstance
-        .gameConfig
-        .difficulty
-
     /** Player game score **/
     var score = 0
         protected set
 
-    private var round = 0
+    var round = 0
+        protected set
 
     /**
      * Prepares the game following the configuration
@@ -48,7 +44,13 @@ abstract class Game(
      * clean up player and assets
      */
     private fun endGame() {
-        gameSound.soundTeardown()
+        val fails = round - score
+        val currentUser = FirebaseAuth.getInstance().currentUser
+
+        if (currentUser != null) {
+            UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
+        }
+        musicController.soundTeardown()
     }
 
     /**
@@ -62,7 +64,8 @@ abstract class Game(
             return true
         }
 
-        gameSound.nextRound()
+        musicController.nextRound()
+        musicController.normalMode()
         return false
     }
 
@@ -70,8 +73,8 @@ abstract class Game(
      * Depends on the game instance parameter
      */
     fun currentMetadata(): MusicMetadata? {
-        if (gameDifficulty.hint) {
-            return gameSound.getCurrentMetadata()
+        if (gameParameter.hint) {
+            return musicController.getCurrentMetadata()
         }
 
         return null
@@ -83,13 +86,13 @@ abstract class Game(
      * @param titleGuess Title that the user guesses
      * @return True if the guess is correct
      */
-    fun guess(titleGuess: String): Boolean {
-        return if (titleGuess.uppercase(Locale.getDefault()) == currentMetadata()?.title?.uppercase(
-                Locale.getDefault()
-            )
+    fun guess(titleGuess: String, isVocal: Boolean): Boolean {
+        return if (
+            GameHelper.isTheCorrectTitle(titleGuess, currentMetadata()!!.title, isVocal)
         ) {
             score += 1
             round += 1
+            musicController.summaryMode()
             true
         } else
             false
@@ -100,6 +103,7 @@ abstract class Game(
      *
      */
     fun timeout() {
+
         round += 1
     }
 
@@ -108,7 +112,7 @@ abstract class Game(
      *
      */
     fun play() {
-        gameSound.play()
+        musicController.play()
     }
 
     /**
@@ -116,6 +120,6 @@ abstract class Game(
      *
      */
     fun pause() {
-        gameSound.pause()
+        musicController.pause()
     }
 }
