@@ -82,9 +82,9 @@ class UserNewInfoActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        auth.signOut()
-    }
+    //override fun onBackPressed() {
+    //    auth.signOut()
+    //}
 
 //    override fun onBackPressed() { // TODO: when returning on SplashSreenActivity, not OK...
 //        super.onBackPressed()
