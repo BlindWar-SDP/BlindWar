@@ -26,8 +26,6 @@ import com.google.firebase.database.ktx.getValue
 class ProfileActivity : AppCompatActivity() {
     private val database = UserDatabase
     private val imageDatabase = ImageDatabase
-    private val auth = FirebaseAuth.getInstance()
-    private val currentUser = auth.currentUser
 
     private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -41,15 +39,13 @@ class ProfileActivity : AppCompatActivity() {
             val emailView = findViewById<TextView>(R.id.emailView)
             val eloView = findViewById<TextView>(R.id.eloDeclarationView)
             val profileImageView = findViewById<ImageView>(R.id.profileImageView)
-            if (user != null) {
-                nameView.text = user.firstName
-                emailView.text = user.email
-                eloView.text = user.userStatistics.elo.toString()
-
-                val imagePath = user.profilePicture.toString()
-                if (imagePath != null && imagePath != "null") {
+            user?.let{
+                nameView.text = it.firstName
+                emailView.text = it.email
+                eloView.text = it.userStatistics.elo.toString()
+                if (it.profilePicture != "") {
                     imageDatabase.dowloadProfilePicture(
-                        imagePath,
+                        it.profilePicture,
                         profileImageView,
                         applicationContext
                     )
@@ -67,8 +63,8 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // user id should be set according to authentication
-        if (currentUser != null) {
-            database.addUserListener(currentUser.uid, userInfoListener)
+        FirebaseAuth.getInstance().currentUser?.let{
+            database.addUserListener(it.uid, userInfoListener)
         }
         setContentView(R.layout.activity_profile)
     }
@@ -78,7 +74,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     fun logoutButton(view: View) {
-        auth.signOut()
+        FirebaseAuth.getInstance().signOut()
         startActivity(Intent(this, SplashScreenActivity::class.java))
 //        AuthUI.getInstance().signOut(this).addOnCompleteListener {
 //            startActivity(Intent(this, SplashScreenActivity::class.java))
@@ -93,7 +89,7 @@ class ProfileActivity : AppCompatActivity() {
             val builderSecond: AlertDialog.Builder = AlertDialog.Builder(this)
             val secondPositiveButtonClick = { _: DialogInterface, _: Int ->
 
-                currentUser?.let{UserDatabase.removeUser(it.uid)}
+                FirebaseAuth.getInstance().currentUser?.let{UserDatabase.removeUser(it.uid)}
                 AuthUI.getInstance().delete(this).addOnCompleteListener {
                     startActivity(Intent(this, SplashScreenActivity::class.java))
                 }
