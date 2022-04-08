@@ -34,6 +34,8 @@ class UserNewInfoActivity : AppCompatActivity() {
     private val imageDatabase = ImageDatabase
     private var profilePictureUri: Uri? = null
 
+    private val auth = FirebaseAuth.getInstance()
+
 
     private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -78,6 +80,10 @@ class UserNewInfoActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().currentUser?.let {
             database.addUserListener(it.uid, userInfoListener)
         }
+    }
+
+    override fun onBackPressed() {
+        auth.signOut()
     }
 
 //    override fun onBackPressed() { // TODO: when returning on SplashSreenActivity, not OK...
