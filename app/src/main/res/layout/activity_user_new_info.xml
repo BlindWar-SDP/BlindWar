@@ -53,6 +53,17 @@
         app:layout_constraintTop_toBottomOf="@+id/NU_profileImageView" />
 
     <Button
+        android:id="@+id/NU_Cancel_Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="cancel"
+        android:text="@string/cancel_btn"
+        app:layout_constraintBottom_toTopOf="@+id/NU_FirstName"
+        app:layout_constraintEnd_toEndOf="@+id/NU_deleteProfile"
+        app:layout_constraintStart_toStartOf="@+id/NU_deleteProfile"
+        app:layout_constraintTop_toBottomOf="@+id/NU_deleteProfile" />
+
+    <Button
         android:id="@+id/NU_additional_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -83,14 +94,25 @@
         android:layout_width="158dp"
         android:layout_height="158dp"
         android:contentDescription="@string/profilePicDescriptionText"
-        app:layout_constraintBottom_toTopOf="@+id/NU_additional_info"
+        app:layout_constraintBottom_toTopOf="@+id/NU_Confirm_Btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/NU_editProfilePicture"
         app:layout_constraintTop_toBottomOf="@+id/NU_LastName"
-        app:layout_constraintVertical_bias="0.354"
         tools:ignore="ImageContrastCheck"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/NU_deleteProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="deleteProfile"
+        android:text="@string/delete_profile"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="@+id/NU_pseudo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/NU_pseudo"
+        app:layout_constraintTop_toTopOf="@+id/NU_pseudo" />
 
     <EditText
         android:id="@+id/NU_LastName"

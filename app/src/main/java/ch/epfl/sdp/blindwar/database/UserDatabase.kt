@@ -63,26 +63,12 @@ object UserDatabase {
     fun setElo(uid: String, elo: Int) {
         getEloReference(uid).setValue(elo)
     }
-    fun setFirstName(uid: String, fn: String) {
-        userReference.child(uid).child("firstName").setValue(fn)
+    fun setUserString(uid: String, data: String, value: String) {
+        userReference.child(uid).child(data).setValue(value)
     }
-    fun setLastName(uid: String, ln: String) {
-        userReference.child(uid).child("lastName").setValue(ln)
-    }
-    fun setPseudo(uid: String, pseudo: String) {
-        userReference.child(uid).child("pseudo").setValue(pseudo)
-    }
-    fun setProfilePicture(uid: String, pp: String) {
-        userReference.child(uid).child("profilePicture").setValue(pp)
-    }
-    fun setBirthdate(uid: String, date: Long) {
-        userReference.child(uid).child("birthDate").setValue(date)
-    }
-    fun setGender(uid: String, gender: String) {
-        userReference.child(uid).child("gender").setValue(gender)
-    }
-    fun setDescription(uid: String, desc: String) {
-        userReference.child(uid).child("description").setValue(desc)
+
+    fun setUserLong(uid: String, data: String, value: Long) {
+        userReference.child(uid).child(data).setValue(value)
     }
 
     /**
@@ -116,9 +102,9 @@ object UserDatabase {
     fun updateSoloUserStatistics(uid: String, score: Int, fails: Int) {
         getUserStatistics(uid).addOnSuccessListener {
             var userStatistics: AppStatistics? = it.getValue(AppStatistics::class.java)
-            if (userStatistics != null) {
-                userStatistics.correctnessUpdate(score, fails, Mode.SOLO)
-                setUserStatistics(uid, userStatistics)
+            userStatistics?.let{stat ->
+                stat.correctnessUpdate(score, fails, Mode.SOLO)
+                setUserStatistics(uid, stat)
             }
         }
     }

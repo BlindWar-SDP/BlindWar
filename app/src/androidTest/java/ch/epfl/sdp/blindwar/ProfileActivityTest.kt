@@ -59,8 +59,8 @@ class ProfileActivityTest : TestCase() {
 
     @Test
     fun statisticsUpdatedCorrectly() {
-        val testEmail = "test@bot.ch"
-        val testPassword = "testtest"
+        val testEmail = "test@test.test"
+        val testPassword = "testTest"
         val login: Task<AuthResult> = FirebaseAuth.getInstance()
             .signInWithEmailAndPassword(testEmail, testPassword)
         try {
@@ -79,37 +79,6 @@ class ProfileActivityTest : TestCase() {
         val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         device.pressBack()
         Espresso.onView(ViewMatchers.withId(R.id.logoutButton)).perform(ViewActions.click())
-    }
-    fun testDeleteButton_cancel() {
-        Espresso.closeSoftKeyboard()
-        onView(withId(R.id.deleteProfile))
-            .perform(click())
-        BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_text)
-        clickOn(android.R.string.cancel)
-    }
-
-    @Test
-    fun testDeleteButton_ok_cancel() {
-        Espresso.closeSoftKeyboard()
-        onView(withId(R.id.deleteProfile))
-            .perform(click())
-        BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_text)
-        clickOn(android.R.string.ok)
-        BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_confirm_text)
-        clickOn(android.R.string.cancel)
-    }
-
-    @Test
-    fun testDeleteButton_ok_ok() {
-        Espresso.closeSoftKeyboard()
-        onView(withId(R.id.deleteProfile))
-            .perform(click())
-        BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_text)
-        clickOn(android.R.string.ok)
-        BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_confirm_text)
-        clickOn(android.R.string.ok)
-//        BaristaVisibilityAssertions.assertDisplayed(R.string.deletion_success) // toast not detected
-        intended(hasComponent(SplashScreenActivity::class.java.name))
     }
 
     @Test

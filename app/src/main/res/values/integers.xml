@@ -6,4 +6,7 @@
     <integer name="age_min">5</integer>
     <integer name="age_max">100</integer>
     <integer name="self_description_max_length">256</integer>
+
+
+    <integer name="default_birthdate">-1</integer>
 </resources>

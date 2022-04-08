@@ -5,34 +5,55 @@ data class User(
     var email: String = "",
     var userStatistics: AppStatistics = AppStatistics(),
     var pseudo: String = "",
-    var firstName: String? = null,
-    var lastName: String? = null,
-    var birthDate: Long? = 0,
+    var firstName: String = "",
+    var lastName: String = "",
+    var birthdate: Long = -1,
     var profilePicture: String = "",
-    var gender: String? = null,
-    var description: String? = null
+    var gender: String = "",
+    var description: String = ""
 ) {
+
+    enum class Gender {
+        Other, Female, Male, Undefined, None
+    }
+    enum class VarName {
+        uid, email, userStatistics, pseudo, firstName, lastName, birthdate, profilePicture, gender, description
+    }
+/*
+    val varNameToStr = mapOf(
+        "uid" to "uid",
+        "email" to "email",
+        "userStatistics" to "userStatistics",
+        "pseudo" to "pseudo",
+        "firstName" to "firstName",
+        "lastName" to "lastName",
+        "birthdate" to "birthdate",
+        "profilePicture" to "profilePicture",
+        "gender" to "gender",
+        "description" to "description",
+    )
+ */
 
     class Builder(
         private var uid: String = "",
         private var email: String = "",
         private var userStatistics: AppStatistics = AppStatistics(),
         private var pseudo: String = "",
-        private var firstName: String? = null,
-        private var lastName: String? = null,
-        private var birthDate: Long? = null,
+        private var firstName: String = "",
+        private var lastName: String = "",
+        private var birthdate: Long = -1,
         private var profilePicture: String = "",
-        private var gender: String? = null,
-        private var description: String? = null
+        private var gender: String = "",
+        private var description: String = ""
     ) {
 
         fun setUid(uid: String) = apply { this.uid = uid }
         fun setEmail(email: String) = apply { this.email = email }
         fun setStats(stats: AppStatistics) = apply { this.userStatistics = stats }
         fun setPseudo(pseudo: String) = apply { this.pseudo = pseudo }
-        fun setFirstName(name: String?) = apply { this.firstName = name }
-        fun setLastName(name: String?) = apply { this.lastName = name }
-        fun setBirthDate(date: Long?) = apply { this.birthDate = date }
+        fun setFirstName(name: String) = apply { this.firstName = name }
+        fun setLastName(name: String) = apply { this.lastName = name }
+        fun setBirthdate(date: Long) = apply { this.birthdate = date }
         fun setProfilePicture(imagePath: String) = apply { this.profilePicture = imagePath }
         fun setGender(gender: String) = apply { this.gender = gender }
         fun setDescription(desc: String) = apply { this.description = desc }
@@ -44,7 +65,7 @@ data class User(
             this.pseudo = user.pseudo
             this.firstName = user.firstName
             this.lastName = user.lastName
-            this.birthDate = user.birthDate
+            this.birthdate = user.birthdate
             this.profilePicture = user.profilePicture
             this.gender = user.gender
             this.description = user.description
@@ -58,7 +79,7 @@ data class User(
                 pseudo,
                 firstName,
                 lastName,
-                birthDate,
+                birthdate,
                 profilePicture,
                 gender,
                 description
@@ -66,7 +87,7 @@ data class User(
         }
     }
 
-    override fun toString(): String{
+    override fun toString(): String {
         return pseudo
     }
 }

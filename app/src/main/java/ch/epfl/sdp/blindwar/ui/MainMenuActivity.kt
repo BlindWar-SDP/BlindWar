@@ -16,9 +16,6 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainMenuActivity : AppCompatActivity() {
 
-    private val database = UserDatabase
-    private val auth = FirebaseAuth.getInstance()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
@@ -37,9 +34,8 @@ class MainMenuActivity : AppCompatActivity() {
 
     // Called when the user taps the Tutorial button
     fun tutorialButton(view: View) {
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        if (currentUser != null) {
-            UserDatabase.setElo(currentUser.uid, 1000)
+        FirebaseAuth.getInstance().currentUser?.let{
+            UserDatabase.setElo(it.uid, 1000)
         }
         val intent = Intent(this, TutorialActivity::class.java)
         startActivity(intent)
@@ -56,7 +52,7 @@ class MainMenuActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        auth.signOut()
+        FirebaseAuth.getInstance().signOut()
         val intent = Intent(this, SplashScreenActivity::class.java)
         startActivity(intent)
     }

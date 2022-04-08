@@ -12,6 +12,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.adevinta.android.barista.interaction.BaristaEditTextInteractions.typeTo
 import com.adevinta.android.barista.interaction.BaristaSpinnerInteractions.clickSpinnerItem
@@ -42,7 +43,7 @@ class UserAdditionalInfoActivityTest : TestCase() {
 
     @Test
     fun testDescription() {
-        typeTo(R.id.NUA_description,"My Description")
+        typeTo(R.id.NUA_description, "My Description")
         closeSoftKeyboard()
         clickOn(R.id.NUA_Confirm_Btn)
         intended(hasComponent(UserNewInfoActivity::class.java.name))
@@ -51,7 +52,7 @@ class UserAdditionalInfoActivityTest : TestCase() {
     @Test
     fun testDatePicker() {
         clickOn(R.id.NUA_select_birthdate)
-        BaristaVisibilityAssertions.assertDisplayed(R.string.new_user_birthdatePicker)
+        assertDisplayed(R.string.new_user_birthdatePicker)
         clickOn(android.R.string.ok)
         clickOn(R.id.NUA_Confirm_Btn)
         intended(hasComponent(UserNewInfoActivity::class.java.name))
@@ -63,4 +64,17 @@ class UserAdditionalInfoActivityTest : TestCase() {
         clickOn(R.id.NUA_Confirm_Btn)
         intended(hasComponent(UserNewInfoActivity::class.java.name))
     }
+
+    @Test
+    fun testCancel() {
+        clickOn(R.id.NUA_Cancel_Btn)
+        intended(hasComponent(UserNewInfoActivity::class.java.name))
+    }
+
+    @Test
+    fun testResetBirthdate() {
+        clickOn(R.id.NUA_reset_birthdate)
+        assertDisplayed(R.id.NUA_reset_birthdate)
+    }
+
 }

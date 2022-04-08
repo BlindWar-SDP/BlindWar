@@ -9,16 +9,18 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.user.AppStatistics
-import ch.epfl.sdp.blindwar.user.Gender
 import ch.epfl.sdp.blindwar.user.User
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -33,6 +35,7 @@ class UserNewInfoActivity : AppCompatActivity() {
     private val database = UserDatabase
     private val imageDatabase = ImageDatabase
     private var profilePictureUri: Uri? = null
+    private var isNewUser = false
 
 
     private val userInfoListener = object : ValueEventListener {
@@ -51,8 +54,8 @@ class UserNewInfoActivity : AppCompatActivity() {
                 firstName.setText(it.firstName)
                 lastName.setText(it.lastName)
                 pseudo.setText(it.pseudo)
-                if (!intent.getBooleanExtra("newUser", false)) {
-                    if (it.profilePicture != "") {
+                if (!intent.getBooleanExtra(getString(R.string.newUser_ExtraName), false)) {
+                    if (it.profilePicture.isNotEmpty()) {
                         imageDatabase.dowloadProfilePicture(
                             it.profilePicture,
                             profileImageView,
@@ -80,6 +83,15 @@ class UserNewInfoActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        isNewUser = intent.getBooleanExtra(getString(R.string.newUser_ExtraName), false)
+        if (isNewUser) {
+            findViewById<Button>(R.id.NU_deleteProfile).visibility = View.INVISIBLE
+            findViewById<Button>(R.id.NU_Cancel_Btn).visibility = View.INVISIBLE
+        }
+    }
+
 //    override fun onBackPressed() { // TODO: when returning on SplashSreenActivity, not OK...
 //        super.onBackPressed()
 //        AuthUI.getInstance().signOut(this)
@@ -87,39 +99,36 @@ class UserNewInfoActivity : AppCompatActivity() {
 //    }
 
     fun confirm(v: View) {
+        // basic info
         val pseudo: String = findViewById<EditText>(R.id.NU_pseudo).text.toString()
         val firstName: String = checkNotDefault(
             findViewById<EditText>(R.id.NU_FirstName).text.toString(),
-            R.string.first_name
+            resources.getString(R.string.first_name)
         )
         val lastName: String = checkNotDefault(
             findViewById<EditText>(R.id.NU_LastName).text.toString(),
-            R.string.last_name
+            resources.getString(R.string.last_name)
         )
-        val birthDate: Long = intent.getLongExtra("birthdate", -1)
-        val profilePicture: String = if (profilePictureUri == null) "" else profilePictureUri.toString()
-        val gender = intent.getStringExtra("gender") ?: Gender.None.toString()
-        val description = intent.getStringExtra("description") ?: ""
-        val isNewUser = intent.getBooleanExtra("newUser", false)
+        val profilePicture: String =
+            if (profilePictureUri == null) "" else profilePictureUri.toString()
+
+        // additional info
+        val birthdate: Long = intent.getLongExtra(User.VarName.birthdate.toString(), -1)
+        val gender = intent.getStringExtra(User.VarName.gender.toString()) ?: ""
+        val description = intent.getStringExtra(User.VarName.description.toString()) ?: ""
 
         // check validity of pseudo
-        if (pseudo.length < resources.getInteger(R.integer.pseudo_minLength) || pseudo == resources.getString(
-                R.string.text_pseudo
-            )
+        if (pseudo.length < resources.getInteger(R.integer.pseudo_minLength) ||
+            pseudo == resources.getString(R.string.text_pseudo)
         ) {
             // Alert Dialog
             val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-            val positiveButtonClick = { _: DialogInterface, _: Int ->
-            }
-
+            val positiveButtonClick = { _: DialogInterface, _: Int -> }
             builder.setTitle(R.string.new_user_wrong_pseudo_title)
                 .setMessage(R.string.new_user_wrong_pseudo_text)
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, positiveButtonClick)
             builder.create().show()
-
-            // Or Toast
-//            Toast.makeText(this, R.string.new_user_wrong_pseudo_text, Toast.LENGTH_SHORT).show()
 
         } else {
             // check if new user or update already existing user
@@ -128,26 +137,47 @@ class UserNewInfoActivity : AppCompatActivity() {
                     pseudo,
                     firstName,
                     lastName,
-                    birthDate,
-                    profilePicture.toString(),
+                    birthdate,
+                    profilePicture,
                     gender,
                     description
-                ) // TODO : Comment for TESTing -> need to uncomment
-//            AuthUI.getInstance().delete(this) // TODO : uncomment for TESTing
+                )
+                Toast.makeText(
+                    this,
+                    "Welcome $pseudo 👋", Toast.LENGTH_SHORT
+                ).show()
                 startActivity(Intent(this, MainMenuActivity::class.java))
             } else {
                 FirebaseAuth.getInstance().currentUser?.let {
-                    UserDatabase.setPseudo(it.uid, pseudo)
-                    UserDatabase.setFirstName(it.uid, firstName)
-                    UserDatabase.setLastName(it.uid, lastName)
-                    UserDatabase.setProfilePicture(it.uid, profilePicture)
-                    UserDatabase.setGender(it.uid, gender)
-                    UserDatabase.setBirthdate(it.uid, birthDate)
-                    UserDatabase.setDescription(it.uid, description)
+                    UserDatabase.setUserString(
+                        it.uid, User.VarName.pseudo.toString(), pseudo
+                    )
+                    UserDatabase.setUserString(
+                        it.uid, User.VarName.firstName.toString(), firstName
+                    )
+                    UserDatabase.setUserString(
+                        it.uid, User.VarName.lastName.toString(), lastName
+                    )
+                    UserDatabase.setUserString(
+                        it.uid, User.VarName.profilePicture.toString(), profilePicture
+                    )
+                    UserDatabase.setUserString(
+                        it.uid, User.VarName.gender.toString(), gender
+                    )
+                    UserDatabase.setUserString(
+                        it.uid, User.VarName.description.toString(), description
+                    )
+                    UserDatabase.setUserLong(
+                        it.uid, User.VarName.birthdate.toString(), birthdate
+                    )
                     startActivity(Intent(this, ProfileActivity::class.java))
+                } ?: run {
+                    Toast.makeText(
+                        this,
+                        "user's info update went wrong", Toast.LENGTH_SHORT
+                    ).show()
+                    startActivity(Intent(this, SplashScreenActivity::class.java))
                 }
-                // FirebaseAuth.getInstance().currentUser should never be null here,
-                // otherwise there is something strange about it -> SplashScreenActivity ??
             }
 
             // Upload picture to database
@@ -160,10 +190,30 @@ class UserNewInfoActivity : AppCompatActivity() {
         }
     }
 
+    fun cancel(v: View) {
+        // new Alert Dialogue to ensure deletion
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val positiveButtonClick = { _: DialogInterface, _: Int ->
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
+        val negativeButtonClick = { _: DialogInterface, _: Int -> }
+
+        builder.setTitle(getString(R.string.alert_dialogue_cancel_title))
+            .setMessage(getString(R.string.alert_dialogue_cancel_text))
+            .setCancelable(false)
+            .setPositiveButton(android.R.string.ok, positiveButtonClick)
+            .setNegativeButton(android.R.string.cancel, negativeButtonClick)
+            .create()
+            .show()
+    }
+
     fun provideMoreInfo(v: View) {
         startActivity(
             Intent(this, UserAdditionalInfoActivity::class.java)
-                .putExtra("newUser", intent.getBooleanExtra("newUser", false))
+                .putExtra(
+                    getString(R.string.newUser_ExtraName),
+                    intent.getBooleanExtra(getString(R.string.newUser_ExtraName), false)
+                )
         )
     }
 
@@ -197,12 +247,12 @@ class UserNewInfoActivity : AppCompatActivity() {
 
     private fun createUser(
         pseudo: String,
-        firstName: String?,
-        lastName: String?,
-        birthDate: Long?,
+        firstName: String,
+        lastName: String,
+        birthdate: Long,
         profilePicture: String,
         gender: String,
-        description: String?
+        description: String
     ) {
 
         val user = Firebase.auth.currentUser
@@ -215,7 +265,7 @@ class UserNewInfoActivity : AppCompatActivity() {
                     pseudo,
                     firstName,
                     lastName,
-                    birthDate,
+                    birthdate,
                     profilePicture,
                     gender,
                     description
@@ -224,17 +274,17 @@ class UserNewInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkNotDefault(value: String, default: Int): String {
-        return if (value == default.toString()) "" else value
+    private fun checkNotDefault(value: String, default: String): String {
+        return if (value == default) "" else value
     }
 
     private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
-                if (data != null) {
-                    if (data.data != null) {
-                        profilePictureUri = data.data
+                data?.let {
+                    it.data?.let { uri ->
+                        profilePictureUri = uri
                         findViewById<ImageView>(R.id.NU_profileImageView).setImageURI(
                             profilePictureUri
                         )
@@ -242,4 +292,59 @@ class UserNewInfoActivity : AppCompatActivity() {
                 }
             }
         }
+
+    fun deleteProfile(view: View) {
+        // Alert Dialog
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        val positiveButtonClick = { _: DialogInterface, _: Int ->
+            // new Alert Dialogue to ensure deletion
+            val builderSecond: AlertDialog.Builder = AlertDialog.Builder(this)
+            val secondPositiveButtonClick = { _: DialogInterface, _: Int ->
+
+                FirebaseAuth.getInstance().currentUser?.let {
+                    UserDatabase.removeUser(it.uid)
+                    AuthUI.getInstance().delete(this).addOnCompleteListener {
+                        startActivity(Intent(this, SplashScreenActivity::class.java))
+                    }
+                    Toast.makeText(
+                        this,
+                        getString(R.string.deletion_success), Toast.LENGTH_SHORT
+                    ).show()
+                } ?: run {
+                    Toast.makeText(
+                        this,
+                        "something went wrong on deletion", Toast.LENGTH_SHORT
+                    ).show()
+                    startActivity(Intent(this, SplashScreenActivity::class.java))
+                }
+            }
+            val secondNegativeButtonClick = { _: DialogInterface, _: Int ->
+                Toast.makeText(
+                    this,
+                    getString(R.string.account_not_deleted_confirm_toast) + "🥳", Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            builderSecond.setTitle(getString(R.string.account_deletion_confirm_title))
+                .setMessage(getString(R.string.account_deletion_confirm_text))
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.ok, secondPositiveButtonClick)
+                .setNegativeButton(android.R.string.cancel, secondNegativeButtonClick)
+            builderSecond.create().show()
+
+        }
+        val negativeButtonClick = { _: DialogInterface, _: Int ->
+            Toast.makeText(
+                this,
+                getString(R.string.account_not_deleted_toast), Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        builder.setTitle(getString(R.string.account_deletion_title))
+            .setMessage(getString(R.string.account_deletion_text))
+            .setCancelable(false)
+            .setPositiveButton(android.R.string.ok, positiveButtonClick)
+            .setNegativeButton(android.R.string.cancel, negativeButtonClick)
+        builder.create().show()
+    }
 }
