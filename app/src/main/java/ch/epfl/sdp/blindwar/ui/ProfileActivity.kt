@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -63,6 +64,16 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -71,6 +82,9 @@ class ProfileActivity : AppCompatActivity() {
             database.addUserListener(currentUser.uid, userInfoListener)
         }
         setContentView(R.layout.activity_profile)
+
+        // showing the back button in action bar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     fun editProfile(view: View) {

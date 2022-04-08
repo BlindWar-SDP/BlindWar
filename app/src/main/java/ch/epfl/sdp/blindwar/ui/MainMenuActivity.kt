@@ -18,7 +18,7 @@ class MainMenuActivity : AppCompatActivity() {
 
     private val database = UserDatabase
     private val auth = FirebaseAuth.getInstance()
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
