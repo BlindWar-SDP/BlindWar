@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.ui
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -44,6 +45,16 @@ class StatisticsActivity : AppCompatActivity() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,11 +81,6 @@ class StatisticsActivity : AppCompatActivity() {
                     parent: AdapterView<*>,
                     view: View, position: Int, id: Long
                 ) {
-                    Toast.makeText(
-                        this@StatisticsActivity,
-                        getString(R.string.selected_item) + " " +
-                                "" + modes[position], Toast.LENGTH_SHORT
-                    ).show()
                     val eloView = findViewById<TextView>(R.id.eloExampleView)
                     val winView = findViewById<TextView>(R.id.winNumberView)
                     val drawView = findViewById<TextView>(R.id.drawNumberView)
@@ -111,6 +117,9 @@ class StatisticsActivity : AppCompatActivity() {
 
             }
         }
+
+        // showing the back button in action bar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
 }

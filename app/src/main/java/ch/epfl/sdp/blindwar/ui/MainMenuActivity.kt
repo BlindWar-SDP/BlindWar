@@ -9,14 +9,13 @@ import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.ui.multi.MultiPlayerActivity
 import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
-import ch.epfl.sdp.blindwar.user.AppStatistics
-import ch.epfl.sdp.blindwar.user.Mode
-import ch.epfl.sdp.blindwar.user.User
 import com.google.firebase.auth.FirebaseAuth
 
 class MainMenuActivity : AppCompatActivity() {
 
     private val database = UserDatabase
+    private val auth = FirebaseAuth.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
@@ -51,5 +50,11 @@ class MainMenuActivity : AppCompatActivity() {
 
     fun launchSpeechRecognitionActivity(view: View) {
         startActivity(Intent(this, DemoSRActivity::class.java))
+    }
+
+    override fun onBackPressed() {
+        auth.signOut()
+        val intent = Intent(this, SplashScreenActivity::class.java)
+        startActivity(intent)
     }
 }
