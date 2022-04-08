@@ -11,6 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
+import com.adevinta.android.barista.assertion.BaristaClickableAssertions.assertClickable
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
@@ -73,8 +74,8 @@ class UserAdditionalInfoActivityTest : TestCase() {
 
     @Test
     fun testResetBirthdate() {
-        clickOn(R.id.NUA_reset_birthdate)
-        assertDisplayed(R.id.NUA_reset_birthdate)
+        closeSoftKeyboard()
+        assertClickable(R.id.NUA_reset_birthdate)
     }
 
 }
