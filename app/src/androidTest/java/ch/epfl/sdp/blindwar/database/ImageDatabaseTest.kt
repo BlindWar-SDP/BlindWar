@@ -38,7 +38,7 @@ class ImageDatabaseTest : TestCase() {
         var retImagePath = ""
         testRule.scenario.onActivity { activity ->
             val profilePictureView = activity.findViewById<ImageView>(R.id.profileImageView)
-            retImagePath = ImageDatabase.dowloadProfilePicture(
+            retImagePath = ImageDatabase.downloadProfilePicture(
                 fakeImagePath,
                 profilePictureView, activity.applicationContext
             )

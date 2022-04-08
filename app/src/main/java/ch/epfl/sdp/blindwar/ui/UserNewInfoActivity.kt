@@ -53,7 +53,7 @@ class UserNewInfoActivity : AppCompatActivity() {
                 pseudo.setText(it.pseudo)
                 if (!intent.getBooleanExtra("newUser", false)) {
                     if (it.profilePicture != "null") {
-                        imageDatabase.dowloadProfilePicture(
+                        imageDatabase.downloadProfilePicture(
                             it.profilePicture!!,
                             profileImageView,
                             applicationContext

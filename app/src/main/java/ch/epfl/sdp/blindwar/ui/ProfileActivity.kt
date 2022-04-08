@@ -48,7 +48,7 @@ class ProfileActivity : AppCompatActivity() {
 
                 val imagePath = user.profilePicture.toString()
                 if (imagePath != null && imagePath != "null") {
-                    imageDatabase.dowloadProfilePicture(
+                    imageDatabase.downloadProfilePicture(
                         imagePath,
                         profileImageView,
                         applicationContext
