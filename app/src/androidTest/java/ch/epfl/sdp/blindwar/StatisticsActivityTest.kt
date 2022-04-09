@@ -34,6 +34,7 @@ class StatisticsActivityTest : TestCase() {
     @Before
     fun setup() {
         Intents.init()
+        Espresso.closeSoftKeyboard()
     }
 
     @After

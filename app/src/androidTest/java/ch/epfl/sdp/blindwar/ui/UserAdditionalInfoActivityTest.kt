@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.ui
 
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
@@ -35,6 +36,7 @@ class UserAdditionalInfoActivityTest : TestCase() {
     @Before
     fun setup() {
         Intents.init()
+        closeSoftKeyboard()
     }
 
     @After

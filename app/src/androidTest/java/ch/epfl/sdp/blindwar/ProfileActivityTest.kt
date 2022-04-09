@@ -42,6 +42,7 @@ class ProfileActivityTest : TestCase() {
     @Before
     fun setup() {
         Intents.init()
+        Espresso.closeSoftKeyboard()
     }
 
     @After
@@ -83,7 +84,6 @@ class ProfileActivityTest : TestCase() {
 
     @Test
     fun testLogoutButton() {
-        Espresso.closeSoftKeyboard()
         onView(withId(R.id.logoutButton))
             .perform(click())
         intended(hasComponent(SplashScreenActivity::class.java.name))
@@ -91,7 +91,6 @@ class ProfileActivityTest : TestCase() {
 
     @Test
     fun testEditProfileButton() {
-        Espresso.closeSoftKeyboard()
         onView(withId(R.id.editProfileButton))
             .perform(click())
         intended(hasComponent(UserNewInfoActivity::class.java.name))

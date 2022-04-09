@@ -7,17 +7,17 @@ import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
-import ch.epfl.sdp.blindwar.ui.*
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
+import ch.epfl.sdp.blindwar.ui.MainMenuActivity
+import ch.epfl.sdp.blindwar.ui.ProfileActivity
+import ch.epfl.sdp.blindwar.ui.UserAdditionalInfoActivity
+import ch.epfl.sdp.blindwar.ui.UserNewInfoActivity
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.adevinta.android.barista.interaction.BaristaClickInteractions
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -48,6 +48,17 @@ class UserNewInfoActivityTest : TestCase() {
     @Before
     fun setup() {
         Intents.init()
+        Espresso.closeSoftKeyboard()
+        // ensure login
+        val login: Task<AuthResult> = FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(email, password)
+        try {
+            Tasks.await(login)
+        } catch (e: ExecutionException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
     }
 
     @After
@@ -55,12 +66,15 @@ class UserNewInfoActivityTest : TestCase() {
         Intents.release()
     }
 
+    private fun putNewUserExtra(bool: Boolean){
+        testRule.scenario.onActivity {
+            it.startActivity(it.intent.putExtra("newUser", bool))
+        }
+    }
+
     @Test
     fun testLayoutInvisibility() {
-        testRule.scenario.onActivity {
-            it.recreate()
-            it.intent.putExtra("newUser", true)
-        }
+        putNewUserExtra(true)
         val invisibleIds = listOf(
             R.id.NU_Cancel_Btn,
             R.id.NU_deleteProfile
@@ -203,10 +217,7 @@ class UserNewInfoActivityTest : TestCase() {
 
     @Test
     fun testNewUser() {
-        testRule.scenario.onActivity {
-            it.recreate()
-            it.intent.putExtra("newUser", true)
-        }
+        putNewUserExtra(true)
         onView(withId(R.id.NU_pseudo))
             .perform(replaceText(validPseudo), closeSoftKeyboard())
         clickOn(R.id.NU_Confirm_Btn)
@@ -215,16 +226,7 @@ class UserNewInfoActivityTest : TestCase() {
 
     @Test
     fun testUpdateUser() {
-        val login: Task<AuthResult> = FirebaseAuth.getInstance()
-            .signInWithEmailAndPassword(email, password)
-        try {
-            Tasks.await(login)
-        } catch (e: ExecutionException) {
-            e.printStackTrace()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-        testRule.scenario.onActivity { it.intent.putExtra("newUser", false) }
+        putNewUserExtra(false)
         onView(withId(R.id.NU_pseudo))
             .perform(replaceText(validPseudo))
         clickOn(R.id.NU_Confirm_Btn)
@@ -271,7 +273,7 @@ class UserNewInfoActivityTest : TestCase() {
     @Test
     fun testCancelBtnOK() {
         closeSoftKeyboard()
-        testRule.scenario.onActivity { it.intent.putExtra("newUser", false) }
+        putNewUserExtra(false)
         clickOn(R.id.NU_Cancel_Btn)
         assertDisplayed(R.string.alert_dialogue_cancel_text)
         clickOn(android.R.string.ok)
@@ -281,7 +283,7 @@ class UserNewInfoActivityTest : TestCase() {
     @Test
     fun testCancelBtnCancel() {
         closeSoftKeyboard()
-        testRule.scenario.onActivity { it.intent.putExtra("newUser", false) }
+        putNewUserExtra(false)
         clickOn(R.id.NU_Cancel_Btn)
         assertDisplayed(R.string.alert_dialogue_cancel_text)
         clickOn(android.R.string.cancel)
