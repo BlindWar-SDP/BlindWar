@@ -15,6 +15,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
@@ -36,6 +37,9 @@ class UserNewInfoActivity : AppCompatActivity() {
     private val imageDatabase = ImageDatabase
     private var profilePictureUri: Uri? = null
     private var isNewUser = false
+    private var birthdate: Long = -1
+    private var description: String = ""
+    private var gender: String = ""
 
 
     private val userInfoListener = object : ValueEventListener {
@@ -61,8 +65,13 @@ class UserNewInfoActivity : AppCompatActivity() {
                             profileImageView,
                             applicationContext
                         )
+                        profilePictureUri = it.profilePicture.toUri()
                     }
                 }
+                // -> extra for UserAdditionalInfoActivity
+                birthdate = it.birthdate
+                gender = it.gender
+                description = it.description
             }
         }
 
@@ -76,15 +85,15 @@ class UserNewInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_new_info)
-
-        // user id should be set according to authentication
-        FirebaseAuth.getInstance().currentUser?.let {
-            database.addUserListener(it.uid, userInfoListener)
-        }
     }
 
     override fun onResume() {
         super.onResume()
+        // user id should be set according to authentication
+        FirebaseAuth.getInstance().currentUser?.let {
+            database.addUserListener(it.uid, userInfoListener)
+        }
+
         isNewUser = intent.getBooleanExtra(getString(R.string.newUser_ExtraName), false)
         if (isNewUser) {
             findViewById<Button>(R.id.NU_deleteProfile).visibility = View.INVISIBLE
@@ -113,9 +122,9 @@ class UserNewInfoActivity : AppCompatActivity() {
             if (profilePictureUri == null) "" else profilePictureUri.toString()
 
         // additional info
-        val birthdate: Long = intent.getLongExtra(User.VarName.birthdate.toString(), -1)
-        val gender = intent.getStringExtra(User.VarName.gender.toString()) ?: ""
-        val description = intent.getStringExtra(User.VarName.description.toString()) ?: ""
+        birthdate = intent.getLongExtra(User.VarName.birthdate.name, -1)
+        gender = intent.getStringExtra(User.VarName.gender.name) ?: ""
+        description = intent.getStringExtra(User.VarName.description.name) ?: ""
 
         // check validity of pseudo
         if (pseudo.length < resources.getInteger(R.integer.pseudo_minLength) ||
@@ -150,25 +159,25 @@ class UserNewInfoActivity : AppCompatActivity() {
             } else {
                 FirebaseAuth.getInstance().currentUser?.let {
                     UserDatabase.setUserString(
-                        it.uid, User.VarName.pseudo.toString(), pseudo
+                        it.uid, User.VarName.pseudo.name, pseudo
                     )
                     UserDatabase.setUserString(
-                        it.uid, User.VarName.firstName.toString(), firstName
+                        it.uid, User.VarName.firstName.name, firstName
                     )
                     UserDatabase.setUserString(
-                        it.uid, User.VarName.lastName.toString(), lastName
+                        it.uid, User.VarName.lastName.name, lastName
                     )
                     UserDatabase.setUserString(
-                        it.uid, User.VarName.profilePicture.toString(), profilePicture
+                        it.uid, User.VarName.profilePicture.name, profilePicture
                     )
                     UserDatabase.setUserString(
-                        it.uid, User.VarName.gender.toString(), gender
+                        it.uid, User.VarName.gender.name, gender
                     )
                     UserDatabase.setUserString(
-                        it.uid, User.VarName.description.toString(), description
+                        it.uid, User.VarName.description.name, description
                     )
                     UserDatabase.setUserLong(
-                        it.uid, User.VarName.birthdate.toString(), birthdate
+                        it.uid, User.VarName.birthdate.name, birthdate
                     )
                     startActivity(Intent(this, ProfileActivity::class.java))
                 } ?: run {
@@ -214,6 +223,10 @@ class UserNewInfoActivity : AppCompatActivity() {
                     getString(R.string.newUser_ExtraName),
                     intent.getBooleanExtra(getString(R.string.newUser_ExtraName), false)
                 )
+                .putExtra(User.VarName.birthdate.name, birthdate)
+                .putExtra(User.VarName.description.name, description)
+                .putExtra(User.VarName.gender.name, gender)
+
         )
     }
 

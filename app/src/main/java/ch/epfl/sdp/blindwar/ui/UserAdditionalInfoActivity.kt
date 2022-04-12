@@ -1,8 +1,6 @@
 package ch.epfl.sdp.blindwar.ui
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -14,8 +12,11 @@ import java.util.*
 
 class UserAdditionalInfoActivity : AppCompatActivity() {
 
-    private var gender: String? = null
+    private var gender: String? = ""
+    private var genderPosition = User.Gender.None.ordinal
+    private var description : String? = ""
     private var birthdate: Long = -1
+
     private var minAge = -1
     private var maxAge = -1
     private var isNewUser = false
@@ -27,8 +28,33 @@ class UserAdditionalInfoActivity : AppCompatActivity() {
         // cannot be initialized to resources value outside
         minAge = resources.getInteger(R.integer.age_min)
         maxAge = resources.getInteger(R.integer.age_max)
-        birthdate = resources.getInteger(R.integer.default_birthdate).toLong()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        isNewUser = intent.getBooleanExtra(getString(R.string.newUser_ExtraName), false)
+        gender = intent.getStringExtra(User.VarName.gender.name)
+        gender?.let{
+            if(it.isNotEmpty()) {
+                genderPosition = User.Gender.valueOf(it).ordinal
+            }
+        }
+
+        description = intent.getStringExtra(User.VarName.description.name)
+        description?.let{
+            findViewById<TextView>(R.id.NUA_description).text = it
+        }
+
+        birthdate = intent.getLongExtra(
+            User.VarName.birthdate.name,
+            resources.getInteger(R.integer.default_birthdate).toLong()
+        )
+        if (birthdate != resources.getInteger(R.integer.default_birthdate).toLong()) {
+            setBirthdateText(birthdate)
+            findViewById<Button>(R.id.NUA_reset_birthdate).visibility = View.VISIBLE
+        } else {
+            findViewById<Button>(R.id.NUA_reset_birthdate).visibility = View.INVISIBLE
+        }
         // access the items of the list
         val genders = User.Gender.values()
         // access the spinner
@@ -42,7 +68,7 @@ class UserAdditionalInfoActivity : AppCompatActivity() {
 
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             it.adapter = adapter
-            it.setSelection(adapter.count - 1) // set default to last item of Gender: None
+            it.setSelection(genderPosition) // set default to last item of Gender: None
             it.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -50,11 +76,10 @@ class UserAdditionalInfoActivity : AppCompatActivity() {
                     view: View, position: Int, id: Long
                 ) {
                     val chosen = parent.getItemAtPosition(position)
-                    gender = if ( chosen == User.Gender.None) {
+                    gender = if (chosen == User.Gender.None) {
                         ""
                     } else {
                         chosen.toString()
-
                     }
                 }
 
@@ -63,11 +88,6 @@ class UserAdditionalInfoActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        isNewUser = intent.getBooleanExtra(getString(R.string.newUser_ExtraName), false)
     }
 
     fun selectBirthdate(view: View) {
@@ -96,23 +116,17 @@ class UserAdditionalInfoActivity : AppCompatActivity() {
         val cal: Calendar = Calendar.getInstance()
         cal.set(year, month, day)
         birthdate = cal.timeInMillis
-        Toast.makeText(
-            this,
-            "birthdate set to " +
-                    "${cal.get(Calendar.DAY_OF_MONTH)}/" +
-                    "${cal.get(Calendar.MONTH)+1}/" +
-                    "${cal.get(Calendar.YEAR)}",
-            Toast.LENGTH_SHORT
-        ).show()
+        setBirthdateText(birthdate)
+
     }
 
     fun confirm(view: View) {
         val description: String = findViewById<EditText>(R.id.NUA_description).text.toString()
         startActivity(
             Intent(this, UserNewInfoActivity::class.java)
-                .putExtra(User.VarName.description.toString(), description)
-                .putExtra(User.VarName.gender.toString(), gender)
-                .putExtra(User.VarName.birthdate.toString(), birthdate)
+                .putExtra(User.VarName.description.name, description)
+                .putExtra(User.VarName.gender.name, gender)
+                .putExtra(User.VarName.birthdate.name, birthdate)
                 .putExtra(getString(R.string.newUser_ExtraName), isNewUser)
         )
     }
@@ -121,8 +135,10 @@ class UserAdditionalInfoActivity : AppCompatActivity() {
 //        // new Alert Dialogue to ensure deletion
 //        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
 //        val positiveButtonClick = { _: DialogInterface, _: Int ->
-            startActivity(Intent(this, UserNewInfoActivity::class.java)
-                .putExtra(getString(R.string.newUser_ExtraName), isNewUser))
+        startActivity(
+            Intent(this, UserNewInfoActivity::class.java)
+                .putExtra(getString(R.string.newUser_ExtraName), isNewUser)
+        )
 //        }
 //        val negativeButtonClick = { _: DialogInterface, _: Int -> }
 //
@@ -137,9 +153,20 @@ class UserAdditionalInfoActivity : AppCompatActivity() {
 
     fun resetBirthdate(v: View) {
         birthdate = resources.getInteger(R.integer.default_birthdate).toLong()
-        Toast.makeText(
-            this,
-            "birthdate reset", Toast.LENGTH_SHORT
-        ).show()
+        val text = findViewById<TextView>(R.id.NUA_selected_birthdate_text)
+        text.text = resources.getString(R.string.no_birthdate_selected)
+        findViewById<Button>(R.id.NUA_reset_birthdate).visibility = View.INVISIBLE
+    }
+
+    private fun setBirthdateText(birthdate: Long) {
+        val cal: Calendar = Calendar.getInstance()
+        cal.timeInMillis = birthdate
+
+        val text = findViewById<TextView>(R.id.NUA_selected_birthdate_text)
+        text.text = "birthdate set to\n" +
+                    "${cal.get(Calendar.DAY_OF_MONTH)}/" +
+                    "${cal.get(Calendar.MONTH) + 1}/" +
+                    "${cal.get(Calendar.YEAR)}"
+        findViewById<Button>(R.id.NUA_reset_birthdate).visibility = View.VISIBLE
     }
 }
