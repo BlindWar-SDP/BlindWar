@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.database
 
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.user.AppStatistics
 import ch.epfl.sdp.blindwar.user.Mode
 import ch.epfl.sdp.blindwar.user.User
@@ -59,6 +60,23 @@ object UserDatabase {
         userReference.child(uid).removeValue()
     }
 
+    /**
+     * Function to add a liked music in user's list of liked music (in particular when he presses
+     * the like button)
+     * @param uid
+     * @param music
+     */
+    fun addLikedMusic(uid: String, music: MusicMetadata) {
+        val likedMusicRef = getUserReference(uid).child("likedMusics")
+        likedMusicRef.get().addOnSuccessListener {
+            var likedMusics: MutableList<MusicMetadata>? = it.getValue(MutableList::class.java)
+                    as MutableList<MusicMetadata>?
+            if (likedMusics != null) {
+                likedMusics.add(music)
+                likedMusicRef.setValue(likedMusics)
+            }
+        }
+    }
     // Set elo of an user
     fun setElo(uid: String, elo: Int) {
         getEloReference(uid).setValue(elo)

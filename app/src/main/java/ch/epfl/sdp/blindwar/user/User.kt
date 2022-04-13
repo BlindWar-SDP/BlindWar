@@ -1,5 +1,7 @@
 package ch.epfl.sdp.blindwar.user
 
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+
 data class User(
     var uid: String = "",
     var email: String = "",
@@ -10,7 +12,8 @@ data class User(
     var birthDate: Long? = 0,
     var profilePicture: String = "",
     var gender: String? = null,
-    var description: String? = null
+    var description: String? = null,
+    var likedMusics: MutableList<MusicMetadata> = mutableListOf()
 ) {
 
     class Builder(
