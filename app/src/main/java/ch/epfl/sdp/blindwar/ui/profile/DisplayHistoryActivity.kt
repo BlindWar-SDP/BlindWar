@@ -11,16 +11,18 @@ class DisplayHistoryActivity : AppCompatActivity() {
     private var titles = mutableListOf<String>()
     private var artists = mutableListOf<String>()
     private var images = mutableListOf<Int>()
-    private val musicRecyclerView: RecyclerView = R.id.musicRecyclerView as RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_display_history)
+        setContentView(R.layout.activity_display_music)
 
         postToList()
-
+        var musicRecyclerView: RecyclerView = findViewById(R.id.musicRecyclerView)
         musicRecyclerView.layoutManager = LinearLayoutManager(this)
         musicRecyclerView.adapter = MusicDisplayRecyclerAdapter(titles, artists, images)
+
+        // showing the back button in action bar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
     }
@@ -32,7 +34,7 @@ class DisplayHistoryActivity : AppCompatActivity() {
     }
 
     private fun postToList() {
-        for (i in 1..3) {
+        for (i in 1..20) {
             addToList("HELLO", "JOJO", R.mipmap.ic_launcher_round_base)
         }
     }

@@ -218,7 +218,7 @@ class UserNewInfoActivity : AppCompatActivity() {
                     birthDate,
                     profilePicture,
                     gender,
-                    descriptionz
+                    description
                 ).build()
             )
         }

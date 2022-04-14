@@ -98,7 +98,7 @@
         android:layout_width="253dp"
         android:layout_height="50dp"
         android:backgroundTint="@color/green_blue_crayola"
-        android:onClick="statisticsButton"
+        android:onClick="historyButton"
         android:text="@string/historyText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toTopOf="@+id/editProfileButton"
