@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.processNextEventInCurrentThread
 
 
 object UserDatabase {
@@ -69,6 +70,16 @@ object UserDatabase {
 
     fun setUserLong(uid: String, data: String, value: Long) {
         userReference.child(uid).child(data).setValue(value)
+    }
+    fun updateUser(user: User){
+        val ref = userReference.child(user.uid)
+        ref.child(User.VarName.pseudo.name).setValue(user.pseudo)
+        ref.child(User.VarName.firstName.name).setValue(user.firstName)
+        ref.child(User.VarName.lastName.name).setValue(user.lastName)
+        ref.child(User.VarName.profilePicture.name).setValue(user.profilePicture)
+        ref.child(User.VarName.description.name).setValue(user.description)
+        ref.child(User.VarName.gender.name).setValue(user.gender)
+        ref.child(User.VarName.birthdate.name).setValue(user.birthdate)
     }
 
     /**
