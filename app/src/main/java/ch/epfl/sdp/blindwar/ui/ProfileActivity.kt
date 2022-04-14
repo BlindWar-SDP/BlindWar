@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.ui.profile.DisplayHistoryActivity
 import ch.epfl.sdp.blindwar.user.User
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
@@ -146,5 +147,9 @@ class ProfileActivity : AppCompatActivity() {
 
     fun statisticsButton(view: View) {
         startActivity(Intent(this, StatisticsActivity::class.java))
+    }
+
+    fun historyButton(view: View) {
+        startActivity(Intent(this, DisplayHistoryActivity::class.java))
     }
 }

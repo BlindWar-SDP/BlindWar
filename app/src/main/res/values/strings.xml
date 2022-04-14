@@ -49,6 +49,7 @@
     <string name="backText"><![CDATA[->]]></string>
     <string name="emailText">Your email here</string>
     <string name="statisticsText">Statistics</string>
+    <string name="historyText">History</string>
     <string name="nameText">Your name here</string>
     <string name="editProfileText">Edit\nProfile</string>
     <string name="logoutText">:( Logout</string>
