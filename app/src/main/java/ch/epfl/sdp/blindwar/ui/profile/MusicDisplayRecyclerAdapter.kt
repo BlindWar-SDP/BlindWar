@@ -2,6 +2,7 @@ package ch.epfl.sdp.blindwar.ui.profile
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
@@ -13,7 +14,7 @@ import ch.epfl.sdp.blindwar.R
  * @property artists
  * @property images
  */
-class MusicDisplayRecyclerAdapter(private var titles: List<String>, private var artists: List<String>, private var images: List<String>):
+class MusicDisplayRecyclerAdapter(private var titles: List<String>, private var artists: List<String>, private var images: List<Int>):
 
 RecyclerView.Adapter<MusicDisplayRecyclerAdapter.ViewHolder>(){
 
@@ -21,7 +22,7 @@ RecyclerView.Adapter<MusicDisplayRecyclerAdapter.ViewHolder>(){
 
         val itemTitle: TextView = itemView.findViewById(R.id.musicTitle)
         val itemArtist: TextView = itemView.findViewById(R.id.musicArtist)
-        val itemPicture: TextView = itemView.findViewById(R.id.musicImage)
+        val itemPicture: ImageView = itemView.findViewById(R.id.musicImage)
 
 
     }
@@ -35,7 +36,7 @@ RecyclerView.Adapter<MusicDisplayRecyclerAdapter.ViewHolder>(){
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemTitle.text = titles[position]
         holder.itemArtist.text = artists[position]
-        //holder.itemPicture.setImageRessource(images)
+        holder.itemPicture.setImageResource((images[position]))
     }
 
     override fun getItemCount(): Int {
@@ -43,4 +44,3 @@ RecyclerView.Adapter<MusicDisplayRecyclerAdapter.ViewHolder>(){
     }
 }
 
-}
