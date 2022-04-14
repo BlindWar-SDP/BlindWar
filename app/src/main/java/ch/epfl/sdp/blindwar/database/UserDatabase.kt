@@ -67,16 +67,16 @@ object UserDatabase {
      * @param music
      */
     fun addLikedMusic(uid: String, music: MusicMetadata) {
-        val likedMusicRef = getUserReference(uid).child("likedMusics")
-        likedMusicRef.get().addOnSuccessListener {
-            var likedMusics: MutableList<MusicMetadata>? = it.getValue(MutableList::class.java)
-                    as MutableList<MusicMetadata>?
-            if (likedMusics != null) {
-                likedMusics.add(music)
-                likedMusicRef.setValue(likedMusics)
+        val userRef = getUserReference(uid)
+        userRef.get().addOnSuccessListener {
+            var user: User? = it.getValue(User::class.java)
+            if (user != null) {
+                user.likedMusics.add(music)
+                userRef.setValue(user)
             }
         }
     }
+
     // Set elo of an user
     fun setElo(uid: String, elo: Int) {
         getEloReference(uid).setValue(elo)
