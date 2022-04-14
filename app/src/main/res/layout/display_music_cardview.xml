@@ -14,7 +14,8 @@
         android:id="@+id/rlWrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp" >
+        android:padding="10dp"
+        android:background="@color/prussian_blue">
 
         <ImageView
             android:id="@+id/musicImage"
@@ -31,13 +32,13 @@
             android:layout_alignBottom="@id/musicImage"
             android:layout_toEndOf="@id/musicImage"
             android:orientation="vertical"
-            android:background="@color/green_blue_crayola">
+            android:gravity="left|center_vertical">
 
             <TextView
                 android:id="@+id/musicTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:text="Title"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
