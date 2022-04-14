@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import okhttp3.internal.wait
 
 
 class UserNewInfoActivity : AppCompatActivity() {
@@ -36,6 +37,10 @@ class UserNewInfoActivity : AppCompatActivity() {
     private val imageDatabase = ImageDatabase
 
     private var user = User()
+
+    private fun isNewUser(): Boolean {
+        return user.pseudo.isEmpty()
+    }
 
     private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -51,13 +56,10 @@ class UserNewInfoActivity : AppCompatActivity() {
 //                    profilePictureUri = user.profilePicture.toUri()
 //                }
             }
-            if (user.pseudo.isEmpty()) {
+            if (isNewUser()) {
                 findViewById<Button>(R.id.NU_deleteProfile).visibility = View.INVISIBLE
                 findViewById<Button>(R.id.NU_Cancel_Btn).visibility = View.INVISIBLE
             }
-            setInfoFromBundle()
-            downloadImage()
-            setView()
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
@@ -83,8 +85,12 @@ class UserNewInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_new_info)
         FirebaseAuth.getInstance().currentUser?.let {
-            database.addUserListener(it.uid, userInfoListener)
+            database.addUserListener(it.uid, userInfoListener)//.wait()
         }
+        setInfoFromBundle()
+        downloadImage()
+        setView()
+
     }
 
 //    override fun onPause() {
