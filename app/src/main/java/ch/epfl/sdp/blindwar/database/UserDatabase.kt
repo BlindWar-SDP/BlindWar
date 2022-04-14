@@ -71,8 +71,10 @@ object UserDatabase {
         userRef.get().addOnSuccessListener {
             var user: User? = it.getValue(User::class.java)
             if (user != null) {
-                user.likedMusics.add(music)
-                userRef.setValue(user)
+                if (music !in user.likedMusics) {
+                    user.likedMusics.add(music)
+                    userRef.setValue(user)
+                }
             }
         }
     }
