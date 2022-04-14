@@ -40,11 +40,11 @@
                 android:textColor="@android:color/black"
                 android:textSize="20sp" />
             <TextView
-                android:id="@+id/musicDescription"
+                android:id="@+id/musicArtist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="This is a description"
+                android:text="This is an artist"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="20sp" />
         </LinearLayout>
