@@ -10,8 +10,12 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
+import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.ui.solo.animated.AnimationSetterHelper
 import com.airbnb.lottie.LottieAnimationView
+import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
 
 class SongSummaryFragment : Fragment() {
@@ -88,6 +92,19 @@ class SongSummaryFragment : Fragment() {
         likeAnimation.setOnClickListener {
             AnimationSetterHelper.playLikeAnimation(likeSwitch, likeAnimation)
             likeSwitch = !likeSwitch
+            val currentUser = FirebaseAuth.getInstance().currentUser
+
+            if (currentUser != null) {
+
+                // Reconstruct musicmetadata from arguments
+                val defaultDuration = 10000
+                val defaultUri = ""
+                val title: String = arguments?.get("title").toString()
+                val artist: String = arguments?.get("artist").toString()
+                val image: String = arguments?.get("image").toString()
+                val music = URIMusicMetadata(title, artist, image, defaultDuration, defaultUri)
+                UserDatabase.addLikedMusic(currentUser.uid, music)
+            }
         }
     }
 
