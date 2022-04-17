@@ -4,7 +4,6 @@ import ch.epfl.sdp.blindwar.user.AppStatistics
 import ch.epfl.sdp.blindwar.user.Mode
 import ch.epfl.sdp.blindwar.user.User
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -54,6 +53,7 @@ object UserDatabase {
     fun addUser(user: User) {
         userReference.child(user.uid).setValue(user)
     }
+
     // Remove user from database
     fun removeUser(uid: String) {
         userReference.child(uid).removeValue()
@@ -63,24 +63,31 @@ object UserDatabase {
     fun setElo(uid: String, elo: Int) {
         getEloReference(uid).setValue(elo)
     }
+
     fun setFirstName(uid: String, fn: String) {
         userReference.child(uid).child("firstName").setValue(fn)
     }
+
     fun setLastName(uid: String, ln: String) {
         userReference.child(uid).child("lastName").setValue(ln)
     }
+
     fun setPseudo(uid: String, pseudo: String) {
         userReference.child(uid).child("pseudo").setValue(pseudo)
     }
+
     fun setProfilePicture(uid: String, pp: String) {
         userReference.child(uid).child("profilePicture").setValue(pp)
     }
+
     fun setBirthdate(uid: String, date: Long) {
         userReference.child(uid).child("birthDate").setValue(date)
     }
+
     fun setGender(uid: String, gender: String) {
         userReference.child(uid).child("gender").setValue(gender)
     }
+
     fun setDescription(uid: String, desc: String) {
         userReference.child(uid).child("description").setValue(desc)
     }
