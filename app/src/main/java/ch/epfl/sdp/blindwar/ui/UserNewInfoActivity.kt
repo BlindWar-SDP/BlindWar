@@ -52,9 +52,9 @@ class UserNewInfoActivity : AppCompatActivity() {
                 lastName.setText(it.lastName)
                 pseudo.setText(it.pseudo)
                 if (!intent.getBooleanExtra("newUser", false)) {
-                    if (it.profilePicture != "null") {
+                    if (it.profilePicture != "") {
                         imageDatabase.dowloadProfilePicture(
-                            it.profilePicture!!,
+                            it.profilePicture,
                             profileImageView,
                             applicationContext
                         )
@@ -97,7 +97,7 @@ class UserNewInfoActivity : AppCompatActivity() {
             R.string.last_name
         )
         val birthDate: Long = intent.getLongExtra("birthdate", -1)
-        val profilePicture: String = profilePictureUri.toString()
+        val profilePicture: String = if (profilePictureUri == null) "" else profilePictureUri.toString()
         val gender = intent.getStringExtra("gender") ?: Gender.None.toString()
         val description = intent.getStringExtra("description") ?: ""
         val isNewUser = intent.getBooleanExtra("newUser", false)
@@ -146,6 +146,8 @@ class UserNewInfoActivity : AppCompatActivity() {
                     UserDatabase.setDescription(it.uid, description)
                     startActivity(Intent(this, ProfileActivity::class.java))
                 }
+                // FirebaseAuth.getInstance().currentUser should never be null here,
+                // otherwise there is something strange about it -> SplashScreenActivity ??
             }
 
             // Upload picture to database
