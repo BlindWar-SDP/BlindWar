@@ -91,7 +91,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
             return if (user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp) {
                 // new user: 1st signIn
-                Intent(activity, UserNewInfoActivity::class.java).putExtra("newUser", true)
+                Intent(activity, UserNewInfoActivity::class.java)
             } else {
                 /*
                     - should we update the online database with the local cache here ?

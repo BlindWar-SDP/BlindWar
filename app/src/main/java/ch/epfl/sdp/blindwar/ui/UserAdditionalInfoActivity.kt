@@ -3,7 +3,6 @@ package ch.epfl.sdp.blindwar.ui
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -28,7 +27,6 @@ class UserAdditionalInfoActivity : AppCompatActivity() {
         maxAge = resources.getInteger(R.integer.age_max)
 
         intent.extras?.let {
-
             user.gender = it.getString(User.VarName.gender.name, user.gender)
             user.description = it.getString(User.VarName.description.name, user.description)
             user.birthdate = it.getLong(User.VarName.birthdate.name, user.birthdate)

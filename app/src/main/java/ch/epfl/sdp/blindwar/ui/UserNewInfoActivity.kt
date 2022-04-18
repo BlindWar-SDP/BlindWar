@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -29,17 +30,26 @@ import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import okhttp3.internal.wait
 
 
 class UserNewInfoActivity : AppCompatActivity() {
     private val database = UserDatabase
     private val imageDatabase = ImageDatabase
 
-    private var user = User()
+    private var user = User() // global variable -> not a good practice
+    private var isNewUser = false
+    private var localPPuri: Uri? = null
 
-    private fun isNewUser(): Boolean {
-        return user.pseudo.isEmpty()
+    private fun hideCancelDeleteBtn() {
+        findViewById<Button>(R.id.NU_deleteProfile).visibility = View.INVISIBLE
+        findViewById<Button>(R.id.NU_Cancel_Btn).visibility = View.INVISIBLE
+    }
+
+    private fun hideResetPPBtn() {
+        findViewById<ImageView>(R.id.NU_profileImageView).setImageResource(
+            android.R.color.transparent
+        )
+        findViewById<Button>(R.id.NU_resetProfilePicture).visibility = View.INVISIBLE
     }
 
     private val userInfoListener = object : ValueEventListener {
@@ -52,14 +62,25 @@ class UserNewInfoActivity : AppCompatActivity() {
             }
             userDB?.let {
                 user = User.Builder().fromUser(it).build()
-//                if (user.profilePicture.isNotEmpty()) {
-//                    profilePictureUri = user.profilePicture.toUri()
-//                }
             }
-            if (isNewUser()) {
-                findViewById<Button>(R.id.NU_deleteProfile).visibility = View.INVISIBLE
-                findViewById<Button>(R.id.NU_Cancel_Btn).visibility = View.INVISIBLE
+            // check for first login
+            intent.extras?.let {
+                setUserFromBundle()
+                isNewUser = it.getBoolean(resources.getString(R.string.newUser_ExtraName), false)
+                Log.i("New USER @@@@", isNewUser.toString())
+                it.getString("localPP")?.let { str ->
+                    localPPuri = str.toUri()
+                }
+            } ?: run {
+                isNewUser = user.pseudo.isEmpty()
             }
+            if (isNewUser) { // 1st login
+                hideCancelDeleteBtn()
+            }
+            if (user.profilePicture.isEmpty()) {
+                hideResetPPBtn()
+            }
+            setView()
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
@@ -68,47 +89,19 @@ class UserNewInfoActivity : AppCompatActivity() {
         }
     }
 
-    private var resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                data?.let {
-                    it.data?.let { uri ->
-                        user.profilePicture = uri.toString()
-                        showImage()
-                    }
-                }
-            }
-        }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_new_info)
         FirebaseAuth.getInstance().currentUser?.let {
-            database.addUserListener(it.uid, userInfoListener)//.wait()
+            database.addUserListener(it.uid, userInfoListener)
         }
-        setInfoFromBundle()
-        downloadImage()
-        setView()
-
     }
-
-//    override fun onPause() {
-//        super.onPause()
-//        setInfoFromText()
-//    }
-
-//    override fun onBackPressed() { // TODO: when returning on SplashSreenActivity, not OK...
-//        super.onBackPressed()
-//        AuthUI.getInstance().signOut(this)
-//        AuthUI.getInstance().delete(this)
-//    }
 
     fun confirm(v: View) {
         // Additional info
-        setInfoFromBundle()
+        setUserFromBundle()
         // basic info
-        setInfoFromText()
+        setUserFromText()
 
         // check validity of pseudo
         if (user.pseudo.length < resources.getInteger(R.integer.pseudo_minLength) ||
@@ -124,11 +117,17 @@ class UserNewInfoActivity : AppCompatActivity() {
             builder.create().show()
 
         } else {
-            updateUser()
             uploadImage()
+            updateUser()
         }
     }
 
+    fun resetProfilePicture(v: View) {
+        user.profilePicture = User().profilePicture // set to default
+        localPPuri = null
+        hideResetPPBtn()
+        showImage()
+    }
 
     fun cancel(v: View) {
         // new Alert Dialogue to ensure deletion
@@ -148,7 +147,7 @@ class UserNewInfoActivity : AppCompatActivity() {
     }
 
     fun provideMoreInfo(v: View) {
-        setInfoFromText()
+        setUserFromText()
         startActivity(
             Intent(this, UserAdditionalInfoActivity::class.java)
                 .putExtras(createBundle())
@@ -166,6 +165,19 @@ class UserNewInfoActivity : AppCompatActivity() {
     fun clearLastName(v: View) {
         clearText(R.id.NU_LastName, R.string.last_name)
     }
+
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                data?.let {
+                    it.data?.let { uri ->
+                        localPPuri = uri
+                        showImage()
+                    }
+                }
+            }
+        }
 
     fun choosePicture(v: View) {
         val intent = Intent()
@@ -202,7 +214,8 @@ class UserNewInfoActivity : AppCompatActivity() {
             val secondNegativeButtonClick = { _: DialogInterface, _: Int ->
                 Toast.makeText(
                     this,
-                    getString(R.string.account_not_deleted_confirm_toast) + "🥳", Toast.LENGTH_SHORT
+                    getString(R.string.account_not_deleted_confirm_toast) + "🥳",
+                    Toast.LENGTH_SHORT
                 ).show()
             }
 
@@ -237,7 +250,7 @@ class UserNewInfoActivity : AppCompatActivity() {
         return if (value == default) "" else value
     }
 
-    private fun setInfoFromText() {
+    private fun setUserFromText() {
 
         user.pseudo = findViewById<EditText>(R.id.NU_pseudo).text.toString()
         user.firstName = checkNotDefault(
@@ -250,7 +263,7 @@ class UserNewInfoActivity : AppCompatActivity() {
         )
     }
 
-    private fun setInfoFromBundle() {
+    private fun setUserFromBundle() {
         intent.extras?.let {
             user.pseudo = it.getString(User.VarName.pseudo.name, user.pseudo)
             user.firstName = it.getString(User.VarName.firstName.name, user.firstName)
@@ -273,38 +286,41 @@ class UserNewInfoActivity : AppCompatActivity() {
     }
 
     private fun showImage() {
-        Log.i("profile String", user.profilePicture)
-        findViewById<ImageView>(R.id.NU_profileImageView).setImageURI(
-            user.profilePicture.toUri()
-        )
+        localPPuri?.let {
+            findViewById<ImageView>(R.id.NU_profileImageView).setImageURI(
+                localPPuri
+            )
+            findViewById<Button>(R.id.NU_resetProfilePicture).visibility = View.VISIBLE
+        } ?: run {
+            downloadImage()
+        }
     }
 
     private fun uploadImage() {
-        // Upload picture to database
-        if (user.profilePicture.isNotEmpty()) {
-            imageDatabase.uploadProfilePicture(
-                FirebaseAuth.getInstance().currentUser,
-                user.profilePicture.toUri(),
-                findViewById(android.R.id.content)
-            )
+        localPPuri?.let {
+            // Upload picture to database
+            user.profilePicture =
+                imageDatabase.uploadProfilePicture(
+                    FirebaseAuth.getInstance().currentUser,
+                    it,
+                    findViewById(android.R.id.content)
+                )
         }
     }
 
     private fun downloadImage() {
-        intent.extras?.let {} ?: run {
-            if (user.profilePicture.isNotEmpty()) { // not default value
-                imageDatabase.dowloadProfilePicture(
-                    user.profilePicture,
-                    findViewById(R.id.NU_profileImageView),
-                    applicationContext
-                )
-            }
+        if (user.profilePicture.isNotEmpty()) { // not default value
+            imageDatabase.dowloadProfilePicture(
+                user.profilePicture,
+                findViewById(R.id.NU_profileImageView),
+                applicationContext
+            )
         }
     }
 
     private fun updateUser() {
         Firebase.auth.currentUser?.let {
-            if (user.pseudo.isEmpty()) {
+            if (isNewUser) { // firstLog()
                 UserDatabase.addUser(
                     User.Builder()
                         .fromUser(user)
@@ -318,6 +334,7 @@ class UserNewInfoActivity : AppCompatActivity() {
                     "Welcome ${user.pseudo} 👋", Toast.LENGTH_SHORT
                 ).show()
                 startActivity(Intent(this, MainMenuActivity::class.java))
+                finish()
             } else {
                 UserDatabase.updateUser(user)
                 Toast.makeText(
@@ -325,6 +342,7 @@ class UserNewInfoActivity : AppCompatActivity() {
                     "${user.pseudo}'s info updated 👋", Toast.LENGTH_SHORT
                 ).show()
                 startActivity(Intent(this, ProfileActivity::class.java))
+                finish()
             }
         } ?: run {
             Toast.makeText(
@@ -345,10 +363,10 @@ class UserNewInfoActivity : AppCompatActivity() {
         bundle.putLong(User.VarName.birthdate.name, user.birthdate)
         bundle.putString(User.VarName.gender.name, user.gender)
         bundle.putString(User.VarName.description.name, user.description)
-        bundle.putBoolean(
-            getString(R.string.newUser_ExtraName),
-            intent.getBooleanExtra(getString(R.string.newUser_ExtraName), false)
-        )
+        bundle.putBoolean(getString(R.string.newUser_ExtraName), isNewUser)
+        localPPuri?.let {
+            bundle.putString("localPP", localPPuri.toString())
+        }
         return bundle
     }
 

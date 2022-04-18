@@ -1,19 +1,14 @@
 package ch.epfl.sdp.blindwar.ui
 
-import androidx.test.espresso.Espresso
+import android.os.Bundle
 import androidx.test.espresso.Espresso.closeSoftKeyboard
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
 import com.adevinta.android.barista.assertion.BaristaClickableAssertions.assertClickable
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.adevinta.android.barista.interaction.BaristaEditTextInteractions.typeTo
@@ -37,6 +32,11 @@ class UserAdditionalInfoActivityTest : TestCase() {
     fun setup() {
         Intents.init()
         closeSoftKeyboard()
+        testRule.scenario.onActivity {
+            val bundle = Bundle()
+            bundle.putBoolean("newUser", false)
+            it.startActivity(it.intent.putExtras(bundle))
+        }
     }
 
     @After

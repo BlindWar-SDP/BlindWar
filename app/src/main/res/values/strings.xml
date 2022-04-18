@@ -167,7 +167,7 @@
     <string name="alert_dialogue_cancel_title">Cancel update</string>
     <string name="alert_dialogue_cancel_text">Are you sure to keep old info</string>
     <string name="newUser_ExtraName">newUser</string>
-    <string name="reset_birthdate_text">reset</string>
+    <string name="reset">reset</string>
     <string name="no_birthdate_selected">no birthdate selected</string>
 
 </resources>

@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="resetBirthdate"
-        android:text="@string/reset_birthdate_text"
+        android:text="@string/reset"
         android:textSize="7sp"
         android:minHeight="0sp"
         android:minWidth="0sp"

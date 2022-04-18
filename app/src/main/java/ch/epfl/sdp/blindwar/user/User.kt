@@ -59,16 +59,16 @@ data class User(
         fun setDescription(desc: String) = apply { this.description = desc }
 
         fun fromUser(user: User) = apply {
-            this.uid = user.uid
-            this.email = user.email
-            this.userStatistics = user.userStatistics
-            this.pseudo = user.pseudo
-            this.firstName = user.firstName
-            this.lastName = user.lastName
-            this.birthdate = user.birthdate
-            this.profilePicture = user.profilePicture
-            this.gender = user.gender
-            this.description = user.description
+            setUid(user.uid)
+            setEmail(user.email)
+            setStats(user.userStatistics)
+            setPseudo(user.pseudo)
+            setFirstName(user.firstName)
+            setLastName(user.lastName)
+            setBirthdate(user.birthdate)
+            setProfilePicture(user.profilePicture)
+            setGender(user.gender)
+            setDescription(user.description)
         }
 
         fun build(): User {

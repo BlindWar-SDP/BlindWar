@@ -143,4 +143,17 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp" />
 
+    <Button
+        android:id="@+id/NU_resetProfilePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="resetProfilePicture"
+        android:text="@string/reset"
+        android:textSize="7sp"
+        android:minHeight="0sp"
+        android:minWidth="0sp"
+        app:layout_constraintEnd_toEndOf="@+id/NU_editProfilePicture"
+        app:layout_constraintStart_toStartOf="@+id/NU_editProfilePicture"
+        app:layout_constraintTop_toBottomOf="@+id/NU_editProfilePicture" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
