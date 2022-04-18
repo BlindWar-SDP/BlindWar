@@ -6,7 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.UserDatabase
-import ch.epfl.sdp.blindwar.ui.multi.MultiPlayerActivity
+import ch.epfl.sdp.blindwar.ui.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
 import ch.epfl.sdp.blindwar.user.AppStatistics
@@ -31,7 +31,7 @@ class MainMenuActivity : AppCompatActivity() {
     }
 
     fun multiButton(view: View) {
-        val intent = Intent(this, MultiPlayerActivity::class.java)
+        val intent = Intent(this, MultiPlayerMenuActivity::class.java)
         startActivity(intent)
     }
 

@@ -14,7 +14,7 @@ class MultiPlayerRandomActivity : AppCompatActivity(){
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_multirandom)
+        setContentView(R.layout.activity_multiplayer_random)
 
         // showing the back button in action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

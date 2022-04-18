@@ -44,7 +44,7 @@
             android:parentActivityName=".ui.UserNewInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.multi.MultiPlayerActivity"
+            android:name=".ui.multi.MultiPlayerMenuActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -53,6 +53,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.multi.MultiPlayerRandomActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.multi.MultiPlayerActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

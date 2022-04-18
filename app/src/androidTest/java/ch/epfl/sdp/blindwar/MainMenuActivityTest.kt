@@ -1,34 +1,25 @@
 package ch.epfl.sdp.blindwar
 
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.ui.DemoSRActivity
 import ch.epfl.sdp.blindwar.ui.MainMenuActivity
 import ch.epfl.sdp.blindwar.ui.ProfileActivity
-import ch.epfl.sdp.blindwar.ui.multi.MultiPlayerActivity
+import ch.epfl.sdp.blindwar.ui.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.Tasks
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
 import junit.framework.TestCase
-import org.hamcrest.Matchers
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.concurrent.ExecutionException
 
 
 @RunWith(AndroidJUnit4::class)
@@ -59,7 +50,7 @@ class MainMenuActivityTest : TestCase() {
     fun testMultiButton() {
         onView(withId(R.id.multiButton))
             .perform(click())
-        intended(hasComponent(MultiPlayerActivity::class.java.name))
+        intended(hasComponent(MultiPlayerMenuActivity::class.java.name))
     }
 
     @Test
