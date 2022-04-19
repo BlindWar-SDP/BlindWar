@@ -9,9 +9,6 @@ import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.ui.multi.MultiPlayerActivity
 import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
 import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
-import ch.epfl.sdp.blindwar.user.AppStatistics
-import ch.epfl.sdp.blindwar.user.Mode
-import ch.epfl.sdp.blindwar.user.User
 import com.google.firebase.auth.FirebaseAuth
 
 class MainMenuActivity : AppCompatActivity() {
@@ -34,7 +31,7 @@ class MainMenuActivity : AppCompatActivity() {
 
     // Called when the user taps the Tutorial button
     fun tutorialButton(view: View) {
-        FirebaseAuth.getInstance().currentUser?.let{
+        FirebaseAuth.getInstance().currentUser?.let {
             UserDatabase.setElo(it.uid, 1000)
         }
         val intent = Intent(this, TutorialActivity::class.java)
@@ -53,6 +50,7 @@ class MainMenuActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         FirebaseAuth.getInstance().signOut()
+        getSharedPreferences("offline", MODE_PRIVATE).edit().remove("user").apply()
         val intent = Intent(this, SplashScreenActivity::class.java)
         startActivity(intent)
     }

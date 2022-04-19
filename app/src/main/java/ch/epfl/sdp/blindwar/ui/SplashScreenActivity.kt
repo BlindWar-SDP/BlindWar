@@ -1,12 +1,17 @@
 package ch.epfl.sdp.blindwar.ui
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.BuildConfig
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.user.User
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
@@ -15,6 +20,7 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 
 class SplashScreenActivity : AppCompatActivity() {
     // inspired by :
@@ -25,8 +31,6 @@ class SplashScreenActivity : AppCompatActivity() {
         private const val TAG = "SplashScreen"
     }
 
-//    private var userAuth = UserAuth()
-
     // See: https://developer.android.com/training/basics/intents/result
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
@@ -35,17 +39,57 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-        checkCurrentUser()
+
+        if (haveInternet()) {
+            setOffline(false)
+            checkCurrentUser()
+        } else {
+            setOffline(true)
+
+            // is there already an offline data?
+            val offline = getSharedPreferences("offline", MODE_PRIVATE)
+                .getString("user", null)
+            offline?.let {
+
+            } ?: run {
+                // if not, create a new one with empty user
+                getSharedPreferences("offline", MODE_PRIVATE)
+                    .edit()
+                    .putString("user", Gson().toJson(User()))
+                    .apply()
+            }
+            Toast.makeText(
+                this,
+                "OFFLINE gameplay", Toast.LENGTH_SHORT
+            ).show()
+            startActivity(Intent(this, MainMenuActivity::class.java))
+        }
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        checkCurrentUser()
-//    }
+    private fun setOffline(bool: Boolean) {
+        getSharedPreferences("offline", MODE_PRIVATE)
+            .edit()
+            .putBoolean("offline", bool)
+            .apply()
+    }
 
+    private fun haveInternet(): Boolean {
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return connectivityManager.activeNetworkInfo?.isConnected ?: false
+    }
 
     private fun checkCurrentUser() {
         if (isSignedIn()) {
+            // upload local data
+            FirebaseAuth.getInstance().currentUser?.let { user ->
+                val offlineStr = getSharedPreferences("offline", MODE_PRIVATE)
+                    .getString("user", null)
+                offlineStr?.let { str ->
+                    val offlineUser: User = Gson().fromJson(str, User::class.java)
+                    UserDatabase.updateUser(offlineUser)
+                }
+            }
             startActivity(Intent(this, MainMenuActivity::class.java))
         } else {
             signInLauncher.launch(createSignInIntent())
@@ -86,17 +130,36 @@ class SplashScreenActivity : AppCompatActivity() {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
             // Successfully signed in
-            val user = FirebaseAuth.getInstance().currentUser // =?= Firebase.auth.currentUser
-            // https://www.tabnine.com/code/java/classes/com.google.firebase.auth.FirebaseAuth
+            FirebaseAuth.getInstance().currentUser?.let { user ->// =?= Firebase.auth.currentUser
+                // https://www.tabnine.com/code/java/classes/com.google.firebase.auth.FirebaseAuth
+                return if (user.metadata?.lastSignInTimestamp == user.metadata?.creationTimestamp) {
+                    // new user: 1st signIn
+                    // update user info if there is a local data (1st login in when offline)
+                    val offlineStr = getSharedPreferences("offline", MODE_PRIVATE)
+                        .getString("user", null)
+                    offlineStr?.let { str ->
+                        val offlineUser: User = Gson().fromJson(str, User::class.java)
+                        if (offlineUser.uid.isEmpty()) { // 1st time logged as offline
+                            offlineUser.uid = user.uid
+                            user.email?.let {
+                                offlineUser.email = it
+                            }
+                        }
+                        UserDatabase.updateUser(offlineUser)
+                    }
 
-            return if (user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp) {
-                // new user: 1st signIn
-                Intent(activity, UserNewInfoActivity::class.java)
-            } else {
-                /*
-                    - should we update the online database with the local cache here ?
-                     */
-                Intent(activity, MainMenuActivity::class.java)
+                    Intent(activity, UserNewInfoActivity::class.java)
+                } else {
+                    // user already known (as logged out: no local data (deleted on logout))
+                    Intent(activity, MainMenuActivity::class.java)
+                }
+            } ?: run {
+                Toast.makeText(
+                    this,
+                    "something went wrong on login", Toast.LENGTH_SHORT
+                ).show()
+                return Intent(activity, SplashScreenActivity::class.java)
+//                return null // ?? better option ??
             }
         } else {
             // Sign in failed. If response is null the user canceled the

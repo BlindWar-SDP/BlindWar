@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -89,8 +90,23 @@ class UserNewInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_new_info)
-        FirebaseAuth.getInstance().currentUser?.let {
-            database.addUserListener(it.uid, userInfoListener)
+
+        val offline = getSharedPreferences("offline", MODE_PRIVATE)
+            .getBoolean("offline", false)
+        if (offline) {
+            findViewById<Button>(R.id.NU_deleteProfile).visibility = View.INVISIBLE
+            findViewById<Button>(R.id.NU_editProfilePicture).visibility = View.INVISIBLE
+            hideResetPPBtn()
+            val userStr = getSharedPreferences("offline", MODE_PRIVATE)
+                .getString("user", null)
+            userStr?.let {
+                user = Gson().fromJson(it, User::class.java)
+            }
+            setView()
+        } else {
+            FirebaseAuth.getInstance().currentUser?.let {
+                database.addUserListener(it.uid, userInfoListener)
+            }
         }
     }
 
@@ -115,7 +131,19 @@ class UserNewInfoActivity : AppCompatActivity() {
 
         } else {
             uploadImage()
+
+            getSharedPreferences("offline", MODE_PRIVATE)
+                .edit()
+                .putString("user", Gson().toJson(user))
+                .apply()
+
             updateUser()
+
+//            val mPref2 = getSharedPreferences("myself", MODE_PRIVATE)
+//            val json2 = mPref2.getString("user", "")
+//            val user2: User = Gson().fromJson(json2, User::class.java)
+//            Log.i("#######", user2.pseudo)
+
         }
     }
 
@@ -270,10 +298,11 @@ class UserNewInfoActivity : AppCompatActivity() {
     private fun setFromBundle() {
         intent.extras?.let { bundle ->
             val serializable = bundle.getString(User.VarName.user.name)
-            serializable?.let{ userStr ->
+            serializable?.let { userStr ->
                 user = Json.decodeFromString(userStr)
             }
-            isNewUser = bundle.getBoolean(resources.getString(R.string.newUser_ExtraName), false)
+            isNewUser =
+                bundle.getBoolean(resources.getString(R.string.newUser_ExtraName), false)
             bundle.getString("localPP")?.let { str ->
                 localPPuri = str.toUri()
             }
@@ -359,9 +388,9 @@ class UserNewInfoActivity : AppCompatActivity() {
         } ?: run {
             Toast.makeText(
                 this,
-                "user's update went wrong", Toast.LENGTH_SHORT
+                "user's local info updated", Toast.LENGTH_SHORT
             ).show()
-            startActivity(Intent(this, SplashScreenActivity::class.java))
+            startActivity(Intent(this, ProfileActivity::class.java))
         }
     }
 

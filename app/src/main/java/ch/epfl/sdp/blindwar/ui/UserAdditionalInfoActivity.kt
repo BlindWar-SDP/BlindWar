@@ -129,25 +129,12 @@ class UserAdditionalInfoActivity : AppCompatActivity() {
     }
 
     fun cancel(v: View) {
-//        // new Alert Dialogue to ensure deletion
-//        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-//        val positiveButtonClick = { _: DialogInterface, _: Int ->
         intent.extras?.let {
             startActivity(
                 Intent(this, UserNewInfoActivity::class.java)
                     .putExtras(it)
             )
         }
-//        }
-//        val negativeButtonClick = { _: DialogInterface, _: Int -> }
-//
-//        builder.setTitle(getString(R.string.alert_dialogue_cancel_title))
-//            .setMessage(getString(R.string.alert_dialogue_cancel_text))
-//            .setCancelable(false)
-//            .setPositiveButton(android.R.string.yes, positiveButtonClick)
-//            .setNegativeButton(android.R.string.cancel, negativeButtonClick)
-//            .create()
-//            .show()
     }
 
     fun resetBirthdate(v: View) {
