@@ -4,6 +4,7 @@ plugins {
     id 'jacoco'
     id 'com.google.gms.google-services'
     id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 jacoco {
@@ -175,6 +176,11 @@ dependencies {
 
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
     androidTestImplementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
+
+    // Serialization
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2"
+
+
 
 }
 

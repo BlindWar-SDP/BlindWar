@@ -11,7 +11,6 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.user.AppStatistics
 import ch.epfl.sdp.blindwar.user.Mode
-import ch.epfl.sdp.blindwar.user.Result
 import ch.epfl.sdp.blindwar.user.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -31,7 +30,6 @@ class StatisticsActivity : AppCompatActivity() {
             } catch (e: DatabaseException) {
                 null
             }
-
             if (user != null) {
                 userStatistics = user.userStatistics
             } else {

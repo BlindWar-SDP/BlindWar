@@ -1,5 +1,19 @@
 package ch.epfl.sdp.blindwar.user
 
+import kotlinx.serialization.Serializable
+
+const val UID = "uid"
+const val EMAIL = "email`"
+const val STATS = "userStatistics"
+const val PSEUDO = "pseudo"
+const val FIRSTNAME = "firstName"
+const val LASTNAME = "lastName"
+const val BIRTHDATE = "birthdate"
+const val PROFILE_PICTURE = "profilePicture"
+const val GENDER = "gender"
+const val DESCRIPTION = "description"
+
+@Serializable
 data class User(
     var uid: String = "",
     var email: String = "",
@@ -17,22 +31,8 @@ data class User(
         Other, Female, Male, Undefined, None
     }
     enum class VarName {
-        uid, email, userStatistics, pseudo, firstName, lastName, birthdate, profilePicture, gender, description
+        uid, email, userStatistics, pseudo, firstName, lastName, birthdate, profilePicture, gender, description, user
     }
-/*
-    val varNameToStr = mapOf(
-        "uid" to "uid",
-        "email" to "email",
-        "userStatistics" to "userStatistics",
-        "pseudo" to "pseudo",
-        "firstName" to "firstName",
-        "lastName" to "lastName",
-        "birthdate" to "birthdate",
-        "profilePicture" to "profilePicture",
-        "gender" to "gender",
-        "description" to "description",
-    )
- */
 
     class Builder(
         private var uid: String = "",

@@ -8,6 +8,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.user.User
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import java.util.*
 
 class UserAdditionalInfoActivity : AppCompatActivity() {
@@ -26,11 +28,12 @@ class UserAdditionalInfoActivity : AppCompatActivity() {
         minAge = resources.getInteger(R.integer.age_min)
         maxAge = resources.getInteger(R.integer.age_max)
 
-        intent.extras?.let {
-            user.gender = it.getString(User.VarName.gender.name, user.gender)
-            user.description = it.getString(User.VarName.description.name, user.description)
-            user.birthdate = it.getLong(User.VarName.birthdate.name, user.birthdate)
-            isNewUser = it.getBoolean(resources.getString(R.string.newUser_ExtraName), isNewUser)
+        intent.extras?.let { bundle ->
+            val serializable = bundle.getString(User.VarName.user.name)
+            serializable?.let { userStr ->
+                user = Json.decodeFromString(userStr)
+            }
+            isNewUser = bundle.getBoolean(resources.getString(R.string.newUser_ExtraName), false)
         }
         // set view
         findViewById<TextView>(R.id.NUA_description).text = user.description
@@ -112,14 +115,12 @@ class UserAdditionalInfoActivity : AppCompatActivity() {
     }
 
     fun confirm(view: View) {
-        val description: String = findViewById<EditText>(R.id.NUA_description).text.toString()
-        val bundle = intent.extras
-        bundle?.let {
-            // overwrite AddiInfo
-            it.putString(User.VarName.description.name, description)
-            it.putString(User.VarName.gender.name, user.gender)
-            it.putLong(User.VarName.birthdate.name, user.birthdate)
-
+        user.description = findViewById<EditText>(R.id.NUA_description).text.toString()
+        intent.extras?.let {
+            it.putSerializable(
+                User.VarName.user.name,
+                Json.encodeToString(User.serializer(), user)
+            )
             startActivity(
                 Intent(this, UserNewInfoActivity::class.java)
                     .putExtras(it)
@@ -131,10 +132,12 @@ class UserAdditionalInfoActivity : AppCompatActivity() {
 //        // new Alert Dialogue to ensure deletion
 //        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
 //        val positiveButtonClick = { _: DialogInterface, _: Int ->
-        startActivity(
-            Intent(this, UserNewInfoActivity::class.java)
-                .putExtras(intent.extras!!)
-        )
+        intent.extras?.let {
+            startActivity(
+                Intent(this, UserNewInfoActivity::class.java)
+                    .putExtras(it)
+            )
+        }
 //        }
 //        val negativeButtonClick = { _: DialogInterface, _: Int -> }
 //

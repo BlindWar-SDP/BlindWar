@@ -30,6 +30,8 @@ import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 
 
 class UserNewInfoActivity : AppCompatActivity() {
@@ -65,12 +67,7 @@ class UserNewInfoActivity : AppCompatActivity() {
             }
             // check for first login
             intent.extras?.let {
-                setUserFromBundle()
-                isNewUser = it.getBoolean(resources.getString(R.string.newUser_ExtraName), false)
-                Log.i("New USER @@@@", isNewUser.toString())
-                it.getString("localPP")?.let { str ->
-                    localPPuri = str.toUri()
-                }
+                setFromBundle()
             } ?: run {
                 isNewUser = user.pseudo.isEmpty()
             }
@@ -99,9 +96,9 @@ class UserNewInfoActivity : AppCompatActivity() {
 
     fun confirm(v: View) {
         // Additional info
-        setUserFromBundle()
+        setFromBundle()
         // basic info
-        setUserFromText()
+        setFromText()
 
         // check validity of pseudo
         if (user.pseudo.length < resources.getInteger(R.integer.pseudo_minLength) ||
@@ -147,10 +144,18 @@ class UserNewInfoActivity : AppCompatActivity() {
     }
 
     fun provideMoreInfo(v: View) {
-        setUserFromText()
+        setFromText()
+        val bundle = Bundle()
+        bundle.putSerializable(
+            User.VarName.user.name,
+            Json.encodeToString(User.serializer(), user)
+        )
+        localPPuri?.let {
+            bundle.putString("localPP", localPPuri.toString())
+        }
         startActivity(
             Intent(this, UserAdditionalInfoActivity::class.java)
-                .putExtras(createBundle())
+                .putExtras(bundle)
         )
     }
 
@@ -250,8 +255,7 @@ class UserNewInfoActivity : AppCompatActivity() {
         return if (value == default) "" else value
     }
 
-    private fun setUserFromText() {
-
+    private fun setFromText() {
         user.pseudo = findViewById<EditText>(R.id.NU_pseudo).text.toString()
         user.firstName = checkNotDefault(
             findViewById<EditText>(R.id.NU_FirstName).text.toString(),
@@ -263,16 +267,16 @@ class UserNewInfoActivity : AppCompatActivity() {
         )
     }
 
-    private fun setUserFromBundle() {
-        intent.extras?.let {
-            user.pseudo = it.getString(User.VarName.pseudo.name, user.pseudo)
-            user.firstName = it.getString(User.VarName.firstName.name, user.firstName)
-            user.lastName = it.getString(User.VarName.lastName.name, user.lastName)
-            user.profilePicture =
-                it.getString(User.VarName.profilePicture.name, user.profilePicture)
-            user.gender = it.getString(User.VarName.gender.name, user.gender)
-            user.description = it.getString(User.VarName.description.name, user.description)
-            user.birthdate = it.getLong(User.VarName.birthdate.name, user.birthdate)
+    private fun setFromBundle() {
+        intent.extras?.let { bundle ->
+            val serializable = bundle.getString(User.VarName.user.name)
+            serializable?.let{ userStr ->
+                user = Json.decodeFromString(userStr)
+            }
+            isNewUser = bundle.getBoolean(resources.getString(R.string.newUser_ExtraName), false)
+            bundle.getString("localPP")?.let { str ->
+                localPPuri = str.toUri()
+            }
         }
     }
 
@@ -305,6 +309,14 @@ class UserNewInfoActivity : AppCompatActivity() {
                     it,
                     findViewById(android.R.id.content)
                 )
+
+            Toast.makeText(
+                this,
+                "uploading profile picture", Toast.LENGTH_SHORT
+            ).show()
+            // time to load photo, otherwise, not on server when loading ProfileActivity
+            // bad practice... need to improve this with ProgressDialog ?
+            Thread.sleep(1000)
         }
     }
 
@@ -351,23 +363,6 @@ class UserNewInfoActivity : AppCompatActivity() {
             ).show()
             startActivity(Intent(this, SplashScreenActivity::class.java))
         }
-    }
-
-    private fun createBundle(
-    ): Bundle {
-        val bundle = Bundle()
-        bundle.putString(User.VarName.pseudo.name, user.pseudo)
-        bundle.putString(User.VarName.firstName.name, user.firstName)
-        bundle.putString(User.VarName.lastName.name, user.lastName)
-        bundle.putString(User.VarName.profilePicture.name, user.profilePicture)
-        bundle.putLong(User.VarName.birthdate.name, user.birthdate)
-        bundle.putString(User.VarName.gender.name, user.gender)
-        bundle.putString(User.VarName.description.name, user.description)
-        bundle.putBoolean(getString(R.string.newUser_ExtraName), isNewUser)
-        localPPuri?.let {
-            bundle.putString("localPP", localPPuri.toString())
-        }
-        return bundle
     }
 
     private fun setView() {

@@ -1,9 +1,10 @@
 package ch.epfl.sdp.blindwar.user
 
-import java.lang.Exception
+import kotlinx.serialization.Serializable
 import kotlin.math.pow
 import kotlin.math.round
 
+@Serializable
 class AppStatistics {
     private val numberOfMode = Mode.values().size
     private val hundredPercent = 100
