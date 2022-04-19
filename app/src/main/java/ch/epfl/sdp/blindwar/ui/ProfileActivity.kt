@@ -99,6 +99,8 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     fun logoutButton(view: View) {
+        // TODO : add warning for offline logout (lost of userinfo update)
+        // TODO : same on backpressed on MainMenuActivity ?
         FirebaseAuth.getInstance().signOut()
         getSharedPreferences("offline", MODE_PRIVATE).edit().remove("user").apply()
         startActivity(Intent(this, SplashScreenActivity::class.java))
