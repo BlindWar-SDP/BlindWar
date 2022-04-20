@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.database
 
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 import ch.epfl.sdp.blindwar.user.AppStatistics
 import ch.epfl.sdp.blindwar.user.Mode
 import ch.epfl.sdp.blindwar.user.User
@@ -66,7 +67,7 @@ object UserDatabase {
      * @param uid
      * @param music
      */
-    fun addLikedMusic(uid: String, music: MusicMetadata) {
+    fun addLikedMusic(uid: String, music: URIMusicMetadata) {
         val userRef = getUserReference(uid)
         userRef.get().addOnSuccessListener {
             var user: User? = it.getValue(User::class.java)

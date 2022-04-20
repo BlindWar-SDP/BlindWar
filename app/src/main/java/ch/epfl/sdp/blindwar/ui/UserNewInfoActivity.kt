@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.user.AppStatistics
@@ -101,7 +102,7 @@ class UserNewInfoActivity : AppCompatActivity() {
         val profilePicture: String = if (profilePictureUri == null) "" else profilePictureUri.toString()
         val gender = intent.getStringExtra("gender") ?: Gender.None.toString()
         val description = intent.getStringExtra("description") ?: ""
-        val likeMusics: MutableList<MusicMetadata> = mutableListOf()
+        val likeMusics: MutableList<URIMusicMetadata> = mutableListOf()
         val isNewUser = intent.getBooleanExtra("newUser", false)
 
         // check validity of pseudo
@@ -206,7 +207,7 @@ class UserNewInfoActivity : AppCompatActivity() {
         profilePicture: String,
         gender: String,
         description: String?,
-        likedMusics: MutableList<MusicMetadata>
+        likedMusics: MutableList<URIMusicMetadata>
     ) {
 
         val user = Firebase.auth.currentUser

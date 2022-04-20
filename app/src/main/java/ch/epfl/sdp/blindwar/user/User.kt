@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.user
 
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 
 data class User(
     var uid: String = "",
@@ -13,7 +14,7 @@ data class User(
     var profilePicture: String = "",
     var gender: String? = null,
     var description: String? = null,
-    var likedMusics: MutableList<MusicMetadata> = mutableListOf()
+    var likedMusics: MutableList<URIMusicMetadata> = mutableListOf()
 ) {
 
     class Builder(
@@ -27,7 +28,7 @@ data class User(
         private var profilePicture: String = "",
         private var gender: String? = null,
         private var description: String? = null,
-        var likedMusics: MutableList<MusicMetadata> = mutableListOf()
+        var likedMusics: MutableList<URIMusicMetadata> = mutableListOf()
     ) {
 
         fun setUid(uid: String) = apply { this.uid = uid }
@@ -40,7 +41,7 @@ data class User(
         fun setProfilePicture(imagePath: String) = apply { this.profilePicture = imagePath }
         fun setGender(gender: String) = apply { this.gender = gender }
         fun setDescription(desc: String) = apply { this.description = desc }
-        fun setLikedMusics(likedMusics: MutableList<MusicMetadata>) = apply { this.likedMusics =
+        fun setLikedMusics(likedMusics: MutableList<URIMusicMetadata>) = apply { this.likedMusics =
             likedMusics }
 
 

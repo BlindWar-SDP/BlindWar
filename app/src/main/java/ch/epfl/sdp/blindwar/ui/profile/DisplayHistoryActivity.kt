@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.user.AppStatistics
 import ch.epfl.sdp.blindwar.user.User
@@ -65,7 +66,7 @@ class DisplayHistoryActivity : AppCompatActivity() {
                 null
             }
             if (user != null) {
-                val likedMusics: MutableList<MusicMetadata> = user.likedMusics
+                val likedMusics: MutableList<URIMusicMetadata> = user.likedMusics
                 for (music in likedMusics) {
                     addToList(music.title, music.artist, R.mipmap.ic_launcher_round_base)
                 }
