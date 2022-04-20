@@ -133,6 +133,13 @@ object UserDatabase {
         return userStatisticsRef.get()
     }
 
+    /**
+     * Gets the userStatistics of the user from the database and update its statistics
+     * using the score of the game.
+     * @param uid
+     * @param score
+     * @param fails
+     */
     fun updateSoloUserStatistics(uid: String, score: Int, fails: Int) {
         getUserStatistics(uid).addOnSuccessListener {
             var userStatistics: AppStatistics? = it.getValue(AppStatistics::class.java)
