@@ -11,7 +11,7 @@ abstract class MusicMetadata(val title: String,
 
 class URIMusicMetadata(title: String = "title",
                        artist: String = "artist",
-                       imageUrl: String?,
+                       imageUrl: String? = null,
                        duration: Int = 0,
                        val uri: String = "uri"): MusicMetadata(title, artist, imageUrl, duration)
 
