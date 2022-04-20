@@ -26,7 +26,8 @@ data class User(
         private var birthDate: Long? = null,
         private var profilePicture: String = "",
         private var gender: String? = null,
-        private var description: String? = null
+        private var description: String? = null,
+        var likedMusics: MutableList<MusicMetadata> = mutableListOf()
     ) {
 
         fun setUid(uid: String) = apply { this.uid = uid }
@@ -39,6 +40,9 @@ data class User(
         fun setProfilePicture(imagePath: String) = apply { this.profilePicture = imagePath }
         fun setGender(gender: String) = apply { this.gender = gender }
         fun setDescription(desc: String) = apply { this.description = desc }
+        fun setLikedMusics(likedMusics: MutableList<MusicMetadata>) = apply { this.likedMusics =
+            likedMusics }
+
 
         fun fromUser(user: User) = apply {
             this.uid = user.uid
@@ -51,6 +55,7 @@ data class User(
             this.profilePicture = user.profilePicture
             this.gender = user.gender
             this.description = user.description
+            this.likedMusics = user.likedMusics
         }
 
         fun build(): User {
@@ -64,7 +69,8 @@ data class User(
                 birthDate,
                 profilePicture,
                 gender,
-                description
+                description,
+                likedMusics
             )
         }
     }

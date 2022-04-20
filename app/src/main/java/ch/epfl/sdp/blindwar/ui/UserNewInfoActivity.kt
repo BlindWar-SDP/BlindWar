@@ -14,6 +14,7 @@ import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.user.AppStatistics
@@ -100,6 +101,7 @@ class UserNewInfoActivity : AppCompatActivity() {
         val profilePicture: String = if (profilePictureUri == null) "" else profilePictureUri.toString()
         val gender = intent.getStringExtra("gender") ?: Gender.None.toString()
         val description = intent.getStringExtra("description") ?: ""
+        val likeMusics: MutableList<MusicMetadata> = mutableListOf()
         val isNewUser = intent.getBooleanExtra("newUser", false)
 
         // check validity of pseudo
@@ -131,7 +133,8 @@ class UserNewInfoActivity : AppCompatActivity() {
                     birthDate,
                     profilePicture.toString(),
                     gender,
-                    description
+                    description,
+                    likeMusics
                 ) // TODO : Comment for TESTing -> need to uncomment
 //            AuthUI.getInstance().delete(this) // TODO : uncomment for TESTing
                 startActivity(Intent(this, MainMenuActivity::class.java))
@@ -202,7 +205,8 @@ class UserNewInfoActivity : AppCompatActivity() {
         birthDate: Long?,
         profilePicture: String,
         gender: String,
-        description: String?
+        description: String?,
+        likedMusics: MutableList<MusicMetadata>
     ) {
 
         val user = Firebase.auth.currentUser
@@ -218,7 +222,8 @@ class UserNewInfoActivity : AppCompatActivity() {
                     birthDate,
                     profilePicture,
                     gender,
-                    description
+                    description,
+                    likedMusics
                 ).build()
             )
         }
