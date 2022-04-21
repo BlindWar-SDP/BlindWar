@@ -12,6 +12,7 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.user.User
+import ch.epfl.sdp.blindwar.user.UserCache
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -20,7 +21,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.gson.Gson
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity(), UserCache {
     private val database = UserDatabase
     private val imageDatabase = ImageDatabase
 
@@ -102,7 +103,7 @@ class ProfileActivity : AppCompatActivity() {
         // TODO : add warning for offline logout (lost of userinfo update)
         // TODO : same on backpressed on MainMenuActivity ?
         FirebaseAuth.getInstance().signOut()
-        getSharedPreferences("offline", MODE_PRIVATE).edit().remove("user").apply()
+        removeCache(this)
         startActivity(Intent(this, SplashScreenActivity::class.java))
     }
 

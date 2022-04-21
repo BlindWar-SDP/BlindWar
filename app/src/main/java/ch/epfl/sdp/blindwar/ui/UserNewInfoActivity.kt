@@ -21,6 +21,7 @@ import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.user.AppStatistics
 import ch.epfl.sdp.blindwar.user.User
+import ch.epfl.sdp.blindwar.user.UserCache
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -30,12 +31,11 @@ import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 
-class UserNewInfoActivity : AppCompatActivity() {
+class UserNewInfoActivity : AppCompatActivity(), UserCache {
     private val database = UserDatabase
     private val imageDatabase = ImageDatabase
 
@@ -91,17 +91,11 @@ class UserNewInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_new_info)
 
-        val offline = getSharedPreferences("offline", MODE_PRIVATE)
-            .getBoolean("offline", false)
-        if (offline) {
+        if (isOffline(this)) {
             findViewById<Button>(R.id.NU_deleteProfile).visibility = View.INVISIBLE
             findViewById<Button>(R.id.NU_editProfilePicture).visibility = View.INVISIBLE
             hideResetPPBtn()
-            val userStr = getSharedPreferences("offline", MODE_PRIVATE)
-                .getString("user", null)
-            userStr?.let {
-                user = Gson().fromJson(it, User::class.java)
-            }
+            user = readCache(this)
             setView()
         } else {
             FirebaseAuth.getInstance().currentUser?.let {
@@ -131,19 +125,8 @@ class UserNewInfoActivity : AppCompatActivity() {
 
         } else {
             uploadImage()
-
-            getSharedPreferences("offline", MODE_PRIVATE)
-                .edit()
-                .putString("user", Gson().toJson(user))
-                .apply()
-
+            writeCache(this, user)
             updateUser()
-
-//            val mPref2 = getSharedPreferences("myself", MODE_PRIVATE)
-//            val json2 = mPref2.getString("user", "")
-//            val user2: User = Gson().fromJson(json2, User::class.java)
-//            Log.i("#######", user2.pseudo)
-
         }
     }
 

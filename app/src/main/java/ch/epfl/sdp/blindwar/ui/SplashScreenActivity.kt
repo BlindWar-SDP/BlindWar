@@ -10,19 +10,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.BuildConfig
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.database.UserDatabase
-import ch.epfl.sdp.blindwar.user.User
+import ch.epfl.sdp.blindwar.user.UserCache
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
 
-class SplashScreenActivity : AppCompatActivity() {
+class SplashScreenActivity : AppCompatActivity(), UserCache {
     // inspired by :
     // https://github.com/firebase/snippets-android/blob/master/auth/app/src/main/java/com/google/firebase/quickstart/auth/kotlin/FirebaseUIActivity.kt
     // https://firebase.google.com/docs/auth/android/firebaseui
@@ -40,24 +36,12 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-        if (haveInternet()) {
-            setOffline(false)
+        if (isOnline()) {
+            setOffline(this, false)
             checkCurrentUser()
         } else {
-            setOffline(true)
-
-            // is there already an offline data?
-            val offline = getSharedPreferences("offline", MODE_PRIVATE)
-                .getString("user", null)
-            offline?.let {
-
-            } ?: run {
-                // if not, create a new one with empty user
-                getSharedPreferences("offline", MODE_PRIVATE)
-                    .edit()
-                    .putString("user", Gson().toJson(User()))
-                    .apply()
-            }
+            setOffline(this, true)
+            createCache(this)
             Toast.makeText(
                 this,
                 "OFFLINE gameplay", Toast.LENGTH_SHORT
@@ -66,32 +50,18 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
-    private fun setOffline(bool: Boolean) {
-        getSharedPreferences("offline", MODE_PRIVATE)
-            .edit()
-            .putBoolean("offline", bool)
-            .apply()
-    }
-
-    private fun haveInternet(): Boolean {
+    private fun isOnline(): Boolean {
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return connectivityManager.activeNetworkInfo?.isConnected ?: false
     }
 
     private fun checkCurrentUser() {
-        if (isSignedIn()) {
+        FirebaseAuth.getInstance().currentUser?.let {
             // upload local data
-            FirebaseAuth.getInstance().currentUser?.let { user ->
-                val offlineStr = getSharedPreferences("offline", MODE_PRIVATE)
-                    .getString("user", null)
-                offlineStr?.let { str ->
-                    val offlineUser: User = Gson().fromJson(str, User::class.java)
-                    UserDatabase.updateUser(offlineUser)
-                }
-            }
+            updateServerFromCache(this)
             startActivity(Intent(this, MainMenuActivity::class.java))
-        } else {
+        } ?: run {
             signInLauncher.launch(createSignInIntent())
         }
     }
@@ -134,20 +104,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 // https://www.tabnine.com/code/java/classes/com.google.firebase.auth.FirebaseAuth
                 return if (user.metadata?.lastSignInTimestamp == user.metadata?.creationTimestamp) {
                     // new user: 1st signIn
-                    // update user info if there is a local data (1st login in when offline)
-                    val offlineStr = getSharedPreferences("offline", MODE_PRIVATE)
-                        .getString("user", null)
-                    offlineStr?.let { str ->
-                        val offlineUser: User = Gson().fromJson(str, User::class.java)
-                        if (offlineUser.uid.isEmpty()) { // 1st time logged as offline
-                            offlineUser.uid = user.uid
-                            user.email?.let {
-                                offlineUser.email = it
-                            }
-                        }
-                        UserDatabase.updateUser(offlineUser)
-                    }
-
+                    updateServerFromCacheFirstLogin(this, user)
                     Intent(activity, UserNewInfoActivity::class.java)
                 } else {
                     // user already known (as logged out: no local data (deleted on logout))
@@ -177,9 +134,5 @@ class SplashScreenActivity : AppCompatActivity() {
             Log.e(TAG, "Sign-in error: ", response.error)
             return null
         }
-    }
-
-    private fun isSignedIn(): Boolean {
-        return Firebase.auth.currentUser != null
     }
 }

@@ -2,16 +2,16 @@ package ch.epfl.sdp.blindwar.user
 
 import kotlinx.serialization.Serializable
 
-const val UID = "uid"
-const val EMAIL = "email`"
-const val STATS = "userStatistics"
-const val PSEUDO = "pseudo"
-const val FIRSTNAME = "firstName"
-const val LASTNAME = "lastName"
-const val BIRTHDATE = "birthdate"
-const val PROFILE_PICTURE = "profilePicture"
-const val GENDER = "gender"
-const val DESCRIPTION = "description"
+//const val UID = "uid"
+//const val EMAIL = "email`"
+//const val STATS = "userStatistics"
+//const val PSEUDO = "pseudo"
+//const val FIRSTNAME = "firstName"
+//const val LASTNAME = "lastName"
+//const val BIRTHDATE = "birthdate"
+//const val PROFILE_PICTURE = "profilePicture"
+//const val GENDER = "gender"
+//const val DESCRIPTION = "description"
 
 @Serializable
 data class User(
@@ -30,6 +30,7 @@ data class User(
     enum class Gender {
         Other, Female, Male, Undefined, None
     }
+
     enum class VarName {
         uid, email, userStatistics, pseudo, firstName, lastName, birthdate, profilePicture, gender, description, user
     }
