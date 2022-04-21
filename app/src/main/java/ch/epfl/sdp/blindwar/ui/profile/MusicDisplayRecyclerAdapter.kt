@@ -51,7 +51,7 @@ RecyclerView.Adapter<MusicDisplayRecyclerAdapter.ViewHolder>(){
                 try {
                     holder.itemPicture.background = BitmapDrawable(Picasso.get().load(image).get())
                 } catch (e: Exception) {
-                    holder.itemPicture.background= AppCompatResources.getDrawable(context, R.drawable.logo)
+                    holder.itemPicture.setImageResource(R.mipmap.ic_launcher_round_base)
                 }
             }
         }

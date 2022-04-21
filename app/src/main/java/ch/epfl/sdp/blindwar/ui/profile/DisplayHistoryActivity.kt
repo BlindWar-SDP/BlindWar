@@ -24,7 +24,7 @@ class DisplayHistoryActivity : AppCompatActivity() {
 
     private var titles = mutableListOf<String>()
     private var artists = mutableListOf<String>()
-    private var images = mutableListOf<Int>()
+    private var images = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +41,7 @@ class DisplayHistoryActivity : AppCompatActivity() {
 
     }
 
-    private fun addToList(title: String, artist: String, image: Int) {
+    private fun addToList(title: String, artist: String, image: String) {
         titles.add(title)
         artists.add(artist)
         images.add(image)
@@ -51,11 +51,14 @@ class DisplayHistoryActivity : AppCompatActivity() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
             UserDatabase.addUserListener(currentUser.uid, userLikedMusicsListener)
-        } else {
+        }
+        /*
+        else {
             for (i in 1..20) {
                 addToList("HELLO", "JOJO", R.mipmap.ic_launcher_round_base)
             }
         }
+         */
     }
 
     private val userLikedMusicsListener = object : ValueEventListener {
@@ -68,7 +71,7 @@ class DisplayHistoryActivity : AppCompatActivity() {
             if (user != null) {
                 val likedMusics: MutableList<URIMusicMetadata> = user.likedMusics
                 for (music in likedMusics) {
-                    addToList(music.title, music.artist, R.mipmap.ic_launcher_round_base)
+                    addToList(music.title, music.artist, music.imageUrl.toString())
                 }
             }
         }
