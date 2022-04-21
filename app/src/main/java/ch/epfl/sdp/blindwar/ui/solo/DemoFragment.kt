@@ -142,7 +142,7 @@ class DemoFragment : Fragment() {
                 MotionEvent.ACTION_UP -> {
                     voiceRecognizer.stop()
                     game.play()
-                    guess(isVocal, isAuto = true)
+                    guess(isVocal, isAuto = false)
                     isVocal = false
                 }
             }
