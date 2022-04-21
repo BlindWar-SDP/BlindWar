@@ -1,11 +1,17 @@
 package ch.epfl.sdp.blindwar.ui.profile
+import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 /**
  * Class to handle the RecyclerView used to display the liked music of a user
@@ -14,7 +20,8 @@ import ch.epfl.sdp.blindwar.R
  * @property artists
  * @property images
  */
-class MusicDisplayRecyclerAdapter(private var titles: List<String>, private var artists: List<String>, private var images: List<Int>):
+class MusicDisplayRecyclerAdapter(private var titles: List<String>, private var artists: List<String>,
+                                  private var imagesURL: List<String>):
 
 RecyclerView.Adapter<MusicDisplayRecyclerAdapter.ViewHolder>(){
 
@@ -23,6 +30,7 @@ RecyclerView.Adapter<MusicDisplayRecyclerAdapter.ViewHolder>(){
         val itemTitle: TextView = itemView.findViewById(R.id.musicTitle)
         val itemArtist: TextView = itemView.findViewById(R.id.musicArtist)
         val itemPicture: ImageView = itemView.findViewById(R.id.musicImage)
+
 
 
     }
@@ -36,7 +44,17 @@ RecyclerView.Adapter<MusicDisplayRecyclerAdapter.ViewHolder>(){
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemTitle.text = titles[position]
         holder.itemArtist.text = artists[position]
-        holder.itemPicture.setImageResource((images[position]))
+        //holder.itemPicture.setImageResource((imagesURL[position]))
+        val image = imagesURL[position]
+        runBlocking {
+            withContext(Dispatchers.IO) {
+                try {
+                    holder.itemPicture.background = BitmapDrawable(Picasso.get().load(image).get())
+                } catch (e: Exception) {
+                    holder.itemPicture.background= AppCompatResources.getDrawable(context, R.drawable.logo)
+                }
+            }
+        }
     }
 
     override fun getItemCount(): Int {
