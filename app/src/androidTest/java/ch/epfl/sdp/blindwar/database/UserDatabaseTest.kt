@@ -1,14 +1,12 @@
 package ch.epfl.sdp.blindwar.database
 
+import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.intent.Intents
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import ch.epfl.sdp.blindwar.ui.ProfileActivity
+import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import junit.framework.TestCase
 import org.junit.After
-import org.junit.Assert.*
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -17,11 +15,6 @@ import org.junit.runner.RunWith
 class UserDatabaseTest : TestCase() {
 
     private val testUID = "JOJO"
-
-    @get:Rule
-    var testRule = ActivityScenarioRule(
-        ProfileActivity::class.java
-    )
 
     @Before
     fun setup() {
@@ -34,25 +27,39 @@ class UserDatabaseTest : TestCase() {
     }
 
     @Test
+    fun placeholder() {
+        assert(true)
+    }
+
+    @Test
     fun setEloCorrectly() {
-        UserDatabase.setElo(testUID, 1000)
-        // should check elo wtih future
+        launchFragmentInContainer<ProfileFragment>().onFragment {
+            UserDatabase.setElo(testUID, 1000)
+            // should check elo with future
+        }
+
     }
 
     @Test
     fun addProfilePictureCorrectly() {
-        UserDatabase.addProfilePicture(testUID, "")
-        // should check path with futures
+        launchFragmentInContainer<ProfileFragment>().onFragment {
+            UserDatabase.addProfilePicture(testUID, "")
+            // should check path with futures
+        }
     }
 
     @Test
     fun getImageReferenceCorrectly() {
-        TestCase.assertNotNull(UserDatabase.getImageReference(testUID))
+        launchFragmentInContainer<ProfileFragment>().onFragment {
+            assertNotNull(UserDatabase.getImageReference(testUID))
+        }
 
     }
 
     @Test
     fun getEloReferenceCorrectly() {
-        TestCase.assertNotNull(UserDatabase.getEloReference(testUID))
+        launchFragmentInContainer<ProfileFragment>().onFragment {
+            assertNotNull(UserDatabase.getEloReference(testUID))
+        }
     }
 }

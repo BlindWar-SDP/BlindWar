@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="0dp"
         android:orientation="vertical"
-        tools:context=".ui.tutorial.TutorialActivity"
+        tools:context=".game.solo.TutorialActivity"
         tools:ignore="ScrollViewSize">
         <WebView
             android:id="@+id/webView"

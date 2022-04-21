@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/profile_fragment"
     android:layout_height="match_parent">
 
     <ImageView
@@ -16,7 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@color/prussian_blue" />
+        app:srcCompat="@color/prussian_blue"
+         />
 
     <RelativeLayout
         android:layout_width="match_parent"

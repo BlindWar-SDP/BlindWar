@@ -1,10 +1,9 @@
 package ch.epfl.sdp.blindwar.database
 
-import ch.epfl.sdp.blindwar.user.AppStatistics
-import ch.epfl.sdp.blindwar.user.Mode
-import ch.epfl.sdp.blindwar.user.User
+import ch.epfl.sdp.blindwar.profile.model.AppStatistics
+import ch.epfl.sdp.blindwar.profile.model.Mode
+import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -17,6 +16,7 @@ object UserDatabase {
 
     /**
      * Get user reference to manipulate user infos
+     *
      * @param uid
      * @return
      */
@@ -26,6 +26,7 @@ object UserDatabase {
 
     /**
      * Get user statistics reference to manipulate user statistics
+     *
      * @param uid
      * @return
      */
@@ -35,6 +36,7 @@ object UserDatabase {
 
     /**
      * Get elo reference to manipulate elo
+     *
      * @param uid
      * @return
      */
@@ -48,6 +50,7 @@ object UserDatabase {
 
     /**
      * Function to add an User to the database (used when creating account)
+     *
      * @param user
      */
     // Add user to database
@@ -90,7 +93,7 @@ object UserDatabase {
      *
      * @param uid
      */
-    fun setUserStatistics(uid: String, userStatistics: AppStatistics) {
+    private fun setUserStatistics(uid: String, userStatistics: AppStatistics) {
         getUserStatisticsReference(uid).setValue(userStatistics)
     }
 
@@ -108,7 +111,7 @@ object UserDatabase {
      * @param uid
      * @return Task<DataSnapshot>
      */
-    fun getUserStatistics(uid: String): Task<DataSnapshot> {
+    private fun getUserStatistics(uid: String): Task<DataSnapshot> {
         val userStatisticsRef = getUserStatisticsReference(uid)
         return userStatisticsRef.get()
     }

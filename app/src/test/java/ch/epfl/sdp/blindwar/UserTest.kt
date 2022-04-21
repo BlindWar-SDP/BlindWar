@@ -1,7 +1,7 @@
 package ch.epfl.sdp.blindwar
 
-import ch.epfl.sdp.blindwar.user.AppStatistics
-import ch.epfl.sdp.blindwar.user.User
+import ch.epfl.sdp.blindwar.profile.model.AppStatistics
+import ch.epfl.sdp.blindwar.profile.model.User
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
