@@ -39,20 +39,21 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
     private val database = UserDatabase
     private val imageDatabase = ImageDatabase
 
-    private var user = User() // global variable -> not a good practice
+    // global variable -> not a good practice
+    private var user = User()
     private var isNewUser = false
     private var localPPuri: Uri? = null
 
     private fun hideCancelDeleteBtn() {
-        findViewById<Button>(R.id.NU_deleteProfile).visibility = View.INVISIBLE
-        findViewById<Button>(R.id.NU_Cancel_Btn).visibility = View.INVISIBLE
+        disableButton(R.id.NU_deleteProfile)
+        disableButton(R.id.NU_Cancel_Btn)
     }
 
     private fun hideResetPPBtn() {
         findViewById<ImageView>(R.id.NU_profileImageView).setImageResource(
             android.R.color.transparent
         )
-        findViewById<Button>(R.id.NU_resetProfilePicture).visibility = View.INVISIBLE
+        disableButton(R.id.NU_resetProfilePicture)
     }
 
     private val userInfoListener = object : ValueEventListener {
@@ -92,10 +93,12 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
         setContentView(R.layout.activity_user_new_info)
 
         if (isOffline(this)) {
-            findViewById<Button>(R.id.NU_deleteProfile).visibility = View.INVISIBLE
-            findViewById<Button>(R.id.NU_editProfilePicture).visibility = View.INVISIBLE
+            disableButton(R.id.NU_deleteProfile)
+            disableButton(R.id.NU_editProfilePicture)
+            disableButton(R.id.NU_deleteProfile)
             hideResetPPBtn()
             user = readCache(this)
+            setFromBundle()
             setView()
         } else {
             FirebaseAuth.getInstance().currentUser?.let {
@@ -326,6 +329,7 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
                 this,
                 "uploading profile picture", Toast.LENGTH_SHORT
             ).show()
+
             // time to load photo, otherwise, not on server when loading ProfileActivity
             // bad practice... need to improve this with ProgressDialog ?
             Thread.sleep(1000)
@@ -383,5 +387,10 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
         findViewById<EditText>(R.id.NU_FirstName).setText(user.firstName)
         findViewById<EditText>(R.id.NU_LastName).setText(user.lastName)
         showImage()
+    }
+
+    private fun disableButton(id: Int){
+//        findViewById<Button>(id).isClickable = false
+        findViewById<Button>(id).visibility = View.INVISIBLE
     }
 }

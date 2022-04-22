@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.UserDatabase
@@ -17,6 +18,11 @@ class MainMenuActivity : AppCompatActivity(), UserCache {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
+
+        if(isOffline(this)){
+            findViewById<Button>(R.id.multiButton).isClickable = false
+            findViewById<Button>(R.id.multiButton).alpha = 0.3F
+        }
     }
 
     // Called when the user taps the Solo button
