@@ -9,6 +9,7 @@ data class Playlist (
     val genres: List<Genre>, // main genres of the playlist
     val songs: List<MusicMetadata>, // list of playlist's songs metadata
     val imageUrl: String, // playlist cover
-    val previewUrl: String // preview song url
+    val previewUrl: String, // preview song url
+    val difficulty: Difficulty
 )
 

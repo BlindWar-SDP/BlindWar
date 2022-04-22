@@ -44,6 +44,8 @@ object Tutorial {
     private const val COVER_URL_SONG =
         "https://i.scdn.co/image/ab67616d0000b27348eb4d2efa517a920ff4e14e"
 
+
+
     val fifaPlaylist = Playlist(
         "FIFA 13 OST",
         "EA Sports",
@@ -71,7 +73,8 @@ object Tutorial {
             )
         ),
         "https://i.scdn.co/image/ab67706c0000bebba1371bd946a7bc3f61f83db4",
-        URL_PREVIEW_FIFA
+        URL_PREVIEW_FIFA,
+        Difficulty.EASY
     )
 
     val tutorialPlaylist = Playlist(
@@ -80,7 +83,8 @@ object Tutorial {
         arrayListOf(Genre.POP, Genre.RAP),
         PLAYLIST,
         "",
-        URL_PREVIEW_TUTORIAL
+        URL_PREVIEW_TUTORIAL,
+        Difficulty.EASY
     )
 
     private const val COVER_TESTING =
@@ -105,8 +109,11 @@ object Tutorial {
                 URL_PREVIEW_TESTING
             )),
         COVER_TESTING,
-        "https://p.scdn.co/mp3-preview/b2e959350596fc2d3f9ca80e855c51db9a5c5453?cid=774b29d4f13844c495f206cafdad9c86"
+        "https://p.scdn.co/mp3-preview/b2e959350596fc2d3f9ca80e855c51db9a5c5453?cid=774b29d4f13844c495f206cafdad9c86",
+        Difficulty.EASY
     )
+
+    val BASE_PLAYLISTS = arrayListOf(fifaPlaylist, tutorialPlaylist, testingPlaylist)
 
     val gameInstance = GameInstance(gameConfig, tutorialPlaylist)
 }
