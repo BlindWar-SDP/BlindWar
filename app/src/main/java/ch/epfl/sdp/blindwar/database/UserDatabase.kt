@@ -37,8 +37,8 @@ object UserDatabase {
     /**
      * Get elo reference to manipulate elo
      *
-     * @param uid
-     * @return
+     * @param uid user identification
+     * @return elo reference of specified user
      */
     fun getEloReference(uid: String): DatabaseReference {
         return getUserStatisticsReference(uid).child("elo")
@@ -51,21 +51,31 @@ object UserDatabase {
     /**
      * Function to add an User to the database (used when creating account)
      *
-     * @param user
+     * @param user to be added
      */
     // Add user to database
     fun addUser(user: User) {
         userReference.child(user.uid).setValue(user)
     }
-    // Remove user from database
+
+    /**
+     * Remove user from database
+     *
+     * @param uid user identification
+     */
     fun removeUser(uid: String) {
         userReference.child(uid).removeValue()
     }
 
-    // Set elo of an user
+    /**
+     * Set elo of an user
+     *
+     * @param uid user identification
+     */
     fun setElo(uid: String, elo: Int) {
         getEloReference(uid).setValue(elo)
     }
+
     fun setFirstName(uid: String, fn: String) {
         userReference.child(uid).child("firstName").setValue(fn)
     }
@@ -91,7 +101,7 @@ object UserDatabase {
     /**
      * Reset set user statistics
      *
-     * @param uid
+     * @param uid user identification
      */
     private fun setUserStatistics(uid: String, userStatistics: AppStatistics) {
         getUserStatisticsReference(uid).setValue(userStatistics)

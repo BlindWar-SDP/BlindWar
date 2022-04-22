@@ -11,7 +11,7 @@ class MainMenuActivity : AppCompatActivity() {
     //private val database = UserDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_menu_rework)
+        setContentView(R.layout.activity_main_menu)
 
         showFragment(PlayMenuFragment())
 
