@@ -27,14 +27,15 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="334dp"
-        android:layout_height="312dp"
-        android:layout_marginTop="132dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:contentDescription="@string/logo_description"
+        app:layout_constraintBottom_toTopOf="@id/guideline2"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView2"
         app:srcCompat="@drawable/logo" />
 
     <Button
@@ -59,14 +60,14 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="120dp"
         android:fontFamily="@font/oxygen"
         android:text="@string/chose_sign_in_text"
         android:textColor="@color/ivory"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.273" />
+        app:layout_constraintTop_toBottomOf="@id/guideline2" />
 
     <TextView
         android:id="@+id/textView2"
@@ -81,14 +82,15 @@
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintGuide_percent="0.8" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
