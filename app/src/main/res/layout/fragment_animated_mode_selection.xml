@@ -432,6 +432,7 @@
             app:lottie_speed="0.75"
             tools:ignore="SpeakableTextPresentCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+    
 
     <!-- Mode layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
