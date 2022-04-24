@@ -19,6 +19,7 @@
         android:inputType="textFilter"
         android:maxLength="@integer/pseudo_maxLength"
         android:onClick="clearPseudo"
+        android:text="@string/text_pseudo"
         android:textColor="@color/green_blue_crayola"
         app:layout_constraintBottom_toTopOf="@+id/NU_FirstName"
         app:layout_constraintStart_toStartOf="parent"
