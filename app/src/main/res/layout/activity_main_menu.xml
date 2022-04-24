@@ -31,7 +31,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/black"
-        app:itemBackground="@color/black"
+        app:itemBackground="@drawable/gradient"
         app:itemIconTint="@color/ivory"
         app:itemTextColor="@color/ivory"
         app:layout_constraintBottom_toBottomOf="parent"

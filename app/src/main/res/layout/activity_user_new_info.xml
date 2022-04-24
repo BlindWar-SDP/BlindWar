@@ -19,11 +19,11 @@
         android:inputType="textFilter"
         android:maxLength="@integer/pseudo_maxLength"
         android:onClick="clearPseudo"
-        android:text="@string/text_pseudo"
         android:textColor="@color/green_blue_crayola"
         app:layout_constraintBottom_toTopOf="@+id/NU_FirstName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/NU_FirstName"
@@ -34,11 +34,11 @@
         android:hint="@string/first_name"
         android:inputType="textPersonName"
         android:onClick="clearFirstName"
-        android:text="@string/first_name"
         android:textColor="@color/green_blue_crayola"
         app:layout_constraintBottom_toTopOf="@+id/NU_LastName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NU_pseudo" />
+        app:layout_constraintTop_toBottomOf="@+id/NU_pseudo"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/NU_Confirm_Btn"
@@ -101,11 +101,11 @@
         android:hint="@string/last_name"
         android:inputType="textPersonName"
         android:onClick="clearLastName"
-        android:text="@string/last_name"
         android:textColor="@color/green_blue_crayola"
         app:layout_constraintBottom_toTopOf="@+id/NU_editProfilePicture"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NU_FirstName" />
+        app:layout_constraintTop_toBottomOf="@+id/NU_FirstName"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"

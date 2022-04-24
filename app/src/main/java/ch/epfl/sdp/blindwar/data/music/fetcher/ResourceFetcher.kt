@@ -43,7 +43,7 @@ class ResourceFetcher(private val context: Context,
                 ?: ResourceMusicMetadata(
                     artist = "",
                     title = "",
-                    imageUrl = null,
+                    imageUrl = "",
                     duration = 0,
                     resourceId = musicMetadata.resourceId
                 )

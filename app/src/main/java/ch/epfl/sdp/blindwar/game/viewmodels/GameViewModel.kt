@@ -1,11 +1,17 @@
-package ch.epfl.sdp.blindwar.game.model
+package ch.epfl.sdp.blindwar.game.viewmodels
 
 import android.content.Context
+import android.content.res.Resources
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import com.google.firebase.auth.FirebaseAuth
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.game.util.GameHelper
 import ch.epfl.sdp.blindwar.audio.MusicViewModel
+import ch.epfl.sdp.blindwar.game.model.config.GameInstance
+import ch.epfl.sdp.blindwar.game.model.config.GameMode
+import ch.epfl.sdp.blindwar.game.model.config.GameParameter
 
 /**
  * Class representing an instance of a game
@@ -14,33 +20,46 @@ import ch.epfl.sdp.blindwar.audio.MusicViewModel
  * @param context of the Game
  * @constructor Construct a class that represent the game logic
  */
-abstract class Game(
+class GameViewModel(
     gameInstance: GameInstance,
-    protected val context: Context
-) {
+    private val context: Context,
+    private val resources: Resources
+): ViewModel() {
     /** Encapsulates the characteristics of a game instead of its logic
      *
      */
-    protected val game: GameInstance = gameInstance
+    private val game: GameInstance = gameInstance
 
-    protected lateinit var musicViewModel: MusicViewModel
+    private lateinit var musicViewModel: MusicViewModel
 
     private val gameParameter: GameParameter = gameInstance
         .gameConfig
         .parameter
+    
+    private val mode: GameMode = gameInstance
+        .gameConfig
+        .mode
 
     /** Player game score **/
     var score = 0
-        protected set
+        private set
 
     var round = 0
-        protected set
+        private set
+
+    /** Survival mode specific **/
+    val lives = MutableLiveData(gameParameter.lives)
 
     /**
      * Prepares the game following the configuration
      *
      */
-    abstract fun init()
+    fun init() {
+        this.musicViewModel = MusicViewModel(
+            game.onlinePlaylist,
+            context, resources
+        )
+    }
 
     /**
      * Record the game instance to the player history
@@ -64,6 +83,11 @@ abstract class Game(
      * @return true if the game is over after this round, false otherwise
      */
     fun nextRound(): Boolean {
+        if (mode == GameMode.SURVIVAL && lives.value!! <= 0) {
+            endGame()
+            return true
+        }
+
         if (round >= gameParameter.round) {
             endGame()
             return true
@@ -111,6 +135,7 @@ abstract class Game(
      */
     fun timeout() {
         round += 1
+        lives.value = lives.value?.minus(1)
     }
 
     /**

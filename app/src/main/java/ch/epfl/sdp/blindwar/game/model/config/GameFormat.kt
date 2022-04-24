@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.game.model
+package ch.epfl.sdp.blindwar.game.model.config
 
 enum class GameFormat {
     SOLO,

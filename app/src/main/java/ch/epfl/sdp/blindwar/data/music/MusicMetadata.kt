@@ -1,9 +1,9 @@
 package ch.epfl.sdp.blindwar.data.music
 
-abstract class MusicMetadata(val title: String,
-                         val artist: String,
-                         val imageUrl: String? = null,
-                         val duration: Int) {
+abstract class MusicMetadata(var title: String = "",
+                         var artist: String = "",
+                         var imageUrl: String = "",
+                         var duration: Int = 0) {
     override fun toString(): String = "$title by $artist"
 }
 

@@ -8,7 +8,7 @@ import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
-import ch.epfl.sdp.blindwar.game.model.GameTutorial
+import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 import ch.epfl.sdp.blindwar.game.util.Tutorial
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
@@ -24,12 +24,12 @@ class GameTutorialTest {
 
     @Test
     fun testNextRound() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, context, context.resources)
+        val gameTutorial = GameViewModel(Tutorial.gameInstance, context, context.resources)
         gameTutorial.init()
         val round = Tutorial.ROUND
 
         // Iterate 10 times since we have 10 different musics in tutorial
-        val toPlay: MutableSet<MusicMetadata> = Tutorial.gameInstance.playlist.songs.toMutableSet()
+        val toPlay: MutableSet<MusicMetadata> = Tutorial.gameInstance.onlinePlaylist.songs.toMutableSet()
         for (i in 0 until round) {
             gameTutorial.nextRound()
             //assertThat(toPlay.contains(gameTutorial.currentMetadata()), `is`(true))
@@ -49,7 +49,7 @@ class GameTutorialTest {
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, context, context.resources)
+        val gameTutorial = GameViewModel(Tutorial.gameInstance, context, context.resources)
         gameTutorial.init()
         val round = Tutorial.ROUND
         for (i in 0 until round) {
@@ -68,7 +68,7 @@ class GameTutorialTest {
 
     @Test
     fun testTwoGoodGuesses() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, context, context.resources)
+        val gameTutorial = GameViewModel(Tutorial.gameInstance, context, context.resources)
         gameTutorial.init()
         goodGuess(gameTutorial)
         goodGuess(gameTutorial)
@@ -78,7 +78,7 @@ class GameTutorialTest {
 
     @Test
     fun testUpperCaseGuess() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, context, context.resources)
+        val gameTutorial = GameViewModel(Tutorial.gameInstance, context, context.resources)
         gameTutorial.init()
         gameTutorial.nextRound()
         val music1 = gameTutorial.currentMetadata()
@@ -89,7 +89,7 @@ class GameTutorialTest {
 
     @Test
     fun testOneGoodAndOneBadGuesses() {
-        val gameTutorial = GameTutorial(Tutorial.gameInstance, context, context.resources)
+        val gameTutorial = GameViewModel(Tutorial.gameInstance, context, context.resources)
         gameTutorial.init()
         goodGuess(gameTutorial)
         badGuess(gameTutorial)
@@ -97,13 +97,13 @@ class GameTutorialTest {
         assertThat(gameTutorial.score, `is`(1))
     }
 
-    private fun goodGuess(gameTutorial: GameTutorial) {
-        gameTutorial.nextRound()
-        gameTutorial.guess(gameTutorial.currentMetadata()?.title!!, false)
+    private fun goodGuess(gameViewModelTutorial: GameViewModel) {
+        gameViewModelTutorial.nextRound()
+        gameViewModelTutorial.guess(gameViewModelTutorial.currentMetadata()?.title!!, false)
     }
 
-    private fun badGuess(gameTutorial: GameTutorial) {
-        gameTutorial.nextRound()
-        gameTutorial.guess("THIS IS NOT A CORRECT TITLE", false)
+    private fun badGuess(gameViewModelTutorial: GameViewModel) {
+        gameViewModelTutorial.nextRound()
+        gameViewModelTutorial.guess("THIS IS NOT A CORRECT TITLE", false)
     }
 }

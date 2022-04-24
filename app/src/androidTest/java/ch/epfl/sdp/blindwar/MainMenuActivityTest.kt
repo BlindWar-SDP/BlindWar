@@ -46,6 +46,12 @@ class MainMenuActivityTest : TestCase() {
     }
 
     @Test
+    fun testSearchButton() {
+        onView(withId(R.id.item_search)).perform(click())
+        onView(withId(R.id.searchBar)).check(matches(isDisplayed()))
+    }
+
+    @Test
     fun testSoloButton() {
         onView(withId(R.id.item_play)).perform(click())
         onView(withId(R.id.soloBtn)).perform(click())
@@ -64,13 +70,4 @@ class MainMenuActivityTest : TestCase() {
         onView(withId(R.id.item_profile)).perform(click())
         onView(withId(R.id.profile_fragment)).check(matches(isDisplayed()))
     }
-
-    /**
-    @Test
-    fun testLaunchSRDemo() {
-        GrantPermissionRule.grant(android.Manifest.permission.RECORD_AUDIO)
-        onView(withId(R.id.item_sr)).perform(click())
-        onView(withId(R.id.sr_fragment)).check(matches(isDisplayed()))
-    }
-    **/
 }

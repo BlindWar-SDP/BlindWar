@@ -5,7 +5,8 @@ import ch.epfl.sdp.blindwar.data.music.ResourceMusicMetadata
 import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 import ch.epfl.sdp.blindwar.game.model.*
 import ch.epfl.sdp.blindwar.game.model.Genre
-import ch.epfl.sdp.blindwar.game.model.Playlist
+import ch.epfl.sdp.blindwar.game.model.OnlinePlaylist
+import ch.epfl.sdp.blindwar.game.model.config.*
 
 object Tutorial {
 
@@ -15,7 +16,7 @@ object Tutorial {
     private val PLAYLIST: List<ResourceMusicMetadata> = METADATA_TUTORIAL_MUSICS_PER_AUTHOR.values.toList()
 
     private val gameParameter =
-        GameParameter(round = ROUND, funny = false, timeToFind = TIME_TO_FIND, hint = true)
+        GameParameter(round = ROUND, funny = false, timeToFind = TIME_TO_FIND, hint = true, lives = 5)
 
     private val gameConfig =
         GameConfig (
@@ -46,7 +47,7 @@ object Tutorial {
 
 
 
-    val fifaPlaylist = Playlist(
+    val fifaPlaylist = OnlinePlaylist("FIFA13",
         "FIFA 13 OST",
         "EA Sports",
         arrayListOf(Genre.POP),
@@ -77,7 +78,7 @@ object Tutorial {
         Difficulty.EASY
     )
 
-    val tutorialPlaylist = Playlist(
+    private val tutorialPlaylist = LocalPlaylist("tutorial",
         "Tutorial",
         "BlindWar",
         arrayListOf(Genre.POP, Genre.RAP),
@@ -96,7 +97,7 @@ object Tutorial {
     const val URL_PREVIEW_TESTING =
         "https://p.scdn.co/mp3-preview/ecfd294001cbeea0811b78b35b5a1da80bf3ef98?cid=774b29d4f13844c495f206cafdad9c86"
 
-    val testingPlaylist = Playlist(
+    private val testingPlaylist = OnlinePlaylist("",
         "The Witcher 3 OST",
         "Marcin Przybyłowicz",
         arrayListOf(Genre.POP),
@@ -113,7 +114,7 @@ object Tutorial {
         Difficulty.EASY
     )
 
-    val BASE_PLAYLISTS = arrayListOf(fifaPlaylist, tutorialPlaylist, testingPlaylist)
+    val BASE_PLAYLISTS = arrayListOf(tutorialPlaylist, testingPlaylist)
 
     val gameInstance = GameInstance(gameConfig, tutorialPlaylist)
 }

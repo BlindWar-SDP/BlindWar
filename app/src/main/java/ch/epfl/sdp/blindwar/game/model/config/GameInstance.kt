@@ -1,14 +1,15 @@
-package ch.epfl.sdp.blindwar.game.model
+package ch.epfl.sdp.blindwar.game.model.config
 
+import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.util.Tutorial
 
 data class GameInstance(
-    val gameConfig: GameConfig,
-    val playlist: Playlist
+    val gameConfig: GameConfig, // configuration object of the game
+    val onlinePlaylist: Playlist // playlist of the game
 ) {
     class Builder() {
         private var playlist: Playlist = Tutorial.gameInstance
-            .playlist
+            .onlinePlaylist
 
         private var gameFormat: GameFormat = GameFormat.SOLO
 
@@ -41,7 +42,7 @@ data class GameInstance(
         }
 
         fun setGameInstance(gameInstance: GameInstance): Builder {
-            setPlaylist(gameInstance.playlist)
+            setPlaylist(gameInstance.onlinePlaylist)
             setFormat(gameInstance.gameConfig.format)
             setParameter(gameInstance.gameConfig.parameter)
             setMode(gameInstance.gameConfig.mode)
@@ -49,7 +50,8 @@ data class GameInstance(
         }
 
         fun build(): GameInstance {
-            return GameInstance(GameConfig(gameFormat, gameMode, gameParameter),
+            return GameInstance(
+                GameConfig(gameFormat, gameMode, gameParameter),
                 playlist)
         }
     }

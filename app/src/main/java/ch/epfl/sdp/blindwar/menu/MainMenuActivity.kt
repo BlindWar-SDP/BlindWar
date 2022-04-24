@@ -18,7 +18,7 @@ class MainMenuActivity : AppCompatActivity() {
         findViewById<BottomNavigationView>(R.id.bottomNavigationView).setOnItemSelectedListener {
             when(it.itemId){
                 R.id.item_play -> showFragment(PlayMenuFragment())
-                R.id.item_sr -> showFragment(DemoSRFragment())
+                R.id.item_search -> showFragment(SearchFragment())
                 R.id.item_profile -> showFragment(ProfileFragment())
             }
             true

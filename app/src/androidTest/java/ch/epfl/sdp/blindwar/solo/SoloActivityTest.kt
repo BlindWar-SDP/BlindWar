@@ -13,7 +13,7 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.game.model.GameMode
+import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.util.Tutorial
 import ch.epfl.sdp.blindwar.game.solo.SoloActivity
 import ch.epfl.sdp.blindwar.game.util.PlaylistAdapter
@@ -81,6 +81,7 @@ class SoloActivityTest {
     @Test
     fun testLostThenWonGame() {
         searchPlaylist("The witcher", 2)
+
         onView(withId(R.id.playlistRecyclerView))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<PlaylistAdapter.PlaylistViewHolder>(
@@ -159,6 +160,8 @@ class SoloActivityTest {
 
     private fun launchPlaylistSelection(btnId: Int, position: Int, chainClick: Int) {
         onView(withId(btnId)).perform(click())
+        // Wait for network request completion
+        Thread.sleep(2000)
         for (i in 0 until chainClick) {
             onView(withId(R.id.playlistRecyclerView))
                 .perform(
@@ -176,6 +179,7 @@ class SoloActivityTest {
         onView(withId(R.id.searchBar)).perform(typeSearchViewText(search))
         closeSoftKeyboard()
     }
+
 
     @Test
     fun testListenPreviewAfterSearch() {

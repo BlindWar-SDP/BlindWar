@@ -4,15 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/prussian_blue"
+    android:background="@drawable/blurred_back"
     tools:context=".login.SplashScreenActivity">
 
     <Button
         android:id="@+id/Btn_google"
+        style="@style/Widget.Material3.Button.UnelevatedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/fui_transparent"
+        android:drawableTop="@drawable/common_google_signin_btn_icon_light_focused"
         android:text="@string/Btn_google"
         android:textAllCaps="false"
+        android:textAppearance="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Primary"
+        android:textColor="@color/ivory"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/Btn_email"
         app:layout_constraintHorizontal_bias="0.575"
@@ -23,45 +29,58 @@
         android:id="@+id/imageView"
         android:layout_width="334dp"
         android:layout_height="312dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="132dp"
+        android:contentDescription="@string/logo_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo"
-        android:contentDescription="@string/logo_description" />
+        app:srcCompat="@drawable/logo" />
 
     <Button
         android:id="@+id/Btn_email"
+        style="@style/Widget.Material3.Button.UnelevatedButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/fui_transparent"
+        android:drawableTop="@android:drawable/ic_dialog_email"
         android:text="@string/Btn_email"
-        app:layout_constraintBaseline_toBaselineOf="@+id/Btn_google"
+        android:textAppearance="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Primary"
+        android:textColor="@color/ivory"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/Btn_google"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/Btn_google" />
+        app:layout_constraintStart_toEndOf="@+id/Btn_google"
+        app:layout_constraintTop_toTopOf="@+id/Btn_google"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/oxygen"
         android:text="@string/chose_sign_in_text"
-        android:textColor="@color/green_blue_crayola"
+        android:textColor="@color/ivory"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.273" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/bungee_inline"
         android:text="@string/signin_welcome_text"
-        android:textColor="@color/green_blue_crayola"
+        android:textAlignment="center"
+        android:textColor="@color/ivory"
         android:textSize="34sp"
-        android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
@@ -77,13 +96,5 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="top"
-        app:constraint_referenced_ids="Btn_email"
-        tools:layout_editor_absoluteY="634dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

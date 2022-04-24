@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/play_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/play_fragment"
-    android:background="@color/black">
+    android:background="@drawable/blurred_back">
 
     <ImageButton
         android:id="@+id/imageButton3"
@@ -34,65 +34,30 @@
         app:srcCompat="@drawable/ic_baseline_volume_down_24"
         tools:ignore="SpeakableTextPresentCheck" />
 
+
     <ImageButton
         android:id="@+id/soloBtn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline13"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toStartOf="@+id/guideline11"
-        app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        tools:ignore="SpeakableTextPresentCheck"
-        tools:srcCompat="@tools:sample/avatars" />
-
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/back_frame_failure"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:srcCompat="@drawable/play_arrow"
+        app:tint="@color/ivory" />
 
     <ImageButton
         android:id="@+id/multiBtn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/multiBottomEnd"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toStartOf="@+id/guideline11"
-        app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toTopOf="@+id/guideline12"
-        tools:ignore="SpeakableTextPresentCheck"
-        tools:srcCompat="@tools:sample/avatars" />
-
-
-    <ImageButton
-        android:id="@+id/imageButton8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@drawable/back_frame_failure"
-        app:layout_constraintBottom_toBottomOf="@+id/soloBtn"
-        app:layout_constraintEnd_toEndOf="@+id/soloBtn"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="@+id/soloBtn"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/play_arrow"
-        app:tint="@color/green_blue_crayola" />
-
-    <ImageButton
-        android:id="@+id/imageButton9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/back_frame_failure"
-        app:layout_constraintBottom_toBottomOf="@+id/multiBtn"
-        app:layout_constraintEnd_toEndOf="@+id/multiBtn"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="@+id/multiBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/play_arrow"
-        app:tint="@color/green_blue_crayola" />
+        app:tint="@color/ivory" />
 
     <TextView
         android:id="@+id/titleText"
@@ -130,14 +95,12 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/black"
         android:fontFamily="@font/oxygen"
         android:text="@string/solo"
-        android:textColor="@color/green_blue_crayola"
+        android:textColor="@color/ivory"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline12"
         app:layout_constraintEnd_toEndOf="@+id/soloBtn"
-        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="@+id/soloBtn"
         app:layout_constraintTop_toTopOf="@+id/guideline7"
         app:layout_constraintVertical_bias="0.08" />
@@ -146,14 +109,12 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/black"
         android:fontFamily="@font/oxygen"
         android:text="@string/multi"
-        android:textColor="@color/green_blue_crayola"
+        android:textColor="@color/ivory"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/multiBottomEnd"
         app:layout_constraintEnd_toEndOf="@+id/multiBtn"
-        app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="@+id/multiBtn"
         app:layout_constraintTop_toTopOf="@+id/guideline12"
         app:layout_constraintVertical_bias="0.087" />

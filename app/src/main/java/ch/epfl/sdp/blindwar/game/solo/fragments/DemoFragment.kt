@@ -3,22 +3,22 @@ package ch.epfl.sdp.blindwar.game.solo.fragments
 import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
-import ch.epfl.sdp.blindwar.game.model.GameTutorial
+import ch.epfl.sdp.blindwar.game.model.config.GameMode
+import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import com.airbnb.lottie.LottieAnimationView
@@ -32,26 +32,43 @@ import java.util.*
  * @constructor creates a DemoFragment
  */
 class DemoFragment : Fragment() {
-    lateinit var game: GameTutorial
-    private var playing = true
-    private lateinit var guessEditText: EditText
-    private lateinit var scoreTextView: TextView
+    // VIEW MODELS
+    lateinit var gameViewModel: GameViewModel
+    private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
+
+    // METADATA
     private lateinit var musicMetadata: MusicMetadata
+    private var playing = true
+
+    // INTERFACE
+    private lateinit var gameSummary: GameSummaryFragment
+    private lateinit var scoreTextView: TextView
     private lateinit var guessButton: ImageButton
     private lateinit var countDown: TextView
-    private var duration: Int = 0
     private lateinit var timer: CountDownTimer
-    private var isVocal = false
 
     // Animations / Buttons
     private lateinit var crossAnim: LottieAnimationView
     private lateinit var startButton: LottieAnimationView
     private lateinit var audioVisualizer: LottieAnimationView
     private lateinit var microphoneButton: ImageButton
-    private lateinit var voiceRecognizer: VoiceRecognizer
 
-    private lateinit var gameSummary: GameSummaryFragment
-    private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
+    // Round duration
+    private var duration: Int = 0
+
+    // INPUT
+    private lateinit var voiceRecognizer: VoiceRecognizer
+    private var isVocal = false
+    private lateinit var guessEditText: EditText
+
+    // MODES
+    // Race mode
+    private lateinit var chronometer: Chronometer
+    private var elapsed: Long = -1000L
+
+    // Survival mode
+    private lateinit var heartImage: ImageView
+    private lateinit var heartNumber: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,18 +76,16 @@ class DemoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.activity_animated_demo, container, false)
-        /** Set up the interface **/
-        // Game instance tutorial
-        game = context?.let {
-            GameTutorial(
+
+        gameViewModel = context?.let {
+            GameViewModel(
                 gameInstanceViewModel.gameInstance.value!!,
                 it,
                 resources
             )
         }!!
 
-        game.init()
-
+        gameViewModel.init()
 
         // Retrieve the game duration from the GameInstance object
         duration = gameInstanceViewModel
@@ -84,16 +99,30 @@ class DemoFragment : Fragment() {
         timer = createCountDown()
         countDown = view.findViewById(R.id.countdown)
 
-        // Cache song image
-        //Picasso.get().load(songMetaData.imageUrl)
+        // Mode specific interface
+        val mode = gameInstanceViewModel
+            .gameInstance
+            .value!!
+            .gameConfig
+            .mode
+
+        chronometer = view.findViewById(R.id.simpleChronometer)
+        heartImage = view.findViewById(R.id.heartImage)
+        heartNumber = view.findViewById(R.id.heartNumber)
+
+        when (mode) {
+            GameMode.TIMED -> initRaceMode()
+            GameMode.SURVIVAL -> initSurvivalMode()
+            else -> {}
+        }
 
         // Create game summary
         gameSummary = GameSummaryFragment()
 
-        /** Start the game **/
-        game.nextRound()
-        game.play()
-        musicMetadata = game.currentMetadata()!!
+        // Start the game
+        gameViewModel.nextRound()
+        gameViewModel.play()
+        musicMetadata = gameViewModel.currentMetadata()!!
         timer.start()
 
         // Get the widgets
@@ -140,13 +169,13 @@ class DemoFragment : Fragment() {
         microphoneButton.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    game.pause()
+                    gameViewModel.pause()
                     voiceRecognizer.start()
                     isVocal = true
                 }
                 MotionEvent.ACTION_UP -> {
                     voiceRecognizer.stop()
-                    game.play()
+                    gameViewModel.play()
                     guess(isVocal, isAuto = false)
                     isVocal = false
                 }
@@ -167,12 +196,13 @@ class DemoFragment : Fragment() {
 
             override fun onTick(millisUntilFinished: Long) {
                 duration = millisUntilFinished.toInt()
+                elapsed += 1000
                 //Log.d("DURATION", duration.toString())
                 countDown.text = (millisUntilFinished / 1000).toString()
             }
 
             override fun onFinish() {
-                game.timeout()
+                gameViewModel.timeout()
                 this.cancel()
                 launchSongSummary(success = false)
             }
@@ -196,17 +226,39 @@ class DemoFragment : Fragment() {
      */
     private fun playAndPause() {
         playing = if (playing) {
-            game.pause()
+            gameViewModel.pause()
             pauseAnim()
             timer.cancel()
             timer = createCountDown()
+            chronometer.stop()
             false
 
         } else {
-            game.play()
+            gameViewModel.play()
             resumeAnim()
+            restartChronometer()
             timer.start()
             true
+        }
+    }
+
+    // RACE MODE
+    private fun restartChronometer() {
+        chronometer.base = SystemClock.elapsedRealtime() - elapsed
+        chronometer.start()
+    }
+
+    private fun initRaceMode() {
+        chronometer.visibility = View.VISIBLE
+        chronometer.start()
+    }
+
+    // SURVIVAL MODE
+    private fun initSurvivalMode() {
+        heartImage.visibility = View.VISIBLE
+        heartNumber.visibility = View.VISIBLE
+        gameViewModel.lives.observe(requireActivity()){
+            heartNumber.text = "x ${it}"
         }
     }
 
@@ -217,9 +269,9 @@ class DemoFragment : Fragment() {
      * @param isAuto true if autoGuessing is activated
      */
     private fun guess(isVocal: Boolean, isAuto: Boolean) {
-        if (game.guess(guessEditText.text.toString(), isVocal)) {
+        if (gameViewModel.guess(guessEditText.text.toString(), isVocal)) {
             // Update the number of point view
-            scoreTextView.text = game.score.toString()
+            scoreTextView.text = gameViewModel.score.toString()
               (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
               .hideSoftInputFromWindow(view?.windowToken, 0)
             launchSongSummary(success = true)
@@ -235,6 +287,7 @@ class DemoFragment : Fragment() {
     private fun launchSongSummary(success: Boolean) {
         setVisibilityLayout(View.GONE)
         timer.cancel()
+        chronometer.stop()
 
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         transaction?.addToBackStack("DEMO")
@@ -294,13 +347,15 @@ class DemoFragment : Fragment() {
                     ?.parameter
                     ?.timeToFind!!
 
+                restartChronometer()
+
                 bundle.putBoolean("liked", songFragment.liked())
                 songRecord.arguments = bundle
                 gameSummary.setSongFragment(songRecord)
-                if (!game.nextRound()) {
+                if (!gameViewModel.nextRound()) {
                     setVisibilityLayout(View.VISIBLE)
                     // Pass to the next music
-                    musicMetadata = game.currentMetadata()!!
+                    musicMetadata = gameViewModel.currentMetadata()!!
                     guessEditText.hint = musicMetadata.artist
                     guessEditText.setText("")
                     // Cache song image
@@ -315,9 +370,9 @@ class DemoFragment : Fragment() {
     }
 
     override fun onPause() {
+        if (playing)
+            playAndPause()
         super.onPause()
-        game.pause()
-        timer.cancel()
     }
 
     override fun onDestroy() {
@@ -327,7 +382,6 @@ class DemoFragment : Fragment() {
     }
 
     // ANIMATIONS
-
     /**
      * Setter for the animation visibility
      *

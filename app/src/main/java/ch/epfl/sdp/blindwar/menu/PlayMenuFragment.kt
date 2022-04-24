@@ -43,6 +43,7 @@ class PlayMenuFragment : Fragment() {
             startActivity(intent)
         }
 
+        /**
         view.findViewById<ImageButton>(R.id.soloBtn).apply {
             Picasso.get().load(coverUrl).into(this)
             this.setColorFilter(Color.rgb(25, 20, 20), PorterDuff.Mode.DARKEN)
@@ -52,6 +53,7 @@ class PlayMenuFragment : Fragment() {
             Picasso.get().load(coverMulti).into(this)
             this.setColorFilter(Color.rgb(50, 40, 40), PorterDuff.Mode.DARKEN)
         }
+        **/
 
         return view
     }

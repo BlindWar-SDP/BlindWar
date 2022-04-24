@@ -1,9 +1,11 @@
 package ch.epfl.sdp.blindwar.game.util
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.media.MediaPlayer
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +23,7 @@ import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.audio.AudioHelper
+import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
 import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.solo.util.AnimationSetterHelper
@@ -50,6 +53,10 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
 
     private val initialPlaylists = ArrayList<Playlist>().apply {
         addAll(playlistSet)
+
+        for (playlist in this) {
+            Log.d(TAG, playlist.name)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistViewHolder {
@@ -101,6 +108,7 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
         private val timerPicker = view.findViewById<NumberPicker>(R.id.timerPicker)
         private val expandButton = view.findViewById<ImageButton>(R.id.expandButton)
         private val playButton = view.findViewById<ImageButton>(R.id.startGame)
+        private val roundTextView = view.findViewById<TextView>(R.id.roundTextView)
 
         /**
          * Bind the playlistModel to the displayed view
@@ -112,6 +120,11 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
             roundPicker.maxValue = playlist.songs.size
             roundPicker.minValue = ROUND_MIN_VALUE
             roundPicker.value = ROUND_DEFAULT_VALUE
+
+            when(gameInstanceViewModel.gameInstance.value!!.gameConfig.mode) {
+                GameMode.SURVIVAL -> roundTextView.text = "LIVES"
+                else -> roundTextView.text = "ROUNDS"
+            }
 
             /** Initialize timerPicker **/
             timerPicker.minValue = TIMER_MIN_VALUE
@@ -160,10 +173,11 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
         private fun setStartGameListener(playlist: Playlist) {
             playButton.setOnClickListener{
                 player.pause()
-                gameInstanceViewModel.setGamePlaylist(playlist)
-                gameInstanceViewModel.setGameTimeRound(
+                gameInstanceViewModel.setGameParameters(
                     timeChosen = (timerPicker.value * 5 + 1) * 1000,
-                    roundChosen = roundPicker.value)
+                    roundChosen = roundPicker.value,
+                    playlist = playlist)
+
 
                 (context as AppCompatActivity).supportFragmentManager.beginTransaction()
                     .replace((viewFragment.parent as ViewGroup).id,
@@ -246,7 +260,6 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
 
                 playing = !playing
             }
-
         }
     }
 

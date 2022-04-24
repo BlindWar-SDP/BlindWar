@@ -4,17 +4,17 @@
 
     <item
         android:id="@+id/item_play"
-        android:title="Play"
-        android:icon="@drawable/play_arrow" />
+        android:icon="@drawable/play_arrow"
+        android:title="Play" />
 
     <item
-        android:id="@+id/item_sr"
-        android:title="SR"
-        android:icon="@drawable/ic_baseline_mic_24"/>
+        android:id="@+id/item_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Search" />
 
     <item
         android:id="@+id/item_profile"
-        android:title="Profile"
-        android:icon="@drawable/ic_baseline_person_24"/>
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Profile" />
 
 </menu>

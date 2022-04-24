@@ -1,19 +1,10 @@
 package ch.epfl.sdp.blindwar.game
 
-import android.os.Bundle
-import android.speech.SpeechRecognizer
-import android.widget.EditText
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
-import ch.epfl.sdp.blindwar.menu.DemoSRFragment
 import junit.framework.TestCase
-import org.junit.Assert
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.*
-import kotlin.collections.ArrayList
 
 @RunWith(AndroidJUnit4::class)
 class VoiceRecognizerTest : TestCase() {

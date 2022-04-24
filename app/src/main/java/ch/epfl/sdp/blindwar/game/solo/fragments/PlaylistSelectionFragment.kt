@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.game.solo.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +12,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.game.util.Tutorial.fifaPlaylist
-import ch.epfl.sdp.blindwar.game.util.Tutorial.testingPlaylist
-import ch.epfl.sdp.blindwar.game.util.Tutorial.tutorialPlaylist
-import ch.epfl.sdp.blindwar.game.util.PlaylistAdapter
+import ch.epfl.sdp.blindwar.data.playlists.PlaylistRepository
+import ch.epfl.sdp.blindwar.database.PlaylistDatabase
 import ch.epfl.sdp.blindwar.game.model.Playlist
+import ch.epfl.sdp.blindwar.game.util.PlaylistAdapter
+import ch.epfl.sdp.blindwar.game.util.Tutorial
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.game.viewmodels.PlaylistViewModel
 
 /**
  * Fragment that let the user choose the game playlist
@@ -30,6 +32,7 @@ class PlaylistSelectionFragment: Fragment() {
     private lateinit var playlistRecyclerView: RecyclerView
     private lateinit var searchBar: SearchView
     private lateinit var adapter: PlaylistAdapter
+    private lateinit var playlistViewModel: PlaylistViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,18 +48,18 @@ class PlaylistSelectionFragment: Fragment() {
         **/
 
         searchBar = view.findViewById(R.id.searchBar)
-
-
-        val playlistCopy = ArrayList<Playlist>().apply {
-            addAll(arrayListOf(fifaPlaylist, tutorialPlaylist, testingPlaylist))
-        }
+        playlistViewModel = PlaylistViewModel()
 
         playlistRecyclerView = view.findViewById(R.id.playlistRecyclerView)
         playlistRecyclerView.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL, false)
+        resetRecyclerView(view)
 
-        //attach adapter to list
-        playlistRecyclerView.adapter = PlaylistAdapter(playlistCopy, requireActivity(), view, gameInstanceViewModel)
-        adapter = playlistRecyclerView.adapter as PlaylistAdapter
+        playlistViewModel.playlists.observe(requireActivity()
+        ) {
+            if (!it.isNullOrEmpty()) {
+                resetRecyclerView(view)
+            }
+        }
 
         setUpSearchView()
 
@@ -67,8 +70,17 @@ class PlaylistSelectionFragment: Fragment() {
         }
         } **/
 
-        return view
+            return view
+        }
+
+    /**
+     * Resets the playlist recycler view with the updated list of playlist
+     */
+    private fun resetRecyclerView(view: View) {
+        playlistRecyclerView.adapter = PlaylistAdapter(playlistViewModel.playlists.value as ArrayList<Playlist>, requireActivity(), view, gameInstanceViewModel)
+        adapter = playlistRecyclerView.adapter as PlaylistAdapter
     }
+
 
     /**
      * Sets up the search view
@@ -82,5 +94,10 @@ class PlaylistSelectionFragment: Fragment() {
                 return true
             }
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        searchBar.setQuery("", true)
     }
 }
