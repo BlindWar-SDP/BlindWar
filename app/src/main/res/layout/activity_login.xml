@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/blurred_back"
     tools:context=".login.SplashScreenActivity">
+    
 
     <Button
         android:id="@+id/Btn_google"
