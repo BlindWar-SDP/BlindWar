@@ -36,14 +36,14 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@null"
-            android:tint="@color/ivory"
             app:layout_constraintBottom_toBottomOf="@+id/checkBox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.464"
             app:layout_constraintStart_toStartOf="@+id/checkBox"
             app:layout_constraintTop_toTopOf="@+id/checkBox"
             app:srcCompat="@drawable/ic_baseline_info_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            app:tint="@color/ivory" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--                    TIMED MODE                         -->
@@ -68,7 +68,6 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@null"
-            android:tint="@color/ivory"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -76,7 +75,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.302"
             app:srcCompat="@drawable/ic_baseline_info_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            app:tint="@color/ivory" />
 
         <TextView
             android:id="@+id/timedDescription"
@@ -220,7 +220,6 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@null"
-            android:tint="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
             app:layout_constraintEnd_toEndOf="@+id/survivalButton_"
             app:layout_constraintHorizontal_bias="0.521"
@@ -228,7 +227,8 @@
             app:layout_constraintTop_toTopOf="@+id/survivalButton_"
             app:layout_constraintVertical_bias="0.29"
             app:srcCompat="@drawable/ic_baseline_info_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/survivalDescription"
@@ -308,7 +308,6 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@null"
-            android:tint="@color/ivory"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -316,7 +315,8 @@
             app:layout_constraintTop_toTopOf="@+id/regularButton_"
             app:layout_constraintVertical_bias="0.282"
             app:srcCompat="@drawable/ic_baseline_info_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            app:tint="@color/ivory" />
 
         <TextView
             android:id="@+id/classicDescription"
@@ -448,7 +448,6 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@null"
-            android:tint="@color/ivory"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/mode_selection"
             app:layout_constraintHorizontal_bias="0.0"
@@ -456,14 +455,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/baseline_navigate_before_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            app:tint="@color/ivory" />
 
         <ImageButton
             android:id="@+id/info"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@null"
-            android:tint="@color/ivory"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -471,7 +470,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/baseline_settings_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            app:tint="@color/ivory" />
 
         <TextView
             android:id="@+id/mode_selection"
