@@ -6,19 +6,17 @@ import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
-import ch.epfl.sdp.blindwar.ui.MainMenuActivity
-import ch.epfl.sdp.blindwar.ui.ProfileActivity
-import ch.epfl.sdp.blindwar.ui.UserAdditionalInfoActivity
-import ch.epfl.sdp.blindwar.ui.UserNewInfoActivity
+import ch.epfl.sdp.blindwar.menu.MainMenuActivity
+import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
+import ch.epfl.sdp.blindwar.login.UserAdditionalInfoActivity
+import ch.epfl.sdp.blindwar.login.UserNewInfoActivity
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.adevinta.android.barista.interaction.BaristaClickInteractions
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -208,7 +206,7 @@ class UserNewInfoActivityTest : TestCase() {
         onView(withId(R.id.NU_pseudo))
             .perform(replaceText(validPseudo))
         clickOn(R.id.NU_Confirm_Btn)
-        intended(hasComponent(ProfileActivity::class.java.name))
+        intended(hasComponent(MainMenuActivity::class.java.name))
     }
 
     @Test

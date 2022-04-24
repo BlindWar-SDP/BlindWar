@@ -6,16 +6,24 @@ import ch.epfl.sdp.blindwar.R
  * Hard coded constants for demo purposes
  */
 object MusicImageUrlConstants {
-    const val ACDC: String = "https://i.scdn.co/image/ab67616d00001e0251c02a77d09dfcd53c8676d0"
-    const val DAFT_PUNK: String = "https://i.scdn.co/image/ab67616d00001e02b33d46dfa2635a47eebf63b2"
-    const val GORILLAZ: String = "https://i.scdn.co/image/ab67616d00001e0219d85a472f328a6ed9b704cf"
-    const val LADY_GAGA: String = "https://i.scdn.co/image/ab67616d00001e02e691217483df8798445c82e2"
+    const val ACDC: String =
+        "https://i.scdn.co/image/ab67616d0000b27351c02a77d09dfcd53c8676d0"
+    const val DAFT_PUNK: String =
+        "https://i.scdn.co/image/ab67616d0000b273b33d46dfa2635a47eebf63b2"
+    const val GORILLAZ: String =
+        "https://i.scdn.co/image/ab67616d0000b27319d85a472f328a6ed9b704cf"
+    const val LADY_GAGA: String =
+        "https://i.scdn.co/image/ab67616d0000b273e691217483df8798445c82e2"
     const val THE_NOTORIOUS: String =
-        "https://i.scdn.co/image/ab67616d00001e02db09958534ac66f9a90d3cf7"
-    const val THE_CLASH: String = "https://i.scdn.co/image/ab67616d00001e026e49cf8fd2505d4dc5368403"
-    const val RENAUD: String = "https://i.scdn.co/image/ab67616d00001e02b9cb0f33dc7ae3344f69282a"
-    const val RHCP: String = "https://i.scdn.co/image/ab67616d00001e0294d08ab63e57b0cae74e8595"
-    const val SUM_41: String = "https://i.scdn.co/image/ab67616d00001e029a482180e6a306229bff49dc"
+        "https://i.scdn.co/image/ab67616d0000b273db09958534ac66f9a90d3cf7"
+    const val THE_CLASH: String =
+        "https://i.scdn.co/image/ab67616d0000b273cd9d8bc9ef04014b6e90e182"
+    const val RENAUD: String =
+        "https://i.scdn.co/image/ab67616d0000b273b9cb0f33dc7ae3344f69282a"
+    const val RHCP: String =
+        "https://i.scdn.co/image/ab67616d0000b27394d08ab63e57b0cae74e8595"
+    const val SUM_41: String =
+        "https://i.scdn.co/image/ab67616d0000b2739a482180e6a306229bff49dc"
 
     val ids = listOf(
         R.raw.lady_gaga_poker_face,

@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.data
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import ch.epfl.sdp.blindwar.data.spotify.*
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
