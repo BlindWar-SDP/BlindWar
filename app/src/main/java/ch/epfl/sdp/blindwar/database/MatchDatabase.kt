@@ -1,7 +1,7 @@
 package ch.epfl.sdp.blindwar.database
 
-import ch.epfl.sdp.blindwar.user.Mode
-import ch.epfl.sdp.blindwar.user.User
+import ch.epfl.sdp.blindwar.profile.model.Mode
+import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 

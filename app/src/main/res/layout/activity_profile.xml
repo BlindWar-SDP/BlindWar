@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/profile_fragment"
     android:layout_height="match_parent">
 
     <ImageView
@@ -16,7 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@color/prussian_blue" />
+        app:srcCompat="@color/prussian_blue"
+         />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -84,7 +86,6 @@
         android:layout_width="253dp"
         android:layout_height="50dp"
         android:backgroundTint="@color/green_blue_crayola"
-        android:onClick="statisticsButton"
         android:text="@string/statisticsText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toTopOf="@+id/editProfileButton"
@@ -114,7 +115,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/green_blue_crayola"
-        android:onClick="editProfile"
         android:text="@string/editProfileText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toTopOf="@+id/logoutButton"
@@ -127,7 +127,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/green_blue_crayola"
-        android:onClick="deleteProfile"
         android:text="@string/delete_profile"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toTopOf="@+id/logoutButton"
@@ -140,7 +139,6 @@
         android:layout_width="253dp"
         android:layout_height="50dp"
         android:backgroundTint="@color/pop_star"
-        android:onClick="logoutButton"
         android:text="@string/logout"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"

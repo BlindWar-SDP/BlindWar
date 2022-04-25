@@ -1,6 +1,6 @@
 package ch.epfl.sdp.blindwar.game
 
-import ch.epfl.sdp.blindwar.domain.game.GameHelper
+import ch.epfl.sdp.blindwar.game.util.GameHelper
 import junit.framework.TestCase
 
 class GameHelperTest : TestCase() {

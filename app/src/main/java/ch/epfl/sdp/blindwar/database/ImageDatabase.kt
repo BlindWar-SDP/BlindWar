@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar.database
 
-
 import android.content.Context
 import android.net.Uri
 import android.view.View
@@ -58,15 +57,14 @@ object ImageDatabase {
             Toast.makeText(getApplicationContext(), "Failed to upload file",
                 Toast.LENGTH_LONG).show()
         }*/
-        }
-        else {
+        } else {
             uploadedImageRef.putFile(imageURI)
         }
         return uploadedImageRef.path
     }
 
 
-    fun dowloadProfilePicture(imagePath: String, imageView: ImageView, context: Context): String {
+    fun downloadProfilePicture(imagePath: String, imageView: ImageView, context: Context): String {
         val profilePictureRef = storageRef.child(imagePath)
         GlideApp.with(context)
             .load(profilePictureRef)

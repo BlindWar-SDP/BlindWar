@@ -1,8 +1,8 @@
 package ch.epfl.sdp.blindwar
 
-import ch.epfl.sdp.blindwar.user.AppStatistics
-import ch.epfl.sdp.blindwar.user.Mode
-import ch.epfl.sdp.blindwar.user.Result
+import ch.epfl.sdp.blindwar.profile.model.AppStatistics
+import ch.epfl.sdp.blindwar.profile.model.Mode
+import ch.epfl.sdp.blindwar.profile.model.Result
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
@@ -162,8 +162,6 @@ class AppStatisticsTest {
     fun getEloInitial() {
         assert(testStats.elo == 1000)
     }
-
-
 
     @Test
     fun resetStatistics() {

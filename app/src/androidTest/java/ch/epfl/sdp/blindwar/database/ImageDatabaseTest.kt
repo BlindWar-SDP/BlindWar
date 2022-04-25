@@ -1,11 +1,13 @@
 package ch.epfl.sdp.blindwar.database
 
 import android.widget.ImageView
+import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.ui.ProfileActivity
+import ch.epfl.sdp.blindwar.game.solo.fragments.TutorialFragment
+import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import junit.framework.TestCase
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -16,12 +18,9 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 
+
 @RunWith(AndroidJUnit4::class)
 class ImageDatabaseTest : TestCase() {
-    @get:Rule
-    var testRule = ActivityScenarioRule(
-        ProfileActivity::class.java
-    )
 
     @Before
     fun setup() {
@@ -32,17 +31,24 @@ class ImageDatabaseTest : TestCase() {
     fun cleanup() {
         Intents.release()
     }
+
     @Test
-    fun testDowloadProfilePicture() {
+    fun placeholder() {
+        assert(true)
+    }
+
+    @Test
+    fun testDownloadProfilePicture() {
         val fakeImagePath = "/gs:/blindwar-sdp.appspot.com/images/old_android.jpeg"
         var retImagePath = ""
-        testRule.scenario.onActivity { activity ->
-            val profilePictureView = activity.findViewById<ImageView>(R.id.profileImageView)
-            retImagePath = ImageDatabase.dowloadProfilePicture(
+        launchFragmentInContainer<ProfileFragment>().onFragment {
+            val profilePictureView = it.view?.findViewById<ImageView>(R.id.profileImageView)!!
+            retImagePath = ImageDatabase.downloadProfilePicture(
                 fakeImagePath,
-                profilePictureView, activity.applicationContext
+                profilePictureView, it.requireContext()
             )
+            assertThat(retImagePath, equalTo(fakeImagePath))
         }
-        assertThat(retImagePath, equalTo(fakeImagePath))
     }
+
 }

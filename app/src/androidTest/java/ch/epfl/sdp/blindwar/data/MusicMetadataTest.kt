@@ -28,7 +28,7 @@ class MusicMetadataTest : TestCase() {
     }
 
     fun testGetImageUrl() {
-        val expected = "https://i.scdn.co/image/ab67616d00001e02b33d46dfa2635a47eebf63b2"
+        val expected = "https://i.scdn.co/image/ab67616d0000b273b33d46dfa2635a47eebf63b2"
         val musicMetaData = METADATA_TUTORIAL_MUSICS_PER_AUTHOR["Daft Punk"]!!
         assertThat(musicMetaData.imageUrl, `is`(expected))
     }

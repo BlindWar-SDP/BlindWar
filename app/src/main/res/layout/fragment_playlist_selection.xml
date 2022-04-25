@@ -9,7 +9,7 @@
         android:id="@+id/playlist_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:background="@drawable/blurred_back">
 
         <ImageButton
             android:id="@+id/back_button_playlist"
@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_navigate_before_24_white"
-            app:tint="@color/black"
+            app:tint="@color/ivory"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
@@ -32,10 +32,10 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:autoSizeTextType="uniform"
-            android:textSize="30sp"
             android:fontFamily="@font/bungee_inline"
             android:text="@string/playlist_selection"
-            android:textColor="@color/black"
+            android:textColor="@color/ivory"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="@+id/selectionGuideline"
             app:layout_constraintEnd_toEndOf="@id/verticalGuidelineEnd"
             app:layout_constraintHorizontal_bias="1.0"
@@ -91,8 +91,9 @@
             android:layout_marginBottom="116dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/verticalGuidelineEnd"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/verticalGuidelineStart"
-            app:layout_constraintTop_toBottomOf="@+id/searchBar" />
+            app:layout_constraintTop_toBottomOf="@+id/searchBar"
+            app:layout_constraintVertical_bias="0.294" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
