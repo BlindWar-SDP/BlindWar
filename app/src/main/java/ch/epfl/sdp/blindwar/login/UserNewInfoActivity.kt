@@ -46,7 +46,9 @@ class UserNewInfoActivity : AppCompatActivity() {
     private var profilePictureUri: Uri? = null
     private val auth = FirebaseAuth.getInstance()
 
-
+    /**
+     * Listener for user entering new information
+     */
     private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             // Get User info and use the values to update the UI
@@ -81,7 +83,11 @@ class UserNewInfoActivity : AppCompatActivity() {
         }
     }
 
-
+    /**
+     * Generates the layout and adds listener for current user
+     *
+     * @param savedInstanceState
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_new_info)
@@ -92,12 +98,21 @@ class UserNewInfoActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * To avoid crashing the app, if the back button is pressed, user will log out
+     *
+     */
     override fun onBackPressed() {
         //this.moveTaskToBack(true);
         auth.signOut()
         startActivity(Intent(this, SplashScreenActivity::class.java))
     }
 
+    /**
+     * Function for confirming and saving all info entered by user
+     *
+     * @param v
+     */
     fun confirm(v: View) {
         val pseudo: String = findViewById<EditText>(R.id.NU_pseudo).text.toString()
         val firstName: String = checkNotDefault(
@@ -170,6 +185,11 @@ class UserNewInfoActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Provides the user with opportunity to add more info (gender, description, birthdate)
+     *
+     * @param v
+     */
     fun provideMoreInfo(v: View) {
         startActivity(
             Intent(this, UserAdditionalInfoActivity::class.java)
@@ -177,18 +197,38 @@ class UserNewInfoActivity : AppCompatActivity() {
         )
     }
 
+    /**
+     * Clears the user's pseudo
+     *
+     * @param v
+     */
     fun clearPseudo(v: View) {
         clearText(R.id.NU_pseudo, R.string.text_pseudo)
     }
 
+    /**
+     * Clears the user's first name
+     *
+     * @param v
+     */
     fun clearFirstName(v: View) {
         clearText(R.id.NU_FirstName, R.string.first_name)
     }
 
+    /**
+     * Clears the user's last name
+     *
+     * @param v
+     */
     fun clearLastName(v: View) {
         clearText(R.id.NU_LastName, R.string.last_name)
     }
 
+    /**
+     * Lets the user choose their own profile picture
+     *
+     * @param v
+     */
     fun choosePicture(v: View) {
         val intent = Intent()
         intent.type = "image/*"
@@ -196,6 +236,11 @@ class UserNewInfoActivity : AppCompatActivity() {
         resultLauncher.launch(intent)
     }
 
+    /**
+     * Clears text
+     *
+     * @param v
+     */
     private fun clearText(id: Int, str: Int) {
         val textView = findViewById<EditText>(id)
         val baseText = getText(str).toString()
@@ -205,6 +250,17 @@ class UserNewInfoActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Creates the user in the Firebase database
+     *
+     * @param pseudo
+     * @param firstName
+     * @param lastName
+     * @param birthDate
+     * @param profilePicture
+     * @param gender
+     * @param description
+     */
     private fun createUser(
         pseudo: String,
         firstName: String?,
@@ -234,10 +290,20 @@ class UserNewInfoActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Internal function for checking if string is empty
+     *
+     * @param value
+     * @param default
+     * @return
+     */
     private fun checkNotDefault(value: String, default: Int): String {
         return if (value == default.toString()) "" else value
     }
 
+    /**
+     * Makes sure data is ok, before launching
+     */
     private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
