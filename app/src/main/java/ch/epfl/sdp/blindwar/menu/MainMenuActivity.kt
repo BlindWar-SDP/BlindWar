@@ -36,4 +36,8 @@ class MainMenuActivity : AppCompatActivity() {
             commit()
         }
     }
+
+    override fun onBackPressed() {
+        this.moveTaskToBack(true);
+    }
 }
