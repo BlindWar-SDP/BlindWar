@@ -9,18 +9,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
-import ch.epfl.sdp.blindwar.game.solo.fragments.PlaylistSelectionFragment
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
-import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Gender
 import ch.epfl.sdp.blindwar.profile.model.User
@@ -36,7 +32,7 @@ import com.google.firebase.ktx.Firebase
 
 /**
  * Activity that let the user enter its principal information when registering for the app
- * TODO: add KDOC / fix CodeClimate issues / fix Cirrus warnings when possible
+ * TODO: fix CodeClimate issues / fix Cirrus warnings when possible
  *
  * @constructor creates a UserNewInfoActivity
  */
@@ -239,7 +235,8 @@ class UserNewInfoActivity : AppCompatActivity() {
     /**
      * Clears text
      *
-     * @param v
+     * @param id
+     * @param str
      */
     private fun clearText(id: Int, str: Int) {
         val textView = findViewById<EditText>(id)
