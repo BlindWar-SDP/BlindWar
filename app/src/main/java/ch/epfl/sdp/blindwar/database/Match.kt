@@ -9,7 +9,7 @@ import ch.epfl.sdp.blindwar.user.User
  * @property listPlayers
  * @property mode (TODO check funny modes and if playlist must be saved)
  * @property listResult (same index as user number of music guessed)
- * @property numberOfMusics (total number to caclculate scores)
+ * @property numberOfMusics (total number to calculate scores)
  */
 data class Match(
     var uid: String = "",
