@@ -44,6 +44,7 @@ class UserNewInfoActivity : AppCompatActivity() {
     private val database = UserDatabase
     private val imageDatabase = ImageDatabase
     private var profilePictureUri: Uri? = null
+    private val auth = FirebaseAuth.getInstance()
 
 
     private val userInfoListener = object : ValueEventListener {
@@ -91,11 +92,11 @@ class UserNewInfoActivity : AppCompatActivity() {
         }
     }
 
-//    override fun onBackPressed() { // TODO: when returning on SplashSreenActivity, not OK...
-//        super.onBackPressed()
-//        AuthUI.getInstance().signOut(this)
-//        AuthUI.getInstance().delete(this)
-//    }
+    override fun onBackPressed() {
+        //this.moveTaskToBack(true);
+        auth.signOut()
+        startActivity(Intent(this, SplashScreenActivity::class.java))
+    }
 
     fun confirm(v: View) {
         val pseudo: String = findViewById<EditText>(R.id.NU_pseudo).text.toString()
