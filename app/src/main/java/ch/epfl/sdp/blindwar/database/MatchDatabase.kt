@@ -3,16 +3,10 @@ package ch.epfl.sdp.blindwar.database
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.profile.model.User
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 
 object MatchDatabase {
-    private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private val matchReference = database.getReference("Match")
-
-    private fun getMatchReference(uid: String): DatabaseReference {
-        return matchReference.child(uid)
-    }
+    private const val COLLECTION_PATH = "match"
 
     /**
      * return if the player has already created a multiplayer game
@@ -22,11 +16,19 @@ object MatchDatabase {
      * @param game gameInstance
      * @return
      */
-    fun createMatch(user: User, numberOfPlayerMax: Int, game: GameInstance): Boolean {
-        val match =
+    fun createMatch(
+        user: User,
+        numberOfPlayerMax: Int,
+        game: GameInstance,
+        db: FirebaseFirestore
+    ): Boolean {
+        db.collection(COLLECTION_PATH).add(
             Match(user.uid, mutableListOf(user), game, mutableListOf(0), numberOfPlayerMax)
-        if (matchReference.child(match.uid).get().isSuccessful) return false
-        matchReference.child(match.uid).setValue(match)
+        ).addOnSuccessListener {
+            //return true
+        }.addOnFailureListener {
+            //return false
+        }
         return true
     }
 
@@ -35,8 +37,11 @@ object MatchDatabase {
      *
      * @param uid
      */
-    fun removeMatch(uid: String) {
-        matchReference.child(uid).removeValue()
+    fun removeMatch(uid: String, db: FirebaseFirestore): Boolean {
+        db.collection(COLLECTION_PATH).document(uid).delete()
+            .addOnSuccessListener { }
+            .addOnFailureListener {}
+        return true
     }
 
     /**
@@ -46,22 +51,14 @@ object MatchDatabase {
      * @param user
      * @return
      */
-    fun addPlayer(match: Match, user: User): Boolean {
+    fun addPlayer(match: Match, user: User, db: FirebaseFirestore): Boolean {
         if (match.listPlayers!!.size + 1 > match.maxPlayer) return false
         match.listPlayers!!.add(user)
         match.listResult!!.add(0)
-        matchReference.child(match.uid).setValue(match)
+        db.collection(COLLECTION_PATH).document(match.uid)
+            .set(match)
+            .addOnSuccessListener { }
+            .addOnFailureListener {}
         return true
-    }
-
-    /**
-     * update game to send to other players
-     *
-     * @param match
-     * @param turnWinners
-     */
-    fun onGameUpdate(match: Match, turnWinners: MutableList<User>) {
-        turnWinners.forEach { p -> match.listResult!![match.listPlayers!!.indexOf(p)] += 1 }
-        matchReference.child(match.uid).setValue(match)
     }
 }
