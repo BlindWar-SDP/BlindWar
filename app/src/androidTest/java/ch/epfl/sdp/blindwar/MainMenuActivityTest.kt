@@ -8,6 +8,8 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
+import androidx.test.uiautomator.UiDevice
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import junit.framework.TestCase
 import org.junit.After
@@ -65,4 +67,12 @@ class MainMenuActivityTest : TestCase() {
         onView(withId(R.id.item_profile)).perform(click())
         onView(withId(R.id.profile_fragment)).check(matches(isDisplayed()))
     }
+
+    @Test
+    fun testBackButton(){
+        val device = UiDevice.getInstance(getInstrumentation())
+        assertTrue("Back button can't be pressed", device.pressBack())
+    }
+
+
 }
