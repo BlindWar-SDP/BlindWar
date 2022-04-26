@@ -4,6 +4,7 @@ import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
@@ -24,6 +25,7 @@ import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import junit.framework.TestCase
+import org.hamcrest.Matchers
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -46,6 +48,7 @@ class ProfileActivityTest : TestCase() {
 
     @After
     fun cleanup() {
+
         Intents.release()
     }
 
@@ -77,6 +80,32 @@ class ProfileActivityTest : TestCase() {
         Espresso.onView(ViewMatchers.withId(R.id.statsButton))
             .perform(ViewActions.click())
         val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        device.pressBack()
+        Espresso.onView(ViewMatchers.withId(R.id.logoutButton)).perform(ViewActions.click())
+    }
+
+    @Test
+    fun historyUpdatedCorrectly() {
+        val testEmail = "test@bot.ch"
+        val testPassword = "testtest"
+        val login: Task<AuthResult> = FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(testEmail, testPassword)
+        try {
+            Tasks.await<AuthResult>(login)
+        } catch (e: ExecutionException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        Thread.sleep(2000)
+        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+
+        Espresso.onView(ViewMatchers.withId(R.id.statsButton))
+            .perform(ViewActions.click())
+        device.pressBack()
+        Espresso.onView(ViewMatchers.withId(R.id.historyButton))
+            .perform(ViewActions.click())
+
         device.pressBack()
         Espresso.onView(ViewMatchers.withId(R.id.logoutButton)).perform(ViewActions.click())
     }
