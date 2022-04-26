@@ -20,6 +20,7 @@ import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Gender
 import ch.epfl.sdp.blindwar.profile.model.User
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -100,8 +101,16 @@ class UserNewInfoActivity : AppCompatActivity() {
      */
     override fun onBackPressed() {
         //this.moveTaskToBack(true);
-        auth.signOut()
-        startActivity(Intent(this, SplashScreenActivity::class.java))
+        val intent = intent
+        val activity = intent.getStringExtra("activity")
+        //Log.w("yeet", activity!!)
+        if (activity != "profile") {
+            AuthUI.getInstance().delete(this)
+            auth.signOut()
+            startActivity(Intent(this, SplashScreenActivity::class.java))
+        } else {
+            super.onBackPressed();
+        }
     }
 
     /**
