@@ -226,7 +226,6 @@ class UserNewInfoActivityTest : TestCase() {
 
     @Test
     fun testUpdateUser() {
-//        putNewUserExtra(false)
         onView(withId(R.id.NU_pseudo))
             .perform(replaceText(validPseudo))
         clickOn(R.id.NU_Confirm_Btn)

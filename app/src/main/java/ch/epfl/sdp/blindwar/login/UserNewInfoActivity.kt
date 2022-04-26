@@ -447,18 +447,22 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
                     this,
                     "Welcome ${user.pseudo} 👋", Toast.LENGTH_SHORT
                 ).show()
-                startActivity(Intent(this, MainMenuActivity::class.java))
-                finish()
             } else {
                 UserDatabase.updateUser(user)
                 Toast.makeText(
                     this,
-                    "${user.pseudo}'s info updated 👋", Toast.LENGTH_SHORT
+                    "${user.pseudo}'s online info updated 👋", Toast.LENGTH_SHORT
                 ).show()
-                startActivity(Intent(this, MainMenuActivity::class.java)) // was ProfileActivity
-                finish()
+//                startActivity(Intent(this, MainMenuActivity::class.java)) // was ProfileActivity\
             }
+        }?: run {
+            Toast.makeText(
+                this,
+                "update offline info only",
+                Toast.LENGTH_LONG
+            ).show()
         }
+        startActivity(Intent(this, MainMenuActivity::class.java))
     }
 
     private fun setView() {
