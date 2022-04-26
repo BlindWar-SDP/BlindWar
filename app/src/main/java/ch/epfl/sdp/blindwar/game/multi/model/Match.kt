@@ -1,6 +1,6 @@
-package ch.epfl.sdp.blindwar.database
+package ch.epfl.sdp.blindwar.game.multi.model
 
-import ch.epfl.sdp.blindwar.profile.model.Mode
+import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.profile.model.User
 
 
@@ -8,15 +8,14 @@ import ch.epfl.sdp.blindwar.profile.model.User
  * Match class
  *
  * @property listPlayers
- * @property mode (TODO check funny modes and if playlist must be saved)
+ * @property game instance where is stored the playlist, game mode, game formats etc
  * @property listResult (same index as user number of music guessed)
- * @property numberOfMusics (total number to calculate scores)
+ * @property maxPlayer
  */
 data class Match(
     var uid: String = "",
     var listPlayers: MutableList<User>? = null,
-    val mode: Mode = Mode.MULTI, //TODO check how to save funny modes
+    val game: GameInstance? = null,
     var listResult: MutableList<Int>? = null,
-    var numberOfMusics: Int = 0,
     var maxPlayer: Int = 2
 )
