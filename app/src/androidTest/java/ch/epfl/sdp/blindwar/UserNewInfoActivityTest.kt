@@ -13,9 +13,9 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
-import ch.epfl.sdp.blindwar.ui.ProfileActivity
-import ch.epfl.sdp.blindwar.ui.UserAdditionalInfoActivity
-import ch.epfl.sdp.blindwar.ui.UserNewInfoActivity
+import ch.epfl.sdp.blindwar.login.UserAdditionalInfoActivity
+import ch.epfl.sdp.blindwar.login.UserNewInfoActivity
+import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.google.android.gms.tasks.Task
@@ -230,7 +230,7 @@ class UserNewInfoActivityTest : TestCase() {
         onView(withId(R.id.NU_pseudo))
             .perform(replaceText(validPseudo))
         clickOn(R.id.NU_Confirm_Btn)
-        intended(hasComponent(ProfileActivity::class.java.name))
+        intended(hasComponent(MainMenuActivity::class.java.name))
     }
 
     @Test
@@ -277,7 +277,7 @@ class UserNewInfoActivityTest : TestCase() {
         clickOn(R.id.NU_Cancel_Btn)
         assertDisplayed(R.string.alert_dialogue_cancel_text)
         clickOn(android.R.string.ok)
-        intended(hasComponent(ProfileActivity::class.java.name))
+        intended(hasComponent(MainMenuActivity::class.java.name))
     }
 
     @Test

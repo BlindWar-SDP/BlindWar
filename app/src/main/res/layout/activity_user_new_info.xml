@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/prussian_blue"
     android:orientation="vertical"
-    tools:context=".ui.UserNewInfoActivity">
+    tools:context=".login.UserNewInfoActivity">
 
     <EditText
         android:id="@+id/NU_pseudo"
@@ -23,7 +23,8 @@
         android:textColor="@color/green_blue_crayola"
         app:layout_constraintBottom_toTopOf="@+id/NU_FirstName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/NU_FirstName"
@@ -38,7 +39,8 @@
         android:textColor="@color/green_blue_crayola"
         app:layout_constraintBottom_toTopOf="@+id/NU_LastName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NU_pseudo" />
+        app:layout_constraintTop_toBottomOf="@+id/NU_pseudo"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/NU_LastName"
@@ -134,7 +136,6 @@
         app:layout_constraintTop_toBottomOf="@+id/NU_LastName"
         tools:ignore="ImageContrastCheck"
         tools:srcCompat="@tools:sample/avatars" />
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"

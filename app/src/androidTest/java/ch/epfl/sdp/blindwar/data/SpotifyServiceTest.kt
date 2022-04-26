@@ -1,12 +1,11 @@
 package ch.epfl.sdp.blindwar.data
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import ch.epfl.sdp.blindwar.data.SpotifyApiConstants.GRANT_TYPE
-import ch.epfl.sdp.blindwar.data.SpotifyApiConstants.credentialsEncoding
-import ch.epfl.sdp.blindwar.data.SpotifyApiConstants.tokenParameter
-import ch.epfl.sdp.blindwar.data.SpotifyService.spotifyApiFactory
+import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.GRANT_TYPE
+import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.credentialsEncoding
+import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.tokenParameter
+import ch.epfl.sdp.blindwar.data.spotify.SpotifyService.spotifyApiFactory
+import ch.epfl.sdp.blindwar.data.spotify.SpotifyToken
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer

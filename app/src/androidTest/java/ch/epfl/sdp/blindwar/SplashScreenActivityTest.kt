@@ -1,21 +1,14 @@
 package ch.epfl.sdp.blindwar
 
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import ch.epfl.sdp.blindwar.ui.SplashScreenActivity
-import com.adevinta.android.barista.assertion.BaristaImageViewAssertions.assertHasDrawable
+import ch.epfl.sdp.blindwar.login.SplashScreenActivity
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.google.firebase.auth.FirebaseAuth
 import junit.framework.TestCase
 import org.junit.*
 import org.junit.runner.RunWith
-import java.security.AuthProvider
 
 
 @RunWith(AndroidJUnit4::class)

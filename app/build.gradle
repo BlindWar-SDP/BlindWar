@@ -62,13 +62,13 @@ android {
 
 dependencies {
     implementation "com.google.code.gson:gson:2.8.9"
-    def lifecycle_version = "2.5.0-alpha05"
+    def lifecycle_version = "2.5.0-beta01"
     def arch_version = "2.1.0"
 
     implementation 'com.spotify.android:auth:1.2.5'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.fragment:fragment-ktx:1.5.0-alpha04@aar'
-    androidTestImplementation 'androidx.fragment:fragment-ktx:1.5.0-alpha04@aar'
+    implementation 'androidx.fragment:fragment-ktx:1.5.0-beta01@aar'
+    androidTestImplementation 'androidx.fragment:fragment-ktx:1.5.0-beta01@aar'
     implementation 'androidx.activity:activity-ktx:1.6.0-alpha01@aar'
     androidTestImplementation 'androidx.activity:activity-ktx:1.6.0-alpha01@aar'
 
@@ -164,7 +164,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx:20.0.4'
 
     debugImplementation("androidx.fragment:fragment-testing:1.4.1")
-    debugImplementation("androidx.fragment:fragment-ktx:1.5.0-alpha04")
+    debugImplementation("androidx.fragment:fragment-ktx:1.5.0-beta01")
     debugImplementation("androidx.test:core:1.4.0")
 
     // JVM-based unit tests (that don't need a real device or emulator)
@@ -208,9 +208,6 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             'hilt_aggregated_deps/**',
             '**/*_Factory.class',
             '**/*_MembersInjector.class'
-
-
-
     ]
     def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"

@@ -89,6 +89,18 @@
             app:srcCompat="@drawable/ic_baseline_help_24"
             tools:ignore="SpeakableTextPresentCheck" />
 
+        <Chronometer
+            android:id="@+id/simpleChronometer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/oxygen"
+            android:textColor="@color/ivory"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/countdown"
+            app:layout_constraintStart_toEndOf="@+id/scoreTextView"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageButton
             android:id="@+id/imageButton6"
             android:layout_width="48dp"
@@ -103,6 +115,34 @@
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/baseline_settings_24_white"
             tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageView
+            android:id="@+id/heartImage"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="4dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/heartNumber"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/scoreTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/heart" />
+
+        <TextView
+            android:id="@+id/heartNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:fontFamily="@font/bungee_inline"
+            android:gravity="top"
+            android:text="x 5"
+            android:textColor="@color/ivory"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/heartImage"
+            app:layout_constraintEnd_toStartOf="@+id/countdown"
+            app:layout_constraintTop_toTopOf="@+id/heartImage"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/countdown"
@@ -141,23 +181,7 @@
             app:lottie_loop="false"
             app:lottie_speed="2" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/cross"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/countdown"
-            app:layout_constraintHorizontal_bias="0.478"
-            app:layout_constraintStart_toEndOf="@+id/scoreTextView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.608"
-            app:lottie_autoPlay="false"
-            app:lottie_fileName="cross.json"
-            app:lottie_loop="false"
-            app:lottie_speed="2"
-            tools:ignore="SpeakableTextPresentCheck" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -174,6 +198,21 @@
         app:lottie_autoPlay="true"
         app:lottie_fileName="audioVisualizer.json"
         app:lottie_loop="true"
+        app:lottie_speed="2"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/cross"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/startButton"
+        app:layout_constraintEnd_toEndOf="@+id/audioVisualizer"
+        app:layout_constraintStart_toStartOf="@+id/audioVisualizer"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat"
+        app:layout_constraintVertical_bias="0.0"
+        app:lottie_autoPlay="false"
+        app:lottie_fileName="cross.json"
+        app:lottie_loop="false"
         app:lottie_speed="2"
         tools:ignore="SpeakableTextPresentCheck" />
 

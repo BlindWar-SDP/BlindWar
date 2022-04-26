@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/prussian_blue"
     android:orientation="vertical"
-    tools:context=".ui.UserAdditionalInfoActivity">
+    tools:context=".login.UserAdditionalInfoActivity">
 
 
     <EditText

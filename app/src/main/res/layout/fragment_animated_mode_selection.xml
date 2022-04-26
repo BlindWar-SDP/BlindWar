@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mode_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="4dp"
-    android:background="@color/white"
+    android:background="@drawable/blurred_back"
     android:orientation="vertical">
 
 
@@ -26,7 +25,7 @@
             android:layout_height="0dp"
             android:fontFamily="@font/bungee_inline"
             android:text="@string/funny"
-            android:textColor="@color/black"
+            android:textColor="@color/ivory"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +42,8 @@
             app:layout_constraintStart_toStartOf="@+id/checkBox"
             app:layout_constraintTop_toTopOf="@+id/checkBox"
             app:srcCompat="@drawable/ic_baseline_info_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            app:tint="@color/ivory" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--                    TIMED MODE                         -->
@@ -75,7 +75,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.302"
             app:srcCompat="@drawable/ic_baseline_info_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            app:tint="@color/ivory" />
 
         <TextView
             android:id="@+id/timedDescription"
@@ -83,7 +84,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/oxygen"
             android:text="@string/timedDescription"
-            android:textColor="@color/black"
+            android:textColor="@color/ivory"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/raceButton_"
             app:layout_constraintEnd_toEndOf="parent"
@@ -99,11 +100,11 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/border_button"
+            android:background="@drawable/border_button_white"
             android:fontFamily="@font/bungee_inline"
             android:gravity="center_horizontal"
             android:text="@string/timed"
-            android:textColor="@color/black"
+            android:textColor="@color/ivory"
             android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -137,12 +138,14 @@
             android:id="@+id/chrono"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:tint="@color/ivory"
             app:layout_constraintBottom_toBottomOf="@+id/raceButton_"
             app:layout_constraintEnd_toStartOf="@+id/chronoGuidelineStart"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/raceButton_"
             app:layout_constraintTop_toTopOf="@+id/raceButton_"
             app:lottie_autoPlay="true"
+            app:lottie_colorFilter="@color/ivory"
             app:lottie_fileName="chronometer.json"
             app:lottie_loop="true"
             app:lottie_speed="0.5"
@@ -152,6 +155,7 @@
             android:id="@+id/chrono2"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:tint="@color/ivory"
             app:layout_constraintBottom_toBottomOf="@+id/raceButton_"
             app:layout_constraintEnd_toEndOf="@+id/raceButton_"
             app:layout_constraintHorizontal_bias="1.0"
@@ -159,6 +163,7 @@
             app:layout_constraintTop_toTopOf="@+id/raceButton_"
             app:layout_constraintVertical_bias="0.0"
             app:lottie_autoPlay="true"
+            app:lottie_colorFilter="@color/ivory"
             app:lottie_fileName="chronometer.json"
             app:lottie_loop="true"
             app:lottie_speed="0.5"
@@ -190,6 +195,26 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.38" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/survivalButton_"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/border_button_white"
+            android:fontFamily="@font/bungee_inline"
+            android:gravity="center_horizontal"
+            android:text="@string/survival"
+            android:textColor="@color/ivory"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageButton
             android:id="@+id/infoSurvival"
             android:layout_width="48dp"
@@ -202,7 +227,8 @@
             app:layout_constraintTop_toTopOf="@+id/survivalButton_"
             app:layout_constraintVertical_bias="0.29"
             app:srcCompat="@drawable/ic_baseline_info_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/survivalDescription"
@@ -210,33 +236,13 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/oxygen"
             android:text="@string/survivalDescription"
-            android:textColor="@color/black"
+            android:textColor="@color/ivory"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.559" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/survivalButton_"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/border_button"
-            android:fontFamily="@font/bungee_inline"
-            android:gravity="center_horizontal"
-            android:text="@string/survival"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/particles"
@@ -309,7 +315,8 @@
             app:layout_constraintTop_toTopOf="@+id/regularButton_"
             app:layout_constraintVertical_bias="0.282"
             app:srcCompat="@drawable/ic_baseline_info_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            app:tint="@color/ivory" />
 
         <TextView
             android:id="@+id/classicDescription"
@@ -318,7 +325,7 @@
             android:layout_marginTop="2dp"
             android:fontFamily="@font/oxygen"
             android:text="@string/classicDescription"
-            android:textColor="@color/black"
+            android:textColor="@color/ivory"
             app:layout_constraintBottom_toBottomOf="@+id/regularButton_"
             app:layout_constraintEnd_toEndOf="@+id/regularButton_"
             app:layout_constraintStart_toStartOf="@+id/regularButton_"
@@ -333,11 +340,11 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/border_button"
+            android:background="@drawable/border_button_white"
             android:fontFamily="@font/bungee_inline"
             android:gravity="center_horizontal"
             android:text="@string/classic"
-            android:textColor="@color/black"
+            android:textColor="@color/ivory"
             android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -401,6 +408,7 @@
             app:layout_constraintTop_toTopOf="@+id/vinylGuidelineStart"
             app:layout_constraintVertical_bias="0.387"
             app:lottie_autoPlay="true"
+            app:lottie_colorFilter="@color/ivory"
             app:lottie_fileName="vinyl.json"
             app:lottie_loop="true"
             app:lottie_speed="0.75"
@@ -418,11 +426,13 @@
             app:layout_constraintTop_toTopOf="@+id/vinylGuidelineStart"
             app:layout_constraintVertical_bias="0.508"
             app:lottie_autoPlay="true"
+            app:lottie_colorFilter="@color/ivory"
             app:lottie_fileName="vinyl.json"
             app:lottie_loop="true"
             app:lottie_speed="0.75"
             tools:ignore="SpeakableTextPresentCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <!-- Mode layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -446,7 +456,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/baseline_navigate_before_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            app:tint="@color/ivory" />
 
         <ImageButton
             android:id="@+id/info"
@@ -460,7 +471,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/baseline_settings_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            app:tint="@color/ivory" />
 
         <TextView
             android:id="@+id/mode_selection"
@@ -470,7 +482,7 @@
             android:fontFamily="@font/bungee_inline"
             android:gravity="bottom"
             android:text="@string/mode_selection"
-            android:textColor="@color/black"
+            android:textColor="@color/ivory"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
