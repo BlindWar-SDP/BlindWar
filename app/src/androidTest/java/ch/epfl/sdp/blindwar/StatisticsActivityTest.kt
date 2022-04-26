@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar
 
+import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -24,7 +25,7 @@ class StatisticsActivityTest : TestCase() {
     @Before
     fun setup() {
         Intents.init()
-        Espresso.closeSoftKeyboard()
+        closeSoftKeyboard()
     }
 
     @After
