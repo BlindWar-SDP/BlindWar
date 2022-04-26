@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
@@ -42,7 +41,7 @@ class PlayMenuFragment : Fragment(), UserCache {
         }
 
         if (isOffline(activity?.applicationContext!!)) {
-            val btn = view.findViewById<Button>(R.id.multiBtn)
+            val btn = view.findViewById<ImageButton>(R.id.multiBtn)
             btn.isClickable = false
             btn.alpha = 0.3F
         }

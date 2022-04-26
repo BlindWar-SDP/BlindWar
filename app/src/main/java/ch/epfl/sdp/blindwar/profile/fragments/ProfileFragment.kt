@@ -89,37 +89,30 @@ class ProfileFragment : Fragment(), UserCache {
 //        return super.onOptionsItemSelected(item)
 //    }
 
-    
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.activity_profile, container, false)
-        // user id should be set according to authentication
-        if (isOffline(activity?.applicationContext!!)) {
-            user = readCache(activity?.applicationContext!!)
-            setView()
-        } else {
-            // user id should be set according to authentication
-            FirebaseAuth.getInstance().currentUser?.let {
-                database.addUserListener(it.uid, userInfoListener)
-            }
-        }
-        activity?.setContentView(R.layout.activity_profile) // ?
+        // Text View
+        nameTextView = view.findViewById(R.id.nameView)
+        emailTextView = view.findViewById(R.id.emailView)
+        eloTextView = view.findViewById(R.id.eloDeclarationView)
 
         // Buttons
         statsButton = view.findViewById<Button>(R.id.statsButton).apply {
-            this.setOnClickListener{
+            this.setOnClickListener {
                 /**
-                 TODO: debug StatisticsFragment
+                TODO: debug StatisticsFragment
                 activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace((view?.parent as ViewGroup).id,
-                        StatisticsFragment(),
-                        "STATS")
-                    ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    ?.commit()
-                **/
+                ?.replace((view?.parent as ViewGroup).id,
+                StatisticsFragment(),
+                "STATS")
+                ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                ?.commit()
+                 **/
 
                 val intent = Intent(requireActivity(), StatisticsActivity::class.java)
                 startActivity(intent)
@@ -130,14 +123,23 @@ class ProfileFragment : Fragment(), UserCache {
             setButtonListener(this) { editProfile() }
         }
 
-        logOutButton = view.findViewById<Button>(R.id.logoutButton).apply {
+
+        logOutButton = view.findViewById<Button>(R.id.logoutButton).apply{
             setButtonListener(this) { logOut() }
         }
 
-        // Text View
-        nameTextView = view.findViewById(R.id.nameView)
-        emailTextView = view.findViewById(R.id.emailView)
-        eloTextView = view.findViewById(R.id.eloDeclarationView)
+        // user id should be set according to authentication
+        if (isOffline(activity?.applicationContext!!)) {
+            user = readCache(activity?.applicationContext!!)
+            Log.i("thco #######", user.pseudo)
+            setView()
+        } else {
+            // user id should be set according to authentication
+            FirebaseAuth.getInstance().currentUser?.let {
+                database.addUserListener(it.uid, userInfoListener)
+            }
+        }
+//        activity?.setContentView(R.layout.activity_profile) // ?
 
         return view
     }
@@ -149,7 +151,7 @@ class ProfileFragment : Fragment(), UserCache {
      * @param action performed on click
      */
     private fun setButtonListener(button: Button, action: () -> Unit) {
-        button.setOnClickListener{
+        button.setOnClickListener {
             action()
         }
     }

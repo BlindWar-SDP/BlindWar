@@ -227,6 +227,7 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
                     AuthUI.getInstance().delete(this).addOnCompleteListener {
                         startActivity(Intent(this, SplashScreenActivity::class.java))
                     }
+                    removeCache(this)
                     Toast.makeText(
                         this,
                         getString(R.string.deletion_success), Toast.LENGTH_SHORT
