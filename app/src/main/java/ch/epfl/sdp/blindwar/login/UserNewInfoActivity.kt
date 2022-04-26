@@ -37,7 +37,7 @@ import kotlinx.serialization.json.Json
 
 /**
  * Activity that let the user enter its principal information when registering for the app
- * TODO: add KDOC / fix CodeClimate issues / fix Cirrus warnings when possible
+ * TODO: fix CodeClimate issues / fix Cirrus warnings when possible
  *
  * @constructor creates a UserNewInfoActivity
  */
@@ -62,6 +62,9 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
         disableButton(R.id.NU_resetProfilePicture)
     }
 
+    /**
+     * Listener for user entering new information
+     */
     private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             // Get User info and use the values to update the UI
@@ -94,6 +97,11 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
         }
     }
 
+    /**
+     * Generates the layout and adds listener for current user
+     *
+     * @param savedInstanceState
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_new_info)
@@ -113,6 +121,29 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
         }
     }
 
+    /**
+     * To avoid crashing the app, if the back button is pressed, user will log out
+     *
+     */
+    override fun onBackPressed() {
+        //this.moveTaskToBack(true);
+        val intent = intent
+        val activity = intent.getStringExtra("activity")
+        //Log.w("yeet", activity!!)
+        if (activity != "profile") {
+            AuthUI.getInstance().delete(this)
+            FirebaseAuth.getInstance().signOut()
+            startActivity(Intent(this, SplashScreenActivity::class.java))
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    /**
+     * Function for confirming and saving all info entered by user
+     *
+     * @param v
+     */
     fun confirm(v: View) {
         // Additional info
         setFromBundle()
@@ -150,7 +181,12 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
         // new Alert Dialogue to ensure deletion
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         val positiveButtonClick = { _: DialogInterface, _: Int ->
-            startActivity(Intent(this, MainMenuActivity::class.java)) // ?? was profile activity before it becomes a fragment
+            startActivity(
+                Intent(
+                    this,
+                    MainMenuActivity::class.java
+                )
+            ) // ?? was profile activity before it becomes a fragment
         }
         val negativeButtonClick = { _: DialogInterface, _: Int -> }
 
@@ -163,6 +199,11 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
             .show()
     }
 
+    /**
+     * Provides the user with opportunity to add more info (gender, description, birthdate)
+     *
+     * @param v
+     */
     fun provideMoreInfo(v: View) {
         setFromText()
         val bundle = Bundle()
@@ -179,18 +220,36 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
         )
     }
 
+    /**
+     * Clears the user's pseudo
+     *
+     * @param v
+     */
     fun clearPseudo(v: View) {
         clearText(R.id.NU_pseudo, R.string.text_pseudo)
     }
 
+    /**
+     * Clears the user's first name
+     *
+     * @param v
+     */
     fun clearFirstName(v: View) {
         clearText(R.id.NU_FirstName, R.string.first_name)
     }
 
+    /**
+     * Clears the user's last name
+     *
+     * @param v
+     */
     fun clearLastName(v: View) {
         clearText(R.id.NU_LastName, R.string.last_name)
     }
 
+    /**
+     * Makes sure data is ok, before launching
+     */
     private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -204,6 +263,11 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
             }
         }
 
+    /**
+     * Lets the user choose their own profile picture
+     *
+     * @param v
+     */
     fun choosePicture(v: View) {
         val intent = Intent()
         intent.type = "image/*"
@@ -275,6 +339,13 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
     // =============================================================================================
     // ================================== PRIVATE FUNCTIONS ========================================
     // =============================================================================================
+    /**
+     * Internal function for checking if string is empty
+     *
+     * @param value
+     * @param default
+     * @return
+     */
     private fun checkNotDefault(value: String, default: String): String {
         return if (value == default) "" else value
     }
@@ -305,6 +376,11 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
         }
     }
 
+    /** Clears text
+     *
+     * @param id
+     * @param str
+     */
     private fun clearText(id: Int, str: Int) {
         val textView = findViewById<EditText>(id)
         val baseText = getText(str).toString()
@@ -382,12 +458,6 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
                 startActivity(Intent(this, MainMenuActivity::class.java)) // was ProfileActivity
                 finish()
             }
-        } ?: run {
-            Toast.makeText(
-                this,
-                "user's local info updated", Toast.LENGTH_SHORT
-            ).show()
-            startActivity(Intent(this, MainMenuActivity::class.java)) // was ProfileActivity
         }
     }
 

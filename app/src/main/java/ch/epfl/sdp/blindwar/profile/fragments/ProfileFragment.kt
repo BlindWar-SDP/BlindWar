@@ -160,7 +160,10 @@ class ProfileFragment : Fragment(), UserCache {
      * Opens profile edition activity
      */
     private fun editProfile() {
-        startActivity(Intent(requireActivity(), UserNewInfoActivity::class.java))
+        //startActivity(Intent(requireActivity(), UserNewInfoActivity::class.java))
+        val intent = Intent(requireActivity(), UserNewInfoActivity::class.java)
+        intent.putExtra("activity", "profile")
+        startActivity(intent)
     }
 
     /**

@@ -289,4 +289,10 @@ class UserNewInfoActivityTest : TestCase() {
         clickOn(android.R.string.cancel)
         assertDisplayed(R.id.NU_Cancel_Btn)
     }
+
+    @Test
+    fun testBackButton(){
+        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        assertTrue("Back button can't be pressed", device.pressBack())
+    }
 }
