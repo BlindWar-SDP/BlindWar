@@ -21,10 +21,6 @@ object PlaylistRepository {
 
     init {
         playlists = fetchPlaylists()
-
-        for (playlist in playlists.value!!) {
-            Log.d(ContentValues.TAG, playlist.name)
-        }
     }
 
     /**
@@ -52,7 +48,7 @@ object PlaylistRepository {
                             snapShot.getValue(OnlinePlaylist::class.java)!!
                         }
                             .filter{
-                                it.name.contains(query)
+                                it.getName().contains(query)
                                         && genreFilter.containsAll(it.genres)
                                         && difficultyFilter.contains(it.difficulty)
                             }.toMutableList()

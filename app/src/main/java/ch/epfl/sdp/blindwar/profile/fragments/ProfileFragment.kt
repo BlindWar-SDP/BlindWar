@@ -9,10 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.ImageDatabase
@@ -21,6 +18,7 @@ import ch.epfl.sdp.blindwar.login.SplashScreenActivity
 import ch.epfl.sdp.blindwar.login.UserNewInfoActivity
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.firebase.ui.auth.AuthUI
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -46,6 +44,8 @@ class ProfileFragment : Fragment() {
     private lateinit var deleteButton: Button
     private lateinit var editButton: Button
     private lateinit var logOutButton: Button
+    private lateinit var optionsButton: Button
+    private lateinit var optionsMenu: NavigationView
 
     private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -81,20 +81,19 @@ class ProfileFragment : Fragment() {
             Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
         }
     }
-
     
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.activity_profile, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
         // user id should be set according to authentication
         if (currentUser != null) {
             database.addUserListener(currentUser.uid, userInfoListener)
         }
 
-        statsButton = view.findViewById<Button>(R.id.statsButton).apply {
+        statsButton = view.findViewById<Button>(R.id.statsBtn).apply {
             this.setOnClickListener{
                 /**
                  TODO: debug StatisticsFragment
@@ -111,16 +110,26 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        deleteButton = view.findViewById<Button>(R.id.deleteProfile).apply {
-            setButtonListener(this) { deleteProfile() }
+        view.findViewById<ImageButton>(R.id.editBtn).apply {
+            this.setOnClickListener{
+                editProfile()
+            }
         }
 
-        editButton = view.findViewById<Button>(R.id.editProfileButton).apply {
-            setButtonListener(this) { editProfile() }
+        view.findViewById<ImageButton>(R.id.optionsBtn).apply {
+            this.setOnClickListener{
+                optionsBtn()
+            }
         }
 
-        logOutButton = view.findViewById<Button>(R.id.logoutButton).apply {
-            setButtonListener(this) { logOut() }
+        optionsMenu = view.findViewById(R.id.optionsMenu)
+
+        optionsMenu.setNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.item_play -> logOut()
+                R.id.item_search -> deleteProfile()
+            }
+            true
         }
 
         return view
@@ -143,6 +152,15 @@ class ProfileFragment : Fragment() {
      */
     private fun editProfile() {
         startActivity(Intent(requireActivity(), UserNewInfoActivity::class.java))
+    }
+
+    /**
+     *
+     */
+    private fun optionsBtn() {
+        optionsMenu.visibility =
+            if (optionsMenu.visibility == View.VISIBLE) View.GONE
+            else View.VISIBLE
     }
 
     /**

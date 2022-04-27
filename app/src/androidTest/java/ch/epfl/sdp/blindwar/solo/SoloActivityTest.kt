@@ -16,7 +16,7 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.util.Tutorial
 import ch.epfl.sdp.blindwar.game.solo.SoloActivity
-import ch.epfl.sdp.blindwar.game.util.PlaylistAdapter
+import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
 import junit.framework.Assert.assertEquals
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
@@ -84,7 +84,7 @@ class SoloActivityTest {
 
         onView(withId(R.id.playlistRecyclerView))
             .perform(
-                RecyclerViewActions.actionOnItemAtPosition<PlaylistAdapter.PlaylistViewHolder>(
+                RecyclerViewActions.actionOnItemAtPosition<DisplayableItemAdapter.DisplayableItemViewHolder>(
                     0,
                     click(),
                 )
@@ -165,7 +165,7 @@ class SoloActivityTest {
         for (i in 0 until chainClick) {
             onView(withId(R.id.playlistRecyclerView))
                 .perform(
-                    RecyclerViewActions.actionOnItemAtPosition<PlaylistAdapter.PlaylistViewHolder>(
+                    RecyclerViewActions.actionOnItemAtPosition<DisplayableItemAdapter.DisplayableItemViewHolder>(
                         position,
                         click(),
                     )

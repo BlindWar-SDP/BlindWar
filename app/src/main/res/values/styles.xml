@@ -6,7 +6,7 @@
     </style>
 
     <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar" >
-        <item name="android:textColorPrimary">@android:color/black</item>
+        <item name="android:textColorPrimary">@color/ivory</item>
     </style>
 
     <style name="datePickerAsSpinner">

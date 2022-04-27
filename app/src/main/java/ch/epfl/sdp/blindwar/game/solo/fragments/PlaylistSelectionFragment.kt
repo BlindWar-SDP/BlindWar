@@ -1,7 +1,6 @@
 package ch.epfl.sdp.blindwar.game.solo.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +11,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.playlists.PlaylistRepository
-import ch.epfl.sdp.blindwar.database.PlaylistDatabase
-import ch.epfl.sdp.blindwar.game.model.Playlist
-import ch.epfl.sdp.blindwar.game.util.PlaylistAdapter
+import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
+import ch.epfl.sdp.blindwar.game.model.Displayable
+import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
 import ch.epfl.sdp.blindwar.game.util.Tutorial
+import ch.epfl.sdp.blindwar.game.util.Tutorial.fly
+import ch.epfl.sdp.blindwar.game.util.Tutorial.searchin
+import ch.epfl.sdp.blindwar.game.util.Tutorial.uatw
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.game.viewmodels.PlaylistViewModel
 
@@ -28,10 +29,9 @@ import ch.epfl.sdp.blindwar.game.viewmodels.PlaylistViewModel
 class PlaylistSelectionFragment: Fragment() {
     //private lateinit var backButton: ImageButton
     private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
-    private lateinit var startButton: Button
     private lateinit var playlistRecyclerView: RecyclerView
     private lateinit var searchBar: SearchView
-    private lateinit var adapter: PlaylistAdapter
+    private lateinit var adapter: DisplayableItemAdapter
     private lateinit var playlistViewModel: PlaylistViewModel
 
     override fun onCreateView(
@@ -77,8 +77,8 @@ class PlaylistSelectionFragment: Fragment() {
      * Resets the playlist recycler view with the updated list of playlist
      */
     private fun resetRecyclerView(view: View) {
-        playlistRecyclerView.adapter = PlaylistAdapter(playlistViewModel.playlists.value as ArrayList<Playlist>, requireActivity(), view, gameInstanceViewModel)
-        adapter = playlistRecyclerView.adapter as PlaylistAdapter
+        playlistRecyclerView.adapter = DisplayableItemAdapter(playlistViewModel.playlists.value as ArrayList<Displayable>, requireActivity(), view, gameInstanceViewModel)
+        adapter = playlistRecyclerView.adapter as DisplayableItemAdapter
     }
 
 

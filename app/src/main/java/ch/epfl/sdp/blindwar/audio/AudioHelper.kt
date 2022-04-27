@@ -10,7 +10,6 @@ object AudioHelper {
     const val NORMAL = 1F
     const val HIGH = 1.2F
 
-
     fun soundAlter(player: MediaPlayer, pitch: Float, speed: Float) {
         val params = player.playbackParams
         params.speed = speed

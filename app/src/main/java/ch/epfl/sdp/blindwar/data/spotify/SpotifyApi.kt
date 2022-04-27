@@ -9,7 +9,11 @@ import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.AUTH_TYPE
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.CONTENT_TYPE
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.GRANT_TYPE
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.LIMIT
+import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.QUERY
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.SEARCH_PATH
+import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.TRACK_ID
+import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.TRACK_PATH
+import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.TYPE
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.URL_ENCODED_FORM
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.credentialsEncoding
 import retrofit2.Response
@@ -44,7 +48,6 @@ interface SpotifyApi {
     @Path(ARTIST_ID) artist_id: String,
     @Query(LIMIT) limit: Int): Response<SpotifyArtist>
 
-    /** TODO: Keep for next sprint task
     @GET(TRACK_PATH)
     @Headers(
     ACCEPT,
@@ -62,6 +65,5 @@ interface SpotifyApi {
                             @Query(TYPE) type: String = "track",
                             @Query(QUERY) query: String,
                             @Query("market") market: String = "FR",
-                            @Query(LIMIT) limit: Int = 1): Response<SpotifySearchTrackResult>
-    **/
+                            @Query(LIMIT) limit: Int = 10): Response<SpotifySearchTrackResult>
 }

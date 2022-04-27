@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerActivity
 import ch.epfl.sdp.blindwar.game.solo.SoloActivity
+import ch.epfl.sdp.blindwar.game.solo.fragments.ModeSelectionFragment
 import com.squareup.picasso.Picasso
 
 /**
