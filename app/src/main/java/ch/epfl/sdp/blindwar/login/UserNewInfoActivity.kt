@@ -451,14 +451,14 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
                 UserDatabase.updateUser(user)
                 Toast.makeText(
                     this,
-                    "${user.pseudo}'s online info updated 👋", Toast.LENGTH_SHORT
+                    "${user.pseudo}'s server data updated 👋", Toast.LENGTH_SHORT
                 ).show()
 //                startActivity(Intent(this, MainMenuActivity::class.java)) // was ProfileActivity\
             }
         }?: run {
             Toast.makeText(
                 this,
-                "update offline info only",
+                "update local data only",
                 Toast.LENGTH_LONG
             ).show()
         }

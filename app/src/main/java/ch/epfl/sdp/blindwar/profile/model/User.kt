@@ -31,6 +31,8 @@ data class User(
         Other, Female, Male, Undefined, None
     }
 
+    // ENUM to get variable name as string with the .name method
+    // for
     enum class VarName {
         uid, email, userStatistics, pseudo, firstName, lastName, birthdate, profilePicture, gender, description, user
     }

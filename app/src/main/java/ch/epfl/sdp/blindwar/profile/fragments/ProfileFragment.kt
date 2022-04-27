@@ -48,6 +48,9 @@ class ProfileFragment : Fragment(), UserCache {
     private lateinit var emailTextView: TextView
     private lateinit var eloTextView: TextView
 
+    /**
+     * download image from database and show it
+     */
     private fun downloadImage() {
         if (user.profilePicture.isNotEmpty()) { // not default value
             imageDatabase.downloadProfilePicture(
@@ -78,17 +81,6 @@ class ProfileFragment : Fragment(), UserCache {
             Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
         }
     }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            android.R.id.home -> {
-//                onBackPressed()
-//                return true
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -131,7 +123,6 @@ class ProfileFragment : Fragment(), UserCache {
         // user id should be set according to authentication
         if (isOffline(activity?.applicationContext!!)) {
             user = readCache(activity?.applicationContext!!)
-            Log.i("thco #######", user.pseudo)
             setView()
         } else {
             // user id should be set according to authentication

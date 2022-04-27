@@ -78,6 +78,7 @@ object UserDatabase {
 
     fun updateUser(user: User){
         val ref = userReference.child(user.uid)
+        // TODO no statistics ...
         ref.child(User.VarName.pseudo.name).setValue(user.pseudo)
         ref.child(User.VarName.firstName.name).setValue(user.firstName)
         ref.child(User.VarName.lastName.name).setValue(user.lastName)
@@ -96,7 +97,12 @@ object UserDatabase {
         getUserStatisticsReference(uid).setValue(userStatistics)
     }
 
-    // Allow user to select a profile picture and store it in database
+    /**
+     *  Allow user to select a profile picture and store it in database
+     *
+     * @param uid
+     * @param path
+     */
     fun addProfilePicture(uid: String, path: String) {
         getImageReference(uid).setValue(path)
     }
