@@ -7,6 +7,7 @@ import android.widget.ImageView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import java.util.*
 
@@ -72,6 +73,10 @@ object ImageDatabase {
             .centerCrop()
             .into(imageView)
         return profilePictureRef.path
+    }
+
+    fun getImageReference(imagePath: String): StorageReference {
+        return storageRef.child(imagePath)
     }
 
 }

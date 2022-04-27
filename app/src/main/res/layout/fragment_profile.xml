@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_profile"
     android:background="@drawable/blurred_back">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profileImgView"
-        android:layout_width="254dp"
-        android:layout_height="254dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/nameView"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
-        app:layout_constraintHorizontal_bias="0.432"
+        app:layout_constraintHorizontal_bias="0.435"
         app:layout_constraintStart_toStartOf="@+id/guideline15"
         app:layout_constraintTop_toTopOf="@+id/guideline14"
-        app:srcCompat="@drawable/logo"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
         tools:srcCompat="@tools:sample/avatars" />
 
     <LinearLayout
@@ -29,7 +31,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline15"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/eloView"
         app:layout_constraintVertical_bias="0.248">
 
         <Button
@@ -72,22 +74,22 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/nameView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/oxygen"
         android:text="NAME"
         android:textColor="@color/ivory"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintBottom_toTopOf="@+id/eloView"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
-        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="@+id/guideline15"
         app:layout_constraintTop_toBottomOf="@+id/profileImgView"
         app:layout_constraintVertical_bias="0.306" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/eloView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
@@ -99,52 +101,21 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="@+id/guideline15"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <ImageButton
-        android:id="@+id/optionsBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        app:layout_constraintBottom_toTopOf="@+id/guideline14"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.042"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.307"
-        app:srcCompat="@drawable/ic_baseline_more_vert_24" />
+        app:layout_constraintTop_toBottomOf="@+id/nameView" />
 
     <ImageButton
         android:id="@+id/editBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="268dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:background="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/optionsBtn"
+        app:layout_constraintBottom_toTopOf="@+id/guideline14"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.395"
-        app:layout_constraintStart_toEndOf="@+id/optionsBtn"
-        app:layout_constraintTop_toTopOf="@+id/optionsBtn"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_baseline_edit_24" />
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/optionsMenu"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@null"
-        android:backgroundTint="@color/fui_transparent"
-        android:visibility="gone"
-        app:itemBackground="@color/fui_transparent"
-        app:itemIconTint="@color/ivory"
-        app:itemTextColor="@color/ivory"
-        app:layout_constraintBottom_toTopOf="@+id/guideline19"
-        app:layout_constraintEnd_toStartOf="@+id/guideline18"
-        app:layout_constraintHorizontal_bias="0.041"
-        app:layout_constraintStart_toStartOf="@+id/guideline15"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline16"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:menu="@menu/profile_menu" />
+        app:layout_constraintVertical_bias="0.45"
+        app:srcCompat="@drawable/ic_baseline_edit_24"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline14"
@@ -180,5 +151,34 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.15" />
+
+    <ImageButton
+        android:id="@+id/logoutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/fui_transparent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline14"
+        app:layout_constraintEnd_toStartOf="@+id/guideline15"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.355"
+        app:srcCompat="@drawable/ic_baseline_login_24"
+        tools:ignore="SpeakableTextPresentCheck"
+        app:tint="@color/ivory" />
+
+    <ImageButton
+        android:id="@+id/deleteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:backgroundTint="@color/fui_transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/logoutBtn"
+        app:layout_constraintStart_toStartOf="@+id/guideline15"
+        app:layout_constraintTop_toTopOf="@+id/logoutBtn"
+        app:layout_constraintVertical_bias="0.422"
+        app:srcCompat="@drawable/ic_baseline_delete_24"
+        tools:ignore="SpeakableTextPresentCheck"
+        app:tint="@color/ivory" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

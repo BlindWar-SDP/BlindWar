@@ -11,8 +11,8 @@ import com.google.firebase.database.ValueEventListener
 
 
 object UserDatabase {
-    private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private val userReference = database.getReference("Users")
+    val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    val userReference = database.getReference("Users")
 
     /**
      * Get user reference to manipulate user infos

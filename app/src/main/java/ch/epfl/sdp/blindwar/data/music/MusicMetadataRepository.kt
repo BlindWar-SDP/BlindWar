@@ -20,16 +20,24 @@ class MusicMetadataRepository {
     val musicMetadata: MutableLiveData<ArrayList<MusicMetadata>>
         get() = _musicMetadatas
 
-    init {
-        _musicMetadatas = fetchMusicMetadata()
-    }
 
+    /**
+     * Fetches music metadatas from local mock source
+     *
+     */
     private fun fetchMusicMetadata(): MutableLiveData<ArrayList<MusicMetadata>> {
         return MutableLiveData(mockSource.fetchMusicMetadata())
     }
 
-    suspend fun fetchMusicMetadataSpotify(query: String): MutableLiveData<ArrayList<MusicMetadata>> {
+    /**
+     * Fetches music metadatas from remote source
+     *
+     * @param query
+     */
+    suspend fun fetchMusicMetadataSpotify(query: String) {
         remoteSource.fetchSongMetadata(query)
-        return remoteSource.musicMetadata
+        remoteSource.musicMetadata.observeForever{
+            _musicMetadatas.postValue(it)
+        }
     }
 }
