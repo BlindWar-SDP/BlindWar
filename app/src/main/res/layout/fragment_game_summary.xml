@@ -9,8 +9,6 @@
     tools:context=".game.solo.fragments.GameSummaryFragment">
 
 
-
-
     <!-- Guidelines -->
 
     <ImageButton
@@ -31,33 +29,33 @@
     <ImageButton
         android:id="@+id/replay"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_height="0dp"
         android:layout_marginTop="2dp"
         android:background="@drawable/border_button_white"
         android:src="@drawable/ic_baseline_replay_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/guideline21"
+        app:layout_constraintHorizontal_bias="0.575"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.272"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageButton
         android:id="@+id/quit"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="2dp"
-        android:layout_marginEnd="32dp"
         android:background="@null"
         android:src="@drawable/ic_baseline_cancel_24"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.519"
-        app:layout_constraintStart_toEndOf="@+id/replay"
+        app:layout_constraintHorizontal_bias="0.426"
+        app:layout_constraintStart_toStartOf="@+id/guideline21"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.272"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
@@ -110,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.98" />
+        app:layout_constraintGuide_percent="1.0" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
@@ -136,5 +134,12 @@
         app:layout_constraintTop_toTopOf="@id/guideline4">
 
     </FrameLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
