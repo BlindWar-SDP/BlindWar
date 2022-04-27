@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 
 /**
- * Activity that lets a user play a multiplayer game with a friend
+ * Activity that lets a user play a multiplayer game with anyone
  *
  * @constructor creates a MultiPlayerFriendActivity
  */

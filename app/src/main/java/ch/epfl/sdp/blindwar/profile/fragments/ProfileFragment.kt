@@ -82,7 +82,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -95,16 +95,16 @@ class ProfileFragment : Fragment() {
         }
 
         statsButton = view.findViewById<Button>(R.id.statsButton).apply {
-            this.setOnClickListener{
+            this.setOnClickListener {
                 /**
-                 TODO: debug StatisticsFragment
+                TODO: debug StatisticsFragment
                 activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace((view?.parent as ViewGroup).id,
-                        StatisticsFragment(),
-                        "STATS")
-                    ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    ?.commit()
-                **/
+                ?.replace((view?.parent as ViewGroup).id,
+                StatisticsFragment(),
+                "STATS")
+                ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                ?.commit()
+                 **/
 
                 val intent = Intent(requireActivity(), StatisticsActivity::class.java)
                 startActivity(intent)
@@ -133,7 +133,7 @@ class ProfileFragment : Fragment() {
      * @param action performed on click
      */
     private fun setButtonListener(button: Button, action: () -> Unit) {
-        button.setOnClickListener{
+        button.setOnClickListener {
             action()
         }
     }
@@ -167,7 +167,7 @@ class ProfileFragment : Fragment() {
             val builderSecond: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
             val secondPositiveButtonClick = { _: DialogInterface, _: Int ->
 
-                currentUser?.let{UserDatabase.removeUser(it.uid)}
+                currentUser?.let { UserDatabase.removeUser(it.uid) }
                 AuthUI.getInstance().delete(requireActivity()).addOnCompleteListener {
                     startActivity(Intent(requireActivity(), SplashScreenActivity::class.java))
                 }

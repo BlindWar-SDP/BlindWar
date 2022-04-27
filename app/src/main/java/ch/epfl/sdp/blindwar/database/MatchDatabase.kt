@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.database
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.profile.model.User
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 object MatchDatabase {
@@ -23,12 +24,16 @@ object MatchDatabase {
         db: FirebaseFirestore
     ): Boolean {
         db.collection(COLLECTION_PATH).add(
-            Match(user.uid, mutableListOf(user), game, mutableListOf(0), numberOfPlayerMax)
-        ).addOnSuccessListener {
-            //return true
-        }.addOnFailureListener {
-            //return false
-        }
+            Match(
+                user.uid,
+                user.userStatistics.elo,
+                mutableListOf(user.uid),
+                mutableListOf(user.pseudo),
+                game,
+                mutableListOf(0),
+                numberOfPlayerMax
+            )
+        )
         return true
     }
 
@@ -39,26 +44,23 @@ object MatchDatabase {
      */
     fun removeMatch(uid: String, db: FirebaseFirestore): Boolean {
         db.collection(COLLECTION_PATH).document(uid).delete()
-            .addOnSuccessListener { }
-            .addOnFailureListener {}
         return true
     }
 
     /**
-     * add a player to the match (connexion)
+     * add a player to the match and return the document
      *
      * @param match
      * @param user
      * @return
      */
-    fun addPlayer(match: Match, user: User, db: FirebaseFirestore): Boolean {
-        if (match.listPlayers!!.size + 1 > match.maxPlayer) return false
-        match.listPlayers!!.add(user)
+    fun connect(match: Match, user: User, db: FirebaseFirestore): DocumentReference? {
+        if (match.listPlayers!!.size + 1 > match.maxPlayer) return null
+        match.listPlayers!!.add(user.uid)
+        match.listPseudo!!.add(user.pseudo)
         match.listResult!!.add(0)
-        db.collection(COLLECTION_PATH).document(match.uid)
-            .set(match)
-            .addOnSuccessListener { }
-            .addOnFailureListener {}
-        return true
+        val matchDB = db.collection(COLLECTION_PATH).document(match.uid)
+        matchDB.set(match)
+        return matchDB
     }
 }

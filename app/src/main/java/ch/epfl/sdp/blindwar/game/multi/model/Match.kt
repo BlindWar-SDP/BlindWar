@@ -1,7 +1,6 @@
 package ch.epfl.sdp.blindwar.game.multi.model
 
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
-import ch.epfl.sdp.blindwar.profile.model.User
 
 
 /**
@@ -14,7 +13,9 @@ import ch.epfl.sdp.blindwar.profile.model.User
  */
 data class Match(
     var uid: String = "",
-    var listPlayers: MutableList<User>? = null,
+    var elo: Int = 0,
+    var listPlayers: MutableList<String>? = null,
+    var listPseudo: MutableList<String>? = null,
     val game: GameInstance? = null,
     var listResult: MutableList<Int>? = null,
     var maxPlayer: Int = 2
