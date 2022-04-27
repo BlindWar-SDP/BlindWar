@@ -30,10 +30,10 @@
 
     <ImageButton
         android:id="@+id/replay"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:background="@drawable/border_button_white"
         android:src="@drawable/ic_baseline_replay_24"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,9 +46,9 @@
 
     <ImageButton
         android:id="@+id/quit"
-        android:layout_width="53dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="32dp"
         android:background="@null"
         android:src="@drawable/ic_baseline_cancel_24"

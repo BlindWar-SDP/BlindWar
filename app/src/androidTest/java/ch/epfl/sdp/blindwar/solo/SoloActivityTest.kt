@@ -97,6 +97,9 @@ class SoloActivityTest {
         simulateLostRound()
 
         onView(withId(R.id.replay)).perform(click())
+
+        Thread.sleep(2000)
+
         onView(withId(R.id.audioVisualizer)).check(matches(isDisplayed()))
 
         onView(withId(R.id.guessEditText)).perform(typeText("NOT CORRECT"))

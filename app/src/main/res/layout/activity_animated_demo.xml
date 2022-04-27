@@ -24,7 +24,6 @@
         android:id="@+id/guessButton"
         android:layout_width="120dp"
         android:layout_height="60dp"
-        android:layout_marginTop="24dp"
         android:background="@null"
         android:text="@string/guess_button_text"
         android:textColor="@color/white"
@@ -32,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/microphone"
+        app:layout_constraintTop_toTopOf="@+id/guideline17"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/border_button_white"
         tools:ignore="SpeakableTextPresentCheck" />
@@ -42,12 +41,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline17"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startButton"
-        app:layout_constraintVertical_bias="0.366"
+        app:layout_constraintTop_toBottomOf="@+id/audioVisualizer"
+        app:layout_constraintVertical_bias="0.595"
         app:srcCompat="@drawable/ic_baseline_mic_24"
         tools:ignore="SpeakableTextPresentCheck" />
 
@@ -182,14 +181,13 @@
             app:lottie_speed="2" />
 
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/audioVisualizer"
         android:layout_width="336dp"
-        android:layout_height="338dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
@@ -249,5 +247,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guessButton"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.66" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.54" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
