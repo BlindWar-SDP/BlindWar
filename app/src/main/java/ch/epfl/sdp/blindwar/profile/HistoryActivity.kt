@@ -4,10 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.menu.PlayMenuFragment
-import ch.epfl.sdp.blindwar.menu.SearchFragment
 import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
-import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HistoryActivity : AppCompatActivity() {

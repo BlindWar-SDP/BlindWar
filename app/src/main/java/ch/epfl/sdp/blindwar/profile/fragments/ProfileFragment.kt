@@ -107,7 +107,7 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        historyButton = view.findViewById<Button>(R.id.historyButton).apply {
+        historyButton = view.findViewById<Button>(R.id.historyBtn).apply {
             this.setOnClickListener {
                 val intent = Intent(requireActivity(), HistoryActivity::class.java)
                 startActivity(intent)

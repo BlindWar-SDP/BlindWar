@@ -1,7 +1,6 @@
 package ch.epfl.sdp.blindwar.database
 
-
-import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Mode

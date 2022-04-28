@@ -140,15 +140,15 @@ class ProfileFragmentTest : TestCase() {
         launchFragmentInContainer<ProfileFragment>()
         Thread.sleep(2000)
         val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        onView(withId(R.id.statsButton))
+        onView(withId(R.id.statsBtn))
             .perform(click())
         device.pressBack()
-        onView(withId(R.id.historyButton))
+        onView(withId(R.id.historyBtn))
             .perform(click())
         onView(withId(R.id.item_match_history)).perform(click())
         onView(withId(R.id.item_liked_musics)).perform(click())
         device.pressBack()
-        onView(withId(R.id.logoutButton)).perform(click())
+        onView(withId(R.id.logoutBtn)).perform(click())
     }
 
 //    fun testDeleteButton_cancel() {
