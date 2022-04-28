@@ -164,4 +164,8 @@
     <string name="select_birthdate">select birthdate</string>
     <string name="select_your_gender">Please, select your gender</string>
 
+    <!-- MULTI -->
+    <string name="toast_connexion">Match are full, retrying…</string>
+    <string name="toast_canceled_connexion">Search canceled !</string>
+    <string name="multi_loading">Loading ...</string>
 </resources>
