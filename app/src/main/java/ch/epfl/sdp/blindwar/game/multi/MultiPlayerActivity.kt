@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.game.multi
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -40,11 +41,7 @@ class MultiPlayerActivity : AppCompatActivity() {
      * @param view
      */
     fun friendButton(view: View) {
-        //TODO launch link fragment
-
-
-        setProgressDialog("Wait for connexion")
-        //TODO connect if ok, toast if not existing match or full
+        //setLinkDialog()
         val intent = Intent(this, MultiPlayerFriendActivity::class.java)
         startActivity(intent)
     }
@@ -55,7 +52,6 @@ class MultiPlayerActivity : AppCompatActivity() {
      * @param view
      */
     fun randomButton(view: View) {
-        //TODO launch lobby fragment
         setProgressDialog("Wait for matches")
         val user = UserDatabase.getCurrentUser()
         val elo = user.child("userStatistics/elo").value!! as Int
@@ -80,8 +76,7 @@ class MultiPlayerActivity : AppCompatActivity() {
                     applicationContext,
                     getString(R.string.toast_connexion),
                     Toast.LENGTH_LONG
-                )
-                    .show()
+                ).show()
                 eloDelta += 100
                 randomButton(view)
             } else if (!isCanceled) {
@@ -95,7 +90,7 @@ class MultiPlayerActivity : AppCompatActivity() {
     }
 
     /**
-     * display progressdialog cancelable for any messages
+     * display progressDialog cancelable for any messages
      *
      * @param message
      */
@@ -112,6 +107,64 @@ class MultiPlayerActivity : AppCompatActivity() {
         }
         builder.setView(View.inflate(applicationContext, R.layout.fragment_dialog_loading, null))
         (findViewById<TextView>(R.id.textView_multi_loading)).text = message
+        dialog = builder.create()
+        dialog!!.show()
+    }
+
+    /**
+     * find a match on DB which is free
+     *
+     * @param text
+     */
+    private fun connectToDB(text: String) {
+        setProgressDialog("Wait for connexion")
+        val user = UserDatabase.getCurrentUser()
+        val match = Firebase.firestore.collection("match").document(text).get() //TODO get only uid
+        if (match.isSuccessful && !isCanceled) {
+            val connect =
+                MatchDatabase.connect(
+                    match.result.toObject(Match::class.java)!!,
+                    user.getValue(User::class.java)!!,
+                    Firebase.firestore
+                )
+            if (connect == null && !isCanceled) {
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.multi_match_full),
+                    Toast.LENGTH_LONG
+                ).show()
+                dialog!!.hide()
+            } else if (!isCanceled) {
+                //match.addSnapshotListener {} //TODO add listener
+                dialog!!.hide()
+                //TODO CONNECT TO MATCH
+            }
+        } else if (!isCanceled) {
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.multi_match_not_found),
+                Toast.LENGTH_LONG
+            ).show()
+            dialog!!.hide()
+            setLinkDialog()
+        }
+    }
+
+    /**
+     * create a dialog which ask for the uid of the match
+     *
+     */
+    private fun setLinkDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setCancelable(true)
+        val view = View.inflate(applicationContext, R.layout.fragment_multi_connexion_link, null)
+        builder.setView(view)
+        builder.setPositiveButton(
+            "OK"
+        ) { _, _ ->
+            connectToDB(findViewById<EditText>(R.id.editTextLink).text.toString())
+            dialog!!.hide()
+        }
         dialog = builder.create()
         dialog!!.show()
     }
