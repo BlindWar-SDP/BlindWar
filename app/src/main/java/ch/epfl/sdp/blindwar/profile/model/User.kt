@@ -1,7 +1,7 @@
 package ch.epfl.sdp.blindwar.profile.model
 
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
+import ch.epfl.sdp.blindwar.game.model.GameResult
 
 data class User(
     var uid: String = "",
@@ -14,7 +14,8 @@ data class User(
     var profilePicture: String = "",
     var gender: String? = null,
     var description: String? = null,
-    var likedMusics: MutableList<URIMusicMetadata> = mutableListOf()
+    var likedMusics: MutableList<URIMusicMetadata> = mutableListOf(),
+    var matchHistory: MutableList<GameResult> = mutableListOf()
 ) {
 
     class Builder(
@@ -28,7 +29,8 @@ data class User(
         private var profilePicture: String = "",
         private var gender: String? = null,
         private var description: String? = null,
-        var likedMusics: MutableList<URIMusicMetadata> = mutableListOf()
+        private var likedMusics: MutableList<URIMusicMetadata> = mutableListOf(),
+        private var matchHistory: MutableList<GameResult> = mutableListOf()
     ) {
 
         fun setUid(uid: String) = apply { this.uid = uid }
@@ -43,6 +45,8 @@ data class User(
         fun setDescription(desc: String) = apply { this.description = desc }
         fun setLikedMusics(likedMusics: MutableList<URIMusicMetadata>) = apply { this.likedMusics =
             likedMusics }
+        fun matchHistory(matchHistory: MutableList<GameResult>) = apply { this.matchHistory =
+            matchHistory }
 
 
         fun fromUser(user: User) = apply {
@@ -57,6 +61,7 @@ data class User(
             this.gender = user.gender
             this.description = user.description
             this.likedMusics = user.likedMusics
+            this.matchHistory = user.matchHistory
         }
 
         fun build(): User {
@@ -71,7 +76,8 @@ data class User(
                 profilePicture,
                 gender,
                 description,
-                likedMusics
+                likedMusics,
+                matchHistory
             )
         }
     }

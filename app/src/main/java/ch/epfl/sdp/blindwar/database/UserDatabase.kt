@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.database
 
 
 import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
+import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.model.User
@@ -91,6 +92,21 @@ object UserDatabase {
                     user.likedMusics.add(music)
                     userRef.setValue(user)
                 }
+            }
+        }
+    }
+
+    /**
+     * Add the gameResult to the matchHistory of the user.
+     * @param uid
+     * @param gameResult
+     */
+    fun addGameResult(uid: String, gameResult: GameResult){
+        val userRef = getUserReference(uid)
+        userRef.get().addOnSuccessListener {
+            val user: User? = it.getValue(User::class.java)
+            if (user != null) {
+                user.matchHistory.add(gameResult)
             }
         }
     }
