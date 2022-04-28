@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <integer name="default_birthdate">-1</integer>
     <integer name="pseudo_maxLength">20</integer>
     <integer name="pseudo_minLength">2</integer>
-    <integer name="max_length_date">10</integer>
     <integer name="age_min">5</integer>
     <integer name="age_max">100</integer>
     <integer name="self_description_max_length">256</integer>
     <integer name="max_lines_user_desc">4</integer>
 
+<!--    DELETED WHEN CLEANED -->
+<!--    <integer name="max_length_date">10</integer>-->
 
-    <integer name="default_birthdate">-1</integer>
 </resources>

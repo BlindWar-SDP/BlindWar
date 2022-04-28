@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Button.Red" parent="ThemeOverlay.AppCompat">
-        <item name="colorAccent">@color/light_red</item>
-    </style>
-
     <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar" >
         <item name="android:textColorPrimary">@android:color/black</item>
     </style>
@@ -14,3 +10,7 @@
     </style>
 
 </resources>
+
+    <!--    <style name="Button.Red" parent="ThemeOverlay.AppCompat">-->
+    <!--        <item name="colorAccent">@color/light_red</item>-->
+    <!--    </style>-->
