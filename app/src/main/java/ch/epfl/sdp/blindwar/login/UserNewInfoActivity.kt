@@ -17,11 +17,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
-import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
-import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.model.User
 import ch.epfl.sdp.blindwar.user.UserCache
@@ -410,7 +407,6 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
             // Upload picture to database
             user.profilePicture =
                 imageDatabase.uploadProfilePicture(
-                    FirebaseAuth.getInstance().currentUser,
                     it,
                     findViewById(android.R.id.content)
                 )

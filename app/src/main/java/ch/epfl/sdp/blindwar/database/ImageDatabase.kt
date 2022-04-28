@@ -5,7 +5,6 @@ import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.util.*
@@ -41,7 +40,7 @@ object ImageDatabase {
         return uploadedImageRef.path
     } */
 
-    fun uploadProfilePicture(user: FirebaseUser?, imageURI: Uri, view: View? = null): String {
+    fun uploadProfilePicture(imageURI: Uri, view: View? = null): String {
         val randomKey = UUID.randomUUID().toString()
 
         // Create a reference to the image to upload

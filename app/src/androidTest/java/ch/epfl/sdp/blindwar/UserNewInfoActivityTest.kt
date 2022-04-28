@@ -295,6 +295,7 @@ class UserNewInfoActivityTest : TestCase() {
 
     @Test
     fun testBackButton() {
+        
         val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         assertTrue("Back button can't be pressed", device.pressBack())
     }
