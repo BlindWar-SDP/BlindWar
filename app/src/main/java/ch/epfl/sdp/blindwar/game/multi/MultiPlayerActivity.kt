@@ -51,7 +51,7 @@ class MultiPlayerActivity : AppCompatActivity() {
      * @param view
      */
     fun randomButton(view: View) {
-        setProgressDialog("Wait for matches")
+        setProgressDialog(getString(R.string.multi_wait_matches))
         /*val user = UserDatabase.getCurrentUser()
         val elo = user.child("userStatistics/elo").value!! as Int
         val matchs = Firebase.firestore.collection("match").whereLessThan("elo", elo + eloDelta)
@@ -107,8 +107,9 @@ class MultiPlayerActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
         }
-        builder.setView(View.inflate(applicationContext, R.layout.fragment_dialog_loading, null))
-        (findViewById<TextView>(R.id.textView_multi_loading)).text = message
+        val view = View.inflate(applicationContext, R.layout.fragment_dialog_loading, null)
+        builder.setView(view)
+        (view.findViewById<TextView>(R.id.textView_multi_loading)).text = message
         dialog = builder.create()
         dialog!!.show()
     }

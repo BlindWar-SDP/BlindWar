@@ -179,4 +179,5 @@
     <string name="multi_write_link">Please write your link invitation</string>
     <string name="multi_match_full">match is full, sorry !</string>
     <string name="multi_match_not_found">Match not found !</string>
+    <string name="multi_wait_matches">Wait for matches...</string>
 </resources>
