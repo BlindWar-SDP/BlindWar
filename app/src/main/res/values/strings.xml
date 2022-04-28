@@ -29,6 +29,7 @@
     <!--  Text  -->
     <string name="emailText">Your email here</string>
     <string name="statisticsText">Statistics</string>
+    <string name="historyText">History</string>
     <string name="nameText">Your name here</string>
     <string name="editProfileText">Edit Profile</string>
     <string name="profilePicDescriptionText">The profile picture of the user</string>
@@ -49,9 +50,16 @@
     <!-- DatePicker -->
     <string name="new_user_birthdatePicker">Please, enter your Birthdate.</string>
 
+    <!-- MULTI -->
+    <string name="toast_connexion">Match are full, retrying…</string>
+    <string name="toast_canceled_connexion">Search canceled !</string>
+    <string name="multi_loading">Loading ...</string>
+    <string name="multi_write_link">Please write your link invitation</string>
+    <string name="multi_match_full">match is full, sorry !</string>
+    <string name="multi_match_not_found">Match not found !</string>
+    <string name="multi_wait_matches">Wait for matches...</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-
     <string name="logo_description">Logo of the application</string>
     <string name="content_description_background_image">Black Background Image</string>
     <string name="tutorial_textview">Tutorial</string>
@@ -88,8 +96,11 @@
     <string name="avatar_description">Avatar image</string>
 
     <string name="artist">ARTIST</string>
-    <string name="play_with_friends">Play with friends</string>
-    <string name="play_with_random">Play with random</string>
+    <string name="track">TRACK</string>
+    <string name="play_with_friends">Join a game via link</string>
+    <string name="play_with_random">Play Now !</string>
+    <string name="multi_create_match">Create a match</string>
+
     <string name="icon_for_playing_with_friends">Icon for playing with friends</string>
     <string name="icon_for_playing_with_random_people">Icon for playing with random people</string>
     <string name="nu_chose_profile_picture">chose profile\npicture</string>
@@ -171,6 +182,5 @@
     <!--    <string name="button">BUTTON</string>-->
     <!--    <string name="time">TIME</string>-->
     <!--    <string name="track">TRACK</string>-->
-
 
 </resources>

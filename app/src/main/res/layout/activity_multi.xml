@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/content_description_background_image"
@@ -47,7 +46,6 @@
         app:layout_constraintVertical_bias="0.772" />
 
     <ImageView
-        android:id="@+id/imageView3"
         android:layout_width="168dp"
         android:layout_height="144dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageFriendsButton"
@@ -59,7 +57,6 @@
         android:contentDescription="@string/icon_for_playing_with_friends" />
 
     <ImageView
-        android:id="@+id/imageView11"
         android:layout_width="168dp"
         android:layout_height="144dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageRandomButton"
@@ -69,6 +66,17 @@
         app:layout_constraintVertical_bias="0.270"
         app:srcCompat="@drawable/ic_baseline_person_search_24"
         android:contentDescription="@string/icon_for_playing_with_random_people" />
+
+    <ImageView
+        android:layout_width="168dp"
+        android:layout_height="144dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageFriendsButton"
+        app:layout_constraintEnd_toEndOf="@+id/imageFriendsButton"
+        app:layout_constraintStart_toStartOf="@+id/imageFriendsButton"
+        app:layout_constraintTop_toTopOf="@+id/imageFriendsButton"
+        app:layout_constraintVertical_bias="0.270"
+        app:srcCompat="@drawable/ic_baseline_group_24"
+        android:contentDescription="@string/icon_for_playing_with_friends" />
 
     <TextView
         android:id="@+id/friendView"

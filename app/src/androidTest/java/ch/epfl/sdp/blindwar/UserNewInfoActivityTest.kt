@@ -215,6 +215,7 @@ class UserNewInfoActivityTest : TestCase() {
 //        intended(hasComponent(StatisticsActivity::class.java.name))
     }
 
+
 //    @Test
 //    fun testNewUser() {
 //        putNewUserExtra(true)
@@ -233,6 +234,7 @@ class UserNewInfoActivityTest : TestCase() {
         intended(hasComponent(MainMenuActivity::class.java.name))
     }
     */
+
 
     @Test
     fun testAdditionalInfo() {
@@ -292,7 +294,7 @@ class UserNewInfoActivityTest : TestCase() {
     }
 
     @Test
-    fun testBackButton(){
+    fun testBackButton() {
         val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         assertTrue("Back button can't be pressed", device.pressBack())
     }

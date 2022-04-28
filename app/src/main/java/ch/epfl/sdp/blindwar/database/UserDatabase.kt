@@ -1,13 +1,18 @@
 package ch.epfl.sdp.blindwar.database
 
+
+import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
+import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
 
 
 object UserDatabase {
@@ -68,6 +73,49 @@ object UserDatabase {
     }
 
     /**
+     * Function to add a liked music in user's list of liked music (in particular when he presses
+     * the like button)
+     * @param uid
+     * @param music
+     */
+    fun addLikedMusic(uid: String, music: URIMusicMetadata) {
+        val userRef = getUserReference(uid)
+        userRef.get().addOnSuccessListener {
+            val user: User? = it.getValue(User::class.java)
+            if (user != null) {
+                var duplicate = false
+                for (likedMusic in user.likedMusics) {
+                    if (music.title == likedMusic.title) {
+                        duplicate = true
+                    }
+                }
+                if (!duplicate) {
+                    user.likedMusics.add(music)
+                    userRef.setValue(user)
+                }
+            }
+        }
+    }
+
+    /**
+     * Add the gameResult to the matchHistory of the user.
+     * @param uid
+     * @param gameResult
+     */
+    fun addGameResult(uid: String, gameResult: GameResult) {
+        val userRef = getUserReference(uid)
+        userRef.get().addOnSuccessListener {
+            val user: User? = it.getValue(User::class.java)
+            if (user != null) {
+                // temporarily added so that old profiles don't crash
+                user.matchHistory = mutableListOf()
+                user.matchHistory.add(gameResult)
+                userRef.setValue(user)
+            }
+        }
+    }
+
+    /**
      * Set elo of an user
      *
      * @param uid user identification
@@ -121,13 +169,28 @@ object UserDatabase {
         return userStatisticsRef.get()
     }
 
+    /**
+     * Gets the userStatistics of the user from the database and update its statistics
+     * using the score of the game.
+     * @param uid
+     * @param score
+     * @param fails
+     */
     fun updateSoloUserStatistics(uid: String, score: Int, fails: Int) {
         getUserStatistics(uid).addOnSuccessListener {
-            var userStatistics: AppStatistics? = it.getValue(AppStatistics::class.java)
-            userStatistics?.let{stat ->
+            val userStatistics: AppStatistics? = it.getValue(AppStatistics::class.java)
+            userStatistics?.let { stat ->
                 stat.correctnessUpdate(score, fails, Mode.SOLO)
                 setUserStatistics(uid, stat)
             }
         }
+    }
+
+    /**
+     * Get current authenticated user
+     *
+     */
+    fun getCurrentUser(): DataSnapshot {
+        return getUserReference(Firebase.auth.currentUser!!.uid).get().result
     }
 }
