@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.firebase.auth.FirebaseAuth
@@ -74,8 +75,9 @@ class ProfileViewModel: ViewModel() {
         auth.signOut()
     }
 
-    fun updateStats(score: Int, fails: Int) {
+    fun updateStats(score: Int, fails: Int, gameResult: GameResult) {
         if (currentUser != null)
             UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
+            UserDatabase.addGameResult(currentUser?.uid!!, gameResult)
     }
 }
