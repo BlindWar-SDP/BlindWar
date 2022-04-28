@@ -37,10 +37,12 @@ object PlaylistRepository {
      *
      * @return mutable list of playlists
      */
-     fun fetchPlaylists(refresh: Boolean = false,
-                        query: String = "",
-                        genreFilter: List<Genre> = Genre.values().toList(),
-                        difficultyFilter: List<Difficulty> = Difficulty.values().toList()) : MutableLiveData<ArrayList<Playlist>> {
+    private fun fetchPlaylists(
+        refresh: Boolean = false,
+        query: String = "",
+        genreFilter: List<Genre> = Genre.values().toList(),
+        difficultyFilter: List<Difficulty> = Difficulty.values().toList()
+    ): MutableLiveData<ArrayList<Playlist>> {
 
         if (refresh || playlists.value?.isEmpty()!!) {
             remotePlaylistSource.get().addOnCompleteListener { task ->
@@ -51,7 +53,7 @@ object PlaylistRepository {
                         response = result.children.map { snapShot ->
                             snapShot.getValue(OnlinePlaylist::class.java)!!
                         }
-                            .filter{
+                            .filter {
                                 it.name.contains(query)
                                         && genreFilter.containsAll(it.genres)
                                         && difficultyFilter.contains(it.difficulty)

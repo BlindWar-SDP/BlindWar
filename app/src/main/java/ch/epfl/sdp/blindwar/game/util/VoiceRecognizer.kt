@@ -26,7 +26,7 @@ class VoiceRecognizer : RecognitionListener {
      */
     override fun onResults(results: Bundle) {
         val data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-        if (data!![0] != null) {
+        if (data != null && data[0] != null) {
             resultsRecognized = data[0]
             editTextResult?.setText(resultsRecognized)
         }

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.res.Resources
 import android.media.MediaPlayer
 import ch.epfl.sdp.blindwar.data.music.fetcher.FetcherFactory
-import ch.epfl.sdp.blindwar.game.model.OnlinePlaylist
 import ch.epfl.sdp.blindwar.game.model.Playlist
 
 class MusicRepository(

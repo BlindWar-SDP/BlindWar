@@ -1,9 +1,8 @@
 package ch.epfl.sdp.blindwar.game.model
 
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
-import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 
-open class Playlist (
+open class Playlist(
     val uid: String = "", // playlist unique id in database
     val name: String = "", // playlist name
     val author: String = "", // playlist author

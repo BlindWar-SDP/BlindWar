@@ -21,7 +21,7 @@ import com.airbnb.lottie.LottieDrawable
  *
  * @constructor creates a ModeSelectionFragment
  */
-class ModeSelectionFragment: Fragment() {
+class ModeSelectionFragment : Fragment() {
 
     private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
     private lateinit var regularButton: Button
@@ -41,7 +41,7 @@ class ModeSelectionFragment: Fragment() {
     private lateinit var infoRegular: ImageButton
     private lateinit var infoSurvival: ImageButton
     private lateinit var infoTimed: ImageButton
-    **/
+     **/
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,24 +49,28 @@ class ModeSelectionFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_animated_mode_selection, container, false)
-        regularButton = view.findViewById<Button>(R.id.regularButton_).also{selectMode(it)}
-        raceButton = view.findViewById<Button>(R.id.raceButton_).also{selectMode(it)}
-        survivalButton = view.findViewById<Button>(R.id.survivalButton_).also{selectMode(it)}
+        regularButton = view.findViewById<Button>(R.id.regularButton_).also { selectMode(it) }
+        raceButton = view.findViewById<Button>(R.id.raceButton_).also { selectMode(it) }
+        survivalButton = view.findViewById<Button>(R.id.survivalButton_).also { selectMode(it) }
 
         funnyButton = view.findViewById(R.id.checkBox)
-        backButton = view.findViewById<ImageButton>(R.id.back_button).also{
-            it.setOnClickListener{
+        backButton = view.findViewById<ImageButton>(R.id.back_button).also {
+            it.setOnClickListener {
                 activity?.onBackPressed()
             }
         }
 
-        particles = arrayListOf(view.findViewById(R.id.particles),
+        particles = arrayListOf(
+            view.findViewById(R.id.particles),
             view.findViewById(R.id.particles2),
-            view.findViewById(R.id.particles3))
+            view.findViewById(R.id.particles3)
+        )
 
-        animations = arrayListOf(view.findViewById(R.id.vinyl), view.findViewById(R.id.vinyl2),
+        animations = arrayListOf(
+            view.findViewById(R.id.vinyl), view.findViewById(R.id.vinyl2),
             view.findViewById(R.id.health), view.findViewById(R.id.health2),
-            view.findViewById(R.id.chrono), view.findViewById(R.id.chrono2))
+            view.findViewById(R.id.chrono), view.findViewById(R.id.chrono2)
+        )
 
         funnyCheck = view.findViewById<CheckBox>(R.id.checkBox).also { checkBox ->
             checkBox.setOnClickListener {
@@ -85,12 +89,14 @@ class ModeSelectionFragment: Fragment() {
      * Sets the listener for the game modes buttons =
      */
     private fun selectMode(button: View) {
-        button.setOnClickListener{
-            gameInstanceViewModel.setGameMode(when(button.id) {
-                R.id.raceButton_ -> GameMode.TIMED
-                R.id.survivalButton_ -> GameMode.SURVIVAL
-                else -> GameMode.REGULAR
-            })
+        button.setOnClickListener {
+            gameInstanceViewModel.setGameMode(
+                when (button.id) {
+                    R.id.raceButton_ -> GameMode.TIMED
+                    R.id.survivalButton_ -> GameMode.SURVIVAL
+                    else -> GameMode.REGULAR
+                }
+            )
 
             gameInstanceViewModel.setGameFunny(funnyButton.isChecked)
             launchPlaylistSelection()
@@ -102,20 +108,22 @@ class ModeSelectionFragment: Fragment() {
      */
     private fun launchPlaylistSelection() {
         activity?.supportFragmentManager?.beginTransaction()
-            ?.replace((view?.parent as ViewGroup).id,
+            ?.replace(
+                (view?.parent as ViewGroup).id,
                 PlaylistSelectionFragment(),
-                "PLAYLIST")
+                "PLAYLIST"
+            )
             ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             ?.commit()
     }
 
     /** TODO: Create the Info fragments
     private fun showInfo(view: View) {
-        view.setOnClickListener{
-            // Use a Dialog or a new fragment that presents the mode to the User
-        }
+    view.setOnClickListener{
+    // Use a Dialog or a new fragment that presents the mode to the User
     }
-    **/
+    }
+     **/
 
     /**
      * Change the animation speed when the funny mode parameter is (un)checked

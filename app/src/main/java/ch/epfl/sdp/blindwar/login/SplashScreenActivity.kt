@@ -18,6 +18,7 @@ import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
+
 /**
  * Launcher activity that let the user log/register to the app
  * TODO: CodeClimate / Cirrus warnings

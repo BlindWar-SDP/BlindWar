@@ -23,10 +23,9 @@ import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.audio.AudioHelper
+import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
-import ch.epfl.sdp.blindwar.game.model.Playlist
-import ch.epfl.sdp.blindwar.game.solo.util.AnimationSetterHelper
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.progressindicator.CircularProgressIndicator
@@ -44,10 +43,11 @@ import kotlinx.coroutines.withContext
  * @param viewFragment playlist creation view
  * @param gameInstanceViewModel shared viewModel needed to create a game
  */
-class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
-                      private val context: Context,
-                      private val viewFragment: View,
-                      private val gameInstanceViewModel: GameInstanceViewModel
+class PlaylistAdapter(
+    private var playlistSet: ArrayList<Playlist>,
+    private val context: Context,
+    private val viewFragment: View,
+    private val gameInstanceViewModel: GameInstanceViewModel
 ) :
     RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>() {
 
@@ -121,7 +121,7 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
             roundPicker.minValue = ROUND_MIN_VALUE
             roundPicker.value = ROUND_DEFAULT_VALUE
 
-            when(gameInstanceViewModel.gameInstance.value!!.gameConfig.mode) {
+            when (gameInstanceViewModel.gameInstance.value!!.gameConfig.mode) {
                 GameMode.SURVIVAL -> roundTextView.text = "LIVES"
                 else -> roundTextView.text = "ROUNDS"
             }
@@ -130,7 +130,7 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
             timerPicker.minValue = TIMER_MIN_VALUE
             timerPicker.maxValue = TIMER_MAX_VALUE
             timerPicker.value = TIMER_DEFAULT_VALUE
-            timerPicker.displayedValues = ((1 until 10).map{ (5 * it).toString()}).toTypedArray()
+            timerPicker.displayedValues = ((1 until 10).map { (5 * it).toString() }).toTypedArray()
 
             name.text = playlist.name.uppercase()
             author.text = playlist.author
@@ -141,9 +141,11 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
             runBlocking {
                 withContext(Dispatchers.IO) {
                     try {
-                        coverCard.background = BitmapDrawable(Picasso.get().load(playlist.imageUrl).get())
+                        coverCard.background =
+                            BitmapDrawable(Picasso.get().load(playlist.imageUrl).get())
                     } catch (e: Exception) {
-                        coverCard.background = AppCompatResources.getDrawable(context, R.drawable.logo)
+                        coverCard.background =
+                            AppCompatResources.getDrawable(context, R.drawable.logo)
                     }
                 }
             }
@@ -171,18 +173,21 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
          * @param playlist chosen playlist
          */
         private fun setStartGameListener(playlist: Playlist) {
-            playButton.setOnClickListener{
+            playButton.setOnClickListener {
                 player.pause()
                 gameInstanceViewModel.setGameParameters(
                     timeChosen = (timerPicker.value * 5 + 1) * 1000,
                     roundChosen = roundPicker.value,
-                    playlist = playlist)
+                    playlist = playlist
+                )
 
 
                 (context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                    .replace((viewFragment.parent as ViewGroup).id,
-                             DemoFragment(),
-                         "DEMO")
+                    .replace(
+                        (viewFragment.parent as ViewGroup).id,
+                        DemoFragment(),
+                        "DEMO"
+                    )
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
             }
@@ -192,7 +197,7 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
          * Sets and handles logic of playlist cardview expansion
          */
         private fun setExpansionListener() {
-            cardView.setOnClickListener{
+            cardView.setOnClickListener {
                 when (expansionView.visibility) {
                     View.VISIBLE -> {
                         TransitionManager.beginDelayedTransition(
@@ -221,7 +226,7 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
          * @param playlist chosen playlist
          */
         private fun setPreviewListener(playlist: Playlist) {
-            playPreview.setOnClickListener{
+            playPreview.setOnClickListener {
 
                 if (!playing) {
                     player = MediaPlayer()

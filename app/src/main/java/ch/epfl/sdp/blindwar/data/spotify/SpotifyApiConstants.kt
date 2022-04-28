@@ -33,7 +33,7 @@ object SpotifyApiConstants {
     const val API_PATH = "api/token/"
     const val ARTIST_PATH = "artists/{artist_id}"
     const val TRACK_PATH = "tracks/{track_id}"
-    const val SEARCH_PATH="search"
+    const val SEARCH_PATH = "search"
 
     /** Query and field constants **/
     const val ARTIST_ID = "artist_id"

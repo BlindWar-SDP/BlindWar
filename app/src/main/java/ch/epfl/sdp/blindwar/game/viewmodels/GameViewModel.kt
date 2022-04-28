@@ -4,15 +4,15 @@ import android.content.Context
 import android.content.res.Resources
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ch.epfl.sdp.blindwar.database.UserDatabase
-import com.google.firebase.auth.FirebaseAuth
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
-import ch.epfl.sdp.blindwar.game.util.GameHelper
 import ch.epfl.sdp.blindwar.audio.MusicViewModel
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
+import ch.epfl.sdp.blindwar.game.util.GameHelper
+import com.google.firebase.auth.FirebaseAuth
 
 /**
  * Class representing an instance of a game
@@ -25,7 +25,7 @@ class GameViewModel(
     gameInstance: GameInstance,
     private val context: Context,
     private val resources: Resources
-): ViewModel() {
+) : ViewModel() {
     /** Encapsulates the characteristics of a game instead of its logic
      *
      */
@@ -36,7 +36,7 @@ class GameViewModel(
     private val gameParameter: GameParameter = gameInstance
         .gameConfig
         .parameter
-    
+
     private val mode: GameMode = gameInstance
         .gameConfig
         .mode

@@ -2,7 +2,6 @@ package ch.epfl.sdp.blindwar.game.util
 
 import android.os.CountDownTimer
 import android.widget.Filter
-import ch.epfl.sdp.blindwar.game.model.OnlinePlaylist
 import ch.epfl.sdp.blindwar.game.model.Playlist
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import java.util.*
@@ -32,9 +31,10 @@ object Util {
      * @param onlinePlaylistSet list of available playlists
      * @param playlistAdapter playlistRecyclerView adapter
      */
-    fun playlistFilterQuery(initialOnlinePlaylists: List<Playlist>,
-                            onlinePlaylistSet: ArrayList<Playlist>,
-                            playlistAdapter: PlaylistAdapter
+    fun playlistFilterQuery(
+        initialOnlinePlaylists: List<Playlist>,
+        onlinePlaylistSet: ArrayList<Playlist>,
+        playlistAdapter: PlaylistAdapter
     ): Filter = object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             val filteredList: ArrayList<Playlist> = ArrayList()

@@ -8,11 +8,12 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 import ch.epfl.sdp.blindwar.database.UserDatabase
-import ch.epfl.sdp.blindwar.game.solo.util.AnimationSetterHelper
+import ch.epfl.sdp.blindwar.game.util.AnimationSetterHelper
 import com.airbnb.lottie.LottieAnimationView
 import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
@@ -54,16 +55,16 @@ class SongSummaryFragment : Fragment() {
         val layout = view.findViewById<ConstraintLayout>(R.id.song_summary_fragment)
 
         if (success) {
-            layout.setBackgroundColor(resources.getColor(R.color.success))
+            layout.setBackgroundColor(resources.getColor(R.color.success, activity?.theme))
         } else {
-            layout.setBackgroundColor(resources.getColor(R.color.black))
+            layout.setBackgroundColor(resources.getColor(R.color.black, activity?.theme))
         }
 
         /** Like animation **/
         likeAnimation = view.findViewById(R.id.likeView)
 
         skip = view.findViewById<ImageButton>(R.id.skip_next_summary).also { button ->
-            button.setOnClickListener{
+            button.setOnClickListener {
                 activity?.onBackPressed()
             }
         }
@@ -72,11 +73,19 @@ class SongSummaryFragment : Fragment() {
             skip.visibility = View.GONE
             layout.background =
                 if (success)
-                    view.resources.getDrawable(R.drawable.back_frame_success)
+                    ResourcesCompat.getDrawable(
+                        resources,
+                        R.drawable.back_frame_success,
+                        activity?.theme
+                    )
                 else
-                    view.resources.getDrawable(R.drawable.back_frame_failure)
+                    ResourcesCompat.getDrawable(
+                        resources,
+                        R.drawable.back_frame_failure,
+                        activity?.theme
+                    )
             arguments?.getBoolean("liked")!!
-        }  else
+        } else
             false
 
         setLikeListener()

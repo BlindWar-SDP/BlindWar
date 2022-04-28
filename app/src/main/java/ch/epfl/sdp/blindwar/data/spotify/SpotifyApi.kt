@@ -37,12 +37,14 @@ interface SpotifyApi {
 
     @GET(SEARCH_PATH)
     @Headers(
-    ACCEPT,
-    CONTENT_TYPE,
+        ACCEPT,
+        CONTENT_TYPE,
     )
-    suspend fun searchArtist(@Header(AUTH) token: String,
-    @Path(ARTIST_ID) artist_id: String,
-    @Query(LIMIT) limit: Int): Response<SpotifyArtist>
+    suspend fun searchArtist(
+        @Header(AUTH) token: String,
+        @Path(ARTIST_ID) artist_id: String,
+        @Query(LIMIT) limit: Int
+    ): Response<SpotifyArtist>
 
     /** TODO: Keep for next sprint task
     @GET(TRACK_PATH)
@@ -59,9 +61,9 @@ interface SpotifyApi {
     CONTENT_TYPE
     )
     suspend fun searchTrack(@Header(AUTH) token: String,
-                            @Query(TYPE) type: String = "track",
-                            @Query(QUERY) query: String,
-                            @Query("market") market: String = "FR",
-                            @Query(LIMIT) limit: Int = 1): Response<SpotifySearchTrackResult>
-    **/
+    @Query(TYPE) type: String = "track",
+    @Query(QUERY) query: String,
+    @Query("market") market: String = "FR",
+    @Query(LIMIT) limit: Int = 1): Response<SpotifySearchTrackResult>
+     **/
 }

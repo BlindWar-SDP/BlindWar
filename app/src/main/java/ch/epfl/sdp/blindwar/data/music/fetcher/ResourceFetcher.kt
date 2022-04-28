@@ -9,8 +9,9 @@ import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.data.music.ResourceMusicMetadata
 import java.util.*
 
-class ResourceFetcher(private val context: Context,
-                      private val resources: Resources
+class ResourceFetcher(
+    private val context: Context,
+    private val resources: Resources
 ) : Fetcher {
     override fun fetchMusic(musicMetadata: MusicMetadata): Pair<MusicMetadata, MediaPlayer> {
 
@@ -38,7 +39,8 @@ class ResourceFetcher(private val context: Context,
                     it,
                     baseMetadata.imageUrl,
                     baseMetadata.duration,
-                    resourceId)
+                    resourceId
+                )
             }
                 ?: ResourceMusicMetadata(
                     artist = "",
