@@ -1,3 +1,4 @@
+
 package ch.epfl.sdp.blindwar.profile.fragments
 
 import android.content.ContentValues
@@ -20,7 +21,7 @@ import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 
-
+/*
 /**
  * Fragment that displays the user game statistics
  * TODO: fix CodeClimate issues / Cirrus warnings
@@ -123,4 +124,4 @@ class StatisticsFragment : Fragment() {
 
         return view
     }
-}
+}*/

@@ -1,29 +1,30 @@
 package ch.epfl.sdp.blindwar.login
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.BuildConfig
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
+import ch.epfl.sdp.blindwar.user.UserCache
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-
 /**
  * Launcher activity that let the user log/register to the app
  * TODO: CodeClimate / Cirrus warnings
  *
  * @constructor creates a SplashScreenActivity
  */
-class SplashScreenActivity : AppCompatActivity() {
+class SplashScreenActivity : AppCompatActivity(), UserCache {
     // inspired by :
     // https://github.com/firebase/snippets-android/blob/master/auth/app/src/main/java/com/google/firebase/quickstart/auth/kotlin/FirebaseUIActivity.kt
     // https://firebase.google.com/docs/auth/android/firebaseui
@@ -31,8 +32,6 @@ class SplashScreenActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "SplashScreen"
     }
-
-//    private var userAuth = UserAuth()
 
     // See: https://developer.android.com/training/basics/intents/result
     private val signInLauncher = registerForActivityResult(
@@ -42,19 +41,33 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-        checkCurrentUser()
+
+        if (isOnline()) {
+            setOffline(this, false)
+            checkCurrentUser()
+        } else {
+            setOffline(this, true)
+            createCache(this)
+            Toast.makeText(
+                this,
+                "OFFLINE gameplay", Toast.LENGTH_SHORT
+            ).show()
+            startActivity(Intent(this, MainMenuActivity::class.java))
+        }
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        checkCurrentUser()
-//    }
-
+    private fun isOnline(): Boolean {
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return connectivityManager.activeNetworkInfo?.isConnected ?: false
+    }
 
     private fun checkCurrentUser() {
-        if (isSignedIn()) {
+        FirebaseAuth.getInstance().currentUser?.let {
+            // upload local data
+            updateServerFromCache(this, it)
             startActivity(Intent(this, MainMenuActivity::class.java))
-        } else {
+        } ?: run {
             signInLauncher.launch(createSignInIntent())
         }
     }
@@ -93,17 +106,23 @@ class SplashScreenActivity : AppCompatActivity() {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
             // Successfully signed in
-            val user = FirebaseAuth.getInstance().currentUser // =?= Firebase.auth.currentUser
-            // https://www.tabnine.com/code/java/classes/com.google.firebase.auth.FirebaseAuth
-
-            return if (user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp) {
-                // new user: 1st signIn
-                Intent(activity, UserNewInfoActivity::class.java).putExtra("newUser", true)
-            } else {
-                /*
-                    - should we update the online database with the local cache here ?
-                     */
-                Intent(activity, MainMenuActivity::class.java)
+            FirebaseAuth.getInstance().currentUser?.let { user ->// =?= Firebase.auth.currentUser
+                // https://www.tabnine.com/code/java/classes/com.google.firebase.auth.FirebaseAuth
+                return if (user.metadata?.lastSignInTimestamp == user.metadata?.creationTimestamp) {
+                    // new user: 1st signIn
+                    updateServerFromCache(this, user)
+                    Intent(activity, UserNewInfoActivity::class.java)
+                } else {
+                    // user already known (as logged out: no local data (deleted on logout))
+                    Intent(activity, MainMenuActivity::class.java)
+                }
+            } ?: run {
+                Toast.makeText(
+                    this,
+                    "something went wrong on login", Toast.LENGTH_SHORT
+                ).show()
+                return Intent(activity, SplashScreenActivity::class.java)
+//                return null // ?? better option ??
             }
         } else {
             // Sign in failed. If response is null the user canceled the
@@ -121,9 +140,5 @@ class SplashScreenActivity : AppCompatActivity() {
             Log.e(TAG, "Sign-in error: ", response.error)
             return null
         }
-    }
-
-    private fun isSignedIn(): Boolean {
-        return Firebase.auth.currentUser != null
     }
 }

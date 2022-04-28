@@ -79,7 +79,8 @@ class SoloActivityTest {
     }
 
     /** TODO: Clean up the following methods **/
-    /*@Test
+    /*
+    @Test
     fun testLostThenWonGame() {
         searchPlaylist("The witcher", 2)
 
