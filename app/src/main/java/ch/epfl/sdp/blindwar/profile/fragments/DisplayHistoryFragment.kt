@@ -4,7 +4,11 @@ import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,23 +26,29 @@ import com.google.firebase.database.ktx.getValue
 
 class DisplayHistoryFragment : Fragment() {
 
+    private lateinit var musicRecyclerView: RecyclerView
     private var titles = mutableListOf<String>()
     private var artists = mutableListOf<String>()
     private var images = mutableListOf<String>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_display_music)
+    
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.activity_display_music, container, false)
 
         postToList()
-        var musicRecyclerView: RecyclerView = findViewById(R.id.musicRecyclerView)
-        musicRecyclerView.layoutManager = LinearLayoutManager(this)
+        musicRecyclerView = view.findViewById(R.id.musicRecyclerView)
+        musicRecyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
         musicRecyclerView.adapter = MusicDisplayRecyclerAdapter(titles, artists, images)
 
         // showing the back button in action bar
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
+        return view
     }
 
     private fun addToList(title: String, artist: String, image: String) {
@@ -81,7 +91,7 @@ class DisplayHistoryFragment : Fragment() {
             Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
         }
     }
-
+    /*
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
@@ -90,5 +100,5 @@ class DisplayHistoryFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
-    }
+    } */
 }
