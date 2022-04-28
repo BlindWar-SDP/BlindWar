@@ -17,14 +17,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
-import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
-import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.model.User
-import ch.epfl.sdp.blindwar.user.UserCache
+import ch.epfl.sdp.blindwar.profile.model.UserCache
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -439,22 +436,22 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
 
     private fun updateUser() {
         Firebase.auth.currentUser?.let { auth ->
-                val user0 = User.Builder()
-                    .fromUser(user)
-                    .setUid(auth.uid)
-                    .build()
-            auth.email?.let{ email ->
-                    user0.email = email
-                }
-                UserDatabase.updateUser(
-                    user0
-                )
-                Toast.makeText(
-                    this,
-                    "${user.pseudo}'s info updated", Toast.LENGTH_SHORT
-                ).show()
+            val user0 = User.Builder()
+                .fromUser(user)
+                .setUid(auth.uid)
+                .build()
+            auth.email?.let { email ->
+                user0.email = email
+            }
+            UserDatabase.updateUser(
+                user0
+            )
+            Toast.makeText(
+                this,
+                "${user.pseudo}'s info updated", Toast.LENGTH_SHORT
+            ).show()
 
-        }?: run {
+        } ?: run {
             Toast.makeText(
                 this,
                 "update local data only",

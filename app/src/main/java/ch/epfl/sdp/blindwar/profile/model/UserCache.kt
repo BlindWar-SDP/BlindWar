@@ -1,9 +1,8 @@
-package ch.epfl.sdp.blindwar.user
+package ch.epfl.sdp.blindwar.profile.model
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.database.UserDatabase
-import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.firebase.auth.FirebaseUser
 import com.google.gson.Gson
 

@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerActivity
 import ch.epfl.sdp.blindwar.game.solo.SoloActivity
-import ch.epfl.sdp.blindwar.user.UserCache
+import ch.epfl.sdp.blindwar.profile.model.UserCache
 
 /**
  * Fragment that let the user choose the format of the game (SOLO / MULTI)

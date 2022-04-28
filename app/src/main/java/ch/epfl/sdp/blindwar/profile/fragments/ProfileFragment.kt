@@ -17,7 +17,7 @@ import ch.epfl.sdp.blindwar.login.SplashScreenActivity
 import ch.epfl.sdp.blindwar.login.UserNewInfoActivity
 import ch.epfl.sdp.blindwar.profile.HistoryActivity
 import ch.epfl.sdp.blindwar.profile.model.User
-import ch.epfl.sdp.blindwar.user.UserCache
+import ch.epfl.sdp.blindwar.profile.model.UserCache
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

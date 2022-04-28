@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.BuildConfig
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
-import ch.epfl.sdp.blindwar.user.UserCache
+import ch.epfl.sdp.blindwar.profile.model.UserCache
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes

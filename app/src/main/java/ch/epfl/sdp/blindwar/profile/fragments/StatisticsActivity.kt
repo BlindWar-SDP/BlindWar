@@ -30,11 +30,7 @@ class StatisticsActivity : AppCompatActivity() {
             } catch (e: DatabaseException) {
                 null
             }
-            if (user != null) {
-                userStatistics = user.userStatistics
-            } else {
-                userStatistics = AppStatistics()
-            }
+            userStatistics = user?.userStatistics ?: AppStatistics()
         }
 
         override fun onCancelled(databaseError: DatabaseError) {

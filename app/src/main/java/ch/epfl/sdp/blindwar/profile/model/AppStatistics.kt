@@ -104,7 +104,8 @@ class AppStatistics {
         }
         val total = wins[mode.ordinal] + draws[mode.ordinal] + losses[mode.ordinal]
         winPercent[mode.ordinal] = (wins[mode.ordinal].toFloat() / total.toFloat() * hundredPercent)
-        drawPercent[mode.ordinal] = (draws[mode.ordinal].toFloat() / total.toFloat() * hundredPercent)
+        drawPercent[mode.ordinal] =
+            (draws[mode.ordinal].toFloat() / total.toFloat() * hundredPercent)
         lossPercent[mode.ordinal] = 100F - winPercent[mode.ordinal] - drawPercent[mode.ordinal]
     }
 
@@ -115,16 +116,16 @@ class AppStatistics {
      * @param opponentElo the ELO of the opponent
      */
     fun eloUpdate(result: Result, opponentElo: Int) {
-        if (elo < 0){
-            elo = 0;
+        if (elo < 0) {
+            elo = 0
         }
         elo = if (opponentElo == elo) {
-                equalElo(result)
-            } else if (opponentElo > elo) {
-                smallerElo(result, opponentElo)
-            } else {
-                greaterElo(result, opponentElo)
-            }
+            equalElo(result)
+        } else if (opponentElo > elo) {
+            smallerElo(result, opponentElo)
+        } else {
+            greaterElo(result, opponentElo)
+        }
 
     }
 
@@ -154,9 +155,9 @@ class AppStatistics {
      * @return the new elo of the user
      */
     private fun smallerElo(result: Result, opponentElo: Int): Int {
-        var ratio = 0 - (opponentElo.toFloat()/ elo.toFloat())
+        var ratio = 0 - (opponentElo.toFloat() / elo.toFloat())
         if (result == Result.LOSS) {
-            ratio = 0 - ((1/ratio).pow(3))
+            ratio = 0 - ((1 / ratio).pow(3))
         } else if (result == Result.WIN) {
             ratio = 0 - (ratio).pow(2)
         }
@@ -179,7 +180,7 @@ class AppStatistics {
         if (result == Result.LOSS) {
             ratio = ratio.pow(2)
         } else if (result == Result.WIN)
-            ratio = 0 - ((1/ratio).pow(3))
+            ratio = 0 - ((1 / ratio).pow(3))
         val diff = round((ratio * standardEqualValue)).toInt()
         return if (elo - diff < 0) {
             0
@@ -190,6 +191,6 @@ class AppStatistics {
 
 
     override fun toString(): String {
-        return "hello " + elo
+        return "hello $elo"
     }
 }
