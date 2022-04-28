@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.profile.fragments
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,35 +21,38 @@ import com.google.firebase.database.ktx.getValue
 
 // TODO: Remove unused activity
 class StatisticsActivity : AppCompatActivity() {
-
     private val profileViewModel: ProfileViewModel by viewModels()
-    private var userStatistics: AppStatistics =
+    private lateinit var spinner: Spinner
+    private var userStatistics =
         AppStatistics()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
 
+        // access the spinner
+        spinner = findViewById(R.id.modes_spinner)
+
         // Observe the stats value from the viewModel
         profileViewModel.userStatistics.observe(this) {
             if (it != AppStatistics()) {
                 userStatistics = it
+                setSpinner()
             }
         }
+    }
 
+    private fun setSpinner() {
         // access the items of the list
         val modes = Mode.values()
 
-        // access the spinner
-        val spinner = findViewById<Spinner>(R.id.modes_spinner)
-        if (spinner != null) {
-            val adapter = ArrayAdapter(
-                this,
-                R.layout.spinner_item, modes
-            )
-            spinner.adapter = adapter
+        val adapter = ArrayAdapter(
+            this,
+                    R.layout.spinner_item, modes
+                )
+        spinner.adapter = adapter
 
-            spinner.onItemSelectedListener = object :
+        spinner.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -93,8 +97,8 @@ class StatisticsActivity : AppCompatActivity() {
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
                     // write code to perform some action
+                    Log.d(TAG, "NOTHING SELECTED")
                 }
             }
         }
-    }
 }

@@ -39,10 +39,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="33.3"
-            android:backgroundTint="@color/fui_transparent"
+            android:backgroundTint="@color/very_opaque_black"
             android:drawableLeft="@drawable/ic_baseline_favorite_border_24"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
             android:fontFamily="@font/oxygen"
+            android:insetTop="4dp"
             android:text="Favorites"
             android:textColor="@color/ivory" />
 
@@ -51,10 +52,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="33.3"
-            android:backgroundTint="@color/fui_transparent"
+            android:backgroundTint="@color/very_opaque_black"
             android:drawableLeft="@drawable/ic_baseline_history_24"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
             android:fontFamily="@font/oxygen"
+            android:insetTop="4dp"
+            android:insetBottom="4dp"
             android:text="History"
             android:textColor="@color/ivory"
             tools:text="History" />
@@ -64,10 +67,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="33.3"
-            android:backgroundTint="@color/fui_transparent"
+            android:backgroundTint="@color/very_opaque_black"
             android:drawableLeft="@drawable/ic_baseline_bar_chart_24"
             android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
             android:fontFamily="@font/oxygen"
+            android:insetTop="0"
+            android:insetBottom="4dp"
             android:text="Statistics"
             android:textColor="@color/ivory"
             tools:text="Statistics" />
@@ -137,13 +142,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.8978102" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.61" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline19"

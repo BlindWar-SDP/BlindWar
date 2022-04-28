@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +31,7 @@ class SearchFragment : Fragment() {
     private lateinit var gameInstanceViewModel: GameInstanceViewModel
     private lateinit var adapter: DisplayableItemAdapter
     private lateinit var searchBar: SearchView
-    private val displayableViewModel: DisplayableViewModel by viewModels()
+    private val displayableViewModel: DisplayableViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

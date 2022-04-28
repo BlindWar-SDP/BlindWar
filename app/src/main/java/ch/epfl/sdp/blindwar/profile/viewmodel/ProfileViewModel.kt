@@ -67,4 +67,13 @@ class ProfileViewModel: ViewModel() {
             database.addUserListener(currentUser.uid, userInfoListener)
         }
     }
+
+    fun logout() {
+        auth.signOut()
+    }
+
+    fun updateStats(score: Int, fails: Int) {
+        if (currentUser != null)
+            UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
+    }
 }

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
 import ch.epfl.sdp.blindwar.R
@@ -39,10 +40,9 @@ import com.google.firebase.storage.StorageReference
  */
 class ProfileFragment : Fragment() {
     // DATABASE
-    private val imageDatabase = ImageDatabase
     private val auth = FirebaseAuth.getInstance()
     private val currentUser = auth.currentUser
-    private val profileViewModel: ProfileViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by activityViewModels()
 
     // BUTTONS
     private lateinit var statsButton: Button
@@ -94,18 +94,6 @@ class ProfileFragment : Fragment() {
     }
 
     /**
-     * Sets the button listener
-     *
-     * @param button
-     * @param action performed on click
-     */
-    private fun setButtonListener(button: Button, action: () -> Unit) {
-        button.setOnClickListener{
-            action()
-        }
-    }
-
-    /**
      * Opens profile edition activity
      */
     private fun editProfile() {
@@ -113,19 +101,10 @@ class ProfileFragment : Fragment() {
     }
 
     /**
-     *
-     */
-    private fun optionsBtn() {
-        optionsMenu.visibility =
-            if (optionsMenu.visibility == View.VISIBLE) View.GONE
-            else View.VISIBLE
-    }
-
-    /**
      * Handle the logout logic
      */
     private fun logOut() {
-        auth.signOut()
+        profileViewModel.logout()
         startActivity(Intent(requireActivity(), SplashScreenActivity::class.java))
         /**
             AuthUI.getInstance().signOut(this).addOnCompleteListener {
