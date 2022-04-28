@@ -50,7 +50,7 @@ object ImageDatabase {
             uploadedImageRef.putFile(imageURI)
                 .addOnSuccessListener {
                     Snackbar.make(view, "Image uploaded", Snackbar.LENGTH_LONG).show()
-                    UserDatabase.addProfilePicture(user!!.uid, uploadedImageRef.path)
+//                    UserDatabase.addProfilePicture(user!!.uid, uploadedImageRef.path)
                 }
             /*
         .addOnFailureListener {

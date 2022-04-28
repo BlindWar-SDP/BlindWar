@@ -21,12 +21,6 @@
         android:theme="@style/Theme.BlindWar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".login.SplashScreenActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity
             android:name=".login.UserNewInfoActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
@@ -69,6 +63,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".menu.MainMenuActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".login.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait" >
 

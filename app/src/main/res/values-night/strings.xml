@@ -7,4 +7,10 @@
     <string name="delete_profile">Delete\nProfile</string>
     <string name="deletion_success">account successfully deleted</string>
     <string name="select_your_gender">Please, select your gender</string>
+    <string name="cancel_btn">cancel</string>
+    <string name="alert_dialogue_cancel_title">Cancel update</string>
+    <string name="alert_dialogue_cancel_text">Are you sure to keep old info</string>
+    <string name="newUser_ExtraName">newUser</string>
+    <string name="reset">reset Birthdate</string>
+    <string name="no_birthdate_selected">no birthdate selected</string>
 </resources>

@@ -1,16 +1,16 @@
-/*
+
 package ch.epfl.sdp.blindwar
 
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import ch.epfl.sdp.blindwar.profile.fragments.StatisticsActivity
-import ch.epfl.sdp.blindwar.profile.fragments.StatisticsFragment
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
@@ -22,7 +22,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.ExecutionException
-
+/*
 @RunWith(AndroidJUnit4::class)
 class StatisticsActivityTest : TestCase() {
 
@@ -36,6 +36,7 @@ class StatisticsActivityTest : TestCase() {
     @Before
     fun setup() {
         Intents.init()
+        closeSoftKeyboard()
     }
 
     @After

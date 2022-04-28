@@ -125,27 +125,14 @@
 
     <Button
         android:id="@+id/editProfileButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="253dp"
+        android:layout_height="50dp"
         android:backgroundTint="@color/green_blue_crayola"
         android:text="@string/editProfileText"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toTopOf="@+id/logoutButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/deleteProfile" />
-
-    <Button
-        android:id="@+id/deleteProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/green_blue_crayola"
-        android:text="@string/delete_profile"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/logoutButton"
-        app:layout_constraintEnd_toStartOf="@+id/editProfileButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/logoutButton"
+        app:layout_constraintStart_toStartOf="@+id/logoutButton" />
 
     <Button
         android:id="@+id/logoutButton"

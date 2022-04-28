@@ -15,11 +15,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import ch.epfl.sdp.blindwar.login.SplashScreenActivity
-import ch.epfl.sdp.blindwar.profile.fragments.StatisticsActivity
 import ch.epfl.sdp.blindwar.login.UserNewInfoActivity
 import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
-import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
+import ch.epfl.sdp.blindwar.profile.fragments.StatisticsActivity
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
@@ -116,42 +114,44 @@ class ProfileFragmentTest : TestCase() {
         device.pressBack()
         onView(withId(R.id.logoutButton)).perform(click())
     }
-    fun testDeleteButton_cancel() {
-        launchFragmentInContainer<ProfileFragment>()
-            closeSoftKeyboard()
-            onView(withId(R.id.deleteProfile))
-                .perform(click())
-            BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_text)
-            clickOn(android.R.string.cancel)
-    }
 
-    @Test
-    fun testDeleteButton_ok_cancel() {
+//    fun testDeleteButton_cancel() {
+//        launchFragmentInContainer<ProfileFragment>()
+//            closeSoftKeyboard()
+//            onView(withId(R.id.deleteProfile))
+//                .perform(click())
+//            BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_text)
+//            clickOn(android.R.string.cancel)
+//    }
+//
+//    @Test
+//    fun testDeleteButton_ok_cancel() {
+//
+//        launchFragmentInContainer<ProfileFragment>()
+//            closeSoftKeyboard()
+//            onView(withId(R.id.deleteProfile))
+//                .perform(click())
+//            BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_text)
+//            clickOn(android.R.string.ok)
+//            BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_confirm_text)
+//            clickOn(android.R.string.cancel)
+//    }
+//
+//    @Test
+//    fun testDeleteButton_ok_ok() {
+//
+//        launchFragmentInContainer<ProfileFragment>()
+//            closeSoftKeyboard()
+//            onView(withId(R.id.deleteProfile))
+//                .perform(click())
+//            BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_text)
+//            clickOn(android.R.string.ok)
+//            BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_confirm_text)
+//            clickOn(android.R.string.ok)
+//            //BaristaVisibilityAssertions.assertDisplayed(R.string.deletion_success) // toast not detected
+//            intended(hasComponent(SplashScreenActivity::class.java.name))
+//    }
 
-        launchFragmentInContainer<ProfileFragment>()
-            closeSoftKeyboard()
-            onView(withId(R.id.deleteProfile))
-                .perform(click())
-            BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_text)
-            clickOn(android.R.string.ok)
-            BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_confirm_text)
-            clickOn(android.R.string.cancel)
-    }
-
-    @Test
-    fun testDeleteButton_ok_ok() {
-
-        launchFragmentInContainer<ProfileFragment>()
-            closeSoftKeyboard()
-            onView(withId(R.id.deleteProfile))
-                .perform(click())
-            BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_text)
-            clickOn(android.R.string.ok)
-            BaristaVisibilityAssertions.assertDisplayed(R.string.account_deletion_confirm_text)
-            clickOn(android.R.string.ok)
-            //BaristaVisibilityAssertions.assertDisplayed(R.string.deletion_success) // toast not detected
-            intended(hasComponent(SplashScreenActivity::class.java.name))
-    }
 
     @Test
     fun testLogoutButton() {
