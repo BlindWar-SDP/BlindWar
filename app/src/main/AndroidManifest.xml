@@ -21,68 +21,61 @@
         android:theme="@style/Theme.BlindWar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.profile.DisplayHistoryActivity"
+            android:name=".profile.fragments.DisplayHistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.SplashScreenActivity"
+            android:name=".login.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".login.UserNewInfoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".game.solo.SoloActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.UserAdditionalInfoActivity"
+            android:exported="false"
+            android:parentActivityName=".login.UserNewInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".game.multi.MultiPlayerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".game.multi.MultiPlayerFriendActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".game.multi.MultiPlayerRandomActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".game.solo.TutorialActivity"
+            android:parentActivityName=".menu.MainMenuActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".profile.fragments.StatisticsActivity"
+            android:parentActivityName=".profile.fragments.ProfileFragment"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".menu.MainMenuActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.UserNewInfoActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.solo.PlayActivity"
-            android:exported="false"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.UserAdditionalInfoActivity"
-            android:exported="false"
-            android:parentActivityName=".ui.UserNewInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.multi.MultiPlayerActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.multi.MultiPlayerFriendActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.multi.MultiPlayerRandomActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.tutorial.TutorialActivity"
-            android:exported="false"
-            android:parentActivityName=".ui.MainMenuActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.DemoSRActivity"
-            android:exported="false"
-            android:parentActivityName=".ui.MainMenuActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.ProfileActivity"
-            android:exported="false"
-            android:parentActivityName=".ui.MainMenuActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.StatisticsActivity"
-            android:exported="false"
-            android:parentActivityName=".ui.ProfileActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.MainMenuActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="preloaded_fonts"

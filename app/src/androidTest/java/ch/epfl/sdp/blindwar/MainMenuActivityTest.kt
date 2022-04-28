@@ -1,34 +1,22 @@
 package ch.epfl.sdp.blindwar
 
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import ch.epfl.sdp.blindwar.ui.DemoSRActivity
-import ch.epfl.sdp.blindwar.ui.MainMenuActivity
-import ch.epfl.sdp.blindwar.ui.ProfileActivity
-import ch.epfl.sdp.blindwar.ui.multi.MultiPlayerActivity
-import ch.epfl.sdp.blindwar.ui.solo.PlayActivity
-import ch.epfl.sdp.blindwar.ui.tutorial.TutorialActivity
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.Tasks
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
+import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
+import androidx.test.uiautomator.UiDevice
+import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import junit.framework.TestCase
-import org.hamcrest.Matchers
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.util.concurrent.ExecutionException
 
 
 @RunWith(AndroidJUnit4::class)
@@ -49,36 +37,42 @@ class MainMenuActivityTest : TestCase() {
     }
 
     @Test
+    fun testPlayMenuButton() {
+        onView(withId(R.id.item_play)).perform(click())
+        onView(withId(R.id.play_fragment)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun testSearchButton() {
+        onView(withId(R.id.item_search)).perform(click())
+        onView(withId(R.id.searchBar)).check(matches(isDisplayed()))
+    }
+
+    @Test
     fun testSoloButton() {
-        onView(withId(R.id.soloButton))
-            .perform(click())
-        intended(hasComponent(PlayActivity::class.java.name))
+        onView(withId(R.id.item_play)).perform(click())
+        onView(withId(R.id.soloBtn)).perform(click())
+        //intended(hasComponent(SoloActivity::class.java.name))
     }
 
     @Test
     fun testMultiButton() {
-        onView(withId(R.id.multiButton))
-            .perform(click())
-        intended(hasComponent(MultiPlayerActivity::class.java.name))
-    }
-
-    @Test
-    fun testTutorialButton() {
-        onView(withId(R.id.tutorialButton))
-            .perform(click())
-        intended(hasComponent(TutorialActivity::class.java.name))
+        onView(withId(R.id.item_play)).perform(click())
+        onView(withId(R.id.multiBtn)).perform(click())
+        //intended(hasComponent(MultiPlayerActivity::class.java.name))
     }
 
     @Test
     fun testProfileButton() {
-        onView(withId(R.id.profileButton))
-            .perform(click())
-        intended(hasComponent(ProfileActivity::class.java.name))
+        onView(withId(R.id.item_profile)).perform(click())
+        onView(withId(R.id.profile_fragment)).check(matches(isDisplayed()))
     }
 
     @Test
-    fun testLaunchSRDemo() {
-        onView(withId(R.id.SpeechButton)).perform(click())
-        intended(hasComponent(DemoSRActivity::class.java.name))
+    fun testBackButton(){
+        val device = UiDevice.getInstance(getInstrumentation())
+        assertTrue("Back button can't be pressed", device.pressBack())
     }
+
+
 }

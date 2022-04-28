@@ -1,12 +1,12 @@
 package ch.epfl.sdp.blindwar.database
 
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+
+
 import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
-import ch.epfl.sdp.blindwar.user.AppStatistics
-import ch.epfl.sdp.blindwar.user.Mode
-import ch.epfl.sdp.blindwar.user.User
+import ch.epfl.sdp.blindwar.profile.model.AppStatistics
+import ch.epfl.sdp.blindwar.profile.model.Mode
+import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -19,6 +19,7 @@ object UserDatabase {
 
     /**
      * Get user reference to manipulate user infos
+     *
      * @param uid
      * @return
      */
@@ -28,6 +29,7 @@ object UserDatabase {
 
     /**
      * Get user statistics reference to manipulate user statistics
+     *
      * @param uid
      * @return
      */
@@ -37,8 +39,9 @@ object UserDatabase {
 
     /**
      * Get elo reference to manipulate elo
-     * @param uid
-     * @return
+     *
+     * @param uid user identification
+     * @return elo reference of specified user
      */
     fun getEloReference(uid: String): DatabaseReference {
         return getUserStatisticsReference(uid).child("elo")
@@ -50,13 +53,19 @@ object UserDatabase {
 
     /**
      * Function to add an User to the database (used when creating account)
-     * @param user
+     *
+     * @param user to be added
      */
     // Add user to database
     fun addUser(user: User) {
         userReference.child(user.uid).setValue(user)
     }
-    // Remove user from database
+
+    /**
+     * Remove user from database
+     *
+     * @param uid user identification
+     */
     fun removeUser(uid: String) {
         userReference.child(uid).removeValue()
     }
@@ -79,11 +88,15 @@ object UserDatabase {
             }
         }
     }
-
-    // Set elo of an user
+    /**
+     * Set elo of an user
+     *
+     * @param uid user identification
+     */
     fun setElo(uid: String, elo: Int) {
         getEloReference(uid).setValue(elo)
     }
+
     fun setFirstName(uid: String, fn: String) {
         userReference.child(uid).child("firstName").setValue(fn)
     }
@@ -109,9 +122,9 @@ object UserDatabase {
     /**
      * Reset set user statistics
      *
-     * @param uid
+     * @param uid user identification
      */
-    fun setUserStatistics(uid: String, userStatistics: AppStatistics) {
+    private fun setUserStatistics(uid: String, userStatistics: AppStatistics) {
         getUserStatisticsReference(uid).setValue(userStatistics)
     }
 
@@ -129,7 +142,7 @@ object UserDatabase {
      * @param uid
      * @return Task<DataSnapshot>
      */
-    fun getUserStatistics(uid: String): Task<DataSnapshot> {
+    private fun getUserStatistics(uid: String): Task<DataSnapshot> {
         val userStatisticsRef = getUserStatisticsReference(uid)
         return userStatisticsRef.get()
     }
