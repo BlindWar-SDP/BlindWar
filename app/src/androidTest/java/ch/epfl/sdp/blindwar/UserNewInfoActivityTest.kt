@@ -224,6 +224,7 @@ class UserNewInfoActivityTest : TestCase() {
 //        intended(hasComponent(MainMenuActivity::class.java.name))
 //    }
 
+    /*
     @Test
     fun testUpdateUser() {
         onView(withId(R.id.NU_pseudo))
@@ -231,6 +232,7 @@ class UserNewInfoActivityTest : TestCase() {
         clickOn(R.id.NU_Confirm_Btn)
         intended(hasComponent(MainMenuActivity::class.java.name))
     }
+    */
 
     @Test
     fun testAdditionalInfo() {
