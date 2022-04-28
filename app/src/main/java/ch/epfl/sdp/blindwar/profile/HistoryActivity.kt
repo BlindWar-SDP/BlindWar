@@ -47,12 +47,4 @@ class HistoryActivity : AppCompatActivity() {
             commit()
         }
     }
-
-    /**
-     * Minimizes the app if the back button is pressed
-     *
-     */
-    override fun onBackPressed() {
-        this.moveTaskToBack(true);
-    }
 }

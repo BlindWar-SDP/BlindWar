@@ -5,11 +5,11 @@
     <item
         android:id="@+id/item_liked_musics"
         android:icon="@drawable/play_arrow"
-        android:title="Liked musics" />
+        android:title="liked musics" />
 
     <item
         android:id="@+id/item_match_history"
         android:icon="@android:drawable/ic_menu_search"
-        android:title="MatchHistory" />
+        android:title="match history" />
 
 </menu>
