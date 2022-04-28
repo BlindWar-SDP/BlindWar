@@ -30,7 +30,7 @@ class HistoryActivity : AppCompatActivity() {
         findViewById<BottomNavigationView>(R.id.historyBottomNavigationView).setOnItemSelectedListener {
             when(it.itemId){
                 R.id.item_liked_musics-> showFragment(DisplayHistoryFragment.newInstance(likedMusicType))
-                R.id.item_match_history -> showFragment(DisplayHistoryFragment.newInstance(likedMusicType))
+                R.id.item_match_history -> showFragment(DisplayHistoryFragment.newInstance(matchHistoryType))
             }
             true
         }

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.profile.model.User
 import ch.epfl.sdp.blindwar.profile.util.MusicDisplayRecyclerAdapter
 import com.google.firebase.auth.FirebaseAuth
@@ -73,6 +74,9 @@ class DisplayHistoryFragment : Fragment() {
         if (historyType == "liked musics" && currentUser != null) {
             UserDatabase.addUserListener(currentUser.uid, userLikedMusicsListener)
         }
+        if (historyType == "match history" && currentUser != null) {
+            UserDatabase.addUserListener(currentUser.uid, userMatchHistoryListener)
+        }
 
         /*
         else {
@@ -94,6 +98,33 @@ class DisplayHistoryFragment : Fragment() {
                 val likedMusics: MutableList<URIMusicMetadata> = user.likedMusics
                 for (music in likedMusics) {
                     addToList(music.title, music.artist, music.imageUrl.toString())
+                }
+            } else {
+                for (i in 1..10) {
+                    addToList("HELLO", "JOJO", "no image")
+                }
+            }
+            musicRecyclerView.adapter = MusicDisplayRecyclerAdapter(titles, artists, images)
+        }
+
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+        }
+    }
+
+    private val userMatchHistoryListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val user: User? = try {
+                dataSnapshot.getValue<User>()
+            } catch (e: DatabaseException) {
+                null
+            }
+            if (user != null) {
+                val matchHistory: MutableList<GameResult> = user.matchHistory
+                for (match in matchHistory) {
+                    addToList(match.gameNbrRound.toString(), match.gameScore.toString(),
+                        "no image")
                 }
             } else {
                 for (i in 1..10) {
