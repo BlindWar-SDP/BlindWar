@@ -21,9 +21,6 @@
         android:theme="@style/Theme.BlindWar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".profile.fragments.DisplayHistoryActivity"
-            android:exported="false" />
-        <activity
             android:name=".login.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait">
@@ -58,6 +55,11 @@
         <activity
             android:name=".game.solo.TutorialActivity"
             android:parentActivityName=".menu.MainMenuActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".profile.HistoryActivity"
+            android:parentActivityName=".profile.fragments.ProfileFragment"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

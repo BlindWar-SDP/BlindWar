@@ -19,6 +19,7 @@ import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.login.SplashScreenActivity
 import ch.epfl.sdp.blindwar.login.UserNewInfoActivity
+import ch.epfl.sdp.blindwar.profile.HistoryActivity
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
@@ -114,7 +115,7 @@ class ProfileFragment : Fragment() {
 
         historyButton = view.findViewById<Button>(R.id.historyButton).apply{
             this.setOnClickListener{
-                val intent = Intent(requireActivity(), DisplayHistoryFragment::class.java)
+                val intent = Intent(requireActivity(), HistoryActivity::class.java)
                 startActivity(intent)
             }
         }
