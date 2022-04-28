@@ -60,8 +60,6 @@ class GameViewModel(
             game.onlinePlaylist,
             context, resources
         )
-
-
     }
 
     /**

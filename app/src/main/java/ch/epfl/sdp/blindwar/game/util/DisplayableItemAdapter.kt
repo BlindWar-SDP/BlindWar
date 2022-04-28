@@ -135,13 +135,14 @@ class DisplayableItemAdapter(private var displayableList: ArrayList<Displayable>
 
             /** Expandable type **/
             if (displayed.extendable()) {
+                expandButton.visibility = View.VISIBLE
+                setExpansionListener()
+
                 /** Initialize roundPicker **/
                 roundPicker.maxValue = displayed.getSize()
                 roundPicker.minValue = ROUND_MIN_VALUE
 
                 setStartGameListener(displayed as Playlist)
-                expandButton.visibility = View.VISIBLE
-                setExpansionListener()
 
                 when(gameInstanceViewModel.gameInstance.value!!.gameConfig.mode) {
                     GameMode.SURVIVAL -> roundTextView.text = "LIVES"
@@ -174,12 +175,10 @@ class DisplayableItemAdapter(private var displayableList: ArrayList<Displayable>
         private fun setStartGameListener(playlist: Playlist) {
             playButton.setOnClickListener{
                 player.pause()
-                Log.d("LIVES", roundPicker.value.toString())
                 gameInstanceViewModel.setGameParameters(
                     timeChosen = (timerPicker.value * 5 + 1) * 1000,
                     roundChosen = roundPicker.value,
                     playlist = playlist)
-
 
                 (context as AppCompatActivity).supportFragmentManager.beginTransaction()
                     .replace((viewFragment.parent as ViewGroup).id,
