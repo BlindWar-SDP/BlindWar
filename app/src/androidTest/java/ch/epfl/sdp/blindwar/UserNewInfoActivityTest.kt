@@ -213,4 +213,10 @@ class UserNewInfoActivityTest : TestCase() {
         clickOn(R.id.NU_additional_info)
         intended(hasComponent(UserAdditionalInfoActivity::class.java.name))
     }
+
+    @Test
+    fun testBackButton(){
+        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        assertTrue("Back button can't be pressed", device.pressBack())
+    }
 }
