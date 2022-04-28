@@ -54,7 +54,7 @@ object UserDatabase {
      * @param user to be added
      */
     // Add user to database
-    fun addUser(user: User) {
+    fun updateUser(user: User) {
         userReference.child(user.uid).setValue(user)
     }
 
@@ -76,27 +76,17 @@ object UserDatabase {
         getEloReference(uid).setValue(elo)
     }
 
-    fun setFirstName(uid: String, fn: String) {
-        userReference.child(uid).child("firstName").setValue(fn)
-    }
-    fun setLastName(uid: String, ln: String) {
-        userReference.child(uid).child("lastName").setValue(ln)
-    }
-    fun setPseudo(uid: String, pseudo: String) {
-        userReference.child(uid).child("pseudo").setValue(pseudo)
-    }
-    fun setProfilePicture(uid: String, pp: String) {
-        userReference.child(uid).child("profilePicture").setValue(pp)
-    }
-    fun setBirthdate(uid: String, date: Long) {
-        userReference.child(uid).child("birthDate").setValue(date)
-    }
-    fun setGender(uid: String, gender: String) {
-        userReference.child(uid).child("gender").setValue(gender)
-    }
-    fun setDescription(uid: String, desc: String) {
-        userReference.child(uid).child("description").setValue(desc)
-    }
+//    fun updateUser(user: User){
+//        val ref = userReference.child(user.uid)
+//        // TODO no statistics ...
+//        ref.child(User.VarName.pseudo.name).setValue(user.pseudo)
+//        ref.child(User.VarName.firstName.name).setValue(user.firstName)
+//        ref.child(User.VarName.lastName.name).setValue(user.lastName)
+//        ref.child(User.VarName.profilePicture.name).setValue(user.profilePicture)
+//        ref.child(User.VarName.description.name).setValue(user.description)
+//        ref.child(User.VarName.gender.name).setValue(user.gender)
+//        ref.child(User.VarName.birthdate.name).setValue(user.birthdate)
+//    }
 
     /**
      * Reset set user statistics
@@ -107,7 +97,12 @@ object UserDatabase {
         getUserStatisticsReference(uid).setValue(userStatistics)
     }
 
-    // Allow user to select a profile picture and store it in database
+    /**
+     *  Allow user to select a profile picture and store it in database
+     *
+     * @param uid
+     * @param path
+     */
     fun addProfilePicture(uid: String, path: String) {
         getImageReference(uid).setValue(path)
     }
@@ -129,9 +124,9 @@ object UserDatabase {
     fun updateSoloUserStatistics(uid: String, score: Int, fails: Int) {
         getUserStatistics(uid).addOnSuccessListener {
             var userStatistics: AppStatistics? = it.getValue(AppStatistics::class.java)
-            if (userStatistics != null) {
-                userStatistics.correctnessUpdate(score, fails, Mode.SOLO)
-                setUserStatistics(uid, userStatistics)
+            userStatistics?.let{stat ->
+                stat.correctnessUpdate(score, fails, Mode.SOLO)
+                setUserStatistics(uid, stat)
             }
         }
     }

@@ -8,14 +8,15 @@
     android:orientation="vertical"
     tools:context=".login.UserAdditionalInfoActivity">
 
+
     <EditText
         android:id="@+id/NUA_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="52dp"
         android:ems="10"
         android:hint="Describe yourself"
+        android:maxLines="@integer/max_lines_user_desc"
         android:inputType="textMultiLine"
         android:maxLength="@integer/self_description_max_length"
         android:textColor="@color/green_blue_crayola"
@@ -32,6 +33,7 @@
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/NUA_select_birthdate"
         app:layout_constraintEnd_toEndOf="@+id/select_gender"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/select_gender"
         app:layout_constraintTop_toBottomOf="@+id/NUA_description" />
 
@@ -40,23 +42,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:backgroundTint="@color/green_blue_crayola"
         android:onClick="selectBirthdate"
         android:text="@string/select_birthdate"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/NUA_Cancel_Btn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gender_spinner" />
+
+    <Button
+        android:id="@+id/NUA_reset_birthdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="resetBirthdate"
+        android:text="@string/reset"
+        android:textSize="7sp"
+        android:minHeight="0sp"
+        android:minWidth="0sp"
+        app:layout_constraintEnd_toEndOf="@+id/NUA_selected_birthdate_text"
+        app:layout_constraintHorizontal_bias="0.605"
+        app:layout_constraintStart_toStartOf="@+id/NUA_selected_birthdate_text"
+        app:layout_constraintTop_toBottomOf="@+id/NUA_selected_birthdate_text"
+        tools:ignore="SmallSp" />
 
     <Button
         android:id="@+id/NUA_Confirm_Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="72dp"
-        android:layout_marginBottom="64dp"
         android:onClick="confirm"
         android:text="@string/confirm"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/NUA_Cancel_Btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/NUA_Cancel_Btn" />
 
+    <Button
+        android:id="@+id/NUA_Cancel_Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="cancel"
+        android:text="@string/cancel_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/NUA_Confirm_Btn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NUA_select_birthdate" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
@@ -73,5 +102,17 @@
         android:text="@string/select_your_gender"
         app:layout_constraintBottom_toTopOf="@+id/gender_spinner"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/NUA_selected_birthdate_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_birthdate_selected"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/NUA_select_birthdate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/NUA_select_birthdate"
+        app:layout_constraintTop_toTopOf="@+id/NUA_select_birthdate"
+        app:layout_constraintVertical_bias="0.592" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

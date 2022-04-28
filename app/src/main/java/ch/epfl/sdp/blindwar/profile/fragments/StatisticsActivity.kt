@@ -30,7 +30,6 @@ class StatisticsActivity : AppCompatActivity() {
             } catch (e: DatabaseException) {
                 null
             }
-
             if (user != null) {
                 userStatistics = user.userStatistics
             } else {
