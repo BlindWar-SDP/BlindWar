@@ -3,18 +3,11 @@ package ch.epfl.sdp.blindwar.game.multi
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.database.MatchDatabase
-import ch.epfl.sdp.blindwar.database.UserDatabase
-import ch.epfl.sdp.blindwar.game.multi.model.Match
-import ch.epfl.sdp.blindwar.profile.model.User
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 
 /**
@@ -114,6 +107,7 @@ class MultiPlayerActivity : AppCompatActivity() {
         dialog!!.show()
     }
 
+    /*
     /**
      * find a match on DB which is free
      *
@@ -152,7 +146,7 @@ class MultiPlayerActivity : AppCompatActivity() {
             setLinkDialog()
         }
     }
-
+    */
     /**
      * create a dialog which ask for the uid of the match
      *
@@ -165,7 +159,7 @@ class MultiPlayerActivity : AppCompatActivity() {
         builder.setPositiveButton(
             "OK"
         ) { _, _ ->
-            connectToDB(findViewById<EditText>(R.id.editTextLink).text.toString())
+            //connectToDB(findViewById<EditText>(R.id.editTextLink).text.toString())
             dialog!!.hide()
         }
         dialog = builder.create()
