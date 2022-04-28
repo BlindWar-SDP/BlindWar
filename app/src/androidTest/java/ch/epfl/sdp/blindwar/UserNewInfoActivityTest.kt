@@ -190,7 +190,7 @@ class UserNewInfoActivityTest : TestCase() {
         clickOn(R.id.NU_Confirm_Btn)
         intended(hasComponent(MainMenuActivity::class.java.name))
     }
-
+    /*
     @Test
     fun testUpdateUser() {
         val login: Task<AuthResult> = FirebaseAuth.getInstance()
@@ -207,7 +207,7 @@ class UserNewInfoActivityTest : TestCase() {
             .perform(replaceText(validPseudo))
         clickOn(R.id.NU_Confirm_Btn)
         intended(hasComponent(MainMenuActivity::class.java.name))
-    }
+    }*/
 
     @Test
     fun testAdditionalInfo() {

@@ -1,11 +1,15 @@
 package ch.epfl.sdp.blindwar
 
+import androidx.fragment.app.testing.launchFragment
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.*
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -14,6 +18,7 @@ import ch.epfl.sdp.blindwar.login.SplashScreenActivity
 import ch.epfl.sdp.blindwar.profile.fragments.StatisticsActivity
 import ch.epfl.sdp.blindwar.login.UserNewInfoActivity
 import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
+import ch.epfl.sdp.blindwar.profile.fragments.StatisticsFragment
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.google.android.gms.tasks.Task
@@ -84,6 +89,33 @@ class ProfileFragmentTest : TestCase() {
             //device.pressBack()
             pressBack()
             onView(withId(R.id.logoutButton)).perform(click())
+    }
+
+    @Test
+    fun historyUpdatedCorrectly() {
+        val testEmail = "test@bot.ch"
+        val testPassword = "testtest"
+        val login: Task<AuthResult> = FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(testEmail, testPassword)
+        try {
+            Tasks.await<AuthResult>(login)
+        } catch (e: ExecutionException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        launchFragmentInContainer<ProfileFragment>()
+        Thread.sleep(2000)
+        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        onView(withId(R.id.statsButton))
+            .perform(click())
+        device.pressBack()
+        onView(withId(R.id.historyButton))
+            .perform(click())
+        onView(withId(R.id.item_match_history)).perform(click())
+        onView(withId(R.id.item_liked_musics)).perform(click())
+        device.pressBack()
+        onView(withId(R.id.logoutButton)).perform(click())
     }
     fun testDeleteButton_cancel() {
         launchFragmentInContainer<ProfileFragment>()

@@ -123,7 +123,8 @@ class DisplayHistoryFragment : Fragment() {
             if (user != null) {
                 val matchHistory: MutableList<GameResult> = user.matchHistory
                 for (match in matchHistory) {
-                    addToList(match.gameNbrRound.toString(), match.gameScore.toString(),
+                    addToList("Number of rounds: " + match.gameNbrRound.toString(),
+                        "Score: " + match.gameScore.toString(),
                         "no image")
                 }
             } else {

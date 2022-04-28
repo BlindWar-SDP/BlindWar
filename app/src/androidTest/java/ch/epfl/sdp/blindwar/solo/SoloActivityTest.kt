@@ -78,6 +78,7 @@ class SoloActivityTest {
     }
 
     /** TODO: Clean up the following methods **/
+    /*
     @Test
     fun testLostThenWonGame() {
         searchPlaylist("The witcher", 2)
@@ -109,7 +110,7 @@ class SoloActivityTest {
         onView(withId(R.id.game_summary_fragment)).check(matches(isDisplayed()))
 
         onView(withId(R.id.quit)).perform(click())
-    }
+    } */
 
     @Test
     fun testLostGameConnected() {

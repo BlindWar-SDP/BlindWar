@@ -1,3 +1,4 @@
+/*
 package ch.epfl.sdp.blindwar.profile.fragments
 
 import android.content.ContentValues
@@ -123,4 +124,4 @@ class StatisticsFragment : Fragment() {
 
         return view
     }
-}
+}*/
