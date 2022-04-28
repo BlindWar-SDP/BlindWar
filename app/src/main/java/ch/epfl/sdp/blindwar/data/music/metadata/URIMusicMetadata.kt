@@ -1,7 +1,5 @@
 package ch.epfl.sdp.blindwar.data.music.metadata
 
-import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
-
 class URIMusicMetadata(title: String = "",
                        artist: String = "",
                        imageUrl: String = "",

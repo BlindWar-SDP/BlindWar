@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.util.GameHelper
 import ch.epfl.sdp.blindwar.audio.MusicViewModel
+import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
@@ -67,8 +68,9 @@ class GameViewModel(
      */
     private fun endGame() {
         val fails = round - score
+        val gameResult = GameResult(mode, round, score)
 
-        profileViewModel.updateStats(score, fails)
+        profileViewModel.updateStats(score, fails, gameResult)
         musicViewModel.soundTeardown()
     }
 

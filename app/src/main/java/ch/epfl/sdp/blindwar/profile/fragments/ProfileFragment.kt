@@ -18,6 +18,13 @@ import ch.epfl.sdp.blindwar.login.SplashScreenActivity
 import ch.epfl.sdp.blindwar.login.UserNewInfoActivity
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.google.firebase.storage.StorageReference
+import ch.epfl.sdp.blindwar.profile.HistoryActivity
+import ch.epfl.sdp.blindwar.profile.model.User
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseException
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 
 /**
  * Fragment that displays a connected user info
@@ -30,6 +37,48 @@ class ProfileFragment : Fragment() {
 
     // BUTTONS
     private lateinit var statsButton: Button
+    private lateinit var historyButton: Button
+    private lateinit var editButton: Button
+    private lateinit var logOutButton: Button
+
+    // TEXT VIEW
+    private lateinit var nameTextView: TextView
+    private lateinit var emailTextView: TextView
+    private lateinit var eloTextView: TextView
+
+    /**
+     * download image from database and show it
+
+    private fun downloadImage() {
+        if (user.profilePicture.isNotEmpty()) { // not default value
+            imageDatabase.downloadProfilePicture(
+                user.profilePicture,
+                view?.findViewById(R.id.profileImageView)!!,
+                activity?.applicationContext!!
+            )
+        }
+    }
+
+    private val userInfoListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            // Get User info and use the values to update the UI
+            val userDB: User? = try {
+                dataSnapshot.getValue<User>()
+            } catch (e: DatabaseException) {
+                null
+            }
+            userDB?.let {
+                user = it
+            }
+            setView()
+            downloadImage()
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            // Getting Post failed, log a message
+            Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+        }
+    }**/
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,6 +104,13 @@ class ProfileFragment : Fragment() {
         view.findViewById<ImageButton>(R.id.logoutBtn).apply {
             this.setOnClickListener {
                 logOut()
+            }
+        }
+
+        historyButton = view.findViewById<Button>(R.id.historyButton).apply {
+            this.setOnClickListener {
+                val intent = Intent(requireActivity(), HistoryActivity::class.java)
+                startActivity(intent)
             }
         }
 

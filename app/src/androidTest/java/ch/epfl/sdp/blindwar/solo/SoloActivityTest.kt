@@ -29,7 +29,7 @@ import org.junit.runner.RunWith
 class SoloActivityTest {
     @get:Rule
     var testRule = ActivityScenarioRule(
-            SoloActivity::class.java
+        SoloActivity::class.java
     )
 
     @Test
@@ -69,7 +69,7 @@ class SoloActivityTest {
                 .value
                 ?.gameConfig?.mode
 
-            val expectedMode = when(btnId) {
+            val expectedMode = when (btnId) {
                 R.id.regularButton_ -> GameMode.REGULAR
                 R.id.raceButton_ -> GameMode.TIMED
                 else -> GameMode.SURVIVAL
@@ -77,6 +77,7 @@ class SoloActivityTest {
             assertEquals(expectedMode, observedMode)
         }
     }
+
 
     /** TODO: Clean up the following methods
     @Test
@@ -91,8 +92,12 @@ class SoloActivityTest {
                 )
             )
 
-        onView(allOf(withId(R.id.startGame),
-            withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+        onView(
+            allOf(
+                withId(R.id.startGame),
+                withEffectiveVisibility(Visibility.VISIBLE)
+            )
+        ).perform(click())
 
         onView(withId(R.id.guessButton)).check(matches(isDisplayed()))
         simulateLostRound()
@@ -151,16 +156,24 @@ class SoloActivityTest {
     private fun launchDemoWithMode(btnId: Int, position: Int) {
         launchPlaylistSelection(btnId, position, 3)
 
-        onView(allOf(withId(R.id.startGame),
-            withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+        onView(
+            allOf(
+                withId(R.id.startGame),
+                withEffectiveVisibility(Visibility.VISIBLE)
+            )
+        ).perform(click())
     }
 
     @Test
     fun likeTest() {
         searchPlaylist("Fifa", 0)
-        onView(allOf(withId(R.id.likeView),
-            withEffectiveVisibility(Visibility.VISIBLE))).perform(click(), click())
-                                                         .check(matches(isClickable()))
+        onView(
+            allOf(
+                withId(R.id.likeView),
+                withEffectiveVisibility(Visibility.VISIBLE)
+            )
+        ).perform(click(), click())
+            .check(matches(isClickable()))
     }
 
 

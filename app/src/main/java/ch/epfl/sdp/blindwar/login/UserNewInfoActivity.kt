@@ -289,8 +289,8 @@ class UserNewInfoActivity : AppCompatActivity() {
                     lastName!!,
                     birthDate!!,
                     profilePicture,
-                    gender,
-                    description!!
+                    gender = gender!!,
+                    description = description!!
                 ).build()
             )
         }

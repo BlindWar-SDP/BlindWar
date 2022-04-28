@@ -58,8 +58,7 @@ object ImageDatabase {
             Toast.makeText(getApplicationContext(), "Failed to upload file",
                 Toast.LENGTH_LONG).show()
         }*/
-        }
-        else {
+        } else {
             uploadedImageRef.putFile(imageURI)
         }
         return uploadedImageRef.path
