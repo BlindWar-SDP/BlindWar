@@ -12,7 +12,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.GlideApp
-import ch.epfl.sdp.blindwar.user.UserCache
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerActivity
 import ch.epfl.sdp.blindwar.game.solo.SoloActivity
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
@@ -23,7 +22,7 @@ import com.google.firebase.storage.StorageReference
  *
  * @constructor creates a PlayMenuFragment
  */
-class PlayMenuFragment : Fragment(), UserCache {
+class PlayMenuFragment : Fragment() {
     private val profileViewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -43,7 +42,6 @@ class PlayMenuFragment : Fragment(), UserCache {
             startActivity(intent)
         }
 
-        // TODO: Move cache in Repository
         /**
         if (isOffline(activity?.applicationContext!!)) {
             val btn = view.findViewById<ImageButton>(R.id.multiBtn)

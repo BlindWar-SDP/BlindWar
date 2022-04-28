@@ -36,14 +36,14 @@ class ProfileViewModel: ViewModel() {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             // Get User info and use the values to update the UI
             val user: User? = try {
-                Log.d("ZAMBO ANGUISA", dataSnapshot.getValue<User>().toString())
                 dataSnapshot.getValue<User>()
             } catch (e: DatabaseException) {
                 null
             }
 
             if (user != null) {
-                name.postValue(user.firstName)
+                Log.d("ZAMBO ANGUISSA", user.firstName!!)
+                name.postValue(user.firstName!!)
                 email.postValue(user.email)
                 elo.postValue(user.userStatistics.elo.toString())
                 imagePath.postValue(user.profilePicture)

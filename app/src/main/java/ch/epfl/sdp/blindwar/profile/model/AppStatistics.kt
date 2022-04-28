@@ -1,11 +1,8 @@
 package ch.epfl.sdp.blindwar.profile.model
 
-
-import kotlinx.serialization.Serializable
 import kotlin.math.pow
 import kotlin.math.round
 
-@Serializable
 class AppStatistics {
     private val numberOfMode = Mode.values().size
     private val hundredPercent = 100
@@ -119,12 +116,12 @@ class AppStatistics {
             elo = 0;
         }
         elo = if (opponentElo == elo) {
-                equalElo(result)
-            } else if (opponentElo > elo) {
-                smallerElo(result, opponentElo)
-            } else {
-                greaterElo(result, opponentElo)
-            }
+            equalElo(result)
+        } else if (opponentElo > elo) {
+            smallerElo(result, opponentElo)
+        } else {
+            greaterElo(result, opponentElo)
+        }
 
     }
 

@@ -91,21 +91,26 @@ object UserDatabase {
     fun setFirstName(uid: String, fn: String) {
         userReference.child(uid).child("firstName").setValue(fn)
     }
+
     fun setLastName(uid: String, ln: String) {
         userReference.child(uid).child("lastName").setValue(ln)
     }
+
     fun setPseudo(uid: String, pseudo: String) {
         userReference.child(uid).child("pseudo").setValue(pseudo)
     }
     fun setProfilePicture(uid: String, pp: String) {
         userReference.child(uid).child("profilePicture").setValue(pp)
     }
+
     fun setBirthdate(uid: String, date: Long) {
         userReference.child(uid).child("birthDate").setValue(date)
     }
+
     fun setGender(uid: String, gender: String) {
         userReference.child(uid).child("gender").setValue(gender)
     }
+
     fun setDescription(uid: String, desc: String) {
         userReference.child(uid).child("description").setValue(desc)
     }
