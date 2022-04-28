@@ -1,7 +1,7 @@
 package ch.epfl.sdp.blindwar.data.music
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.game.util.Tutorial
 
 object MockMusicdataSource {

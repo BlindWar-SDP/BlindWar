@@ -1,18 +1,13 @@
-package ch.epfl.sdp.blindwar.data
+package ch.epfl.sdp.blindwar.data.music.metadata
 
 import android.content.ContentValues
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
-import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyApi
-import ch.epfl.sdp.blindwar.data.spotify.SpotifyArtist
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyService.apiMeta
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyToken
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyTrack
 import ch.epfl.sdp.blindwar.game.util.Tutorial
-import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -27,7 +22,7 @@ class RemoteMusicMetadataSource(private val songMetadataSource: SpotifyApi = api
     val musicMetadata = MutableLiveData<ArrayList<MusicMetadata>>()
 
     suspend fun fetchSongMetadata(trackName: String = "take on me") {
-        var songMetaData = URIMusicMetadata("", "", "")
+        //var songMetaData = URIMusicMetadata("", "", "")
         withContext(ioDispatcher) {
             var spotifyTrack: SpotifyTrack
             if (!logged)

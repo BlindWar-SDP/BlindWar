@@ -1,7 +1,7 @@
-package ch.epfl.sdp.blindwar.data.music
+package ch.epfl.sdp.blindwar.data.music.metadata
 
 import androidx.lifecycle.MutableLiveData
-import ch.epfl.sdp.blindwar.data.RemoteMusicMetadataSource
+import ch.epfl.sdp.blindwar.data.music.MockMusicdataSource
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyService.apiAuth
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyService.apiMeta
 import kotlinx.coroutines.Dispatchers
@@ -22,15 +22,15 @@ class MusicMetadataRepository {
 
 
     /**
-     * Fetches music metadatas from local mock source
+     * Fetches music metadata from local mock source
      *
      */
     private fun fetchMusicMetadata(): MutableLiveData<ArrayList<MusicMetadata>> {
-        return MutableLiveData(mockSource.fetchMusicMetadata())
+        return MutableLiveData(MockMusicdataSource.fetchMusicMetadata())
     }
 
     /**
-     * Fetches music metadatas from remote source
+     * Fetches music metadata from remote source
      *
      * @param query
      */

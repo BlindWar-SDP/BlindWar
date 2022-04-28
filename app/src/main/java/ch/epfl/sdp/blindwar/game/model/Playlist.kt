@@ -1,6 +1,6 @@
 package ch.epfl.sdp.blindwar.game.model
 
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 
 open class Playlist (
     val uid: String = "", // playlist unique id in database

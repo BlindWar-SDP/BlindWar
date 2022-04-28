@@ -1,7 +1,6 @@
 package ch.epfl.sdp.blindwar.menu
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,20 +8,14 @@ import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.DisplayableViewModel
-import ch.epfl.sdp.blindwar.data.music.MusicMetadataRepository
-import ch.epfl.sdp.blindwar.data.music.MusicMetadataViewModel
-import ch.epfl.sdp.blindwar.data.music.MusicRepository
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadataRepository
 import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
-import ch.epfl.sdp.blindwar.game.util.Tutorial
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
-import ch.epfl.sdp.blindwar.game.viewmodels.PlaylistViewModel
 
 class SearchFragment : Fragment() {
 
@@ -72,11 +65,12 @@ class SearchFragment : Fragment() {
     private fun setUpSearchView() {
         searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                //displayableViewModel.fetchMusicMetadata(query!!)
+                displayableViewModel.queryMetadata(query!!)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.getFilter().filter(newText);
                 return true
             }
         })

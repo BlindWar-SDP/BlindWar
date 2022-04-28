@@ -4,20 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
-import ch.epfl.sdp.blindwar.game.util.Tutorial
-import ch.epfl.sdp.blindwar.game.util.Tutorial.fly
-import ch.epfl.sdp.blindwar.game.util.Tutorial.searchin
-import ch.epfl.sdp.blindwar.game.util.Tutorial.uatw
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.game.viewmodels.PlaylistViewModel
 

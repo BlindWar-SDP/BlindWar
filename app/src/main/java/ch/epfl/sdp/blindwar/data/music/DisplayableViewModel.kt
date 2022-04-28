@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.data.music
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadataViewModel
 import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.viewmodels.PlaylistViewModel
 import kotlinx.coroutines.launch

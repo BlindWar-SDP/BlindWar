@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.data.music
+package ch.epfl.sdp.blindwar.data.music.metadata
 
 import ch.epfl.sdp.blindwar.game.model.Displayable
 

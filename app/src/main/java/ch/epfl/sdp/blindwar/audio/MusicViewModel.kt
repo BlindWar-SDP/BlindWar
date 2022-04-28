@@ -4,8 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.media.MediaPlayer
 import ch.epfl.sdp.blindwar.data.music.MusicRepository
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
-import ch.epfl.sdp.blindwar.game.model.OnlinePlaylist
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.Playlist
 import java.util.*
 

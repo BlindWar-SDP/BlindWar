@@ -2,12 +2,9 @@ package ch.epfl.sdp.blindwar.game.viewmodels
 
 import android.content.Context
 import android.content.res.Resources
-import android.provider.ContactsContract
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ch.epfl.sdp.blindwar.database.UserDatabase
-import com.google.firebase.auth.FirebaseAuth
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.util.GameHelper
 import ch.epfl.sdp.blindwar.audio.MusicViewModel
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance

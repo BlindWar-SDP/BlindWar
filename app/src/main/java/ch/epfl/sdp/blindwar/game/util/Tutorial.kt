@@ -1,8 +1,8 @@
 package ch.epfl.sdp.blindwar.game.util
 
 import ch.epfl.sdp.blindwar.data.music.MusicImageUrlConstants.METADATA_TUTORIAL_MUSICS_PER_AUTHOR
-import ch.epfl.sdp.blindwar.data.music.ResourceMusicMetadata
-import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.ResourceMusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.game.model.*
 import ch.epfl.sdp.blindwar.game.model.Genre
 import ch.epfl.sdp.blindwar.game.model.OnlinePlaylist
@@ -49,9 +49,9 @@ object Tutorial {
     val searchin = (
             URIMusicMetadata("Searchin",
                 "Matisyahu",
-                Tutorial.COVER_URL_SONG,
+                COVER_URL_SONG,
                 30000,
-                Tutorial.URL_PREVIEW_FIFA
+                URL_PREVIEW_FIFA
             ))
 
     val uatw = URIMusicMetadata(
@@ -114,7 +114,8 @@ object Tutorial {
                 COVER_TESTING,
                 30000,
                 URL_PREVIEW_TESTING
-            )),
+            )
+        ),
         COVER_TESTING,
         "https://p.scdn.co/mp3-preview/b2e959350596fc2d3f9ca80e855c51db9a5c5453?cid=774b29d4f13844c495f206cafdad9c86",
         Difficulty.EASY
