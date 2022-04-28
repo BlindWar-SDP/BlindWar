@@ -79,9 +79,15 @@ object UserDatabase {
     fun addLikedMusic(uid: String, music: URIMusicMetadata) {
         val userRef = getUserReference(uid)
         userRef.get().addOnSuccessListener {
-            var user: User? = it.getValue(User::class.java)
+            val user: User? = it.getValue(User::class.java)
             if (user != null) {
-                if (music !in user.likedMusics) {
+                var duplicate = false
+                for (likedMusic in user.likedMusics) {
+                    if (music.title == likedMusic.title) {
+                        duplicate = true
+                    }
+                }
+                if (!duplicate) {
                     user.likedMusics.add(music)
                     userRef.setValue(user)
                 }

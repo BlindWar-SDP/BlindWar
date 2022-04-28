@@ -25,7 +25,7 @@ class HistoryActivity : AppCompatActivity() {
         val likedMusicType = "liked musics"
         val matchHistoryType = "match history"
 
-        showFragment((DisplayHistoryFragment.newInstance(likedMusicType)))
+        //showFragment((DisplayHistoryFragment.newInstance(likedMusicType)))
 
         findViewById<BottomNavigationView>(R.id.historyBottomNavigationView).setOnItemSelectedListener {
             when(it.itemId){

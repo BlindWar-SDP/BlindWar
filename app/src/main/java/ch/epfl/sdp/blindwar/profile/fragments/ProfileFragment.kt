@@ -68,7 +68,7 @@ class ProfileFragment : Fragment() {
                 eloView?.text = user.userStatistics.elo.toString()
 
                 val imagePath = user.profilePicture.toString()
-                if (imagePath != "") {
+                if (imagePath != "" && profileImageView != null) {
                     imageDatabase.downloadProfilePicture(
                         imagePath,
                         profileImageView!!,

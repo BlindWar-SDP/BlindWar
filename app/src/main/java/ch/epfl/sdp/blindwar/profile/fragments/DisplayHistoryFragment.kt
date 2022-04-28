@@ -43,7 +43,7 @@ class DisplayHistoryFragment : Fragment() {
         postToList()
         musicRecyclerView = view.findViewById(R.id.musicRecyclerView)
         musicRecyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
-        musicRecyclerView.adapter = MusicDisplayRecyclerAdapter(titles, artists, images)
+
 
         // showing the back button in action bar
         //supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -51,12 +51,22 @@ class DisplayHistoryFragment : Fragment() {
         return view
     }
 
+    /**
+     * Add element of MusicMetadata to appropriate list.
+     * @param title
+     * @param artist
+     * @param image
+     */
     private fun addToList(title: String, artist: String, image: String) {
         titles.add(title)
         artists.add(artist)
         images.add(image)
     }
 
+    /**
+     * Fetch likedMusics from user and call addToList(with the listener) to add the element
+     * to the lists that will be displayed.
+     */
     private fun postToList() {
         val historyType = arguments?.getString(HISTORY_TYPE)
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -85,7 +95,12 @@ class DisplayHistoryFragment : Fragment() {
                 for (music in likedMusics) {
                     addToList(music.title, music.artist, music.imageUrl.toString())
                 }
+            } else {
+                for (i in 1..10) {
+                    addToList("HELLO", "JOJO", "no image")
+                }
             }
+            musicRecyclerView.adapter = MusicDisplayRecyclerAdapter(titles, artists, images)
         }
 
 
