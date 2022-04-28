@@ -35,36 +35,69 @@
         android:hint="@string/first_name"
         android:inputType="textPersonName"
         android:onClick="clearFirstName"
+        android:text="@string/first_name"
         android:textColor="@color/green_blue_crayola"
         app:layout_constraintBottom_toTopOf="@+id/NU_LastName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NU_pseudo"
         tools:ignore="TouchTargetSizeCheck" />
 
-    <Button
-        android:id="@+id/NU_Confirm_Btn"
+    <EditText
+        android:id="@+id/NU_LastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="confirm"
-        android:text="@string/confirm"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/NU_additional_info"
-        app:layout_constraintTop_toBottomOf="@+id/NU_profileImageView" />
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:hint="@string/last_name"
+        android:inputType="textPersonName"
+        android:onClick="clearLastName"
+        android:text="@string/last_name"
+        android:textColor="@color/green_blue_crayola"
+        app:layout_constraintBottom_toTopOf="@+id/NU_editProfilePicture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NU_FirstName" />
 
     <Button
-        android:id="@+id/NU_additional_info"
+        android:id="@+id/NU_Cancel_Btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/green_blue_crayola"
-        android:onClick="provideMoreInfo"
-        android:text="@string/additional_info_text"
+        android:background="@android:color/transparent"
+        android:onClick="cancel"
+        android:text="@string/cancel_btn"
+        android:textColor="@color/light_red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/NU_Confirm_Btn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NU_editProfilePicture" />
+        app:layout_constraintTop_toBottomOf="@+id/NU_additional_info" />
+
+
+    <Button
+        android:id="@+id/NU_Confirm_Btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:onClick="confirm"
+        android:text="@string/confirm"
+        android:textColor="@color/light_red"
+        android:textStyle="italic"
+        app:layout_constraintBaseline_toBaselineOf="@+id/NU_Cancel_Btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/NU_Cancel_Btn" />
+
+    <Button
+        android:id="@+id/NU_deleteProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:onClick="deleteProfile"
+        android:text="@string/delete_profile"
+        android:textColor="@color/light_red"
+        app:layout_constraintBottom_toBottomOf="@+id/NU_pseudo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/NU_pseudo"
+        app:layout_constraintTop_toTopOf="@+id/NU_pseudo" />
 
     <Button
         android:id="@+id/NU_editProfilePicture"
@@ -79,6 +112,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NU_LastName" />
 
+    <Button
+        android:id="@+id/NU_additional_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:backgroundTint="@color/green_blue_crayola"
+        android:onClick="provideMoreInfo"
+        android:text="@string/additional_info_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NU_editProfilePicture" />
+
     <ImageView
         android:id="@+id/NU_profileImageView"
         android:layout_width="158dp"
@@ -89,24 +134,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/NU_editProfilePicture"
         app:layout_constraintTop_toBottomOf="@+id/NU_LastName"
-        app:layout_constraintVertical_bias="0.354"
         tools:ignore="ImageContrastCheck"
         tools:srcCompat="@tools:sample/avatars" />
-
-    <EditText
-        android:id="@+id/NU_LastName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:ems="10"
-        android:hint="@string/last_name"
-        android:inputType="textPersonName"
-        android:onClick="clearLastName"
-        android:textColor="@color/green_blue_crayola"
-        app:layout_constraintBottom_toTopOf="@+id/NU_editProfilePicture"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NU_FirstName"
-        tools:ignore="TouchTargetSizeCheck" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
@@ -114,5 +143,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp" />
+
+    <Button
+        android:id="@+id/NU_resetProfilePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="resetProfilePicture"
+        android:text="@string/reset"
+        android:textSize="7sp"
+        android:minHeight="0sp"
+        android:minWidth="0sp"
+        app:layout_constraintEnd_toEndOf="@+id/NU_editProfilePicture"
+        app:layout_constraintStart_toStartOf="@+id/NU_editProfilePicture"
+        app:layout_constraintTop_toBottomOf="@+id/NU_editProfilePicture" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

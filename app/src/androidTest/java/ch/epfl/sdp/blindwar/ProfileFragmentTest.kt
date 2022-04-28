@@ -82,6 +82,8 @@ class ProfileFragmentTest : TestCase() {
             onView(withId(R.id.logoutBtn)).perform(click())
     }
 
+
+    /**
     fun testDeleteButton_cancel() {
         launchFragmentInContainer<ProfileFragment>()
             closeSoftKeyboard()
@@ -115,7 +117,7 @@ class ProfileFragmentTest : TestCase() {
             clickOn(android.R.string.ok)
             //BaristaVisibilityAssertions.assertDisplayed(R.string.deletion_success) // toast not detected
             intended(hasComponent(SplashScreenActivity::class.java.name))
-    }
+    } **/
 
     @Test
     fun testLogoutButton() {
