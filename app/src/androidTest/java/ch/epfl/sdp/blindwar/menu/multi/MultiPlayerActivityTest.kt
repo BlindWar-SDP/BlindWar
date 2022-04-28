@@ -10,9 +10,8 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerActivity
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerFriendActivity
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerRandomActivity
-import org.junit.Assert.*
-
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

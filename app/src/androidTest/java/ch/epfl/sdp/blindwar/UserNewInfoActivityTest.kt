@@ -232,7 +232,6 @@ class UserNewInfoActivityTest : TestCase() {
             .perform(replaceText(validPseudo))
         clickOn(R.id.NU_Confirm_Btn)
         intended(hasComponent(MainMenuActivity::class.java.name))
-
     }
     */
 
@@ -295,7 +294,7 @@ class UserNewInfoActivityTest : TestCase() {
     }
 
     @Test
-    fun testBackButton(){
+    fun testBackButton() {
         val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         assertTrue("Back button can't be pressed", device.pressBack())
     }

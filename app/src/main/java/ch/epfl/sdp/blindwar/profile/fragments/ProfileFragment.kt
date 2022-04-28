@@ -113,8 +113,8 @@ class ProfileFragment : Fragment(), UserCache {
             }
         }
 
-        historyButton = view.findViewById<Button>(R.id.historyButton).apply{
-            this.setOnClickListener{
+        historyButton = view.findViewById<Button>(R.id.historyButton).apply {
+            this.setOnClickListener {
                 val intent = Intent(requireActivity(), HistoryActivity::class.java)
                 startActivity(intent)
             }
@@ -124,7 +124,7 @@ class ProfileFragment : Fragment(), UserCache {
         }
 
 
-        logOutButton = view.findViewById<Button>(R.id.logoutButton).apply{
+        logOutButton = view.findViewById<Button>(R.id.logoutButton).apply {
             setButtonListener(this) { logOut() }
         }
 

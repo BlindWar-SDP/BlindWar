@@ -1,17 +1,18 @@
 package ch.epfl.sdp.blindwar.database
 
 
-
 import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
 
 
 object UserDatabase {
@@ -101,7 +102,7 @@ object UserDatabase {
      * @param uid
      * @param gameResult
      */
-    fun addGameResult(uid: String, gameResult: GameResult){
+    fun addGameResult(uid: String, gameResult: GameResult) {
         val userRef = getUserReference(uid)
         userRef.get().addOnSuccessListener {
             val user: User? = it.getValue(User::class.java)
@@ -113,6 +114,7 @@ object UserDatabase {
             }
         }
     }
+
     /**
      * Set elo of an user
      *
@@ -176,11 +178,19 @@ object UserDatabase {
      */
     fun updateSoloUserStatistics(uid: String, score: Int, fails: Int) {
         getUserStatistics(uid).addOnSuccessListener {
-            var userStatistics: AppStatistics? = it.getValue(AppStatistics::class.java)
-            userStatistics?.let{stat ->
+            val userStatistics: AppStatistics? = it.getValue(AppStatistics::class.java)
+            userStatistics?.let { stat ->
                 stat.correctnessUpdate(score, fails, Mode.SOLO)
                 setUserStatistics(uid, stat)
             }
         }
+    }
+
+    /**
+     * Get current authenticated user
+     *
+     */
+    fun getCurrentUser(): DataSnapshot {
+        return getUserReference(Firebase.auth.currentUser!!.uid).get().result
     }
 }

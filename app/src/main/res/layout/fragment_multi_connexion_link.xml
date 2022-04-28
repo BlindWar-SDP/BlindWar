@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_gravity="center_vertical"
+    android:padding="30dp">
+
+    <EditText
+        android:id="@+id/editTextLink"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:hint="@string/multi_write_link"
+        android:autofillHints="string"
+        android:inputType="text" />
+</LinearLayout>
