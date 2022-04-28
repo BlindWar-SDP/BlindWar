@@ -41,7 +41,8 @@ class MultiPlayerActivity : AppCompatActivity() {
      */
     fun friendButton(view: View) {
         //TODO launch link fragment
-        
+
+
         setProgressDialog("Wait for connexion")
         //TODO connect if ok, toast if not existing match or full
         val intent = Intent(this, MultiPlayerFriendActivity::class.java)

@@ -168,4 +168,5 @@
     <string name="toast_connexion">Match are full, retrying…</string>
     <string name="toast_canceled_connexion">Search canceled !</string>
     <string name="multi_loading">Loading ...</string>
+    <string name="multi_write_link">Please write your link invitation</string>
 </resources>
