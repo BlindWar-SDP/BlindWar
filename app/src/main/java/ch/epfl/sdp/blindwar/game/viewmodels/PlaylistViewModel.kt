@@ -24,17 +24,14 @@ class PlaylistViewModel: ViewModel() {
 
     fun queryFilterPlaylist(query: String) {
         viewModelScope.launch{
-            _playlists.apply {
                 _playlists.postValue(
-                    this.value?.filter { it.getName().lowercase().contains(query)} as ArrayList<Playlist>
+                    //this.value?.filter { it.getName().lowercase().contains(query)} as ArrayList<Playlist>
+                    PlaylistRepository.playlists.value
                 )
-            }
         }
     }
 
-    private fun resetPlaylist() {
-
-    }
+    private fun resetPlaylist() {}
 
     fun likePlaylist(playlist: Playlist) {}
 }

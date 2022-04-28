@@ -38,13 +38,13 @@ class DisplayableViewModel: ViewModel() {
     }
 
     private fun queryPlaylistMetadata(query: String) {
-
+        playlistViewModel.queryFilterPlaylist(query)
     }
 
     fun queryMetadata(query: String) {
         viewModelScope.launch {
             queryMusicMetadata(query)
-            queryPlaylistMetadata(query)
+            //queryPlaylistMetadata(query)
         }
     }
 

@@ -55,7 +55,7 @@ class SearchFragment : Fragment() {
      * Resets the playlist recycler view with the updated list of playlist
      */
     private fun resetRecyclerView(view: View, list: ArrayList<Displayable>) {
-        musicMetadataRecyclerView.adapter = DisplayableItemAdapter(list, requireActivity(), view, gameInstanceViewModel)
+        musicMetadataRecyclerView.adapter = DisplayableItemAdapter(list, requireContext(), view, gameInstanceViewModel)
         adapter = musicMetadataRecyclerView.adapter as DisplayableItemAdapter
     }
 
@@ -66,6 +66,7 @@ class SearchFragment : Fragment() {
         searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 displayableViewModel.queryMetadata(query!!)
+                onQueryTextChange(query)
                 return true
             }
 
