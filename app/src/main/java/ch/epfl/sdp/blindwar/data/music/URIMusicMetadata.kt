@@ -8,4 +8,6 @@ data class URIMusicMetadata(
     override var artist: String = "",
     override var imageUrl: String = "",
     override var duration: Int = 0,
-    val uri: String = ""): MusicMetadata()
+    val uri: String = ""): MusicMetadata() {
+    override fun toString(): String = "$title by $artist"
+}
