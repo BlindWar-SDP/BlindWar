@@ -18,6 +18,7 @@ import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Gender
@@ -135,6 +136,7 @@ class UserNewInfoActivity : AppCompatActivity() {
         val gender = intent.getStringExtra("gender") ?: Gender.None.toString()
         val description = intent.getStringExtra("description") ?: ""
         val likeMusics: MutableList<URIMusicMetadata> = mutableListOf()
+        val matchHistory: MutableList<GameResult> = mutableListOf()
         val isNewUser = intent.getBooleanExtra("newUser", false)
 
         // check validity of pseudo
@@ -167,7 +169,9 @@ class UserNewInfoActivity : AppCompatActivity() {
                     profilePicture.toString(),
                     gender,
                     description,
-                    likeMusics
+                    likeMusics,
+                    matchHistory
+
                 ) // TODO : Comment for TESTing -> need to uncomment
 //            AuthUI.getInstance().delete(this) // TODO : uncomment for TESTing
                 startActivity(Intent(this, MainMenuActivity::class.java))
@@ -270,6 +274,8 @@ class UserNewInfoActivity : AppCompatActivity() {
      * @param profilePicture
      * @param gender
      * @param description
+     * @param likedMusics
+     * @param matchHistory
      */
     private fun createUser(
         pseudo: String,
@@ -279,7 +285,8 @@ class UserNewInfoActivity : AppCompatActivity() {
         profilePicture: String,
         gender: String,
         description: String?,
-        likedMusics: MutableList<URIMusicMetadata>
+        likedMusics: MutableList<URIMusicMetadata>,
+        matchHistory: MutableList<GameResult>
     ) {
 
         val user = Firebase.auth.currentUser
@@ -296,7 +303,8 @@ class UserNewInfoActivity : AppCompatActivity() {
                     profilePicture,
                     gender,
                     description,
-                    likedMusics
+                    likedMusics,
+                    matchHistory
                 ).build()
             )
         }
