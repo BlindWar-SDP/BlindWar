@@ -8,9 +8,6 @@ import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.viewmodels.PlaylistViewModel
 import kotlinx.coroutines.launch
 
-/**
- *
- */
 class DisplayableViewModel: ViewModel() {
     private val musicMetadataViewModel: MusicMetadataViewModel =
         MusicMetadataViewModel()
@@ -58,9 +55,5 @@ class DisplayableViewModel: ViewModel() {
                 }
             )
         }
-    }
-
-    fun filterByType(type: Int) {
-
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.media.MediaPlayer
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -134,14 +135,13 @@ class DisplayableItemAdapter(private var displayableList: ArrayList<Displayable>
 
             /** Expandable type **/
             if (displayed.extendable()) {
-                setStartGameListener(displayed as Playlist)
-                expandButton.visibility = View.VISIBLE
-                setExpansionListener()
-
                 /** Initialize roundPicker **/
                 roundPicker.maxValue = displayed.getSize()
                 roundPicker.minValue = ROUND_MIN_VALUE
-                roundPicker.value = ROUND_DEFAULT_VALUE
+
+                setStartGameListener(displayed as Playlist)
+                expandButton.visibility = View.VISIBLE
+                setExpansionListener()
 
                 when(gameInstanceViewModel.gameInstance.value!!.gameConfig.mode) {
                     GameMode.SURVIVAL -> roundTextView.text = "LIVES"
@@ -174,6 +174,7 @@ class DisplayableItemAdapter(private var displayableList: ArrayList<Displayable>
         private fun setStartGameListener(playlist: Playlist) {
             playButton.setOnClickListener{
                 player.pause()
+                Log.d("LIVES", roundPicker.value.toString())
                 gameInstanceViewModel.setGameParameters(
                     timeChosen = (timerPicker.value * 5 + 1) * 1000,
                     roundChosen = roundPicker.value,

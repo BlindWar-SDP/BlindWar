@@ -2,6 +2,7 @@ package ch.epfl.sdp.blindwar.game.viewmodels
 
 import android.content.Context
 import android.content.res.Resources
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
@@ -59,6 +60,8 @@ class GameViewModel(
             game.onlinePlaylist,
             context, resources
         )
+
+
     }
 
     /**

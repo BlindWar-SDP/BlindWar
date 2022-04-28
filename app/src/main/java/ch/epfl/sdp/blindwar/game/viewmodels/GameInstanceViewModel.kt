@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.game.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ch.epfl.sdp.blindwar.game.model.*
