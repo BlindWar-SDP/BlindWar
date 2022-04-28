@@ -58,10 +58,12 @@ class DisplayHistoryFragment : Fragment() {
     }
 
     private fun postToList() {
+        val historyType = arguments?.getString(HISTORY_TYPE)
         val currentUser = FirebaseAuth.getInstance().currentUser
-        if (currentUser != null) {
+        if (historyType == "liked musics" && currentUser != null) {
             UserDatabase.addUserListener(currentUser.uid, userLikedMusicsListener)
         }
+
         /*
         else {
             for (i in 1..20) {
@@ -91,6 +93,25 @@ class DisplayHistoryFragment : Fragment() {
             Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
         }
     }
+
+    companion object {
+        const val HISTORY_TYPE = "type"
+
+
+        fun newInstance(name: String): DisplayHistoryFragment {
+            val fragment = DisplayHistoryFragment()
+
+            val bundle = Bundle().apply {
+                putString(HISTORY_TYPE, name)
+            }
+
+            fragment.arguments = bundle
+
+            return fragment
+        }
+    }
+
+
     /*
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
