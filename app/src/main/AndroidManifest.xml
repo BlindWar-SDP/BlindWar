@@ -8,8 +8,7 @@
 
     <queries>
         <intent>
-            <action
-                android:name="android.speech.RecognitionService" />
+            <action android:name="android.speech.RecognitionService" />
         </intent>
     </queries>
 
@@ -18,9 +17,9 @@
         android:icon="@mipmap/ic_launcher_base"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round_base"
-        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BlindWar">
+        android:theme="@style/Theme.BlindWar"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".login.UserNewInfoActivity"
             android:exported="false"
@@ -53,6 +52,11 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".profile.HistoryActivity"
+            android:parentActivityName=".profile.fragments.ProfileFragment"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".profile.fragments.StatisticsActivity"
             android:parentActivityName=".profile.fragments.ProfileFragment"
             android:exported="false"
@@ -68,6 +72,7 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -76,4 +81,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
 </manifest>

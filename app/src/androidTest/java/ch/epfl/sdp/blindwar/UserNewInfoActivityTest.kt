@@ -215,6 +215,7 @@ class UserNewInfoActivityTest : TestCase() {
 //        intended(hasComponent(StatisticsActivity::class.java.name))
     }
 
+
 //    @Test
 //    fun testNewUser() {
 //        putNewUserExtra(true)
@@ -231,8 +232,10 @@ class UserNewInfoActivityTest : TestCase() {
             .perform(replaceText(validPseudo))
         clickOn(R.id.NU_Confirm_Btn)
         intended(hasComponent(MainMenuActivity::class.java.name))
+
     }
     */
+
 
     @Test
     fun testAdditionalInfo() {

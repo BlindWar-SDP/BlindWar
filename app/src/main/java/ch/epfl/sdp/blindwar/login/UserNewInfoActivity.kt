@@ -17,8 +17,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.model.User
 import ch.epfl.sdp.blindwar.user.UserCache
@@ -144,10 +147,12 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
      * @param v
      */
     fun confirm(v: View) {
+
         // Additional info
         setFromBundle()
         // basic info
         setFromText()
+
 
         // check validity of pseudo
         if (user.pseudo.length < resources.getInteger(R.integer.pseudo_minLength) ||
@@ -427,6 +432,7 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
                 user.profilePicture,
                 findViewById(R.id.NU_profileImageView),
                 applicationContext
+
             )
         }
     }

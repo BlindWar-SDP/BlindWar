@@ -80,6 +80,7 @@ class SoloActivityTest {
 
     /*
     /** TODO: Clean up the following methods **/
+    /*
     @Test
     fun testLostThenWonGame() {
         searchPlaylist("The witcher", 2)
@@ -112,6 +113,7 @@ class SoloActivityTest {
 
         onView(withId(R.id.quit)).perform(click())
     }
+    */
     */
 
     @Test

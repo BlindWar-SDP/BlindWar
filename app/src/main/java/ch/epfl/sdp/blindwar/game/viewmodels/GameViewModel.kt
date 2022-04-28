@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import ch.epfl.sdp.blindwar.data.music.MusicMetadata
 import ch.epfl.sdp.blindwar.game.util.GameHelper
 import ch.epfl.sdp.blindwar.audio.MusicViewModel
+import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
@@ -71,7 +72,9 @@ class GameViewModel(
         val currentUser = FirebaseAuth.getInstance().currentUser
 
         if (currentUser != null) {
+            val gameResult = GameResult(mode, round, score)
             UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
+            UserDatabase.addGameResult(currentUser.uid, gameResult)
         }
 
         musicViewModel.soundTeardown()
