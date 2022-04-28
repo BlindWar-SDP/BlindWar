@@ -19,6 +19,11 @@ class MainMenuActivity : AppCompatActivity() {
     private val displayableViewModel: DisplayableViewModel by viewModels()
 
     @SuppressLint("UseCompatLoadingForDrawables")
+    /**
+     * Generates the layout and sets up bottom navigation
+     *
+     * @param savedInstanceState
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
@@ -47,5 +52,13 @@ class MainMenuActivity : AppCompatActivity() {
             replace(R.id.fragment_menu_container, fragment)
             commit()
         }
+    }
+
+    /**
+     * Minimizes the app if the back button is pressed
+     *
+     */
+    override fun onBackPressed() {
+        this.moveTaskToBack(true);
     }
 }
