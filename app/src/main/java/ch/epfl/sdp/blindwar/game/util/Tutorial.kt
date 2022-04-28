@@ -2,6 +2,7 @@ package ch.epfl.sdp.blindwar.game.util
 
 import ch.epfl.sdp.blindwar.data.music.MusicImageUrlConstants.METADATA_TUTORIAL_MUSICS_PER_AUTHOR
 import ch.epfl.sdp.blindwar.data.music.ResourceMusicMetadata
+import ch.epfl.sdp.blindwar.data.music.ReverseMusicConstants.METADATA_REVERSE_MUSICS_PER_AUTHOR
 import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
 import ch.epfl.sdp.blindwar.game.model.*
 import ch.epfl.sdp.blindwar.game.model.Genre
@@ -14,6 +15,7 @@ object Tutorial {
     const val ROUND = 2
 
     private val PLAYLIST: List<ResourceMusicMetadata> = METADATA_TUTORIAL_MUSICS_PER_AUTHOR.values.toList()
+    private val REV_PLAYLIST: List<ResourceMusicMetadata> = METADATA_REVERSE_MUSICS_PER_AUTHOR.values.toList()
 
     private val gameParameter =
         GameParameter(round = ROUND, funny = false, timeToFind = TIME_TO_FIND, hint = true, lives = 5)
@@ -88,6 +90,16 @@ object Tutorial {
         Difficulty.EASY
     )
 
+    private val reversePlaylist = LocalPlaylist("tutorial",
+        "Reverse",
+        "BlindWar LTD.",
+        arrayListOf(Genre.POP, Genre.RAP),
+        REV_PLAYLIST,
+        "",
+        URL_PREVIEW_TUTORIAL,
+        Difficulty.EASY
+    )
+
     private const val COVER_TESTING =
         "https://i.scdn.co/image/ab67616d0000b273df756f52b91b4dcd656760b0"
 
@@ -114,7 +126,7 @@ object Tutorial {
         Difficulty.EASY
     )
 
-    val BASE_PLAYLISTS = arrayListOf(tutorialPlaylist, testingPlaylist)
+    val BASE_PLAYLISTS = arrayListOf(tutorialPlaylist, testingPlaylist, reversePlaylist)
 
     val gameInstance = GameInstance(gameConfig, tutorialPlaylist)
 }
