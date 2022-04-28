@@ -20,7 +20,6 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
-import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.User
 import ch.epfl.sdp.blindwar.user.UserCache
 import com.firebase.ui.auth.AuthUI
@@ -433,28 +432,22 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
     }
 
     private fun updateUser() {
-        Firebase.auth.currentUser?.let {
-            if (isNewUser) { // firstLog()
-                UserDatabase.addUser(
-                    User.Builder()
-                        .fromUser(user)
-                        .setUid(it.uid)
-                        .setEmail(it.email!!)
-                        .setStats(AppStatistics())
-                        .build()
+        Firebase.auth.currentUser?.let { auth ->
+                val user0 = User.Builder()
+                    .fromUser(user)
+                    .setUid(auth.uid)
+                    .build()
+            auth.email?.let{ email ->
+                    user0.email = email
+                }
+                UserDatabase.updateUser(
+                    user0
                 )
                 Toast.makeText(
                     this,
-                    "Welcome ${user.pseudo} 👋", Toast.LENGTH_SHORT
+                    "${user.pseudo}'s info updated", Toast.LENGTH_SHORT
                 ).show()
-            } else {
-                UserDatabase.updateUser(user)
-                Toast.makeText(
-                    this,
-                    "${user.pseudo}'s server data updated 👋", Toast.LENGTH_SHORT
-                ).show()
-//                startActivity(Intent(this, MainMenuActivity::class.java)) // was ProfileActivity\
-            }
+
         }?: run {
             Toast.makeText(
                 this,

@@ -91,25 +91,16 @@ interface UserCache {
     }
 
     /**
-     * push local data to firebase server
-     *
-     * @param context
-     */
-    fun updateServerFromCache(context: Context) {
-        val user = readCache(context)
-        UserDatabase.updateUser(user) // TODO this should be addUser instead ? (no stats update, but needed as no offline was... but now there is so yes !!)
-    }
-
-    /**
-     * create user from local data at first online connection
+     * overwrite server data with local data
      *
      * if user first connect offline, no id neither email are available
-     * thus, we get it from the FirebaseUser
+     * thus, we get it from the FirebaseUser.
      *
      * @param context
      * @param user
      */
-    fun updateServerFromCacheFirstLogin(context: Context, user: FirebaseUser) {
+    // TODO is this a source of conflict ?
+    fun updateServerFromCache(context: Context, user: FirebaseUser) {
         // update user info if there is a local data (1st login in when offline)
         val userCache = readCache(context)
         userCache.uid = user.uid

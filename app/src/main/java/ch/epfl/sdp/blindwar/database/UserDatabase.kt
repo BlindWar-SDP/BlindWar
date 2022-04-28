@@ -54,7 +54,7 @@ object UserDatabase {
      * @param user to be added
      */
     // Add user to database
-    fun addUser(user: User) {
+    fun updateUser(user: User) {
         userReference.child(user.uid).setValue(user)
     }
 
@@ -76,17 +76,17 @@ object UserDatabase {
         getEloReference(uid).setValue(elo)
     }
 
-    fun updateUser(user: User){
-        val ref = userReference.child(user.uid)
-        // TODO no statistics ...
-        ref.child(User.VarName.pseudo.name).setValue(user.pseudo)
-        ref.child(User.VarName.firstName.name).setValue(user.firstName)
-        ref.child(User.VarName.lastName.name).setValue(user.lastName)
-        ref.child(User.VarName.profilePicture.name).setValue(user.profilePicture)
-        ref.child(User.VarName.description.name).setValue(user.description)
-        ref.child(User.VarName.gender.name).setValue(user.gender)
-        ref.child(User.VarName.birthdate.name).setValue(user.birthdate)
-    }
+//    fun updateUser(user: User){
+//        val ref = userReference.child(user.uid)
+//        // TODO no statistics ...
+//        ref.child(User.VarName.pseudo.name).setValue(user.pseudo)
+//        ref.child(User.VarName.firstName.name).setValue(user.firstName)
+//        ref.child(User.VarName.lastName.name).setValue(user.lastName)
+//        ref.child(User.VarName.profilePicture.name).setValue(user.profilePicture)
+//        ref.child(User.VarName.description.name).setValue(user.description)
+//        ref.child(User.VarName.gender.name).setValue(user.gender)
+//        ref.child(User.VarName.birthdate.name).setValue(user.birthdate)
+//    }
 
     /**
      * Reset set user statistics

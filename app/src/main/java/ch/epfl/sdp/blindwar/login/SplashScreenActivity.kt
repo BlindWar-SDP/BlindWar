@@ -10,8 +10,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.BuildConfig
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.user.UserCache
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
+import ch.epfl.sdp.blindwar.user.UserCache
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
@@ -65,7 +65,7 @@ class SplashScreenActivity : AppCompatActivity(), UserCache {
     private fun checkCurrentUser() {
         FirebaseAuth.getInstance().currentUser?.let {
             // upload local data
-            updateServerFromCache(this)
+            updateServerFromCache(this, it)
             startActivity(Intent(this, MainMenuActivity::class.java))
         } ?: run {
             signInLauncher.launch(createSignInIntent())
@@ -110,7 +110,7 @@ class SplashScreenActivity : AppCompatActivity(), UserCache {
                 // https://www.tabnine.com/code/java/classes/com.google.firebase.auth.FirebaseAuth
                 return if (user.metadata?.lastSignInTimestamp == user.metadata?.creationTimestamp) {
                     // new user: 1st signIn
-                    updateServerFromCacheFirstLogin(this, user)
+                    updateServerFromCache(this, user)
                     Intent(activity, UserNewInfoActivity::class.java)
                 } else {
                     // user already known (as logged out: no local data (deleted on logout))
