@@ -9,6 +9,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerActivity
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerFriendActivity
+import ch.epfl.sdp.blindwar.game.multi.MultiPlayerRandomActivity
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -45,11 +46,11 @@ class MultiPlayerActivityTest {
         Intents.intended(IntentMatchers.hasComponent(MultiPlayerFriendActivity::class.java.name))
     }
 
-    /*@Test
+    @Test
     fun randomButton() {
         Espresso.closeSoftKeyboard()
         Espresso.onView(ViewMatchers.withId(R.id.imageRandomButton))
             .perform(ViewActions.click())
         Intents.intended(IntentMatchers.hasComponent(MultiPlayerRandomActivity::class.java.name))
-    }*/
+    }
 }

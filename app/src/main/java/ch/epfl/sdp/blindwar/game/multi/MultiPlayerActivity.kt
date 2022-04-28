@@ -13,8 +13,6 @@ import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.profile.model.User
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -41,7 +39,8 @@ class MultiPlayerActivity : AppCompatActivity() {
      * @param view
      */
     fun friendButton(view: View) {
-        //setLinkDialog()
+        setLinkDialog()
+        dialog!!.hide() //TODO REMOVE WHEN TESTS OK
         val intent = Intent(this, MultiPlayerFriendActivity::class.java)
         startActivity(intent)
     }
@@ -53,7 +52,7 @@ class MultiPlayerActivity : AppCompatActivity() {
      */
     fun randomButton(view: View) {
         setProgressDialog("Wait for matches")
-        val user = UserDatabase.getCurrentUser()
+        /*val user = UserDatabase.getCurrentUser()
         val elo = user.child("userStatistics/elo").value!! as Int
         val matchs = Firebase.firestore.collection("match").whereLessThan("elo", elo + eloDelta)
             .whereGreaterThan("elo", elo - 200)
@@ -86,7 +85,10 @@ class MultiPlayerActivity : AppCompatActivity() {
             }
         } else if (!isCanceled) {
             randomButton(view)
-        }
+        }*/
+        dialog!!.hide() //TODO REMOVE WHEN TESTS OK
+        val intent = Intent(this, MultiPlayerRandomActivity::class.java)
+        startActivity(intent)
     }
 
     /**

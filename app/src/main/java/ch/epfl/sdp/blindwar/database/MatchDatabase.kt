@@ -22,7 +22,7 @@ object MatchDatabase {
         numberOfPlayerMax: Int,
         game: GameInstance,
         db: FirebaseFirestore
-    ): Boolean {
+    ) {
         db.collection(COLLECTION_PATH).add(
             Match(
                 user.uid,
@@ -34,7 +34,6 @@ object MatchDatabase {
                 numberOfPlayerMax
             )
         )
-        return true
     }
 
     /**
