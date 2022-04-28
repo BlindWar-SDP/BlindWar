@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar.database
 
-
 import android.content.Context
 import android.net.Uri
 import android.view.View
@@ -51,22 +50,21 @@ object ImageDatabase {
             uploadedImageRef.putFile(imageURI)
                 .addOnSuccessListener {
                     Snackbar.make(view, "Image uploaded", Snackbar.LENGTH_LONG).show()
-                    UserDatabase.addProfilePicture(user!!.uid, uploadedImageRef.path)
+//                    UserDatabase.addProfilePicture(user!!.uid, uploadedImageRef.path)
                 }
             /*
         .addOnFailureListener {
             Toast.makeText(getApplicationContext(), "Failed to upload file",
                 Toast.LENGTH_LONG).show()
         }*/
-        }
-        else {
+        } else {
             uploadedImageRef.putFile(imageURI)
         }
         return uploadedImageRef.path
     }
 
 
-    fun dowloadProfilePicture(imagePath: String, imageView: ImageView, context: Context): String {
+    fun downloadProfilePicture(imagePath: String, imageView: ImageView, context: Context): String {
         val profilePictureRef = storageRef.child(imagePath)
         GlideApp.with(context)
             .load(profilePictureRef)

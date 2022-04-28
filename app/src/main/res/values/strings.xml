@@ -12,7 +12,7 @@
     <string name="profile">PROFILE</string>
     <string name="logout">LOGOUT</string>
     <string name="login">LOGIN</string>
-    <string name="Btn_email">e-mail</string>
+    <string name="Btn_email">Email</string>
     <string name="Btn_google">Google</string>
     <string name="confirm">Confirm</string>
     <string name="ok">OK</string>
@@ -49,8 +49,9 @@
     <string name="backText"><![CDATA[->]]></string>
     <string name="emailText">Your email here</string>
     <string name="statisticsText">Statistics</string>
+    <string name="historyText">History</string>
     <string name="nameText">Your name here</string>
-    <string name="editProfileText">Edit\nProfile</string>
+    <string name="editProfileText">Edit Profile</string>
     <string name="logoutText">:( Logout</string>
     <string name="profilePicDescriptionText">The profile picture of the user</string>
     <string name="game">GAME</string>
@@ -148,8 +149,9 @@
     <string name="time">TIME</string>
     <string name="artist">ARTIST</string>
     <string name="track">TRACK</string>
-    <string name="play_with_friends">Play with friends</string>
-    <string name="play_with_random">Play with random</string>
+    <string name="play_with_friends">Join a game via link</string>
+    <string name="play_with_random">Play Now !</string>
+    <string name="multi_create_match">Create a match</string>
     <string name="icon_for_playing_with_friends">Icon for playing with friends</string>
     <string name="icon_for_playing_with_random_people">Icon for playing with random people</string>
     <string name="nu_chose_profile_picture">chose profile\npicture</string>
@@ -163,5 +165,19 @@
     <string name="account_deletion_text">Are you sure you want to delete your account?</string>
     <string name="select_birthdate">select birthdate</string>
     <string name="select_your_gender">Please, select your gender</string>
+    <string name="cancel_btn">cancel</string>
+    <string name="alert_dialogue_cancel_title">Cancel update</string>
+    <string name="alert_dialogue_cancel_text">Are you sure to keep old info</string>
+    <string name="newUser_ExtraName">newUser</string>
+    <string name="reset">reset</string>
+    <string name="no_birthdate_selected">no birthdate selected</string>
 
+    <!-- MULTI -->
+    <string name="toast_connexion">Match are full, retrying…</string>
+    <string name="toast_canceled_connexion">Search canceled !</string>
+    <string name="multi_loading">Loading ...</string>
+    <string name="multi_write_link">Please write your link invitation</string>
+    <string name="multi_match_full">match is full, sorry !</string>
+    <string name="multi_match_not_found">Match not found !</string>
+    <string name="multi_wait_matches">Wait for matches...</string>
 </resources>

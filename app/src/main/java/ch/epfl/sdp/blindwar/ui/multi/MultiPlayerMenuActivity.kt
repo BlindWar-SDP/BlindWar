@@ -6,6 +6,8 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.game.multi.MultiPlayerFriendActivity
+import ch.epfl.sdp.blindwar.game.multi.MultiPlayerRandomActivity
 
 class MultiPlayerMenuActivity : AppCompatActivity() {
 
@@ -39,7 +41,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      */
     fun friendButton(view: View) {
         //val intent = Intent(this, MultiPlayerFriendActivity::class.java)
-        val intent = Intent(this, MultiPlayerActivity::class.java)
+        val intent = Intent(this, MultiPlayerFriendActivity::class.java)
         startActivity(intent)
     }
 

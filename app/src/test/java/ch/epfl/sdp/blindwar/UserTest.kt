@@ -1,7 +1,7 @@
 package ch.epfl.sdp.blindwar
 
-import ch.epfl.sdp.blindwar.user.AppStatistics
-import ch.epfl.sdp.blindwar.user.User
+import ch.epfl.sdp.blindwar.profile.model.AppStatistics
+import ch.epfl.sdp.blindwar.profile.model.User
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -15,10 +15,17 @@ class UserTest {
     private var lastName2 = "lastName2"
     private var pseudo1 = "Screen Name1"
     private var pseudo2 = "Screen Name2"
-    private var birthDate1: Long = 1312341234
-    private var birthDate2: Long = 1312311111
+    private var birthdate1: Long = 1312341234
+    private var birthdate2: Long = 1312311111
     private var userStatistics: AppStatistics = AppStatistics()
-//    private var profilePicture: Uri? = null
+    private var gender1 = "Female"
+    private var gender2 = "Male"
+    private var description1 = "Male"
+    private var description2 = "Male"
+    private var uid1 = "Male"
+    private var uid2 = "Male"
+    private var profilePicture1: String = "image1"
+    private var profilePicture2: String = "image2"
 
     private lateinit var testUser1: User
     private lateinit var testUser2: User
@@ -31,8 +38,11 @@ class UserTest {
             .setPseudo(pseudo1)
             .setFirstName(firstName1)
             .setLastName(lastName1)
-            .setBirthDate(birthDate1)
-//            .setImage(profilePicture)
+            .setBirthdate(birthdate1)
+            .setProfilePicture(profilePicture1)
+            .setUid(uid1)
+            .setGender(gender1)
+            .setDescription(description1)
             .build()
 
         testUser2 = User.Builder()
@@ -41,8 +51,11 @@ class UserTest {
             .setPseudo(pseudo2)
             .setFirstName(firstName2)
             .setLastName(lastName2)
-            .setBirthDate(birthDate2)
-//            .setImage(profilePicture)
+            .setBirthdate(birthdate2)
+            .setProfilePicture(profilePicture2)
+            .setUid(uid2)
+            .setGender(gender2)
+            .setDescription(description2)
             .build()
     }
 
@@ -70,13 +83,29 @@ class UserTest {
     }
 
     @Test
-    fun getBirthDate() {
-        assertEquals(testUser1.birthDate, birthDate1)
+    fun getBirthdate() {
+        assertEquals(testUser1.birthdate, birthdate1)
     }
 
     @Test
     fun getPseudo() {
         assertEquals(testUser1.pseudo, pseudo1)
+    }
+    @Test
+    fun getUid() {
+        assertEquals(testUser1.uid, uid1)
+    }
+    @Test
+    fun getDescription() {
+        assertEquals(testUser1.description, description1)
+    }
+    @Test
+    fun getGender() {
+        assertEquals(testUser1.gender, gender1)
+    }
+    @Test
+    fun getProfilePicture() {
+        assertEquals(testUser1.profilePicture, profilePicture1)
     }
 
     // =========
@@ -114,17 +143,35 @@ class UserTest {
 
     @Test
     fun setBirthDate() {
-        val testUser = User.Builder().setBirthDate(birthDate1).build()
-        assertEquals(testUser.birthDate, birthDate1)
+        val testUser = User.Builder().setBirthdate(birthdate1).build()
+        assertEquals(testUser.birthdate, birthdate1)
     }
 
-    /*
     @Test
-    fun setImage() {
-        val testUser = User.Builder().setImage(profilePicture).build()
-        assertEquals(testUser.profilePicture, profilePicture)
+    fun setProfilePicture() {
+        val testUser = User.Builder().setProfilePicture(profilePicture1).build()
+        assertEquals(testUser.profilePicture, profilePicture1)
     }
-     */
+    @Test
+    fun setGender() {
+        val testUser = User.Builder().setGender(gender1).build()
+        assertEquals(testUser.gender, gender1)
+    }
+    @Test
+    fun setBirthdate() {
+        val testUser = User.Builder().setBirthdate(birthdate1).build()
+        assertEquals(testUser.birthdate, birthdate1)
+    }
+    @Test
+    fun setDescription() {
+        val testUser = User.Builder().setDescription(description1).build()
+        assertEquals(testUser.description, description1)
+    }
+    @Test
+    fun setUid() {
+        val testUser = User.Builder().setUid(uid1).build()
+        assertEquals(testUser.uid, uid1)
+    }
 
 
     // =============
