@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BlindWar</string>
+    <string name="blind_war">Blind War</string>
+
+    <!-- Buttons  -->
+    <string name="solo">SOLO</string>
+    <string name="logout">LOGOUT</string>
+    <string name="Btn_email">Email</string>
+    <string name="Btn_google">Google</string>
+    <string name="confirm">Confirme</string>
+
+    <!--  Modes  -->
+    <string name="survival">SURVIVAL</string>
+    <string name="classic">CLASSIC</string>
+    <string name="timed">TIMED</string>
+    <string name="mode_selection">MODE</string>
+    <string name="funny">FUNNY</string>
+    <string name="timedDescription">Faster, Higher, Stronger</string>
+    <string name="survivalDescription">Good luck</string>
+    <string name="classicDescription">Just a normal game</string>
+
+    <!--  Playlist selection  -->
+    <string name="playlist_selection">SELECTION de PLAYLIST</string>
+
+    <!--  Text  -->
+    <string name="emailText">votre email ici</string>
+    <string name="statisticsText">Statistiques</string>
+    <string name="historyText">Historique</string>
+    <string name="nameText">Votre nom ici</string>
+    <string name="editProfileText">Edit Profile</string>
+    <string name="profilePicDescriptionText">Votre image de profile</string>
+    <string name="game">JEU</string>
+    <string name="text_pseudo">Pseudo</string>
+    <string name="first_name">Prénom</string>
+    <string name="last_name">Nom</string>
+    <string name="additional_info_text">plus?</string>
+    <string name="elo">ELO:</string>
+
+    <!-- chars for Pseudo -->
+    <string name="Pseudo_AvailableChars">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
+
+    <!-- Alert Dialogue-->
+    <string name="new_user_wrong_pseudo_title">Alert de Creation deProfile</string>
+    <string name="new_user_wrong_pseudo_text">Svp,veuillez <b>enter un pseudo valide</b>\n\nVotre pseudo doit être long d'au moin <b>2</b> caractères, mais <b>pas \"Pseudo\"</b></string>
+
+    <!-- DatePicker -->
+    <string name="new_user_birthdatePicker">Svp, enter votre date de naissance.</string>
+
+    <!-- MULTI -->
+    <string name="toast_connexion">les Match sont pleins, veuilley réessayer…</string>
+    <string name="toast_canceled_connexion">Recherche annulée !</string>
+    <string name="multi_loading">Chargement…</string>
+    <string name="multi_write_link">Svp, veuillez entrer votre lien d'invitation</string>
+    <string name="multi_match_full">Le match est plein, désolé !</string>
+    <string name="multi_match_not_found">Le match n'a pas été trouvé!</string>
+    <string name="multi_wait_matches">En attente du match…</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="logo_description">Logo de l'application</string>
+    <string name="content_description_background_image">Image noire de Fond d'écran</string>
+    <string name="tutorial_textview">Tutoriel</string>
+    <string name="oval_description">Forme ovale pour le profile</string>
+    <string name="guess_button_text">Devine !</string>
+    <string name="zero">0</string>
+    <string name="modes_textview">Modes</string>
+    <string name="formats_textview">Formats</string>
+    <string name="commands_textview">Commandes</string>
+    <string name="game_options_textview">Options de Jeu</string>
+
+    <string name="example_elo">1435</string>
+    <string name="wins">Gagné:</string>
+    <string name="win_number">60</string>
+    <string name="win_percent" formatted="false">"25%"</string>
+    <string name="draws">Null:</string>
+    <string name="draw_number">36</string>
+    <string name="draw_percent" formatted="false">"15%"</string>
+    <string name="losses">Perdus:</string>
+    <string name="loss_number">144</string>
+    <string name="loss_percent" formatted="false">"60%"</string>
+
+    <string name="correct">Correct:</string>
+    <string name="correct_number">195</string>
+    <string name="correct_percent" formatted="false">"65%"</string>
+
+    <string name="wrong">Faux:</string>
+    <string name="wrong_number">105</string>
+    <string name="wrong_percent" formatted="false">"35%"</string>
+
+    <string name="selected_item">item selectionné:</string>
+    <string name="chose_sign_in_text">Sign In avec:</string>
+    <string name="signin_welcome_text">BlindWar vous souhaite la bien venue !</string>
+    <string name="avatar_description">image de l'avatar</string>
+
+    <string name="artist">ARTISTE</string>
+    <string name="track">MORCEAU</string>
+    <string name="play_with_friends">Rejoindre une partie avec un lien</string>
+    <string name="play_with_random">Jouer !</string>
+    <string name="multi_create_match">Créer un match</string>
+
+    <string name="icon_for_playing_with_friends">Icon pour jouer avec des amis</string>
+    <string name="icon_for_playing_with_random_people">Icon pour jouer aléatoirement avec des personnes</string>
+    <string name="nu_chose_profile_picture">choisir profile\npicture</string>
+    <string name="delete_profile">Supprimer\nProfile</string>
+    <string name="deletion_success">Compte supprimé avec succès, <b>Bye Bye</b></string>
+    <string name="account_not_deleted_confirm_toast">ouf, vous restez membre de la famille</string>
+    <string name="account_deletion_confirm_title"><b>Suppression de compte</b></string>
+    <string name="account_deletion_confirm_text">Êtes-vous <b>certain</b> de vouloir supprimer votre compre et <b>quitter</b> la majestueuse aventure <b>BlindWar</b></string>
+    <string name="account_not_deleted_toast">suppression annulée</string>
+    <string name="account_deletion_title">Suppression de Compte</string>
+    <string name="account_deletion_text">Êtes-vous certain de désirer supprimer votre compte BlindWar?</string>
+    <string name="select_birthdate">selection de la date d'anniversaire</string>
+    <string name="select_your_gender">Svp, veuillez selectionner votre genre</string>
+    <string name="alert_dialogue_cancel_title">Mise-à-jour annulée</string>
+    <string name="alert_dialogue_cancel_text">Êtes-vous certain de vouloir ocnserver les anciennes infos</string>
+    <string name="newUser_ExtraName">newUser</string>
+    <string name="reset">reset</string>
+    <string name="no_birthdate_selected">Aucune date d'anniversaire selectionnée</string>
+</resources>
