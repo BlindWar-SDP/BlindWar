@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -15,12 +16,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
-import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import java.util.*
@@ -113,7 +115,8 @@ class DemoFragment : Fragment() {
         when (mode) {
             GameMode.TIMED -> initRaceMode()
             GameMode.SURVIVAL -> initSurvivalMode()
-            else -> {}
+            else -> {
+            }
         }
 
         // Create game summary
@@ -147,7 +150,7 @@ class DemoFragment : Fragment() {
         crossAnim = view.findViewById(R.id.cross)
         crossAnim.repeatCount = 1
 
-        view.findViewById<ConstraintLayout>(R.id.fragment_container).setOnClickListener{
+        view.findViewById<ConstraintLayout>(R.id.fragment_container).setOnClickListener {
             guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
         }
 
@@ -157,10 +160,10 @@ class DemoFragment : Fragment() {
 
         /** TODO : Settings menu
         guessEditText.doOnTextChanged { text, _, _, _ ->
-            if (text != "" && (text!!.length > game.currentMetadata()?.title!!.length / 2.0)) {
-                isVocal = voiceRecognizer.resultsRecognized != ""
-                guess(false, isAuto = true) //guess as a keyboard at every change
-            }
+        if (text != "" && (text!!.length > game.currentMetadata()?.title!!.length / 2.0)) {
+        isVocal = voiceRecognizer.resultsRecognized != ""
+        guess(false, isAuto = true) //guess as a keyboard at every change
+        }
         } **/
 
         microphoneButton = view.findViewById(R.id.microphone)
@@ -176,7 +179,13 @@ class DemoFragment : Fragment() {
                 MotionEvent.ACTION_UP -> {
                     voiceRecognizer.stop()
                     gameViewModel.play()
-                    guess(isVocal, isAuto = false)
+
+                    voiceRecognizer.ready.observe(requireActivity()) {
+                        if (it) {
+                            guess(isVocal, isAuto = false)
+                            voiceRecognizer.ready = MutableLiveData(false)
+                        }
+                    }
                     isVocal = false
                 }
             }
@@ -257,7 +266,7 @@ class DemoFragment : Fragment() {
     private fun initSurvivalMode() {
         heartImage.visibility = View.VISIBLE
         heartNumber.visibility = View.VISIBLE
-        gameViewModel.lives.observe(requireActivity()){
+        gameViewModel.lives.observe(requireActivity()) {
             heartNumber.text = "x ${it}"
         }
     }
@@ -272,8 +281,8 @@ class DemoFragment : Fragment() {
         if (gameViewModel.guess(guessEditText.text.toString(), isVocal)) {
             // Update the number of point view
             scoreTextView.text = gameViewModel.score.toString()
-              (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
-              .hideSoftInputFromWindow(view?.windowToken, 0)
+            (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
+                .hideSoftInputFromWindow(view?.windowToken, 0)
             launchSongSummary(success = true)
         } else if (!isAuto) {
             animNotFound()

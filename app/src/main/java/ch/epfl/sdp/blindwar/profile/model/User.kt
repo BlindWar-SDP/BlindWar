@@ -1,9 +1,8 @@
 package ch.epfl.sdp.blindwar.profile.model
 
-import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
-import ch.epfl.sdp.blindwar.game.model.GameResult
 
-import kotlinx.serialization.Serializable
+import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
+import ch.epfl.sdp.blindwar.game.model.GameResult
 
 //const val UID = "uid"
 //const val EMAIL = "email`"
@@ -16,31 +15,20 @@ import kotlinx.serialization.Serializable
 //const val GENDER = "gender"
 //const val DESCRIPTION = "description"
 
-@Serializable
 data class User(
     var uid: String = "",
     var email: String = "",
     var userStatistics: AppStatistics = AppStatistics(),
     var pseudo: String = "",
-    var firstName: String = "",
-    var lastName: String = "",
-    var birthdate: Long = -1,
+    var firstName: String? = null,
+    var lastName: String? = null,
+    var birthDate: Long? = 0,
     var profilePicture: String = "",
     var likedMusics: MutableList<URIMusicMetadata> = mutableListOf(),
     var matchHistory: MutableList<GameResult> = mutableListOf(),
     var gender: String = "",
     var description: String = ""
 ) {
-
-    enum class Gender {
-        Other, Female, Male, Undefined, None
-    }
-
-    // ENUM to get variable name as string with the .name method
-    // for
-    enum class VarName {
-        uid, email, userStatistics, pseudo, firstName, lastName, birthdate, profilePicture, gender, description, user
-    }
 
     class Builder(
         private var uid: String = "",
@@ -67,10 +55,15 @@ data class User(
         fun setProfilePicture(imagePath: String) = apply { this.profilePicture = imagePath }
         fun setGender(gender: String) = apply { this.gender = gender }
         fun setDescription(desc: String) = apply { this.description = desc }
-        fun setLikedMusics(likedMusics: MutableList<URIMusicMetadata>) = apply { this.likedMusics =
-            likedMusics }
-        fun matchHistory(matchHistory: MutableList<GameResult>) = apply { this.matchHistory =
-            matchHistory }
+        fun setLikedMusics(likedMusics: MutableList<URIMusicMetadata>) = apply {
+            this.likedMusics =
+                likedMusics
+        }
+
+        fun matchHistory(matchHistory: MutableList<GameResult>) = apply {
+            this.matchHistory =
+                matchHistory
+        }
 
 
         fun fromUser(user: User) = apply {
@@ -78,24 +71,12 @@ data class User(
             this.email = user.email
             this.userStatistics = user.userStatistics
             this.pseudo = user.pseudo
-            this.firstName = user.firstName
-            this.lastName = user.lastName
-            this.birthDate = user.birthdate
+            this.firstName = user.firstName.toString()
+            this.lastName = user.lastName.toString()
+            this.birthDate = user.birthDate!!
             this.profilePicture = user.profilePicture
             this.gender = user.gender
             this.description = user.description
-            this.likedMusics = user.likedMusics
-            this.matchHistory = user.matchHistory
-            setUid(user.uid)
-            setEmail(user.email)
-            setStats(user.userStatistics)
-            setPseudo(user.pseudo)
-            setFirstName(user.firstName)
-            setLastName(user.lastName)
-            setBirthdate(user.birthdate)
-            setProfilePicture(user.profilePicture)
-            setGender(user.gender)
-            setDescription(user.description)
         }
 
         fun build(): User {

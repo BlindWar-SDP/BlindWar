@@ -1,11 +1,9 @@
 package ch.epfl.sdp.blindwar.game.util
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.media.MediaPlayer
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,10 +21,10 @@ import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.audio.AudioHelper
+import ch.epfl.sdp.blindwar.game.model.Displayable
+import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
-import ch.epfl.sdp.blindwar.game.model.Playlist
-import ch.epfl.sdp.blindwar.game.solo.util.AnimationSetterHelper
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.progressindicator.CircularProgressIndicator
@@ -39,52 +37,49 @@ import kotlinx.coroutines.withContext
 /**
  * Recycler view adapter for a playlistModel
  *
- * @param playlistSet playlist data
+ * @param displayableList playlist data
  * @param context Play Activity context
  * @param viewFragment playlist creation view
  * @param gameInstanceViewModel shared viewModel needed to create a game
  */
-class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
-                      private val context: Context,
-                      private val viewFragment: View,
-                      private val gameInstanceViewModel: GameInstanceViewModel
+class DisplayableItemAdapter(
+    private var displayableList: ArrayList<Displayable>,
+    private val context: Context,
+    private val viewFragment: View,
+    private val gameInstanceViewModel: GameInstanceViewModel
 ) :
-    RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>() {
+    RecyclerView.Adapter<DisplayableItemAdapter.DisplayableItemViewHolder>() {
 
-    private val initialPlaylists = ArrayList<Playlist>().apply {
-        addAll(playlistSet)
-
-        for (playlist in this) {
-            Log.d(TAG, playlist.name)
-        }
+    private val initialItems = ArrayList<Displayable>().apply {
+        addAll(displayableList)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistViewHolder {
-        return PlaylistViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DisplayableItemViewHolder {
+        return DisplayableItemViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.playlist_expanded_cardview, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
-        holder.bind(playlistSet[position])
+    override fun onBindViewHolder(holder: DisplayableItemViewHolder, position: Int) {
+        holder.bind(displayableList[position])
     }
 
     override fun getItemCount(): Int {
-        return playlistSet.size
+        return displayableList.size
     }
 
     /**
      * Search filter
      **/
     fun getFilter(): Filter {
-        return Util.playlistFilterQuery(initialPlaylists, playlistSet, this)
+        return Util.playlistFilterQuery(initialItems, displayableList, this)
     }
 
     /**
      *
      */
-    inner class PlaylistViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class DisplayableItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         /** Playlist info **/
         private val cardView = view.findViewById<ConstraintLayout>(R.id.base_cardview)
         private val name: TextView = view.findViewById(R.id.playlistName)
@@ -113,27 +108,11 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
         /**
          * Bind the playlistModel to the displayed view
          *
-         * @param playlist object to represent
+         * @param displayed object to represent
          */
-        fun bind(playlist: Playlist) {
-            /** Initialize roundPicker **/
-            roundPicker.maxValue = playlist.songs.size
-            roundPicker.minValue = ROUND_MIN_VALUE
-            roundPicker.value = ROUND_DEFAULT_VALUE
-
-            when(gameInstanceViewModel.gameInstance.value!!.gameConfig.mode) {
-                GameMode.SURVIVAL -> roundTextView.text = "LIVES"
-                else -> roundTextView.text = "ROUNDS"
-            }
-
-            /** Initialize timerPicker **/
-            timerPicker.minValue = TIMER_MIN_VALUE
-            timerPicker.maxValue = TIMER_MAX_VALUE
-            timerPicker.value = TIMER_DEFAULT_VALUE
-            timerPicker.displayedValues = ((1 until 10).map{ (5 * it).toString()}).toTypedArray()
-
-            name.text = playlist.name.uppercase()
-            author.text = playlist.author
+        fun bind(displayed: Displayable) {
+            name.text = displayed.getName().uppercase()
+            author.text = displayed.getAuthor()
 
             /** Retrieve the playlist cover : image retrieval must be done on another thread
              *  we use runBlocking to avoid this function to be suspendable **/
@@ -141,18 +120,43 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
             runBlocking {
                 withContext(Dispatchers.IO) {
                     try {
-                        coverCard.background = BitmapDrawable(Picasso.get().load(playlist.imageUrl).get())
+                        coverCard.background =
+                            BitmapDrawable(Picasso.get().load(displayed.getCover()).get())
                     } catch (e: Exception) {
-                        coverCard.background = AppCompatResources.getDrawable(context, R.drawable.logo)
+                        coverCard.background =
+                            AppCompatResources.getDrawable(context, R.drawable.logo)
                     }
                 }
             }
 
             /** Set listeners **/
             setLikeListener()
-            setExpansionListener()
-            setPreviewListener(playlist)
-            setStartGameListener(playlist)
+            setPreviewListener(displayed)
+
+            /** Expandable type **/
+            if (displayed.extendable()) {
+                expandButton.visibility = View.VISIBLE
+                setExpansionListener()
+
+                /** Initialize roundPicker **/
+                roundPicker.maxValue = displayed.getSize()
+                roundPicker.minValue = ROUND_MIN_VALUE
+                roundPicker.value = ROUND_DEFAULT_VALUE
+
+                setStartGameListener(displayed as Playlist)
+
+                when (gameInstanceViewModel.gameInstance.value!!.gameConfig.mode) {
+                    GameMode.SURVIVAL -> roundTextView.text = "LIVES"
+                    else -> roundTextView.text = "ROUNDS"
+                }
+
+                /** Initialize timerPicker **/
+                timerPicker.minValue = TIMER_MIN_VALUE
+                timerPicker.maxValue = TIMER_MAX_VALUE
+                timerPicker.value = TIMER_DEFAULT_VALUE
+                timerPicker.displayedValues =
+                    ((1 until 10).map { (5 * it).toString() }).toTypedArray()
+            }
         }
 
         /** Duplicated function, create Animation object/class setter **/
@@ -171,18 +175,20 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
          * @param playlist chosen playlist
          */
         private fun setStartGameListener(playlist: Playlist) {
-            playButton.setOnClickListener{
+            playButton.setOnClickListener {
                 player.pause()
                 gameInstanceViewModel.setGameParameters(
                     timeChosen = (timerPicker.value * 5 + 1) * 1000,
                     roundChosen = roundPicker.value,
-                    playlist = playlist)
-
+                    playlist = playlist
+                )
 
                 (context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                    .replace((viewFragment.parent as ViewGroup).id,
-                             DemoFragment(),
-                         "DEMO")
+                    .replace(
+                        (viewFragment.parent as ViewGroup).id,
+                        DemoFragment(),
+                        "DEMO"
+                    )
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
             }
@@ -192,7 +198,7 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
          * Sets and handles logic of playlist cardview expansion
          */
         private fun setExpansionListener() {
-            cardView.setOnClickListener{
+            cardView.setOnClickListener {
                 when (expansionView.visibility) {
                     View.VISIBLE -> {
                         TransitionManager.beginDelayedTransition(
@@ -218,20 +224,27 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
         /**
          * Sets and handles logic of the preview button
          *
-         * @param playlist chosen playlist
+         * @param displayed chosen displayed item
          */
-        private fun setPreviewListener(playlist: Playlist) {
-            playPreview.setOnClickListener{
-
+        private fun setPreviewListener(displayed: Displayable) {
+            playPreview.setOnClickListener {
                 if (!playing) {
                     player = MediaPlayer()
-                    player.setDataSource(playlist.previewUrl)
+                    player.setDataSource(displayed.getPreviewUrl())
+
+                    var duration = DURATION_DEFAULT
 
                     /** Modify the music preview to not spoil the playlist too much **/
-                    AudioHelper.soundAlter(player, AudioHelper.HIGH, AudioHelper.FAST)
+                    if (displayed.extendable()) {
+                        AudioHelper.soundAlter(
+                            player,
+                            AudioHelper.HIGH,
+                            AudioHelper.FAST
+                        )
+                        duration = DURATION_FAST
+                    }
 
                     /** Create util object **/
-                    val duration = DURATION_FAST
                     countdown = Util.createCountDown(duration, progress)
 
                     /** Audio player view model or global AudioManager needed **/
@@ -273,6 +286,7 @@ class PlaylistAdapter(private var playlistSet: ArrayList<Playlist>,
         const val TIMER_DEFAULT_VALUE = Tutorial.TIME_TO_FIND / 5000
         const val TIMER_MAX_VALUE = 9
         const val DURATION_FAST = 20000L
+        const val DURATION_DEFAULT = 30000L
     }
 }
 

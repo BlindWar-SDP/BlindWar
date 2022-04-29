@@ -1,6 +1,5 @@
-/*
 package ch.epfl.sdp.blindwar.ui
-
+/*
 import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.DialogInterface

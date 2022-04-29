@@ -1,12 +1,10 @@
-package ch.epfl.sdp.blindwar.user
+package ch.epfl.sdp.blindwar.profile.model
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.database.UserDatabase
-import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.firebase.auth.FirebaseUser
 import com.google.gson.Gson
-
 
 private const val BLIND_WAR = "blind_war"
 private const val USER = "user"
@@ -15,7 +13,7 @@ private const val OFFLINE = "offline"
 interface UserCache {
 
     /**
-     * create local user if not already exist
+     * Create local user if not already exist
      *
      * @param context
      */
@@ -38,6 +36,7 @@ interface UserCache {
         if (localStr.isNotEmpty()) {
             user = Gson().fromJson(localStr, User::class.java)
         }
+
         return user
     }
 
@@ -91,15 +90,14 @@ interface UserCache {
     }
 
     /**
-     * overwrite server data with local data
+     * Overwrite server data with local data
      *
-     * if user first connect offline, no id neither email are available
+     * If user first connect offline, no id neither email are available
      * thus, we get it from the FirebaseUser.
      *
      * @param context
      * @param user
      */
-    // TODO is this a source of conflict ?
     fun updateServerFromCache(context: Context, user: FirebaseUser) {
         // update user info if there is a local data (1st login in when offline)
         val userCache = readCache(context)
@@ -112,7 +110,7 @@ interface UserCache {
     }
 
     /**
-     * read local storage and return it as a String,
+     * Read local storage and return it as a String,
      * which is empty if no local data
      *
      * @param context

@@ -7,6 +7,7 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.widget.EditText
+import androidx.lifecycle.MutableLiveData
 
 /**
  * Class used to recognize voice
@@ -18,6 +19,7 @@ class VoiceRecognizer : RecognitionListener {
     var resultsRecognized: String = ""
     private var speechRecognizerIntent: Intent? = null
     private var editTextResult: EditText? = null
+    var ready = MutableLiveData<Boolean>()
 
     /**
      * Function used when the SpeechRecognizer recognize something
@@ -26,9 +28,11 @@ class VoiceRecognizer : RecognitionListener {
      */
     override fun onResults(results: Bundle) {
         val data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-        if (data!![0] != null) {
+        ready.postValue(false)
+        if (data != null && data[0] != null) {
             resultsRecognized = data[0]
             editTextResult?.setText(resultsRecognized)
+            ready.postValue(true)
         }
     }
 

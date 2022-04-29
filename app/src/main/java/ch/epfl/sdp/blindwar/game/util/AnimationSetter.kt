@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.game.solo.util
+package ch.epfl.sdp.blindwar.game.util
 
 import com.airbnb.lottie.LottieAnimationView
 
@@ -24,14 +24,14 @@ object AnimationSetterHelper {
      * @param likeAnimation reference of the AnimationView object
      */
     fun playLikeAnimation(likeSwitch: Boolean, likeAnimation: LottieAnimationView) {
-            if (!likeSwitch) {
-                likeAnimation.setMinAndMaxFrame(10, 30)
-                likeAnimation.repeatCount = 0
-                likeAnimation.playAnimation()
-            } else {
-                likeAnimation.setMinAndMaxFrame(45, 70)
-                likeAnimation.repeatCount = 0
-                likeAnimation.playAnimation()
-            }
+        if (!likeSwitch) {
+            likeAnimation.setMinAndMaxFrame(10, 30)
+            likeAnimation.repeatCount = 0
+            likeAnimation.playAnimation()
+        } else {
+            likeAnimation.setMinAndMaxFrame(45, 70)
+            likeAnimation.repeatCount = 0
+            likeAnimation.playAnimation()
+        }
     }
 }

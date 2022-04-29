@@ -1,7 +1,5 @@
 package ch.epfl.sdp.blindwar.data.playlists
 
-import android.content.ContentValues
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import ch.epfl.sdp.blindwar.game.model.Difficulty
 import ch.epfl.sdp.blindwar.game.model.Genre
@@ -21,10 +19,6 @@ object PlaylistRepository {
 
     init {
         playlists = fetchPlaylists()
-
-        for (playlist in playlists.value!!) {
-            Log.d(ContentValues.TAG, playlist.name)
-        }
     }
 
     /**
@@ -37,10 +31,12 @@ object PlaylistRepository {
      *
      * @return mutable list of playlists
      */
-     fun fetchPlaylists(refresh: Boolean = false,
-                        query: String = "",
-                        genreFilter: List<Genre> = Genre.values().toList(),
-                        difficultyFilter: List<Difficulty> = Difficulty.values().toList()) : MutableLiveData<ArrayList<Playlist>> {
+    private fun fetchPlaylists(
+        refresh: Boolean = false,
+        query: String = "",
+        genreFilter: List<Genre> = Genre.values().toList(),
+        difficultyFilter: List<Difficulty> = Difficulty.values().toList()
+    ): MutableLiveData<ArrayList<Playlist>> {
 
         if (refresh || playlists.value?.isEmpty()!!) {
             remotePlaylistSource.get().addOnCompleteListener { task ->
@@ -51,8 +47,8 @@ object PlaylistRepository {
                         response = result.children.map { snapShot ->
                             snapShot.getValue(OnlinePlaylist::class.java)!!
                         }
-                            .filter{
-                                it.name.contains(query)
+                            .filter {
+                                it.getName().contains(query)
                                         && genreFilter.containsAll(it.genres)
                                         && difficultyFilter.contains(it.difficulty)
                             }.toMutableList()
