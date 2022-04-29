@@ -50,6 +50,10 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.multi.MultiPlayerMenuActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".game.multi.MultiPlayerFriendActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
