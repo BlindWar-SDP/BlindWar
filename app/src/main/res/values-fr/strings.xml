@@ -42,7 +42,7 @@
 
     <!-- Alert Dialogue-->
     <string name="new_user_wrong_pseudo_title">Alert de Creation deProfile</string>
-    <string name="new_user_wrong_pseudo_text">Svp,veuillez <b>enter un pseudo valide</b>\n\nVotre pseudo doit être long d'au moin <b>2</b> caractères, mais <b>pas \"Pseudo\"</b></string>
+    <string name="new_user_wrong_pseudo_text">Svp,veuillez <b>enter un pseudo valide</b>\n\nVotre pseudo doit être long d\'au moin <b>2</b> caractères, mais <b>pas \"Pseudo\"</b></string>
 
     <!-- DatePicker -->
     <string name="new_user_birthdatePicker">Svp, enter votre date de naissance.</string>
