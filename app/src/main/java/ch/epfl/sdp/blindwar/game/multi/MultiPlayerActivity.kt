@@ -22,7 +22,7 @@ class MultiPlayerActivity : AppCompatActivity() {
     private var isCanceled = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_multiplayer)
+        setContentView(R.layout.activity_multiplayer_menu)
         eloDelta = 200
     }
 
