@@ -7,7 +7,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.game.multi.MultiPlayerActivity
+import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerFriendActivity
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerRandomActivity
 import org.junit.After
@@ -16,10 +16,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class MultiPlayerActivityTest {
+class MultiPlayerMenuActivityTest {
     @get:Rule
     var testRule = ActivityScenarioRule(
-        MultiPlayerActivity::class.java
+        MultiPlayerMenuActivity::class.java
     )
 
     @Before

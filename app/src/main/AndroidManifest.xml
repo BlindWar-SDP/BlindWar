@@ -46,7 +46,7 @@
             android:parentActivityName=".login.UserNewInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".game.multi.MultiPlayerActivity"
+            android:name=".game.multi.MultiPlayerMenuActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
