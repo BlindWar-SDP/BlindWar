@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.data.music
 
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.data.music.metadata.ResourceMusicMetadata
 
 /**
  * Hard coded constants for demo purposes

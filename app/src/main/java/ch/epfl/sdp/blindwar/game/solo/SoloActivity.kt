@@ -6,10 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.audio.MusicViewModel
 import ch.epfl.sdp.blindwar.game.solo.fragments.GameSummaryFragment
 import ch.epfl.sdp.blindwar.game.solo.fragments.ModeSelectionFragment
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 /**
  * Contains the UI logic to play a solo game
@@ -19,6 +21,7 @@ import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 class SoloActivity : AppCompatActivity() {
 
     val gameInstanceViewModel: GameInstanceViewModel by viewModels()
+    val profileViewModel: ProfileViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

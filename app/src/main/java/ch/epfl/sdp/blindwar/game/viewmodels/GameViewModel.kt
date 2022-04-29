@@ -5,14 +5,13 @@ import android.content.res.Resources
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ch.epfl.sdp.blindwar.audio.MusicViewModel
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
-import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
 import ch.epfl.sdp.blindwar.game.util.GameHelper
-import com.google.firebase.auth.FirebaseAuth
+import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 /**
  * Class representing an instance of a game
@@ -30,8 +29,8 @@ class GameViewModel(
      *
      */
     private val game: GameInstance = gameInstance
-
     private lateinit var musicViewModel: MusicViewModel
+    private val profileViewModel = ProfileViewModel()
 
     private val gameParameter: GameParameter = gameInstance
         .gameConfig
@@ -69,14 +68,9 @@ class GameViewModel(
      */
     private fun endGame() {
         val fails = round - score
-        val currentUser = FirebaseAuth.getInstance().currentUser
+        val gameResult = GameResult(mode, round, score)
 
-        if (currentUser != null) {
-            val gameResult = GameResult(mode, round, score)
-            UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
-            UserDatabase.addGameResult(currentUser.uid, gameResult)
-        }
-
+        profileViewModel.updateStats(score, fails, gameResult)
         musicViewModel.soundTeardown()
     }
 

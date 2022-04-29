@@ -10,10 +10,12 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
-import ch.epfl.sdp.blindwar.database.UserDatabase
+
+import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.game.util.AnimationSetterHelper
+import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
@@ -28,6 +30,7 @@ class SongSummaryFragment : Fragment() {
     private lateinit var skip: ImageButton
     private var likeSwitch: Boolean = false
     private var success: Boolean = false
+    private val profileViewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -118,7 +121,7 @@ class SongSummaryFragment : Fragment() {
                 val artist: String = arguments?.get("artist").toString()
                 val image: String = arguments?.get("image").toString()
                 val music = URIMusicMetadata(title, artist, image, defaultDuration, defaultUri)
-                UserDatabase.addLikedMusic(currentUser.uid, music)
+                profileViewModel.likeMusic(music)
             }
         }
     }

@@ -2,7 +2,7 @@ package ch.epfl.sdp.blindwar.game.util
 
 import android.os.CountDownTimer
 import android.widget.Filter
-import ch.epfl.sdp.blindwar.game.model.Playlist
+import ch.epfl.sdp.blindwar.game.model.Displayable
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import java.util.*
 
@@ -24,26 +24,25 @@ object Util {
         }
     }
 
-    /** TODO: Add generic parameter once we use a Song Recycler View **/
     /**
      * Creates a Filter based on the name for the playlistSelectionFragment
      * @param initialOnlinePlaylists base list of playlists
      * @param onlinePlaylistSet list of available playlists
-     * @param playlistAdapter playlistRecyclerView adapter
+     * @param displayableItemAdapter playlistRecyclerView adapter
      */
     fun playlistFilterQuery(
-        initialOnlinePlaylists: List<Playlist>,
-        onlinePlaylistSet: ArrayList<Playlist>,
-        playlistAdapter: PlaylistAdapter
+        initialOnlinePlaylists: List<Displayable>,
+        onlinePlaylistSet: ArrayList<Displayable>,
+        displayableItemAdapter: DisplayableItemAdapter
     ): Filter = object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            val filteredList: ArrayList<Playlist> = ArrayList()
+            val filteredList: ArrayList<Displayable> = ArrayList()
             if (constraint == null || constraint.isEmpty()) {
                 initialOnlinePlaylists.let { filteredList.addAll(it) }
             } else {
                 val query = constraint.toString().trim().lowercase(Locale.getDefault())
                 initialOnlinePlaylists.forEach {
-                    if (it.name.lowercase(Locale.getDefault()).contains(query)) {
+                    if (it.getName().lowercase(Locale.getDefault()).contains(query)) {
                         filteredList.add(it)
                     }
                 }
@@ -56,8 +55,8 @@ object Util {
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             if (results?.values is ArrayList<*>) {
                 onlinePlaylistSet.clear()
-                onlinePlaylistSet.addAll(results.values as ArrayList<Playlist>)
-                playlistAdapter.notifyDataSetChanged()
+                onlinePlaylistSet.addAll(results.values as ArrayList<Displayable>)
+                displayableItemAdapter.notifyDataSetChanged()
             }
         }
     }

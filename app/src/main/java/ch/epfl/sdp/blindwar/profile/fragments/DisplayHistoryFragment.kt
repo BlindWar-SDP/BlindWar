@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.profile.model.User

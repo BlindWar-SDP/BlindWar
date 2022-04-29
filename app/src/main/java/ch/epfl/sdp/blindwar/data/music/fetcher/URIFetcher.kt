@@ -1,8 +1,8 @@
 package ch.epfl.sdp.blindwar.data.music.fetcher
 
 import android.media.MediaPlayer
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
-import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 
 class URIFetcher : Fetcher {
     override fun fetchMusic(musicMetadata: MusicMetadata): Pair<MusicMetadata, MediaPlayer> {

@@ -4,7 +4,7 @@ import android.util.Base64
 
 object SpotifyApiConstants {
     /** Credentials constants **/
-    private const val CLIENT_ID = ""
+    private const val CLIENT_ID = "66f4e3c14d6e425caed973ba62bb2077"
     private const val CLIENT_SECRET = ""
     const val AUTH_TYPE = "client_credentials"
 

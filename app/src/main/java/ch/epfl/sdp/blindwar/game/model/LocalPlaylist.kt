@@ -1,6 +1,6 @@
 package ch.epfl.sdp.blindwar.game.model
 
-import ch.epfl.sdp.blindwar.data.music.ResourceMusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.ResourceMusicMetadata
 
 class LocalPlaylist(
     uid: String, // playlist unique id in database
