@@ -13,9 +13,9 @@ import ch.epfl.sdp.blindwar.R
 /**
  * Activity that lets the user start a multiplayer game
  *
- * @constructor creates a MultiPlayerActivity
+ * @constructor creates a MultiPlayerMenuActivity
  */
-class MultiPlayerActivity : AppCompatActivity() {
+class MultiPlayerMenuActivity : AppCompatActivity() {
     private val LIMIT_MATCH: Long = 10
     private var eloDelta = 200
     private var dialog: AlertDialog? = null
