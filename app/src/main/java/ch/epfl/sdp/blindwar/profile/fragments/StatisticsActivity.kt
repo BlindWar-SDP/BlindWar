@@ -1,16 +1,19 @@
 package ch.epfl.sdp.blindwar.profile.fragments
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.model.User
+import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.getValue
@@ -18,51 +21,38 @@ import com.google.firebase.database.ktx.getValue
 
 // TODO: Remove unused activity
 class StatisticsActivity : AppCompatActivity() {
-
-    //private val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private val currentUser = FirebaseAuth.getInstance().currentUser
-
-    var userStatistics: AppStatistics = AppStatistics()
-    private val userStatsListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val user: User? = try {
-                dataSnapshot.getValue<User>()
-            } catch (e: DatabaseException) {
-                null
-            }
-            if (user != null) {
-                userStatistics = user.userStatistics
-            } else {
-                userStatistics = AppStatistics()
-            }
-        }
-
-        override fun onCancelled(databaseError: DatabaseError) {
-            Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
-        }
-    }
-
+    private val profileViewModel: ProfileViewModel by viewModels()
+    private lateinit var spinner: Spinner
+    private var userStatistics =
+        AppStatistics()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (currentUser != null) {
-            UserDatabase.addUserListener(currentUser.uid, userStatsListener)
-        }
         setContentView(R.layout.activity_statistics)
 
+        // access the spinner
+        spinner = findViewById(R.id.modes_spinner)
+
+        // Observe the stats value from the viewModel
+        profileViewModel.userStatistics.observe(this) {
+            if (it != AppStatistics()) {
+                userStatistics = it
+                setSpinner()
+            }
+        }
+    }
+
+    private fun setSpinner() {
         // access the items of the list
         val modes = Mode.values()
 
-        // access the spinner
-        val spinner = findViewById<Spinner>(R.id.modes_spinner)
-        if (spinner != null) {
-            val adapter = ArrayAdapter(
-                this,
-                R.layout.spinner_item, modes
-            )
-            spinner.adapter = adapter
+        val adapter = ArrayAdapter(
+            this,
+                    R.layout.spinner_item, modes
+                )
+        spinner.adapter = adapter
 
-            spinner.onItemSelectedListener = object :
+        spinner.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     parent: AdapterView<*>,
@@ -85,11 +75,13 @@ class StatisticsActivity : AppCompatActivity() {
                     val wrongView = findViewById<TextView>(R.id.wrongNumberView)
                     val correctPercent = findViewById<TextView>(R.id.correctnessPercentView)
                     val wrongPercent = findViewById<TextView>(R.id.wrongPercentView)
+
                     /*
                     userStatistics.eloUpdate(Result.WIN, 1300)
                     userStatistics.multiWinLossCountUpdate(Result.WIN, Mode.MULTI)
                     userStatistics.correctnessUpdate(1, 0, Mode.SOLO)
                     */
+
                     eloView.text = userStatistics.elo.toString()
                     winView.text = userStatistics.wins[position].toString()
                     drawView.text = userStatistics.draws[position].toString()
@@ -105,8 +97,8 @@ class StatisticsActivity : AppCompatActivity() {
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
                     // write code to perform some action
+                    Log.d(TAG, "NOTHING SELECTED")
                 }
             }
         }
-    }
 }

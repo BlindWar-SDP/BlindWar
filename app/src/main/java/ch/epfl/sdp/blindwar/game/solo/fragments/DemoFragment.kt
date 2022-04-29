@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -15,8 +16,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.music.MusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
@@ -176,7 +178,13 @@ class DemoFragment : Fragment() {
                 MotionEvent.ACTION_UP -> {
                     voiceRecognizer.stop()
                     gameViewModel.play()
-                    guess(isVocal, isAuto = false)
+
+                    voiceRecognizer.ready.observe(requireActivity()) {
+                        if (it) {
+                            guess(isVocal, isAuto = false)
+                            voiceRecognizer.ready = MutableLiveData(false)
+                        }
+                    }
                     isVocal = false
                 }
             }

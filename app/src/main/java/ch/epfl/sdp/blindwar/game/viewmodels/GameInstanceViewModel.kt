@@ -1,5 +1,7 @@
 package ch.epfl.sdp.blindwar.game.viewmodels
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ch.epfl.sdp.blindwar.game.model.*
@@ -19,15 +21,7 @@ class GameInstanceViewModel: ViewModel() {
         it
     }
 
-    private val currentParameter = gameInstance
-        .value
-        ?.gameConfig
-        ?.parameter
 
-    private val mode = gameInstance
-        .value!!
-        .gameConfig
-        .mode
 
     /**
      * Setter for the game mode
@@ -46,6 +40,11 @@ class GameInstanceViewModel: ViewModel() {
      * @param funny
      */
     fun setGameFunny(funny: Boolean) {
+        val currentParameter = gameInstance
+            .value
+            ?.gameConfig
+            ?.parameter
+
         gameInstance.value = GameInstance.Builder().setGameInstance(gameInstance.value!!)
             .setParameter(
                 GameParameter(round = currentParameter?.round!!,
@@ -66,6 +65,16 @@ class GameInstanceViewModel: ViewModel() {
      * @param playlist
      */
     fun setGameParameters(timeChosen: Int, roundChosen: Int, playlist: Playlist) {
+        val mode = gameInstance
+            .value!!
+            .gameConfig
+            .mode
+
+        val currentParameter = gameInstance
+            .value
+            ?.gameConfig
+            ?.parameter
+
         gameInstance.value = GameInstance.Builder().setGameInstance(gameInstance.value!!)
             .setPlaylist(playlist)
             .setParameter(

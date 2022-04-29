@@ -16,7 +16,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.solo.SoloActivity
-import ch.epfl.sdp.blindwar.game.util.PlaylistAdapter
+import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
 import ch.epfl.sdp.blindwar.game.util.Tutorial
 import junit.framework.Assert.assertEquals
 import org.hamcrest.Matcher
@@ -78,15 +78,15 @@ class SoloActivityTest {
         }
     }
 
-    /** TODO: Clean up the following methods **/
-    /*
+
+    /** TODO: Clean up the following methods
     @Test
     fun testLostThenWonGame() {
         searchPlaylist("The witcher", 2)
 
         onView(withId(R.id.playlistRecyclerView))
             .perform(
-                RecyclerViewActions.actionOnItemAtPosition<PlaylistAdapter.PlaylistViewHolder>(
+                RecyclerViewActions.actionOnItemAtPosition<DisplayableItemAdapter.DisplayableItemViewHolder>(
                     0,
                     click(),
                 )
@@ -103,6 +103,9 @@ class SoloActivityTest {
         simulateLostRound()
 
         onView(withId(R.id.replay)).perform(click())
+
+        Thread.sleep(2000)
+
         onView(withId(R.id.audioVisualizer)).check(matches(isDisplayed()))
 
         onView(withId(R.id.guessEditText)).perform(typeText("NOT CORRECT"))
@@ -115,7 +118,8 @@ class SoloActivityTest {
         onView(withId(R.id.game_summary_fragment)).check(matches(isDisplayed()))
 
         onView(withId(R.id.quit)).perform(click())
-    }*/
+    }
+    **/
 
     @Test
     fun testLostGameConnected() {
@@ -145,6 +149,7 @@ class SoloActivityTest {
         onView(withId(R.id.guessButton)).perform(click())
         val transitionDelay = 2000L
         Thread.sleep(Tutorial.TIME_TO_FIND.toLong() + transitionDelay)
+        closeSoftKeyboard()
         pressBackUnconditionally()
     }
 
@@ -179,7 +184,7 @@ class SoloActivityTest {
         for (i in 0 until chainClick) {
             onView(withId(R.id.playlistRecyclerView))
                 .perform(
-                    RecyclerViewActions.actionOnItemAtPosition<PlaylistAdapter.PlaylistViewHolder>(
+                    RecyclerViewActions.actionOnItemAtPosition<DisplayableItemAdapter.DisplayableItemViewHolder>(
                         position,
                         click(),
                     )
