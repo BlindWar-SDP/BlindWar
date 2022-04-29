@@ -80,7 +80,8 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             randomButton(view)
         }*/
         dialog!!.hide() //TODO REMOVE WHEN TESTS OK
-        val intent = Intent(this, MultiPlayerRandomActivity::class.java)
+        //val intent = Intent(this, MultiPlayerRandomActivity::class.java)
+        val intent = Intent(this, MultiPlayerActivity::class.java)
         startActivity(intent)
     }
 

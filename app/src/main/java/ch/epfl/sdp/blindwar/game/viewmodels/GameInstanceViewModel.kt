@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ch.epfl.sdp.blindwar.game.model.Playlist
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
@@ -87,6 +88,12 @@ class GameInstanceViewModel : ViewModel() {
                     lives = if (mode == GameMode.SURVIVAL) roundChosen else currentParameter.lives
                 )
             )
+            .build()
+    }
+
+    fun setGameFormat(gameFormat: GameFormat) {
+        gameInstance.value = GameInstance.Builder().setGameInstance(gameInstance.value!!)
+            .setFormat(gameFormat)
             .build()
     }
 }

@@ -16,15 +16,16 @@ import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadataRepository
 import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 class SearchFragment : Fragment() {
-
     private lateinit var musicMetadataRecyclerView: RecyclerView
     private lateinit var musicMetadataRepository: MusicMetadataRepository
     private lateinit var gameInstanceViewModel: GameInstanceViewModel
     private lateinit var adapter: DisplayableItemAdapter
     private lateinit var searchBar: SearchView
     private val displayableViewModel: DisplayableViewModel by activityViewModels()
+    private val profileViewModel: ProfileViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,7 +56,7 @@ class SearchFragment : Fragment() {
      * Resets the playlist recycler view with the updated list of playlist
      */
     private fun resetRecyclerView(view: View, list: ArrayList<Displayable>) {
-        musicMetadataRecyclerView.adapter = DisplayableItemAdapter(list, requireContext(), view, gameInstanceViewModel)
+        musicMetadataRecyclerView.adapter = DisplayableItemAdapter(list, requireContext(), view, gameInstanceViewModel, profileViewModel)
         adapter = musicMetadataRecyclerView.adapter as DisplayableItemAdapter
     }
 

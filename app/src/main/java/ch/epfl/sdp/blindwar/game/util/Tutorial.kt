@@ -28,7 +28,6 @@ object Tutorial {
 
     private val gameConfig =
         GameConfig(
-            GameFormat.SOLO,
             GameMode.REGULAR,
             gameParameter
         )
@@ -135,5 +134,5 @@ object Tutorial {
 
     val BASE_PLAYLISTS = arrayListOf(tutorialPlaylist, testingPlaylist)
 
-    val gameInstance = GameInstance(gameConfig, tutorialPlaylist)
+    val gameInstance = GameInstance(gameConfig, tutorialPlaylist, GameFormat.SOLO)
 }
