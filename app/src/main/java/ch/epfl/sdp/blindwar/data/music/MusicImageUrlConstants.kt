@@ -71,6 +71,21 @@ object MusicImageUrlConstants {
             it["Sum 41"] = ResourceMusicMetadata("In Too Deep", "Sum 41", SUM_41, 222000, ids[7])
             it["Daft Punk"] =
                 ResourceMusicMetadata("One More Time", "Daft Punk", DAFT_PUNK, 321000, ids[8])
+            it["Michael Jackson"] = ResourceMusicMetadata("Billie Jean", "Michael Jackson",
+                ReverseMusicConstants.MICHAEL_JACKSON, 30000, resourceId = ReverseMusicConstants.idList[0])
+            it["Queen"] = ResourceMusicMetadata("Bohemian Rhapsody", "Queen",
+                ReverseMusicConstants.QUEEN, 30000, ReverseMusicConstants.idList[1])
+            it["The Beatles"] = ResourceMusicMetadata("Hey Jude", "The Beatles",
+                ReverseMusicConstants.THE_BEATLES, 30000, ReverseMusicConstants.idList[2])
+            it["Klaus Badelt"] = ResourceMusicMetadata("Pirates of the Caribbean", "Klaus Badelt",
+                ReverseMusicConstants.KLAUS_BADELT, 30000, ReverseMusicConstants.idList[3])
+            it["Deep Purple"] = ResourceMusicMetadata("Smoke on the water", "Deep Purple",
+                ReverseMusicConstants.DEEP_PURPLE, 30000, ReverseMusicConstants.idList[4])
+            it["Led Zeppelin"] = ResourceMusicMetadata("Stairway to Heaven", "Led Zeppelin",
+                ReverseMusicConstants.LED_ZEPPELIN, 30000, ReverseMusicConstants.idList[5])
+            it["The Champs"] = ResourceMusicMetadata("Tequila", "The Champs",
+                ReverseMusicConstants.THE_CHAMPS, 30000, ReverseMusicConstants.idList[6])
             it
         }
+
 }
