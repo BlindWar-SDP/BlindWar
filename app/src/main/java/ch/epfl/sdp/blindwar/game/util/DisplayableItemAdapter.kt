@@ -141,6 +141,7 @@ class DisplayableItemAdapter(private var displayableList: ArrayList<Displayable>
                 /** Initialize roundPicker **/
                 roundPicker.maxValue = displayed.getSize()
                 roundPicker.minValue = ROUND_MIN_VALUE
+                roundPicker.value = ROUND_DEFAULT_VALUE
 
                 setStartGameListener(displayed as Playlist)
 
