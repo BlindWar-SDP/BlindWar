@@ -1,19 +1,16 @@
 package ch.epfl.sdp.blindwar.profile.fragments
 
 import android.content.ContentValues
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.music.URIMusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.profile.model.User
@@ -32,7 +29,6 @@ class DisplayHistoryFragment : Fragment() {
     private var artists = mutableListOf<String>()
     private var images = mutableListOf<String>()
 
-    
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -97,7 +93,7 @@ class DisplayHistoryFragment : Fragment() {
             if (user != null) {
                 val likedMusics: MutableList<URIMusicMetadata> = user.likedMusics
                 for (music in likedMusics) {
-                    addToList(music.title, music.artist, music.imageUrl.toString())
+                    addToList(music.title, music.artist, music.imageUrl)
                 }
             } else {
                 for (i in 1..10) {
@@ -123,9 +119,11 @@ class DisplayHistoryFragment : Fragment() {
             if (user != null) {
                 val matchHistory: MutableList<GameResult> = user.matchHistory
                 for (match in matchHistory) {
-                    addToList("Number of rounds: " + match.gameNbrRound.toString(),
+                    addToList(
+                        "Number of rounds: " + match.gameNbrRound.toString(),
                         "Score: " + match.gameScore.toString(),
-                        "no image")
+                        "no image"
+                    )
                 }
             } else {
                 for (i in 1..10) {

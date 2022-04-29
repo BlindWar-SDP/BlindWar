@@ -9,19 +9,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
+import ch.epfl.sdp.blindwar.profile.model.AppStatistics
+import ch.epfl.sdp.blindwar.profile.model.Gender
 import ch.epfl.sdp.blindwar.profile.model.User
-import ch.epfl.sdp.blindwar.user.UserCache
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -31,8 +29,7 @@ import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
+
 
 /**
  * Activity that let the user enter its principal information when registering for the app
@@ -40,26 +37,11 @@ import kotlinx.serialization.json.Json
  *
  * @constructor creates a UserNewInfoActivity
  */
-class UserNewInfoActivity : AppCompatActivity(), UserCache {
+class UserNewInfoActivity : AppCompatActivity() {
     private val database = UserDatabase
     private val imageDatabase = ImageDatabase
-
-    // global variable -> not a good practice
-    private var user = User()
-    private var isNewUser = false
-    private var localPPuri: Uri? = null
-
-    private fun hideCancelDeleteBtn() {
-        disableButton(R.id.NU_deleteProfile)
-        disableButton(R.id.NU_Cancel_Btn)
-    }
-
-    private fun hideResetPPBtn() {
-        findViewById<ImageView>(R.id.NU_profileImageView).setImageResource(
-            android.R.color.transparent
-        )
-        disableButton(R.id.NU_resetProfilePicture)
-    }
+    private var profilePictureUri: Uri? = null
+    private val auth = FirebaseAuth.getInstance()
 
     /**
      * Listener for user entering new information
@@ -67,27 +49,29 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
     private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             // Get User info and use the values to update the UI
-            val userDB: User? = try {
+            val user: User? = try {
                 dataSnapshot.getValue<User>()
             } catch (e: DatabaseException) {
                 null
             }
-            userDB?.let {
-                user = User.Builder().fromUser(it).build()
+            val firstName = findViewById<EditText>(R.id.NU_FirstName)
+            val lastName = findViewById<EditText>(R.id.NU_LastName)
+            val pseudo = findViewById<EditText>(R.id.NU_pseudo)
+            val profileImageView = findViewById<ImageView>(R.id.NU_profileImageView)
+            user?.let {
+                firstName.setText(it.firstName)
+                lastName.setText(it.lastName)
+                pseudo.setText(it.pseudo)
+                if (!intent.getBooleanExtra("newUser", false)) {
+                    if (it.profilePicture != "null") {
+                        imageDatabase.downloadProfilePicture(
+                            it.profilePicture!!,
+                            profileImageView,
+                            applicationContext
+                        )
+                    }
+                }
             }
-            // check for first login
-            intent.extras?.let {
-                setFromBundle()
-            } ?: run {
-                isNewUser = user.pseudo.isEmpty()
-            }
-            if (isNewUser) { // 1st login
-                hideCancelDeleteBtn()
-            }
-            if (user.profilePicture.isEmpty()) {
-                hideResetPPBtn()
-            }
-            setView()
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
@@ -105,18 +89,9 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_new_info)
 
-        if (isOffline(this)) {
-            disableButton(R.id.NU_deleteProfile)
-            disableButton(R.id.NU_editProfilePicture)
-            disableButton(R.id.NU_deleteProfile)
-            hideResetPPBtn()
-            user = readCache(this)
-            setFromBundle()
-            setView()
-        } else {
-            FirebaseAuth.getInstance().currentUser?.let {
-                database.addUserListener(it.uid, userInfoListener)
-            }
+        // user id should be set according to authentication
+        FirebaseAuth.getInstance().currentUser?.let {
+            database.addUserListener(it.uid, userInfoListener)
         }
     }
 
@@ -131,7 +106,7 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
         //Log.w("yeet", activity!!)
         if (activity != "profile") {
             AuthUI.getInstance().delete(this)
-            FirebaseAuth.getInstance().signOut()
+            auth.signOut()
             startActivity(Intent(this, SplashScreenActivity::class.java))
         } else {
             super.onBackPressed();
@@ -144,60 +119,75 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
      * @param v
      */
     fun confirm(v: View) {
-
-        // Additional info
-        setFromBundle()
-        // basic info
-        setFromText()
-
+        val pseudo: String = findViewById<EditText>(R.id.NU_pseudo).text.toString()
+        val firstName: String = checkNotDefault(
+            findViewById<EditText>(R.id.NU_FirstName).text.toString(),
+            R.string.first_name
+        )
+        val lastName: String = checkNotDefault(
+            findViewById<EditText>(R.id.NU_LastName).text.toString(),
+            R.string.last_name
+        )
+        val birthDate: Long = intent.getLongExtra("birthdate", -1)
+        val profilePicture: String = profilePictureUri.toString()
+        val gender = intent.getStringExtra("gender") ?: Gender.None.toString()
+        val description = intent.getStringExtra("description") ?: ""
+        val isNewUser = intent.getBooleanExtra("newUser", false)
 
         // check validity of pseudo
-        if (user.pseudo.length < resources.getInteger(R.integer.pseudo_minLength) ||
-            user.pseudo == resources.getString(R.string.text_pseudo)
+        if (pseudo.length < resources.getInteger(R.integer.pseudo_minLength) || pseudo == resources.getString(
+                R.string.text_pseudo
+            )
         ) {
             // Alert Dialog
             val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-            val positiveButtonClick = { _: DialogInterface, _: Int -> }
+            val positiveButtonClick = { _: DialogInterface, _: Int ->
+            }
+
             builder.setTitle(R.string.new_user_wrong_pseudo_title)
                 .setMessage(R.string.new_user_wrong_pseudo_text)
                 .setCancelable(false)
                 .setPositiveButton(android.R.string.ok, positiveButtonClick)
             builder.create().show()
 
+            // Or Toast
+//            Toast.makeText(this, R.string.new_user_wrong_pseudo_text, Toast.LENGTH_SHORT).show()
+
         } else {
-            uploadImage()
-            writeCache(this, user)
-            updateUser()
-        }
-    }
+            // check if new user or update already existing user
+            if (isNewUser) {
+                createUser(
+                    pseudo,
+                    firstName,
+                    lastName,
+                    birthDate,
+                    profilePicture.toString(),
+                    gender,
+                    description
+                ) // TODO : Comment for TESTing -> need to uncomment
+//            AuthUI.getInstance().delete(this) // TODO : uncomment for TESTing
+                startActivity(Intent(this, MainMenuActivity::class.java))
+            } else {
+                FirebaseAuth.getInstance().currentUser?.let {
+                    UserDatabase.setPseudo(it.uid, pseudo)
+                    UserDatabase.setFirstName(it.uid, firstName)
+                    UserDatabase.setLastName(it.uid, lastName)
+                    UserDatabase.setProfilePicture(it.uid, profilePicture)
+                    UserDatabase.setGender(it.uid, gender)
+                    UserDatabase.setBirthdate(it.uid, birthDate)
+                    UserDatabase.setDescription(it.uid, description)
+                    startActivity(Intent(this, MainMenuActivity::class.java))
+                }
+            }
 
-    fun resetProfilePicture(v: View) {
-        user.profilePicture = User().profilePicture // set to default
-        localPPuri = null
-        hideResetPPBtn()
-        showImage()
-    }
-
-    fun cancel(v: View) {
-        // new Alert Dialogue to ensure deletion
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        val positiveButtonClick = { _: DialogInterface, _: Int ->
-            startActivity(
-                Intent(
-                    this,
-                    MainMenuActivity::class.java
+            // Upload picture to database
+            profilePictureUri?.let {
+                imageDatabase.uploadProfilePicture(
+                    it,
+                    findViewById(android.R.id.content)
                 )
-            ) // ?? was profile activity before it becomes a fragment
+            }
         }
-        val negativeButtonClick = { _: DialogInterface, _: Int -> }
-
-        builder.setTitle(getString(R.string.alert_dialogue_cancel_title))
-            .setMessage(getString(R.string.alert_dialogue_cancel_text))
-            .setCancelable(false)
-            .setPositiveButton(android.R.string.ok, positiveButtonClick)
-            .setNegativeButton(android.R.string.cancel, negativeButtonClick)
-            .create()
-            .show()
     }
 
     /**
@@ -206,18 +196,9 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
      * @param v
      */
     fun provideMoreInfo(v: View) {
-        setFromText()
-        val bundle = Bundle()
-        bundle.putSerializable(
-            User.VarName.user.name,
-            Json.encodeToString(User.serializer(), user)
-        )
-        localPPuri?.let {
-            bundle.putString("localPP", localPPuri.toString())
-        }
         startActivity(
             Intent(this, UserAdditionalInfoActivity::class.java)
-                .putExtras(bundle)
+                .putExtra("newUser", intent.getBooleanExtra("newUser", false))
         )
     }
 
@@ -249,22 +230,6 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
     }
 
     /**
-     * Makes sure data is ok, before launching
-     */
-    private var resultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-                data?.let {
-                    it.data?.let { uri ->
-                        localPPuri = uri
-                        showImage()
-                    }
-                }
-            }
-        }
-
-    /**
      * Lets the user choose their own profile picture
      *
      * @param v
@@ -277,107 +242,7 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
     }
 
     /**
-     * Handle the profile deletion logic
-     */
-    fun deleteProfile(v: View) {
-        // Alert Dialog
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        val positiveButtonClick = { _: DialogInterface, _: Int ->
-            // new Alert Dialogue to ensure deletion
-            val builderSecond: AlertDialog.Builder = AlertDialog.Builder(this)
-            val secondPositiveButtonClick = { _: DialogInterface, _: Int ->
-
-                FirebaseAuth.getInstance().currentUser?.let {
-                    UserDatabase.removeUser(it.uid)
-                    AuthUI.getInstance().delete(this).addOnCompleteListener {
-                        startActivity(Intent(this, SplashScreenActivity::class.java))
-                    }
-                    removeCache(this)
-                    Toast.makeText(
-                        this,
-                        getString(R.string.deletion_success), Toast.LENGTH_SHORT
-                    ).show()
-                } ?: run {
-                    Toast.makeText(
-                        this,
-                        "something went wrong on deletion", Toast.LENGTH_SHORT
-                    ).show()
-                    startActivity(Intent(this, SplashScreenActivity::class.java))
-                }
-            }
-            val secondNegativeButtonClick = { _: DialogInterface, _: Int ->
-                Toast.makeText(
-                    this,
-                    getString(R.string.account_not_deleted_confirm_toast) + "🥳",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            builderSecond.setTitle(getString(R.string.account_deletion_confirm_title))
-                .setMessage(getString(R.string.account_deletion_confirm_text))
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, secondPositiveButtonClick)
-                .setNegativeButton(android.R.string.cancel, secondNegativeButtonClick)
-            builderSecond.create().show()
-
-        }
-        val negativeButtonClick = { _: DialogInterface, _: Int ->
-            Toast.makeText(
-                this,
-                getString(R.string.account_not_deleted_toast), Toast.LENGTH_SHORT
-            ).show()
-        }
-
-        builder.setTitle(getString(R.string.account_deletion_title))
-            .setMessage(getString(R.string.account_deletion_text))
-            .setCancelable(false)
-            .setPositiveButton(android.R.string.ok, positiveButtonClick)
-            .setNegativeButton(android.R.string.cancel, negativeButtonClick)
-        builder.create().show()
-    }
-
-
-    // =============================================================================================
-    // ================================== PRIVATE FUNCTIONS ========================================
-    // =============================================================================================
-    /**
-     * Internal function for checking if string is empty
-     *
-     * @param value
-     * @param default
-     * @return
-     */
-    private fun checkNotDefault(value: String, default: String): String {
-        return if (value == default) "" else value
-    }
-
-    private fun setFromText() {
-        user.pseudo = findViewById<EditText>(R.id.NU_pseudo).text.toString()
-        user.firstName = checkNotDefault(
-            findViewById<EditText>(R.id.NU_FirstName).text.toString(),
-            resources.getString(R.string.first_name)
-        )
-        user.lastName = checkNotDefault(
-            findViewById<EditText>(R.id.NU_LastName).text.toString(),
-            resources.getString(R.string.last_name)
-        )
-    }
-
-    private fun setFromBundle() {
-        intent.extras?.let { bundle ->
-            val serializable = bundle.getString(User.VarName.user.name)
-            serializable?.let { userStr ->
-                user = Json.decodeFromString(userStr)
-            }
-            isNewUser =
-                bundle.getBoolean(resources.getString(R.string.newUser_ExtraName), false)
-            bundle.getString("localPP")?.let { str ->
-                localPPuri = str.toUri()
-            }
-        }
-    }
-
-    /** Clears text
+     * Clears text
      *
      * @param id
      * @param str
@@ -391,85 +256,73 @@ class UserNewInfoActivity : AppCompatActivity(), UserCache {
         }
     }
 
-    private fun showImage() {
-        localPPuri?.let {
-            findViewById<ImageView>(R.id.NU_profileImageView).setImageURI(
-                localPPuri
-            )
-            findViewById<Button>(R.id.NU_resetProfilePicture).visibility = View.VISIBLE
-        } ?: run {
-            downloadImage()
-        }
-    }
+    /**
+     * Creates the user in the Firebase database
+     *
+     * @param pseudo
+     * @param firstName
+     * @param lastName
+     * @param birthDate
+     * @param profilePicture
+     * @param gender
+     * @param description
+     */
+    private fun createUser(
+        pseudo: String,
+        firstName: String?,
+        lastName: String?,
+        birthDate: Long?,
+        profilePicture: String,
+        gender: String,
+        description: String?
+    ) {
 
-    private fun uploadImage() {
-        localPPuri?.let {
-            // Upload picture to database
-            user.profilePicture =
-                imageDatabase.uploadProfilePicture(
-                    it,
-                    findViewById(android.R.id.content)
-                )
-
-            Toast.makeText(
-                this,
-                "uploading profile picture", Toast.LENGTH_SHORT
-            ).show()
-
-            // time to load photo, otherwise, not on server when loading ProfileActivity
-            // bad practice... need to improve this with ProgressDialog ?
-            Thread.sleep(1000)
-        }
-    }
-
-    private fun downloadImage() {
-        if (user.profilePicture.isNotEmpty()) { // not default value
-            imageDatabase.downloadProfilePicture(
-                user.profilePicture,
-                findViewById(R.id.NU_profileImageView),
-                applicationContext
-
+        val user = Firebase.auth.currentUser
+        user?.let {
+            UserDatabase.updateUser(
+                User.Builder(
+                    it.uid,
+                    it.email!!,
+                    AppStatistics(),
+                    pseudo,
+                    firstName!!,
+                    lastName!!,
+                    birthDate!!,
+                    profilePicture,
+                    gender = gender!!,
+                    description = description!!
+                ).build()
             )
         }
     }
 
-    private fun updateUser() {
-        Firebase.auth.currentUser?.let { auth ->
-                val user0 = User.Builder()
-                    .fromUser(user)
-                    .setUid(auth.uid)
-                    .build()
-            auth.email?.let{ email ->
-                    user0.email = email
+    /**
+     * Internal function for checking if string is empty
+     *
+     * @param value
+     * @param default
+     * @return
+     */
+    private fun checkNotDefault(value: String, default: Int): String {
+        return if (value == default.toString()) "" else value
+    }
+
+    /**
+     * Makes sure data is ok, before launching
+     */
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                if (data != null) {
+                    if (data.data != null) {
+                        profilePictureUri = data.data
+                        findViewById<ImageView>(R.id.NU_profileImageView).setImageURI(
+                            profilePictureUri
+                        )
+                    }
                 }
-                UserDatabase.updateUser(
-                    user0
-                )
-                Toast.makeText(
-                    this,
-                    "${user.pseudo}'s info updated", Toast.LENGTH_SHORT
-                ).show()
-
-        }?: run {
-            Toast.makeText(
-                this,
-                "update local data only",
-                Toast.LENGTH_LONG
-            ).show()
+            }
         }
-        startActivity(Intent(this, MainMenuActivity::class.java))
-    }
-
-    private fun setView() {
-        // set the view
-        findViewById<EditText>(R.id.NU_pseudo).setText(user.pseudo)
-        findViewById<EditText>(R.id.NU_FirstName).setText(user.firstName)
-        findViewById<EditText>(R.id.NU_LastName).setText(user.lastName)
-        showImage()
-    }
-
-    private fun disableButton(id: Int) {
-//        findViewById<Button>(id).isClickable = false
-        findViewById<Button>(id).visibility = View.INVISIBLE
-    }
 }
+

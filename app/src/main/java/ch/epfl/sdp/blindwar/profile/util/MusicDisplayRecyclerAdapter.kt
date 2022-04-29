@@ -1,4 +1,5 @@
 package ch.epfl.sdp.blindwar.profile.util
+
 import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
@@ -17,26 +18,29 @@ import kotlinx.coroutines.withContext
  *
  * @property titles
  * @property artists
- * @property images
+ * @property imagesURL
  */
-class MusicDisplayRecyclerAdapter(private var titles: List<String>, private var artists: List<String>,
-                                  private var imagesURL: List<String>):
+class MusicDisplayRecyclerAdapter(
+    private var titles: List<String>, private var artists: List<String>,
+    private var imagesURL: List<String>
+) :
 
-RecyclerView.Adapter<MusicDisplayRecyclerAdapter.ViewHolder>(){
+    RecyclerView.Adapter<MusicDisplayRecyclerAdapter.ViewHolder>() {
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val itemTitle: TextView = itemView.findViewById(R.id.musicTitle)
         val itemArtist: TextView = itemView.findViewById(R.id.musicArtist)
         val itemPicture: ImageView = itemView.findViewById(R.id.musicImage)
 
 
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v: View = LayoutInflater.from(parent.context).inflate(R.layout.display_music_cardview,
-            parent, false)
+        val v: View = LayoutInflater.from(parent.context).inflate(
+            R.layout.display_music_cardview,
+            parent, false
+        )
         return ViewHolder(v)
     }
 

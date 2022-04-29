@@ -4,10 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.menu.PlayMenuFragment
-import ch.epfl.sdp.blindwar.menu.SearchFragment
 import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
-import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HistoryActivity : AppCompatActivity() {
@@ -28,9 +25,17 @@ class HistoryActivity : AppCompatActivity() {
         showFragment((DisplayHistoryFragment.newInstance(likedMusicType)))
 
         findViewById<BottomNavigationView>(R.id.historyBottomNavigationView).setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.item_liked_musics-> showFragment(DisplayHistoryFragment.newInstance(likedMusicType))
-                R.id.item_match_history -> showFragment(DisplayHistoryFragment.newInstance(matchHistoryType))
+            when (it.itemId) {
+                R.id.item_liked_musics -> showFragment(
+                    DisplayHistoryFragment.newInstance(
+                        likedMusicType
+                    )
+                )
+                R.id.item_match_history -> showFragment(
+                    DisplayHistoryFragment.newInstance(
+                        matchHistoryType
+                    )
+                )
             }
             true
         }

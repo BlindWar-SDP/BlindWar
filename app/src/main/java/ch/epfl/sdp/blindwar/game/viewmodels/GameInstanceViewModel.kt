@@ -1,8 +1,10 @@
 package ch.epfl.sdp.blindwar.game.viewmodels
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ch.epfl.sdp.blindwar.game.model.*
+import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
@@ -13,21 +15,13 @@ import ch.epfl.sdp.blindwar.game.util.Tutorial
  *
  * @constructor creates a GameInstanceViewModel
  */
-class GameInstanceViewModel: ViewModel() {
+class GameInstanceViewModel : ViewModel() {
     var gameInstance = MutableLiveData<GameInstance>().let {
         it.value = Tutorial.gameInstance
         it
     }
 
-    private val currentParameter = gameInstance
-        .value
-        ?.gameConfig
-        ?.parameter
 
-    private val mode = gameInstance
-        .value!!
-        .gameConfig
-        .mode
 
     /**
      * Setter for the game mode
@@ -46,14 +40,20 @@ class GameInstanceViewModel: ViewModel() {
      * @param funny
      */
     fun setGameFunny(funny: Boolean) {
+        val currentParameter = gameInstance
+            .value
+            ?.gameConfig
+            ?.parameter
+
         gameInstance.value = GameInstance.Builder().setGameInstance(gameInstance.value!!)
             .setParameter(
-                GameParameter(round = currentParameter?.round!!,
-                timeToFind = currentParameter.timeToFind,
-                hint = currentParameter.hint,
-                funny = currentParameter.funny,
+                GameParameter(
+                    round = currentParameter?.round!!,
+                    timeToFind = currentParameter.timeToFind,
+                    hint = currentParameter.hint,
+                    funny = currentParameter.funny,
                     lives = currentParameter.lives
-            )
+                )
             )
             .build()
     }
@@ -66,6 +66,16 @@ class GameInstanceViewModel: ViewModel() {
      * @param playlist
      */
     fun setGameParameters(timeChosen: Int, roundChosen: Int, playlist: Playlist) {
+        val mode = gameInstance
+            .value!!
+            .gameConfig
+            .mode
+
+        val currentParameter = gameInstance
+            .value
+            ?.gameConfig
+            ?.parameter
+
         gameInstance.value = GameInstance.Builder().setGameInstance(gameInstance.value!!)
             .setPlaylist(playlist)
             .setParameter(

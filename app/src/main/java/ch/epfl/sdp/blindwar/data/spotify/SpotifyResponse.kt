@@ -34,8 +34,6 @@ data class SpotifyToken(
     val token_type: String
 )
 
-/** Spotify Track dependencies**/
-/**
 data class SpotifySearchTrackResult(
     val href: String,
     val tracks: SpotifySearchTrack,
@@ -121,5 +119,4 @@ val name: String,
 val type: String,
 val uri: String
 )
- **/
 
