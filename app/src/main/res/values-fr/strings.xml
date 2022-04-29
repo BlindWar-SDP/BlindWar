@@ -51,14 +51,14 @@
     <string name="toast_connexion">les Match sont pleins, veuilley réessayer…</string>
     <string name="toast_canceled_connexion">Recherche annulée !</string>
     <string name="multi_loading">Chargement…</string>
-    <string name="multi_write_link">Svp, veuillez entrer votre lien d'invitation</string>
+    <string name="multi_write_link">Svp, veuillez entrer votre lien d\'invitation</string>
     <string name="multi_match_full">Le match est plein, désolé !</string>
-    <string name="multi_match_not_found">Le match n'a pas été trouvé!</string>
+    <string name="multi_match_not_found">Le match n\'a pas été trouvé!</string>
     <string name="multi_wait_matches">En attente du match…</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="logo_description">Logo de l'application</string>
-    <string name="content_description_background_image">Image noire de Fond d'écran</string>
+    <string name="logo_description">Logo de l\'application</string>
+    <string name="content_description_background_image">Image noire de Fond d\'écran</string>
     <string name="tutorial_textview">Tutoriel</string>
     <string name="oval_description">Forme ovale pour le profile</string>
     <string name="guess_button_text">Devine !</string>
@@ -90,7 +90,7 @@
     <string name="selected_item">item selectionné:</string>
     <string name="chose_sign_in_text">Sign In avec:</string>
     <string name="signin_welcome_text">BlindWar vous souhaite la bien venue !</string>
-    <string name="avatar_description">image de l'avatar</string>
+    <string name="avatar_description">image de lavatar</string>
 
     <string name="artist">ARTISTE</string>
     <string name="track">MORCEAU</string>
@@ -109,11 +109,11 @@
     <string name="account_not_deleted_toast">suppression annulée</string>
     <string name="account_deletion_title">Suppression de Compte</string>
     <string name="account_deletion_text">Êtes-vous certain de désirer supprimer votre compte BlindWar?</string>
-    <string name="select_birthdate">selection de la date d'anniversaire</string>
+    <string name="select_birthdate">selection de la date d\'anniversaire</string>
     <string name="select_your_gender">Svp, veuillez selectionner votre genre</string>
     <string name="alert_dialogue_cancel_title">Mise-à-jour annulée</string>
     <string name="alert_dialogue_cancel_text">Êtes-vous certain de vouloir ocnserver les anciennes infos</string>
     <string name="newUser_ExtraName">newUser</string>
     <string name="reset">reset</string>
-    <string name="no_birthdate_selected">Aucune date d'anniversaire selectionnée</string>
+    <string name="no_birthdate_selected">Aucune date d\'anniversaire selectionnée</string>
 </resources>
