@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.data.music
 
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.data.music.metadata.ResourceMusicMetadata
 
 /**
  * Hard coded constants for demo purposes
@@ -32,15 +33,22 @@ object ReverseMusicConstants {
         R.raw.tequila_reversed
     )
 
-    val METADATA_REVERSE_MUSICS_PER_AUTHOR: Map<String, ResourceMusicMetadata> = mutableMapOf<String, ResourceMusicMetadata>().let{
-        it["Michael Jackson"] = ResourceMusicMetadata("Billy Jean", "Michael Jackson", MICHAEL_JACKSON, 30000, resourceId = idList[0])
-        it["Queen"] = ResourceMusicMetadata("Bohemian Rhapsody", "Queen", QUEEN, 30000, idList[1])
-        it["The Beatles"] = ResourceMusicMetadata("Hey Jude", "The Beatles", THE_BEATLES, 30000, idList[2])
-        it["Klaus Badelt"] = ResourceMusicMetadata("Pirates of the caribbean", "Klaus Badelt", KLAUS_BADELT, 30000, idList[3])
-        it["Deep Purple"] = ResourceMusicMetadata("Smoke on the water", "Deep Purple", DEEP_PURPLE, 30000, idList[4])
-        it["Led Zeppelin"] = ResourceMusicMetadata("Stairway to heaven", "Led Zeppelin", LED_ZEPPELIN, 30000, idList[5])
-        it["The Champs"] = ResourceMusicMetadata("Tequila", "The Champs", THE_CHAMPS, 30000, idList[6])
-
-        it
-    }
+    val METADATA_REVERSE_MUSICS_PER_AUTHOR: Map<String, ResourceMusicMetadata> =
+        mutableMapOf<String, ResourceMusicMetadata>().let {
+            it["Michael Jackson"] = ResourceMusicMetadata("Billie Jean", "Michael Jackson",
+                MICHAEL_JACKSON, 30000, resourceId = idList[0])
+            it["Queen"] = ResourceMusicMetadata("Bohemian Rhapsody", "Queen",
+                QUEEN, 30000, idList[1])
+            it["The Beatles"] = ResourceMusicMetadata("Hey Jude", "The Beatles",
+                THE_BEATLES, 30000, idList[2])
+            it["Klaus Badelt"] = ResourceMusicMetadata("Pirates of the Caribbean", "Klaus Badelt",
+                KLAUS_BADELT, 30000, idList[3])
+            it["Deep Purple"] = ResourceMusicMetadata("Smoke on the water", "Deep Purple",
+                DEEP_PURPLE, 30000, idList[4])
+            it["Led Zeppelin"] = ResourceMusicMetadata("Stairway to Heaven", "Led Zeppelin",
+                LED_ZEPPELIN, 30000, idList[5])
+            it["The Champs"] = ResourceMusicMetadata("Tequila", "The Champs",
+                THE_CHAMPS, 30000, idList[6])
+            it
+        }
 }

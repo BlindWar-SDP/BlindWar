@@ -7,7 +7,7 @@ data class GameInstance(
     val gameConfig: GameConfig, // configuration object of the game
     val onlinePlaylist: Playlist // playlist of the game
 ) {
-    class Builder() {
+    class Builder {
         private var playlist: Playlist = Tutorial.gameInstance
             .onlinePlaylist
 
@@ -52,7 +52,8 @@ data class GameInstance(
         fun build(): GameInstance {
             return GameInstance(
                 GameConfig(gameFormat, gameMode, gameParameter),
-                playlist)
+                playlist
+            )
         }
     }
 }

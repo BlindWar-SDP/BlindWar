@@ -39,13 +39,13 @@ class GameSummaryFragment : Fragment() {
         viewPager.adapter = adapter
 
         quit = view.findViewById<ImageButton>(R.id.quit).also { button ->
-            button.setOnClickListener{
+            button.setOnClickListener {
                 activity?.onBackPressed()
             }
         }
 
-        replay = view.findViewById<ImageButton>(R.id.replay).also{ button ->
-            button.setOnClickListener{
+        replay = view.findViewById<ImageButton>(R.id.replay).also { button ->
+            button.setOnClickListener {
                 (requireActivity() as SoloActivity).removeAllFragments()
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.play_container, DemoFragment(), "DEMO")

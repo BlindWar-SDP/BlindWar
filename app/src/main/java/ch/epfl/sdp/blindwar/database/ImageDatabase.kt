@@ -7,6 +7,7 @@ import android.widget.ImageView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import java.util.*
 
@@ -57,8 +58,7 @@ object ImageDatabase {
             Toast.makeText(getApplicationContext(), "Failed to upload file",
                 Toast.LENGTH_LONG).show()
         }*/
-        }
-        else {
+        } else {
             uploadedImageRef.putFile(imageURI)
         }
         return uploadedImageRef.path
@@ -72,6 +72,10 @@ object ImageDatabase {
             .centerCrop()
             .into(imageView)
         return profilePictureRef.path
+    }
+
+    fun getImageReference(imagePath: String): StorageReference {
+        return storageRef.child(imagePath)
     }
 
 }

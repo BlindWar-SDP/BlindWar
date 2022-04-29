@@ -6,19 +6,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.audio.MusicViewModel
 import ch.epfl.sdp.blindwar.game.solo.fragments.GameSummaryFragment
 import ch.epfl.sdp.blindwar.game.solo.fragments.ModeSelectionFragment
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 /**
  * Contains the UI logic to play a solo game
  *
  * @constructor creates a PlayActivity
  */
-class SoloActivity: AppCompatActivity() {
+class SoloActivity : AppCompatActivity() {
 
     val gameInstanceViewModel: GameInstanceViewModel by viewModels()
+    val profileViewModel: ProfileViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,16 +43,12 @@ class SoloActivity: AppCompatActivity() {
                 if (supportFragmentManager.fragments[1] is SongSummaryFragment) {
                     supportFragmentManager.fragments[0].onResume()
                     supportFragmentManager.popBackStackImmediate()
-                }
-
-                else if (supportFragmentManager.fragments[1] is GameSummaryFragment) {
+                } else if (supportFragmentManager.fragments[1] is GameSummaryFragment) {
                     removeAllFragments()
                     super.onBackPressed()
                 }
             }
-        }
-
-        else {
+        } else {
             super.onBackPressed()
         }
     }

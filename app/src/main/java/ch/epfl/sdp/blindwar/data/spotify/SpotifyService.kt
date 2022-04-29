@@ -15,8 +15,8 @@ object SpotifyService {
             val loggingInterceptor = HttpLoggingInterceptor()
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
             val okHttpClient: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .build()
+                .addInterceptor(loggingInterceptor)
+                .build()
 
 
             Retrofit.Builder()

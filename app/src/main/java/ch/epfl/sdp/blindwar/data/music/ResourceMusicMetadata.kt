@@ -5,4 +5,5 @@ data class ResourceMusicMetadata(
     override var artist: String,
     override var imageUrl: String,
     override var duration: Int,
-    val resourceId: Int): MusicMetadata()
+    val resourceId: Int
+) : MusicMetadata()

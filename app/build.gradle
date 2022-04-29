@@ -100,7 +100,6 @@ dependencies {
     testImplementation("androidx.arch.core:core-testing:$arch_version")
 
 
-
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
@@ -153,13 +152,13 @@ dependencies {
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     kapt 'com.github.bumptech.glide:compiler:4.13.0'
-
     }
 
     // Firebase
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.3'
     implementation 'com.google.android.gms:play-services-auth:20.1.0'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
+    implementation 'com.google.firebase:firebase-firestore-ktx:24.1.1'
     implementation 'com.google.firebase:firebase-database:20.0.4'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.4'
 
@@ -207,8 +206,14 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             '**/*Hilt*.*',
             'hilt_aggregated_deps/**',
             '**/*_Factory.class',
-            '**/*_MembersInjector.class'
+            '**/*_MembersInjector.class',
+            '**/UserNewInfoActivity.**/',
+            '**/RemoteMusicMetadataSource.**',
+            '**/MusicMetadataRepository.**',
+            '**/MockMusicdataSource.**',
+            '**/database/**'
     ]
+
     def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 

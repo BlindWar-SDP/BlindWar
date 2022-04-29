@@ -11,11 +11,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
-        app:cardBackgroundColor="@color/ivory"
+        app:cardBackgroundColor="@color/very_opaque_black"
         app:cardCornerRadius="8dp"
-        app:cardElevation="8dp"
+        app:cardElevation="0dp"
         app:cardMaxElevation="10dp"
-        app:cardPreventCornerOverlap="true"
+        app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/playlistLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/very_opaque_black">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/base_cardview"
@@ -48,13 +49,15 @@
                     android:rotation="-90"
                     android:rotationX="0"
                     android:rotationY="0"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="@id/nameSeparationGuideline"
+                    app:layout_constraintEnd_toEndOf="@+id/likeView"
+                    app:layout_constraintHorizontal_bias="0.652"
+                    app:layout_constraintStart_toEndOf="@+id/playPreview"
                     app:layout_constraintTop_toBottomOf="@+id/likeView"
                     app:layout_constraintVertical_bias="0.0"
                     app:srcCompat="@drawable/baseline_navigate_before_24"
+                    app:tint="@color/ivory"
                     tools:ignore="SpeakableTextPresentCheck" />
 
                 <ImageButton
@@ -67,7 +70,7 @@
                     app:layout_constraintStart_toEndOf="@+id/playlistName"
                     app:layout_constraintTop_toTopOf="@+id/progress_preview"
                     app:srcCompat="@drawable/play_arrow_small"
-                    app:tint="@color/opaque_black" />
+                    app:tint="@color/ivory" />
 
                 <ImageView
                     android:id="@+id/authorIcon"
@@ -79,7 +82,8 @@
                     app:layout_constraintStart_toEndOf="@+id/authorTextview"
                     app:layout_constraintTop_toBottomOf="@+id/playlistName"
                     app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@drawable/ic_baseline_check_24" />
+                    app:srcCompat="@drawable/ic_baseline_check_24"
+                    app:tint="@color/ivory" />
 
 
                 <TextView
@@ -88,10 +92,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:autoSizeTextType="uniform"
+                    android:maxLines="1"
                     android:ellipsize="marquee"
                     android:fontFamily="@font/oxygen"
                     android:marqueeRepeatLimit="marquee_forever"
-                    android:textColor="@color/black"
+                    android:textColor="@color/ivory"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@id/nameGuideline"
                     app:layout_constraintEnd_toStartOf="@+id/progress_preview"
@@ -106,10 +111,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:autoSizeTextType="uniform"
+                    android:maxLines="1"
                     android:ellipsize="marquee"
                     android:fontFamily="@font/oxygen"
                     android:text="@string/app_name"
-                    android:textColor="@color/black"
+                    android:textColor="@color/ivory"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/progress_preview"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -162,11 +168,11 @@
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="4dp"
-                    app:layout_constraintDimensionRatio="1:1"
                     android:layout_marginBottom="4dp"
                     app:cardCornerRadius="8dp"
                     app:cardElevation="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="@id/coverGuideline"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -180,11 +186,11 @@
                         android:layout_marginTop="0dp"
                         android:layout_marginEnd="0dp"
                         android:layout_marginBottom="0dp"
-                        app:layout_constraintDimensionRatio="1:1"
                         android:clipToOutline="true"
                         android:contentDescription="@string/app_name"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="1:1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
@@ -309,7 +315,7 @@
                     android:autoSizeTextType="uniform"
                     android:fontFamily="@font/oxygen"
                     android:text="ROUNDS"
-                    android:textColor="@color/black"
+                    android:textColor="@color/ivory"
                     app:layout_constraintBottom_toBottomOf="@+id/roundPicker"
                     app:layout_constraintEnd_toStartOf="@+id/timerPicker"
                     app:layout_constraintHorizontal_bias="0.5"
@@ -327,7 +333,7 @@
                     android:autoSizeTextType="uniform"
                     android:fontFamily="@font/oxygen"
                     android:text="TIMER"
-                    android:textColor="@color/black"
+                    android:textColor="@color/ivory"
                     app:layout_constraintBottom_toBottomOf="@+id/timerPicker"
                     app:layout_constraintEnd_toStartOf="@+id/guideline8"
                     app:layout_constraintHorizontal_bias="0.5"

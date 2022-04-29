@@ -16,7 +16,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.solo.SoloActivity
-import ch.epfl.sdp.blindwar.game.util.PlaylistAdapter
+import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
 import ch.epfl.sdp.blindwar.game.util.Tutorial
 import junit.framework.Assert.assertEquals
 import org.hamcrest.Matcher
@@ -29,7 +29,7 @@ import org.junit.runner.RunWith
 class SoloActivityTest {
     @get:Rule
     var testRule = ActivityScenarioRule(
-            SoloActivity::class.java
+        SoloActivity::class.java
     )
 
     @Test
@@ -69,7 +69,7 @@ class SoloActivityTest {
                 .value
                 ?.gameConfig?.mode
 
-            val expectedMode = when(btnId) {
+            val expectedMode = when (btnId) {
                 R.id.regularButton_ -> GameMode.REGULAR
                 R.id.raceButton_ -> GameMode.TIMED
                 else -> GameMode.SURVIVAL
@@ -78,28 +78,34 @@ class SoloActivityTest {
         }
     }
 
-    /*
-    /** TODO: Clean up the following methods **/
-    /*
+
+    /** TODO: Clean up the following methods
     @Test
     fun testLostThenWonGame() {
         searchPlaylist("The witcher", 2)
 
         onView(withId(R.id.playlistRecyclerView))
             .perform(
-                RecyclerViewActions.actionOnItemAtPosition<PlaylistAdapter.PlaylistViewHolder>(
+                RecyclerViewActions.actionOnItemAtPosition<DisplayableItemAdapter.DisplayableItemViewHolder>(
                     0,
                     click(),
                 )
             )
 
-        onView(allOf(withId(R.id.startGame),
-            withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+        onView(
+            allOf(
+                withId(R.id.startGame),
+                withEffectiveVisibility(Visibility.VISIBLE)
+            )
+        ).perform(click())
 
         onView(withId(R.id.guessButton)).check(matches(isDisplayed()))
         simulateLostRound()
 
         onView(withId(R.id.replay)).perform(click())
+
+        Thread.sleep(2000)
+
         onView(withId(R.id.audioVisualizer)).check(matches(isDisplayed()))
 
         onView(withId(R.id.guessEditText)).perform(typeText("NOT CORRECT"))
@@ -113,8 +119,7 @@ class SoloActivityTest {
 
         onView(withId(R.id.quit)).perform(click())
     }
-    */
-    */
+    **/
 
     @Test
     fun testLostGameConnected() {
@@ -144,22 +149,31 @@ class SoloActivityTest {
         onView(withId(R.id.guessButton)).perform(click())
         val transitionDelay = 2000L
         Thread.sleep(Tutorial.TIME_TO_FIND.toLong() + transitionDelay)
+        closeSoftKeyboard()
         pressBackUnconditionally()
     }
 
     private fun launchDemoWithMode(btnId: Int, position: Int) {
         launchPlaylistSelection(btnId, position, 3)
 
-        onView(allOf(withId(R.id.startGame),
-            withEffectiveVisibility(Visibility.VISIBLE))).perform(click())
+        onView(
+            allOf(
+                withId(R.id.startGame),
+                withEffectiveVisibility(Visibility.VISIBLE)
+            )
+        ).perform(click())
     }
 
     @Test
     fun likeTest() {
         searchPlaylist("Fifa", 0)
-        onView(allOf(withId(R.id.likeView),
-            withEffectiveVisibility(Visibility.VISIBLE))).perform(click(), click())
-                                                         .check(matches(isClickable()))
+        onView(
+            allOf(
+                withId(R.id.likeView),
+                withEffectiveVisibility(Visibility.VISIBLE)
+            )
+        ).perform(click(), click())
+            .check(matches(isClickable()))
     }
 
 
@@ -170,7 +184,7 @@ class SoloActivityTest {
         for (i in 0 until chainClick) {
             onView(withId(R.id.playlistRecyclerView))
                 .perform(
-                    RecyclerViewActions.actionOnItemAtPosition<PlaylistAdapter.PlaylistViewHolder>(
+                    RecyclerViewActions.actionOnItemAtPosition<DisplayableItemAdapter.DisplayableItemViewHolder>(
                         position,
                         click(),
                     )

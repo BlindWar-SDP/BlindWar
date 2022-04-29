@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_profile"
+    android:background="@drawable/blurred_back">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profileImgView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/nameView"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
+        app:layout_constraintHorizontal_bias="0.435"
+        app:layout_constraintStart_toStartOf="@+id/guideline15"
+        app:layout_constraintTop_toTopOf="@+id/guideline14"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <LinearLayout
+        android:id="@+id/containerBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline15"
+        app:layout_constraintTop_toBottomOf="@+id/eloView"
+        app:layout_constraintVertical_bias="0.248">
+
+        <Button
+            android:id="@+id/favoritesBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="33.3"
+            android:backgroundTint="@color/very_opaque_black"
+            android:drawableLeft="@drawable/ic_baseline_favorite_border_24"
+            android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:fontFamily="@font/oxygen"
+            android:text="Favorites"
+            android:textColor="@color/ivory" />
+
+        <Button
+            android:id="@+id/historyBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="33.3"
+            android:backgroundTint="@color/very_opaque_black"
+            android:drawableLeft="@drawable/ic_baseline_history_24"
+            android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:fontFamily="@font/oxygen"
+            android:text="History"
+            android:textColor="@color/ivory"
+            tools:text="History" />
+
+        <Button
+            android:id="@+id/statsBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="33.3"
+            android:backgroundTint="@color/very_opaque_black"
+            android:drawableLeft="@drawable/ic_baseline_bar_chart_24"
+            android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:fontFamily="@font/oxygen"
+            android:text="Statistics"
+            android:textColor="@color/ivory"
+            tools:text="Statistics" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/nameView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/oxygen"
+        android:text="NAME"
+        android:textColor="@color/ivory"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/eloView"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="@+id/guideline15"
+        app:layout_constraintTop_toBottomOf="@+id/profileImgView"
+        app:layout_constraintVertical_bias="0.306" />
+
+    <TextView
+        android:id="@+id/eloView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:fontFamily="@font/oxygen"
+        android:text="1000"
+        android:textColor="@color/ivory"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/containerBtn"
+        app:layout_constraintEnd_toStartOf="@+id/guideline16"
+        app:layout_constraintHorizontal_bias="0.486"
+        app:layout_constraintStart_toStartOf="@+id/guideline15"
+        app:layout_constraintTop_toBottomOf="@+id/nameView" />
+
+    <ImageButton
+        android:id="@+id/editBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        app:layout_constraintBottom_toTopOf="@+id/guideline14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline16"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45"
+        app:srcCompat="@drawable/ic_baseline_edit_24"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.12" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.11922141" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8978102" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <ImageButton
+        android:id="@+id/logoutBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/fui_transparent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline14"
+        app:layout_constraintEnd_toStartOf="@+id/guideline15"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.355"
+        app:srcCompat="@drawable/ic_baseline_login_24"
+        tools:ignore="SpeakableTextPresentCheck"
+        app:tint="@color/ivory" />
+
+    <ImageButton
+        android:id="@+id/deleteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:backgroundTint="@color/fui_transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/logoutBtn"
+        app:layout_constraintStart_toStartOf="@+id/guideline15"
+        app:layout_constraintTop_toTopOf="@+id/logoutBtn"
+        app:layout_constraintVertical_bias="0.422"
+        app:srcCompat="@drawable/ic_baseline_delete_24"
+        tools:ignore="SpeakableTextPresentCheck"
+        app:tint="@color/ivory" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
