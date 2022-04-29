@@ -16,7 +16,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class MultiPlayerActivityTest {
+class MultiPlayerMenuActivityTest {
     @get:Rule
     var testRule = ActivityScenarioRule(
         MultiPlayerMenuActivity::class.java

@@ -70,10 +70,8 @@ class MainMenuActivityTest : TestCase() {
     }
 
     @Test
-    fun testBackButton(){
+    fun testBackButton() {
         val device = UiDevice.getInstance(getInstrumentation())
         assertTrue("Back button can't be pressed", device.pressBack())
     }
-
-
 }
