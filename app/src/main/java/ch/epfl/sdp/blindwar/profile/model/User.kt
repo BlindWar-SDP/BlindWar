@@ -1,11 +1,8 @@
 package ch.epfl.sdp.blindwar.profile.model
 
+
 import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
-
-
 import ch.epfl.sdp.blindwar.game.model.GameResult
-
-import kotlinx.serialization.Serializable
 
 //const val UID = "uid"
 //const val EMAIL = "email`"
@@ -58,10 +55,15 @@ data class User(
         fun setProfilePicture(imagePath: String) = apply { this.profilePicture = imagePath }
         fun setGender(gender: String) = apply { this.gender = gender }
         fun setDescription(desc: String) = apply { this.description = desc }
-        fun setLikedMusics(likedMusics: MutableList<URIMusicMetadata>) = apply { this.likedMusics =
-            likedMusics }
-        fun matchHistory(matchHistory: MutableList<GameResult>) = apply { this.matchHistory =
-            matchHistory }
+        fun setLikedMusics(likedMusics: MutableList<URIMusicMetadata>) = apply {
+            this.likedMusics =
+                likedMusics
+        }
+
+        fun matchHistory(matchHistory: MutableList<GameResult>) = apply {
+            this.matchHistory =
+                matchHistory
+        }
 
 
         fun fromUser(user: User) = apply {
@@ -95,7 +97,7 @@ data class User(
         }
     }
 
-    override fun toString(): String{
+    override fun toString(): String {
         return pseudo
     }
 }

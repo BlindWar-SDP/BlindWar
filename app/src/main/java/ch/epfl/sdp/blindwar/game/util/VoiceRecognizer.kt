@@ -1,15 +1,12 @@
 package ch.epfl.sdp.blindwar.game.util
 
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
-import android.util.Log
 import android.widget.EditText
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 /**
@@ -32,7 +29,7 @@ class VoiceRecognizer : RecognitionListener {
     override fun onResults(results: Bundle) {
         val data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
         ready.postValue(false)
-        if (data!![0] != null) {
+        if (data != null && data[0] != null) {
             resultsRecognized = data[0]
             editTextResult?.setText(resultsRecognized)
             ready.postValue(true)

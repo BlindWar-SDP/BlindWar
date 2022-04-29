@@ -5,6 +5,7 @@ import ch.epfl.sdp.blindwar.data.music.metadata.ResourceMusicMetadata
 import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.game.model.*
 import ch.epfl.sdp.blindwar.game.model.Genre
+import ch.epfl.sdp.blindwar.game.model.LocalPlaylist
 import ch.epfl.sdp.blindwar.game.model.OnlinePlaylist
 import ch.epfl.sdp.blindwar.game.model.config.*
 
@@ -13,13 +14,20 @@ object Tutorial {
     const val TIME_TO_FIND = 5000
     const val ROUND = 2
 
-    private val PLAYLIST: List<ResourceMusicMetadata> = METADATA_TUTORIAL_MUSICS_PER_AUTHOR.values.toList()
+    private val PLAYLIST: List<ResourceMusicMetadata> =
+        METADATA_TUTORIAL_MUSICS_PER_AUTHOR.values.toList()
 
     private val gameParameter =
-        GameParameter(round = ROUND, funny = false, timeToFind = TIME_TO_FIND, hint = true, lives = 5)
+        GameParameter(
+            round = ROUND,
+            funny = false,
+            timeToFind = TIME_TO_FIND,
+            hint = true,
+            lives = 5
+        )
 
     private val gameConfig =
-        GameConfig (
+        GameConfig(
             GameFormat.SOLO,
             GameMode.REGULAR,
             gameParameter
@@ -36,9 +44,9 @@ object Tutorial {
 
     private const val URL_PREVIEW_TUTORIAL =
     //    "https://p.scdn.co/mp3-preview/83a6425e6cf360bff80cb93fa3fbc8799cac3894?cid=774b29d4f13844c495f206cafdad9c86"
-        //"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/26/70/c9/2670c997-2aa1-550c-477a-fec1708ed552/mzaf_14517577682338403358.plus.aac.p.m4a"
-       // "https://p.scdn.co/mp3-preview/33c3aa0656120e384ffdd450a730d62e82869c65?cid=774b29d4f13844c495f206cafdad9c86"
-       // "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/86/ff/67/86ff676b-de98-1f74-b90a-b882566ab4a0/mzaf_1515347027412876886.plus.aac.p.m4a"
+    //"https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/26/70/c9/2670c997-2aa1-550c-477a-fec1708ed552/mzaf_14517577682338403358.plus.aac.p.m4a"
+    // "https://p.scdn.co/mp3-preview/33c3aa0656120e384ffdd450a730d62e82869c65?cid=774b29d4f13844c495f206cafdad9c86"
+        // "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/86/ff/67/86ff676b-de98-1f74-b90a-b882566ab4a0/mzaf_1515347027412876886.plus.aac.p.m4a"
         "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/ca/6f/88/ca6f884c-ae3a-8503-3f0e-27522dbea1aa/mzaf_3487386545306563563.plus.aac.p.m4a"
 
 
@@ -47,7 +55,8 @@ object Tutorial {
 
 
     val searchin = (
-            URIMusicMetadata("Searchin",
+            URIMusicMetadata(
+                "Searchin",
                 "Matisyahu",
                 COVER_URL_SONG,
                 30000,
@@ -70,7 +79,8 @@ object Tutorial {
         URL_FIFA_SONG_3
     )
 
-    val fifaPlaylist = OnlinePlaylist("FIFA13",
+    val fifaPlaylist = OnlinePlaylist(
+        "FIFA13",
         "FIFA 13 OST",
         "EA Sports",
         arrayListOf(Genre.POP),
@@ -84,7 +94,8 @@ object Tutorial {
         Difficulty.EASY
     )
 
-    private val tutorialPlaylist = LocalPlaylist("tutorial",
+    private val tutorialPlaylist = LocalPlaylist(
+        "tutorial",
         "Tutorial",
         "BlindWar",
         arrayListOf(Genre.POP, Genre.RAP),
@@ -97,13 +108,14 @@ object Tutorial {
     private const val COVER_TESTING =
         "https://i.scdn.co/image/ab67616d0000b273df756f52b91b4dcd656760b0"
 
-    const val SONG_TESTING =
+    private const val SONG_TESTING =
         "Silver for Monsters"
 
-    const val URL_PREVIEW_TESTING =
+    private const val URL_PREVIEW_TESTING =
         "https://p.scdn.co/mp3-preview/ecfd294001cbeea0811b78b35b5a1da80bf3ef98?cid=774b29d4f13844c495f206cafdad9c86"
 
-    private val testingPlaylist = OnlinePlaylist("",
+    private val testingPlaylist = OnlinePlaylist(
+        "",
         "The Witcher 3 OST",
         "Marcin Przybyłowicz",
         arrayListOf(Genre.POP),

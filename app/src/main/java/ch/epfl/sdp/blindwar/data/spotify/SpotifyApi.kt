@@ -41,29 +41,35 @@ interface SpotifyApi {
 
     @GET(SEARCH_PATH)
     @Headers(
-    ACCEPT,
-    CONTENT_TYPE,
+        ACCEPT,
+        CONTENT_TYPE,
     )
-    suspend fun searchArtist(@Header(AUTH) token: String,
-    @Path(ARTIST_ID) artist_id: String,
-    @Query(LIMIT) limit: Int): Response<SpotifyArtist>
+    suspend fun searchArtist(
+        @Header(AUTH) token: String,
+        @Path(ARTIST_ID) artist_id: String,
+        @Query(LIMIT) limit: Int
+    ): Response<SpotifyArtist>
 
     @GET(TRACK_PATH)
     @Headers(
-    ACCEPT,
-    CONTENT_TYPE
+        ACCEPT,
+        CONTENT_TYPE
     )
-    suspend fun getTrack(@Header(AUTH) token: String,
-    @Path(TRACK_ID) track_id: String): Response<SpotifyTrack>
+    suspend fun getTrack(
+        @Header(AUTH) token: String,
+        @Path(TRACK_ID) track_id: String
+    ): Response<SpotifyTrack>
 
     @GET(SEARCH_PATH)
     @Headers(
-    ACCEPT,
-    CONTENT_TYPE
+        ACCEPT,
+        CONTENT_TYPE
     )
-    suspend fun searchTrack(@Header(AUTH) token: String,
-                            @Query(TYPE) type: String = "track",
-                            @Query(QUERY) query: String,
-                            @Query("market") market: String = "FR",
-                            @Query(LIMIT) limit: Int = 10): Response<SpotifySearchTrackResult>
+    suspend fun searchTrack(
+        @Header(AUTH) token: String,
+        @Query(TYPE) type: String = "track",
+        @Query(QUERY) query: String,
+        @Query("market") market: String = "FR",
+        @Query(LIMIT) limit: Int = 10
+    ): Response<SpotifySearchTrackResult>
 }

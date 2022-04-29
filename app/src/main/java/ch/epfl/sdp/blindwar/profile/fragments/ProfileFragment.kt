@@ -16,15 +16,9 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.GlideApp
 import ch.epfl.sdp.blindwar.login.SplashScreenActivity
 import ch.epfl.sdp.blindwar.login.UserNewInfoActivity
+import ch.epfl.sdp.blindwar.profile.HistoryActivity
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.google.firebase.storage.StorageReference
-import ch.epfl.sdp.blindwar.profile.HistoryActivity
-import ch.epfl.sdp.blindwar.profile.model.User
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseException
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 
 /**
  * Fragment that displays a connected user info
@@ -50,34 +44,34 @@ class ProfileFragment : Fragment() {
      * download image from database and show it
 
     private fun downloadImage() {
-        if (user.profilePicture.isNotEmpty()) { // not default value
-            imageDatabase.downloadProfilePicture(
-                user.profilePicture,
-                view?.findViewById(R.id.profileImageView)!!,
-                activity?.applicationContext!!
-            )
-        }
+    if (user.profilePicture.isNotEmpty()) { // not default value
+    imageDatabase.downloadProfilePicture(
+    user.profilePicture,
+    view?.findViewById(R.id.profileImageView)!!,
+    activity?.applicationContext!!
+    )
+    }
     }
 
     private val userInfoListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            // Get User info and use the values to update the UI
-            val userDB: User? = try {
-                dataSnapshot.getValue<User>()
-            } catch (e: DatabaseException) {
-                null
-            }
-            userDB?.let {
-                user = it
-            }
-            setView()
-            downloadImage()
-        }
+    override fun onDataChange(dataSnapshot: DataSnapshot) {
+    // Get User info and use the values to update the UI
+    val userDB: User? = try {
+    dataSnapshot.getValue<User>()
+    } catch (e: DatabaseException) {
+    null
+    }
+    userDB?.let {
+    user = it
+    }
+    setView()
+    downloadImage()
+    }
 
-        override fun onCancelled(databaseError: DatabaseError) {
-            // Getting Post failed, log a message
-            Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
-        }
+    override fun onCancelled(databaseError: DatabaseError) {
+    // Getting Post failed, log a message
+    Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+    }
     }**/
 
     override fun onCreateView(
@@ -132,15 +126,15 @@ class ProfileFragment : Fragment() {
         // TODO: Move cache in User repository
         // user id should be set according to authentication
         if (isOffline(activity?.applicationContext!!)) {
-            user = readCache(activity?.applicationContext!!)
-            //setView()
+        user = readCache(activity?.applicationContext!!)
+        //setView()
         } else {
-            // user id should be set according to authentication
-            FirebaseAuth.getInstance().currentUser?.let {
-                //database.addUserListener(it.uid, userInfoListener)
-            }
+        // user id should be set according to authentication
+        FirebaseAuth.getInstance().currentUser?.let {
+        //database.addUserListener(it.uid, userInfoListener)
         }
-        **/
+        }
+         **/
 
         return view
     }

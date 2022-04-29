@@ -44,9 +44,9 @@ class PlayMenuFragment : Fragment() {
 
         /**
         if (isOffline(activity?.applicationContext!!)) {
-            val btn = view.findViewById<ImageButton>(R.id.multiBtn)
-            btn.isClickable = false
-            btn.alpha = 0.3F
+        val btn = view.findViewById<ImageButton>(R.id.multiBtn)
+        btn.isClickable = false
+        btn.alpha = 0.3F
         } **/
 
         updateProfileImage(profileViewModel.imageRef, view.findViewById(R.id.profileView))

@@ -18,7 +18,7 @@ import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
  *
  * @constructor creates a PlayActivity
  */
-class SoloActivity(): AppCompatActivity() {
+class SoloActivity : AppCompatActivity() {
 
     val gameInstanceViewModel: GameInstanceViewModel by viewModels()
     val profileViewModel: ProfileViewModel by viewModels()
@@ -43,16 +43,12 @@ class SoloActivity(): AppCompatActivity() {
                 if (supportFragmentManager.fragments[1] is SongSummaryFragment) {
                     supportFragmentManager.fragments[0].onResume()
                     supportFragmentManager.popBackStackImmediate()
-                }
-
-                else if (supportFragmentManager.fragments[1] is GameSummaryFragment) {
+                } else if (supportFragmentManager.fragments[1] is GameSummaryFragment) {
                     removeAllFragments()
                     super.onBackPressed()
                 }
             }
-        }
-
-        else {
+        } else {
             super.onBackPressed()
         }
     }

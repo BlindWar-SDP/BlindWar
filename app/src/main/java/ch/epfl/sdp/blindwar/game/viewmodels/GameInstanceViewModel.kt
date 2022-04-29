@@ -4,7 +4,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ch.epfl.sdp.blindwar.game.model.*
+import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
@@ -15,7 +15,7 @@ import ch.epfl.sdp.blindwar.game.util.Tutorial
  *
  * @constructor creates a GameInstanceViewModel
  */
-class GameInstanceViewModel: ViewModel() {
+class GameInstanceViewModel : ViewModel() {
     var gameInstance = MutableLiveData<GameInstance>().let {
         it.value = Tutorial.gameInstance
         it
@@ -47,12 +47,13 @@ class GameInstanceViewModel: ViewModel() {
 
         gameInstance.value = GameInstance.Builder().setGameInstance(gameInstance.value!!)
             .setParameter(
-                GameParameter(round = currentParameter?.round!!,
-                timeToFind = currentParameter.timeToFind,
-                hint = currentParameter.hint,
-                funny = currentParameter.funny,
+                GameParameter(
+                    round = currentParameter?.round!!,
+                    timeToFind = currentParameter.timeToFind,
+                    hint = currentParameter.hint,
+                    funny = currentParameter.funny,
                     lives = currentParameter.lives
-            )
+                )
             )
             .build()
     }

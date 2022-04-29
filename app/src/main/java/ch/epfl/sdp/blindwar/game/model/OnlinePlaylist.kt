@@ -2,7 +2,7 @@ package ch.epfl.sdp.blindwar.game.model
 
 import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 
-class OnlinePlaylist (
+class OnlinePlaylist(
     uid: String = "", // playlist unique id in database
     name: String = "", // playlist name
     author: String = "", // playlist author

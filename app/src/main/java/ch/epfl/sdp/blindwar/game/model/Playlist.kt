@@ -2,7 +2,7 @@ package ch.epfl.sdp.blindwar.game.model
 
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 
-open class Playlist (
+open class Playlist(
     val uid: String = "", // playlist unique id in database
     private val name: String = "", // playlist name
     private val author: String = "", // playlist author
@@ -11,7 +11,7 @@ open class Playlist (
     val imageUrl: String = "", // playlist cover
     private val previewUrl: String = "", // preview song url
     val difficulty: Difficulty = Difficulty.EASY
-): Displayable {
+) : Displayable {
     override fun getName(): String {
         return name
     }
