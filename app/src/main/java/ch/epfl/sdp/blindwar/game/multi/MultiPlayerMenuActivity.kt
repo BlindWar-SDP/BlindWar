@@ -39,6 +39,15 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     }
 
     /**
+     * Launch the create match activity
+     *
+     * @param view
+     */
+    fun createMatch(view: View) {
+        startActivity(Intent(this, CreateMatchActivity::class.java))
+    }
+
+    /**
      * Starts a multiplayer game played with a random user
      *
      * @param view
