@@ -45,7 +45,6 @@ class ProfileViewModel: ViewModel() {
             }
 
             if (user != null) {
-                Log.d("ZAMBO ANGUISSA", user.firstName!!)
                 name.postValue(user.firstName!!)
                 email.postValue(user.email)
                 elo.postValue(user.userStatistics.elo.toString())

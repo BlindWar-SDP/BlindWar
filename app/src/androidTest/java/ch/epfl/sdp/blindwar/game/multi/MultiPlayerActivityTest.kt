@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.menu.multi
+package ch.epfl.sdp.blindwar.game.multi
 
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
@@ -7,9 +7,6 @@ import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.game.multi.MultiPlayerActivity
-import ch.epfl.sdp.blindwar.game.multi.MultiPlayerFriendActivity
-import ch.epfl.sdp.blindwar.game.multi.MultiPlayerRandomActivity
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before

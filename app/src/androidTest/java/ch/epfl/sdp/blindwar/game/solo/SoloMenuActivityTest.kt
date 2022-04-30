@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.solo
+package ch.epfl.sdp.blindwar.game.solo
 
 /**
 @RunWith(AndroidJUnit4::class)

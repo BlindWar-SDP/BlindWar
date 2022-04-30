@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.tutorial
+package ch.epfl.sdp.blindwar.game.solo.tutorial
 
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView

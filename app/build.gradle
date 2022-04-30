@@ -208,10 +208,12 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             'hilt_aggregated_deps/**',
             '**/*_Factory.class',
             '**/*_MembersInjector.class',
+            // Temporary
             '**/UserNewInfoActivity.**/',
             '**/RemoteMusicMetadataSource.**',
             '**/MusicMetadataRepository.**',
             '**/MockMusicdataSource.**',
+            '**/data/spotify/**',
             '**/database/**'
     ]
 

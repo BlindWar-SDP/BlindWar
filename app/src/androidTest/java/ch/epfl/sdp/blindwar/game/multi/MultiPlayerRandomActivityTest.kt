@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.menu.multi
+package ch.epfl.sdp.blindwar.game.multi
 
 import androidx.test.espresso.intent.Intents
 import org.junit.Assert.*

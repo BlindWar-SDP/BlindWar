@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.tutorial
+package ch.epfl.sdp.blindwar.game.solo.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
@@ -10,7 +10,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.MusicImageUrlConstants.METADATA_TUTORIAL_MUSICS_PER_AUTHOR
-import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
