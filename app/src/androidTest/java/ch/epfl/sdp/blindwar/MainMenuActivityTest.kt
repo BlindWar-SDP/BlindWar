@@ -60,7 +60,7 @@ class MainMenuActivityTest : TestCase() {
     fun testMultiButton() {
         onView(withId(R.id.item_play)).perform(click())
         onView(withId(R.id.multiBtn)).perform(click())
-        //intended(hasComponent(MultiPlayerActivity::class.java.name))
+        //intended(hasComponent(MultiPlayerMenuActivity::class.java.name))
     }
 
     @Test
@@ -70,10 +70,8 @@ class MainMenuActivityTest : TestCase() {
     }
 
     @Test
-    fun testBackButton(){
+    fun testBackButton() {
         val device = UiDevice.getInstance(getInstrumentation())
         assertTrue("Back button can't be pressed", device.pressBack())
     }
-
-
 }

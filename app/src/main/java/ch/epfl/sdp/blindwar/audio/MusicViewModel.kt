@@ -8,9 +8,7 @@ import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.Playlist
 import java.util.*
 
-class MusicViewModel(playlist: Playlist,
-                     context: Context,
-                     resources: Resources) {
+class MusicViewModel(playlist: Playlist, context: Context, resources: Resources) {
 
     // Collection of musics
     private val mediaPlayerPerMusic = MusicRepository(resources, context).fetchMusics(playlist)
@@ -26,9 +24,9 @@ class MusicViewModel(playlist: Playlist,
 
     /**
     private fun refreshFetchers() {
-        mutableMediaPlayerPerMusic = mediaPlayerPerMusic.toMutableMap()
+    mutableMediaPlayerPerMusic = mediaPlayerPerMusic.toMutableMap()
     }
-    **/
+     **/
 
     fun soundTeardown() {
         pause()
@@ -44,10 +42,10 @@ class MusicViewModel(playlist: Playlist,
         pause()
         reset()
 
-        /**
+        /*
         if (mutableMediaPlayerPerMusic.isEmpty())
-            refreshFetchers()
-        **/
+        refreshFetchers()
+         */
 
         // Get a random title
         val random = Random()

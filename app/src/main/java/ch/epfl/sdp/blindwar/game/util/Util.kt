@@ -30,9 +30,10 @@ object Util {
      * @param onlinePlaylistSet list of available playlists
      * @param displayableItemAdapter playlistRecyclerView adapter
      */
-    fun playlistFilterQuery(initialOnlinePlaylists: List<Displayable>,
-                            onlinePlaylistSet: ArrayList<Displayable>,
-                            displayableItemAdapter: DisplayableItemAdapter
+    fun playlistFilterQuery(
+        initialOnlinePlaylists: List<Displayable>,
+        onlinePlaylistSet: ArrayList<Displayable>,
+        displayableItemAdapter: DisplayableItemAdapter
     ): Filter = object : Filter() {
         override fun performFiltering(constraint: CharSequence?): FilterResults {
             val filteredList: ArrayList<Displayable> = ArrayList()

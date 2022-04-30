@@ -17,7 +17,7 @@ object GameHelper {
      */
     fun isTheCorrectTitle(answerString: String, title: String, isVocal: Boolean): Boolean {
         val keyboardDistance = (keyboardCostRatio * answerString.length).let {
-             if (it <= 3) it.toInt() else keyboardCostMax
+            if (it <= 3) it.toInt() else keyboardCostMax
         }
 
         return if (isVocal) levensteinDistance(

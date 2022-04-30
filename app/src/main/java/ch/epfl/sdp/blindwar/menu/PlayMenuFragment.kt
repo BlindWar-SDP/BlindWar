@@ -12,7 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.GlideApp
-import ch.epfl.sdp.blindwar.game.multi.MultiPlayerActivity
+import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.game.solo.SoloActivity
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.google.firebase.storage.StorageReference
@@ -38,15 +38,15 @@ class PlayMenuFragment : Fragment() {
         }
 
         view.findViewById<ImageButton>(R.id.multiBtn).setOnClickListener {
-            val intent = Intent(requireActivity(), MultiPlayerActivity::class.java)
+            val intent = Intent(requireActivity(), MultiPlayerMenuActivity::class.java)
             startActivity(intent)
         }
 
         /**
         if (isOffline(activity?.applicationContext!!)) {
-            val btn = view.findViewById<ImageButton>(R.id.multiBtn)
-            btn.isClickable = false
-            btn.alpha = 0.3F
+        val btn = view.findViewById<ImageButton>(R.id.multiBtn)
+        btn.isClickable = false
+        btn.alpha = 0.3F
         } **/
 
         updateProfileImage(profileViewModel.imageRef, view.findViewById(R.id.profileView))

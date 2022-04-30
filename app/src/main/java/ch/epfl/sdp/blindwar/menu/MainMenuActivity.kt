@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.DisplayableViewModel
 import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
@@ -33,7 +32,7 @@ class MainMenuActivity : AppCompatActivity() {
         bottomMenu = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
 
         bottomMenu.setOnItemSelectedListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.item_play -> showFragment(PlayMenuFragment())
                 R.id.item_search -> showFragment(SearchFragment())
                 R.id.item_profile -> showFragment(ProfileFragment())
