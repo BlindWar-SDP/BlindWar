@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.game
+package ch.epfl.sdp.blindwar.game.util
 
 import ch.epfl.sdp.blindwar.game.util.GameHelper
 import junit.framework.TestCase

@@ -1,9 +1,9 @@
-package ch.epfl.sdp.blindwar
+package ch.epfl.sdp.blindwar.login
 
 import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import ch.epfl.sdp.blindwar.login.SplashScreenActivity
+import ch.epfl.sdp.blindwar.R
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.google.firebase.auth.FirebaseAuth
 import junit.framework.TestCase

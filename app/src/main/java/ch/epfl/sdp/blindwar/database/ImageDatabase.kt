@@ -77,7 +77,6 @@ object ImageDatabase {
     fun getImageReference(imagePath: String): StorageReference {
         return storageRef.child(imagePath)
     }
-
 }
 
 

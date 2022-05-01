@@ -59,6 +59,7 @@ object PlaylistRepository {
                 playlists.value = (response as ArrayList<Playlist>)
             }
         }
+
         return playlists
     }
 }

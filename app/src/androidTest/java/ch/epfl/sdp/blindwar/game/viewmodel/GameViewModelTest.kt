@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.game
+package ch.epfl.sdp.blindwar.game.viewmodel
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
@@ -18,7 +18,7 @@ import java.util.*
 import java.util.concurrent.ExecutionException
 
 @RunWith(AndroidJUnit4::class)
-class GameTutorialTest {
+class GameViewModelTest {
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
 

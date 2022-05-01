@@ -1,5 +1,5 @@
 
-package ch.epfl.sdp.blindwar
+package ch.epfl.sdp.blindwar.profile.fragments
 
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso
@@ -22,7 +22,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.ExecutionException
-/*
+/* TODO: Debug tests
 @RunWith(AndroidJUnit4::class)
 class StatisticsActivityTest : TestCase() {
 

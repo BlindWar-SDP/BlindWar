@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.game
+package ch.epfl.sdp.blindwar.game.util
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer

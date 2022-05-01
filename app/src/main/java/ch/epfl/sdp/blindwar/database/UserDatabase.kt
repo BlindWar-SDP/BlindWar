@@ -48,6 +48,12 @@ object UserDatabase {
         return getUserStatisticsReference(uid).child("elo")
     }
 
+    /**
+     * Get image reference
+     *
+     * @param uid user id
+     * @return database reference of the selected object
+     */
     fun getImageReference(uid: String): DatabaseReference {
         return userReference.child(uid).child("profilePicture")
     }

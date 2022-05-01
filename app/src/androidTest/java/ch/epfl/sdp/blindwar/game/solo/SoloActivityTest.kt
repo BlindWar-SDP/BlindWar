@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.game.solo
 
 import android.view.View
+import androidx.annotation.LongDef
 import androidx.appcompat.widget.SearchView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBackUnconditionally

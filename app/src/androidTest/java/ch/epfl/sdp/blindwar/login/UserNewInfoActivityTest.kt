@@ -1,23 +1,10 @@
-package ch.epfl.sdp.blindwar
+package ch.epfl.sdp.blindwar.login
 
 
 import androidx.test.espresso.Espresso
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.uiautomator.UiDevice
-import ch.epfl.sdp.blindwar.login.UserAdditionalInfoActivity
-import ch.epfl.sdp.blindwar.login.UserNewInfoActivity
-import ch.epfl.sdp.blindwar.menu.MainMenuActivity
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult

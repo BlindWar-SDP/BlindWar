@@ -1,8 +1,5 @@
-package ch.epfl.sdp.blindwar
+package ch.epfl.sdp.blindwar.profile.model
 
-import ch.epfl.sdp.blindwar.profile.model.AppStatistics
-import ch.epfl.sdp.blindwar.profile.model.Mode
-import ch.epfl.sdp.blindwar.profile.model.Result
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 

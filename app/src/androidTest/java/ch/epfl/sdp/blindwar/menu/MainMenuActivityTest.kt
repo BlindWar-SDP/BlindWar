@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar
+package ch.epfl.sdp.blindwar.menu
 
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
@@ -11,7 +11,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.uiautomator.UiDevice
-import ch.epfl.sdp.blindwar.menu.MainMenuActivity
+import ch.epfl.sdp.blindwar.R
 import junit.framework.TestCase
 import org.junit.After
 import org.junit.Before

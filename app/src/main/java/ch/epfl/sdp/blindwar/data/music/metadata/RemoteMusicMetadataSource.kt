@@ -22,7 +22,6 @@ class RemoteMusicMetadataSource(private val songMetadataSource: SpotifyApi = api
     val musicMetadata = MutableLiveData<ArrayList<MusicMetadata>>()
 
     suspend fun fetchSongMetadata(trackName: String = "take on me") {
-        //var songMetaData = URIMusicMetadata("", "", "")
         withContext(ioDispatcher) {
             var spotifyTrack: SpotifyTrack
             if (!logged)
