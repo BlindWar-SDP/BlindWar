@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -167,7 +168,8 @@ class DemoFragment : Fragment() {
         } **/
 
         microphoneButton = view.findViewById(R.id.microphone)
-        context?.let { voiceRecognizer.init(it, guessEditText, Locale.ENGLISH.toLanguageTag()) }
+        context?.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
+
         //warning seems ok, no need to override performClick
         microphoneButton.setOnTouchListener { _, event ->
             when (event.action) {
@@ -176,20 +178,20 @@ class DemoFragment : Fragment() {
                     voiceRecognizer.start()
                     isVocal = true
                 }
-                MotionEvent.ACTION_UP -> {
-                    voiceRecognizer.stop()
-                    gameViewModel.play()
 
-                    voiceRecognizer.ready.observe(requireActivity()) {
-                        if (it) {
-                            guess(isVocal, isAuto = false)
-                            voiceRecognizer.ready = MutableLiveData(false)
-                        }
-                    }
-                    isVocal = false
+                MotionEvent.ACTION_UP -> {
+                    gameViewModel.play()
+                    voiceRecognizer.stop()
                 }
             }
             true
+        }
+
+        voiceRecognizer.resultString.observe(viewLifecycleOwner) {
+            voiceRecognizer.stop()
+            guessEditText.setText(it)
+            guess(isVocal, isAuto = false)
+            isVocal = false
         }
 
         return view

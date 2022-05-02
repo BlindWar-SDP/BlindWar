@@ -58,6 +58,7 @@ class UserDatabaseTest : TestCase() {
             UserDatabase.database
             UserDatabase.setFirstName(testUID, firstName)
             UserDatabase.setLastName(testUID, lastName)
+            Thread.sleep(3000)
             UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
                 assertTrue((it.getValue(User::class.java)?.firstName == firstName))
                 assertTrue((it.getValue(User::class.java)?.lastName == firstName))
@@ -126,6 +127,7 @@ class UserDatabaseTest : TestCase() {
     fun addLikedMusicTest() {
         launchFragmentInContainer<ProfileFragment>().onFragment {
             UserDatabase.addLikedMusic(testUID, Tutorial.fly)
+            Thread.sleep(3000)
             UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
                 assertTrue((it.getValue(User::class.java)?.likedMusics?.last()?.getName() == Tutorial.fly.getName()))
             }

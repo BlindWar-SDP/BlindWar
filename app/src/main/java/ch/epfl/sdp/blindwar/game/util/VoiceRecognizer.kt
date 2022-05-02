@@ -18,7 +18,7 @@ class VoiceRecognizer : RecognitionListener {
     private var speechRecognizer: SpeechRecognizer? = null
     var resultsRecognized: String = ""
     private var speechRecognizerIntent: Intent? = null
-    private var editTextResult: EditText? = null
+    val resultString = MutableLiveData<String>("")
 
     /**
      * Function used when the SpeechRecognizer recognize something
@@ -29,17 +29,8 @@ class VoiceRecognizer : RecognitionListener {
         val data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
         if (data != null && data[0] != null) {
             resultsRecognized = data[0]
-            editTextResult?.setText(resultsRecognized)
+            resultString.postValue(resultsRecognized)
         }
-    }
-
-    /**
-     * Function used when the SpeechRecognizer recognize partially something
-     *
-     * @param partialResults
-     */
-    override fun onPartialResults(partialResults: Bundle?) {
-        //val data = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
     }
 
     override fun onEvent(eventType: Int, params: Bundle?) {}
@@ -48,11 +39,10 @@ class VoiceRecognizer : RecognitionListener {
      * Initialize every attributes of the class
      *
      * @param context
-     * @param editText
+     * @param language
      */
-    fun init(context: Context, editText: EditText, language: String) {
+    fun init(context: Context, language: String) {
         if (speechRecognizer == null && speechRecognizerIntent == null) {
-            editTextResult = editText
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
 
             speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
@@ -67,7 +57,9 @@ class VoiceRecognizer : RecognitionListener {
             speechRecognizerIntent!!.putExtra(
                 "android.speech.extra.MASK_OFFENSIVE_WORDS",
                 false
-            ) //only for android 13
+            )
+
+            //only for android 13
             resultsRecognized = ""
             (speechRecognizer as SpeechRecognizer).setRecognitionListener(this)
         }
@@ -99,6 +91,12 @@ class VoiceRecognizer : RecognitionListener {
     }
 
     // UNUSED OVERRIDDEN FUNCTIONS
+    /**
+     * Function used when the SpeechRecognizer recognize partially something
+     *
+     * @param partialResults
+     */
+    override fun onPartialResults(partialResults: Bundle?) {}
     override fun onReadyForSpeech(params: Bundle?) {}
     override fun onBeginningOfSpeech() {}
     override fun onRmsChanged(rmsdB: Float) {}
