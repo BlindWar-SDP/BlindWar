@@ -1,10 +1,16 @@
 package ch.epfl.sdp.blindwar.game.util
 
+import android.os.Bundle
+import android.speech.SpeechRecognizer
+import android.widget.EditText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
 import junit.framework.TestCase
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.*
+import kotlin.collections.ArrayList
 
 @RunWith(AndroidJUnit4::class)
 class VoiceRecognizerTest : TestCase() {
@@ -16,7 +22,7 @@ class VoiceRecognizerTest : TestCase() {
         assert(true)
     }
 
-    /**
+
     @Test
     fun init() {
         testRule.scenario.onActivity { activity ->
@@ -157,5 +163,5 @@ class VoiceRecognizerTest : TestCase() {
             Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
         }
     }
-    **/
+
 }

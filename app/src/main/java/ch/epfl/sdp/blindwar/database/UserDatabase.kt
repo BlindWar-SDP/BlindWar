@@ -6,12 +6,10 @@ import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.ktx.Firebase
 
 
 object UserDatabase {
@@ -196,7 +194,7 @@ object UserDatabase {
      * @param uid
      * @return Task<DataSnapshot>
      */
-    private fun getUserStatistics(uid: String): Task<DataSnapshot> {
+    fun getUserStatistics(uid: String): Task<DataSnapshot> {
         val userStatisticsRef = getUserStatisticsReference(uid)
         return userStatisticsRef.get()
     }
@@ -216,13 +214,5 @@ object UserDatabase {
                 setUserStatistics(uid, stat)
             }
         }
-    }
-
-    /**
-     * Get current authenticated user
-     *
-     */
-    fun getCurrentUser(): DataSnapshot {
-        return getUserReference(Firebase.auth.currentUser!!.uid).get().result
     }
 }

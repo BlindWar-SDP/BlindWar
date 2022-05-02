@@ -19,7 +19,6 @@ class VoiceRecognizer : RecognitionListener {
     var resultsRecognized: String = ""
     private var speechRecognizerIntent: Intent? = null
     private var editTextResult: EditText? = null
-    var ready = MutableLiveData<Boolean>()
 
     /**
      * Function used when the SpeechRecognizer recognize something
@@ -28,11 +27,9 @@ class VoiceRecognizer : RecognitionListener {
      */
     override fun onResults(results: Bundle) {
         val data = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-        ready.postValue(false)
         if (data != null && data[0] != null) {
             resultsRecognized = data[0]
             editTextResult?.setText(resultsRecognized)
-            ready.postValue(true)
         }
     }
 
