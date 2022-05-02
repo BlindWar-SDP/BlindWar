@@ -5,32 +5,22 @@ import org.junit.Before
 import org.junit.Test
 
 class SpotifyResponseTest: TestCase() {
-    private lateinit var spotifyArtist: SpotifyArtist
-    private lateinit var spotifyImage: SpotifyImage
-    private lateinit var spotifyFollowers: SpotifyFollowers
-    private lateinit var spotifyUrls: SpotifyExternalUrls
-    private lateinit var spotifyToken: SpotifyToken
-
-    /**
-    @Before
-    fun setUp() {
-        spotifyFollowers = SpotifyFollowers("FollowersUrl", 9)
-        spotifyImage = SpotifyImage(0, "", 0)
-        spotifyUrls = SpotifyExternalUrls("SpotifyURL")
-        spotifyToken = SpotifyToken("TOKEN", 0, "CREDENTIALS")
-        spotifyArtist = SpotifyArtist(
-            spotifyUrls,
-            spotifyFollowers,
-            arrayListOf("POP"),
-            "ARTIST_URL",
-            "ARTIST_ID",
-            arrayListOf(spotifyImage),
-            "ARTIST_NAME",
-            10,
-            "ARTIST_TYPE",
-            "ARTIST_URI"
-        )
-    }
+    private var spotifyImage = SpotifyImage(0, "", 0)
+    private var spotifyFollowers = SpotifyFollowers("FollowersUrl", 9)
+    private var spotifyUrls = SpotifyExternalUrls("SpotifyURL")
+    private var spotifyToken = SpotifyToken("TOKEN", 0, "CREDENTIALS")
+    private var spotifyArtist = SpotifyArtist(
+        spotifyUrls,
+        spotifyFollowers,
+        arrayListOf("POP"),
+        "ARTIST_URL",
+        "ARTIST_ID",
+        arrayListOf(spotifyImage),
+        "ARTIST_NAME",
+        10,
+        "ARTIST_TYPE",
+        "ARTIST_URI"
+    )
 
     @Test
     fun testSpotifyFollowers() {
@@ -88,5 +78,5 @@ class SpotifyResponseTest: TestCase() {
         assertEquals(spotifyToken.expires_in, 0)
         assertEquals(spotifyToken.token_type, "CREDENTIALS")
         assertEquals(spotifyToken, SpotifyToken("TOKEN", 0, "CREDENTIALS"))
-    }**/
+    }
 }

@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.data.music
+package ch.epfl.sdp.blindwar.data
 
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata

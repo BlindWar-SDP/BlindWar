@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.game.solo.tutorial.util
+package ch.epfl.sdp.blindwar.game.solo.util
 
 /** Source :
  * https://github.com/android/views-widgets-samples/blob/master/ViewPager2/app/src/androidTest/java/androidx/viewpager2/integration/testapp/test/util/ViewPagerActions.kt

@@ -18,24 +18,23 @@ class URIFetcher : Fetcher {
 
         /** TODO: Debug
         player.setOnPreparedListener{
-
-
-            // Random start if the music duration is superior to 30s
-            if (musicMetadata.duration > 30000) {
-                //TODO: Remove code duplication
-
-                // Keep the start time low enough so that at least half the song can be heard (for now)
-                val time = Random().nextInt(musicMetadata.duration.div(2))
-
-                // Change the current music
-                it.seekTo(time)
-                readyMediaPlayer.ready.postValue(true)
-            }
         }
 
         player.prepareAsync()
         **/
-        //player.prepareAsync()
+        player.prepare()
+
+        // Random start if the music duration is superior to 30s
+        if (musicMetadata.duration > 30000) {
+            //TODO: Remove code duplication
+
+            // Keep the start time low enough so that at least half the song can be heard (for now)
+            val time = Random().nextInt(musicMetadata.duration.div(2))
+
+            // Change the current music
+            player.seekTo(time)
+            readyMediaPlayer.ready.postValue(true)
+        }
 
         return Pair(musicMetadata, readyMediaPlayer)
     }

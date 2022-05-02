@@ -12,36 +12,13 @@ import com.google.firebase.storage.ktx.storage
 import java.util.*
 
 object ImageDatabase {
-
     private val storage = Firebase.storage
 
     // Create a storage reference from our app
     private val storageRef = storage.reference
     private val imagesRef = storageRef.child("images")
 
-
-/*
-    fun uploadImage(imageURI: Uri, view: View? = null): String {
-        val randomKey = UUID.randomUUID().toString()
-
-        // Create a reference to the image to upload
-        val uploadedImageRef = imagesRef.child(randomKey)
-        if (view != null) {
-            uploadedImageRef.putFile(imageURI)
-                .addOnSuccessListener {
-                    Snackbar.make(view, "Image uploaded", Snackbar.LENGTH_LONG).show()
-                }
-            /*
-                .addOnFailureListener {
-                    Toast.makeText(getApplicationContext(), "Failed to upload file",
-                        Toast.LENGTH_LONG).show()
-                }*/
-        } else {
-            uploadedImageRef.putFile(imageURI)
-        }
-        return uploadedImageRef.path
-    } */
-
+    /** TODO: Clean method **/
     fun uploadProfilePicture(user: FirebaseUser?, imageURI: Uri, view: View? = null): String {
         val randomKey = UUID.randomUUID().toString()
 
@@ -53,11 +30,11 @@ object ImageDatabase {
                     Snackbar.make(view, "Image uploaded", Snackbar.LENGTH_LONG).show()
 //                    UserDatabase.addProfilePicture(user!!.uid, uploadedImageRef.path)
                 }
-            /*
+        /*
         .addOnFailureListener {
             Toast.makeText(getApplicationContext(), "Failed to upload file",
                 Toast.LENGTH_LONG).show()
-        }*/
+        } */
         } else {
             uploadedImageRef.putFile(imageURI)
         }

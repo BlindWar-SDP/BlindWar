@@ -21,7 +21,6 @@ object MusicDatabase {
      * @return database reference of the selected objects
      */
     fun getSongReference(): Task<ListResult> {
-        Log.d("ZAMBO ANGUISSA", "CALLED")
         return songsRef.listAll()
     }
 }

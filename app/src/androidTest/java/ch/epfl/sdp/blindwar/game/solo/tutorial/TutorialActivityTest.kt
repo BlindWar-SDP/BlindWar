@@ -9,9 +9,8 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.viewpager2.widget.ViewPager2
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.tutorial.util.*
 import ch.epfl.sdp.blindwar.game.solo.TutorialActivity
-import ch.epfl.sdp.blindwar.game.solo.tutorial.util.*
+import ch.epfl.sdp.blindwar.game.solo.util.*
 import org.hamcrest.Matcher
 import org.junit.After
 import org.junit.Before

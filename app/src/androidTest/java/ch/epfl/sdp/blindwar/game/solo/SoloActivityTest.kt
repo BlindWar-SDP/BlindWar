@@ -1,12 +1,7 @@
 package ch.epfl.sdp.blindwar.game.solo
 
-import android.view.View
-import androidx.annotation.LongDef
-import androidx.appcompat.widget.SearchView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBackUnconditionally
-import androidx.test.espresso.UiController
-import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -16,11 +11,10 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
-import ch.epfl.sdp.blindwar.game.solo.SoloActivity
+import ch.epfl.sdp.blindwar.game.solo.util.typeSearchViewText
 import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
 import ch.epfl.sdp.blindwar.game.util.Tutorial
 import junit.framework.Assert.assertEquals
-import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.junit.Rule
 import org.junit.Test
@@ -132,7 +126,7 @@ class SoloActivityTest {
     @Test
     fun testLostGameLocal() {
         closeSoftKeyboard()
-        testCompleteGame(1, Tutorial.ROUND)
+        testCompleteGame(2, Tutorial.ROUND)
         onView(withId(R.id.quit)).perform(click())
     }
 
@@ -213,24 +207,5 @@ class SoloActivityTest {
 
         onView(allOf(withId(R.id.playPreview), withEffectiveVisibility(Visibility.VISIBLE)))
             .check(matches(isClickable()))
-    }
-
-    /** Source :
-     *  https://stackoverflow.com/questions/48037060/how-to-type-text-on-a-searchview-using-espresso
-     */
-    private fun typeSearchViewText(text: String): ViewAction {
-        return object : ViewAction {
-            override fun getDescription(): String {
-                return "Search Query"
-            }
-
-            override fun getConstraints(): Matcher<View> {
-                return allOf(isDisplayed(), isAssignableFrom(SearchView::class.java))
-            }
-
-            override fun perform(uiController: UiController?, view: View?) {
-                (view as SearchView).setQuery(text, true)
-            }
-        }
     }
 }

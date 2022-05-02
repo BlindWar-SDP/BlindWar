@@ -24,18 +24,6 @@ class MusicRepository(
         return playlist.songs.parallelStream()
             .map {
                 fetcherFactory.getFetcher(it).fetchMusic(it)
-            }.collect(Collectors.toList()).toMap().also {
-                it.values.forEach{ mp ->
-                    mp.mediaPlayer.setOnPreparedListener{
-                        mp.ready.postValue(true)
-                        val time = Random().nextInt(30000)
-
-                        // Change the current music
-                        mp.mediaPlayer.seekTo(time)
-                    }
-
-                    mp.mediaPlayer.prepareAsync()
-                }
-            }
+            }.collect(Collectors.toList()).toMap()
     }
 }

@@ -14,8 +14,8 @@ object PlaylistDatabase {
      * @param pid playlist identification
      * @return playlist reference
      */
-    private fun getPlaylistReference(pid: String): DatabaseReference {
-        return PlaylistDatabase.playlistReference.child(pid)
+    fun getPlaylistReference(pid: String): DatabaseReference {
+        return playlistReference.child(pid)
     }
 
     /**
@@ -25,5 +25,14 @@ object PlaylistDatabase {
      */
     fun addPlaylist(onlinePlaylist: OnlinePlaylist) {
         playlistReference.child(onlinePlaylist.uid).setValue(onlinePlaylist)
+    }
+
+    /**
+     * Function to add an playlist to the database
+     *
+     * @param pid id of playlist removed
+     */
+    fun removePlaylist(pid: String) {
+        getPlaylistReference(pid).removeValue()
     }
 }
