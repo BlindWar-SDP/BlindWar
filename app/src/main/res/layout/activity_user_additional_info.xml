@@ -66,40 +66,6 @@
         app:layout_constraintTop_toBottomOf="@+id/NUA_selected_birthdate_text"
         tools:ignore="SmallSp" />
 
-    <Button
-        android:id="@+id/NUA_Confirm_Btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:textColor="@color/light_red"
-        android:onClick="confirm"
-        android:text="@string/confirm"
-        app:layout_constraintBaseline_toBaselineOf="@+id/NUA_Cancel_Btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/NUA_Cancel_Btn" />
-
-    <Button
-        android:id="@+id/NUA_Cancel_Btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:textColor="@color/light_red"
-        android:onClick="cancel"
-        android:text="@android:string/cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/NUA_Confirm_Btn"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NUA_select_birthdate" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
-
     <TextView
         android:id="@+id/select_gender"
         android:layout_width="wrap_content"

@@ -104,6 +104,8 @@ class SplashScreenActivity : AppCompatActivity() {
                     - should we update the online database with the local cache here ?
                      */
                 Intent(activity, MainMenuActivity::class.java)
+
+
             }
         } else {
             // Sign in failed. If response is null the user canceled the

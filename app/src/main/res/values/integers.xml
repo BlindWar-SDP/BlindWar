@@ -8,7 +8,7 @@
     <integer name="self_description_max_length">256</integer>
     <integer name="max_lines_user_desc">4</integer>
 
-<!--    DELETED WHEN CLEANED -->
+    <!--    DELETED WHEN CLEANED -->
 <!--    <integer name="max_length_date">10</integer>-->
 
 </resources>
