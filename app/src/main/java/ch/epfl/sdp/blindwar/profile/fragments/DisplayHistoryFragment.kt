@@ -28,6 +28,8 @@ class DisplayHistoryFragment : Fragment() {
     private var titles = mutableListOf<String>()
     private var artists = mutableListOf<String>()
     private var images = mutableListOf<String>()
+    private val LIKED_MUSIC_TYPE = "liked musics"
+    private val MATCH_HISTORY_TYPE = "match history"
 
 
     override fun onCreateView(
@@ -67,10 +69,10 @@ class DisplayHistoryFragment : Fragment() {
     private fun postToList() {
         val historyType = arguments?.getString(HISTORY_TYPE)
         val currentUser = FirebaseAuth.getInstance().currentUser
-        if (historyType == "liked musics" && currentUser != null) {
+        if (historyType == LIKED_MUSIC_TYPE && currentUser != null) {
             UserDatabase.addUserListener(currentUser.uid, userLikedMusicsListener)
         }
-        if (historyType == "match history" && currentUser != null) {
+        if (historyType == MATCH_HISTORY_TYPE && currentUser != null) {
             UserDatabase.addUserListener(currentUser.uid, userMatchHistoryListener)
         }
 
