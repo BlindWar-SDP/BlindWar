@@ -2,10 +2,15 @@ package ch.epfl.sdp.blindwar.data.music.metadata
 
 import ch.epfl.sdp.blindwar.game.model.Displayable
 
-abstract class MusicMetadata(var title: String = "",
-                         var artist: String = "",
-                         var imageUrl: String = "",
-                         var duration: Int = 0) : Displayable {
+import kotlinx.serialization.Serializable
+
+@Serializable
+abstract class MusicMetadata(
+    var title: String = "",
+    var artist: String = "",
+    var imageUrl: String = "",
+    var duration: Int = 0
+) : Displayable {
     override fun toString(): String = "$title by $artist"
 
     override fun getAuthor(): String {

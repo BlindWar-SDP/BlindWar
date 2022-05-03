@@ -18,13 +18,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.storage.StorageReference
 
-class ProfileViewModel: ViewModel() {
-    // DATABASE
-    private val database = UserDatabase
-    private val auth = FirebaseAuth.getInstance()
-    private val currentUser = auth.currentUser
-    //private val userRepository = UserRepository
-    private val imageDatabase = ImageDatabase
+class ProfileViewModel : ViewModel() {
 
     // OBSERVABLES
     val name = MutableLiveData<String>()
@@ -43,19 +37,19 @@ class ProfileViewModel: ViewModel() {
                 null
             }
 
-            if (user != null) {
-                Log.d("ZAMBO ANGUISSA", user.firstName!!)
-                name.postValue(user.firstName!!)
-                email.postValue(user.email)
-                elo.postValue(user.userStatistics.elo.toString())
-                imagePath.postValue(user.profilePicture)
-                userStatistics.postValue(user.userStatistics)
+            user?.let {
+                Log.d("ZAMBO ANGUISSA", it.firstName)
+                name.postValue(it.firstName)
+                email.postValue(it.email)
+                elo.postValue(it.userStatistics.elo.toString())
+                imagePath.postValue(it.profilePicture)
+                userStatistics.postValue(it.userStatistics)
 
-                if (user.profilePicture != "") {
-                    imageRef.postValue(imageDatabase.getImageReference(user.profilePicture))
+                if (it.profilePicture != "") {
+                    imageRef.postValue(ImageDatabase.getImageReference(it.profilePicture))
                 }
 
-            } else {
+            } ?: run {
                 userStatistics.postValue(AppStatistics())
             }
         }
@@ -67,23 +61,25 @@ class ProfileViewModel: ViewModel() {
     }
 
     init {
-        if (currentUser != null) {
-            database.addUserListener(currentUser.uid, userInfoListener)
+        FirebaseAuth.getInstance().currentUser?.let {
+            UserDatabase.addUserListener(it.uid, userInfoListener)
         }
     }
 
     fun logout() {
-        auth.signOut()
+        FirebaseAuth.getInstance().signOut()
     }
 
     fun updateStats(score: Int, fails: Int, gameResult: GameResult) {
-        if (currentUser != null) {
-            UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
-            UserDatabase.addGameResult(currentUser?.uid!!, gameResult)
+        FirebaseAuth.getInstance().currentUser?.let {
+            UserDatabase.updateSoloUserStatistics(it.uid, score, fails)
+            UserDatabase.addGameResult(it.uid, gameResult)
         }
     }
 
     fun likeMusic(music: URIMusicMetadata) {
-        database.addLikedMusic(currentUser?.uid!!, music)
+        FirebaseAuth.getInstance().currentUser?.let {
+            UserDatabase.addLikedMusic(it.uid, music)
+        }
     }
 }

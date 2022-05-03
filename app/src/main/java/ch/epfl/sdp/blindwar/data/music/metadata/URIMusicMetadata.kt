@@ -1,11 +1,12 @@
 package ch.epfl.sdp.blindwar.data.music.metadata
 
-class URIMusicMetadata(title: String = "",
-                       artist: String = "",
-                       imageUrl: String = "",
-                       duration: Int = 0,
-                       val uri: String = ""): MusicMetadata(title, artist, imageUrl, duration)
-{
+import kotlinx.serialization.Serializable
+
+@Serializable
+class URIMusicMetadata(
+    val uri: String = ""
+) : MusicMetadata() {
     override fun getPreviewUrl(): String {
         return uri
-    } }
+    }
+}

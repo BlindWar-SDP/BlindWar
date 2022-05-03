@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.profile.model
 
 import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.game.model.GameResult
+import kotlinx.serialization.Serializable
 
 //const val UID = "uid"
 //const val EMAIL = "email`"
@@ -15,20 +16,31 @@ import ch.epfl.sdp.blindwar.game.model.GameResult
 //const val GENDER = "gender"
 //const val DESCRIPTION = "description"
 
+@Serializable
 data class User(
     var uid: String = "",
     var email: String = "",
     var userStatistics: AppStatistics = AppStatistics(),
     var pseudo: String = "",
-    var firstName: String? = null,
-    var lastName: String? = null,
-    var birthDate: Long? = 0,
+    var firstName: String = "",
+    var lastName: String = "",
+    var birthdate: Long = -1,
     var profilePicture: String = "",
     var likedMusics: MutableList<URIMusicMetadata> = mutableListOf(),
     var matchHistory: MutableList<GameResult> = mutableListOf(),
     var gender: String = "",
     var description: String = ""
 ) {
+
+    enum class Gender {
+        Other, Female, Male, Undefined, None
+    }
+
+    // ENUM to get variable name as string with the .name method
+    // for
+    enum class VarName {
+        user, uid, email, userStatistics, pseudo, firstName, lastName, birthdate, profilePicture, likedMusics, matchHistory, gender, description
+    }
 
     class Builder(
         private var uid: String = "",
@@ -37,7 +49,7 @@ data class User(
         private var pseudo: String = "",
         private var firstName: String = "",
         private var lastName: String = "",
-        private var birthDate: Long = -1,
+        private var birthdate: Long = -1,
         private var profilePicture: String = "",
         private var likedMusics: MutableList<URIMusicMetadata> = mutableListOf(),
         private var matchHistory: MutableList<GameResult> = mutableListOf(),
@@ -51,7 +63,7 @@ data class User(
         fun setPseudo(pseudo: String) = apply { this.pseudo = pseudo }
         fun setFirstName(name: String) = apply { this.firstName = name }
         fun setLastName(name: String) = apply { this.lastName = name }
-        fun setBirthdate(date: Long) = apply { this.birthDate = date }
+        fun setBirthdate(date: Long) = apply { this.birthdate = date }
         fun setProfilePicture(imagePath: String) = apply { this.profilePicture = imagePath }
         fun setGender(gender: String) = apply { this.gender = gender }
         fun setDescription(desc: String) = apply { this.description = desc }
@@ -73,7 +85,7 @@ data class User(
             this.pseudo = user.pseudo
             this.firstName = user.firstName.toString()
             this.lastName = user.lastName.toString()
-            this.birthDate = user.birthDate!!
+            this.birthdate = user.birthdate
             this.profilePicture = user.profilePicture
             this.gender = user.gender
             this.description = user.description
@@ -87,7 +99,7 @@ data class User(
                 pseudo,
                 firstName,
                 lastName,
-                birthDate,
+                birthdate,
                 profilePicture,
                 likedMusics,
                 matchHistory,

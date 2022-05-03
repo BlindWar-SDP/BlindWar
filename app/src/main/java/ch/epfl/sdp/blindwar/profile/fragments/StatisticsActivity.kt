@@ -11,11 +11,10 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
-import com.google.firebase.database.*
 
 
 // TODO: Remove unused activity
-class StatisticsActivity : AppCompatActivity() {
+class StatisticsActivity: AppCompatActivity() {
     private val profileViewModel: ProfileViewModel by viewModels()
     private lateinit var spinner: Spinner
     private var userStatistics =
