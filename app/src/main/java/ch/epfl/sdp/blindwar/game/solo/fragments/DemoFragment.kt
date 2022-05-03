@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -19,10 +18,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
+import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModelMulti
+import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModelSolo
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import java.util.*
@@ -79,13 +81,24 @@ class DemoFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.activity_animated_demo, container, false)
 
-        gameViewModel = context?.let {
-            GameViewModel(
-                gameInstanceViewModel.gameInstance.value!!,
-                it,
-                resources
-            )
-        }!!
+        // Switch between the two different game view model
+        when(gameInstanceViewModel.gameInstance.value?.gameFormat){
+            GameFormat.SOLO -> gameViewModel = context?.let {
+                GameViewModelSolo(
+                    gameInstanceViewModel.gameInstance.value!!,
+                    it,
+                    resources
+                )
+            }!!
+            GameFormat.MULTI -> gameViewModel = context?.let {
+                GameViewModelMulti(
+                    gameInstanceViewModel.gameInstance.value!!,
+                    it,
+                    resources
+                )
+            }!!
+        }
+
 
         gameViewModel.init()
 

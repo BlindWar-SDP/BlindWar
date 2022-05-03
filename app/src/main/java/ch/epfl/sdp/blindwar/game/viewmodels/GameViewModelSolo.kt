@@ -20,68 +20,58 @@ import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
  * @param context of the Game
  * @constructor Construct a class that represent the game logic
  */
-abstract class GameViewModel(
+class GameViewModelSolo(
     gameInstance: GameInstance,
     private val context: Context,
-    private val resources: Resources
-) : ViewModel() {
-    /** Encapsulates the characteristics of a game instead of its logic
-     *
-     */
-    protected    val game: GameInstance = gameInstance
-    protected lateinit var musicViewModel: MusicViewModel
-    protected val profileViewModel = ProfileViewModel()
-
-    protected val gameParameter: GameParameter = gameInstance
-        .gameConfig
-        .parameter
-
-    protected val mode: GameMode = gameInstance
-        .gameConfig
-        .mode
-
-    /** Player game score **/
-    var score = 0
-        protected set
-
-    var round = 0
-        protected set
-
-    /** Survival mode specific **/
-    val lives = MutableLiveData(gameParameter.lives)
-
-    /**
-     * Prepares the game following the configuration
-     *
-     */
-    fun init() {
-        this.musicViewModel = MusicViewModel(
-            game.onlinePlaylist,
-            context, resources
-        )
-    }
-
+    resources: Resources
+) : GameViewModel(gameInstance, context, resources) {
 
     /**
      * Record the game instance to the player history
      * clean up player and assets
      *
      */
-    protected abstract fun endGame()
+    override fun endGame() {
+        val fails = round - score
+        val gameResult = GameResult(mode, round, score)
+
+        profileViewModel.updateStats(score, fails, gameResult)
+        musicViewModel.soundTeardown()
+    }
 
     /**
      * Pass to the next round
      *
      * @return true if the game is over after this round, false otherwise
      */
-    abstract fun nextRound() : Boolean
+    override fun nextRound(): Boolean {
+        if (mode == GameMode.SURVIVAL && lives.value!! <= 0) {
+            endGame()
+            return true
+        }
+
+        if (round >= gameParameter.round) {
+            endGame()
+            return true
+        }
+
+        musicViewModel.nextRound()
+        musicViewModel.normalMode()
+        return false
+    }
 
     /**
      * Depends on the game instance parameter
      *
      * @return
      */
-    abstract fun currentMetadata(): MusicMetadata?
+    override fun currentMetadata(): MusicMetadata? {
+        if (gameParameter.hint) {
+            return musicViewModel.getCurrentMetadata()
+        }
+
+        return null
+    }
 
     /**
      * Try to guess a music by its title
@@ -89,27 +79,24 @@ abstract class GameViewModel(
      * @param titleGuess Title that the user guesses
      * @return True if the guess is correct
      */
-    abstract fun guess(titleGuess: String, isVocal: Boolean): Boolean
+    override fun guess(titleGuess: String, isVocal: Boolean): Boolean {
+        return if (
+            GameHelper.isTheCorrectTitle(titleGuess, currentMetadata()!!.title, isVocal)
+        ) {
+            score += 1
+            round += 1
+            musicViewModel.summaryMode()
+            true
+        } else
+            false
+    }
 
     /**
      * Current round has timed out
      *
      */
-    abstract fun timeout()
-
-    /**
-     * Play the current music if in pause
-     *
-     */
-    fun play() {
-        musicViewModel.play()
-    }
-
-    /**
-     * Pause the current music if playing
-     *
-     */
-    fun pause() {
-        musicViewModel.pause()
+    override fun timeout() {
+        round += 1
+        lives.value = lives.value?.minus(1)
     }
 }

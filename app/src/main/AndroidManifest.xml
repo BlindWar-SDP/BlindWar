@@ -58,6 +58,10 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".game.multi.CreateMatchActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".game.multi.MultiPlayerRandomActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

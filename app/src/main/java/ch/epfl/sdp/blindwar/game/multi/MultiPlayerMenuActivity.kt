@@ -90,7 +90,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         }*/
         dialog!!.hide() //TODO REMOVE WHEN TESTS OK
         //val intent = Intent(this, MultiPlayerRandomActivity::class.java)
-        val intent = Intent(this, MultiPlayerActivity::class.java)
+        val intent = Intent(this, CreateMatchActivity::class.java)
         startActivity(intent)
     }
 

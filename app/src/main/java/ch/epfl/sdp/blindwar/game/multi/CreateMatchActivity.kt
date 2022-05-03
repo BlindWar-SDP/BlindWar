@@ -1,13 +1,46 @@
 package ch.epfl.sdp.blindwar.game.multi
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
+import ch.epfl.sdp.blindwar.game.solo.fragments.GameSummaryFragment
+import ch.epfl.sdp.blindwar.game.solo.fragments.ModeSelectionFragment
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment
+import ch.epfl.sdp.blindwar.game.util.GameActivity
 
-class CreateMatchActivity : AppCompatActivity() {
+class CreateMatchActivity: GameActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_match)
-    }
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            setContentView(R.layout.activity_play)
+
+            // Set the game format
+            gameInstanceViewModel.setGameFormat(GameFormat.MULTI)
+
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.play_container, ModeSelectionFragment(), "MODE")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit()
+        }
+
+        /**
+         * Handle the back button logic in the activity
+         */
+        override fun onBackPressed() {
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                if (supportFragmentManager.fragments.size > 1) {
+
+                    if (supportFragmentManager.fragments[1] is SongSummaryFragment) {
+                        supportFragmentManager.fragments[0].onResume()
+                        supportFragmentManager.popBackStackImmediate()
+                    } else if (supportFragmentManager.fragments[1] is GameSummaryFragment) {
+                        removeAllFragments()
+                        super.onBackPressed()
+                    }
+                }
+            } else {
+                super.onBackPressed()
+            }
+        }
 }
