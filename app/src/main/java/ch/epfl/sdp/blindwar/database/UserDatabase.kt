@@ -181,6 +181,11 @@ object UserDatabase {
         getImageReference(uid).setValue(path)
     }
 
+    /**
+     * Add a Listener for a specific User(specified by uid).
+     * @param uid
+     * @param listener
+     */
     fun addUserListener(uid: String, listener: ValueEventListener) {
         userReference.child(uid).addValueEventListener(listener)
     }
@@ -213,10 +218,15 @@ object UserDatabase {
     }
 
     /**
-     * Get current authenticated user
-     *
+     * Get Pseudo and Elo of all users. Needs to be treated as a future(addOnSuccessListener)
+     * @return Task<DataSnapshot>
      */
-    fun getCurrentUser(): DataSnapshot {
-        return getUserReference(Firebase.auth.currentUser!!.uid).get().result
+
+    fun getLeaderboardData(): Task<DataSnapshot>  {
+        val users = userReference.get().addOnSuccessListener {
+
+        }
     }
+
+
 }

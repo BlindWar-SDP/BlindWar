@@ -151,6 +151,36 @@ class DisplayHistoryFragment : Fragment() {
         }
     }
 
+    private val leaderboardListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val user: User? = try {
+                dataSnapshot.getValue<User>()
+            } catch (e: DatabaseException) {
+                null
+            }
+            if (user != null) {
+                val matchHistory: MutableList<GameResult> = user.matchHistory
+                for (match in matchHistory) {
+                    addToList(
+                        "Number of rounds: " + match.gameNbrRound.toString(),
+                        "Score: " + match.gameScore.toString(),
+                        "no image"
+                    )
+                }
+            } else {
+                for (i in 1..10) {
+                    addToList("HELLO", "JOJO", "no image")
+                }
+            }
+            musicRecyclerView.adapter = LeaderboardRecyclerAdapter(titles, artists, images)
+        }
+
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+        }
+    }
+
     companion object {
         const val HISTORY_TYPE = "type"
 
