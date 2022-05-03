@@ -21,43 +21,35 @@ import kotlinx.coroutines.withContext
  * @property imagesURL
  */
 class LeaderboardRecyclerAdapter(
-    private var titles: List<String>, private var artists: List<String>,
-    private var imagesURL: List<String>
+    private var ranks: List<String>, private var pseudos: List<String>,
+    private var elos: List<String>
 ) :
 
     RecyclerView.Adapter<LeaderboardRecyclerAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val itemRank: TextView = itemView.findViewById(R.id.musicTitle)
-        val itemPseudo: TextView = itemView.findViewById(R.id.musicArtist)
-        val itemElo: ImageView = itemView.findViewById(R.id.musicImage)
+        val userRank: TextView = itemView.findViewById(R.id.musicTitle)
+        val userPseudo: TextView = itemView.findViewById(R.id.musicArtist)
+        val userElo: ImageView = itemView.findViewById(R.id.musicImage)
 
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v: View = LayoutInflater.from(parent.context).inflate(
-            R.layout.display_music_cardview,
+            R.layout.leaderboard_cardview,
             parent, false
         )
         return ViewHolder(v)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemTitle.text = titles[position]
-        holder.itemArtist.text = artists[position]
+        holder.userRank.text = titles[position]
+        holder.userPseudo.text = artists[position]
+        holder.userElo.text =
         //holder.itemPicture.setImageResource((imagesURL[position]))
-        val image = imagesURL[position]
-        runBlocking {
-            withContext(Dispatchers.IO) {
-                try {
-                    holder.itemPicture.background = BitmapDrawable(Picasso.get().load(image).get())
-                } catch (e: Exception) {
-                    holder.itemPicture.setImageResource(R.mipmap.ic_launcher_round_base)
-                }
-            }
-        }
+
     }
 
     override fun getItemCount(): Int {

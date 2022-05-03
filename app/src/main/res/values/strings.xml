@@ -172,6 +172,11 @@
     <string name="reset">reset</string>
     <string name="no_birthdate_selected">no birthdate selected</string>
 
+    <!-- PROFILE -->
+    <string name="userRank">Rank</string>
+    <string name="userPseudo">Pseudo</string>
+    <string name="userElo">Elo</string>
+
     <!-- MULTI -->
     <string name="toast_connexion">Match are full, retrying…</string>
     <string name="toast_canceled_connexion">Search canceled !</string>
