@@ -30,10 +30,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
-
 /**
  * Activity that let the user enter its principal information when registering for the app
- * TODO: fix CodeClimate issues / fix Cirrus warnings when possible
  *
  * @constructor creates a UserNewInfoActivity
  */
@@ -64,11 +62,12 @@ class UserNewInfoActivity : AppCompatActivity() {
                 pseudo.setText(it.pseudo)
                 if (!intent.getBooleanExtra("newUser", false)) {
                     if (it.profilePicture != "null") {
-                        imageDatabase.downloadProfilePicture(
-                            it.profilePicture!!,
-                            profileImageView,
-                            applicationContext
-                        )
+                        // TODO: Refactor UserNewInfoActivity
+                        //imageDatabase.downloadProfilePicture(
+                          //  it.profilePicture!!,
+                           // profileImageView,
+                           // applicationContext
+                        //)
                     }
                 }
             }

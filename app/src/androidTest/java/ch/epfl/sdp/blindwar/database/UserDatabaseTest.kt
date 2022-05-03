@@ -5,7 +5,14 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.game.util.Tutorial
 import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import ch.epfl.sdp.blindwar.profile.model.User
+import com.google.android.gms.tasks.Tasks.await
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import junit.framework.TestCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -14,6 +21,12 @@ import org.junit.runner.RunWith
 class UserDatabaseTest : TestCase() {
     private val testUID = "JOJO"
 
+    @Before
+    fun init() {
+        runBlocking {
+            await(Firebase.auth.signInWithEmailAndPassword("test@bot.ch", "testtest"))
+        }
+    }
 
     @Test
     fun setEloCorrectly() {
@@ -53,40 +66,62 @@ class UserDatabaseTest : TestCase() {
 
     @Test
     fun setNamesCorrectly() {
-        launchFragmentInContainer<ProfileFragment>().onFragment {
+        launchFragmentInContainer<ProfileFragment>()
             val firstName = "David"; val lastName = "Goodenough"
             UserDatabase.database
-            UserDatabase.setFirstName(testUID, firstName)
-            UserDatabase.setLastName(testUID, lastName)
-            Thread.sleep(3000)
-            UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
-                assertTrue((it.getValue(User::class.java)?.firstName == firstName))
-                assertTrue((it.getValue(User::class.java)?.lastName == firstName))
+            runBlocking {
+                var user: User?
+                    withContext(Dispatchers.IO) {
+                    user =
+                        await(
+                        UserDatabase.setFirstName(testUID, firstName)
+                            .continueWithTask {
+                        UserDatabase.setLastName(testUID, lastName)
+                    }.continueWithTask{
+                        UserDatabase.userReference.child(testUID).get()
+                    }).getValue(User::class.java)
+                }
+
+                assertTrue(user?.firstName == firstName)
+                assertTrue(user?.lastName == lastName)
             }
-        }
     }
 
     @Test
     fun setGenderCorrectly() {
-        launchFragmentInContainer<ProfileFragment>().onFragment {
+        launchFragmentInContainer<ProfileFragment>()
             val gender = "MALE"
-            UserDatabase.database
-            UserDatabase.setGender(testUID, gender)
-            UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
-                assertTrue((it.getValue(User::class.java)?.gender == gender))
+            runBlocking {
+                var user: User?
+                withContext(Dispatchers.IO) {
+                    user =
+                        await(
+                            UserDatabase.setGender(testUID, gender)
+                                .continueWithTask{
+                                    UserDatabase.userReference.child(testUID).get()
+                                }).getValue(User::class.java)
+                }
+
+                assertTrue(user?.gender == gender)
             }
-        }
     }
 
     @Test
     fun setPseudoCorrectly() {
-        launchFragmentInContainer<ProfileFragment>().onFragment {
-            val pseudo = "Cirrus"
-            UserDatabase.database
-            UserDatabase.setPseudo(testUID, pseudo)
-            UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
-                assertTrue((it.getValue(User::class.java)?.pseudo == pseudo))
+        launchFragmentInContainer<ProfileFragment>()
+        val pseudo = "Cirrus"
+        runBlocking {
+            var user: User?
+            withContext(Dispatchers.IO) {
+                user =
+                    await(
+                        UserDatabase.setPseudo(testUID, pseudo)
+                            .continueWithTask{
+                                UserDatabase.userReference.child(testUID).get()
+                            }).getValue(User::class.java)
             }
+
+            assertTrue(user?.pseudo == pseudo)
         }
     }
 
@@ -101,18 +136,23 @@ class UserDatabaseTest : TestCase() {
         }
     }
 
+    /**
     @Test
     fun getUserStatisticsTest() {
-        launchFragmentInContainer<ProfileFragment>().onFragment {
-            UserDatabase.updateSoloUserStatistics(testUID, 1, 1)
-            UserDatabase.getUserStatistics(testUID).addOnSuccessListener {
-                // Assert that last game has the correct stats
-                val stats = (it.getValue(User::class.java)?.userStatistics)
-                assertTrue(stats?.losses?.last() == 1)
-                assertTrue(stats?.wins?.last() == 1)
+        launchFragmentInContainer<ProfileFragment>()
+        val fail = 1; val score = 2
+        runBlocking {
+            var user: User?
+            withContext(Dispatchers.IO) {
+                await(UserDatabase.updateSoloUserStatistics(testUID, score, fail))
+                user = await(UserDatabase.userReference.child(testUID).get())
+                    .getValue(User::class.java)
             }
+
+            assertTrue(user?.userStatistics?.correctArray?.last() == score)
+            assertTrue(user?.userStatistics?.wrongArray?.last() == fail)
         }
-    }
+    } **/
 
     // TODO
     @Test

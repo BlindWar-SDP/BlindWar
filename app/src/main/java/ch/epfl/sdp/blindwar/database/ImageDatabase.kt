@@ -41,16 +41,6 @@ object ImageDatabase {
         return uploadedImageRef.path
     }
 
-
-    fun downloadProfilePicture(imagePath: String, imageView: ImageView, context: Context): String {
-        val profilePictureRef = storageRef.child(imagePath)
-        GlideApp.with(context)
-            .load(profilePictureRef)
-            .centerCrop()
-            .into(imageView)
-        return profilePictureRef.path
-    }
-
     fun getImageReference(imagePath: String): StorageReference {
         return storageRef.child(imagePath)
     }

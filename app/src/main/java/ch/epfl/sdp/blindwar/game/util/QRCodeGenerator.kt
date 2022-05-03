@@ -5,6 +5,7 @@ import android.graphics.Color
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
+import java.lang.RuntimeException
 
 object QRCodeGenerator {
 
@@ -19,7 +20,7 @@ object QRCodeGenerator {
                     bitmap.setPixel(x, y, if (bitMatrix[x, y]) Color.BLACK else Color.WHITE)
                 }
             }
-        } catch (e: WriterException) {
+        } catch (e: RuntimeException) {
             e.printStackTrace()
         }
 

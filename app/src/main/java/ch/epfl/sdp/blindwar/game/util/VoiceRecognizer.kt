@@ -33,7 +33,7 @@ class VoiceRecognizer : RecognitionListener {
         }
     }
 
-    override fun onEvent(eventType: Int, params: Bundle?) {}
+
 
     /**
      * Initialize every attributes of the class
@@ -97,6 +97,7 @@ class VoiceRecognizer : RecognitionListener {
      * @param partialResults
      */
     override fun onPartialResults(partialResults: Bundle?) {}
+    override fun onEvent(eventType: Int, params: Bundle?) {}
     override fun onReadyForSpeech(params: Bundle?) {}
     override fun onBeginningOfSpeech() {}
     override fun onRmsChanged(rmsdB: Float) {}
