@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
  * @property artists
  * @property imagesURL
  */
-class MusicDisplayRecyclerAdapter(
+class LeaderboardRecyclerAdapter(
     private var titles: List<String>, private var artists: List<String>,
     private var imagesURL: List<String>
 ) :
@@ -29,9 +29,9 @@ class MusicDisplayRecyclerAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val itemTitle: TextView = itemView.findViewById(R.id.musicTitle)
-        val itemArtist: TextView = itemView.findViewById(R.id.musicArtist)
-        val itemPicture: ImageView = itemView.findViewById(R.id.musicImage)
+        val itemRank: TextView = itemView.findViewById(R.id.musicTitle)
+        val itemPseudo: TextView = itemView.findViewById(R.id.musicArtist)
+        val itemElo: ImageView = itemView.findViewById(R.id.musicImage)
 
 
     }
@@ -64,4 +64,3 @@ class MusicDisplayRecyclerAdapter(
         return titles.size
     }
 }
-

@@ -14,7 +14,7 @@ import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.profile.model.User
-import ch.epfl.sdp.blindwar.profile.util.MusicDisplayRecyclerAdapter
+import ch.epfl.sdp.blindwar.profile.util.LeaderboardRecyclerAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -30,6 +30,7 @@ class DisplayHistoryFragment : Fragment() {
     private var images = mutableListOf<String>()
     private val LIKED_MUSIC_TYPE = "liked musics"
     private val MATCH_HISTORY_TYPE = "match history"
+    private val LEADERBOARD_TYPE = "leaderboard"
 
 
     override fun onCreateView(
@@ -65,15 +66,24 @@ class DisplayHistoryFragment : Fragment() {
     /**
      * Fetch likedMusics from user and call addToList(with the listener) to add the element
      * to the lists that will be displayed.
+     * Creates a different display based on the argument of the Fragment.
      */
     private fun postToList() {
         val historyType = arguments?.getString(HISTORY_TYPE)
         val currentUser = FirebaseAuth.getInstance().currentUser
-        if (historyType == LIKED_MUSIC_TYPE && currentUser != null) {
-            UserDatabase.addUserListener(currentUser.uid, userLikedMusicsListener)
-        }
-        if (historyType == MATCH_HISTORY_TYPE && currentUser != null) {
-            UserDatabase.addUserListener(currentUser.uid, userMatchHistoryListener)
+
+        if (currentUser != null) {
+            if (historyType == LIKED_MUSIC_TYPE) {
+                UserDatabase.addUserListener(currentUser.uid, userLikedMusicsListener)
+            }
+
+            if (historyType == MATCH_HISTORY_TYPE) {
+                UserDatabase.addUserListener(currentUser.uid, userMatchHistoryListener)
+            }
+
+            if (historyType == LEADERBOARD_TYPE) {
+
+            }
         }
 
         /*
@@ -102,7 +112,7 @@ class DisplayHistoryFragment : Fragment() {
                     addToList("HELLO", "JOJO", "no image")
                 }
             }
-            musicRecyclerView.adapter = MusicDisplayRecyclerAdapter(titles, artists, images)
+            musicRecyclerView.adapter = LeaderboardRecyclerAdapter(titles, artists, images)
         }
 
 
@@ -132,7 +142,7 @@ class DisplayHistoryFragment : Fragment() {
                     addToList("HELLO", "JOJO", "no image")
                 }
             }
-            musicRecyclerView.adapter = MusicDisplayRecyclerAdapter(titles, artists, images)
+            musicRecyclerView.adapter = LeaderboardRecyclerAdapter(titles, artists, images)
         }
 
 
