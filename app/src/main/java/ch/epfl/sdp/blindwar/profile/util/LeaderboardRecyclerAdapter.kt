@@ -14,11 +14,12 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 /**
- * Class to handle the RecyclerView used to display the liked music of a user
+ * Class to handle the RecyclerView used to display a leaderboard with rank, pseudo and elo of
+ * each User.
  *
- * @property titles
- * @property artists
- * @property imagesURL
+ * @property ranks
+ * @property pseudos
+ * @property elos
  */
 class LeaderboardRecyclerAdapter(
     private var ranks: List<String>, private var pseudos: List<String>,
@@ -29,9 +30,9 @@ class LeaderboardRecyclerAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val userRank: TextView = itemView.findViewById(R.id.musicTitle)
-        val userPseudo: TextView = itemView.findViewById(R.id.musicArtist)
-        val userElo: ImageView = itemView.findViewById(R.id.musicImage)
+        val userRank: TextView = itemView.findViewById(R.id.userRank)
+        val userPseudo: TextView = itemView.findViewById(R.id.userPseudo)
+        val userElo: TextView = itemView.findViewById(R.id.userElo)
 
 
     }
@@ -45,14 +46,12 @@ class LeaderboardRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.userRank.text = titles[position]
-        holder.userPseudo.text = artists[position]
-        holder.userElo.text =
-        //holder.itemPicture.setImageResource((imagesURL[position]))
-
+        holder.userRank.text = '#' + position.toString()
+        holder.userPseudo.text = pseudos[position]
+        holder.userElo.text = elos[position]
     }
 
     override fun getItemCount(): Int {
-        return titles.size
+        return ranks.size
     }
 }
