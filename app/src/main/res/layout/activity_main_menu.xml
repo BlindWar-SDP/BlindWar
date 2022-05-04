@@ -30,7 +30,6 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@android:color/transparent"
         app:itemBackground="@color/fui_transparent"
         app:itemIconTint="@color/ivory"
         app:itemTextColor="@color/ivory"
