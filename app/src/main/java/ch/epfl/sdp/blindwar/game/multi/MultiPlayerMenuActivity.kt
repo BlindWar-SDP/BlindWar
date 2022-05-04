@@ -31,7 +31,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_multiplayer_menu)
-        toast = Toast(this)
+        toast = Toast.makeText(applicationContext, "default", Toast.LENGTH_SHORT)
         eloDelta = 200
     }
 
@@ -153,7 +153,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             toast.setText(getString(R.string.multi_match_not_found))
             toast.show()
             dialog!!.hide()
-            setLinkDialog()
         }
     }
 
