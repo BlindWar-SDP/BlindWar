@@ -23,8 +23,8 @@ object MatchDatabase {
         numberOfPlayerMax: Int,
         game: GameInstance,
         db: FirebaseFirestore
-    ): Task<DocumentReference> {
-        return db.collection(COLLECTION_PATH).add(
+    ) {
+         db.collection(COLLECTION_PATH).add(
             Match(
                 user.uid,
                 user.userStatistics.elo,

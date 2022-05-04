@@ -27,6 +27,10 @@ class MainMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
 
+        val play = PlayMenuFragment()
+        val search = SearchFragment()
+        val profile = ProfileFragment()
+
         showFragment(PlayMenuFragment())
 
         bottomMenu = findViewById(R.id.bottomNavigationView)
@@ -34,9 +38,9 @@ class MainMenuActivity : AppCompatActivity() {
         bottomMenu.setOnItemSelectedListener {
             when (it.itemId) {
                 // Avoid creating a new fragment on each navigation event
-                R.id.item_play -> showFragment(PlayMenuFragment())
-                R.id.item_search -> showFragment(SearchFragment())
-                R.id.item_profile -> showFragment(ProfileFragment())
+                R.id.item_play -> showFragment(play)
+                R.id.item_search -> showFragment(search)
+                R.id.item_profile -> showFragment(profile)
             }
             true
         }
