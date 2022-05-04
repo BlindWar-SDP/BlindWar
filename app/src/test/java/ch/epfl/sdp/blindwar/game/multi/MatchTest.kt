@@ -18,14 +18,46 @@ class MatchTest: TestCase() {
         4
     )
 
+    private var emptyMatch = Match()
+
     @Test
-    fun testMatch() {
-        assertEquals("uid", dummyMatch.uid)
-        assertEquals(1, dummyMatch.elo)
-        assertEquals(dummyPlayerList, dummyMatch.listPlayers)
-        assertEquals(dummyPseudoList, dummyMatch.listPseudo)
+    fun testMatchUID() {
+        emptyMatch.uid = dummyMatch.uid
+        assertEquals("uid", emptyMatch.uid)
+    }
+
+    @Test
+    fun testMatchElo() {
+        emptyMatch.elo = dummyMatch.elo
+        assertEquals(1, emptyMatch.elo)
+    }
+
+    @Test
+    fun testMatchPlayers() {
+        emptyMatch.listPlayers = dummyMatch.listPlayers
+        assertEquals(dummyPlayerList, emptyMatch.listPlayers)
+    }
+
+    @Test
+    fun testMatchPseudos() {
+        emptyMatch.listPseudo = dummyMatch.listPseudo
+        assertEquals(dummyPseudoList, emptyMatch.listPseudo)
+    }
+
+    @Test
+    fun testMatchResults() {
+        emptyMatch.listResult = dummyMatch.listResult
+        assertEquals(dummyResultList, emptyMatch.listResult)
+    }
+
+    @Test
+    fun testMatchMaxPlayers() {
+        emptyMatch.maxPlayer = dummyMatch.maxPlayer
+        assertEquals(4, emptyMatch.maxPlayer)
+    }
+
+    @Test
+    fun testNullGame() {
         assertNull(dummyMatch.game)
-        assertEquals(dummyResultList, dummyMatch.listResult)
-        assertEquals(4, dummyMatch.maxPlayer)
     }
 }
