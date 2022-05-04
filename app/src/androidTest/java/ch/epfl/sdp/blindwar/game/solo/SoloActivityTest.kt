@@ -104,7 +104,7 @@ class SoloActivityTest {
 
 
         // Create a function with a counter for the number of rounds
-        simulateLostRound(true)
+        simulateLostRound(false)
 
         onView(withId(R.id.replay)).perform(click())
 
