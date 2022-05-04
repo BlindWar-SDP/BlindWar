@@ -2,8 +2,7 @@ package ch.epfl.sdp.blindwar.game.solo
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBackUnconditionally
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -78,12 +77,11 @@ class SoloActivityTest {
         }
     }
 
-
-    /** TODO: Clean up the following methods
     @Test
     fun testLostThenWonGame() {
         searchPlaylist("The witcher", 2)
 
+        // Click on the playlist
         onView(withId(R.id.playlistRecyclerView))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<DisplayableItemAdapter.DisplayableItemViewHolder>(
@@ -92,6 +90,7 @@ class SoloActivityTest {
                 )
             )
 
+        // Start game with the correct playlist
         onView(
             allOf(
                 withId(R.id.startGame),
@@ -99,27 +98,36 @@ class SoloActivityTest {
             )
         ).perform(click())
 
+
+        // Assert that the game is launched
         onView(withId(R.id.guessButton)).check(matches(isDisplayed()))
+
+
+        // Create a function with a counter for the number of rounds
         simulateLostRound()
 
         onView(withId(R.id.replay)).perform(click())
 
-        Thread.sleep(2000)
-
+        // Assert that the player is in the demo fragment
         onView(withId(R.id.audioVisualizer)).check(matches(isDisplayed()))
 
-        onView(withId(R.id.guessEditText)).perform(typeText("NOT CORRECT"))
-        onView(withId(R.id.guessButton)).perform(click())
+        guess(Tutorial.SONG_TESTING)
 
-        onView(withId(R.id.guessEditText)).perform(typeText(Tutorial.SONG_TESTING))
-        onView(withId(R.id.guessButton)).perform(click())
+        // Assert that the player has guessed the song
+        onView(withId(R.id.skip_next_summary)).check(matches(isDisplayed()))
 
         onView(withId(R.id.skip_next_summary)).perform(click())
+
+        // Assert that the player has completed the game
         onView(withId(R.id.game_summary_fragment)).check(matches(isDisplayed()))
 
         onView(withId(R.id.quit)).perform(click())
     }
-    **/
+
+    private fun guess(guess: String) {
+        onView(withId(R.id.guessEditText)).perform(typeText(guess))
+        onView(withId(R.id.guessButton)).perform(click())
+    }
 
     @Test
     fun testLostGameConnected() {
@@ -146,7 +154,7 @@ class SoloActivityTest {
     private fun simulateLostRound() {
         onView(withId(R.id.microphone)).perform(click())
         onView(withId(R.id.startButton)).perform(click(), click())
-        onView(withId(R.id.guessButton)).perform(click())
+        guess("WRONG")
         val transitionDelay = 2000L
         Thread.sleep(Tutorial.TIME_TO_FIND.toLong() + transitionDelay)
         closeSoftKeyboard()

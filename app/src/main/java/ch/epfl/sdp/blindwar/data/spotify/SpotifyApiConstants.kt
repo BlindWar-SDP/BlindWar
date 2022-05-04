@@ -7,8 +7,8 @@ object SpotifyApiConstants {
     /** Credentials constants **/
     private const val VALUE = "66f4e3c14d6e425"
     private const val VALUE_3 = "caed973ba62bb2077"
-    private const val VALUE_2 = "a6236ca312ea45"
-    private const val VALUE_4 = "9695ae7bf3ed1a1a64"
+    private const val VALUE_2 = "5bb832a9b0724abe"
+    private const val VALUE_4 = "b53af1ffceb29a16"
     const val AUTH_TYPE = "client_credentials"
 
     fun credentialsEncoding(): String {

@@ -123,7 +123,7 @@ object Tutorial {
     private const val COVER_TESTING =
         "https://i.scdn.co/image/ab67616d0000b273df756f52b91b4dcd656760b0"
 
-    private const val SONG_TESTING =
+    const val SONG_TESTING =
         "Silver for Monsters"
 
     private const val URL_PREVIEW_TESTING =
