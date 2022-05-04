@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.game.multi
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.CheckBox
 import android.widget.NumberPicker
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
@@ -20,7 +21,11 @@ class CreateMatchActivity : AppCompatActivity() {
     }
 
     fun createMatchSoloAttributes(view: View) {
+        val nb: NumberPicker = findViewById(R.id.numberOfPLayers)
+        val checkBox: CheckBox = findViewById(R.id.checkBoxIsPrivate)
 
+        val maxPlayer = nb.value
+        val isPrivate = checkBox.isChecked
     }
 
     /**

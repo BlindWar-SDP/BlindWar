@@ -43,8 +43,8 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     fun friendButton(view: View) {
         setLinkDialog()
         //dialog!!.hide() //TODO REMOVE WHEN TESTS OK
-        val intent = Intent(this, MultiPlayerFriendActivity::class.java)
-        startActivity(intent)
+        /*val intent = Intent(this, MultiPlayerFriendActivity::class.java)
+        startActivity(intent)*/
     }
 
     /**
@@ -107,8 +107,8 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             randomButton(view)
         }
         //dialog!!.hide() //TODO REMOVE WHEN TESTS OK
-        val intent = Intent(this, MultiPlayerRandomActivity::class.java)
-        startActivity(intent)
+        /*val intent = Intent(this, MultiPlayerRandomActivity::class.java)
+        startActivity(intent)*/
     }
 
     /**

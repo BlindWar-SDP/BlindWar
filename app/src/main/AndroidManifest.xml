@@ -41,20 +41,17 @@
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".game.multi.CreateMatchActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".login.UserAdditionalInfoActivity"
             android:exported="false"
             android:parentActivityName=".login.UserNewInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".game.multi.MultiPlayerMenuActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".game.multi.MultiPlayerFriendActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".game.multi.MultiPlayerRandomActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
