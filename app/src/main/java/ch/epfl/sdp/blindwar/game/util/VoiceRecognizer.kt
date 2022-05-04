@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
-import android.widget.EditText
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 
 /**
@@ -18,7 +18,7 @@ class VoiceRecognizer : RecognitionListener {
     private var speechRecognizer: SpeechRecognizer? = null
     var resultsRecognized: String = ""
     private var speechRecognizerIntent: Intent? = null
-    val resultString = MutableLiveData<String>("")
+    val resultString = MutableLiveData("")
 
     /**
      * Function used when the SpeechRecognizer recognize something
@@ -32,8 +32,6 @@ class VoiceRecognizer : RecognitionListener {
             resultString.postValue(resultsRecognized)
         }
     }
-
-
 
     /**
      * Initialize every attributes of the class
@@ -58,6 +56,11 @@ class VoiceRecognizer : RecognitionListener {
                 "android.speech.extra.MASK_OFFENSIVE_WORDS",
                 false
             )
+
+            /**
+            speechRecognizerIntent!!.putExtra(
+                    RecognizerIntent.EXTRA_CALLING_PACKAGE, context.applicationInfo.packageName
+            )**/
 
             //only for android 13
             resultsRecognized = ""

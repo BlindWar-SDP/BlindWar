@@ -1,6 +1,8 @@
 package ch.epfl.sdp.blindwar.game.solo.fragments
 
 import android.app.Activity
+import android.content.ContentValues.TAG
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
@@ -14,6 +16,8 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
@@ -27,6 +31,7 @@ import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import java.util.*
+import android.Manifest
 
 
 /**
@@ -35,6 +40,7 @@ import java.util.*
  * @constructor creates a DemoFragment
  */
 class DemoFragment : Fragment() {
+
     // VIEW MODELS
     lateinit var gameViewModel: GameViewModel
     private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
@@ -170,6 +176,14 @@ class DemoFragment : Fragment() {
         microphoneButton = view.findViewById(R.id.microphone)
         context?.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
 
+        voiceRecognizer.resultString.observe(viewLifecycleOwner) {
+            //voiceRecognizer.stop()
+            guessEditText.setText(it)
+            //Log.d("VOICE RECOGNITION RESULT", it)
+            guess(isVocal, isAuto = false)
+            isVocal = false
+        }
+
         //warning seems ok, no need to override performClick
         microphoneButton.setOnTouchListener { _, event ->
             when (event.action) {
@@ -185,13 +199,6 @@ class DemoFragment : Fragment() {
                 }
             }
             true
-        }
-
-        voiceRecognizer.resultString.observe(viewLifecycleOwner) {
-            voiceRecognizer.stop()
-            guessEditText.setText(it)
-            guess(isVocal, isAuto = false)
-            isVocal = false
         }
 
         return view

@@ -29,10 +29,11 @@ class MainMenuActivity : AppCompatActivity() {
 
         showFragment(PlayMenuFragment())
 
-        bottomMenu = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomMenu = findViewById(R.id.bottomNavigationView)
 
         bottomMenu.setOnItemSelectedListener {
             when (it.itemId) {
+                // Avoid creating a new fragment on each navigation event
                 R.id.item_play -> showFragment(PlayMenuFragment())
                 R.id.item_search -> showFragment(SearchFragment())
                 R.id.item_profile -> showFragment(ProfileFragment())

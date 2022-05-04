@@ -79,7 +79,7 @@ class ProfileViewModel: ViewModel() {
     fun updateStats(score: Int, fails: Int, gameResult: GameResult) {
         if (currentUser != null) {
             UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
-            UserDatabase.addGameResult(currentUser?.uid!!, gameResult)
+            UserDatabase.addGameResult(currentUser.uid, gameResult)
         }
     }
 

@@ -1,8 +1,12 @@
 package ch.epfl.sdp.blindwar.game.solo
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
@@ -19,6 +23,8 @@ import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
  * @constructor creates a PlayActivity
  */
 class SoloActivity : AppCompatActivity() {
+    /* Used to handle permission request */
+    private val PERMISSIONS_REQUEST_RECORD_AUDIO = 1
 
     val gameInstanceViewModel: GameInstanceViewModel by viewModels()
     val profileViewModel: ProfileViewModel by viewModels()
@@ -31,6 +37,17 @@ class SoloActivity : AppCompatActivity() {
             .replace(R.id.play_container, ModeSelectionFragment(), "MODE")
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .commit()
+
+        /** Permission handling **/
+        val permissionCheck =
+            ContextCompat.checkSelfPermission(applicationContext!!, Manifest.permission.RECORD_AUDIO)
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.RECORD_AUDIO),
+                PERMISSIONS_REQUEST_RECORD_AUDIO
+            )
+        }
     }
 
     /**

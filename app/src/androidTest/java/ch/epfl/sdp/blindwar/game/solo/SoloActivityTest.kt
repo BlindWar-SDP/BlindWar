@@ -9,6 +9,7 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.GrantPermissionRule
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.solo.util.typeSearchViewText
@@ -26,6 +27,10 @@ class SoloActivityTest {
     var testRule = ActivityScenarioRule(
         SoloActivity::class.java
     )
+
+    @get:Rule
+    var permissionRule: GrantPermissionRule =
+        GrantPermissionRule.grant(android.Manifest.permission.RECORD_AUDIO)
 
     @Test
     fun testBackButton() {

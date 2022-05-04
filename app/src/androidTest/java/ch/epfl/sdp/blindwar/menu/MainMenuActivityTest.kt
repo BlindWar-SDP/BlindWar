@@ -5,13 +5,13 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.uiautomator.UiDevice
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.game.solo.util.typeSearchViewText
 import junit.framework.TestCase
 import org.junit.After
 import org.junit.Before
@@ -37,16 +37,12 @@ class MainMenuActivityTest : TestCase() {
         Intents.release()
     }
 
+    // INTERFACE
+
     @Test
     fun testPlayMenuButton() {
         onView(withId(R.id.item_play)).perform(click())
         onView(withId(R.id.play_fragment)).check(matches(isDisplayed()))
-    }
-
-    @Test
-    fun testSearchButton() {
-        onView(withId(R.id.item_search)).perform(click())
-        onView(withId(R.id.searchBar)).check(matches(isDisplayed()))
     }
 
     @Test
@@ -73,5 +69,33 @@ class MainMenuActivityTest : TestCase() {
     fun testBackButton() {
         val device = UiDevice.getInstance(getInstrumentation())
         assertTrue("Back button can't be pressed", device.pressBack())
+    }
+
+    @Test
+    fun testViewModels() {
+        testRule.scenario.onActivity {
+        }
+    }
+
+    // SEARCH FRAGMENT
+
+    private fun launchSearchFragment() {
+        onView(withId(R.id.item_search)).perform(click())
+        onView(withId(R.id.searchBar)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun testBasicSearch() {
+        launchSearchFragment()
+        onView(withId(R.id.searchBar)).perform(typeSearchViewText("cirrus"))
+        // TODO: Assert that the correct music is displayed
+    }
+
+    @Test
+    fun testPlaylistCreationButton() {
+        launchSearchFragment()
+        onView(withId(R.id.addButton)).check(matches(isClickable())).perform(click())
+        // TODO: Assert that the playlist creation activity is launcheds
+        //onView(withId())
     }
 }

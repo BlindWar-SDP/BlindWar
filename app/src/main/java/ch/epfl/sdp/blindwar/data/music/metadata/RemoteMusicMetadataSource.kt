@@ -23,19 +23,14 @@ class RemoteMusicMetadataSource(private val songMetadataSource: SpotifyApi = api
 
     suspend fun fetchSongMetadata(trackName: String = "take on me") {
         withContext(ioDispatcher) {
-            var spotifyTrack: SpotifyTrack
             if (!logged)
                 fetchToken()
 
             if (logged) {
                 val response = try {
                     songMetadataSource.searchTrack("Bearer ${token.access_token}", query = trackName)
-                } catch(e: IOException) {
-                    Log.e(ContentValues.TAG, "IOException, you might not have internet connection")
-                    logged = false
-                    return@withContext
-                } catch (e: HttpException) {
-                    Log.e(ContentValues.TAG, "HttpException, unexpected response")
+                }  catch (e: Exception) {
+                    Log.e("An exception occured : ", e.toString())
                     logged = false
                     return@withContext
                 }
@@ -49,7 +44,8 @@ class RemoteMusicMetadataSource(private val songMetadataSource: SpotifyApi = api
                         it.artists[0].name,
                         it.album.images[0].url,
                         duration = 30000,
-                        uri = if (it.preview_url != null) it.preview_url!! else Tutorial.URL_FIFA_SONG_2)
+                        uri = it.preview_url ?: Tutorial.URL_FIFA_SONG_2
+                        )
                     }
 
                     musicMetadata.postValue(tracks as ArrayList<MusicMetadata>)

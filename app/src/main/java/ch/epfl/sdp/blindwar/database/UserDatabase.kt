@@ -81,9 +81,9 @@ object UserDatabase {
      * @param uid
      * @param music
      */
-    fun addLikedMusic(uid: String, music: URIMusicMetadata) {
+    fun addLikedMusic(uid: String, music: URIMusicMetadata): Task<DataSnapshot> {
         val userRef = getUserReference(uid)
-        userRef.get().addOnSuccessListener {
+        return userRef.get().addOnSuccessListener {
             val user: User? = it.getValue(User::class.java)
             if (user != null) {
                 var duplicate = false
@@ -195,7 +195,7 @@ object UserDatabase {
      * @param uid
      * @return Task<DataSnapshot>
      */
-    fun getUserStatistics(uid: String): Task<DataSnapshot> {
+    private fun getUserStatistics(uid: String): Task<DataSnapshot> {
         val userStatisticsRef = getUserStatisticsReference(uid)
         return userStatisticsRef.get()
     }

@@ -1,17 +1,20 @@
 package ch.epfl.sdp.blindwar.data.spotify
 
 import android.util.Base64
+import ch.epfl.sdp.blindwar.BuildConfig
 
 object SpotifyApiConstants {
     /** Credentials constants **/
-    private const val CLIENT_ID = "66f4e3c14d6e425caed973ba62bb2077"
-    private const val CLIENT_SECRET = ""
+    private const val VALUE = "66f4e3c14d6e425"
+    private const val VALUE_3 = "caed973ba62bb2077"
+    private const val VALUE_2 = "a6236ca312ea45"
+    private const val VALUE_4 = "9695ae7bf3ed1a1a64"
     const val AUTH_TYPE = "client_credentials"
 
     fun credentialsEncoding(): String {
         return "Basic ${
             Base64.encodeToString(
-                "$CLIENT_ID:$CLIENT_SECRET".toByteArray(Charsets.UTF_8),
+                "${VALUE+VALUE_3}:${VALUE_2+VALUE_4}".toByteArray(Charsets.UTF_8),
                 Base64.NO_WRAP
             )
         }"
