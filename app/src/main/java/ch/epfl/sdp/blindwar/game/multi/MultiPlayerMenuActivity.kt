@@ -8,6 +8,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.database.MatchDatabase
+import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.game.multi.model.Match
+import ch.epfl.sdp.blindwar.menu.MainMenuActivity
+import ch.epfl.sdp.blindwar.profile.model.User
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 /**
@@ -33,7 +42,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      */
     fun friendButton(view: View) {
         setLinkDialog()
-        dialog!!.hide() //TODO REMOVE WHEN TESTS OK
+        //dialog!!.hide() //TODO REMOVE WHEN TESTS OK
         val intent = Intent(this, MultiPlayerFriendActivity::class.java)
         startActivity(intent)
     }
@@ -48,13 +57,22 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     }
 
     /**
+     * Cancel
+     *
+     * @param view
+     */
+    fun cancel(view: View) {
+        startActivity(Intent(this, MainMenuActivity::class.java))
+    }
+
+    /**
      * Starts a multiplayer game played with a random user
      *
      * @param view
      */
     fun randomButton(view: View) {
         setProgressDialog(getString(R.string.multi_wait_matches))
-        /*val user = UserDatabase.getCurrentUser()
+        val user = UserDatabase.getCurrentUser()
         val elo = user.child("userStatistics/elo").value!! as Int
         val matchs = Firebase.firestore.collection("match").whereLessThan("elo", elo + eloDelta)
             .whereGreaterThan("elo", elo - 200)
@@ -87,8 +105,8 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             }
         } else if (!isCanceled) {
             randomButton(view)
-        }*/
-        dialog!!.hide() //TODO REMOVE WHEN TESTS OK
+        }
+        //dialog!!.hide() //TODO REMOVE WHEN TESTS OK
         val intent = Intent(this, MultiPlayerRandomActivity::class.java)
         startActivity(intent)
     }
@@ -116,7 +134,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         dialog!!.show()
     }
 
-    /*
     /**
      * find a match on DB which is free
      *
@@ -155,7 +172,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             setLinkDialog()
         }
     }
-    */
+
     /**
      * create a dialog which ask for the uid of the match
      *

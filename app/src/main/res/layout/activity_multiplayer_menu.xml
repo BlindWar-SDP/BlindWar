@@ -19,11 +19,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="@+id/imageView_background_multi">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:padding="30dp"
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="@+id/imageView_background_multi"
             android:fillViewport="true">
@@ -123,6 +122,12 @@
                     android:textColor="#3F88C5"
                     android:textSize="20sp" />
             </FrameLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel_btn"
+                android:onClick="cancel"
+                android:layout_gravity="center"/>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
