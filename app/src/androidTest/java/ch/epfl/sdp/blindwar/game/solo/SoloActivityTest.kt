@@ -106,6 +106,7 @@ class SoloActivityTest {
         // Create a function with a counter for the number of rounds
         simulateLostRound(false)
 
+        
         onView(withId(R.id.replay)).perform(click())
 
         // Assert that the player is in the demo fragment
