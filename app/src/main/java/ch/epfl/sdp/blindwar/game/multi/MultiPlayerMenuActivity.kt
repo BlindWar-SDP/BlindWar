@@ -182,9 +182,10 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         builder.setCancelable(true)
         val view = View.inflate(applicationContext, R.layout.fragment_multi_connexion_link, null)
         builder.setView(view)
-        builder.setPositiveButton(
-            "OK"
-        ) { _, _ ->
+        builder.setNeutralButton(resources.getText(R.string.cancel_btn)) { _, _ ->
+            dialog!!.hide()
+        }
+        builder.setPositiveButton(resources.getText(R.string.ok)) { _, _ ->
             //connectToDB(findViewById<EditText>(R.id.editTextLink).text.toString())
             dialog!!.hide()
         }
