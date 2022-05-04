@@ -104,7 +104,7 @@ class SoloActivityTest {
 
 
         // Create a function with a counter for the number of rounds
-        simulateLostRound()
+        simulateLostRound(true)
 
         onView(withId(R.id.replay)).perform(click())
 
@@ -147,14 +147,16 @@ class SoloActivityTest {
         launchDemoWithMode(R.id.raceButton_, playlistIndex)
         onView(withId(R.id.guessButton)).check(matches(isDisplayed()))
         for (i in 0 until round) {
-            simulateLostRound()
+            simulateLostRound(false)
         }
     }
 
-    private fun simulateLostRound() {
+    private fun simulateLostRound(guess: Boolean) {
         onView(withId(R.id.microphone)).perform(click())
         onView(withId(R.id.startButton)).perform(click(), click())
-        guess("WRONG")
+        if (guess)
+            guess("WRONG")
+
         val transitionDelay = 2000L
         Thread.sleep(Tutorial.TIME_TO_FIND.toLong() + transitionDelay)
         closeSoftKeyboard()
