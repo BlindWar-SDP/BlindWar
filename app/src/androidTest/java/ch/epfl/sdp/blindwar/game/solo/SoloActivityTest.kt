@@ -155,10 +155,11 @@ class SoloActivityTest {
         onView(withId(R.id.microphone)).perform(click())
         onView(withId(R.id.startButton)).perform(click(), click())
         guess("WRONG")
-        val transitionDelay = 1000L
+        val transitionDelay = 2000L
         Thread.sleep(Tutorial.TIME_TO_FIND.toLong() + transitionDelay)
         closeSoftKeyboard()
         pressBackUnconditionally()
+
     }
 
     private fun launchDemoWithMode(btnId: Int, position: Int) {
