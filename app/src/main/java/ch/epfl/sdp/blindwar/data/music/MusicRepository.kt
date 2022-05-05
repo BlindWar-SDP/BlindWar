@@ -19,11 +19,16 @@ class MusicRepository(
 ) {
     // TODO: add Cache and download feature
     private val fetcherFactory: FetcherFactory = FetcherFactory(context, resources)
-    @RequiresApi(Build.VERSION_CODES.N)
     fun fetchMusics(playlist: Playlist): Map<MusicMetadata, ReadyMediaPlayer> {
-        return playlist.songs.parallelStream()
-            .map {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            playlist.songs.parallelStream()
+                .map {
+                    fetcherFactory.getFetcher(it).fetchMusic(it)
+                }.collect(Collectors.toList()).toMap()
+        } else {
+            playlist.songs.associate {
                 fetcherFactory.getFetcher(it).fetchMusic(it)
-            }.collect(Collectors.toList()).toMap()
+            }
+        }
     }
 }
