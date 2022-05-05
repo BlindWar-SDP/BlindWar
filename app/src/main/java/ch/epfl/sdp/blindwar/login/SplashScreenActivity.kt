@@ -13,7 +13,6 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -62,13 +61,15 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun createSignInIntent(): Intent {
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().setRequireName(false).build(),
-            AuthUI.IdpConfig.GoogleBuilder().build()
+            AuthUI.IdpConfig.GoogleBuilder().build(),
+            AuthUI.IdpConfig.AnonymousBuilder().build()
         )
 //            AuthUI.IdpConfig.AnonymousBuilder().build())
 
         val customLayout = AuthMethodPickerLayout
             .Builder(R.layout.activity_login)
             .setGoogleButtonId(R.id.Btn_google)
+            .setAnonymousButtonId(R.id.Btn_anonymous)
             .setEmailButtonId(R.id.Btn_email)
             .build()
 
@@ -92,20 +93,18 @@ class SplashScreenActivity : AppCompatActivity() {
     ): Intent? {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
-            // Successfully signed in
-            val user = FirebaseAuth.getInstance().currentUser // =?= Firebase.auth.currentUser
+//            // Successfully signed in
+//            val user = Firebase.auth.currentUser
             // https://www.tabnine.com/code/java/classes/com.google.firebase.auth.FirebaseAuth
 
-            return if (user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp) {
+            return if (response!!.isNewUser){ // old check : (user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp) {
                 // new user: 1st signIn
-                Intent(activity, UserNewInfoActivity::class.java).putExtra("newUser", true)
+                Intent(activity, UserNewInfoActivity::class.java)
             } else {
                 /*
                     - should we update the online database with the local cache here ?
                      */
                 Intent(activity, MainMenuActivity::class.java)
-
-
             }
         } else {
             // Sign in failed. If response is null the user canceled the

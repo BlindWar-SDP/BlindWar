@@ -84,7 +84,7 @@ class UserTest {
 
     @Test
     fun getBirthdate() {
-        assertEquals(testUser1.birthDate, birthdate1)
+        assertEquals(testUser1.birthdate, birthdate1)
     }
 
     @Test
@@ -144,7 +144,7 @@ class UserTest {
     @Test
     fun setBirthDate() {
         val testUser = User.Builder().setBirthdate(birthdate1).build()
-        assertEquals(testUser.birthDate, birthdate1)
+        assertEquals(testUser.birthdate, birthdate1)
     }
 
     @Test
@@ -160,7 +160,7 @@ class UserTest {
     @Test
     fun setBirthdate() {
         val testUser = User.Builder().setBirthdate(birthdate1).build()
-        assertEquals(testUser.birthDate, birthdate1)
+        assertEquals(testUser.birthdate, birthdate1)
     }
     @Test
     fun setDescription() {

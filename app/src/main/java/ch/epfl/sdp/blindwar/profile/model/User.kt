@@ -3,7 +3,6 @@ package ch.epfl.sdp.blindwar.profile.model
 
 import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.game.model.GameResult
-import kotlinx.serialization.Serializable
 
 //const val UID = "uid"
 //const val EMAIL = "email`"
@@ -16,7 +15,6 @@ import kotlinx.serialization.Serializable
 //const val GENDER = "gender"
 //const val DESCRIPTION = "description"
 
-@Serializable
 data class User(
     var uid: String = "",
     var email: String = "",
@@ -83,8 +81,8 @@ data class User(
             this.email = user.email
             this.userStatistics = user.userStatistics
             this.pseudo = user.pseudo
-            this.firstName = user.firstName.toString()
-            this.lastName = user.lastName.toString()
+            this.firstName = user.firstName
+            this.lastName = user.lastName
             this.birthdate = user.birthdate
             this.profilePicture = user.profilePicture
             this.gender = user.gender

@@ -11,6 +11,7 @@
     <string name="logout">LOGOUT</string>
     <string name="Btn_email">Email</string>
     <string name="Btn_google">Google</string>
+    <string name="Btn_anonymous">Guest</string>
     <string name="confirm">Confirm</string>
 
     <!--  Modes  -->
@@ -45,7 +46,7 @@
 
     <!-- Alert Dialogue-->
     <string name="new_user_wrong_pseudo_title">Profile Creation Alert</string>
-    <string name="new_user_wrong_pseudo_text">Please, <b>enter a valid Pseudo</b>\n\nYour pseudo should be at least <b>2</b> characters, but <b>not \"Pseudo\"</b></string>
+    <string name="new_user_wrong_pseudo_text">Please, <b>enter a valid Pseudo</b>\n\nYour pseudo should be at least <b>2</b> characters</string>
 
     <!-- DatePicker -->
     <string name="new_user_birthdatePicker">Please, enter your Birthdate.</string>
@@ -103,7 +104,7 @@
 
     <string name="icon_for_playing_with_friends">Icon for playing with friends</string>
     <string name="icon_for_playing_with_random_people">Icon for playing with random people</string>
-    <string name="nu_chose_profile_picture">chose profile\npicture</string>
+    <string name="nu_chose_profile_picture">set profile picture</string>
     <string name="delete_profile">Delete\nProfile</string>
     <string name="deletion_success">account successfully deleted, <b>Bye Bye</b></string>
     <string name="account_not_deleted_confirm_toast">ouf, you still are family member</string>
@@ -112,13 +113,19 @@
     <string name="account_not_deleted_toast">deletion cancelled</string>
     <string name="account_deletion_title">Account Deletion</string>
     <string name="account_deletion_text">Are you sure you want to delete your account?</string>
-    <string name="select_birthdate">select birthdate</string>
-    <string name="select_your_gender">Please, select your gender</string>
+    <string name="select_birthdate">set birthdate</string>
+    <string name="select_your_gender">Please, set your gender</string>
     <string name="alert_dialogue_cancel_title">Cancel update</string>
     <string name="alert_dialogue_cancel_text">Are you sure to keep old info</string>
     <string name="newUser_ExtraName">newUser</string>
     <string name="reset">reset</string>
-    <string name="no_birthdate_selected">no birthdate selected</string>
+    <string name="no_birthdate_selected"> </string>
+    <string name="describe_yourself">Describe yourself</string>
+
+    <string-array name="listView_login_provider">
+        <item >Email</item>
+        <item >Google</item>
+    </string-array>
 
     <!--    DELETED WHEN CLEANED -->
     <!--    <string name="cancel_btn">cancel</string>-->

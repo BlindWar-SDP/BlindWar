@@ -2,22 +2,10 @@ package ch.epfl.sdp.blindwar
 
 
 import androidx.test.espresso.Espresso
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.Intents.intended
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.uiautomator.UiDevice
-import ch.epfl.sdp.blindwar.login.UserAdditionalInfoActivity
 import ch.epfl.sdp.blindwar.login.UserNewInfoActivity
-import ch.epfl.sdp.blindwar.menu.MainMenuActivity
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
-import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
@@ -305,4 +293,67 @@ class UserNewInfoActivityTest : TestCase() {
         assertTrue("Back button can't be pressed", device.pressBack())
     }
     **/
+
+
+    /**
+     *
+     * Test of old kotlin activity additional info
+     *
+
+    @Before
+    fun setup() {
+    Intents.init()
+    closeSoftKeyboard()
+    testRule.scenario.onActivity {
+    val bundle = Bundle()
+    bundle.putBoolean("newUser", false)
+    it.startActivity(it.intent.putExtras(bundle))
+    }
+    }
+
+    @After
+    fun cleanup() {
+    Intents.release()
+    }
+
+    @Test
+    fun testDescription() {
+    typeTo(R.id.NUA_description, "My Description")
+    closeSoftKeyboard()
+    clickOn(R.id.NUA_Confirm_Btn)
+    intended(hasComponent(UserNewInfoActivity::class.java.name))
+    }
+
+    @Test
+    fun testDatePicker() {
+    clickOn(R.id.NUA_select_birthdate)
+    assertDisplayed(R.string.new_user_birthdatePicker)
+    clickOn(android.R.string.ok)
+    clickOn(R.id.NUA_Confirm_Btn)
+    intended(hasComponent(UserNewInfoActivity::class.java.name))
+    }
+
+    @Test
+    fun testSpinner() {
+    clickSpinnerItem(R.id.gender_spinner, 3)
+    clickOn(R.id.NUA_Confirm_Btn)
+    intended(hasComponent(UserNewInfoActivity::class.java.name))
+    }
+
+    /**
+    @Test
+    fun testCancel() {
+    clickOn(R.id.NUA_Cancel_Btn)
+    intended(hasComponent(UserNewInfoActivity::class.java.name))
+    }
+    **/
+
+    @Test
+    fun testResetBirthdate() {
+    closeSoftKeyboard()
+    assertClickable(R.id.NUA_reset_birthdate)
+    }
+
+
+     */
 }

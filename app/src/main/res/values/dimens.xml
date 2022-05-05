@@ -4,4 +4,5 @@
     <dimen name="NU_between_field_margin">45dp</dimen>
     <dimen name="NU_image_size">158dp</dimen>
 
+    <dimen name="NU_top_guideline">20dp</dimen>
 </resources>

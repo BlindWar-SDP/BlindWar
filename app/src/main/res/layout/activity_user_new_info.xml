@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/prussian_blue"
+    android:background="@drawable/blurred_back"
     tools:context=".login.UserNewInfoActivity">
 
     <ScrollView
@@ -21,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="20dp" />
+                app:layout_constraintGuide_begin="@dimen/NU_top_guideline" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/NU_BOTTOM_guideline"
@@ -38,9 +38,8 @@
                 android:layout_marginTop="@dimen/NU_between_field_margin"
                 android:ems="10"
                 android:hint="@string/first_name"
+                android:textColorHint="@color/white"
                 android:inputType="textPersonName"
-                android:onClick="clearFirstName"
-                android:text="@string/first_name"
                 android:textColor="@color/green_blue_crayola"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/NU_TOP_guideline"
@@ -55,6 +54,7 @@
                 app:layout_constraintBaseline_toBaselineOf="@+id/NU_FirstName"
                 android:background="@android:color/transparent"
                 android:text="@string/delete_profile"
+                android:onClick="deleteProfile"
                 android:textColor="@color/light_red" />
 
             <EditText
@@ -65,9 +65,8 @@
                 android:layout_marginTop="@dimen/NU_between_field_margin"
                 android:ems="10"
                 android:hint="@string/last_name"
+                android:textColorHint="@color/white"
                 android:inputType="textPersonName"
-                android:onClick="clearLastName"
-                android:text="@string/last_name"
                 android:textColor="@color/green_blue_crayola"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/NU_FirstName" />
@@ -123,10 +122,9 @@
                 android:digits="@string/Pseudo_AvailableChars"
                 android:ems="10"
                 android:hint="@string/text_pseudo"
+                android:textColorHint="@color/white"
                 android:inputType="textFilter"
                 android:maxLength="@integer/pseudo_maxLength"
-                android:onClick="clearPseudo"
-                android:text="@string/text_pseudo"
                 android:textColor="@color/green_blue_crayola"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -161,9 +159,8 @@
                 android:textSize="9sp"
                 tools:ignore="SmallSp" />
 
-
             <TextView
-                android:id="@+id/NUA_selected_birthdate_text"
+                android:id="@+id/NU_selected_birthdate_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/NU_left_margin"
@@ -171,7 +168,6 @@
                 app:layout_constraintBaseline_toBaselineOf="@+id/NU_select_birthdate"
                 android:text="@string/no_birthdate_selected"
                 android:textAlignment="center" />
-
 
             <TextView
                 android:id="@+id/NU_select_gender"
@@ -203,7 +199,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/gender_spinner"
                 android:ems="10"
-                android:hint="Describe yourself"
+                android:hint="@string/describe_yourself"
+                android:textColorHint="@color/white"
                 android:inputType="textMultiLine"
                 android:maxLength="@integer/self_description_max_length"
                 android:maxLines="@integer/max_lines_user_desc"
@@ -223,7 +220,6 @@
                 android:onClick="cancel"
                 android:text="@android:string/cancel"
                 android:textColor="@color/light_red"/>
-
 
             <Button
                 android:id="@+id/NU_Confirm_Btn"

@@ -8,6 +8,33 @@
     tools:context=".login.SplashScreenActivity">
 
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/bungee_inline"
+        android:text="@string/signin_welcome_text"
+        android:textAlignment="center"
+        android:textColor="@color/ivory"
+        android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/logo_description"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView2"
+        app:layout_constraintBottom_toTopOf="@id/guideline2"
+        app:srcCompat="@drawable/logo" />
+
     <Button
         android:id="@+id/Btn_google"
         style="@style/Widget.Material3.Button.UnelevatedButton"
@@ -20,24 +47,27 @@
         android:textAppearance="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Primary"
         android:textColor="@color/ivory"
         android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/Btn_email"
-        app:layout_constraintHorizontal_bias="0.575"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintEnd_toStartOf="@+id/Btn_anonymous"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
+    <Button
+        android:id="@+id/Btn_anonymous"
+        style="@style/Widget.Material3.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:contentDescription="@string/logo_description"
-        app:layout_constraintBottom_toTopOf="@id/guideline2"
+        android:backgroundTint="@color/fui_transparent"
+        android:drawableTop="@android:drawable/ic_menu_help"
+        android:text="@string/Btn_anonymous"
+        android:textAppearance="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Primary"
+        android:textColor="@color/ivory"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/Btn_google"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView2"
-        app:srcCompat="@drawable/logo" />
+        app:layout_constraintEnd_toStartOf="@+id/Btn_email"
+        app:layout_constraintStart_toEndOf="@+id/Btn_google"
+        app:layout_constraintTop_toTopOf="@+id/Btn_google" />
 
     <Button
         android:id="@+id/Btn_email"
@@ -50,12 +80,10 @@
         android:textAppearance="@style/Widget.Material3.ExtendedFloatingActionButton.Icon.Primary"
         android:textColor="@color/ivory"
         android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/Btn_google"
+        app:layout_constraintStart_toEndOf="@+id/Btn_anonymous"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/Btn_google"
-        app:layout_constraintTop_toTopOf="@+id/Btn_google"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/Btn_anonymous"
+        app:layout_constraintBottom_toBottomOf="@+id/Btn_anonymous"/>
 
     <TextView
         android:id="@+id/textView"
@@ -69,22 +97,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline2" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:fontFamily="@font/bungee_inline"
-        android:text="@string/signin_welcome_text"
-        android:textAlignment="center"
-        android:textColor="@color/ivory"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
