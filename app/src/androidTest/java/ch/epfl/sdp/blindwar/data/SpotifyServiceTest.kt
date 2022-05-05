@@ -17,6 +17,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 
+/**
+ * TODO: Add the following tests :
+ * ** correctSearchTrackTest()
+ */
 @RunWith(AndroidJUnit4::class)
 class SpotifyServiceTest {
     private lateinit var artistId: String
@@ -93,7 +97,7 @@ class SpotifyServiceTest {
 
         val token = SpotifyToken("NgCXRKcMzYjw", 3600, "bearer")
 
-        val artist = runBlocking { mockSpotifyApi.getArtist(tokenParameter(token), artistId) }
+        runBlocking { mockSpotifyApi.getArtist(tokenParameter(token), artistId) }
         val response = mockWebServer.takeRequest()
 
         assertEquals("GET", response.method.toString())
@@ -115,7 +119,7 @@ class SpotifyServiceTest {
 
         mockWebServer.enqueue(mockResponse)
 
-        val token = runBlocking { mockSpotifyApi.getToken(credentialsEncoding(), GRANT_TYPE) }
+        runBlocking { mockSpotifyApi.getToken(credentialsEncoding(), GRANT_TYPE) }
         val response = mockWebServer.takeRequest()
 
         assertEquals("POST", response.method.toString())
@@ -126,6 +130,30 @@ class SpotifyServiceTest {
         assertNotNull(response.getHeader("Authorization"))
         assertEquals("/${testPath}${tokenPath}", response.path.toString())
     }
+
+    /**
+    @Test
+    fun correctSearchTest() {
+        val mockSpotifyApi = spotifyApiFactory(mockWebServer.url(testPath).toString()).value
+        //val tokenSpotifyApi = apiAuth.value
+
+        val mockResponse = MockResponse()
+            .addHeader("Content-Type", "application/json")
+            .setBody(spotifyToken)
+
+        mockWebServer.enqueue(mockResponse)
+
+        runBlocking { mockSpotifyApi.getToken(credentialsEncoding(), GRANT_TYPE) }
+        val response = mockWebServer.takeRequest()
+
+        assertEquals("POST", response.method.toString())
+        assertEquals(
+            "application/x-www-form-urlencoded",
+            response.getHeader("Content-Type").toString()
+        )
+        assertNotNull(response.getHeader("Authorization"))
+        assertEquals("/${testPath}${tokenPath}", response.path.toString())
+    } **/
 
     @After
     fun tearDown() {

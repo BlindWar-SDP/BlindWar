@@ -31,7 +31,8 @@ class PlaylistViewModel: ViewModel() {
         }
     }
 
-    private fun resetPlaylist() {}
 
+    /** TODO: Keep (WIP)
     fun likePlaylist(playlist: Playlist) {}
+    **/
 }

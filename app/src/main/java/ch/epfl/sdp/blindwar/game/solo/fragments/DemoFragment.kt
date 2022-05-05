@@ -1,9 +1,12 @@
 package ch.epfl.sdp.blindwar.game.solo.fragments
 
 import android.app.Activity
+import android.content.ContentValues.TAG
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -13,6 +16,8 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
@@ -26,6 +31,7 @@ import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import java.util.*
+import android.Manifest
 
 
 /**
@@ -34,6 +40,7 @@ import java.util.*
  * @constructor creates a DemoFragment
  */
 class DemoFragment : Fragment() {
+
     // VIEW MODELS
     lateinit var gameViewModel: GameViewModel
     private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
@@ -167,7 +174,16 @@ class DemoFragment : Fragment() {
         } **/
 
         microphoneButton = view.findViewById(R.id.microphone)
-        context?.let { voiceRecognizer.init(it, guessEditText, Locale.ENGLISH.toLanguageTag()) }
+        context?.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
+
+        voiceRecognizer.resultString.observe(viewLifecycleOwner) {
+            //voiceRecognizer.stop()
+            guessEditText.setText(it)
+            //Log.d("VOICE RECOGNITION RESULT", it)
+            guess(isVocal, isAuto = false)
+            isVocal = false
+        }
+
         //warning seems ok, no need to override performClick
         microphoneButton.setOnTouchListener { _, event ->
             when (event.action) {
@@ -176,17 +192,10 @@ class DemoFragment : Fragment() {
                     voiceRecognizer.start()
                     isVocal = true
                 }
-                MotionEvent.ACTION_UP -> {
-                    voiceRecognizer.stop()
-                    gameViewModel.play()
 
-                    voiceRecognizer.ready.observe(requireActivity()) {
-                        if (it) {
-                            guess(isVocal, isAuto = false)
-                            voiceRecognizer.ready = MutableLiveData(false)
-                        }
-                    }
-                    isVocal = false
+                MotionEvent.ACTION_UP -> {
+                    gameViewModel.play()
+                    voiceRecognizer.stop()
                 }
             }
             true

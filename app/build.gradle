@@ -22,6 +22,8 @@ configurations.all{
 }
 
 
+
+
 android {
     compileSdk 31
 
@@ -46,6 +48,11 @@ android {
         }
     }
 
+    /**
+    lintOptions {
+        abortOnError false
+    } **/
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -53,6 +60,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     testOptions {
         animationsDisabled = true
     }
@@ -109,6 +117,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:20.0.4'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.4'
     implementation 'com.airbnb.android:lottie:5.0.3'
+
+    // QR Code Lib
+    implementation 'com.google.zxing:core:3.2.0'
 
     // ViewModel
     //implementation 'androidx.fragment:fragment-ktx:1.5.0-alpha03@aar'
@@ -207,11 +218,8 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             'hilt_aggregated_deps/**',
             '**/*_Factory.class',
             '**/*_MembersInjector.class',
-            '**/UserNewInfoActivity.**/',
-            '**/RemoteMusicMetadataSource.**',
-            '**/MusicMetadataRepository.**',
-            '**/MockMusicdataSource.**',
-            '**/database/**'
+            // Temporary
+            '**/UserNewInfoActivity.**'
     ]
 
     def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
