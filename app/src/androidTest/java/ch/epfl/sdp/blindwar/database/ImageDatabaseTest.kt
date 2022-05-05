@@ -15,16 +15,6 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ImageDatabaseTest : TestCase() {
 
-    @Before
-    fun setup() {
-        Intents.init()
-    }
-
-    @After
-    fun cleanup() {
-        Intents.release()
-    }
-
     @Test
     fun testDownloadProfilePicture() {
         val fakeImagePath = "/gs:/blindwar-sdp.appspot.com/images/old_android.jpeg"

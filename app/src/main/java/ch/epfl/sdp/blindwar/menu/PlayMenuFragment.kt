@@ -14,6 +14,7 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.GlideApp
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.game.solo.SoloActivity
+import ch.epfl.sdp.blindwar.game.util.QRCodeGenerator
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.google.firebase.storage.StorageReference
 

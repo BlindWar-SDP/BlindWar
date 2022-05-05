@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.domain.game
+package ch.epfl.sdp.blindwar.game.util
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 
-class PlayerListAdapter(public var dataSet: List<Pair<Int, String>>)  :
+class PlayerListAdapter(var dataSet: List<Pair<Int, String>>)  :
     RecyclerView.Adapter<PlayerListAdapter.ViewHolder>() {
 
     /**

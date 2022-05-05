@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.database
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.profile.model.User
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -23,7 +24,7 @@ object MatchDatabase {
         game: GameInstance,
         db: FirebaseFirestore
     ) {
-        db.collection(COLLECTION_PATH).add(
+         db.collection(COLLECTION_PATH).add(
             Match(
                 user.uid,
                 user.userStatistics.elo,

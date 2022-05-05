@@ -6,12 +6,10 @@ import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.ktx.Firebase
 
 
 object UserDatabase {
@@ -48,6 +46,12 @@ object UserDatabase {
         return getUserStatisticsReference(uid).child("elo")
     }
 
+    /**
+     * Get image reference
+     *
+     * @param uid user id
+     * @return database reference of the selected object
+     */
     fun getImageReference(uid: String): DatabaseReference {
         return userReference.child(uid).child("profilePicture")
     }
@@ -58,8 +62,8 @@ object UserDatabase {
      * @param user to be added
      */
     // Add user to database
-    fun updateUser(user: User) {
-        userReference.child(user.uid).setValue(user)
+    fun updateUser(user: User): Task<Void> {
+        return userReference.child(user.uid).setValue(user)
     }
 
     /**
@@ -77,9 +81,9 @@ object UserDatabase {
      * @param uid
      * @param music
      */
-    fun addLikedMusic(uid: String, music: URIMusicMetadata) {
+    fun addLikedMusic(uid: String, music: URIMusicMetadata): Task<DataSnapshot> {
         val userRef = getUserReference(uid)
-        userRef.get().addOnSuccessListener {
+        return userRef.get().addOnSuccessListener {
             val user: User? = it.getValue(User::class.java)
             if (user != null) {
                 var duplicate = false
@@ -135,31 +139,32 @@ object UserDatabase {
 //        ref.child(User.VarName.birthdate.name).setValue(user.birthdate)
 //    }
 
-    fun setFirstName(uid: String, fn: String) {
-        userReference.child(uid).child("firstName").setValue(fn)
+    fun setFirstName(uid: String, fn: String): Task<Void> {
+        return userReference.child(uid).child("firstName").setValue(fn)
     }
 
-    fun setLastName(uid: String, ln: String) {
-        userReference.child(uid).child("lastName").setValue(ln)
+    fun setLastName(uid: String, ln: String): Task<Void> {
+        return userReference.child(uid).child("lastName").setValue(ln)
     }
 
-    fun setPseudo(uid: String, pseudo: String) {
-        userReference.child(uid).child("pseudo").setValue(pseudo)
-    }
-    fun setProfilePicture(uid: String, pp: String) {
-        userReference.child(uid).child("profilePicture").setValue(pp)
+    fun setPseudo(uid: String, pseudo: String): Task<Void> {
+        return userReference.child(uid).child("pseudo").setValue(pseudo)
     }
 
-    fun setBirthdate(uid: String, date: Long) {
-        userReference.child(uid).child("birthDate").setValue(date)
+    fun setProfilePicture(uid: String, pp: String): Task<Void> {
+        return userReference.child(uid).child("profilePicture").setValue(pp)
     }
 
-    fun setGender(uid: String, gender: String) {
-        userReference.child(uid).child("gender").setValue(gender)
+    fun setBirthdate(uid: String, date: Long): Task<Void> {
+        return userReference.child(uid).child("birthDate").setValue(date)
     }
 
-    fun setDescription(uid: String, desc: String) {
-        userReference.child(uid).child("description").setValue(desc)
+    fun setGender(uid: String, gender: String): Task<Void> {
+        return userReference.child(uid).child("gender").setValue(gender)
+    }
+
+    fun setDescription(uid: String, desc: String): Task<Void> {
+        return userReference.child(uid).child("description").setValue(desc)
     }
 
     /**
@@ -167,8 +172,8 @@ object UserDatabase {
      *
      * @param uid user identification
      */
-    private fun setUserStatistics(uid: String, userStatistics: AppStatistics) {
-        getUserStatisticsReference(uid).setValue(userStatistics)
+    private fun setUserStatistics(uid: String, userStatistics: AppStatistics): Task<Void> {
+        return getUserStatisticsReference(uid).setValue(userStatistics)
     }
 
     /**
@@ -202,21 +207,13 @@ object UserDatabase {
      * @param score
      * @param fails
      */
-    fun updateSoloUserStatistics(uid: String, score: Int, fails: Int) {
-        getUserStatistics(uid).addOnSuccessListener {
+    fun updateSoloUserStatistics(uid: String, score: Int, fails: Int): Task<DataSnapshot> {
+        return getUserStatistics(uid).addOnSuccessListener {
             val userStatistics: AppStatistics? = it.getValue(AppStatistics::class.java)
             userStatistics?.let { stat ->
                 stat.correctnessUpdate(score, fails, Mode.SOLO)
                 setUserStatistics(uid, stat)
             }
         }
-    }
-
-    /**
-     * Get current authenticated user
-     *
-     */
-    fun getCurrentUser(): DataSnapshot {
-        return getUserReference(Firebase.auth.currentUser!!.uid).get().result
     }
 }
