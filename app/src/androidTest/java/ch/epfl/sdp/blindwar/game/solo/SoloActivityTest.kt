@@ -124,7 +124,7 @@ class SoloActivityTest {
         onView(withId(R.id.game_summary_fragment)).check(matches(isDisplayed()))
 
         onView(withId(R.id.quit)).perform(click())
-    }**/
+    } **/
 
     private fun guess(guess: String) {
         onView(withId(R.id.guessEditText)).perform(typeText(guess))
