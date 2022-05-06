@@ -47,11 +47,13 @@ class MultiPlayerMenuActivityTest {
 
     @Test
     fun testDisplayFriendButton() {
+        onView(withId(R.id.imageFriendsButton)).perform(scrollTo(), ViewActions.click())
         onView(withId(R.id.imageFriendsButton)).check(matches(isDisplayed()))
     }
 
     @Test
     fun testDisplayRandomButton() {
+        onView(withId(R.id.imageRandomButton)).perform(scrollTo(), ViewActions.click())
         onView(withId(R.id.imageRandomButton)).check(matches(isDisplayed()))
     }
 
