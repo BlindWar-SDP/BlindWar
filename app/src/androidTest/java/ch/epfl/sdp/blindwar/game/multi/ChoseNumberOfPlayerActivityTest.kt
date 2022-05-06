@@ -39,6 +39,12 @@ class ChoseNumberOfPlayerActivityTest {
         onView(withId(R.id.cancel_number_player)).perform(ViewActions.click())
         intended(hasComponent(MultiPlayerMenuActivity::class.java.name))
     }
+
+    @Test
+    fun testCreateMatchButton() {
+        onView(withId(R.id.create_match)).perform(ViewActions.click())
+        intended(hasComponent(GameActivity::class.java.name))
+    }
     
     @Test
     fun testDefaultNumberPicker() {
