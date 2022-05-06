@@ -74,37 +74,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      */
     fun randomButton(view: View) {
         setProgressDialog(getString(R.string.multi_wait_matches))
-        /*val user = UserDatabase.getCurrentUser()
-        val elo = user.child("userStatistics/elo").value!! as Int
-        val matchs = Firebase.firestore.collection("match").whereLessThan("elo", elo + eloDelta)
-            .whereGreaterThan("elo", elo - 200)
-            .orderBy("elo", Query.Direction.DESCENDING)
-            .limit(LIMIT_MATCH).get()
-        if (matchs.isSuccessful && !isCanceled) {
-            var i = 0
-            var match: DocumentReference? = null
-            while (match == null && i < LIMIT_MATCH) {
-                match =
-                    MatchDatabase.connect(
-                        matchs.result.documents[i].toObject(Match::class.java)!!,
-                        user.getValue(User::class.java)!!,
-                        Firebase.firestore
-                    )
-                i++
-            }
-            if (match == null && !isCanceled) {
-                toast.setText(getString(R.string.toast_connexion))
-                toast.show()
-                eloDelta += 100
-                randomButton(view)
-            } else if (!isCanceled) {
-                //match.addSnapshotListener {} //TODO add listener
-                dialog!!.hide()
-                //TODO CONNECT TO MATCH
-            }
-        } else if (!isCanceled) {
-            randomButton(view)
-        }*/
         dialog!!.hide() //TODO REMOVE WHEN TESTS OK
         //val intent = Intent(this, MultiPlayerRandomActivity::class.java)
     }
@@ -128,40 +97,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         dialog = builder.create()
         dialog!!.show()
     }
-
-    /**
-     * find a match on DB which is free
-     *
-     * @param text
-     */
-    /*
-    private fun connectToDB(text: String) {
-        setProgressDialog("Wait for connexion")
-        val user = UserDatabase.getCurrentUser()
-        val match = Firebase.firestore.collection("match").document(text).get() //TODO get only uid
-        if (match.isSuccessful && !isCanceled) {
-            val connect =
-                MatchDatabase.connect(
-                    match.result.toObject(Match::class.java)!!,
-                    user.getValue(User::class.java)!!,
-                    Firebase.firestore
-                )
-            if (connect == null && !isCanceled) {
-                toast.setText(getString(R.string.multi_match_full))
-                toast.show()
-                dialog!!.hide()
-            } else if (!isCanceled) {
-                //match.addSnapshotListener {} //TODO add listener
-                dialog!!.hide()
-                //TODO CONNECT TO MATCH
-            }
-        } else if (!isCanceled) {
-            toast.setText(getString(R.string.multi_match_not_found))
-            toast.show()
-            dialog!!.hide()
-        }
-    }
-     */
+    
 
     /**
      * create a dialog which ask for the uid of the match
