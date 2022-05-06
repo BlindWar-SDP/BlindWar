@@ -134,6 +134,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      *
      * @param text
      */
+    /*
     private fun connectToDB(text: String) {
         setProgressDialog("Wait for connexion")
         val user = UserDatabase.getCurrentUser()
@@ -160,6 +161,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             dialog!!.hide()
         }
     }
+     */
 
     /**
      * create a dialog which ask for the uid of the match

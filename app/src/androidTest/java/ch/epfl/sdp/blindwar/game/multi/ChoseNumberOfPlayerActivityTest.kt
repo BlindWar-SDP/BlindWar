@@ -36,23 +36,12 @@ class ChoseNumberOfPlayerActivityTest {
 
     @Test
     fun testCancelButton() {
-        Espresso.onView(ViewMatchers.withId(R.id.cancel_number_player)).perform(ViewActions.click())
+        onView(withId(R.id.cancel_number_player)).perform(ViewActions.click())
         intended(hasComponent(MultiPlayerMenuActivity::class.java.name))
     }
-
-    @Test
-    fun testCreateButton() {
-        Espresso.onView(ViewMatchers.withId(R.id.create_match)).perform(ViewActions.click())
-        intended(hasComponent(GameActivity::class.java.name))
-    }
-
+    
     @Test
     fun testDefaultNumberPicker() {
         onView(withParent(withId(R.id.number_of_players))).check(matches(withText(ChoseNumberOfPlayerActivity.DEFAULT_NUMBER_OF_PLAYER.toString())))
-    }
-
-    @Test
-    fun testDisplayNumberPicker() {
-        onView(withId(R.id.number_of_players)).check(matches(isDisplayed()))
     }
 }
