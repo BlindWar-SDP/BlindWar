@@ -11,5 +11,9 @@
         android:id="@+id/item_match_history"
         android:icon="@android:drawable/ic_menu_search"
         android:title="match history" />
+    <item
+        android:id="@+id/leaderboard"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="match history" />
 
 </menu>

@@ -46,6 +46,7 @@ class DisplayHistoryFragment : Fragment() {
         musicRecyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
 
 
+
         // showing the back button in action bar
         //supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -79,12 +80,12 @@ class DisplayHistoryFragment : Fragment() {
             }
 
             if (historyType == MATCH_HISTORY_TYPE) {
-                loadLeaderboard()
+                UserDatabase.addSingleEventAllUsersListener(leaderboardListener)
                 UserDatabase.addUserListener(currentUser.uid, userMatchHistoryListener)
             }
 
             if (historyType == LEADERBOARD_TYPE) {
-                loadLeaderboard()
+                UserDatabase.addSingleEventAllUsersListener(leaderboardListener)
             }
         }
 
@@ -156,6 +157,7 @@ class DisplayHistoryFragment : Fragment() {
     /**
      * Retrieves all Users from the database an get their pseudo and elo
      */
+    /*
     private fun loadLeaderboard() {
         UserDatabase.getLeaderboardData().addOnSuccessListener {
             val usersDatabase: Map<String, Any> = it.value as Map<String, Any>
@@ -168,6 +170,39 @@ class DisplayHistoryFragment : Fragment() {
                 userMap["pseudo"]?.let { it1 -> pseudos.add(it1) }
                 userStatMap["userStatistics"]?.get("elo")?.let { it1 -> elos.add(it1.toString()) }
             }
+        }
+    } */
+    private val leaderboardListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            val usersMap = try {
+                dataSnapshot.getValue<Map<String, String>>()
+            } catch (e: DatabaseException) {
+                null
+            }
+            if (usersMap!= null) {
+                val ranks = mutableListOf(0..usersMap.size)
+                //val pseudos = mutableListOf<String>()
+                //val elos = mutableListOf<String>()
+                for(user in usersMap) {
+                    val userMap: Map<String, String> = user as Map<String, String>
+                    val userStatMap: Map<String, Map<String, Long>> = user as Map<String, Map<String, Long>>
+                    val pseudo = userMap["pseudo"]
+                    val elo = userStatMap["userStatistics"]?.get("elo")
+                    if (pseudo != null && elo != null) {
+                        addToList("1", pseudo, elo.toString())
+                    }
+                }
+            } else {
+                for (i in 1..10) {
+                    addToList("HELLO", "JOJO", "no image")
+                }
+            }
+            musicRecyclerView.adapter = LeaderboardRecyclerAdapter(titles, artists, images)
+        }
+
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
         }
     }
 

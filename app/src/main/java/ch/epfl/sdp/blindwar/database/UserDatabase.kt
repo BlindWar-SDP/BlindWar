@@ -187,6 +187,12 @@ object UserDatabase {
     fun addUserListener(uid: String, listener: ValueEventListener) {
         userReference.child(uid).addValueEventListener(listener)
     }
+    /**
+     * Used to get Pseudo and Elo of all users once.
+     */
+    fun addSingleEventAllUsersListener(listener: ValueEventListener) {
+        userReference.addListenerForSingleValueEvent(listener)
+    }
 
     /**
      * Gets UserStatistics of a user. Needs to be treated as a future(addOnSuccessListener)
@@ -215,14 +221,9 @@ object UserDatabase {
         }
     }
 
-    /**
-     * Get Pseudo and Elo of all users. Needs to be treated as a future(addOnSuccessListener)
-     * @return Task<DataSnapshot>
-     */
 
-    fun getLeaderboardData(): Task<DataSnapshot>{
-        return userReference.get()
-    }
+
+
 
 
 }

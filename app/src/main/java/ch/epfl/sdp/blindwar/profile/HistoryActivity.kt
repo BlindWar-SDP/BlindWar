@@ -36,6 +36,7 @@ class HistoryActivity : AppCompatActivity() {
                         matchHistoryType
                     )
                 )
+                R
             }
             true
         }
