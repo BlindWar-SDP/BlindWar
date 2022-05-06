@@ -6,12 +6,10 @@ import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.ktx.Firebase
 
 
 object UserDatabase {
@@ -222,10 +220,8 @@ object UserDatabase {
      * @return Task<DataSnapshot>
      */
 
-    fun getLeaderboardData(): Task<DataSnapshot>  {
-        val users = userReference.get().addOnSuccessListener {
-
-        }
+    fun getLeaderboardData(): Task<DataSnapshot>{
+        return userReference.get()
     }
 
 

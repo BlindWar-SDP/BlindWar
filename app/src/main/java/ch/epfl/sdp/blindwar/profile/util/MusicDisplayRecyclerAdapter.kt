@@ -25,7 +25,7 @@ class MusicDisplayRecyclerAdapter(
     private var imagesURL: List<String>
 ) :
 
-    RecyclerView.Adapter<LeaderboardRecyclerAdapter.ViewHolder>() {
+    RecyclerView.Adapter<MusicDisplayRecyclerAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -63,5 +63,6 @@ class MusicDisplayRecyclerAdapter(
     override fun getItemCount(): Int {
         return titles.size
     }
+
 }
 
