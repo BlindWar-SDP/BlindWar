@@ -11,18 +11,25 @@ import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.util.GameActivity
 
 class ChoseNumberOfPlayerActivity : AppCompatActivity(){
+
+    companion object {
+        const val DEFAULT_NUMBER_OF_PLAYER = 2
+        const val MINIMUM_NUMBER_OF_PLAYER = 2
+        const val MAXIMUM_NUMBER_OF_PLAYER = 20
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chose_number_of_player)
 
-        val nb: NumberPicker = findViewById(R.id.numberOfPLayers)
-        nb.maxValue = 20
-        nb.minValue = 2
-        nb.value = 2
+        val nb: NumberPicker = findViewById(R.id.number_of_players)
+        nb.maxValue = MAXIMUM_NUMBER_OF_PLAYER
+        nb.minValue = MINIMUM_NUMBER_OF_PLAYER
+        nb.value = DEFAULT_NUMBER_OF_PLAYER
     }
 
     fun createMatchSoloAttributes(view: View) {
-        val nb: NumberPicker = findViewById(R.id.numberOfPLayers)
+        val nb: NumberPicker = findViewById(R.id.number_of_players)
         val checkBox: CheckBox = findViewById(R.id.checkBoxIsPrivate)
 
         // TODO: Do not ignore these data !

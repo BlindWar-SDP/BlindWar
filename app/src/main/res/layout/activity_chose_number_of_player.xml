@@ -28,7 +28,7 @@
             android:text="@string/multi_number_player" />
 
         <NumberPicker
-            android:id="@+id/numberOfPLayers"
+            android:id="@+id/number_of_players"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp" />
@@ -55,6 +55,7 @@
             android:layout_height="wrap_content">
 
             <Button
+                android:id="@+id/cancel_number_player"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -63,6 +64,7 @@
                 android:text="@string/cancel_btn" />
 
             <Button
+                android:id="@+id/create_match"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
