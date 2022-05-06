@@ -30,16 +30,6 @@ data class User(
     var description: String = ""
 ) {
 
-    enum class Gender {
-        Other, Female, Male, Undefined, None
-    }
-
-    // ENUM to get variable name as string with the .name method
-    // for
-    enum class VarName {
-        user, uid, email, userStatistics, pseudo, firstName, lastName, birthdate, profilePicture, likedMusics, matchHistory, gender, description
-    }
-
     class Builder(
         private var uid: String = "",
         private var email: String = "",

@@ -32,10 +32,6 @@
         </activity>
 
         <activity
-            android:name=".login.UserNewInfoActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".game.solo.SoloActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"

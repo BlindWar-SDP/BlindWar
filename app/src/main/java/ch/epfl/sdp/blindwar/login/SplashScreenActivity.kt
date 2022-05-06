@@ -7,7 +7,9 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.BuildConfig
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
+import ch.epfl.sdp.blindwar.profile.model.User
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
@@ -94,18 +96,24 @@ class SplashScreenActivity : AppCompatActivity() {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
 //            // Successfully signed in
-//            val user = Firebase.auth.currentUser
             // https://www.tabnine.com/code/java/classes/com.google.firebase.auth.FirebaseAuth
 
-            return if (response!!.isNewUser){ // old check : (user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp) {
-                // new user: 1st signIn
-                Intent(activity, UserNewInfoActivity::class.java)
-            } else {
-                /*
-                    - should we update the online database with the local cache here ?
-                     */
-                Intent(activity, MainMenuActivity::class.java)
+            if (response!!.isNewUser) { // old check : (user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp) {
+                Firebase.auth.currentUser?.let {
+                    val user0 = User.Builder()
+                        .setPseudo(it.uid.take(5))
+                        .setUid(it.uid)
+                        .build()
+                    it.email?.let { email ->
+                        user0.email = email
+                    }
+                    UserDatabase.updateUser(
+                        user0
+                    )
+                }
             }
+            return Intent(activity, MainMenuActivity::class.java)
+
         } else {
             // Sign in failed. If response is null the user canceled the
             // sign-in flow using the back button. Otherwise check

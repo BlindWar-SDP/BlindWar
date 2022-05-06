@@ -28,9 +28,9 @@ class StatisticsActivity: AppCompatActivity() {
         spinner = findViewById(R.id.modes_spinner)
 
         // Observe the stats value from the viewModel
-        profileViewModel.userStatistics.observe(this) {
-            if (it != AppStatistics()) {
-                userStatistics = it
+        profileViewModel.user.observe(this) {
+            if (it.userStatistics != AppStatistics()) {
+                userStatistics = it.userStatistics
                 setSpinner()
             }
         }

@@ -8,7 +8,6 @@ import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.GameResult
-import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -21,36 +20,28 @@ import com.google.firebase.storage.StorageReference
 class ProfileViewModel : ViewModel() {
 
     // OBSERVABLES
-    val name = MutableLiveData<String>()
-    val email = MutableLiveData<String>()
-    val elo = MutableLiveData<String>()
-    val imagePath = MutableLiveData<String>()
+    val user = MutableLiveData<User>()
     val imageRef = MutableLiveData<StorageReference>()
-    val userStatistics = MutableLiveData<AppStatistics>()
 
     private val userInfoListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             // Get User info and use the values to update the UI
-            val user: User? = try {
+            val userDB: User? = try {
                 dataSnapshot.getValue<User>()
             } catch (e: DatabaseException) {
                 null
             }
 
-            user?.let {
+            userDB?.let {
+                user.postValue(it)
                 Log.d("ZAMBO ANGUISSA", it.firstName)
-                name.postValue(it.firstName)
-                email.postValue(it.email)
-                elo.postValue(it.userStatistics.elo.toString())
-                imagePath.postValue(it.profilePicture)
-                userStatistics.postValue(it.userStatistics)
 
-                if (it.profilePicture != "") {
+                if (it.profilePicture.isNotEmpty()) {
                     imageRef.postValue(ImageDatabase.getImageReference(it.profilePicture))
                 }
 
             } ?: run {
-                userStatistics.postValue(AppStatistics())
+                user.postValue(User.Builder().build())
             }
         }
 
@@ -64,10 +55,6 @@ class ProfileViewModel : ViewModel() {
         FirebaseAuth.getInstance().currentUser?.let {
             UserDatabase.addUserListener(it.uid, userInfoListener)
         }
-    }
-
-    fun logout() {
-        FirebaseAuth.getInstance().signOut()
     }
 
     fun updateStats(score: Int, fails: Int, gameResult: GameResult) {

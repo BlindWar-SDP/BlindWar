@@ -14,7 +14,7 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.GlideApp
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.game.solo.SoloActivity
-import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
+import ch.epfl.sdp.blindwar.login.viewmodel.UserNewInfoViewModel
 import com.google.firebase.storage.StorageReference
 
 /**
@@ -23,7 +23,7 @@ import com.google.firebase.storage.StorageReference
  * @constructor creates a PlayMenuFragment
  */
 class PlayMenuFragment : Fragment() {
-    private val profileViewModel: ProfileViewModel by activityViewModels()
+    private val userNewInfoViewModel: UserNewInfoViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,15 +49,15 @@ class PlayMenuFragment : Fragment() {
         btn.alpha = 0.3F
         } **/
 
-        updateProfileImage(profileViewModel.imageRef, view.findViewById(R.id.profileView))
+        updateProfileImage(userNewInfoViewModel.imageRef, view.findViewById(R.id.profileView))
 
         return view
     }
 
     /** TODO: Remove duplicated code **/
-    private fun updateProfileImage(liveData: LiveData<StorageReference>, imageView: ImageView) {
+    private fun updateProfileImage(liveData: LiveData<StorageReference?>, imageView: ImageView) {
         liveData.observe(viewLifecycleOwner) {
-            if (it.path != "") {
+            it?.let{
                 GlideApp.with(requireActivity())
                     .load(it)
                     .centerCrop()

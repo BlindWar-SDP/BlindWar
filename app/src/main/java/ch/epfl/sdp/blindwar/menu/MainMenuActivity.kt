@@ -24,8 +24,19 @@ class MainMenuActivity : AppCompatActivity() {
      * @param savedInstanceState
      */
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        // following lines hide the status bar
+        // (the one with the time/setting/network/cellular/battery)
+//        requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        window.setFlags(
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN
+//        )
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
+
+        // this hide the top bar with the App Label/ back-button / ...
+//        supportActionBar?.hide()
 
         showFragment(PlayMenuFragment())
 

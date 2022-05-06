@@ -1,25 +1,18 @@
 package ch.epfl.sdp.blindwar
 
-import androidx.fragment.app.testing.launchFragment
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.*
-import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import ch.epfl.sdp.blindwar.login.SplashScreenActivity
-import ch.epfl.sdp.blindwar.login.UserNewInfoActivity
 import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import ch.epfl.sdp.blindwar.profile.fragments.StatisticsActivity
-import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions
-import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
@@ -197,13 +190,13 @@ class ProfileFragmentTest : TestCase() {
                 .perform(click())
             intended(hasComponent(SplashScreenActivity::class.java.name))
     }
-
-    @Test
-    fun testEditProfileButton() {
-        launchFragmentInContainer<ProfileFragment>()
-        closeSoftKeyboard()
-            onView(withId(R.id.editBtn))
-                .perform(click())
-            intended(hasComponent(UserNewInfoActivity::class.java.name))
-    }
+//
+//    @Test
+//    fun testEditProfileButton() {
+//        launchFragmentInContainer<ProfileFragment>()
+//        closeSoftKeyboard()
+//            onView(withId(R.id.editBtn))
+//                .perform(click())
+//            intended(hasComponent(UserNewInfoActivity::class.java.name))
+//    }
 }
