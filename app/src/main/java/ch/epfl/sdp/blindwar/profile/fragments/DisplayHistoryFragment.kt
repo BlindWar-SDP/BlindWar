@@ -156,21 +156,6 @@ class DisplayHistoryFragment : Fragment() {
     /**
      * Retrieves all Users from the database an get their pseudo and elo
      */
-    /*
-    private fun loadLeaderboard() {
-        UserDatabase.getLeaderboardData().addOnSuccessListener {
-            val usersDatabase: Map<String, Any> = it.value as Map<String, Any>
-            val users = usersDatabase.values
-            val pseudos = mutableListOf<String>()
-            val elos = mutableListOf<String>()
-            for(user in users) {
-                val userMap: Map<String, String> = user as Map<String, String>
-                val userStatMap: Map<String, Map<String, Long>> = user as Map<String, Map<String, Long>>
-                userMap["pseudo"]?.let { it1 -> pseudos.add(it1) }
-                userStatMap["userStatistics"]?.get("elo")?.let { it1 -> elos.add(it1.toString()) }
-            }
-        }
-    } */
     private val leaderboardListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val usersMap = try {
@@ -197,12 +182,12 @@ class DisplayHistoryFragment : Fragment() {
             // Create a List of (pseudo, elo) Pairs and order them by elo to have
             // an ordered leaderboard
             var pseudoUsers = mutableListOf<Pair<String, String>>()
-            for (i in (0 until titles.size)) {
-                pseudoUsers[i] = Pair(artists[i], images[i])
+            for (i in (0 until artists.size)) {
+                pseudoUsers.add(Pair(artists[i], images[i]))
             }
             val sortedPseudoUsers = pseudoUsers
                 .sortedWith(compareBy({ it.second }, { it.first })).asReversed()
-            for (i in (0 until titles.size)) {
+            for (i in (0 until artists.size)) {
                 artists[i] = sortedPseudoUsers[i].first
                 images[i] = sortedPseudoUsers[i].second
             }

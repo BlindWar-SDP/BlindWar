@@ -40,7 +40,7 @@ class LeaderboardRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.userRank.text = '#' + position.toString()
+        holder.userRank.text = '#' + position.toString() + 1
         holder.userPseudo.text = pseudos[position]
         holder.userElo.text = "elo: " + elos[position]
 
