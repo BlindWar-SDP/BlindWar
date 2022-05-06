@@ -18,7 +18,7 @@ import java.util.*
 import java.util.concurrent.ExecutionException
 
 @RunWith(AndroidJUnit4::class)
-class GameViewModelTest {
+class GameViewModelSoloTest {
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
 
@@ -62,8 +62,6 @@ class GameViewModelTest {
         val logout: Unit = FirebaseAuth.getInstance().signOut()
         Thread.sleep(1000)
     }
-
-
 
 
     @Test

@@ -7,6 +7,8 @@ import android.widget.CheckBox
 import android.widget.NumberPicker
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
+import ch.epfl.sdp.blindwar.game.util.GameActivity
 
 class ChoseNumberOfPlayerActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +29,7 @@ class ChoseNumberOfPlayerActivity : AppCompatActivity(){
         val maxPlayer = nb.value
         val isPrivate = checkBox.isChecked
 
-        startActivity(Intent(this, CreateMatchActivity::class.java))
+        startActivity(Intent(this, GameActivity::class.java).apply { putExtra(GameActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.MULTI) })
     }
 
     /**

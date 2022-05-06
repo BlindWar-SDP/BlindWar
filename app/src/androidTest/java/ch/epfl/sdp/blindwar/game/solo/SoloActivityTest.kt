@@ -1,5 +1,8 @@
 package ch.epfl.sdp.blindwar.game.solo
 
+import android.content.Intent
+import android.os.Bundle
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBackUnconditionally
 import androidx.test.espresso.action.ViewActions.*
@@ -10,9 +13,11 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.solo.util.typeSearchViewText
 import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
+import ch.epfl.sdp.blindwar.game.util.GameActivity
 import ch.epfl.sdp.blindwar.game.util.Tutorial
 import junit.framework.Assert.assertEquals
 import org.hamcrest.Matchers.allOf
@@ -20,11 +25,15 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+
 @RunWith(AndroidJUnit4::class)
 class SoloActivityTest {
+
+    var intent: Intent? = Intent(ApplicationProvider.getApplicationContext(), GameActivity::class.java).apply { putExtra(GameActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.SOLO) }
+
     @get:Rule
-    var testRule = ActivityScenarioRule(
-        SoloActivity::class.java
+    var testRule = ActivityScenarioRule<GameActivity>(
+        intent
     )
 
     @get:Rule
