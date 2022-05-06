@@ -42,7 +42,8 @@ class LeaderboardRecyclerAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.userRank.text = '#' + position.toString()
         holder.userPseudo.text = pseudos[position]
-        holder.userElo.text = elos[position]
+        holder.userElo.text = "elo: " + elos[position]
+
     }
 
     override fun getItemCount(): Int {

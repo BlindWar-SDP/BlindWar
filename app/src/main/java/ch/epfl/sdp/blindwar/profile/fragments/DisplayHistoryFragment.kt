@@ -80,7 +80,6 @@ class DisplayHistoryFragment : Fragment() {
             }
 
             if (historyType == MATCH_HISTORY_TYPE) {
-                UserDatabase.addSingleEventAllUsersListener(leaderboardListener)
                 UserDatabase.addUserListener(currentUser.uid, userMatchHistoryListener)
             }
 
@@ -175,20 +174,17 @@ class DisplayHistoryFragment : Fragment() {
     private val leaderboardListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val usersMap = try {
-                dataSnapshot.getValue<Map<String, String>>()
+                dataSnapshot.getValue<Map<String, Any>>()
             } catch (e: DatabaseException) {
                 null
             }
-            if (usersMap!= null) {
-                val ranks = mutableListOf(0..usersMap.size)
-                //val pseudos = mutableListOf<String>()
-                //val elos = mutableListOf<String>()
-                for(user in usersMap) {
+            if (usersMap != null) {
+                for(user in usersMap.values) {
                     val userMap: Map<String, String> = user as Map<String, String>
-                    val userStatMap: Map<String, Map<String, Long>> = user as Map<String, Map<String, Long>>
+                    val userStatMap: HashMap<String, Map<String, Long>> = user as HashMap<String, Map<String, Long>>
                     val pseudo = userMap["pseudo"]
                     val elo = userStatMap["userStatistics"]?.get("elo")
-                    if (pseudo != null && elo != null) {
+                    if (pseudo != null && elo != null && pseudo != "") {
                         addToList("1", pseudo, elo.toString())
                     }
                 }
@@ -197,6 +193,20 @@ class DisplayHistoryFragment : Fragment() {
                     addToList("HELLO", "JOJO", "no image")
                 }
             }
+
+            // Create a List of (pseudo, elo) Pairs and order them by elo to have
+            // an ordered leaderboard
+            var pseudoUsers = mutableListOf<Pair<String, String>>()
+            for (i in (0 until titles.size)) {
+                pseudoUsers[i] = Pair(artists[i], images[i])
+            }
+            val sortedPseudoUsers = pseudoUsers
+                .sortedWith(compareBy({ it.second }, { it.first })).asReversed()
+            for (i in (0 until titles.size)) {
+                artists[i] = sortedPseudoUsers[i].first
+                images[i] = sortedPseudoUsers[i].second
+            }
+
             musicRecyclerView.adapter = LeaderboardRecyclerAdapter(titles, artists, images)
         }
 

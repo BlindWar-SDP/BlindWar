@@ -44,16 +44,25 @@
                 android:text="@string/userPseudo"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
-
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@id/userRank"
+            android:layout_alignBottom="@id/userRank"
+            android:layout_toEndOf="@id/userRank"
+            android:gravity="left|center_vertical"
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/userElo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="220dp"
                 android:text="@string/userElo"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@android:color/black"
                 android:textSize="18sp" />
         </LinearLayout>
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
 
