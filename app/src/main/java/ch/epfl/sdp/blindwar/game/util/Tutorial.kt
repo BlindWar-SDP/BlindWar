@@ -58,7 +58,7 @@ object Tutorial {
         "https://i.scdn.co/image/ab67616d0000b27348eb4d2efa517a920ff4e14e"
 
 
-    val searchin = (
+    private val searchin = (
             URIMusicMetadata(
                 "Searchin",
                 "Matisyahu",
@@ -67,7 +67,7 @@ object Tutorial {
                 URL_PREVIEW_FIFA
             ))
 
-    val uatw = URIMusicMetadata(
+    private val uatw = URIMusicMetadata(
         "Us Against the World",
         "Clement Marfo",
         "https://i.scdn.co/image/ab67616d0000b273b6e0b1707eea74cd006df458",

@@ -27,15 +27,20 @@ class MainMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
 
+        val play = PlayMenuFragment()
+        val search = SearchFragment()
+        val profile = ProfileFragment()
+
         showFragment(PlayMenuFragment())
 
-        bottomMenu = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomMenu = findViewById(R.id.bottomNavigationView)
 
         bottomMenu.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.item_play -> showFragment(PlayMenuFragment())
-                R.id.item_search -> showFragment(SearchFragment())
-                R.id.item_profile -> showFragment(ProfileFragment())
+                // Avoid creating a new fragment on each navigation event
+                R.id.item_play -> showFragment(play)
+                R.id.item_search -> showFragment(search)
+                R.id.item_profile -> showFragment(profile)
             }
             true
         }
@@ -58,6 +63,6 @@ class MainMenuActivity : AppCompatActivity() {
      *
      */
     override fun onBackPressed() {
-        this.moveTaskToBack(true);
+        this.moveTaskToBack(true)
     }
 }

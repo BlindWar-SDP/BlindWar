@@ -11,10 +11,15 @@ abstract class GameActivity: AppCompatActivity() {
     val gameInstanceViewModel: GameInstanceViewModel  by viewModels()
     protected val profileViewModel: ProfileViewModel by viewModels()
 
+    companion object {
+        /* Used to handle permission request */
+        const val PERMISSIONS_REQUEST_RECORD_AUDIO = 1
+    }
+
     /**
      * Removes the provided fragment from the fragment manager list
      */
-    protected fun removeFragment(fragment: Fragment) {
+    private fun removeFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .remove(fragment)

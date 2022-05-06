@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.res.Resources
 import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
+import androidx.lifecycle.MutableLiveData
+import ch.epfl.sdp.blindwar.audio.ReadyMediaPlayer
 import ch.epfl.sdp.blindwar.data.music.MusicImageUrlConstants
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.data.music.metadata.ResourceMusicMetadata
@@ -13,7 +15,7 @@ class ResourceFetcher(
     private val context: Context,
     private val resources: Resources
 ) : Fetcher {
-    override fun fetchMusic(musicMetadata: MusicMetadata): Pair<MusicMetadata, MediaPlayer> {
+    override fun fetchMusic(musicMetadata: MusicMetadata): Pair<MusicMetadata, ReadyMediaPlayer> {
 
         // Create a file descriptor to get the author from
         val mediaMetadataRetriever = MediaMetadataRetriever()
@@ -59,7 +61,8 @@ class ResourceFetcher(
         // Change the current music
         player.seekTo(time)
 
+
         // Return a new media player from the give resource id
-        return Pair(updateMetadata, player)
+        return Pair(updateMetadata, ReadyMediaPlayer(player, MutableLiveData(true)))
     }
 }

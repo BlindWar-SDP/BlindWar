@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <queries>
@@ -41,6 +42,16 @@
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".game.multi.CreateMatchActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".game.solo.TutorialActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".login.UserAdditionalInfoActivity"
             android:exported="false"
             android:parentActivityName=".login.UserNewInfoActivity"
@@ -50,24 +61,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".game.multi.MultiPlayerActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".game.multi.MultiPlayerFriendActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".game.multi.CreateMatchActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".game.multi.MultiPlayerRandomActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".game.solo.TutorialActivity"
-            android:parentActivityName=".menu.MainMenuActivity"
+            android:name=".game.multi.ChoseNumberOfPlayerActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -80,7 +74,6 @@
             android:parentActivityName=".profile.fragments.ProfileFragment"
             android:exported="false"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".menu.MainMenuActivity"
             android:exported="true"

@@ -8,6 +8,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.database.MatchDatabase
+import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.game.multi.model.Match
+import ch.epfl.sdp.blindwar.menu.MainMenuActivity
+import ch.epfl.sdp.blindwar.profile.model.User
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 /**
@@ -16,13 +23,19 @@ import ch.epfl.sdp.blindwar.R
  * @constructor creates a MultiPlayerMenuActivity
  */
 class MultiPlayerMenuActivity : AppCompatActivity() {
-    private val LIMIT_MATCH: Long = 10
     private var eloDelta = 200
     private var dialog: AlertDialog? = null
     private var isCanceled = false
+    private lateinit var toast: Toast
+
+    companion object {
+        private val LIMIT_MATCH: Long = 10
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_multiplayer_menu)
+        toast = Toast.makeText(applicationContext, "default", Toast.LENGTH_SHORT)
         eloDelta = 200
     }
 
@@ -33,9 +46,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      */
     fun friendButton(view: View) {
         setLinkDialog()
-        dialog!!.hide() //TODO REMOVE WHEN TESTS OK
-        val intent = Intent(this, MultiPlayerFriendActivity::class.java)
-        startActivity(intent)
+        //dialog!!.hide() //TODO REMOVE WHEN TESTS OK
     }
 
     /**
@@ -44,7 +55,16 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun createMatch(view: View) {
-        startActivity(Intent(this, CreateMatchActivity::class.java))
+        startActivity(Intent(this, ChoseNumberOfPlayerActivity::class.java))
+    }
+
+    /**
+     * Cancel
+     *
+     * @param view
+     */
+    fun cancel(view: View) {
+        startActivity(Intent(this, MainMenuActivity::class.java))
     }
 
     /**
@@ -73,11 +93,8 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                 i++
             }
             if (match == null && !isCanceled) {
-                Toast.makeText(
-                    applicationContext,
-                    getString(R.string.toast_connexion),
-                    Toast.LENGTH_LONG
-                ).show()
+                toast.setText(getString(R.string.toast_connexion))
+                toast.show()
                 eloDelta += 100
                 randomButton(view)
             } else if (!isCanceled) {
@@ -90,8 +107,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         }*/
         dialog!!.hide() //TODO REMOVE WHEN TESTS OK
         //val intent = Intent(this, MultiPlayerRandomActivity::class.java)
-        val intent = Intent(this, CreateMatchActivity::class.java)
-        startActivity(intent)
     }
 
     /**
@@ -104,11 +119,8 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         builder.setCancelable(true)
         builder.setOnCancelListener {
             isCanceled = true
-            Toast.makeText(
-                applicationContext,
-                getString(R.string.toast_canceled_connexion),
-                Toast.LENGTH_SHORT
-            ).show()
+            toast.setText(getString(R.string.toast_canceled_connexion))
+            toast.show()
         }
         val view = View.inflate(applicationContext, R.layout.fragment_dialog_loading, null)
         builder.setView(view)
@@ -117,7 +129,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         dialog!!.show()
     }
 
-    /*
     /**
      * find a match on DB which is free
      *
@@ -135,11 +146,8 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                     Firebase.firestore
                 )
             if (connect == null && !isCanceled) {
-                Toast.makeText(
-                    applicationContext,
-                    getString(R.string.multi_match_full),
-                    Toast.LENGTH_LONG
-                ).show()
+                toast.setText(getString(R.string.multi_match_full))
+                toast.show()
                 dialog!!.hide()
             } else if (!isCanceled) {
                 //match.addSnapshotListener {} //TODO add listener
@@ -147,16 +155,12 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                 //TODO CONNECT TO MATCH
             }
         } else if (!isCanceled) {
-            Toast.makeText(
-                applicationContext,
-                getString(R.string.multi_match_not_found),
-                Toast.LENGTH_LONG
-            ).show()
+            toast.setText(getString(R.string.multi_match_not_found))
+            toast.show()
             dialog!!.hide()
-            setLinkDialog()
         }
     }
-    */
+
     /**
      * create a dialog which ask for the uid of the match
      *
@@ -166,9 +170,10 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         builder.setCancelable(true)
         val view = View.inflate(applicationContext, R.layout.fragment_multi_connexion_link, null)
         builder.setView(view)
-        builder.setPositiveButton(
-            "OK"
-        ) { _, _ ->
+        builder.setNeutralButton(resources.getText(R.string.cancel_btn)) { _, _ ->
+            dialog!!.hide()
+        }
+        builder.setPositiveButton(resources.getText(R.string.ok)) { _, _ ->
             //connectToDB(findViewById<EditText>(R.id.editTextLink).text.toString())
             dialog!!.hide()
         }

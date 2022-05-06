@@ -22,7 +22,7 @@ import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
  */
 class GameViewModelSolo(
     gameInstance: GameInstance,
-    private val context: Context,
+    context: Context,
     resources: Resources
 ) : GameViewModel(gameInstance, context, resources) {
 

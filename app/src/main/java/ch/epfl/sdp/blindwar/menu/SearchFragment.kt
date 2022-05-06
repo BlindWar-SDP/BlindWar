@@ -72,7 +72,7 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                adapter.getFilter().filter(newText);
+                adapter.getFilter().filter(newText)
                 return true
             }
         })

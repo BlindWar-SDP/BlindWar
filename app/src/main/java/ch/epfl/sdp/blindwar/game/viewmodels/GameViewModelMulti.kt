@@ -22,7 +22,7 @@ import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
  */
 class GameViewModelMulti(
     gameInstance: GameInstance,
-    private val context: Context,
+    context: Context,
     resources: Resources
 ) : GameViewModel(gameInstance, context, resources) {
 
@@ -45,7 +45,6 @@ class GameViewModelMulti(
      * @return true if the game is over after this round, false otherwise
      */
     override fun nextRound(): Boolean {
-        TODO("NOT IMPLEMENTED")
         if (mode == GameMode.SURVIVAL && lives.value!! <= 0) {
             endGame()
             return true
@@ -67,7 +66,6 @@ class GameViewModelMulti(
      * @return
      */
     override fun currentMetadata(): MusicMetadata? {
-        TODO("NOT IMPLEMENTED")
         if (gameParameter.hint) {
             return musicViewModel.getCurrentMetadata()
         }
@@ -82,7 +80,6 @@ class GameViewModelMulti(
      * @return True if the guess is correct
      */
     override fun guess(titleGuess: String, isVocal: Boolean): Boolean {
-        TODO("NOT IMPLEMENTED")
         return if (
             GameHelper.isTheCorrectTitle(titleGuess, currentMetadata()!!.title, isVocal)
         ) {
@@ -99,7 +96,6 @@ class GameViewModelMulti(
      *
      */
     override fun timeout() {
-        TODO("NOT IMPLEMENTED")
         round += 1
         lives.value = lives.value?.minus(1)
     }
