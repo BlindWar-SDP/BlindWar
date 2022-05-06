@@ -57,7 +57,7 @@ class MultiPlayerMenuActivityTest {
 
     @Test
     fun testCreateButton() {
-        onView(withId(R.id.imageCreateButton)).perform(ViewActions.click())
+        onView(withId(R.id.imageCreateButton)).perform(scrollTo(), ViewActions.click())
         intended(hasComponent(ChoseNumberOfPlayerActivity::class.java.name))
     }
 }
