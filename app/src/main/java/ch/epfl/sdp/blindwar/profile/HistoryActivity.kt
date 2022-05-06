@@ -21,6 +21,7 @@ class HistoryActivity : AppCompatActivity() {
 
         val likedMusicType = "liked musics"
         val matchHistoryType = "match history"
+        val leaderboardType = "leaderboard"
 
         showFragment((DisplayHistoryFragment.newInstance(likedMusicType)))
 
@@ -36,7 +37,11 @@ class HistoryActivity : AppCompatActivity() {
                         matchHistoryType
                     )
                 )
-                R
+                R.id.leaderboard -> showFragment(
+                    DisplayHistoryFragment.newInstance(
+                        leaderboardType
+                    )
+                )
             }
             true
         }
