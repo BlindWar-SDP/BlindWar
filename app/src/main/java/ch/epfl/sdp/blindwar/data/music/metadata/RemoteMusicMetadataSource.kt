@@ -7,11 +7,9 @@ import ch.epfl.sdp.blindwar.data.spotify.SpotifyApi
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyService.apiMeta
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyToken
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyTrack
-import ch.epfl.sdp.blindwar.game.util.Tutorial
+import ch.epfl.sdp.blindwar.game.util.GameUtil
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
-import java.io.IOException
 
 class RemoteMusicMetadataSource(private val songMetadataSource: SpotifyApi = apiMeta.value,
                                 private val tokenSource: SpotifyApi,
@@ -44,7 +42,7 @@ class RemoteMusicMetadataSource(private val songMetadataSource: SpotifyApi = api
                         it.artists[0].name,
                         it.album.images[0].url,
                         duration = 30000,
-                        uri = it.preview_url ?: Tutorial.URL_FIFA_SONG_2
+                        uri = it.preview_url ?: GameUtil.URL_FIFA_SONG_2
                         )
                     }
 

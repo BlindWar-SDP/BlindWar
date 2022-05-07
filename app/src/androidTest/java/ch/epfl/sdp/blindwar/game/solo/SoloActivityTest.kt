@@ -1,7 +1,6 @@
 package ch.epfl.sdp.blindwar.game.solo
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBackUnconditionally
@@ -18,7 +17,7 @@ import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.solo.util.typeSearchViewText
 import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
 import ch.epfl.sdp.blindwar.game.util.GameActivity
-import ch.epfl.sdp.blindwar.game.util.Tutorial
+import ch.epfl.sdp.blindwar.game.util.GameUtil
 import junit.framework.Assert.assertEquals
 import org.hamcrest.Matchers.allOf
 import org.junit.Rule
@@ -122,7 +121,7 @@ class SoloActivityTest {
         // Assert that the player is in the demo fragment
         onView(withId(R.id.audioVisualizer)).check(matches(isDisplayed()))
 
-        guess(Tutorial.SONG_TESTING)
+        guess(GameUtil.SONG_TESTING)
 
         // Assert that the player has guessed the song
         onView(withId(R.id.skip_next_summary)).check(matches(isDisplayed()))
@@ -142,7 +141,7 @@ class SoloActivityTest {
 
     @Test
     fun testLostGameConnected() {
-        testCompleteGame(0, Tutorial.ROUND)
+        testCompleteGame(0, GameUtil.ROUND)
         onView(withId(R.id.replay)).perform(click())
         onView(withId(R.id.audioVisualizer)).check(matches(isDisplayed()))
     }
@@ -150,7 +149,7 @@ class SoloActivityTest {
     @Test
     fun testLostGameLocal() {
         closeSoftKeyboard()
-        testCompleteGame(2, Tutorial.ROUND)
+        testCompleteGame(2, GameUtil.ROUND)
         onView(withId(R.id.quit)).perform(click())
     }
 
@@ -169,7 +168,7 @@ class SoloActivityTest {
             guess("WRONG")
 
         val transitionDelay = 2000L
-        Thread.sleep(Tutorial.TIME_TO_FIND.toLong() + transitionDelay)
+        Thread.sleep(GameUtil.TIME_TO_FIND.toLong() + transitionDelay)
         closeSoftKeyboard()
         pressBackUnconditionally()
 

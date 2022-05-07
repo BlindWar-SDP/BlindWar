@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.media.MediaPlayer
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -307,9 +306,9 @@ class DisplayableItemAdapter(
      */
     companion object {
         const val ROUND_MIN_VALUE = 1
-        const val ROUND_DEFAULT_VALUE = Tutorial.ROUND
+        const val ROUND_DEFAULT_VALUE = GameUtil.ROUND
         const val TIMER_MIN_VALUE = 1
-        const val TIMER_DEFAULT_VALUE = Tutorial.TIME_TO_FIND / 5000
+        const val TIMER_DEFAULT_VALUE = GameUtil.TIME_TO_FIND / 5000
         const val TIMER_MAX_VALUE = 9
         const val DURATION_FAST = 20000L
         const val DURATION_DEFAULT = 30000L

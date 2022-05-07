@@ -64,7 +64,7 @@ class MusicMetadataRepository {
                             arrayListOf(Genre.POP),
                             fetched,
                             "https://yt3.ggpht.com/ytc/AKedOLQEPKJQm1iJn986SkSpabjJSdcoh8gPxDtHfpCQ=s88-c-k-c0x00ffffff-no-rj",
-                            Tutorial.URL_PREVIEW_FIFA
+                            GameUtil.URL_PREVIEW_FIFA
                         )
                     )**/
                 }

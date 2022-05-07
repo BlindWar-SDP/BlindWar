@@ -8,7 +8,7 @@ import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
-import ch.epfl.sdp.blindwar.game.util.Tutorial
+import ch.epfl.sdp.blindwar.game.util.GameUtil
 import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModelMulti
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
@@ -25,12 +25,12 @@ class GameViewModelMultiTest {
 
     @Test
     fun testNextRound() {
-        val gameViewModelMulti = GameViewModelMulti(Tutorial.gameInstance, context, context.resources)
+        val gameViewModelMulti = GameViewModelMulti(GameUtil.gameInstanceMulti, context, context.resources)
         gameViewModelMulti.init()
-        val round = Tutorial.ROUND
+        val round = GameUtil.ROUND
 
         // Iterate 10 times since we have 10 different musics in tutorial
-        val toPlay: MutableSet<MusicMetadata> = Tutorial.gameInstance.onlinePlaylist.songs.toMutableSet()
+        val toPlay: MutableSet<MusicMetadata> = GameUtil.gameInstanceMulti.onlinePlaylist.songs.toMutableSet()
         for (i in 0 until round) {
             gameViewModelMulti.nextRound()
             //assertThat(toPlay.contains(gameTutorial.currentMetadata()), `is`(true))
@@ -51,9 +51,9 @@ class GameViewModelMultiTest {
             e.printStackTrace()
         }
 
-        val gameViewModelMulti = GameViewModelMulti(Tutorial.gameInstance, context, context.resources)
+        val gameViewModelMulti = GameViewModelMulti(GameUtil.gameInstanceMulti, context, context.resources)
         gameViewModelMulti.init()
-        val round = Tutorial.ROUND
+        val round = GameUtil.ROUND
         for (i in 0 until round) {
             goodGuess(gameViewModelMulti)
             val round = gameViewModelMulti.round
@@ -68,7 +68,7 @@ class GameViewModelMultiTest {
 
     @Test
     fun testTwoGoodGuesses() {
-        val gameViewModelMulti = GameViewModelMulti(Tutorial.gameInstance, context, context.resources)
+        val gameViewModelMulti = GameViewModelMulti(GameUtil.gameInstanceMulti, context, context.resources)
         gameViewModelMulti.init()
         goodGuess(gameViewModelMulti)
         goodGuess(gameViewModelMulti)
@@ -78,7 +78,7 @@ class GameViewModelMultiTest {
 
     @Test
     fun testUpperCaseGuess() {
-        val gameViewModelMulti = GameViewModelMulti(Tutorial.gameInstance, context, context.resources)
+        val gameViewModelMulti = GameViewModelMulti(GameUtil.gameInstanceMulti, context, context.resources)
         gameViewModelMulti.init()
         gameViewModelMulti.nextRound()
         val music1 = gameViewModelMulti.currentMetadata()
@@ -89,7 +89,7 @@ class GameViewModelMultiTest {
 
     @Test
     fun testOneGoodAndOneBadGuesses() {
-        val gameViewModelMulti = GameViewModelMulti(Tutorial.gameInstance, context, context.resources)
+        val gameViewModelMulti = GameViewModelMulti(GameUtil.gameInstanceMulti, context, context.resources)
         gameViewModelMulti.init()
         goodGuess(gameViewModelMulti)
         badGuess(gameViewModelMulti)

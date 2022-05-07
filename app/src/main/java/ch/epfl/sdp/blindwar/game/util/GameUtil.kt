@@ -12,7 +12,7 @@ import ch.epfl.sdp.blindwar.game.model.LocalPlaylist
 import ch.epfl.sdp.blindwar.game.model.OnlinePlaylist
 import ch.epfl.sdp.blindwar.game.model.config.*
 
-object Tutorial {
+object GameUtil {
 
     const val TIME_TO_FIND = 5000
     const val ROUND = 2
@@ -100,7 +100,7 @@ object Tutorial {
 
     private val tutorialPlaylist = LocalPlaylist(
         "tutorial",
-        "Tutorial",
+        "GameUtil",
         "BlindWar",
         arrayListOf(Genre.POP, Genre.RAP),
         PLAYLIST,
@@ -149,5 +149,6 @@ object Tutorial {
 
     val BASE_PLAYLISTS = arrayListOf(tutorialPlaylist, testingPlaylist, reversePlaylist)
 
-    val gameInstance = GameInstance(gameConfig, tutorialPlaylist, GameFormat.SOLO)
+    val gameInstanceSolo = GameInstance(gameConfig, tutorialPlaylist, GameFormat.SOLO)
+    val gameInstanceMulti = GameInstance(gameConfig, tutorialPlaylist, GameFormat.SOLO)
 }

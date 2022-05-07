@@ -22,6 +22,6 @@ class MatchDatabaseTest : TestCase() {
     fun testMatchCreation() {
         launchFragmentInContainer<ProfileFragment>()
         //
-        //MatchDatabase.createMatch(User(), 1, Tutorial.gameInstance, db)
+        //MatchDatabase.createMatch(User(), 1, GameUtil.gameInstance, db)
     }
 }

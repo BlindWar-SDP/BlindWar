@@ -17,7 +17,7 @@
     <string name="confirm">Confirm</string>
     <string name="ok">OK</string>
 
-    <!--  Tutorial  -->
+    <!--  GameUtil  -->
     <string name="play_button_description">Click here to play or stop the game</string>
     <string name="logo_description">Logo of the application</string>
     <string name="format_description"> Survival : Description placeholder

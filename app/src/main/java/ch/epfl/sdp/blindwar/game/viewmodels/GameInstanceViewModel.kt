@@ -7,7 +7,7 @@ import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
-import ch.epfl.sdp.blindwar.game.util.Tutorial
+import ch.epfl.sdp.blindwar.game.util.GameUtil
 
 /**
  * Game Instance viewModel used during game creation
@@ -16,7 +16,7 @@ import ch.epfl.sdp.blindwar.game.util.Tutorial
  */
 class GameInstanceViewModel : ViewModel() {
     var gameInstance = MutableLiveData<GameInstance>().let {
-        it.value = Tutorial.gameInstance
+        it.value = GameUtil.gameInstanceSolo
         it
     }
 
