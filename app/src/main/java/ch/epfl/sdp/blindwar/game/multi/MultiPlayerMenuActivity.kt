@@ -73,7 +73,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun randomButton(view: View) {
-        setProgressDialog(getString(R.string.multi_wait_matches))
+        //setProgressDialog(getString(R.string.multi_wait_matches))
         /*val user = UserDatabase.getCurrentUser()
         val elo = user.child("userStatistics/elo").value!! as Int
         val matchs = Firebase.firestore.collection("match").whereLessThan("elo", elo + eloDelta)
@@ -106,7 +106,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             randomButton(view)
         }*/
         dialog!!.hide() //TODO REMOVE WHEN TESTS OK
-        //val intent = Intent(this, MultiPlayerRandomActivity::class.java)
     }
 
     /**
@@ -114,6 +113,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      *
      * @param message
      */
+    /*
     private fun setProgressDialog(message: String) {
         val builder = AlertDialog.Builder(this)
         builder.setCancelable(true)
@@ -128,6 +128,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         dialog = builder.create()
         dialog!!.show()
     }
+     */
 
     /**
      * find a match on DB which is free
