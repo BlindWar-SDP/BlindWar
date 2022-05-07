@@ -105,7 +105,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         } else if (!isCanceled) {
             randomButton(view)
         }*/
-        dialog!!.hide() //TODO REMOVE WHEN TESTS OK
+        //dialog!!.hide() //TODO REMOVE WHEN TESTS OK
     }
 
     /**
