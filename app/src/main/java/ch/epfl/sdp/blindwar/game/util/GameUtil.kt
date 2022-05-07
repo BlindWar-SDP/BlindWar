@@ -150,5 +150,5 @@ object GameUtil {
     val BASE_PLAYLISTS = arrayListOf(tutorialPlaylist, testingPlaylist, reversePlaylist)
 
     val gameInstanceSolo = GameInstance(gameConfig, tutorialPlaylist, GameFormat.SOLO)
-    val gameInstanceMulti = GameInstance(gameConfig, tutorialPlaylist, GameFormat.SOLO)
+    val gameInstanceMulti = GameInstance(gameConfig, tutorialPlaylist, GameFormat.MULTI)
 }
