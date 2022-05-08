@@ -12,7 +12,7 @@ import ch.epfl.sdp.blindwar.game.model.LocalPlaylist
 import ch.epfl.sdp.blindwar.game.model.OnlinePlaylist
 import ch.epfl.sdp.blindwar.game.model.config.*
 
-object Tutorial {
+object GameUtil {
 
     const val TIME_TO_FIND = 5000
     const val ROUND = 2
@@ -33,7 +33,6 @@ object Tutorial {
 
     private val gameConfig =
         GameConfig(
-            GameFormat.SOLO,
             GameMode.REGULAR,
             gameParameter
         )
@@ -59,7 +58,7 @@ object Tutorial {
         "https://i.scdn.co/image/ab67616d0000b27348eb4d2efa517a920ff4e14e"
 
 
-    val searchin = (
+    private val searchin = (
             URIMusicMetadata(
                 "Searchin",
                 "Matisyahu",
@@ -68,7 +67,7 @@ object Tutorial {
                 URL_PREVIEW_FIFA
             ))
 
-    val uatw = URIMusicMetadata(
+    private val uatw = URIMusicMetadata(
         "Us Against the World",
         "Clement Marfo",
         "https://i.scdn.co/image/ab67616d0000b273b6e0b1707eea74cd006df458",
@@ -101,7 +100,7 @@ object Tutorial {
 
     private val tutorialPlaylist = LocalPlaylist(
         "tutorial",
-        "Tutorial",
+        "GameUtil",
         "BlindWar",
         arrayListOf(Genre.POP, Genre.RAP),
         PLAYLIST,
@@ -123,7 +122,7 @@ object Tutorial {
     private const val COVER_TESTING =
         "https://i.scdn.co/image/ab67616d0000b273df756f52b91b4dcd656760b0"
 
-    const val SONG_TESTING =
+    private const val SONG_TESTING =
         "Silver for Monsters"
 
     private const val URL_PREVIEW_TESTING =
@@ -150,5 +149,6 @@ object Tutorial {
 
     val BASE_PLAYLISTS = arrayListOf(tutorialPlaylist, testingPlaylist, reversePlaylist)
 
-    val gameInstance = GameInstance(gameConfig, tutorialPlaylist)
+    val gameInstanceSolo = GameInstance(gameConfig, tutorialPlaylist, GameFormat.SOLO)
+    val gameInstanceMulti = GameInstance(gameConfig, tutorialPlaylist, GameFormat.MULTI)
 }

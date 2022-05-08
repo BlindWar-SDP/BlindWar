@@ -63,6 +63,6 @@ class MainMenuActivity : AppCompatActivity() {
      *
      */
     override fun onBackPressed() {
-        this.moveTaskToBack(true);
+        this.moveTaskToBack(true)
     }
 }

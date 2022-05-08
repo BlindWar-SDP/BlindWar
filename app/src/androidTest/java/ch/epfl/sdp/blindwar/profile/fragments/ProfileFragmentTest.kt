@@ -124,7 +124,7 @@ class ProfileFragmentTest : TestCase() {
         val login: Task<AuthResult> = FirebaseAuth.getInstance()
             .signInWithEmailAndPassword(testEmail, testPassword)
         try {
-            Tasks.await<AuthResult>(login)
+            Tasks.await(login)
         } catch (e: ExecutionException) {
             e.printStackTrace()
         } catch (e: InterruptedException) {

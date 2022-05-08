@@ -108,7 +108,7 @@ class UserNewInfoActivity : AppCompatActivity() {
             auth.signOut()
             startActivity(Intent(this, SplashScreenActivity::class.java))
         } else {
-            super.onBackPressed();
+            super.onBackPressed()
         }
     }
 
@@ -288,7 +288,7 @@ class UserNewInfoActivity : AppCompatActivity() {
                     lastName!!,
                     birthDate!!,
                     profilePicture,
-                    gender = gender!!,
+                    gender = gender,
                     description = description!!
                 ).build()
             )

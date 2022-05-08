@@ -8,8 +8,8 @@ import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
-import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
-import ch.epfl.sdp.blindwar.game.util.Tutorial
+import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModelSolo
+import ch.epfl.sdp.blindwar.game.util.GameUtil
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -18,18 +18,18 @@ import java.util.*
 import java.util.concurrent.ExecutionException
 
 @RunWith(AndroidJUnit4::class)
-class GameViewModelTest {
+class GameViewModelSoloTest {
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
 
     @Test
     fun testNextRound() {
-        val gameTutorial = GameViewModel(Tutorial.gameInstance, context, context.resources)
+        val gameTutorial = GameViewModelSolo(GameUtil.gameInstanceSolo, context, context.resources)
         gameTutorial.init()
-        val round = Tutorial.ROUND
+        val round = GameUtil.ROUND
 
         // Iterate 10 times since we have 10 different musics in tutorial
-        val toPlay: MutableSet<MusicMetadata> = Tutorial.gameInstance.onlinePlaylist.songs.toMutableSet()
+        val toPlay: MutableSet<MusicMetadata> = GameUtil.gameInstanceSolo.onlinePlaylist.songs.toMutableSet()
         for (i in 0 until round) {
             gameTutorial.nextRound()
             //assertThat(toPlay.contains(gameTutorial.currentMetadata()), `is`(true))
@@ -43,15 +43,15 @@ class GameViewModelTest {
         val login: Task<AuthResult> = FirebaseAuth.getInstance()
             .signInWithEmailAndPassword(testEmail, testPassword)
         try {
-            Tasks.await<AuthResult>(login)
+            Tasks.await(login)
         } catch (e: ExecutionException) {
             e.printStackTrace()
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
-        val gameTutorial = GameViewModel(Tutorial.gameInstance, context, context.resources)
+        val gameTutorial = GameViewModelSolo(GameUtil.gameInstanceSolo, context, context.resources)
         gameTutorial.init()
-        val round = Tutorial.ROUND
+        val round = GameUtil.ROUND
         for (i in 0 until round) {
             goodGuess(gameTutorial)
             val round = gameTutorial.round
@@ -64,11 +64,9 @@ class GameViewModelTest {
     }
 
 
-
-
     @Test
     fun testTwoGoodGuesses() {
-        val gameTutorial = GameViewModel(Tutorial.gameInstance, context, context.resources)
+        val gameTutorial = GameViewModelSolo(GameUtil.gameInstanceSolo, context, context.resources)
         gameTutorial.init()
         goodGuess(gameTutorial)
         goodGuess(gameTutorial)
@@ -78,7 +76,7 @@ class GameViewModelTest {
 
     @Test
     fun testUpperCaseGuess() {
-        val gameTutorial = GameViewModel(Tutorial.gameInstance, context, context.resources)
+        val gameTutorial = GameViewModelSolo(GameUtil.gameInstanceSolo, context, context.resources)
         gameTutorial.init()
         gameTutorial.nextRound()
         val music1 = gameTutorial.currentMetadata()
@@ -89,7 +87,7 @@ class GameViewModelTest {
 
     @Test
     fun testOneGoodAndOneBadGuesses() {
-        val gameTutorial = GameViewModel(Tutorial.gameInstance, context, context.resources)
+        val gameTutorial = GameViewModelSolo(GameUtil.gameInstanceSolo, context, context.resources)
         gameTutorial.init()
         goodGuess(gameTutorial)
         badGuess(gameTutorial)
@@ -97,13 +95,13 @@ class GameViewModelTest {
         assertThat(gameTutorial.score, `is`(1))
     }
 
-    private fun goodGuess(gameViewModelTutorial: GameViewModel) {
-        gameViewModelTutorial.nextRound()
-        gameViewModelTutorial.guess(gameViewModelTutorial.currentMetadata()?.title!!, false)
+    private fun goodGuess(gameViewModelSoloTutorial: GameViewModelSolo) {
+        gameViewModelSoloTutorial.nextRound()
+        gameViewModelSoloTutorial.guess(gameViewModelSoloTutorial.currentMetadata()?.title!!, false)
     }
 
-    private fun badGuess(gameViewModelTutorial: GameViewModel) {
-        gameViewModelTutorial.nextRound()
-        gameViewModelTutorial.guess("THIS IS NOT A CORRECT TITLE", false)
+    private fun badGuess(gameViewModelSoloTutorial: GameViewModelSolo) {
+        gameViewModelSoloTutorial.nextRound()
+        gameViewModelSoloTutorial.guess("THIS IS NOT A CORRECT TITLE", false)
     }
 }

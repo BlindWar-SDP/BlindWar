@@ -1,13 +1,9 @@
 package ch.epfl.sdp.blindwar.game.solo.fragments
 
 import android.app.Activity
-import android.content.ContentValues.TAG
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
-import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -16,22 +12,21 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.MutableLiveData
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
+import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModelMulti
+import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModelSolo
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import java.util.*
-import android.Manifest
 
 
 /**
@@ -86,13 +81,24 @@ class DemoFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.activity_animated_demo, container, false)
 
-        gameViewModel = context?.let {
-            GameViewModel(
-                gameInstanceViewModel.gameInstance.value!!,
-                it,
-                resources
-            )
-        }!!
+        // Switch between the two different game view model
+        when(gameInstanceViewModel.gameInstance.value?.gameFormat){
+            GameFormat.SOLO -> gameViewModel = context?.let {
+                GameViewModelSolo(
+                    gameInstanceViewModel.gameInstance.value!!,
+                    it,
+                    resources
+                )
+            }!!
+            GameFormat.MULTI -> gameViewModel = context?.let {
+                GameViewModelMulti(
+                    gameInstanceViewModel.gameInstance.value!!,
+                    it,
+                    resources
+                )
+            }!!
+        }
+
 
         gameViewModel.init()
 
@@ -276,7 +282,7 @@ class DemoFragment : Fragment() {
         heartImage.visibility = View.VISIBLE
         heartNumber.visibility = View.VISIBLE
         gameViewModel.lives.observe(requireActivity()) {
-            heartNumber.text = "x ${it}"
+            heartNumber.text = "x $it"
         }
     }
 

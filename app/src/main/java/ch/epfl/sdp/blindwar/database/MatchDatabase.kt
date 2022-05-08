@@ -20,9 +20,10 @@ object MatchDatabase {
      */
     fun createMatch(
         user: User,
-        numberOfPlayerMax: Int,
+        numberOfPlayerMax: Int = 2,
         game: GameInstance,
-        db: FirebaseFirestore
+        db: FirebaseFirestore,
+        isPrivate: Boolean = false
     ) {
          db.collection(COLLECTION_PATH).add(
             Match(
@@ -32,7 +33,8 @@ object MatchDatabase {
                 mutableListOf(user.pseudo),
                 game,
                 mutableListOf(0),
-                numberOfPlayerMax
+                numberOfPlayerMax,
+                isPrivate
             )
         )
     }

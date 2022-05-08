@@ -1,12 +1,22 @@
 package ch.epfl.sdp.blindwar.game.multi
 
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.pressBack
+import androidx.test.espresso.action.ViewActions.scrollTo
+import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.game.util.GameActivity
+import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -30,24 +40,32 @@ class MultiPlayerMenuActivityTest {
     }
 
     @Test
-    fun onCreate() {
-        //Placeholder
-        assertEquals(1,1)
+    fun testCancelButton() {
+        onView(withId(R.id.cancel_multi_menu)).perform(scrollTo(), ViewActions.click())
+        intended(hasComponent(MainMenuActivity::class.java.name))
     }
 
     @Test
-    fun friendButton() {
-        Espresso.closeSoftKeyboard()
-        Espresso.onView(ViewMatchers.withId(R.id.imageFriendsButton))
-            .perform(ViewActions.click())
-        Intents.intended(IntentMatchers.hasComponent(MultiPlayerFriendActivity::class.java.name))
+    fun testDisplayFriendButtonAndClose() {
+        onView(withId(R.id.imageFriendsButton)).perform(scrollTo(), ViewActions.click())
+        Thread.sleep(1000)
+
+        // Click on close
+        onView(isRoot()).perform(ViewActions.pressBack());
+        Thread.sleep(1000)
+
+        onView(withId(R.id.imageFriendsButton)).check(matches(isDisplayed()))
     }
 
     @Test
-    fun randomButton() {
-        Espresso.closeSoftKeyboard()
-        Espresso.onView(ViewMatchers.withId(R.id.imageRandomButton))
-            .perform(ViewActions.click())
-        Intents.intended(IntentMatchers.hasComponent(MultiPlayerRandomActivity::class.java.name))
+    fun testDisplayRandomButton() {
+        onView(withId(R.id.imageRandomButton)).perform(scrollTo(), ViewActions.click())
+        onView(withId(R.id.imageRandomButton)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun testCreateButton() {
+        onView(withId(R.id.imageCreateButton)).perform(scrollTo(), ViewActions.click())
+        intended(hasComponent(ChoseNumberOfPlayerActivity::class.java.name))
     }
 }

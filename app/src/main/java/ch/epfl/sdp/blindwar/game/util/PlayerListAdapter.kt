@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 
-class PlayerListAdapter(var dataSet: List<Pair<Int, String>>)  :
+class PlayerListAdapter(private var dataSet: List<Pair<Int, String>>)  :
     RecyclerView.Adapter<PlayerListAdapter.ViewHolder>() {
 
     /**

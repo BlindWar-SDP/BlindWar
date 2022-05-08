@@ -5,7 +5,7 @@ import ch.epfl.sdp.blindwar.game.model.Difficulty
 import ch.epfl.sdp.blindwar.game.model.Genre
 import ch.epfl.sdp.blindwar.game.model.OnlinePlaylist
 import ch.epfl.sdp.blindwar.game.model.Playlist
-import ch.epfl.sdp.blindwar.game.util.Tutorial
+import ch.epfl.sdp.blindwar.game.util.GameUtil
 import com.google.firebase.database.FirebaseDatabase
 
 object PlaylistRepository {
@@ -55,7 +55,7 @@ object PlaylistRepository {
                     }
                 }
 
-                (response as ArrayList<Playlist>).addAll(Tutorial.BASE_PLAYLISTS)
+                (response as ArrayList<Playlist>).addAll(GameUtil.BASE_PLAYLISTS)
                 playlists.value = (response as ArrayList<Playlist>)
             }
         }

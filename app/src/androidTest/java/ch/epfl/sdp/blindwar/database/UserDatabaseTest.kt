@@ -2,7 +2,7 @@ package ch.epfl.sdp.blindwar.database
 
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import ch.epfl.sdp.blindwar.game.util.Tutorial
+import ch.epfl.sdp.blindwar.game.util.GameUtil
 import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.android.gms.tasks.Tasks.await
@@ -169,13 +169,13 @@ class UserDatabaseTest : TestCase() {
             var user: User?
             runBlocking {
                 withContext(Dispatchers.IO) {
-                    user = await(UserDatabase.addLikedMusic(testUID, Tutorial.fly).continueWithTask{
+                    user = await(UserDatabase.addLikedMusic(testUID, GameUtil.fly).continueWithTask{
                         UserDatabase.userReference.child(testUID).get()
                     }).getValue(User::class.java)
                 }
             }
 
-            assertTrue(user?.likedMusics?.last()?.getName() == Tutorial.fly.getName())
+            assertTrue(user?.likedMusics?.last()?.getName() == GameUtil.fly.getName())
     }
 
     @Test
