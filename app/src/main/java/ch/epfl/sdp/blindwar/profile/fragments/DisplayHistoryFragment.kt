@@ -195,16 +195,19 @@ class DisplayHistoryFragment : Fragment() {
             for (i in (0 until artists.size)) {
                 //pseudoUsers.add(Pair(artists[i], images[i]))
                 val userData = LeaderboardUserData(images[i], winsList[i], lossesList[i])
-                pseudoUserData.add(Pair(artists[i], ))
+                pseudoUserData.add(Pair(artists[i], userData))
             }
-            val sortedPseudoUsers = pseudoUsers
-                .sortedWith(compareBy({ it.second }, { it.first })).asReversed()
+            val sortedPseudoUsers = pseudoUserData
+                .sortedWith(compareBy({ it.second.elo }, { it.first })).asReversed()
             for (i in (0 until artists.size)) {
                 artists[i] = sortedPseudoUsers[i].first
-                images[i] = sortedPseudoUsers[i].second
+                images[i] = sortedPseudoUsers[i].second.elo
+                winsList[i] = sortedPseudoUsers[i].second.wins
+                lossesList[i] = sortedPseudoUsers[i].second.losses
             }
 
-            musicRecyclerView.adapter = LeaderboardRecyclerAdapter(titles, artists, images, )
+            musicRecyclerView.adapter = LeaderboardRecyclerAdapter(titles, artists, images,
+                winsList, lossesList)
         }
 
 
