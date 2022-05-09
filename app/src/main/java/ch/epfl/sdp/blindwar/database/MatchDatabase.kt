@@ -3,7 +3,6 @@ package ch.epfl.sdp.blindwar.database
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.profile.model.User
-import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -19,18 +18,20 @@ object MatchDatabase {
      * @return
      */
     fun createMatch(
-        user: User,
+        userUID: String,
+        userPseudo: String,
+        userElo : Int,
         numberOfPlayerMax: Int = 2,
         game: GameInstance,
         db: FirebaseFirestore,
         isPrivate: Boolean = false
     ) {
-         db.collection(COLLECTION_PATH).add(
+        db.collection(COLLECTION_PATH).add(
             Match(
-                user.uid,
-                user.userStatistics.elo,
-                mutableListOf(user.uid),
-                mutableListOf(user.pseudo),
+                userUID,
+                userElo,
+                mutableListOf(userUID),
+                mutableListOf(userPseudo),
                 game,
                 mutableListOf(0),
                 numberOfPlayerMax,

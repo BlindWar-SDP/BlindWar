@@ -2,12 +2,17 @@ package ch.epfl.sdp.blindwar.game.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ch.epfl.sdp.blindwar.database.MatchDatabase
+import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
 import ch.epfl.sdp.blindwar.game.util.GameUtil
+import ch.epfl.sdp.blindwar.profile.model.User
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 /**
  * Game Instance viewModel used during game creation
@@ -19,7 +24,6 @@ class GameInstanceViewModel : ViewModel() {
         it.value = GameUtil.gameInstanceSolo
         it
     }
-
 
 
     /**
@@ -93,5 +97,19 @@ class GameInstanceViewModel : ViewModel() {
         gameInstance.value = GameInstance.Builder().setGameInstance(gameInstance.value!!)
             .setFormat(gameFormat)
             .build()
+    }
+
+    fun setMultiParameters(isPrivate: Boolean, maxPlayer: Int) {
+        val user = UserDatabase.getCurrentUser()
+            .getValue(User::class.java) as User //TODO find better solution
+        MatchDatabase.createMatch(
+            user.uid,
+            user.pseudo,
+            user.userStatistics.elo,
+            maxPlayer,
+            gameInstance.value!!,
+            Firebase.firestore,
+            isPrivate
+        )
     }
 }

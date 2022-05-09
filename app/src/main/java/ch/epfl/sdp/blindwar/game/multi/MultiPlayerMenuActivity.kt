@@ -3,18 +3,11 @@ package ch.epfl.sdp.blindwar.game.multi
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.database.MatchDatabase
-import ch.epfl.sdp.blindwar.database.UserDatabase
-import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
-import ch.epfl.sdp.blindwar.profile.model.User
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 
 /**
@@ -76,7 +69,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         //setProgressDialog(getString(R.string.multi_wait_matches))
         /*val user = UserDatabase.getCurrentUser()
         val elo = user.child("userStatistics/elo").value!! as Int
-        val matchs = Firebase.firestore.collection("match").whereLessThan("elo", elo + eloDelta)
+        val matchs = Firebase.firestore.collection("match").where("isPrivate", false).whereLessThan("elo", elo + eloDelta)
             .whereGreaterThan("elo", elo - 200)
             .orderBy("elo", Query.Direction.DESCENDING)
             .limit(LIMIT_MATCH).get()
@@ -91,7 +84,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                         Firebase.firestore
                     )
                 i++
-            }
+            }discord
             if (match == null && !isCanceled) {
                 toast.setText(getString(R.string.toast_connexion))
                 toast.show()

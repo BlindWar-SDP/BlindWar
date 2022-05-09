@@ -10,7 +10,7 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.util.GameActivity
 
-class ChoseNumberOfPlayerActivity : AppCompatActivity(){
+class ChoseNumberOfPlayerActivity : AppCompatActivity() {
 
     companion object {
         const val DEFAULT_NUMBER_OF_PLAYER = 2
@@ -32,11 +32,11 @@ class ChoseNumberOfPlayerActivity : AppCompatActivity(){
         val nb: NumberPicker = findViewById(R.id.number_of_players)
         val checkBox: CheckBox = findViewById(R.id.checkBoxIsPrivate)
 
-        // TODO: Do not ignore these data !
-        val maxPlayer = nb.value
-        val isPrivate = checkBox.isChecked
-
-        startActivity(Intent(this, GameActivity::class.java).apply { putExtra(GameActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.MULTI) })
+        val intent = Intent(this, GameActivity::class.java)
+        intent.putExtra(GameActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.MULTI)
+        intent.putExtra(GameActivity.GAME_IS_PRIVATE, checkBox.isChecked)
+        intent.putExtra(GameActivity.GAME_MAX_PLAYERS, nb.value)
+        startActivity(intent)
     }
 
     /**
