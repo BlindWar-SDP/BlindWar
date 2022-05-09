@@ -19,6 +19,10 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.ARTIST_KEY
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.COVER_KEY
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.SUCCESS_KEY
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.TITLE_KEY
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
@@ -98,7 +102,6 @@ class DemoFragment : Fragment() {
                 )
             }!!
         }
-
 
         gameViewModel.init()
 
@@ -329,10 +332,10 @@ class DemoFragment : Fragment() {
      */
     private fun createBundleSongSummary(success: Boolean): Bundle {
         val bundle = Bundle()
-        bundle.putString("artist", musicMetadata.artist)
-        bundle.putString("title", musicMetadata.title)
-        bundle.putString("image", musicMetadata.imageUrl)
-        bundle.putBoolean("success", success)
+        bundle.putString(ARTIST_KEY, musicMetadata.artist)
+        bundle.putString(TITLE_KEY, musicMetadata.title)
+        bundle.putString(COVER_KEY, musicMetadata.imageUrl)
+        bundle.putBoolean(SUCCESS_KEY, success)
         return bundle
     }
 
@@ -341,7 +344,6 @@ class DemoFragment : Fragment() {
      */
     private fun launchGameSummary() {
         val transaction = activity?.supportFragmentManager?.beginTransaction()
-        //transaction?.addToBackStack(GameSummaryFragment::class.java.name)
         transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         transaction?.replace((view?.parent as ViewGroup).id, gameSummary, "Game Summary")
         transaction?.commit()
@@ -353,37 +355,27 @@ class DemoFragment : Fragment() {
      * Handle next round logic
      */
     override fun onResume() {
-        /** Put the UI logic inside the Play Activity / Put a listener on viewModel
-         * that indicates a round change **/
         super.onResume()
         val songRecord = SongSummaryFragment()
-
         if (activity?.supportFragmentManager?.fragments!!.size > 1) {
             if (activity?.supportFragmentManager?.fragments?.get(1) is SongSummaryFragment) {
-                val songFragment =
-                    (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
+                val songFragment = (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
                 val bundle = createBundleSongSummary(songFragment.success())
 
-                duration = gameInstanceViewModel
-                    .gameInstance
-                    .value
-                    ?.gameConfig
-                    ?.parameter
-                    ?.timeToFind!!
-
+                duration = gameInstanceViewModel.gameInstance.value?.gameConfig
+                                                                   ?.parameter
+                                                                   ?.timeToFind!!
                 restartChronometer()
-
                 bundle.putBoolean("liked", songFragment.liked())
                 songRecord.arguments = bundle
                 gameSummary.setSongFragment(songRecord)
+
                 if (!gameViewModel.nextRound()) {
                     setVisibilityLayout(View.VISIBLE)
                     // Pass to the next music
                     musicMetadata = gameViewModel.currentMetadata()!!
                     guessEditText.hint = musicMetadata.artist
                     guessEditText.setText("")
-                    // Cache song image
-                    // Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
                     timer = createCountDown()
                     timer.start()
                 } else {

@@ -27,7 +27,6 @@ class ModeSelectionFragment : Fragment() {
     private lateinit var regularButton: Button
     private lateinit var survivalButton: Button
     private lateinit var raceButton: Button
-    private lateinit var funnyButton: CheckBox
 
     private lateinit var backButton: ImageButton
 
@@ -49,11 +48,17 @@ class ModeSelectionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_animated_mode_selection, container, false)
-        regularButton = view.findViewById<Button>(R.id.regularButton_).also { selectMode(it) }
-        raceButton = view.findViewById<Button>(R.id.raceButton_).also { selectMode(it) }
-        survivalButton = view.findViewById<Button>(R.id.survivalButton_).also { selectMode(it) }
 
-        funnyButton = view.findViewById(R.id.checkBox)
+        regularButton = view.findViewById(R.id.regularButton_)
+        raceButton = view.findViewById(R.id.raceButton_)
+        survivalButton = view.findViewById(R.id.survivalButton_)
+
+        val buttons = arrayListOf(regularButton, survivalButton, raceButton)
+
+        for (button in buttons) {
+            selectMode(button)
+        }
+
         backButton = view.findViewById<ImageButton>(R.id.back_button).also {
             it.setOnClickListener {
                 activity?.onBackPressed()
@@ -80,8 +85,6 @@ class ModeSelectionFragment : Fragment() {
             }
         }
 
-        funnyButton = funnyCheck
-
         return view
     }
 
@@ -98,7 +101,7 @@ class ModeSelectionFragment : Fragment() {
                 }
             )
 
-            gameInstanceViewModel.setGameFunny(funnyButton.isChecked)
+            gameInstanceViewModel.setGameFunny(funnyCheck.isChecked)
             launchPlaylistSelection()
         }
     }

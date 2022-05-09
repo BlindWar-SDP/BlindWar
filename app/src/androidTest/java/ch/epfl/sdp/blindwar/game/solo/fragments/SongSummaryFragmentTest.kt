@@ -10,6 +10,10 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.MusicImageUrlConstants.METADATA_TUTORIAL_MUSICS_PER_AUTHOR
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.ARTIST_KEY
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.COVER_KEY
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.SUCCESS_KEY
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.TITLE_KEY
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -31,10 +35,10 @@ class SongSummaryFragmentTest {
     private fun createBundle(success: Boolean, liked: Boolean): Bundle {
         return Bundle().let {
             val meta = METADATA_TUTORIAL_MUSICS_PER_AUTHOR["Daft Punk"]
-            it.putString("artist", meta?.artist)
-            it.putString("title", meta?.title)
-            it.putString("image", meta?.imageUrl)
-            it.putBoolean("success", success)
+            it.putString(ARTIST_KEY, meta?.artist)
+            it.putString(TITLE_KEY, meta?.title)
+            it.putString(COVER_KEY, meta?.imageUrl)
+            it.putBoolean(SUCCESS_KEY, success)
             it.putBoolean("liked", liked)
             it
         }

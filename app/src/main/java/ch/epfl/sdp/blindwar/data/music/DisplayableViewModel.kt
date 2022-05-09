@@ -20,13 +20,14 @@ class DisplayableViewModel: ViewModel() {
     init {
         viewModelScope.launch{
             musicMetadataViewModel.fetchMusicMetadata("take on me")
-            musicMetadataViewModel.metadata.observeForever{
-                addToList(it as ArrayList<Displayable>)
-            }
+            setObservable(musicMetadataViewModel.metadata as MutableLiveData<ArrayList<Displayable>>)
+            setObservable(playlistViewModel.playlists as MutableLiveData<ArrayList<Displayable>>)
+        }
+    }
 
-            playlistViewModel.playlists.observeForever{
-                addToList(it as ArrayList<Displayable>)
-            }
+    private fun setObservable(liveData: MutableLiveData<ArrayList<Displayable>>) {
+        liveData.observeForever{
+            addToList(it as ArrayList<Displayable>)
         }
     }
 

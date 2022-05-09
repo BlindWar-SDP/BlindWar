@@ -62,7 +62,7 @@ class ProfileViewModel: ViewModel() {
 
         override fun onCancelled(databaseError: DatabaseError) {
             // Getting Post failed, log a message
-            Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+            // Log.w("CANCELED REQUEST", "userInfoListener:onCancelled", databaseError.toException())
         }
     }
 
