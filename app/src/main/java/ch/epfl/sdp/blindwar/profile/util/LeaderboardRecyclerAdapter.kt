@@ -16,8 +16,11 @@ import ch.epfl.sdp.blindwar.R
  * @property elos
  */
 class LeaderboardRecyclerAdapter(
-    private var ranks: List<String>, private var pseudos: List<String>,
-    private var elos: List<String>
+    private var ranks: List<String>,
+    private var pseudos: List<String>,
+    private var elos: List<String>,
+    private var wins: List<String>,
+    private var losses: List<String>
 ) :
 
     RecyclerView.Adapter<LeaderboardRecyclerAdapter.ViewHolder>() {
@@ -40,9 +43,10 @@ class LeaderboardRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.userRank.text = '#' + position.toString() + 1
+        holder.userRank.text = '#' + (position + 1).toString()
         holder.userPseudo.text = pseudos[position]
-        holder.userElo.text = "elo: " + elos[position]
+        holder.userElo.text =
+            "W:" + wins[position] + "/L:" + losses[postion] + "elo: " + elos[position]
 
     }
 
