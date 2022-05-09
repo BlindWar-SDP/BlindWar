@@ -29,6 +29,8 @@ class DisplayHistoryFragment : Fragment() {
     private var titles = mutableListOf<String>()
     private var artists = mutableListOf<String>()
     private var images = mutableListOf<String>()
+    private var winsList = mutableListOf<String>()
+    private var lossesList = mutableListOf<String>()
     private val LIKED_MUSIC_TYPE = "liked musics"
     private val MATCH_HISTORY_TYPE = "match history"
     private val LEADERBOARD_TYPE = "leaderboard"
@@ -169,8 +171,13 @@ class DisplayHistoryFragment : Fragment() {
                     val userStatMap: HashMap<String, Map<String, Long>> = user as HashMap<String, Map<String, Long>>
                     val pseudo = userMap["pseudo"]
                     val elo = userStatMap["userStatistics"]?.get("elo")
-                    if (pseudo != null && elo != null && pseudo != "") {
+                    val wins = userStatMap["userStatistics"]?.get("wins")
+                    val losses = userStatMap["userStatistics"]?.get("losses")
+                    if (pseudo != null && elo != null && pseudo != "" &&
+                        wins != null && losses != null) {
                         addToList("1", pseudo, elo.toString())
+                        winsList.add(wins.toString())
+                        lossesList.add(losses.toString())
                     }
                 }
             } else {
@@ -178,12 +185,17 @@ class DisplayHistoryFragment : Fragment() {
                     addToList("HELLO", "JOJO", "no image")
                 }
             }
+            // Create data class to contain data of an user to be displayed on the leaderboard
+            data class LeaderboardUserData(val elo: String, val wins: String, val losses: String )
 
             // Create a List of (pseudo, elo) Pairs and order them by elo to have
             // an ordered leaderboard
-            var pseudoUsers = mutableListOf<Pair<String, String>>()
+            //var pseudoUsers = mutableListOf<Pair<String, String>>()
+            var pseudoUserData = mutableListOf<Pair<String, LeaderboardUserData>>()
             for (i in (0 until artists.size)) {
-                pseudoUsers.add(Pair(artists[i], images[i]))
+                //pseudoUsers.add(Pair(artists[i], images[i]))
+                val userData = LeaderboardUserData(images[i], winsList[i], lossesList[i])
+                pseudoUserData.add(Pair(artists[i], ))
             }
             val sortedPseudoUsers = pseudoUsers
                 .sortedWith(compareBy({ it.second }, { it.first })).asReversed()
@@ -192,7 +204,7 @@ class DisplayHistoryFragment : Fragment() {
                 images[i] = sortedPseudoUsers[i].second
             }
 
-            musicRecyclerView.adapter = LeaderboardRecyclerAdapter(titles, artists, images)
+            musicRecyclerView.adapter = LeaderboardRecyclerAdapter(titles, artists, images, )
         }
 
 

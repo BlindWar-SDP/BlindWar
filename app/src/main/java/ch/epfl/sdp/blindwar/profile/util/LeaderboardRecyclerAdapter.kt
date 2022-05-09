@@ -46,7 +46,7 @@ class LeaderboardRecyclerAdapter(
         holder.userRank.text = '#' + (position + 1).toString()
         holder.userPseudo.text = pseudos[position]
         holder.userElo.text =
-            "W:" + wins[position] + "/L:" + losses[postion] + "elo: " + elos[position]
+            "W:" + wins[position] + "/L:" + losses[position] + "elo: " + elos[position]
 
     }
 
