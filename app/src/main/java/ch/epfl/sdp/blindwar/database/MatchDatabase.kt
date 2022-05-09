@@ -12,32 +12,36 @@ object MatchDatabase {
     /**
      * return if the player has already created a multiplayer game
      *
-     * @param user
+     * @param userUID
+     * @param userPseudo
+     * @param userElo
      * @param numberOfPlayerMax
-     * @param game gameInstance
+     * @param game
+     * @param db
+     * @param isPrivate
      * @return
      */
     fun createMatch(
         userUID: String,
         userPseudo: String,
-        userElo : Int,
+        userElo: Int,
         numberOfPlayerMax: Int = 2,
         game: GameInstance,
         db: FirebaseFirestore,
         isPrivate: Boolean = false
-    ) {
-        db.collection(COLLECTION_PATH).add(
-            Match(
-                userUID,
-                userElo,
-                mutableListOf(userUID),
-                mutableListOf(userPseudo),
-                game,
-                mutableListOf(0),
-                numberOfPlayerMax,
-                isPrivate
-            )
+    ): Match {
+        val match = Match(
+            userUID,
+            userElo,
+            mutableListOf(userUID),
+            mutableListOf(userPseudo),
+            game,
+            mutableListOf(0),
+            numberOfPlayerMax,
+            isPrivate
         )
+        db.collection(COLLECTION_PATH).add(match)
+        return match
     }
 
     /**

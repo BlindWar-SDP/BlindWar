@@ -9,6 +9,7 @@ import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
+import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.util.GameUtil
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.firebase.firestore.ktx.firestore
@@ -24,6 +25,8 @@ class GameInstanceViewModel : ViewModel() {
         it.value = GameUtil.gameInstanceSolo
         it
     }
+    var isPrivate = false
+    var maxPlayer = 2
 
 
     /**
@@ -99,17 +102,33 @@ class GameInstanceViewModel : ViewModel() {
             .build()
     }
 
+    /**
+     * Set parameters for multiplayer mode
+     *
+     * @param isPrivate
+     * @param maxPlayer
+     */
     fun setMultiParameters(isPrivate: Boolean, maxPlayer: Int) {
-        val user = UserDatabase.getCurrentUser()
-            .getValue(User::class.java) as User //TODO find better solution
-        MatchDatabase.createMatch(
-            user.uid,
-            user.pseudo,
-            user.userStatistics.elo,
-            maxPlayer,
-            gameInstance.value!!,
-            Firebase.firestore,
-            isPrivate
-        )
+        this.isPrivate = isPrivate
+        this.maxPlayer = maxPlayer
+    }
+
+    /**
+     * create match for multiplayer mode
+     *
+     */
+    fun createMatch(): Match {
+        UserDatabase.getCurrentUser().let {
+            val user = it.getValue(User::class.java) as User //TODO find better solution
+            return MatchDatabase.createMatch(
+                user.uid,
+                user.pseudo,
+                user.userStatistics.elo,
+                maxPlayer,
+                gameInstance.value!!,
+                Firebase.firestore,
+                isPrivate
+            )
+        }
     }
 }

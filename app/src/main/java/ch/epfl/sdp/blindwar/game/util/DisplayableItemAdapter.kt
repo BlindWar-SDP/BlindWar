@@ -7,10 +7,8 @@ import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.ImageButton
-import android.widget.NumberPicker
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
@@ -21,18 +19,19 @@ import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.audio.AudioHelper
-import ch.epfl.sdp.blindwar.database.MatchDatabase.createMatch
+import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
+import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
-import ch.epfl.sdp.blindwar.profile.model.User
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -152,8 +151,8 @@ class DisplayableItemAdapter(
                 setStartGameListener(displayed as Playlist)
 
                 when (gameInstanceViewModel.gameInstance.value!!.gameConfig.mode) {
-                    GameMode.SURVIVAL -> roundTextView.text = "LIVES"
-                    else -> roundTextView.text = "ROUNDS"
+                    GameMode.SURVIVAL -> roundTextView.text = context.getString(R.string.lives)
+                    else -> roundTextView.text = context.getString(R.string.rounds)
                 }
 
                 /** Initialize timerPicker **/
@@ -190,7 +189,7 @@ class DisplayableItemAdapter(
                 )
 
                 // Separate solo logic from multiplayer one
-                when(gameInstanceViewModel.gameInstance.value?.gameFormat){
+                when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
                     GameFormat.SOLO -> {
                         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
                             .replace(
@@ -203,20 +202,43 @@ class DisplayableItemAdapter(
                     }
                     GameFormat.MULTI -> {
                         // TODO : Use the new mutable live data to respect the view model architecture
+                        // TODO : what ?
                         // Create the match object
-                        createMatch(User(), 10, gameInstanceViewModel.gameInstance.value!!, FirebaseFirestore.getInstance())
-
-                        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                        val match: Match = gameInstanceViewModel.createMatch()
+                        setProgressDialog(context.getString(R.string.multi_wait_players), match.uid)
+                        /*(context as AppCompatActivity).supportFragmentManager.beginTransaction()
                             .replace(
                                 (viewFragment.parent as ViewGroup).id,
                                 DemoFragment(),
                                 "DEMO"
                             )
                             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                            .commit()
+                            .commit()*/
                     }
                 }
             }
+        }
+
+        /**
+         * display progressDialog cancelable for any messages
+         * TODO generify for multiMenu
+         * @param message
+         */
+        private fun setProgressDialog(message: String, matchUID: String) {
+            val builder = AlertDialog.Builder(context)
+            builder.setCancelable(true)
+            builder.setOnCancelListener {
+                Toast.makeText(
+                    context,
+                    context.getString(R.string.toast_canceled_connexion),
+                    Toast.LENGTH_SHORT
+                ).show()
+                MatchDatabase.removeMatch(matchUID, Firebase.firestore)
+            }
+            val view = View.inflate(context, R.layout.fragment_dialog_loading, null)
+            builder.setView(view)
+            (view.findViewById<TextView>(R.id.textView_multi_loading)).text = message
+            builder.create().show()
         }
 
         /**

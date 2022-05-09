@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.game.multi
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -106,7 +107,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      *
      * @param message
      */
-    /*
     private fun setProgressDialog(message: String) {
         val builder = AlertDialog.Builder(this)
         builder.setCancelable(true)
@@ -121,7 +121,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         dialog = builder.create()
         dialog!!.show()
     }
-     */
+
 
     /**
      * find a match on DB which is free

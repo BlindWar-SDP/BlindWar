@@ -183,4 +183,8 @@
     <string name="multi_number_player">Give the maximum number of player</string>
     <string name="button_create_match">Create</string>
     <string name="multi_is_private">Do you want to create a private match ?</string>
+    <string name="playlist_name">Playlist</string>
+    <string name="multi_wait_players">Waiting for players...</string>
+    <string name="lives">LIVES</string>
+    <string name="rounds">ROUNDS</string>
 </resources>
