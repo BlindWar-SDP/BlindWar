@@ -76,41 +76,50 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
 
     /**
      * Starts a multiplayer game played with a random user
-     * TODO progress dialog not working
+     *
      * @param view
      */
     fun randomButton(view: View) {
         if (dialog == null || !dialog!!.isShowing)
             setProgressDialog(getString(R.string.multi_wait_matches))
         val user = UserDatabase.getCurrentUser()
-        val elo = user?.child("userStatistics/elo")?.value as Long
-        val matches = Firebase.firestore.collection("match")
-            .whereEqualTo("isPrivate", false)
-            .whereLessThan("elo", elo + eloDelta)
-            .whereGreaterThan("elo", elo - eloDelta)
-            .orderBy("elo", Query.Direction.DESCENDING)
-            .limit(LIMIT_MATCH).get()
-        if (matches.isSuccessful && !isCanceled) {
-            var i = 0
-            var match: DocumentReference? = null
-            while (match == null && i < LIMIT_MATCH) {
-                match = MatchDatabase.connect(
-                    matches.result.documents[i].toObject(Match::class.java)!!,
-                    user.getValue(User::class.java)!!,
-                    Firebase.firestore
-                )
-                i++
+        if (user != null) {
+            val elo = user.child("userStatistics/elo").value as Long
+            var isOk = false
+            while (!isOk) {
+                val matches = Firebase.firestore.collection("match")
+                    .whereEqualTo("isPrivate", false)
+                    .whereLessThan("elo", elo + eloDelta)
+                    .whereGreaterThan("elo", elo - eloDelta)
+                    .orderBy("elo", Query.Direction.DESCENDING)
+                    .limit(LIMIT_MATCH).get()
+                if (matches.isSuccessful && !isCanceled) {
+                    var i = 0
+                    var match: DocumentReference? = null
+                    while (match == null && i < LIMIT_MATCH) {
+                        match = MatchDatabase.connect(
+                            matches.result.documents[i].toObject(Match::class.java)!!,
+                            user.getValue(User::class.java)!!,
+                            Firebase.firestore
+                        )
+                        i++
+                    }
+                    if (match == null && !isCanceled) {
+                        displayToast(R.string.toast_connexion)
+                        eloDelta += DELTA_MATCHMAKING
+                        isOk = false
+                    } else if (!isCanceled) {
+                        isOk = true
+                        setListener(match!!)
+                    }
+                } else if (!isCanceled) {
+                    displayToast(R.string.toast_connexion_internet)
+                    listener?.remove()
+                    isOk = false
+                }
             }
-            if (match == null && !isCanceled) {
-                displayToast(R.string.toast_connexion)
-                eloDelta += DELTA_MATCHMAKING
-                randomButton(view)
-            } else if (!isCanceled) {
-                setListener(match!!)
-            }
-        } else if (!isCanceled) {
+        } else {
             displayToast(R.string.toast_connexion_internet)
-            listener?.remove()
             randomButton(view)
         }
     }
@@ -122,7 +131,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      */
     private fun setProgressDialog(message: String) {
         val builder = AlertDialog.Builder(this)
-        builder.setCancelable(true)
+        builder.setCancelable(false)
         builder.setPositiveButton(
             getString(R.string.cancel_btn)
         ) { it, _ -> it.cancel() }
@@ -137,7 +146,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         dialog!!.setCanceledOnTouchOutside(false)
         dialog!!.show()
     }
-
 
     /**
      * return null if dynamic link is false, otherwise return the match uid
@@ -187,7 +195,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      */
     private fun setLinkDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setCancelable(true)
+        builder.setCancelable(false)
         val view = View.inflate(applicationContext, R.layout.fragment_multi_connexion_link, null)
         val editText = view.findViewById<EditText>(R.id.editTextLink)
         builder.setView(view)

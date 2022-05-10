@@ -24,20 +24,6 @@ class GameViewModelMultiTest {
     private val context = ApplicationProvider.getApplicationContext<Context>()
 
     @Test
-    fun testNextRound() {
-        val gameViewModelMulti = GameViewModelMulti(GameUtil.gameInstanceMulti, context, context.resources)
-        gameViewModelMulti.init()
-        val round = GameUtil.ROUND
-
-        // Iterate 10 times since we have 10 different musics in tutorial
-        val toPlay: MutableSet<MusicMetadata> = GameUtil.gameInstanceMulti.onlinePlaylist.songs.toMutableSet()
-        for (i in 0 until round) {
-            gameViewModelMulti.nextRound()
-            //assertThat(toPlay.contains(gameTutorial.currentMetadata()), `is`(true))
-        }
-    }
-
-    @Test
     fun gameWithLogin() {
         val testEmail = "test@bot.ch"
         val testPassword = "testtest"
