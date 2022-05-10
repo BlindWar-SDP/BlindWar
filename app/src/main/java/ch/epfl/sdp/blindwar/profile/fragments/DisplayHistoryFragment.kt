@@ -13,7 +13,9 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.GameResult
+import ch.epfl.sdp.blindwar.profile.model.Result
 import ch.epfl.sdp.blindwar.profile.model.User
+import ch.epfl.sdp.blindwar.profile.util.LeaderboardRecyclerAdapter
 import ch.epfl.sdp.blindwar.profile.util.MatchHistoryRecyclerAdapter
 import ch.epfl.sdp.blindwar.profile.util.MusicDisplayRecyclerAdapter
 import com.google.firebase.auth.FirebaseAuth
@@ -31,6 +33,9 @@ class DisplayHistoryFragment : Fragment() {
     private var images = mutableListOf<String>()
     private var winsList = mutableListOf<String>()
     private var lossesList = mutableListOf<String>()
+    private var modesList = mutableListOf<String>()
+    private var victoriesList = mutableListOf<String>()
+
     private val LIKED_MUSIC_TYPE = "liked musics"
     private val MATCH_HISTORY_TYPE = "match history"
     private val LEADERBOARD_TYPE = "leaderboard"
@@ -135,11 +140,21 @@ class DisplayHistoryFragment : Fragment() {
             if (user != null) {
                 val matchHistory: MutableList<GameResult> = user.matchHistory
                 for (match in matchHistory) {
+
+                    // Create the String that will we displayed depending on the value
+                    var result = "DRAW"
+                    if (match.result == Result.WIN) {
+                        result = "WIN"
+                    } else if (match.result == Result.LOSS){
+                        result = "LOSS"
+                    }
                     addToList(
                         "Number of rounds: " + match.gameNbrRound.toString(),
                         "Score: " + match.gameScore.toString(),
-                        "no image"
+                        match.mode.toString() + "  " + match.gameMode.toString()
                     )
+                    victoriesList.add(result)
+
                 }
             } else {
                 for (i in 1..10) {
@@ -209,7 +224,7 @@ class DisplayHistoryFragment : Fragment() {
                 lossesList[i] = sortedPseudoUsers[i].second.losses
             }
 
-            musicRecyclerView.adapter = MatchHistoryRecyclerAdapter(titles, artists, images,
+            musicRecyclerView.adapter = LeaderboardRecyclerAdapter(titles, artists, images,
                 winsList, lossesList)
         }
 
