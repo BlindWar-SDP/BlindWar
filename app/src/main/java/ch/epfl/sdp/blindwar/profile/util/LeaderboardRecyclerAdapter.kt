@@ -14,6 +14,8 @@ import ch.epfl.sdp.blindwar.R
  * @property ranks
  * @property pseudos
  * @property elos
+ * @property wins
+ * @property losses
  */
 class LeaderboardRecyclerAdapter(
     private var ranks: List<String>,
@@ -46,12 +48,14 @@ class LeaderboardRecyclerAdapter(
 
         // Add an header to describe the data of the leaderboard
         if (position == 0) {
-            holder.userRank.text = "rank             pseudo          wins/losses         elo"
+            holder.userRank.text = "Rank"
+            holder.userPseudo.text = "Name"
+            holder.userElo.text = "Wins/Losses"
         } else {
             holder.userRank.text = '#' + (position).toString()
             holder.userPseudo.text = pseudos[position]
             holder.userElo.text =
-                "W:" + wins[position] + "/L:" + losses[position] + "elo: " + elos[position]
+                "W:" + wins[position] + "/L:" + losses[position] + "  elo: " + elos[position]
         }
     }
 

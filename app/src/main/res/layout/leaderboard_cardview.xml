@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="@string/userPseudo"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="18sp" />
         </LinearLayout>
         <LinearLayout
@@ -57,10 +57,10 @@
                 android:id="@+id/userElo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="220dp"
+                android:layout_marginStart="180dp"
                 android:text="@string/userElo"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
         </LinearLayout>
 
     </RelativeLayout>
