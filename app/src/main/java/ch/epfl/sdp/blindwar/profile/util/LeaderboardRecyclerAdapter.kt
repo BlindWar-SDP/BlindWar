@@ -43,11 +43,16 @@ class LeaderboardRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.userRank.text = '#' + (position + 1).toString()
-        holder.userPseudo.text = pseudos[position]
-        holder.userElo.text =
-            "W:" + wins[position] + "/L:" + losses[position] + "elo: " + elos[position]
 
+        // Add an header to describe the data of the leaderboard
+        if (position == 0) {
+            holder.userRank.text = "rank             pseudo          wins/losses         elo"
+        } else {
+            holder.userRank.text = '#' + (position).toString()
+            holder.userPseudo.text = pseudos[position]
+            holder.userElo.text =
+                "W:" + wins[position] + "/L:" + losses[position] + "elo: " + elos[position]
+        }
     }
 
     override fun getItemCount(): Int {

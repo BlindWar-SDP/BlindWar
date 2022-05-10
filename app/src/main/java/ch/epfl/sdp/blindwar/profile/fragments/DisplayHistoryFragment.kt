@@ -168,11 +168,16 @@ class DisplayHistoryFragment : Fragment() {
             if (usersMap != null) {
                 for(user in usersMap.values) {
                     val userMap: Map<String, String> = user as Map<String, String>
-                    val userStatMap: HashMap<String, Map<String, Long>> = user as HashMap<String, Map<String, Long>>
+                    val userStatMap: HashMap<String, Map<String, Long>> =
+                        user as HashMap<String, Map<String, Long>>
+                    val userWinsMap: HashMap<String, Map<String, ArrayList<Long>>> =
+                        user as HashMap<String, Map<String, ArrayList<Long>>>
                     val pseudo = userMap["pseudo"]
                     val elo = userStatMap["userStatistics"]?.get("elo")
-                    val wins = userStatMap["userStatistics"]?.get("wins")
-                    val losses = userStatMap["userStatistics"]?.get("losses")
+
+                    // The get(1) at the end is to have the wins for multi mode only.
+                    val wins = userWinsMap["userStatistics"]?.get("wins")?.get(1)
+                    val losses = userWinsMap["userStatistics"]?.get("losses")?.get(1)
                     if (pseudo != null && elo != null && pseudo != "" &&
                         wins != null && losses != null) {
                         addToList("1", pseudo, elo.toString())
@@ -190,10 +195,8 @@ class DisplayHistoryFragment : Fragment() {
 
             // Create a List of (pseudo, elo) Pairs and order them by elo to have
             // an ordered leaderboard
-            //var pseudoUsers = mutableListOf<Pair<String, String>>()
             var pseudoUserData = mutableListOf<Pair<String, LeaderboardUserData>>()
             for (i in (0 until artists.size)) {
-                //pseudoUsers.add(Pair(artists[i], images[i]))
                 val userData = LeaderboardUserData(images[i], winsList[i], lossesList[i])
                 pseudoUserData.add(Pair(artists[i], userData))
             }
