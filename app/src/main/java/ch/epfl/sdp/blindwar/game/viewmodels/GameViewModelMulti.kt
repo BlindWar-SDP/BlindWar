@@ -11,6 +11,8 @@ import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
 import ch.epfl.sdp.blindwar.game.util.GameHelper
+import ch.epfl.sdp.blindwar.profile.model.Mode
+import ch.epfl.sdp.blindwar.profile.model.Result
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 /**
@@ -33,7 +35,13 @@ class GameViewModelMulti(
      */
     override fun endGame() {
         val fails = round - score
-        val gameResult = GameResult(mode, round, score)
+        var result: Result
+        if (fails == 0) {
+            result = Result.WIN
+        } else {
+            result = Result.LOSS
+        }
+        val gameResult = GameResult(mode, Mode.MULTI, result ,round, score)
 
         profileViewModel.updateStats(score, fails, gameResult)
         musicViewModel.soundTeardown()

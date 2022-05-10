@@ -25,7 +25,7 @@ class LeaderboardRecyclerAdapter(
     private var losses: List<String>
 ) :
 
-    RecyclerView.Adapter<MatchHistoryRecyclerAdapter.ViewHolder>() {
+    RecyclerView.Adapter<LeaderboardRecyclerAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -63,4 +63,5 @@ class LeaderboardRecyclerAdapter(
     override fun getItemCount(): Int {
         return ranks.size
     }
+
 }
