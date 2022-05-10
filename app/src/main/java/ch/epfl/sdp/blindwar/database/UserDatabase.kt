@@ -221,9 +221,12 @@ object UserDatabase {
 
     /**
      * Get current authenticated user
-     *
+     * TODO check when null if internet is ok
      */
-    fun getCurrentUser(): DataSnapshot {
-        return getUserReference(Firebase.auth.currentUser!!.uid).get().result
+    fun getCurrentUser(): DataSnapshot? {
+        val task = getUserReference(Firebase.auth.currentUser!!.uid).get()
+        while (!task.isComplete);
+        return if (task.isSuccessful) task.result
+        else null
     }
 }

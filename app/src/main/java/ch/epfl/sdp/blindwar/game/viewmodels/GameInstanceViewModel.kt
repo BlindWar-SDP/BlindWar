@@ -25,8 +25,8 @@ class GameInstanceViewModel : ViewModel() {
         it.value = GameUtil.gameInstanceSolo
         it
     }
-    var isPrivate = false
-    var maxPlayer = 2
+    private var isPrivate = false
+    private var maxPlayer = 2
 
 
     /**
@@ -119,7 +119,8 @@ class GameInstanceViewModel : ViewModel() {
      */
     fun createMatch(): Match {
         UserDatabase.getCurrentUser().let {
-            val user = it.getValue(User::class.java) as User //TODO find better solution
+            val user =
+                it!!.getValue(User::class.java) as User //TODO find better solution to avoid active waiting
             return MatchDatabase.createMatch(
                 user.uid,
                 user.pseudo,

@@ -7,7 +7,7 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 object MatchDatabase {
-    private const val COLLECTION_PATH = "match"
+    const val COLLECTION_PATH = "match"
 
     /**
      * return if the player has already created a multiplayer game

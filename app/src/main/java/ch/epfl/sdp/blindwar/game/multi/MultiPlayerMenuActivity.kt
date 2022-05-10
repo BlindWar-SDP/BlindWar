@@ -110,6 +110,9 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private fun setProgressDialog(message: String) {
         val builder = AlertDialog.Builder(this)
         builder.setCancelable(true)
+        builder.setNeutralButton(
+            getString(R.string.cancel_btn)
+        ) { it, _ -> it.cancel() }
         builder.setOnCancelListener {
             isCanceled = true
             toast.setText(getString(R.string.toast_canceled_connexion))

@@ -165,7 +165,7 @@
     <string name="account_deletion_text">Are you sure you want to delete your account?</string>
     <string name="select_birthdate">select birthdate</string>
     <string name="select_your_gender">Please, select your gender</string>
-    <string name="cancel_btn">cancel</string>
+    <string name="cancel_btn">Cancel</string>
     <string name="alert_dialogue_cancel_title">Cancel update</string>
     <string name="alert_dialogue_cancel_text">Are you sure to keep old info</string>
     <string name="newUser_ExtraName">newUser</string>
@@ -175,16 +175,17 @@
     <!-- MULTI -->
     <string name="toast_connexion">Match are full, retrying…</string>
     <string name="toast_canceled_connexion">Search canceled !</string>
-    <string name="multi_loading">Loading ...</string>
+    <string name="multi_loading">Loading …</string>
     <string name="multi_write_link">Please write your link invitation</string>
     <string name="multi_match_full">match is full, sorry !</string>
     <string name="multi_match_not_found">Match not found !</string>
-    <string name="multi_wait_matches">Wait for matches...</string>
+    <string name="multi_wait_matches">Wait for matches…</string>
     <string name="multi_number_player">Give the maximum number of player</string>
     <string name="button_create_match">Create</string>
     <string name="multi_is_private">Do you want to create a private match ?</string>
     <string name="playlist_name">Playlist</string>
-    <string name="multi_wait_players">Waiting for players...</string>
+    <string name="multi_wait_players">Waiting for players…</string>
+    <string name="multi_wait_players_nb">Waiting for players : %1$d/%2$d</string>
     <string name="lives">LIVES</string>
     <string name="rounds">ROUNDS</string>
 </resources>

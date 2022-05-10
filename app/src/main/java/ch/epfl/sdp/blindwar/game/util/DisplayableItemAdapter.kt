@@ -204,8 +204,42 @@ class DisplayableItemAdapter(
                         // TODO : Use the new mutable live data to respect the view model architecture
                         // TODO : what ?
                         // Create the match object
-                        val match: Match = gameInstanceViewModel.createMatch()
-                        setProgressDialog(context.getString(R.string.multi_wait_players), match.uid)
+                        var match: Match = gameInstanceViewModel.createMatch()
+                        val dialog = setProgressDialog(
+                            context.getString(R.string.multi_wait_players),
+                            match.uid
+                        )
+                        dialog.show()
+                        Firebase.firestore.collection(MatchDatabase.COLLECTION_PATH)
+                            .document(match.uid).addSnapshotListener { snapshot, e ->
+                                if (e != null) {
+                                    return@addSnapshotListener
+                                }
+
+                                if (snapshot != null && snapshot.exists()) {
+                                    match = snapshot.toObject(Match::class.java)!!
+                                    val nbPlayers = match.listPlayers!!.size
+                                    if ((match.isPrivate && nbPlayers == match.maxPlayer) ||                //private match wait for all players to join
+                                        (!match.isPrivate && nbPlayers > (0.75 * match.maxPlayer).toInt())  //public match wait for 3/4 of the max players number
+                                    ) {
+                                        //launch game //TODO realtime update
+                                        dialog.hide()
+                                        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                                            .replace(
+                                                (viewFragment.parent as ViewGroup).id,
+                                                DemoFragment(),
+                                                "DEMO"
+                                            )
+                                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                            .commit()
+                                    } else {
+                                        dialog.findViewById<TextView>(R.id.textView_multi_loading)?.text =
+                                            context.getString(R.string.multi_wait_players_nb)
+                                                .format(nbPlayers, match.maxPlayer)
+                                    }
+                                }
+
+                            }
                         /*(context as AppCompatActivity).supportFragmentManager.beginTransaction()
                             .replace(
                                 (viewFragment.parent as ViewGroup).id,
@@ -224,9 +258,12 @@ class DisplayableItemAdapter(
          * TODO generify for multiMenu
          * @param message
          */
-        private fun setProgressDialog(message: String, matchUID: String) {
+        private fun setProgressDialog(message: String, matchUID: String): AlertDialog {
             val builder = AlertDialog.Builder(context)
             builder.setCancelable(true)
+            builder.setNeutralButton(
+                context.getString(R.string.cancel_btn)
+            ) { it, _ -> it.cancel() }
             builder.setOnCancelListener {
                 Toast.makeText(
                     context,
@@ -238,7 +275,7 @@ class DisplayableItemAdapter(
             val view = View.inflate(context, R.layout.fragment_dialog_loading, null)
             builder.setView(view)
             (view.findViewById<TextView>(R.id.textView_multi_loading)).text = message
-            builder.create().show()
+            return builder.create()
         }
 
         /**

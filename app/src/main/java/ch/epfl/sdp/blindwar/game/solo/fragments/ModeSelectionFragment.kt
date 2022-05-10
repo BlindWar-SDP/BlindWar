@@ -32,7 +32,8 @@ class ModeSelectionFragment : Fragment() {
     private lateinit var backButton: ImageButton
 
     private lateinit var animations: List<LottieAnimationView>
-    private lateinit var funnyCheck: CheckBox
+
+    //private lateinit var funnyCheck: CheckBox
     private lateinit var particles: List<LottieAnimationView>
     private var checked: Boolean = false
 
@@ -72,7 +73,8 @@ class ModeSelectionFragment : Fragment() {
             view.findViewById(R.id.chrono), view.findViewById(R.id.chrono2)
         )
 
-        funnyCheck = view.findViewById<CheckBox>(R.id.checkBox).also { checkBox ->
+        //TODO Do you need this ?
+        /*funnyCheck = view.findViewById<CheckBox>(R.id.checkBox).also { checkBox ->
             checkBox.setOnClickListener {
                 checked = !checked
                 setAnimationsSpeed()
@@ -80,8 +82,13 @@ class ModeSelectionFragment : Fragment() {
             }
         }
 
-        funnyButton = funnyCheck
-
+        funnyButton = funnyCheck*/
+        //TODO I think this work samely, without the second var
+        funnyButton.setOnClickListener {
+            checked = !checked
+            setAnimationsSpeed()
+            toggleParticles()
+        }
         return view
     }
 
