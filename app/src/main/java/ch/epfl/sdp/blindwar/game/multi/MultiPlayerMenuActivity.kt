@@ -114,7 +114,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                     }
                 } else if (!isCanceled) {
                     displayToast(R.string.toast_connexion_internet)
-                    listener?.remove()
                     isOk = false
                 }
             }

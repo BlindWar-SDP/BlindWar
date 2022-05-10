@@ -243,7 +243,7 @@ class DisplayableItemAdapter(
             builder.setOnCancelListener {
                 Toast.makeText(
                     context,
-                    context.getString(R.string.toast_canceled_connexion),
+                    context.getString(R.string.toast_canceled_match_creation),
                     Toast.LENGTH_SHORT
                 ).show()
                 MatchDatabase.removeMatch(matchUID, Firebase.firestore)

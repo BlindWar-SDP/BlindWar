@@ -189,4 +189,5 @@
     <string name="toast_connexion_internet">Connexion error, retrying…</string>
     <string name="heart_number">x %1$d</string>
     <string name="multi_bad_link">Verify the correctness of your link</string>
+    <string name="toast_canceled_match_creation">Match canceled !</string>
 </resources>
