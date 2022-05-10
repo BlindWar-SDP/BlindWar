@@ -190,6 +190,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private fun showFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment_multiplayer, fragment)
+            addToBackStack(null)
             commit()
         }
     }
