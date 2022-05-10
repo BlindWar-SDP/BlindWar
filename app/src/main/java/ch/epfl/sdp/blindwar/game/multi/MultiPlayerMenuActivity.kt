@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.game.multi
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -27,7 +28,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private var eloDelta = 200
     private var dialog: AlertDialog? = null
     private var isCanceled = false
-    private var listener : ListenerRegistration? = null
+    private var listener: ListenerRegistration? = null
     private lateinit var toast: Toast
 
     companion object {
@@ -96,43 +97,22 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                     )
                 i++
             }
-            dialog!!.hide()
             if (match == null && !isCanceled) {
+                dialog!!.hide()
                 toast.setText(getString(R.string.toast_connexion))
                 toast.show()
                 eloDelta += 100
                 randomButton(view)
             } else if (!isCanceled) {
-                dialog!!.hide()
-                listener = match!!.addSnapshotListener { snapshot, e ->
-                    if (e != null) {
-                        return@addSnapshotListener
-                    }
-                    if (snapshot != null && snapshot.exists()) {
-                        val matchObject = snapshot.toObject(Match::class.java)!!
-                        val nbPlayers = matchObject.listPlayers!!.size
-                        if ((matchObject.isPrivate && nbPlayers == matchObject.maxPlayer) ||                //private match wait for all players to join
-                            (!matchObject.isPrivate && nbPlayers > (0.75 * matchObject.maxPlayer).toInt())  //public match wait for 3/4 of the max players number
-                        ) {
-                            dialog!!.hide()
-                            listener?.remove()
-                            //TODO launch game
-                        } else {
-                            dialog!!.findViewById<TextView>(R.id.textView_multi_loading)?.text =
-                                getString(R.string.multi_wait_players_nb)
-                                    .format(nbPlayers, matchObject.maxPlayer)
-                        }
-                    }
-                }
-                //TODO CONNECT TO MATCH
+                setListener(match!!)
             }
         } else if (!isCanceled) {
             toast.setText(getString(R.string.toast_connexion_internet))
             toast.show()
             dialog!!.hide()
+            listener?.remove()
             randomButton(view)
         }
-        //dialog!!.hide() //TODO REMOVE WHEN TESTS OK
     }
 
     /**
@@ -160,38 +140,48 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
 
 
     /**
-     * find a match on DB which is free
+     * return null if dynamic link is false, otherwise return the match uid
      *
-     * @param text
+     * @param uri the dynamic link
+     * @return
      */
-/*
-private fun connectToDB(text: String) {
-    setProgressDialog("Wait for connexion")
-    val user = UserDatabase.getCurrentUser()
-    val match = Firebase.firestore.collection("match").document(text).get() //TODO get only uid
-    if (match.isSuccessful && !isCanceled) {
-        val connect =
-            MatchDatabase.connect(
-                match.result.toObject(Match::class.java)!!,
-                user.getValue(User::class.java)!!,
-                Firebase.firestore
-            )
-        if (connect == null && !isCanceled) {
-            toast.setText(getString(R.string.multi_match_full))
+    private fun parseDynamicLink(uri: String): String? {
+        if (uri.substring(0, 29) != "https://blindwar.ch/game?uid=")
+            return null
+        return uri.trim().substring(29) //https://blindwar.ch/game + ?uid=
+    }
+
+    /**
+     * find a match with the link on DB which is free
+     *
+     * @param uid
+     */
+    private fun connectToDB(uid: String) {
+        setProgressDialog("Wait for connexion")
+        val user = UserDatabase.getCurrentUser()
+        val matchDoc = Firebase.firestore.collection("match").document(uid)
+        val match = matchDoc.get()
+        if (match.isSuccessful && !isCanceled) {
+            val matchObject = match.result.toObject(Match::class.java)!!
+            val connect =
+                MatchDatabase.connect(
+                    matchObject,
+                    user?.getValue(User::class.java)!!,
+                    Firebase.firestore
+                )
+            if (connect == null && !isCanceled) {
+                toast.setText(getString(R.string.multi_match_full))
+                toast.show()
+                dialog!!.hide()
+            } else if (!isCanceled) {
+                setListener(matchDoc)
+            }
+        } else if (!isCanceled) {
+            toast.setText(getString(R.string.multi_match_not_found))
             toast.show()
             dialog!!.hide()
-        } else if (!isCanceled) {
-            //match.addSnapshotListener {} //TODO add listener
-            dialog!!.hide()
-            //TODO CONNECT TO MATCH
         }
-    } else if (!isCanceled) {
-        toast.setText(getString(R.string.multi_match_not_found))
-        toast.show()
-        dialog!!.hide()
     }
-}
- */
 
     /**
      * create a dialog which ask for the uid of the match
@@ -206,10 +196,29 @@ private fun connectToDB(text: String) {
             dialog!!.hide()
         }
         builder.setPositiveButton(resources.getText(R.string.ok)) { _, _ ->
-            //connectToDB(findViewById<EditText>(R.id.editTextLink).text.toString())
-            dialog!!.hide()
+            val uri = findViewById<EditText>(R.id.editTextLink).text.toString()
+            val isCorrect = parseDynamicLink(uri)
+            if (isCorrect != null) {
+                connectToDB(isCorrect)
+                dialog!!.hide()
+            } else {
+                toast.setText(R.string.multi_bad_link)
+            }
         }
         dialog = builder.create()
         dialog!!.show()
+    }
+
+    private fun setListener(match: DocumentReference) {
+        listener = match.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                return@addSnapshotListener
+            }
+            val isReady = SnapshotListener.listenerOnLobby(snapshot, this, dialog!!)
+            if (isReady) {
+                listener?.remove()
+                //TODO launch game
+            }
+        }
     }
 }

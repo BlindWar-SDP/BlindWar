@@ -82,7 +82,7 @@ class DemoFragment : Fragment() {
         val view = inflater.inflate(R.layout.activity_animated_demo, container, false)
 
         // Switch between the two different game view model
-        when(gameInstanceViewModel.gameInstance.value?.gameFormat){
+        when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
             GameFormat.SOLO -> gameViewModel = context?.let {
                 GameViewModelSolo(
                     gameInstanceViewModel.gameInstance.value!!,
@@ -282,7 +282,8 @@ class DemoFragment : Fragment() {
         heartImage.visibility = View.VISIBLE
         heartNumber.visibility = View.VISIBLE
         gameViewModel.lives.observe(requireActivity()) {
-            heartNumber.text = "x $it"
+            heartNumber.text =
+                getString(R.string.heart_number).format(it) //TODO check if it works (x $it)
         }
     }
 

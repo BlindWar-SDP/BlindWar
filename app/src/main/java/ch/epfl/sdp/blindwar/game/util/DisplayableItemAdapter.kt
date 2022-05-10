@@ -205,7 +205,7 @@ class DisplayableItemAdapter(
                         // TODO : Use the new mutable live data to respect the view model architecture
                         // TODO : what ?
                         // Create the match object
-                        var match: Match = gameInstanceViewModel.createMatch()
+                        val match: Match = gameInstanceViewModel.createMatch()
                         val dialog = setProgressDialog(
                             context.getString(R.string.multi_wait_players),
                             match.uid
@@ -217,23 +217,13 @@ class DisplayableItemAdapter(
                                     return@addSnapshotListener
                                 }
 
-                                val newMatch = SnapshotListener.getInstance(
+                                SnapshotListener.listenerOnLobby(
                                     snapshot,
                                     context,
                                     dialog,
                                     viewFragment
                                 )
-                                if (newMatch != null)
-                                    match = newMatch
                             }
-                        /*(context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                            .replace(
-                                (viewFragment.parent as ViewGroup).id,
-                                DemoFragment(),
-                                "DEMO"
-                            )
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                            .commit()*/
                     }
                 }
             }

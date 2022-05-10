@@ -189,4 +189,6 @@
     <string name="lives">LIVES</string>
     <string name="rounds">ROUNDS</string>
     <string name="toast_connexion_internet">Connexion error, retrying...</string>
+    <string name="heart_number">x %1$d</string>
+    <string name="multi_bad_link">verify the corectness of your link</string>
 </resources>

@@ -10,6 +10,7 @@ import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
+import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.util.GameHelper
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
@@ -21,10 +22,10 @@ import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
  * @constructor Construct a class that represent the game logic
  */
 class GameViewModelMulti(
-    gameInstance: GameInstance,
+    match: Match,
     context: Context,
     resources: Resources
-) : GameViewModel(gameInstance, context, resources) {
+) : GameViewModel(match.game!!, context, resources) {
 
     /**
      * Record the game instance to the player history

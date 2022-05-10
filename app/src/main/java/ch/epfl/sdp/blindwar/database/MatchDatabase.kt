@@ -62,7 +62,7 @@ object MatchDatabase {
      * @return
      */
     fun connect(match: Match, user: User, db: FirebaseFirestore): DocumentReference? {
-        if (match.listPlayers!!.size + 1 > match.maxPlayer) return null
+        if (match.listPlayers!!.size < match.maxPlayer) return null
         match.listPlayers!!.add(user.uid)
         match.listPseudo!!.add(user.pseudo)
         match.listResult!!.add(0)
