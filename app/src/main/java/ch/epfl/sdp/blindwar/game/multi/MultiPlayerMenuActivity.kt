@@ -25,7 +25,8 @@ import com.google.firebase.ktx.Firebase
  * @constructor creates a MultiPlayerMenuActivity
  */
 class MultiPlayerMenuActivity : AppCompatActivity() {
-    private var eloDelta = 200
+
+    private var eloDelta = DEFAULT_ELO
     private var dialog: AlertDialog? = null
     private var isCanceled = false
     private var listener: ListenerRegistration? = null
@@ -33,12 +34,14 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
 
     companion object {
         private const val LIMIT_MATCH: Long = 10
+        private const val DELTA_MATCHMAKING = 100
+        private const val DEFAULT_ELO = 200
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_multiplayer_menu)
-        eloDelta = 200
+        eloDelta = DEFAULT_ELO
     }
 
     /**
@@ -73,42 +76,40 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
 
     /**
      * Starts a multiplayer game played with a random user
-     *
+     * TODO progress dialog not working
      * @param view
      */
     fun randomButton(view: View) {
-        setProgressDialog(getString(R.string.multi_wait_matches))
+        if (dialog == null || !dialog!!.isShowing)
+            setProgressDialog(getString(R.string.multi_wait_matches))
         val user = UserDatabase.getCurrentUser()
-        val elo = user?.child("userStatistics/elo")?.value as Int
+        val elo = user?.child("userStatistics/elo")?.value as Long
         val matches = Firebase.firestore.collection("match")
             .whereEqualTo("isPrivate", false)
             .whereLessThan("elo", elo + eloDelta)
-            .whereGreaterThan("elo", elo - 200)
+            .whereGreaterThan("elo", elo - eloDelta)
             .orderBy("elo", Query.Direction.DESCENDING)
             .limit(LIMIT_MATCH).get()
         if (matches.isSuccessful && !isCanceled) {
             var i = 0
             var match: DocumentReference? = null
             while (match == null && i < LIMIT_MATCH) {
-                match =
-                    MatchDatabase.connect(
-                        matches.result.documents[i].toObject(Match::class.java)!!,
-                        user.getValue(User::class.java)!!,
-                        Firebase.firestore
-                    )
+                match = MatchDatabase.connect(
+                    matches.result.documents[i].toObject(Match::class.java)!!,
+                    user.getValue(User::class.java)!!,
+                    Firebase.firestore
+                )
                 i++
             }
             if (match == null && !isCanceled) {
-                dialog!!.hide()
                 displayToast(R.string.toast_connexion)
-                eloDelta += 100
+                eloDelta += DELTA_MATCHMAKING
                 randomButton(view)
             } else if (!isCanceled) {
                 setListener(match!!)
             }
         } else if (!isCanceled) {
             displayToast(R.string.toast_connexion_internet)
-            dialog!!.hide()
             listener?.remove()
             randomButton(view)
         }
@@ -122,7 +123,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private fun setProgressDialog(message: String) {
         val builder = AlertDialog.Builder(this)
         builder.setCancelable(true)
-        builder.setNeutralButton(
+        builder.setPositiveButton(
             getString(R.string.cancel_btn)
         ) { it, _ -> it.cancel() }
         builder.setOnCancelListener {
@@ -133,6 +134,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         builder.setView(view)
         (view.findViewById<TextView>(R.id.textView_multi_loading)).text = message
         dialog = builder.create()
+        dialog!!.setCanceledOnTouchOutside(false)
         dialog!!.show()
     }
 
@@ -201,6 +203,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             }
         }
         dialog = builder.create()
+        dialog!!.setCanceledOnTouchOutside(false)
         dialog!!.show()
     }
 
@@ -239,6 +242,5 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         toast?.cancel()
         toast = Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
         toast?.show()
-
     }
 }

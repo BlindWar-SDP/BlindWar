@@ -251,7 +251,9 @@ class DisplayableItemAdapter(
             val view = View.inflate(context, R.layout.fragment_dialog_loading, null)
             builder.setView(view)
             (view.findViewById<TextView>(R.id.textView_multi_loading)).text = message
-            return builder.create()
+            val dialog = builder.create()
+            dialog.setCanceledOnTouchOutside(false)
+            return dialog
         }
 
         /**
