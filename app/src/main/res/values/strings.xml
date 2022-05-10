@@ -188,4 +188,5 @@
     <string name="multi_wait_players_nb">Waiting for players : %1$d/%2$d</string>
     <string name="lives">LIVES</string>
     <string name="rounds">ROUNDS</string>
+    <string name="toast_connexion_internet">Connexion error, retrying...</string>
 </resources>

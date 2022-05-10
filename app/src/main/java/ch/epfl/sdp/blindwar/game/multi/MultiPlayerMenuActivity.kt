@@ -8,7 +8,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.database.MatchDatabase
+import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
+import ch.epfl.sdp.blindwar.profile.model.User
+import com.google.firebase.firestore.*
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 /**
@@ -20,6 +27,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private var eloDelta = 200
     private var dialog: AlertDialog? = null
     private var isCanceled = false
+    private var listener : ListenerRegistration? = null
     private lateinit var toast: Toast
 
     companion object {
@@ -67,10 +75,12 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun randomButton(view: View) {
-        //setProgressDialog(getString(R.string.multi_wait_matches))
-        /*val user = UserDatabase.getCurrentUser()
-        val elo = user.child("userStatistics/elo").value!! as Int
-        val matchs = Firebase.firestore.collection("match").where("isPrivate", false).whereLessThan("elo", elo + eloDelta)
+        setProgressDialog(getString(R.string.multi_wait_matches))
+        val user = UserDatabase.getCurrentUser()
+        val elo = user?.child("userStatistics/elo")?.value as Int
+        val matchs = Firebase.firestore.collection("match")
+            .whereEqualTo("isPrivate", false)
+            .whereLessThan("elo", elo + eloDelta)
             .whereGreaterThan("elo", elo - 200)
             .orderBy("elo", Query.Direction.DESCENDING)
             .limit(LIMIT_MATCH).get()
@@ -85,20 +95,43 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                         Firebase.firestore
                     )
                 i++
-            }discord
+            }
+            dialog!!.hide()
             if (match == null && !isCanceled) {
                 toast.setText(getString(R.string.toast_connexion))
                 toast.show()
                 eloDelta += 100
                 randomButton(view)
             } else if (!isCanceled) {
-                //match.addSnapshotListener {} //TODO add listener
                 dialog!!.hide()
+                listener = match!!.addSnapshotListener { snapshot, e ->
+                    if (e != null) {
+                        return@addSnapshotListener
+                    }
+                    if (snapshot != null && snapshot.exists()) {
+                        val matchObject = snapshot.toObject(Match::class.java)!!
+                        val nbPlayers = matchObject.listPlayers!!.size
+                        if ((matchObject.isPrivate && nbPlayers == matchObject.maxPlayer) ||                //private match wait for all players to join
+                            (!matchObject.isPrivate && nbPlayers > (0.75 * matchObject.maxPlayer).toInt())  //public match wait for 3/4 of the max players number
+                        ) {
+                            dialog!!.hide()
+                            listener?.remove()
+                            //TODO launch game
+                        } else {
+                            dialog!!.findViewById<TextView>(R.id.textView_multi_loading)?.text =
+                                getString(R.string.multi_wait_players_nb)
+                                    .format(nbPlayers, matchObject.maxPlayer)
+                        }
+                    }
+                }
                 //TODO CONNECT TO MATCH
             }
         } else if (!isCanceled) {
+            toast.setText(getString(R.string.toast_connexion_internet))
+            toast.show()
+            dialog!!.hide()
             randomButton(view)
-        }*/
+        }
         //dialog!!.hide() //TODO REMOVE WHEN TESTS OK
     }
 
@@ -131,34 +164,34 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      *
      * @param text
      */
-    /*
-    private fun connectToDB(text: String) {
-        setProgressDialog("Wait for connexion")
-        val user = UserDatabase.getCurrentUser()
-        val match = Firebase.firestore.collection("match").document(text).get() //TODO get only uid
-        if (match.isSuccessful && !isCanceled) {
-            val connect =
-                MatchDatabase.connect(
-                    match.result.toObject(Match::class.java)!!,
-                    user.getValue(User::class.java)!!,
-                    Firebase.firestore
-                )
-            if (connect == null && !isCanceled) {
-                toast.setText(getString(R.string.multi_match_full))
-                toast.show()
-                dialog!!.hide()
-            } else if (!isCanceled) {
-                //match.addSnapshotListener {} //TODO add listener
-                dialog!!.hide()
-                //TODO CONNECT TO MATCH
-            }
-        } else if (!isCanceled) {
-            toast.setText(getString(R.string.multi_match_not_found))
+/*
+private fun connectToDB(text: String) {
+    setProgressDialog("Wait for connexion")
+    val user = UserDatabase.getCurrentUser()
+    val match = Firebase.firestore.collection("match").document(text).get() //TODO get only uid
+    if (match.isSuccessful && !isCanceled) {
+        val connect =
+            MatchDatabase.connect(
+                match.result.toObject(Match::class.java)!!,
+                user.getValue(User::class.java)!!,
+                Firebase.firestore
+            )
+        if (connect == null && !isCanceled) {
+            toast.setText(getString(R.string.multi_match_full))
             toast.show()
             dialog!!.hide()
+        } else if (!isCanceled) {
+            //match.addSnapshotListener {} //TODO add listener
+            dialog!!.hide()
+            //TODO CONNECT TO MATCH
         }
+    } else if (!isCanceled) {
+        toast.setText(getString(R.string.multi_match_not_found))
+        toast.show()
+        dialog!!.hide()
     }
-     */
+}
+ */
 
     /**
      * create a dialog which ask for the uid of the match

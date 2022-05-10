@@ -24,6 +24,7 @@ import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
+import ch.epfl.sdp.blindwar.game.multi.SnapshotListener
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
@@ -216,29 +217,14 @@ class DisplayableItemAdapter(
                                     return@addSnapshotListener
                                 }
 
-                                if (snapshot != null && snapshot.exists()) {
-                                    match = snapshot.toObject(Match::class.java)!!
-                                    val nbPlayers = match.listPlayers!!.size
-                                    if ((match.isPrivate && nbPlayers == match.maxPlayer) ||                //private match wait for all players to join
-                                        (!match.isPrivate && nbPlayers > (0.75 * match.maxPlayer).toInt())  //public match wait for 3/4 of the max players number
-                                    ) {
-                                        //launch game //TODO realtime update
-                                        dialog.hide()
-                                        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                                            .replace(
-                                                (viewFragment.parent as ViewGroup).id,
-                                                DemoFragment(),
-                                                "DEMO"
-                                            )
-                                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                                            .commit()
-                                    } else {
-                                        dialog.findViewById<TextView>(R.id.textView_multi_loading)?.text =
-                                            context.getString(R.string.multi_wait_players_nb)
-                                                .format(nbPlayers, match.maxPlayer)
-                                    }
-                                }
-
+                                val newMatch = SnapshotListener.getInstance(
+                                    snapshot,
+                                    context,
+                                    dialog,
+                                    viewFragment
+                                )
+                                if (newMatch != null)
+                                    match = newMatch
                             }
                         /*(context as AppCompatActivity).supportFragmentManager.beginTransaction()
                             .replace(
@@ -261,7 +247,7 @@ class DisplayableItemAdapter(
         private fun setProgressDialog(message: String, matchUID: String): AlertDialog {
             val builder = AlertDialog.Builder(context)
             builder.setCancelable(true)
-            builder.setNeutralButton(
+            builder.setPositiveButton(
                 context.getString(R.string.cancel_btn)
             ) { it, _ -> it.cancel() }
             builder.setOnCancelListener {
