@@ -195,4 +195,5 @@
     <string name="multi_join_match">Join current match</string>
     <string name="multi_dynamic_link">Invitation link to play :\n https://blindwar.ch/game?uid=%1$s</string>
     <string name="show_qr">Show QR code</string>
+    <string name="qr_code_description">QR code to join a game</string>
 </resources>

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
@@ -249,8 +250,19 @@ class DisplayableItemAdapter(
                 MatchDatabase.removeMatch(matchUID, Firebase.firestore)
             }
             val view = View.inflate(context, R.layout.fragment_dialog_loading_creation, null)
-            view.findViewById<TextView>(R.id.textView_dynamic_link).text =
-                context.getString(R.string.multi_dynamic_link, matchUID)
+            val url = context.getString(R.string.multi_dynamic_link, matchUID)
+            val textView = view.findViewById<TextView>(R.id.textView_dynamic_link)
+            textView.text = url
+
+            textView.setOnClickListener {
+
+            }
+            val qrCode = view.findViewById<ImageView>(R.id.QR_code)
+            qrCode.setImageBitmap(QRCodeGenerator.encodeUrl(url))
+            view.findViewById<Button>(R.id.show_qr_button).setOnClickListener {
+                qrCode.visibility = if (qrCode.isVisible) View.INVISIBLE
+                else View.VISIBLE
+            }
             builder.setView(view)
             (view.findViewById<TextView>(R.id.textView_multi_loading)).text = message
             val dialog = builder.create()

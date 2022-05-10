@@ -79,8 +79,9 @@ object MatchDatabase {
      * @return
      */
     fun getMatch(uid: String, db: FirebaseFirestore): Match? {
-        val match = db.collection(COLLECTION_PATH).document(uid).get().result
-        return if (match.exists())
-            match.toObject(Match::class.java) else null
+        val match = db.collection(COLLECTION_PATH).document(uid).get()
+        while (!match.isComplete);
+        return if (match.isSuccessful && match.result.exists())
+            match.result.toObject(Match::class.java) else null
     }
 }
