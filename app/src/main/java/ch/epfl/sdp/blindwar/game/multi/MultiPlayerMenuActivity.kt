@@ -32,7 +32,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private lateinit var toast: Toast
 
     companion object {
-        private val LIMIT_MATCH: Long = 10
+        private const val LIMIT_MATCH: Long = 10
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +48,8 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun friendButton(view: View) {
+        assert(view.isEnabled)
         setLinkDialog()
-        //dialog!!.hide() //TODO REMOVE WHEN TESTS OK
     }
 
     /**
@@ -58,6 +58,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun createMatch(view: View) {
+        assert(view.isEnabled)
         startActivity(Intent(this, ChoseNumberOfPlayerActivity::class.java))
     }
 
@@ -67,6 +68,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun cancel(view: View) {
+        assert(view.isEnabled)
         startActivity(Intent(this, MainMenuActivity::class.java))
     }
 
@@ -79,19 +81,19 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         setProgressDialog(getString(R.string.multi_wait_matches))
         val user = UserDatabase.getCurrentUser()
         val elo = user?.child("userStatistics/elo")?.value as Int
-        val matchs = Firebase.firestore.collection("match")
+        val matches = Firebase.firestore.collection("match")
             .whereEqualTo("isPrivate", false)
             .whereLessThan("elo", elo + eloDelta)
             .whereGreaterThan("elo", elo - 200)
             .orderBy("elo", Query.Direction.DESCENDING)
             .limit(LIMIT_MATCH).get()
-        if (matchs.isSuccessful && !isCanceled) {
+        if (matches.isSuccessful && !isCanceled) {
             var i = 0
             var match: DocumentReference? = null
             while (match == null && i < LIMIT_MATCH) {
                 match =
                     MatchDatabase.connect(
-                        matchs.result.documents[i].toObject(Match::class.java)!!,
+                        matches.result.documents[i].toObject(Match::class.java)!!,
                         user.getValue(User::class.java)!!,
                         Firebase.firestore
                     )
@@ -192,9 +194,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         builder.setCancelable(true)
         val view = View.inflate(applicationContext, R.layout.fragment_multi_connexion_link, null)
         builder.setView(view)
-        builder.setNeutralButton(resources.getText(R.string.cancel_btn)) { _, _ ->
-            dialog!!.hide()
-        }
+        builder.setNeutralButton(resources.getText(R.string.cancel_btn)) { di, _ -> di.cancel() }
         builder.setPositiveButton(resources.getText(R.string.ok)) { _, _ ->
             val uri = findViewById<EditText>(R.id.editTextLink).text.toString()
             val isCorrect = parseDynamicLink(uri)
@@ -203,20 +203,34 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                 dialog!!.hide()
             } else {
                 toast.setText(R.string.multi_bad_link)
+                toast.show()
             }
         }
         dialog = builder.create()
         dialog!!.show()
     }
 
+    /**
+     * add a listener to the match to know when it is ready to play
+     *
+     * @param match
+     */
     private fun setListener(match: DocumentReference) {
         listener = match.addSnapshotListener { snapshot, e ->
             if (e != null) {
                 return@addSnapshotListener
             }
-            val isReady = SnapshotListener.listenerOnLobby(snapshot, this, dialog!!)
-            if (isReady) {
+            if (SnapshotListener.listenerOnLobby(snapshot, this, dialog!!)) {
                 listener?.remove()
+                /*(context as AppCompatActivity).supportFragmentManager.beginTransaction()
+    .replace(
+        (viewFragment.parent as ViewGroup).id,
+        DemoFragment(),
+        "DEMO"
+    )
+    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+    .commit()*/
+
                 //TODO launch game
             }
         }

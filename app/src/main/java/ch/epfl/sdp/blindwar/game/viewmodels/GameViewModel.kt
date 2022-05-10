@@ -26,7 +26,7 @@ abstract class GameViewModel(
     /** Encapsulates the characteristics of a game instead of its logic
      *
      */
-    protected    val game: GameInstance = gameInstance
+    protected val game: GameInstance = gameInstance
     protected lateinit var musicViewModel: MusicViewModel
     protected val profileViewModel = ProfileViewModel()
 
@@ -53,7 +53,7 @@ abstract class GameViewModel(
      *
      */
     fun init() {
-        this.musicViewModel = MusicViewModel(
+        musicViewModel = MusicViewModel(
             game.onlinePlaylist,
             context, resources
         )
@@ -72,7 +72,7 @@ abstract class GameViewModel(
      *
      * @return true if the game is over after this round, false otherwise
      */
-    abstract fun nextRound() : Boolean
+    abstract fun nextRound(): Boolean
 
     /**
      * Depends on the game instance parameter

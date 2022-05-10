@@ -25,6 +25,7 @@ class GameInstanceViewModel : ViewModel() {
         it.value = GameUtil.gameInstanceSolo
         it
     }
+    var match: Match? = null
     private var isPrivate = false
     private var maxPlayer = 2
 
@@ -121,7 +122,7 @@ class GameInstanceViewModel : ViewModel() {
         UserDatabase.getCurrentUser().let {
             val user =
                 it!!.getValue(User::class.java) as User //TODO find better solution to avoid active waiting
-            return MatchDatabase.createMatch(
+            match = MatchDatabase.createMatch(
                 user.uid,
                 user.pseudo,
                 user.userStatistics.elo,
@@ -130,6 +131,7 @@ class GameInstanceViewModel : ViewModel() {
                 Firebase.firestore,
                 isPrivate
             )
+            return match!!
         }
     }
 }

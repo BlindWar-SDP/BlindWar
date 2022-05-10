@@ -1,7 +1,6 @@
 package ch.epfl.sdp.blindwar.game.multi
 
 import android.content.Context
-import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import ch.epfl.sdp.blindwar.R
@@ -17,7 +16,6 @@ object SnapshotListener {
      * @param snapshot
      * @param context
      * @param dialog
-     * @param viewFragment
      */
     fun listenerOnLobby(
         snapshot: DocumentSnapshot?,
@@ -32,21 +30,13 @@ object SnapshotListener {
             ) {
                 dialog.hide()
                 return true
-                /*(context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                    .replace(
-                        (viewFragment.parent as ViewGroup).id,
-                        DemoFragment(),
-                        "DEMO"
-                    )
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()*/
             } else {
                 dialog.findViewById<TextView>(R.id.textView_multi_loading)?.text =
                     context.getString(R.string.multi_wait_players_nb)
                         .format(nbPlayers, newMatch.maxPlayer)
-                return false
             }
         }
+        return false
     }
 
     /**

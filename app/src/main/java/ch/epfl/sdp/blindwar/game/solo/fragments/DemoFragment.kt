@@ -92,13 +92,12 @@ class DemoFragment : Fragment() {
             }!!
             GameFormat.MULTI -> gameViewModel = context?.let {
                 GameViewModelMulti(
-                    gameInstanceViewModel.gameInstance.value!!,
+                    gameInstanceViewModel.match!!,
                     it,
                     resources
                 )
             }!!
         }
-
 
         gameViewModel.init()
 

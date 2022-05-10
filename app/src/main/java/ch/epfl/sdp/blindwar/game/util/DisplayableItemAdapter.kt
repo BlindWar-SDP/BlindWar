@@ -31,6 +31,7 @@ import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
@@ -52,7 +53,8 @@ class DisplayableItemAdapter(
     private val context: Context,
     private val viewFragment: View,
     private val gameInstanceViewModel: GameInstanceViewModel,
-    private val profileViewModel: ProfileViewModel
+    private val profileViewModel: ProfileViewModel,
+    private var listener: ListenerRegistration? = null
 ) :
     RecyclerView.Adapter<DisplayableItemAdapter.DisplayableItemViewHolder>() {
 
@@ -211,18 +213,16 @@ class DisplayableItemAdapter(
                             match.uid
                         )
                         dialog.show()
-                        Firebase.firestore.collection(MatchDatabase.COLLECTION_PATH)
+                        listener = Firebase.firestore.collection(MatchDatabase.COLLECTION_PATH)
                             .document(match.uid).addSnapshotListener { snapshot, e ->
                                 if (e != null) {
                                     return@addSnapshotListener
                                 }
 
-                                SnapshotListener.listenerOnLobby(
-                                    snapshot,
-                                    context,
-                                    dialog,
-                                    viewFragment
-                                )
+                                if (SnapshotListener.listenerOnLobby(snapshot, context, dialog)) {
+                                    listener?.remove()
+                                    //TODO LAUNCH GAME
+                                }
                             }
                     }
                 }

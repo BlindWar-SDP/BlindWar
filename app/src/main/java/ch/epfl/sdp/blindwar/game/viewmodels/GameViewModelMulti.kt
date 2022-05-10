@@ -2,22 +2,16 @@ package ch.epfl.sdp.blindwar.game.viewmodels
 
 import android.content.Context
 import android.content.res.Resources
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import ch.epfl.sdp.blindwar.audio.MusicViewModel
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.GameResult
-import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
-import ch.epfl.sdp.blindwar.game.model.config.GameParameter
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.util.GameHelper
-import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 /**
  * Class representing an instance of a game
  *
- * @param gameInstance object that defines the parameters / configuration of a game
+ * @param match object that defines the parameters / configuration of a game
  * @param context of the Game
  * @constructor Construct a class that represent the game logic
  */
