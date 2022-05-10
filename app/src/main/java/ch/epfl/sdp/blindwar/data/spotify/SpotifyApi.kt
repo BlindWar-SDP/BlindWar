@@ -42,27 +42,6 @@ interface SpotifyApi {
     @GET(SEARCH_PATH)
     @Headers(
         ACCEPT,
-        CONTENT_TYPE,
-    )
-    suspend fun searchArtist(
-        @Header(AUTH) token: String,
-        @Path(ARTIST_ID) artist_id: String,
-        @Query(LIMIT) limit: Int
-    ): Response<SpotifyArtist>
-
-    @GET(TRACK_PATH)
-    @Headers(
-        ACCEPT,
-        CONTENT_TYPE
-    )
-    suspend fun getTrack(
-        @Header(AUTH) token: String,
-        @Path(TRACK_ID) track_id: String
-    ): Response<SpotifyTrack>
-
-    @GET(SEARCH_PATH)
-    @Headers(
-        ACCEPT,
         CONTENT_TYPE
     )
     suspend fun searchTrack(

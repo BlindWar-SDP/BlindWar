@@ -7,11 +7,9 @@ import ch.epfl.sdp.blindwar.data.spotify.SpotifyApi
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyService.apiMeta
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyToken
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyTrack
-import ch.epfl.sdp.blindwar.game.util.Tutorial
+import ch.epfl.sdp.blindwar.game.util.GameUtil
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import retrofit2.HttpException
-import java.io.IOException
 
 class RemoteMusicMetadataSource(private val songMetadataSource: SpotifyApi = apiMeta.value,
                                 private val tokenSource: SpotifyApi,
@@ -22,21 +20,15 @@ class RemoteMusicMetadataSource(private val songMetadataSource: SpotifyApi = api
     val musicMetadata = MutableLiveData<ArrayList<MusicMetadata>>()
 
     suspend fun fetchSongMetadata(trackName: String = "take on me") {
-        //var songMetaData = URIMusicMetadata("", "", "")
         withContext(ioDispatcher) {
-            var spotifyTrack: SpotifyTrack
             if (!logged)
                 fetchToken()
 
             if (logged) {
                 val response = try {
                     songMetadataSource.searchTrack("Bearer ${token.access_token}", query = trackName)
-                } catch(e: IOException) {
-                    Log.e(ContentValues.TAG, "IOException, you might not have internet connection")
-                    logged = false
-                    return@withContext
-                } catch (e: HttpException) {
-                    Log.e(ContentValues.TAG, "HttpException, unexpected response")
+                }  catch (e: Exception) {
+                    Log.e("An exception occured : ", e.toString())
                     logged = false
                     return@withContext
                 }
@@ -50,7 +42,8 @@ class RemoteMusicMetadataSource(private val songMetadataSource: SpotifyApi = api
                         it.artists[0].name,
                         it.album.images[0].url,
                         duration = 30000,
-                        uri = if (it.preview_url != null) it.preview_url!! else Tutorial.URL_FIFA_SONG_2)
+                        uri = it.preview_url ?: GameUtil.URL_FIFA_SONG_2
+                        )
                     }
 
                     musicMetadata.postValue(tracks as ArrayList<MusicMetadata>)

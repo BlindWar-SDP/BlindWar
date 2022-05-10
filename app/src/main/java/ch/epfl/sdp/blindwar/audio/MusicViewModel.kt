@@ -3,6 +3,9 @@ package ch.epfl.sdp.blindwar.audio
 import android.content.Context
 import android.content.res.Resources
 import android.media.MediaPlayer
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import ch.epfl.sdp.blindwar.data.music.MusicRepository
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.Playlist
@@ -22,12 +25,6 @@ class MusicViewModel(playlist: Playlist, context: Context, resources: Resources)
     // Current player
     private var currentMediaPlayer: MediaPlayer? = null
 
-    /**
-    private fun refreshFetchers() {
-    mutableMediaPlayerPerMusic = mediaPlayerPerMusic.toMutableMap()
-    }
-     **/
-
     fun soundTeardown() {
         pause()
         reset()
@@ -40,17 +37,24 @@ class MusicViewModel(playlist: Playlist, context: Context, resources: Resources)
     fun nextRound(): MusicMetadata? {
         // Stop the music
         pause()
-        reset()
 
-        /*
-        if (mutableMediaPlayerPerMusic.isEmpty())
-        refreshFetchers()
-         */
+        var musicMetadata: MusicMetadata
 
-        // Get a random title
-        val random = Random()
-        val musicMetadata =
-            mutableMediaPlayerPerMusic.keys.elementAt(random.nextInt(mutableMediaPlayerPerMusic.size))
+        do {
+
+            // Get a random title
+            val random = Random().nextInt(mutableMediaPlayerPerMusic.size)
+            musicMetadata =
+                mutableMediaPlayerPerMusic.keys.elementAt(random)
+
+            val player =
+                mutableMediaPlayerPerMusic.values.elementAt(random)
+
+            Log.d("ZAMBO ANGUISSA", musicMetadata.artist)
+            val ready = player.ready.value!!
+
+        // Player's duration is -1 until the media is ready to be played
+        } while(!ready)
 
         // Remove it to the playlist
         mutableMediaPlayerPerMusic.remove(musicMetadata)
@@ -58,7 +62,7 @@ class MusicViewModel(playlist: Playlist, context: Context, resources: Resources)
 
         // Set the current metadata and the current player
         currentMusicMetadata = musicMetadata
-        currentMediaPlayer = mediaPlayerPerMusic[musicMetadata]
+        currentMediaPlayer = mediaPlayerPerMusic[musicMetadata]?.mediaPlayer
 
 
         // Play the music
@@ -69,7 +73,6 @@ class MusicViewModel(playlist: Playlist, context: Context, resources: Resources)
     }
 
     // GAME SOUND CONTROLS
-
     private fun reset() {
         currentMediaPlayer?.reset()
     }

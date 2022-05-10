@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_profile"
     android:background="@drawable/blurred_back">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -25,9 +25,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="36dp"
-        android:layout_marginBottom="16dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/menuGuideline"
         app:layout_constraintEnd_toStartOf="@+id/guideline16"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline15"
@@ -157,8 +156,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.355"
         app:srcCompat="@drawable/ic_baseline_login_24"
-        tools:ignore="SpeakableTextPresentCheck"
-        app:tint="@color/ivory" />
+        app:tint="@color/ivory"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageButton
         android:id="@+id/deleteBtn"
@@ -171,7 +170,14 @@
         app:layout_constraintTop_toTopOf="@+id/logoutBtn"
         app:layout_constraintVertical_bias="0.422"
         app:srcCompat="@drawable/ic_baseline_delete_24"
-        tools:ignore="SpeakableTextPresentCheck"
-        app:tint="@color/ivory" />
+        app:tint="@color/ivory"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/menuGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.92" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

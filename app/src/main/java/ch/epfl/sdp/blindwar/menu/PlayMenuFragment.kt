@@ -12,8 +12,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.GlideApp
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
-import ch.epfl.sdp.blindwar.game.solo.SoloActivity
+import ch.epfl.sdp.blindwar.game.util.GameActivity
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.google.firebase.storage.StorageReference
 
@@ -33,7 +34,7 @@ class PlayMenuFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_play, container, false)
 
         view.findViewById<ImageButton>(R.id.soloBtn).setOnClickListener {
-            val intent = Intent(requireActivity(), SoloActivity::class.java)
+            val intent = Intent(requireActivity(), GameActivity::class.java).apply { putExtra(GameActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.SOLO) }
             startActivity(intent)
         }
 

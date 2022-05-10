@@ -1,14 +1,13 @@
 package ch.epfl.sdp.blindwar.game.viewmodels
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ch.epfl.sdp.blindwar.game.model.Playlist
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
-import ch.epfl.sdp.blindwar.game.util.Tutorial
+import ch.epfl.sdp.blindwar.game.util.GameUtil
 
 /**
  * Game Instance viewModel used during game creation
@@ -17,7 +16,7 @@ import ch.epfl.sdp.blindwar.game.util.Tutorial
  */
 class GameInstanceViewModel : ViewModel() {
     var gameInstance = MutableLiveData<GameInstance>().let {
-        it.value = Tutorial.gameInstance
+        it.value = GameUtil.gameInstanceSolo
         it
     }
 
@@ -51,7 +50,7 @@ class GameInstanceViewModel : ViewModel() {
                     round = currentParameter?.round!!,
                     timeToFind = currentParameter.timeToFind,
                     hint = currentParameter.hint,
-                    funny = currentParameter.funny,
+                    funny = funny,
                     lives = currentParameter.lives
                 )
             )
@@ -87,6 +86,12 @@ class GameInstanceViewModel : ViewModel() {
                     lives = if (mode == GameMode.SURVIVAL) roundChosen else currentParameter.lives
                 )
             )
+            .build()
+    }
+
+    fun setGameFormat(gameFormat: GameFormat) {
+        gameInstance.value = GameInstance.Builder().setGameInstance(gameInstance.value!!)
+            .setFormat(gameFormat)
             .build()
     }
 }

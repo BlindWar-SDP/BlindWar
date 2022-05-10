@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -16,13 +15,15 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.MutableLiveData
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
+import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModelMulti
+import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModelSolo
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import java.util.*
@@ -34,6 +35,7 @@ import java.util.*
  * @constructor creates a DemoFragment
  */
 class DemoFragment : Fragment() {
+
     // VIEW MODELS
     lateinit var gameViewModel: GameViewModel
     private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
@@ -79,13 +81,24 @@ class DemoFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.activity_animated_demo, container, false)
 
-        gameViewModel = context?.let {
-            GameViewModel(
-                gameInstanceViewModel.gameInstance.value!!,
-                it,
-                resources
-            )
-        }!!
+        // Switch between the two different game view model
+        when(gameInstanceViewModel.gameInstance.value?.gameFormat){
+            GameFormat.SOLO -> gameViewModel = context?.let {
+                GameViewModelSolo(
+                    gameInstanceViewModel.gameInstance.value!!,
+                    it,
+                    resources
+                )
+            }!!
+            GameFormat.MULTI -> gameViewModel = context?.let {
+                GameViewModelMulti(
+                    gameInstanceViewModel.gameInstance.value!!,
+                    it,
+                    resources
+                )
+            }!!
+        }
+
 
         gameViewModel.init()
 
@@ -167,7 +180,16 @@ class DemoFragment : Fragment() {
         } **/
 
         microphoneButton = view.findViewById(R.id.microphone)
-        context?.let { voiceRecognizer.init(it, guessEditText, Locale.ENGLISH.toLanguageTag()) }
+        context?.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
+
+        voiceRecognizer.resultString.observe(viewLifecycleOwner) {
+            //voiceRecognizer.stop()
+            guessEditText.setText(it)
+            //Log.d("VOICE RECOGNITION RESULT", it)
+            guess(isVocal, isAuto = false)
+            isVocal = false
+        }
+
         //warning seems ok, no need to override performClick
         microphoneButton.setOnTouchListener { _, event ->
             when (event.action) {
@@ -176,17 +198,10 @@ class DemoFragment : Fragment() {
                     voiceRecognizer.start()
                     isVocal = true
                 }
-                MotionEvent.ACTION_UP -> {
-                    voiceRecognizer.stop()
-                    gameViewModel.play()
 
-                    voiceRecognizer.ready.observe(requireActivity()) {
-                        if (it) {
-                            guess(isVocal, isAuto = false)
-                            voiceRecognizer.ready = MutableLiveData(false)
-                        }
-                    }
-                    isVocal = false
+                MotionEvent.ACTION_UP -> {
+                    gameViewModel.play()
+                    voiceRecognizer.stop()
                 }
             }
             true
@@ -267,7 +282,7 @@ class DemoFragment : Fragment() {
         heartImage.visibility = View.VISIBLE
         heartNumber.visibility = View.VISIBLE
         gameViewModel.lives.observe(requireActivity()) {
-            heartNumber.text = "x ${it}"
+            heartNumber.text = "x $it"
         }
     }
 

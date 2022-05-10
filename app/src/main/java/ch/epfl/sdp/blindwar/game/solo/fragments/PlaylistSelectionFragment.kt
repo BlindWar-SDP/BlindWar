@@ -15,6 +15,7 @@ import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.game.viewmodels.PlaylistViewModel
+import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 /**
  * Fragment that let the user choose the game playlist
@@ -24,6 +25,7 @@ import ch.epfl.sdp.blindwar.game.viewmodels.PlaylistViewModel
 class PlaylistSelectionFragment : Fragment() {
     //private lateinit var backButton: ImageButton
     private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
+    private val profileViewModel: ProfileViewModel by activityViewModels()
     private lateinit var playlistRecyclerView: RecyclerView
     private lateinit var searchBar: SearchView
     private lateinit var adapter: DisplayableItemAdapter
@@ -78,7 +80,8 @@ class PlaylistSelectionFragment : Fragment() {
             playlistViewModel.playlists.value as ArrayList<Displayable>,
             requireActivity(),
             view,
-            gameInstanceViewModel
+            gameInstanceViewModel,
+            profileViewModel
         )
         adapter = playlistRecyclerView.adapter as DisplayableItemAdapter
     }

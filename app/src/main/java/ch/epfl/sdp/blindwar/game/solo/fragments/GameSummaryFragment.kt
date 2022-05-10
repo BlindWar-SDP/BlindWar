@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.widget.ViewPager2
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.game.solo.SoloActivity
+import ch.epfl.sdp.blindwar.game.util.GameActivity
 import ch.epfl.sdp.blindwar.game.util.ViewPagerAdapter
 
 /**
@@ -46,7 +46,7 @@ class GameSummaryFragment : Fragment() {
 
         replay = view.findViewById<ImageButton>(R.id.replay).also { button ->
             button.setOnClickListener {
-                (requireActivity() as SoloActivity).removeAllFragments()
+                (requireActivity() as GameActivity).removeAllFragments()
                 activity?.supportFragmentManager?.beginTransaction()
                     ?.replace(R.id.play_container, DemoFragment(), "DEMO")
                     ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
