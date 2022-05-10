@@ -162,29 +162,20 @@ class DemoFragment : Fragment() {
 
         microphoneButton = view.findViewById(R.id.microphone)
         context?.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
+        // Create game summary
+        gameSummary = GameSummaryFragment()
 
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         voiceRecognizer.resultString.observe(viewLifecycleOwner) {
-            //voiceRecognizer.stop()
             guessEditText.setText(it)
-            //Log.d("VOICE RECOGNITION RESULT", it)
             guess(isVocal, isAuto = false)
             isVocal = false
         }
 
-        // Create game summary
-        gameSummary = GameSummaryFragment()
 
-        /** TODO : Settings menu
-        guessEditText.doOnTextChanged { text, _, _, _ ->
-        if (text != "" && (text!!.length > game.currentMetadata()?.title!!.length / 2.0)) {
-        isVocal = voiceRecognizer.resultsRecognized != ""
-        guess(false, isAuto = true) //guess as a keyboard at every change
-        }
-        } **/
 
         //warning seems ok, no need to override performClick
         microphoneButton.setOnTouchListener { _, event ->
@@ -220,7 +211,6 @@ class DemoFragment : Fragment() {
      */
     private fun createCountDown(): CountDownTimer {
         return object : CountDownTimer(duration.toLong(), 1000) {
-
             override fun onTick(millisUntilFinished: Long) {
                 duration = millisUntilFinished.toInt()
                 elapsed += 1000
@@ -262,7 +252,12 @@ class DemoFragment : Fragment() {
 
         } else {
             gameViewModel.play()
-            resumeAnim()
+
+            // Resume Animation
+            audioVisualizer.resumeAnimation()
+            startButton.setMinAndMaxFrame(10, 25)
+            startButton.playAnimation()
+
             restartChronometer()
             timer.start()
             true
@@ -429,15 +424,6 @@ class DemoFragment : Fragment() {
         audioVisualizer.pauseAnimation()
         startButton.setMinAndMaxFrame(30, 55)
         startButton.repeatCount = 0
-        startButton.playAnimation()
-    }
-
-    /**
-     * Animation played when the player pauses the game
-     */
-    private fun resumeAnim() {
-        audioVisualizer.resumeAnimation()
-        startButton.setMinAndMaxFrame(10, 25)
         startButton.playAnimation()
     }
 }
