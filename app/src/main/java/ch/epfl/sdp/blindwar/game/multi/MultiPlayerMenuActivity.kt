@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -24,19 +25,20 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private var eloDelta = 200
     private var dialog: AlertDialog? = null
     private var isCanceled = false
-    private lateinit var leaderboardButton: Button
+    private lateinit var leaderboardButton: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setContentView(R.layout.activity_multiplayer_menu)
+
         // Add leaderboardButton onClick
-        leaderboardButton = findViewById<Button>(R.id.leaderboardButton).apply {
+        leaderboardButton = findViewById<ImageButton>(R.id.leaderboardButton).apply {
             this.setOnClickListener {
                 showFragment(
                 DisplayHistoryFragment.newInstance("leaderboard"))
             }
         }
-        setContentView(R.layout.activity_multiplayer_menu)
         eloDelta = 200
     }
 
@@ -187,7 +189,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      */
     private fun showFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment_history_menu_container, fragment)
+            replace(R.id.fragment_multiplayer, fragment)
             commit()
         }
     }
