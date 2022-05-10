@@ -1,9 +1,17 @@
 package ch.epfl.sdp.blindwar.game.util
 
+import android.app.Activity
+import android.content.Context
 import android.os.CountDownTimer
 import android.widget.Filter
+import android.widget.ImageView
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import ch.epfl.sdp.blindwar.database.GlideApp
 import ch.epfl.sdp.blindwar.game.model.Displayable
+import com.bumptech.glide.Glide
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.firebase.storage.StorageReference
 import java.util.*
 
 object Util {
@@ -57,6 +65,20 @@ object Util {
                 onlinePlaylistSet.clear()
                 onlinePlaylistSet.addAll(results.values as ArrayList<Displayable>)
                 displayableItemAdapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+    fun updateProfileImage(liveData: LiveData<StorageReference>,
+                           imageView: ImageView,
+                           viewLifecycleOwner: LifecycleOwner,
+                           context: Context) {
+        liveData.observe(viewLifecycleOwner) {
+            if (it.path.isNotEmpty()) {
+                GlideApp.with(context)
+                    .load(it)
+                    .centerCrop()
+                    .into(imageView)
             }
         }
     }

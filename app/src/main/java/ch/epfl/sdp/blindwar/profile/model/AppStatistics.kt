@@ -99,13 +99,16 @@ class AppStatistics {
         } else {
             losses[mode.ordinal]++
         }
+
         val total = wins[mode.ordinal] + draws[mode.ordinal] + losses[mode.ordinal]
-        winPercent[mode.ordinal] = (wins[mode.ordinal].toFloat() / total.toFloat() * hundredPercent)
-        drawPercent[mode.ordinal] =
-            (draws[mode.ordinal].toFloat() / total.toFloat() * hundredPercent)
+        winPercent[mode.ordinal] = computePercentage(wins[mode.ordinal].toFloat(), total.toFloat())
+        drawPercent[mode.ordinal] = computePercentage(draws[mode.ordinal].toFloat(), total.toFloat())
         lossPercent[mode.ordinal] = 100F - winPercent[mode.ordinal] - drawPercent[mode.ordinal]
     }
 
+    private fun computePercentage(quantity: Float, total: Float): Float {
+        return quantity / total * hundredPercent
+    }
 
     /**
      * Updates ELO

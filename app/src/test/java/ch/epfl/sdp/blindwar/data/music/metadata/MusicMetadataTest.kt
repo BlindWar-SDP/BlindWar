@@ -1,7 +1,6 @@
 package ch.epfl.sdp.blindwar.data.music.metadata
 
-import ch.epfl.sdp.blindwar.data.music.MusicImageUrlConstants.METADATA_TUTORIAL_MUSICS_PER_AUTHOR
-import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
+import ch.epfl.sdp.blindwar.game.util.GameUtil.metadataTutorial
 import junit.framework.TestCase
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
@@ -16,7 +15,7 @@ class MusicMetadataTest : TestCase() {
 
     fun testGetTitle() {
         val expected = "Lady Gaga"
-        val musicMetaData = METADATA_TUTORIAL_MUSICS_PER_AUTHOR["Lady Gaga"]!!
+        val musicMetaData = metadataTutorial()["Lady Gaga"]!!
         assertThat(musicMetaData.artist, `is`(expected))
     }
 
@@ -28,7 +27,7 @@ class MusicMetadataTest : TestCase() {
 
     fun testGetImageUrl() {
         val expected = "https://i.scdn.co/image/ab67616d0000b273b33d46dfa2635a47eebf63b2"
-        val musicMetaData = METADATA_TUTORIAL_MUSICS_PER_AUTHOR["Daft Punk"]!!
+        val musicMetaData = metadataTutorial()["Daft Punk"]!!
         assertThat(musicMetaData.imageUrl, `is`(expected))
     }
 }
