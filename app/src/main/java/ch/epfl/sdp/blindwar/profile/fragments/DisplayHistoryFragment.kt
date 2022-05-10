@@ -14,7 +14,7 @@ import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.profile.model.User
-import ch.epfl.sdp.blindwar.profile.util.LeaderboardRecyclerAdapter
+import ch.epfl.sdp.blindwar.profile.util.MatchHistoryRecyclerAdapter
 import ch.epfl.sdp.blindwar.profile.util.MusicDisplayRecyclerAdapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -209,7 +209,7 @@ class DisplayHistoryFragment : Fragment() {
                 lossesList[i] = sortedPseudoUsers[i].second.losses
             }
 
-            musicRecyclerView.adapter = LeaderboardRecyclerAdapter(titles, artists, images,
+            musicRecyclerView.adapter = MatchHistoryRecyclerAdapter(titles, artists, images,
                 winsList, lossesList)
         }
 

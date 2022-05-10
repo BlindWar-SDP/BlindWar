@@ -7,22 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 
-/**
- * Class to handle the RecyclerView used to display a leaderboard with rank, pseudo and elo of
- * each User.
- *
- * @property ranks
- * @property pseudos
- * @property elos
- * @property wins
- * @property losses
- */
-class LeaderboardRecyclerAdapter(
-    private var ranks: List<String>,
-    private var pseudos: List<String>,
-    private var elos: List<String>,
-    private var wins: List<String>,
-    private var losses: List<String>
+class MatchHistoryRecyclerAdapter(
+    private var victories: List<String>,
+    private var gameMode: List<String>,
+    private var rounds: List<String>,
+    private var scores: List<String>
 ) :
 
     RecyclerView.Adapter<MatchHistoryRecyclerAdapter.ViewHolder>() {

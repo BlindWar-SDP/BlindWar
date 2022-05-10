@@ -135,7 +135,7 @@
                 android:layout_gravity="center"/>
         </LinearLayout>
     </ScrollView>
-    
+
     <ImageButton
         android:id="@+id/leaderboardButton"
         android:layout_width="48dp"
