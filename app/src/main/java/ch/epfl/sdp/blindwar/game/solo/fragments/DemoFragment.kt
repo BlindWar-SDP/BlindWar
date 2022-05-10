@@ -38,7 +38,6 @@ import java.util.*
  * @constructor creates a DemoFragment
  */
 class DemoFragment : Fragment() {
-
     // VIEW MODELS
     lateinit var gameViewModel: GameViewModel
     private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
@@ -175,8 +174,6 @@ class DemoFragment : Fragment() {
             isVocal = false
         }
 
-
-
         //warning seems ok, no need to override performClick
         microphoneButton.setOnTouchListener { _, event ->
             when (event.action) {
@@ -194,14 +191,18 @@ class DemoFragment : Fragment() {
             true
         }
 
+        startGame()
+
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun startGame() {
         // Start the game
         gameViewModel.nextRound()
         gameViewModel.play()
         musicMetadata = gameViewModel.currentMetadata()!!
         guessEditText.hint = musicMetadata.artist
         timer.start()
-
-        super.onViewCreated(view, savedInstanceState)
     }
 
     /**
@@ -235,7 +236,14 @@ class DemoFragment : Fragment() {
         guessButton.visibility = code
         scoreTextView.visibility = code
         guessEditText.visibility = code
-        setAnimVisibility(code)
+
+        // Set animation visibility
+        crossAnim.visibility = code
+        countDown.visibility = code
+        audioVisualizer.visibility = code
+        startButton.visibility = code
+        microphoneButton.visibility = code
+        view?.findViewById<ImageButton>(R.id.guessButton)?.visibility = code
     }
 
     /**
@@ -244,7 +252,12 @@ class DemoFragment : Fragment() {
     private fun playAndPause() {
         playing = if (playing) {
             gameViewModel.pause()
-            pauseAnim()
+            // Pause Animation
+            audioVisualizer.pauseAnimation()
+            startButton.setMinAndMaxFrame(30, 55)
+            startButton.repeatCount = 0
+            startButton.playAnimation()
+            // Timer cancel
             timer.cancel()
             timer = createCountDown()
             chronometer.stop()
@@ -298,7 +311,10 @@ class DemoFragment : Fragment() {
                 .hideSoftInputFromWindow(view?.windowToken, 0)
             launchSongSummary(success = true)
         } else if (!isAuto) {
-            animNotFound()
+            /** Resets the base frame value of the animation and keep the reversing mode **/
+            crossAnim.repeatMode = LottieDrawable.RESTART
+            crossAnim.repeatMode = LottieDrawable.REVERSE
+            crossAnim.playAnimation()
         }
     }
 
@@ -390,40 +406,5 @@ class DemoFragment : Fragment() {
         timer.cancel()
         voiceRecognizer.destroy()
         super.onDestroy()
-    }
-
-    // ANIMATIONS
-    /**
-     * Setter for the animation visibility
-     *
-     * @param code visibility code : VISIBLE or GONE
-     */
-    private fun setAnimVisibility(code: Int) {
-        crossAnim.visibility = code
-        countDown.visibility = code
-        audioVisualizer.visibility = code
-        startButton.visibility = code
-        microphoneButton.visibility = code
-        view?.findViewById<ImageButton>(R.id.guessButton)?.visibility = code
-    }
-
-    /**
-     * Animation played when the player has a wrong guess
-     */
-    private fun animNotFound() {
-        /** Resets the base frame value of the animation and keep the reversing mode **/
-        crossAnim.repeatMode = LottieDrawable.RESTART
-        crossAnim.repeatMode = LottieDrawable.REVERSE
-        crossAnim.playAnimation()
-    }
-
-    /**
-     * Animation played when the player pauses the game
-     */
-    private fun pauseAnim() {
-        audioVisualizer.pauseAnimation()
-        startButton.setMinAndMaxFrame(30, 55)
-        startButton.repeatCount = 0
-        startButton.playAnimation()
     }
 }

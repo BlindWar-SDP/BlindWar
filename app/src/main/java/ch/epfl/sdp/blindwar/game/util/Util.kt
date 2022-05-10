@@ -69,7 +69,6 @@ object Util {
         }
     }
 
-
     fun updateProfileImage(liveData: LiveData<StorageReference>,
                            imageView: ImageView,
                            viewLifecycleOwner: LifecycleOwner,

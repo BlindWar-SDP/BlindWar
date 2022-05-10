@@ -9,6 +9,7 @@ import ch.epfl.sdp.blindwar.audio.ReadyMediaPlayer
 import ch.epfl.sdp.blindwar.data.music.MusicImageUrlConstants
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.data.music.metadata.ResourceMusicMetadata
+import ch.epfl.sdp.blindwar.game.util.GameUtil
 import java.util.*
 
 class ResourceFetcher(
@@ -32,7 +33,7 @@ class ResourceFetcher(
                 .toString()
 
         // Set the metadata
-        val baseMetadata = MusicImageUrlConstants.METADATA_TUTORIAL_MUSICS_PER_AUTHOR[author]
+        val baseMetadata = GameUtil.metadataTutorial()[author]
 
         val updateMetadata =
             baseMetadata?.artist?.let {

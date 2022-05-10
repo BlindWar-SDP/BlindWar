@@ -7,6 +7,25 @@ import ch.epfl.sdp.blindwar.data.music.metadata.ResourceMusicMetadata
  * Hard coded constants for demo purposes
  */
 object MusicImageUrlConstants {
+
+    /**
+    lateinit var METADATA_TUTORIAL_MUSICS_PER_AUTHOR: Map<String, ResourceMusicMetadata>
+
+    init {
+        METADATA_TUTORIAL_MUSICS_PER_AUTHOR =
+            mutableMapOf<String, ResourceMusicMetadata>().let {
+                for ((index, key) in keys.withIndex()) {
+                    it[key.first] = ResourceMusicMetadata(
+                        artist = key.first,
+                        title = key.second,
+                        imageUrl = urls[index],
+                        duration = durations[index],
+                        resourceId = ids[index]
+                    )
+                }
+                it
+            }
+    }
     private const val ACDC: String =
         "https://i.scdn.co/image/ab67616d0000b27351c02a77d09dfcd53c8676d0"
     private const val DAFT_PUNK: String =
@@ -35,27 +54,33 @@ object MusicImageUrlConstants {
         RENAUD,
         RHCP,
         SUM_41,
-        ReverseMusicConstants.MICHAEL_JACKSON
+        ReverseMusicConstants.MICHAEL_JACKSON,
+        ReverseMusicConstants.QUEEN,
+        ReverseMusicConstants.THE_BEATLES,
+        ReverseMusicConstants.KLAUS_BADELT,
+        ReverseMusicConstants.LED_ZEPPELIN,
+        ReverseMusicConstants.DEEP_PURPLE,
+        ReverseMusicConstants.THE_CHAMPS
     )
 
     private val keys = listOf(
-        "Lady Gaga",
-        "Gorillaz",
-        "ACDC",
-        "The Notorious BIG",
-        "The Clash",
-        "Renaud",
-        "Red Hot Chili Peppers",
-        "Sum 41",
+        Pair("Lady Gaga", "Poker Face"),
+        Pair("Gorillaz", "Feel Good Inc"),
+        Pair("ACDC", "Highway to Hell"),
+        Pair("The Notorious BIG", "Respect"),
+        Pair("The Clash", "London Calling"),
+        Pair("Renaud", "Mistral Gagnant"),
+        Pair("Red Hot Chili Peppers", "Californication"),
+        Pair("Sum 41", "In Too Deep"),
+        Pair("Daft Punk", "One More Time"),
         // REVERSED
-        "Daft Punk",
-        "Michael Jackson",
-        "Queen",
-        "The Beatles",
-        "Klaus Badelt",
-        "Deep Purple",
-        "Led Zeppelin",
-        "The Champs"
+        Pair("Michael Jackson", "Billie Jean"),
+        Pair("Queen", "Bohemian Rhapsody"),
+        Pair("The Beatles", "Hey Jude"),
+        Pair("Klaus Badelt", "Pirates of the Caribbean"),
+        Pair("Deep Purple", "Smoke on the water"),
+        Pair("Led Zeppelin", "Stairway to Heaven"),
+        Pair("The Champs", "Tequila")
     )
 
     private val ids = listOf(
@@ -67,59 +92,33 @@ object MusicImageUrlConstants {
         R.raw.renaud_mistral_gagnant,
         R.raw.red_hot_chili_peppers_californication,
         R.raw.sum_41_in_too_deep,
-        R.raw.daft_punk_one_more_time
+        R.raw.daft_punk_one_more_time,
+        ReverseMusicConstants.idList[0],
+        ReverseMusicConstants.idList[1],
+        ReverseMusicConstants.idList[2],
+        ReverseMusicConstants.idList[3],
+        ReverseMusicConstants.idList[4],
+        ReverseMusicConstants.idList[5],
+        ReverseMusicConstants.idList[6]
     )
 
-    val METADATA_TUTORIAL_MUSICS_PER_AUTHOR: Map<String, ResourceMusicMetadata> =
-        mutableMapOf<String, ResourceMusicMetadata>().let {
-            it["Lady Gaga"] = ResourceMusicMetadata(
-                "Poker Face",
-                "Lady Gaga",
-                LADY_GAGA,
-                214000,
-                resourceId = ids[0]
-            )
-            it["Gorillaz"] =
-                ResourceMusicMetadata("Feel Good Inc", "Gorillaz", GORILLAZ, 254000, ids[1])
-            it["ACDC"] = ResourceMusicMetadata("Highway To Hell", "ACDC", ACDC, 207000, ids[2])
-            it["The Notorious BIG"] = ResourceMusicMetadata(
-                "Respect",
-                "The Notorious BIG",
-                THE_NOTORIOUS,
-                3200000,
-                ids[3]
-            )
-            it["The Clash"] =
-                ResourceMusicMetadata("London Calling", "The Clash", THE_CLASH, 203000, ids[4])
-            it["Renaud"] =
-                ResourceMusicMetadata("Mistral Gagnant", "Renaud", RENAUD, 162000, ids[5])
-            it["Red Hot Chili Peppers"] = ResourceMusicMetadata(
-                "Californication",
-                "Red Hot Chili Peppers",
-                RHCP,
-                321000,
-                ids[6]
-            )
-            it["Sum 41"] = ResourceMusicMetadata("In Too Deep", "Sum 41", SUM_41, 222000, ids[7])
-            it["Daft Punk"] =
-                ResourceMusicMetadata("One More Time", "Daft Punk", DAFT_PUNK, 321000, ids[8])
-
-
-            it["Michael Jackson"] = ResourceMusicMetadata("Billie Jean", "Michael Jackson",
-                ReverseMusicConstants.MICHAEL_JACKSON, 30000, resourceId = ReverseMusicConstants.idList[0])
-            it["Queen"] = ResourceMusicMetadata("Bohemian Rhapsody", "Queen",
-                ReverseMusicConstants.QUEEN, 30000, ReverseMusicConstants.idList[1])
-            it["The Beatles"] = ResourceMusicMetadata("Hey Jude", "The Beatles",
-                ReverseMusicConstants.THE_BEATLES, 30000, ReverseMusicConstants.idList[2])
-            it["Klaus Badelt"] = ResourceMusicMetadata("Pirates of the Caribbean", "Klaus Badelt",
-                ReverseMusicConstants.KLAUS_BADELT, 30000, ReverseMusicConstants.idList[3])
-            it["Deep Purple"] = ResourceMusicMetadata("Smoke on the water", "Deep Purple",
-                ReverseMusicConstants.DEEP_PURPLE, 30000, ReverseMusicConstants.idList[4])
-            it["Led Zeppelin"] = ResourceMusicMetadata("Stairway to Heaven", "Led Zeppelin",
-                ReverseMusicConstants.LED_ZEPPELIN, 30000, ReverseMusicConstants.idList[5])
-            it["The Champs"] = ResourceMusicMetadata("Tequila", "The Champs",
-                ReverseMusicConstants.THE_CHAMPS, 30000, ReverseMusicConstants.idList[6])
-            it
-        }
-
+    private val durations = listOf(
+        214000,
+        254000,
+        207000,
+        3200000,
+        203000,
+        162000,
+        321000,
+        222000,
+        321000,
+        30000,
+        30000,
+        30000,
+        30000,
+        30000,
+        30000,
+        30000
+    )
+    **/
 }
