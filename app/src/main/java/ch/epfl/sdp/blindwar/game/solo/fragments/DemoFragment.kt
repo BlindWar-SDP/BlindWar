@@ -32,7 +32,6 @@ import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import java.util.*
 
-
 /**
  * Fragment containing the UI logic of a solo game
  *
@@ -106,12 +105,9 @@ class DemoFragment : Fragment() {
         gameViewModel.init()
 
         // Retrieve the game duration from the GameInstance object
-        duration = gameInstanceViewModel
-            .gameInstance
-            .value
-            ?.gameConfig
-            ?.parameter
-            ?.timeToFind!!
+        duration = gameInstanceViewModel.gameInstance.value?.gameConfig
+                                                           ?.parameter
+                                                           ?.timeToFind!!
 
         // Create and start countdown
         timer = createCountDown()
@@ -135,18 +131,8 @@ class DemoFragment : Fragment() {
             }
         }
 
-        // Create game summary
-        gameSummary = GameSummaryFragment()
-
-        // Start the game
-        gameViewModel.nextRound()
-        gameViewModel.play()
-        musicMetadata = gameViewModel.currentMetadata()!!
-        timer.start()
-
         // Get the widgets
         guessEditText = view.findViewById(R.id.guessEditText)
-        guessEditText.hint = musicMetadata.artist
         scoreTextView = view.findViewById(R.id.scoreTextView)
         guessButton = view.findViewById<ImageButton>(R.id.guessButton).also {
             it.setOnClickListener {
@@ -174,17 +160,13 @@ class DemoFragment : Fragment() {
         audioVisualizer = view.findViewById(R.id.audioVisualizer)
         startButton.setMinAndMaxFrame(30, 50)
 
-        /** TODO : Settings menu
-        guessEditText.doOnTextChanged { text, _, _, _ ->
-        if (text != "" && (text!!.length > game.currentMetadata()?.title!!.length / 2.0)) {
-        isVocal = voiceRecognizer.resultsRecognized != ""
-        guess(false, isAuto = true) //guess as a keyboard at every change
-        }
-        } **/
-
         microphoneButton = view.findViewById(R.id.microphone)
         context?.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
 
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         voiceRecognizer.resultString.observe(viewLifecycleOwner) {
             //voiceRecognizer.stop()
             guessEditText.setText(it)
@@ -192,6 +174,17 @@ class DemoFragment : Fragment() {
             guess(isVocal, isAuto = false)
             isVocal = false
         }
+
+        // Create game summary
+        gameSummary = GameSummaryFragment()
+
+        /** TODO : Settings menu
+        guessEditText.doOnTextChanged { text, _, _, _ ->
+        if (text != "" && (text!!.length > game.currentMetadata()?.title!!.length / 2.0)) {
+        isVocal = voiceRecognizer.resultsRecognized != ""
+        guess(false, isAuto = true) //guess as a keyboard at every change
+        }
+        } **/
 
         //warning seems ok, no need to override performClick
         microphoneButton.setOnTouchListener { _, event ->
@@ -210,7 +203,14 @@ class DemoFragment : Fragment() {
             true
         }
 
-        return view
+        // Start the game
+        gameViewModel.nextRound()
+        gameViewModel.play()
+        musicMetadata = gameViewModel.currentMetadata()!!
+        guessEditText.hint = musicMetadata.artist
+        timer.start()
+
+        super.onViewCreated(view, savedInstanceState)
     }
 
     /**

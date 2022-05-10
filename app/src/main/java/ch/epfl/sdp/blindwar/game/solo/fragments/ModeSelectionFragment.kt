@@ -52,18 +52,7 @@ class ModeSelectionFragment : Fragment() {
         regularButton = view.findViewById(R.id.regularButton_)
         raceButton = view.findViewById(R.id.raceButton_)
         survivalButton = view.findViewById(R.id.survivalButton_)
-
-        val buttons = arrayListOf(regularButton, survivalButton, raceButton)
-
-        for (button in buttons) {
-            selectMode(button)
-        }
-
-        backButton = view.findViewById<ImageButton>(R.id.back_button).also {
-            it.setOnClickListener {
-                activity?.onBackPressed()
-            }
-        }
+        backButton = view.findViewById(R.id.back_button)
 
         particles = arrayListOf(
             view.findViewById(R.id.particles),
@@ -77,15 +66,24 @@ class ModeSelectionFragment : Fragment() {
             view.findViewById(R.id.chrono), view.findViewById(R.id.chrono2)
         )
 
-        funnyCheck = view.findViewById<CheckBox>(R.id.checkBox).also { checkBox ->
-            checkBox.setOnClickListener {
-                checked = !checked
-                setAnimationsSpeed()
-                toggleParticles()
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val buttons = arrayListOf(regularButton, survivalButton, raceButton)
+
+        for (button in buttons) {
+            selectMode(button)
+        }
+
+        backButton.also {
+            it.setOnClickListener {
+                activity?.onBackPressed()
             }
         }
 
-        return view
+        setCheckBox(view)
+        super.onViewCreated(view, savedInstanceState)
     }
 
     /**
@@ -127,6 +125,16 @@ class ModeSelectionFragment : Fragment() {
     }
     }
      **/
+
+    private fun setCheckBox(view: View) {
+        funnyCheck = view.findViewById<CheckBox>(R.id.checkBox).also { checkBox ->
+            checkBox.setOnClickListener {
+                checked = !checked
+                setAnimationsSpeed()
+                toggleParticles()
+            }
+        }
+    }
 
     /**
      * Change the animation speed when the funny mode parameter is (un)checked

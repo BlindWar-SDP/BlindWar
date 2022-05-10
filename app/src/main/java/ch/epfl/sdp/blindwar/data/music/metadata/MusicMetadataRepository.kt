@@ -27,15 +27,6 @@ class MusicMetadataRepository {
         get() = _musicMetadatas
 
     /**
-     * Fetches music metadata from local mock source
-     *
-
-    private fun fetchMusicMetadata(): MutableLiveData<ArrayList<MusicMetadata>> {
-        return MutableLiveData(ch.epfl.sdp.blindwar.data.MockMusicdataSource.fetchMusicMetadata())
-    }
-    **/
-
-    /**
      * Fetches music metadata from remote source
      *
      * @param query

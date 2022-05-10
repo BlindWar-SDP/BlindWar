@@ -26,6 +26,38 @@ object MusicImageUrlConstants {
     private const val SUM_41: String =
         "https://i.scdn.co/image/ab67616d0000b2739a482180e6a306229bff49dc"
 
+    private val urls = listOf(
+        LADY_GAGA, // LADY GAGA
+       GORILLAZ, // GORILLAZ
+        ACDC, // ACDC
+        THE_NOTORIOUS, // THE NOTORIOUS
+        THE_CLASH,
+        RENAUD,
+        RHCP,
+        SUM_41,
+        ReverseMusicConstants.MICHAEL_JACKSON
+    )
+
+    private val keys = listOf(
+        "Lady Gaga",
+        "Gorillaz",
+        "ACDC",
+        "The Notorious BIG",
+        "The Clash",
+        "Renaud",
+        "Red Hot Chili Peppers",
+        "Sum 41",
+        // REVERSED
+        "Daft Punk",
+        "Michael Jackson",
+        "Queen",
+        "The Beatles",
+        "Klaus Badelt",
+        "Deep Purple",
+        "Led Zeppelin",
+        "The Champs"
+    )
+
     private val ids = listOf(
         R.raw.lady_gaga_poker_face,
         R.raw.gorillaz_feel_good,
@@ -71,6 +103,8 @@ object MusicImageUrlConstants {
             it["Sum 41"] = ResourceMusicMetadata("In Too Deep", "Sum 41", SUM_41, 222000, ids[7])
             it["Daft Punk"] =
                 ResourceMusicMetadata("One More Time", "Daft Punk", DAFT_PUNK, 321000, ids[8])
+
+
             it["Michael Jackson"] = ResourceMusicMetadata("Billie Jean", "Michael Jackson",
                 ReverseMusicConstants.MICHAEL_JACKSON, 30000, resourceId = ReverseMusicConstants.idList[0])
             it["Queen"] = ResourceMusicMetadata("Bohemian Rhapsody", "Queen",
