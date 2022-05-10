@@ -7,5 +7,5 @@ class URIMusicMetadata(title: String = "",
                        val uri: String = ""): MusicMetadata(title, artist, imageUrl, duration)
 {
     override fun getPreviewUrl(): String {
-        return uri
-    } }
+        return uri }
+                       }

@@ -21,13 +21,18 @@ import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.audio.AudioHelper
+import ch.epfl.sdp.blindwar.database.MatchDatabase.createMatch
 import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.model.Playlist
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.profile.model.User
+import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -46,7 +51,8 @@ class DisplayableItemAdapter(
     private var displayableList: ArrayList<Displayable>,
     private val context: Context,
     private val viewFragment: View,
-    private val gameInstanceViewModel: GameInstanceViewModel
+    private val gameInstanceViewModel: GameInstanceViewModel,
+    private val profileViewModel: ProfileViewModel
 ) :
     RecyclerView.Adapter<DisplayableItemAdapter.DisplayableItemViewHolder>() {
 
@@ -183,14 +189,33 @@ class DisplayableItemAdapter(
                     playlist = playlist
                 )
 
-                (context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                    .replace(
-                        (viewFragment.parent as ViewGroup).id,
-                        DemoFragment(),
-                        "DEMO"
-                    )
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
+                // Separate solo logic from multiplayer one
+                when(gameInstanceViewModel.gameInstance.value?.gameFormat){
+                    GameFormat.SOLO -> {
+                        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                            .replace(
+                                (viewFragment.parent as ViewGroup).id,
+                                DemoFragment(),
+                                "DEMO"
+                            )
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .commit()
+                    }
+                    GameFormat.MULTI -> {
+                        // TODO : Use the new mutable live data to respect the view model architecture
+                        // Create the match object
+                        createMatch(User(), 10, gameInstanceViewModel.gameInstance.value!!, FirebaseFirestore.getInstance())
+
+                        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                            .replace(
+                                (viewFragment.parent as ViewGroup).id,
+                                DemoFragment(),
+                                "DEMO"
+                            )
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .commit()
+                    }
+                }
             }
         }
 
@@ -281,9 +306,9 @@ class DisplayableItemAdapter(
      */
     companion object {
         const val ROUND_MIN_VALUE = 1
-        const val ROUND_DEFAULT_VALUE = Tutorial.ROUND
+        const val ROUND_DEFAULT_VALUE = GameUtil.ROUND
         const val TIMER_MIN_VALUE = 1
-        const val TIMER_DEFAULT_VALUE = Tutorial.TIME_TO_FIND / 5000
+        const val TIMER_DEFAULT_VALUE = GameUtil.TIME_TO_FIND / 5000
         const val TIMER_MAX_VALUE = 9
         const val DURATION_FAST = 20000L
         const val DURATION_DEFAULT = 30000L

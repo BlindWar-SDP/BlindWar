@@ -82,7 +82,7 @@ class UserAdditionalInfoActivity : AppCompatActivity() {
         datePickerDialog.datePicker.maxDate = calendar.timeInMillis
         calendar.add(Calendar.YEAR, -maxAge)
         datePickerDialog.datePicker.minDate = calendar.timeInMillis
-        datePickerDialog.setIcon(R.drawable.logo);
+        datePickerDialog.setIcon(R.drawable.logo)
         datePickerDialog.setTitle(R.string.new_user_birthdatePicker)
         datePickerDialog.show()
     }

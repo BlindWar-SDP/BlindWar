@@ -9,109 +9,133 @@
 
 
     <ImageView
+        android:id="@+id/imageView_background_multi"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/content_description_background_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@color/prussian_blue" />
 
-    <ImageView
-        android:id="@+id/imageFriendsButton"
-        android:layout_width="214dp"
-        android:layout_height="213dp"
-        android:contentDescription="@string/oval_description"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:onClick="friendButton"
-        android:src="@drawable/transparent_rectangle_green"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.214" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView_background_multi">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="@+id/imageView_background_multi"
+            android:fillViewport="true">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="25dp">
 
-    <ImageView
-        android:id="@+id/imageRandomButton"
-        android:layout_width="214dp"
-        android:layout_height="213dp"
-        android:contentDescription="@string/oval_description"
-        android:onClick="randomButton"
-        android:src="@drawable/transparent_rectangle_green"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.772" />
+                <ImageView
+                    android:id="@+id/imageFriendsButton"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:contentDescription="@string/oval_description"
+                    android:icon="@android:drawable/ic_menu_preferences"
+                    android:onClick="friendButton"
+                    android:src="@drawable/transparent_rectangle_green" />
 
-    <ImageView
-        android:layout_width="168dp"
-        android:layout_height="144dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageFriendsButton"
-        app:layout_constraintEnd_toEndOf="@+id/imageFriendsButton"
-        app:layout_constraintStart_toStartOf="@+id/imageFriendsButton"
-        app:layout_constraintTop_toTopOf="@+id/imageFriendsButton"
-        app:layout_constraintVertical_bias="0.270"
-        app:srcCompat="@drawable/ic_baseline_group_24"
-        android:contentDescription="@string/icon_for_playing_with_friends" />
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/icon_for_playing_with_friends"
+                    app:srcCompat="@drawable/ic_baseline_group_24" />
 
-    <ImageView
-        android:layout_width="168dp"
-        android:layout_height="144dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageRandomButton"
-        app:layout_constraintEnd_toEndOf="@+id/imageRandomButton"
-        app:layout_constraintStart_toStartOf="@+id/imageRandomButton"
-        app:layout_constraintTop_toTopOf="@+id/imageRandomButton"
-        app:layout_constraintVertical_bias="0.270"
-        app:srcCompat="@drawable/ic_baseline_person_search_24"
-        android:contentDescription="@string/icon_for_playing_with_random_people" />
+                <TextView
+                    android:id="@+id/friendView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:text="@string/play_with_friends"
+                    android:textColor="#3F88C5"
+                    android:textSize="20sp" />
+            </FrameLayout>
 
-    <ImageView
-        android:layout_width="168dp"
-        android:layout_height="144dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageFriendsButton"
-        app:layout_constraintEnd_toEndOf="@+id/imageFriendsButton"
-        app:layout_constraintStart_toStartOf="@+id/imageFriendsButton"
-        app:layout_constraintTop_toTopOf="@+id/imageFriendsButton"
-        app:layout_constraintVertical_bias="0.270"
-        app:srcCompat="@drawable/ic_baseline_group_24"
-        android:contentDescription="@string/icon_for_playing_with_friends" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="25dp">
 
-    <TextView
-        android:id="@+id/friendView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:text="@string/play_with_friends"
-        android:textColor="#3F88C5"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageFriendsButton"
-        app:layout_constraintEnd_toEndOf="@+id/imageFriendsButton"
-        app:layout_constraintHorizontal_bias="0.521"
-        app:layout_constraintStart_toStartOf="@+id/imageFriendsButton"
-        app:layout_constraintTop_toTopOf="@+id/imageFriendsButton"
-        app:layout_constraintVertical_bias="0.870" />
+                <ImageView
+                    android:id="@+id/imageRandomButton"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:contentDescription="@string/oval_description"
+                    android:onClick="randomButton"
+                    android:src="@drawable/transparent_rectangle_green" />
 
-    <TextView
-        android:id="@+id/randomView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:text="@string/play_with_random"
-        android:textColor="#3F88C5"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageRandomButton"
-        app:layout_constraintEnd_toEndOf="@+id/imageRandomButton"
-        app:layout_constraintHorizontal_bias="0.521"
-        app:layout_constraintStart_toStartOf="@+id/imageRandomButton"
-        app:layout_constraintTop_toTopOf="@+id/imageRandomButton"
-        app:layout_constraintVertical_bias="0.870" />
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/icon_for_playing_with_random_people"
+                    app:srcCompat="@drawable/ic_baseline_person_search_24" />
 
+                <TextView
+                    android:id="@+id/randomView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:text="@string/play_with_random"
+                    android:textColor="#3F88C5"
+                    android:textSize="20sp" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="25dp">
+
+                <ImageView
+                    android:id="@+id/imageCreateButton"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:contentDescription="@string/oval_description"
+                    android:onClick="createMatch"
+                    android:src="@drawable/transparent_rectangle_green" />
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/icon_for_playing_with_random_people"
+                    app:srcCompat="@drawable/ic_baseline_add" />
+
+                <TextView
+                    android:id="@+id/createMatchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:text="@string/multi_create_match"
+                    android:textColor="#3F88C5"
+                    android:textSize="20sp" />
+            </FrameLayout>
+            <Button
+                android:id="@+id/cancel_multi_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel_btn"
+                android:onClick="cancel"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+    </ScrollView>
+    
     <ImageButton
         android:id="@+id/leaderboardButton"
         android:layout_width="48dp"

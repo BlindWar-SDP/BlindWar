@@ -17,6 +17,7 @@ class MusicMetadataViewModel: ViewModel() {
     fun fetchMusicMetadata(query: String): MutableLiveData<ArrayList<MusicMetadata>> {
         viewModelScope.launch {
             repository.fetchMusicMetadataSpotify(query)
+            repository.fetchMusicMetadataDatabase()
             repository.musicMetadata.observeForever{
                 metadata.postValue(it)
             }
