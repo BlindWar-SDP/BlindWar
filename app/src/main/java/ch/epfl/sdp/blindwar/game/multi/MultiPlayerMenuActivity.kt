@@ -29,7 +29,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private var dialog: AlertDialog? = null
     private var isCanceled = false
     private var listener: ListenerRegistration? = null
-    private lateinit var toast: Toast
+    private var toast: Toast? = null
 
     companion object {
         private const val LIMIT_MATCH: Long = 10
@@ -38,7 +38,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_multiplayer_menu)
-        toast = Toast.makeText(applicationContext, "default", Toast.LENGTH_SHORT)
         eloDelta = 200
     }
 
@@ -101,16 +100,14 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             }
             if (match == null && !isCanceled) {
                 dialog!!.hide()
-                toast.setText(getString(R.string.toast_connexion))
-                toast.show()
+                displayToast(R.string.toast_connexion)
                 eloDelta += 100
                 randomButton(view)
             } else if (!isCanceled) {
                 setListener(match!!)
             }
         } else if (!isCanceled) {
-            toast.setText(getString(R.string.toast_connexion_internet))
-            toast.show()
+            displayToast(R.string.toast_connexion_internet)
             dialog!!.hide()
             listener?.remove()
             randomButton(view)
@@ -130,8 +127,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         ) { it, _ -> it.cancel() }
         builder.setOnCancelListener {
             isCanceled = true
-            toast.setText(getString(R.string.toast_canceled_connexion))
-            toast.show()
+            displayToast(R.string.toast_canceled_connexion)
         }
         val view = View.inflate(applicationContext, R.layout.fragment_dialog_loading, null)
         builder.setView(view)
@@ -148,7 +144,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @return
      */
     private fun parseDynamicLink(uri: String): String? {
-        if (uri.substring(0, 29) != "https://blindwar.ch/game?uid=")
+        if (uri.length < 30 || uri.substring(0, 29) != "https://blindwar.ch/game?uid=")
             return null
         return uri.trim().substring(29) //https://blindwar.ch/game + ?uid=
     }
@@ -172,15 +168,13 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                     Firebase.firestore
                 )
             if (connect == null && !isCanceled) {
-                toast.setText(getString(R.string.multi_match_full))
-                toast.show()
+                displayToast(R.string.multi_match_full)
                 dialog!!.hide()
             } else if (!isCanceled) {
                 setListener(matchDoc)
             }
         } else if (!isCanceled) {
-            toast.setText(getString(R.string.multi_match_not_found))
-            toast.show()
+            displayToast(R.string.multi_match_not_found)
             dialog!!.hide()
         }
     }
@@ -193,17 +187,17 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setCancelable(true)
         val view = View.inflate(applicationContext, R.layout.fragment_multi_connexion_link, null)
+        val editText = view.findViewById<EditText>(R.id.editTextLink)
         builder.setView(view)
         builder.setNeutralButton(resources.getText(R.string.cancel_btn)) { di, _ -> di.cancel() }
         builder.setPositiveButton(resources.getText(R.string.ok)) { _, _ ->
-            val uri = findViewById<EditText>(R.id.editTextLink).text.toString()
+            val uri = editText.text.toString()
             val isCorrect = parseDynamicLink(uri)
             if (isCorrect != null) {
                 connectToDB(isCorrect)
                 dialog!!.hide()
             } else {
-                toast.setText(R.string.multi_bad_link)
-                toast.show()
+                displayToast(R.string.multi_bad_link)
             }
         }
         dialog = builder.create()
@@ -234,5 +228,17 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                 //TODO launch game
             }
         }
+    }
+
+    /**
+     * Display a toast from a string resource and cancel any toast currently displayed
+     *
+     * @param message
+     */
+    private fun displayToast(message: Int) {
+        toast?.cancel()
+        toast = Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
+        toast?.show()
+
     }
 }
