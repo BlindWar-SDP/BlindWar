@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -41,6 +42,24 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_multiplayer_menu)
+        val match = MatchDatabase.getMatch(
+            UserDatabase.getCurrentUser()?.child("uid")?.value.toString(),
+            Firebase.firestore
+        )
+
+        if (match != null) {
+            findViewById<FrameLayout>(R.id.frameLayout_create).visibility = View.GONE
+            findViewById<FrameLayout>(R.id.frameLayout_join).visibility = View.VISIBLE
+            findViewById<FrameLayout>(R.id.frameLayout_link).visibility = View.GONE
+            findViewById<FrameLayout>(R.id.frameLayout_play).visibility = View.GONE
+            findViewById<FrameLayout>(R.id.frameLayout_quit).visibility = View.VISIBLE
+        } else {
+            findViewById<FrameLayout>(R.id.frameLayout_create).visibility = View.VISIBLE
+            findViewById<FrameLayout>(R.id.frameLayout_join).visibility = View.GONE
+            findViewById<FrameLayout>(R.id.frameLayout_link).visibility = View.VISIBLE
+            findViewById<FrameLayout>(R.id.frameLayout_play).visibility = View.VISIBLE
+            findViewById<FrameLayout>(R.id.frameLayout_quit).visibility = View.GONE
+        }
         eloDelta = DEFAULT_ELO
     }
 
@@ -249,5 +268,24 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         toast?.cancel()
         toast = Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
         toast?.show()
+    }
+
+    /**
+     * Quit current match
+     *
+     * @param view
+     */
+    fun quitMatch(view: View) {
+
+    }
+
+    /**
+     * Join current match
+     * TODO
+     *
+     * @param view
+     */
+    fun joinMatch(view: View) {
+
     }
 }

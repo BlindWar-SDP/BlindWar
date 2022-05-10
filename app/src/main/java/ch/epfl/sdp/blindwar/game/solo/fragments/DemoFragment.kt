@@ -282,7 +282,7 @@ class DemoFragment : Fragment() {
         heartNumber.visibility = View.VISIBLE
         gameViewModel.lives.observe(requireActivity()) {
             heartNumber.text =
-                getString(R.string.heart_number).format(it) //TODO check if it works (x $it)
+                getString(R.string.heart_number, it) //TODO check if it works (x $it)
         }
     }
 

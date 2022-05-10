@@ -70,4 +70,17 @@ object MatchDatabase {
         matchDB.set(match)
         return matchDB
     }
+
+    /**
+     * Get a match from a uid
+     *
+     * @param uid
+     * @param db
+     * @return
+     */
+    fun getMatch(uid: String, db: FirebaseFirestore): Match? {
+        val match = db.collection(COLLECTION_PATH).document(uid).get().result
+        return if (match.exists())
+            match.toObject(Match::class.java) else null
+    }
 }

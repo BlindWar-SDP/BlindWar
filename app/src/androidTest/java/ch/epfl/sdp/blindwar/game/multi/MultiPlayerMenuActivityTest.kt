@@ -45,7 +45,7 @@ class MultiPlayerMenuActivityTest {
         intended(hasComponent(MainMenuActivity::class.java.name))
     }
 
-    @Test
+    /*@Test
     fun testDisplayFriendButtonAndClose() {
         onView(withId(R.id.imageFriendsButton)).perform(scrollTo(), ViewActions.click())
         Thread.sleep(1000)
@@ -55,7 +55,7 @@ class MultiPlayerMenuActivityTest {
         Thread.sleep(1000)
 
         onView(withId(R.id.imageFriendsButton)).check(matches(isDisplayed()))
-    }
+    }*/
 
     /*@Test
     fun testDisplayRandomButton() {

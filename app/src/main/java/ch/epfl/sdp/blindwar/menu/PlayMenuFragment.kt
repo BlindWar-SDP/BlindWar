@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
@@ -15,6 +16,7 @@ import ch.epfl.sdp.blindwar.database.GlideApp
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.game.util.GameActivity
+import ch.epfl.sdp.blindwar.game.util.Util
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.google.firebase.storage.StorageReference
 
@@ -34,13 +36,24 @@ class PlayMenuFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_play, container, false)
 
         view.findViewById<ImageButton>(R.id.soloBtn).setOnClickListener {
-            val intent = Intent(requireActivity(), GameActivity::class.java).apply { putExtra(GameActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.SOLO) }
+            val intent = Intent(
+                requireActivity(),
+                GameActivity::class.java
+            ).apply { putExtra(GameActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.SOLO) }
             startActivity(intent)
         }
 
         view.findViewById<ImageButton>(R.id.multiBtn).setOnClickListener {
-            val intent = Intent(requireActivity(), MultiPlayerMenuActivity::class.java)
-            startActivity(intent)
+            if (Util.isOnline()) {
+                val intent = Intent(requireActivity(), MultiPlayerMenuActivity::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(
+                    context,
+                    getString(R.string.toast_connexion_internet_unavailable),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         /**

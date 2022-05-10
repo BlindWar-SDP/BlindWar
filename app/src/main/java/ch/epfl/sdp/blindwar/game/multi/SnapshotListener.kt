@@ -32,8 +32,7 @@ object SnapshotListener {
                 return true
             } else {
                 dialog.findViewById<TextView>(R.id.textView_multi_loading)?.text =
-                    context.getString(R.string.multi_wait_players_nb)
-                        .format(nbPlayers, newMatch.maxPlayer)
+                    context.getString(R.string.multi_wait_players_nb, nbPlayers, newMatch.maxPlayer)
             }
         }
         return false

@@ -248,7 +248,9 @@ class DisplayableItemAdapter(
                 ).show()
                 MatchDatabase.removeMatch(matchUID, Firebase.firestore)
             }
-            val view = View.inflate(context, R.layout.fragment_dialog_loading, null)
+            val view = View.inflate(context, R.layout.fragment_dialog_loading_creation, null)
+            view.findViewById<TextView>(R.id.textView_dynamic_link).text =
+                context.getString(R.string.multi_dynamic_link, matchUID)
             builder.setView(view)
             (view.findViewById<TextView>(R.id.textView_multi_loading)).text = message
             val dialog = builder.create()
