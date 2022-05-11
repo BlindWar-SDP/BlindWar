@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Gender
@@ -40,6 +41,7 @@ class UserNewInfoActivity : AppCompatActivity() {
     private val imageDatabase = ImageDatabase
     private var profilePictureUri: Uri? = null
     private val auth = FirebaseAuth.getInstance()
+    private var dynamicLink: String? = null
 
     /**
      * Listener for user entering new information
@@ -64,9 +66,9 @@ class UserNewInfoActivity : AppCompatActivity() {
                     if (it.profilePicture != "null") {
                         // TODO: Refactor UserNewInfoActivity
                         //imageDatabase.downloadProfilePicture(
-                          //  it.profilePicture!!,
-                           // profileImageView,
-                           // applicationContext
+                        //  it.profilePicture!!,
+                        // profileImageView,
+                        // applicationContext
                         //)
                     }
                 }
@@ -87,7 +89,7 @@ class UserNewInfoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_new_info)
-
+        dynamicLink = intent?.extras?.getString(MultiPlayerMenuActivity.DYNAMIC_LINK)
         // user id should be set according to authentication
         FirebaseAuth.getInstance().currentUser?.let {
             database.addUserListener(it.uid, userInfoListener)
@@ -165,7 +167,16 @@ class UserNewInfoActivity : AppCompatActivity() {
                     description
                 ) // TODO : Comment for TESTing -> need to uncomment
 //            AuthUI.getInstance().delete(this) // TODO : uncomment for TESTing
-                startActivity(Intent(this, MainMenuActivity::class.java))
+                if (dynamicLink == null) {
+                    startActivity(Intent(this, MainMenuActivity::class.java))
+                } else {
+                    startActivity(
+                        Intent(this, MultiPlayerMenuActivity::class.java).putExtra(
+                            MultiPlayerMenuActivity.DYNAMIC_LINK,
+                            dynamicLink
+                        )
+                    )
+                }
             } else {
                 FirebaseAuth.getInstance().currentUser?.let {
                     UserDatabase.setPseudo(it.uid, pseudo)
@@ -175,7 +186,16 @@ class UserNewInfoActivity : AppCompatActivity() {
                     UserDatabase.setGender(it.uid, gender)
                     UserDatabase.setBirthdate(it.uid, birthDate)
                     UserDatabase.setDescription(it.uid, description)
-                    startActivity(Intent(this, MainMenuActivity::class.java))
+                    if (dynamicLink == null) {
+                        startActivity(Intent(this, MainMenuActivity::class.java))
+                    } else {
+                        startActivity(
+                            Intent(this, MultiPlayerMenuActivity::class.java).putExtra(
+                                MultiPlayerMenuActivity.DYNAMIC_LINK,
+                                dynamicLink
+                            )
+                        )
+                    }
                 }
             }
 

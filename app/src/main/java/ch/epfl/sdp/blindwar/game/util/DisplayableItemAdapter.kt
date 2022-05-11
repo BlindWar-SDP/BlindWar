@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
@@ -33,6 +34,11 @@ import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.firebase.dynamiclinks.DynamicLink
+import com.google.firebase.dynamiclinks.ktx.androidParameters
+import com.google.firebase.dynamiclinks.ktx.dynamicLink
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.dynamiclinks.ktx.socialMetaTagParameters
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -251,24 +257,15 @@ class DisplayableItemAdapter(
                 MatchDatabase.removeMatch(matchUID, Firebase.firestore)
             }
             val view = View.inflate(context, R.layout.fragment_dialog_loading_creation, null)
-            val url = context.getString(R.string.multi_dynamic_link, matchUID)
-            val textView = view.findViewById<TextView>(R.id.textView_dynamic_link)
-            textView.text = url
 
-            textView.setOnClickListener {
-                val myIntent = Intent(Intent.ACTION_SEND)
-                myIntent.type = "text/plain"
-                myIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_subject))
-                myIntent.putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_text))
-                context.startActivity(
-                    Intent.createChooser(
-                        myIntent,
-                        context.getString(R.string.share_title)
-                    )
-                )
-            }
+            //setup dynamic link
+            val dynamicLink = createDynamicLink(matchUID)
+            view.findViewById<TextView>(R.id.textView_dynamic_link)
+                .setOnClickListener { createShareIntent(dynamicLink.uri) }
+
+            //setup QR code
             val qrCode = view.findViewById<ImageView>(R.id.QR_code)
-            qrCode.setImageBitmap(QRCodeGenerator.encodeUrl(url))
+            qrCode.setImageBitmap(QRCodeGenerator.encodeUrl(dynamicLink.uri.toString()))
             val qrButton = view.findViewById<Button>(R.id.show_qr_button)
             qrButton.setOnClickListener {
                 qrCode.visibility = if (qrCode.isVisible) View.GONE
@@ -377,6 +374,44 @@ class DisplayableItemAdapter(
         const val TIMER_MAX_VALUE = 9
         const val DURATION_FAST = 20000L
         const val DURATION_DEFAULT = 30000L
+    }
+
+
+    /**
+     * Create a long dynamic link
+     *
+     * @param matchUID
+     * @return
+     */
+    private fun createDynamicLink(matchUID: String): DynamicLink {
+        return Firebase.dynamicLinks.dynamicLink {
+            link = Uri.parse("https://blindwar.page.link/game?uid=$matchUID")
+            domainUriPrefix = "https://blindwar.page.link"
+            // Open links with this app on Android
+            androidParameters("ch.epfl.sdp.blindwar") { }
+            socialMetaTagParameters {
+                title = "Join me to play !"
+                imageUrl =
+                    Uri.parse("https://github.com/BlindWar-SDP/BlindWar/wiki/img/logo.png")
+            }
+        }
+    }
+
+    /**
+     * create and run the Share intent to share dynamic link
+     *
+     * @param uri
+     */
+    private fun createShareIntent(uri: Uri) {
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_TEXT, uri.toString())
+        context.startActivity(
+            Intent.createChooser(
+                shareIntent,
+                context.getString(R.string.share_title)
+            )
+        )
     }
 }
 

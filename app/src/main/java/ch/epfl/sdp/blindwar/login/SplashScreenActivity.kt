@@ -2,11 +2,13 @@ package ch.epfl.sdp.blindwar.login
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.BuildConfig
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
@@ -32,6 +34,7 @@ class SplashScreenActivity : AppCompatActivity() {
         private const val TAG = "SplashScreen"
     }
 
+    private var data: Uri? = null
 //    private var userAuth = UserAuth()
 
     // See: https://developer.android.com/training/basics/intents/result
@@ -42,6 +45,7 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
+        data = intent?.data
         checkCurrentUser()
     }
 
@@ -53,7 +57,13 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun checkCurrentUser() {
         if (isSignedIn()) {
-            startActivity(Intent(this, MainMenuActivity::class.java))
+            if (data == null)
+                startActivity(Intent(this, MainMenuActivity::class.java))
+            else {
+                val intent = Intent(this, MultiPlayerMenuActivity::class.java)
+                intent.putExtra(MultiPlayerMenuActivity.DYNAMIC_LINK, data.toString())
+                startActivity(intent)
+            }
         } else {
             signInLauncher.launch(createSignInIntent())
         }
@@ -98,12 +108,28 @@ class SplashScreenActivity : AppCompatActivity() {
 
             return if (user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp) {
                 // new user: 1st signIn
-                Intent(activity, UserNewInfoActivity::class.java).putExtra("newUser", true)
+                if (data != null) {
+                    Intent(activity, UserNewInfoActivity::class.java).putExtra("newUser", true)
+                        .putExtra(
+                            MultiPlayerMenuActivity.DYNAMIC_LINK,
+                            data.toString()
+                        )
+                } else {
+                    Intent(activity, UserNewInfoActivity::class.java).putExtra("newUser", true)
+                }
             } else {
                 /*
                     - should we update the online database with the local cache here ?
                      */
-                Intent(activity, MainMenuActivity::class.java)
+                if (data == null)
+                    Intent(activity, MainMenuActivity::class.java)
+                else {
+                    Intent(this, MultiPlayerMenuActivity::class.java).putExtra(
+                        MultiPlayerMenuActivity.DYNAMIC_LINK,
+                        data.toString()
+                    )
+                }
+
             }
         } else {
             // Sign in failed. If response is null the user canceled the

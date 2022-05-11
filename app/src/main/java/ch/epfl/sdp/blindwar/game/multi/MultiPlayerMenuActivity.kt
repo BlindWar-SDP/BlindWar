@@ -37,6 +37,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         private const val LIMIT_MATCH: Long = 10
         private const val DELTA_MATCHMAKING = 100
         private const val DEFAULT_ELO = 200
+        const val DYNAMIC_LINK = "Dynamic link"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +62,13 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             findViewById<FrameLayout>(R.id.frameLayout_quit).visibility = View.GONE
         }
         eloDelta = DEFAULT_ELO
+        val link: String? = intent.extras?.getString(DYNAMIC_LINK)
+        if (link != null && match == null) { //TODO change with user match id
+            val matchUID = parseDynamicLink(link)
+            if (matchUID != null) {
+                connectToDB(matchUID)
+            }
+        }
     }
 
     /**
