@@ -6,19 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.database.GlideApp
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.game.util.GameActivity
 import ch.epfl.sdp.blindwar.game.util.Util
+import ch.epfl.sdp.blindwar.game.util.Util.updateProfileImage
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
-import com.google.firebase.storage.StorageReference
 
 /**
  * Fragment that let the user choose the format of the game (SOLO / MULTI)
@@ -43,6 +40,7 @@ class PlayMenuFragment : Fragment() {
             startActivity(intent)
         }
 
+
         view.findViewById<ImageButton>(R.id.multiBtn).setOnClickListener {
             if (Util.isOnline()) {
                 val intent = Intent(requireActivity(), MultiPlayerMenuActivity::class.java)
@@ -63,20 +61,13 @@ class PlayMenuFragment : Fragment() {
         btn.alpha = 0.3F
         } **/
 
-        updateProfileImage(profileViewModel.imageRef, view.findViewById(R.id.profileView))
+        updateProfileImage(
+            profileViewModel.imageRef,
+            view.findViewById(R.id.profileView),
+            viewLifecycleOwner,
+            requireContext()
+        )
 
         return view
-    }
-
-    /** TODO: Remove duplicated code **/
-    private fun updateProfileImage(liveData: LiveData<StorageReference>, imageView: ImageView) {
-        liveData.observe(viewLifecycleOwner) {
-            if (it.path != "") {
-                GlideApp.with(requireActivity())
-                    .load(it)
-                    .centerCrop()
-                    .into(imageView)
-            }
-        }
     }
 }

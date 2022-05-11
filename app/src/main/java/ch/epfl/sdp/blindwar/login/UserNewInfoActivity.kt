@@ -58,6 +58,7 @@ class UserNewInfoActivity : AppCompatActivity() {
             val lastName = findViewById<EditText>(R.id.NU_LastName)
             val pseudo = findViewById<EditText>(R.id.NU_pseudo)
             val profileImageView = findViewById<ImageView>(R.id.NU_profileImageView)
+
             user?.let {
                 firstName.setText(it.firstName)
                 lastName.setText(it.lastName)
@@ -77,7 +78,7 @@ class UserNewInfoActivity : AppCompatActivity() {
 
         override fun onCancelled(databaseError: DatabaseError) {
             // Getting Post failed, log a message
-            Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+            // Log.w("CANCELED REQUEST", "loadPost:onCancelled", databaseError.toException())
         }
     }
 

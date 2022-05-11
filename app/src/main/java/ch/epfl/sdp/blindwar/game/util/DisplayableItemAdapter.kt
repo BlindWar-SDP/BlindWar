@@ -202,14 +202,7 @@ class DisplayableItemAdapter(
                 // Separate solo logic from multiplayer one
                 when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
                     GameFormat.SOLO -> {
-                        (context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                            .replace(
-                                (viewFragment.parent as ViewGroup).id,
-                                DemoFragment(),
-                                "DEMO"
-                            )
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                            .commit()
+                        startDemo()
                     }
                     GameFormat.MULTI -> {
                         // TODO : Use the new mutable live data to respect the view model architecture
@@ -235,6 +228,17 @@ class DisplayableItemAdapter(
                     }
                 }
             }
+        }
+
+        private fun startDemo() {
+            (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                .replace(
+                    (viewFragment.parent as ViewGroup).id,
+                    DemoFragment(),
+                    "DEMO"
+                )
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit()
         }
 
         /**
@@ -333,12 +337,7 @@ class DisplayableItemAdapter(
 
                     /** Create util object **/
                     countdown = Util.createCountDown(duration, progress)
-
-                    /** Audio player view model or global AudioManager needed **/
-                    player.prepare()
-                    player.start()
-                    countdown.start()
-                    progress.visibility = View.VISIBLE
+                    startPlayer()
 
                     /** Set pause image button **/
                     playPreview.setImageResource(R.drawable.ic_baseline_pause_24)
@@ -351,15 +350,27 @@ class DisplayableItemAdapter(
                     }
 
                 } else {
-                    playPreview.setImageResource(R.drawable.play_arrow_small)
-                    player.pause()
-                    countdown.cancel()
-                    progress.progress = 0
-                    progress.visibility = View.INVISIBLE
+                    pausePlayer()
                 }
 
                 playing = !playing
             }
+        }
+
+        private fun startPlayer() {
+            /** Audio player view model or global AudioManager needed **/
+            player.prepare()
+            player.start()
+            countdown.start()
+            progress.visibility = View.VISIBLE
+        }
+
+        private fun pausePlayer() {
+            playPreview.setImageResource(R.drawable.play_arrow_small)
+            player.pause()
+            countdown.cancel()
+            progress.progress = 0
+            progress.visibility = View.INVISIBLE
         }
     }
 

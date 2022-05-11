@@ -29,7 +29,6 @@ class GameInstanceViewModel : ViewModel() {
     private var isPrivate = false
     private var maxPlayer = 2
 
-
     /**
      * Setter for the game mode
      *

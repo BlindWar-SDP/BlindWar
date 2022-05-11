@@ -1,9 +1,15 @@
 package ch.epfl.sdp.blindwar.game.util
 
+import android.content.Context
 import android.os.CountDownTimer
 import android.widget.Filter
+import android.widget.ImageView
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import ch.epfl.sdp.blindwar.database.GlideApp
 import ch.epfl.sdp.blindwar.game.model.Displayable
 import com.google.android.material.progressindicator.CircularProgressIndicator
+import com.google.firebase.storage.StorageReference
 import java.util.*
 
 object Util {
@@ -71,6 +77,22 @@ object Util {
             Runtime.getRuntime().exec("/system/bin/ping -c 1 8.8.8.8").waitFor() == 0
         } catch (_: Exception) {
             false
+        }
+    }
+
+    fun updateProfileImage(
+        liveData: LiveData<StorageReference>,
+        imageView: ImageView,
+        viewLifecycleOwner: LifecycleOwner,
+        context: Context
+    ) {
+        liveData.observe(viewLifecycleOwner) {
+            if (it.path.isNotEmpty()) {
+                GlideApp.with(context)
+                    .load(it)
+                    .centerCrop()
+                    .into(imageView)
+            }
         }
     }
 }

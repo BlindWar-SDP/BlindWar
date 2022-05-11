@@ -21,9 +21,23 @@ class StatisticsActivity : AppCompatActivity() {
     private var userStatistics =
         AppStatistics()
 
+    private lateinit var eloView: TextView
+    private lateinit var winView: TextView
+    private lateinit var drawView: TextView
+    private lateinit var lossView: TextView
+    private lateinit var winPercent: TextView
+    private lateinit var drawPercent: TextView
+    private lateinit var lossPercent: TextView
+    private lateinit var correctView: TextView
+    private lateinit var wrongView: TextView
+    private lateinit var correctPercent: TextView
+    private lateinit var wrongPercent: TextView
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
+        setTextViews()
 
         // access the spinner
         spinner = findViewById(R.id.modes_spinner)
@@ -59,35 +73,7 @@ class StatisticsActivity : AppCompatActivity() {
                             "" + modes[position], Toast.LENGTH_SHORT
                 ).show()
 
-                val eloView = findViewById<TextView>(R.id.eloExampleView)
-                val winView = findViewById<TextView>(R.id.winNumberView)
-                val drawView = findViewById<TextView>(R.id.drawNumberView)
-                val lossView = findViewById<TextView>(R.id.lossNumberView)
-                val winPercent = findViewById<TextView>(R.id.winPercentView)
-                val drawPercent = findViewById<TextView>(R.id.drawPercentView)
-                val lossPercent = findViewById<TextView>(R.id.lossPercentView)
-                val correctView = findViewById<TextView>(R.id.correctNumberView)
-                val wrongView = findViewById<TextView>(R.id.wrongNumberView)
-                val correctPercent = findViewById<TextView>(R.id.correctnessPercentView)
-                val wrongPercent = findViewById<TextView>(R.id.wrongPercentView)
-
-                /*
-                userStatistics.eloUpdate(Result.WIN, 1300)
-                userStatistics.multiWinLossCountUpdate(Result.WIN, Mode.MULTI)
-                userStatistics.correctnessUpdate(1, 0, Mode.SOLO)
-                */
-
-                eloView.text = userStatistics.elo.toString()
-                winView.text = userStatistics.wins[position].toString()
-                drawView.text = userStatistics.draws[position].toString()
-                lossView.text = userStatistics.losses[position].toString()
-                winPercent.text = userStatistics.winPercent[position].toString()
-                drawPercent.text = userStatistics.drawPercent[position].toString()
-                lossPercent.text = userStatistics.lossPercent[position].toString()
-                correctView.text = userStatistics.correctArray[position].toString()
-                wrongView.text = userStatistics.wrongArray[position].toString()
-                correctPercent.text = userStatistics.correctPercent[position].toString()
-                wrongPercent.text = userStatistics.wrongPercent[position].toString()
+                updateTextViews(position)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -95,5 +81,33 @@ class StatisticsActivity : AppCompatActivity() {
                 Log.d(TAG, "NOTHING SELECTED")
             }
         }
+    }
+
+    private fun setTextViews() {
+        eloView = findViewById(R.id.eloExampleView)
+        winView = findViewById(R.id.winNumberView)
+        drawView = findViewById(R.id.drawNumberView)
+        lossView = findViewById(R.id.lossNumberView)
+        winPercent = findViewById(R.id.winPercentView)
+        drawPercent = findViewById(R.id.drawPercentView)
+        lossPercent = findViewById(R.id.lossPercentView)
+        correctView = findViewById(R.id.correctNumberView)
+        wrongView = findViewById(R.id.wrongNumberView)
+        correctPercent = findViewById(R.id.correctnessPercentView)
+        wrongPercent = findViewById(R.id.wrongPercentView)
+    }
+
+    private fun updateTextViews(position: Int) {
+        eloView.text = userStatistics.elo.toString()
+        winView.text = userStatistics.wins[position].toString()
+        drawView.text = userStatistics.draws[position].toString()
+        lossView.text = userStatistics.losses[position].toString()
+        winPercent.text = userStatistics.winPercent[position].toString()
+        drawPercent.text = userStatistics.drawPercent[position].toString()
+        lossPercent.text = userStatistics.lossPercent[position].toString()
+        correctView.text = userStatistics.correctArray[position].toString()
+        wrongView.text = userStatistics.wrongArray[position].toString()
+        correctPercent.text = userStatistics.correctPercent[position].toString()
+        wrongPercent.text = userStatistics.wrongPercent[position].toString()
     }
 }

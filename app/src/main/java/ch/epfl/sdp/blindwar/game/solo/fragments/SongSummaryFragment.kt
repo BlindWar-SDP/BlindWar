@@ -31,6 +31,14 @@ class SongSummaryFragment : Fragment() {
     private var likeSwitch: Boolean = false
     private var success: Boolean = false
     private val profileViewModel: ProfileViewModel by activityViewModels()
+    private lateinit var title: String
+    private lateinit var artist: String
+    private lateinit var cover: String
+    private lateinit var layout: ConstraintLayout
+
+    private lateinit var artistText: TextView
+    private lateinit var trackText: TextView
+    private lateinit var artistView: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,22 +48,15 @@ class SongSummaryFragment : Fragment() {
         val view: View =
             inflater.inflate(R.layout.fragment_song_summary, container, false)
 
-        val artistView = view.findViewById<ImageView>(R.id.artistImageView)
-        val artistText = view.findViewById<TextView>(R.id.artistTextView)
-        val trackText = view.findViewById<TextView>(R.id.trackTextView)
-
-        /** Like animation **/
-        likeAnimation = view.findViewById(R.id.likeView)
-
-        likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
-            arguments?.getBoolean("liked")!!
-        } else false
-
-        setLikeListener()
+        /** Metadata **/
+        artistView = view.findViewById(R.id.artistImageView)
+        artistText = view.findViewById(R.id.artistTextView)
+        trackText = view.findViewById(R.id.trackTextView)
+        setMetadata()
 
         /** Background color **/
-        success = arguments?.get("success") as Boolean
-        val layout = view.findViewById<ConstraintLayout>(R.id.song_summary_fragment)
+        success = arguments?.get(SUCCESS_KEY) as Boolean
+        layout = view.findViewById(R.id.song_summary_fragment)
 
         if (success) {
             layout.setBackgroundColor(resources.getColor(R.color.success, activity?.theme))
@@ -64,13 +65,21 @@ class SongSummaryFragment : Fragment() {
         }
 
         /** Like animation **/
-        likeAnimation = view.findViewById(R.id.likeView)
-
         skip = view.findViewById<ImageButton>(R.id.skip_next_summary).also { button ->
             button.setOnClickListener {
                 activity?.onBackPressed()
             }
         }
+
+        setLikeAnimation(view)
+        setLikeListener()
+
+        return view
+    }
+
+    private fun setLikeAnimation(view: View) {
+        /** Like animation **/
+        likeAnimation = view.findViewById(R.id.likeView)
 
         likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
             skip.visibility = View.GONE
@@ -92,13 +101,16 @@ class SongSummaryFragment : Fragment() {
             false
 
         setLikeListener()
+    }
 
-        /** TODO: define constant key Strings **/
-        artistText.text = arguments?.get("artist").toString()
-        trackText.text = arguments?.get("title").toString()
-        Picasso.get().load(arguments?.get("image").toString()).into(artistView)
+    private fun setMetadata() {
+        artist = arguments?.get(ARTIST_KEY).toString()
+        title = arguments?.get(TITLE_KEY).toString()
+        cover = arguments?.get(COVER_KEY).toString()
 
-        return view
+        artistText.text = artist
+        trackText.text = title
+        Picasso.get().load(cover).into(artistView)
     }
 
     /**
@@ -106,21 +118,16 @@ class SongSummaryFragment : Fragment() {
      */
     private fun setLikeListener() {
         AnimationSetterHelper.setLikeListener(likeSwitch, likeAnimation)
-
         likeAnimation.setOnClickListener {
             AnimationSetterHelper.playLikeAnimation(likeSwitch, likeAnimation)
             likeSwitch = !likeSwitch
             val currentUser = FirebaseAuth.getInstance().currentUser
 
             if (currentUser != null) {
-
-                // Reconstruct musicmetadata from arguments
+                // Reconstruct MusicMetadata from arguments
                 val defaultDuration = 10000
                 val defaultUri = ""
-                val title: String = arguments?.get("title").toString()
-                val artist: String = arguments?.get("artist").toString()
-                val image: String = arguments?.get("image").toString()
-                val music = URIMusicMetadata(title, artist, image, defaultDuration, defaultUri)
+                val music = URIMusicMetadata(title, artist, cover, defaultDuration, defaultUri)
                 profileViewModel.likeMusic(music)
             }
         }
@@ -142,5 +149,12 @@ class SongSummaryFragment : Fragment() {
      */
     fun success(): Boolean {
         return success
+    }
+
+    companion object {
+        const val ARTIST_KEY = "ARTIST"
+        const val TITLE_KEY = "TITLE"
+        const val COVER_KEY = "COVER"
+        const val SUCCESS_KEY = "SUCCESS"
     }
 }
