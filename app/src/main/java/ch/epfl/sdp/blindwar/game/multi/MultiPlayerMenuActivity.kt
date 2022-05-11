@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.game.multi
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -9,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
@@ -62,12 +64,9 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             findViewById<FrameLayout>(R.id.frameLayout_quit).visibility = View.GONE
         }
         eloDelta = DEFAULT_ELO
-        val link: String? = intent.extras?.getString(DYNAMIC_LINK)
-        if (link != null && match == null) { //TODO change with user match id
-            val matchUID = parseDynamicLink(link)
-            if (matchUID != null) {
-                connectToDB(matchUID)
-            }
+        val matchUID: String? = intent.extras?.getString(DYNAMIC_LINK)
+        if (matchUID != null && match == null) { //TODO change with user match id
+            connectToDB(matchUID)
         }
     }
 
@@ -179,10 +178,11 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param uri the dynamic link
      * @return
      */
-    private fun parseDynamicLink(uri: String): String? {
-        if (uri.length < 30 || uri.substring(0, 29) != "https://blindwar.ch/game?uid=")
-            return null
-        return uri.trim().substring(29) //https://blindwar.ch/game + ?uid=
+    private fun parseDynamicLink(uri: Uri?): String? {
+        if (uri != null) {
+            return uri.getQueryParameter("uid")
+        }
+        return null
     }
 
     /**
@@ -227,8 +227,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         builder.setView(view)
         builder.setNeutralButton(resources.getText(R.string.cancel_btn)) { di, _ -> di.cancel() }
         builder.setPositiveButton(resources.getText(R.string.ok)) { _, _ ->
-            val uri = editText.text.toString()
-            val isCorrect = parseDynamicLink(uri)
+            val isCorrect = parseDynamicLink(editText.text.toString().toUri())
             if (isCorrect != null) {
                 connectToDB(isCorrect)
                 dialog!!.hide()
@@ -284,16 +283,15 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun quitMatch(view: View) {
-
+        //TODO remove matchId
     }
 
     /**
      * Join current match
-     * TODO
      *
      * @param view
      */
     fun joinMatch(view: View) {
-
+        //TODO
     }
 }

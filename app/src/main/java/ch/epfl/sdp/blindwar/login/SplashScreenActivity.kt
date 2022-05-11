@@ -2,7 +2,6 @@ package ch.epfl.sdp.blindwar.login
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +16,7 @@ import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
 
 /**
@@ -34,7 +34,7 @@ class SplashScreenActivity : AppCompatActivity() {
         private const val TAG = "SplashScreen"
     }
 
-    private var data: Uri? = null
+    private var data: String? = null
 //    private var userAuth = UserAuth()
 
     // See: https://developer.android.com/training/basics/intents/result
@@ -45,7 +45,15 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-        data = intent?.data
+        Firebase.dynamicLinks
+            .getDynamicLink(intent)
+            .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                // Get deep link from result (may be null if no link is found)
+                if (pendingDynamicLinkData != null) {
+                    data = pendingDynamicLinkData.link?.getQueryParameter("uid")
+                }
+            }
+            .addOnFailureListener(this) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
         checkCurrentUser()
     }
 
@@ -61,7 +69,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 startActivity(Intent(this, MainMenuActivity::class.java))
             else {
                 val intent = Intent(this, MultiPlayerMenuActivity::class.java)
-                intent.putExtra(MultiPlayerMenuActivity.DYNAMIC_LINK, data.toString())
+                intent.putExtra(MultiPlayerMenuActivity.DYNAMIC_LINK, data)
                 startActivity(intent)
             }
         } else {
