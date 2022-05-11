@@ -193,7 +193,11 @@
     <string name="toast_connexion_internet_unavailable">You seems disconnected from Internet !</string>
     <string name="multi_quit_match">Quit current match</string>
     <string name="multi_join_match">Join current match</string>
-    <string name="multi_dynamic_link">Invitation link to play :\n https://blindwar.ch/game?uid=%1$s</string>
+    <string name="multi_dynamic_link">Click here to share invitation :\n https://blindwar.ch/game?uid=%1$s</string>
     <string name="show_qr">Show QR code</string>
     <string name="qr_code_description">QR code to join a game</string>
+    <string name="hide_qr">Hide QR</string>
+    <string name="share_title">Share invitation</string>
+    <string name="share_text">Share BlindWar invitation !</string>
+    <string name="share_subject">Invitation link !</string>
 </resources>

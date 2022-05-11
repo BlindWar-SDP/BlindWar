@@ -33,7 +33,7 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:id="@+id/QR_code"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:contentDescription="@string/qr_code_description" />
 
 </LinearLayout>

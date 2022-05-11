@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.game.util
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.media.MediaPlayer
 import android.os.CountDownTimer
@@ -255,13 +256,26 @@ class DisplayableItemAdapter(
             textView.text = url
 
             textView.setOnClickListener {
-
+                val myIntent = Intent(Intent.ACTION_SEND)
+                myIntent.type = "text/plain"
+                myIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_subject))
+                myIntent.putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_text))
+                context.startActivity(
+                    Intent.createChooser(
+                        myIntent,
+                        context.getString(R.string.share_title)
+                    )
+                )
             }
             val qrCode = view.findViewById<ImageView>(R.id.QR_code)
             qrCode.setImageBitmap(QRCodeGenerator.encodeUrl(url))
-            view.findViewById<Button>(R.id.show_qr_button).setOnClickListener {
-                qrCode.visibility = if (qrCode.isVisible) View.INVISIBLE
+            val qrButton = view.findViewById<Button>(R.id.show_qr_button)
+            qrButton.setOnClickListener {
+                qrCode.visibility = if (qrCode.isVisible) View.GONE
                 else View.VISIBLE
+                qrButton.text = context.getString(
+                    if (qrCode.isVisible) R.string.hide_qr else R.string.show_qr
+                )
             }
             builder.setView(view)
             (view.findViewById<TextView>(R.id.textView_multi_loading)).text = message
