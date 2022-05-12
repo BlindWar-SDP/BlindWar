@@ -122,8 +122,6 @@ object UserDatabase {
         userRef.get().addOnSuccessListener {
             val user: User? = it.getValue(User::class.java)
             if (user != null) {
-                // temporarily added so that old profiles don't crash
-                user.matchHistory = mutableListOf()
                 user.matchHistory.add(gameResult)
                 userRef.setValue(user)
             }
@@ -198,8 +196,20 @@ object UserDatabase {
         getImageReference(uid).setValue(path)
     }
 
+    /**
+     * Add a Listener for a specific User(specified by uid).
+     * @param uid
+     * @param listener
+     */
     fun addUserListener(uid: String, listener: ValueEventListener) {
         userReference.child(uid).addValueEventListener(listener)
+    }
+
+    /**
+     * Used to get Pseudo and Elo of all users once.
+     */
+    fun addSingleEventAllUsersListener(listener: ValueEventListener) {
+        userReference.addListenerForSingleValueEvent(listener)
     }
 
     /**

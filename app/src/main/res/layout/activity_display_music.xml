@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/blurred_back">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/musicRecyclerView"
@@ -12,6 +13,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
-        tools:itemCount="17" />
+        tools:itemCount="100"
+        android:scrollbars="vertical"/>
 
 </RelativeLayout>

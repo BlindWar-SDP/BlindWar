@@ -8,8 +8,6 @@ import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HistoryActivity : AppCompatActivity() {
-    //private val database = UserDatabase
-
     /**
      * Generates the layout and sets up bottom navigation
      *

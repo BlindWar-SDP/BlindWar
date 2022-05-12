@@ -4,13 +4,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.core.net.toUri
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
+import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
@@ -21,6 +19,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 
 
 /**
@@ -37,6 +36,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private var toast: Toast? = null
     private var currentUser: DataSnapshot? = null
     private var matchId: String? = null
+    private lateinit var leaderboardButton: ImageButton
 
     companion object {
         private const val LIMIT_MATCH: Long = 10
@@ -45,8 +45,10 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         const val DYNAMIC_LINK = "Dynamic link"
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_multiplayer_menu)
         currentUser = UserDatabase.getCurrentUser()
         matchId = currentUser?.child("matchId")?.value as String?
@@ -68,6 +70,15 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         val matchUID: String? = intent.extras?.getString(DYNAMIC_LINK)
         if (matchUID != null && matchId == null) {
             connectToDB(matchUID)
+        }
+
+        // Add leaderboardButton onClick
+        leaderboardButton = findViewById<ImageButton>(R.id.leaderboardButton).apply {
+            this.setOnClickListener {
+                showFragment(
+                    DisplayHistoryFragment.newInstance("leaderboard")
+                )
+            }
         }
     }
 
@@ -303,5 +314,17 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     )
     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
     .commit()*/
+    }
+
+    /** Shows the selected fragment
+     *
+     * @param fragment to show
+     */
+    private fun showFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment_multiplayer, fragment)
+            addToBackStack(null)
+            commit()
+        }
     }
 }

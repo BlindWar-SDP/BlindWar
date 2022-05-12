@@ -2,11 +2,16 @@ package ch.epfl.sdp.blindwar.game.viewmodels
 
 import android.content.Context
 import android.content.res.Resources
+import android.os.Build
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.util.GameHelper
+import ch.epfl.sdp.blindwar.profile.model.Mode
+import ch.epfl.sdp.blindwar.profile.model.Result
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * Class representing an instance of a game
@@ -28,7 +33,18 @@ class GameViewModelMulti(
      */
     override fun endGame() {
         val fails = round - score
-        val gameResult = GameResult(mode, round, score)
+        val result: Result = if (fails == 0) {
+            Result.WIN
+        } else {
+            Result.LOSS
+        }
+        var formatted = "never"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val current = LocalDateTime.now()
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+            formatted = current.format(formatter)
+        }
+        val gameResult = GameResult(mode, Mode.MULTI, result, round, score, formatted)
 
         profileViewModel.updateStats(score, fails, gameResult)
         musicViewModel.soundTeardown()

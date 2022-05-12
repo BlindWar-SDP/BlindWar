@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/musicCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -17,40 +18,51 @@
         android:background="@color/prussian_blue"
         android:padding="5dp">
 
-        <ImageView
-            android:id="@+id/musicImage"
+        <TextView
+            android:id="@+id/userRank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_margin="1dp" />
+            android:layout_marginStart="10dp"
+            android:text="@string/userRank"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignTop="@id/musicImage"
-            android:layout_alignBottom="@id/musicImage"
-            android:layout_toEndOf="@id/musicImage"
+            android:layout_alignTop="@id/userRank"
+            android:layout_alignBottom="@id/userRank"
+            android:layout_toEndOf="@id/userRank"
             android:gravity="left|center_vertical"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/musicTitle"
+                android:id="@+id/userPseudo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Title"
+                android:text="@string/userPseudo"
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />
-
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@id/userRank"
+            android:layout_alignBottom="@id/userRank"
+            android:layout_toEndOf="@id/userRank"
+            android:gravity="left|center_vertical"
+            android:orientation="vertical">
             <TextView
-                android:id="@+id/musicArtist"
+                android:id="@+id/userElo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="This is an artist"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="18sp" />
+                android:layout_marginStart="180dp"
+                android:text="@string/userElo"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
         </LinearLayout>
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
 
