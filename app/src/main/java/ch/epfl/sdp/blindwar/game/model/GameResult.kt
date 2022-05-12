@@ -10,5 +10,6 @@ class GameResult(
     var mode: Mode = Mode.SOLO,
     var result: Result = Result.DRAW,
     var gameNbrRound: Int = 0,
-    var gameScore: Int = 0
+    var gameScore: Int = 0,
+    var gameTime: String = "never"
 )

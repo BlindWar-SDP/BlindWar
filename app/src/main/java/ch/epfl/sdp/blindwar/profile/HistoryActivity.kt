@@ -8,8 +8,6 @@ import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HistoryActivity : AppCompatActivity() {
-    //private val database = UserDatabase
-
     /**
      * Generates the layout and sets up bottom navigation
      *
@@ -21,7 +19,6 @@ class HistoryActivity : AppCompatActivity() {
 
         val likedMusicType = "liked musics"
         val matchHistoryType = "match history"
-        val leaderboardType = "leaderboard"
 
         showFragment((DisplayHistoryFragment.newInstance(likedMusicType)))
 
@@ -35,11 +32,6 @@ class HistoryActivity : AppCompatActivity() {
                 R.id.item_match_history -> showFragment(
                     DisplayHistoryFragment.newInstance(
                         matchHistoryType
-                    )
-                )
-                R.id.leaderboard -> showFragment(
-                    DisplayHistoryFragment.newInstance(
-                        leaderboardType
                     )
                 )
             }

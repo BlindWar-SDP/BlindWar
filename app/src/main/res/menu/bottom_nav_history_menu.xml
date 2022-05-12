@@ -11,9 +11,5 @@
         android:id="@+id/item_match_history"
         android:icon="@drawable/ic_baseline_history_24"
         android:title="@string/matchHistory" />
-    <item
-        android:id="@+id/leaderboard"
-        android:icon="@drawable/ic_baseline_person_24"
-        android:title="@string/leaderboard" />
 
 </menu>
