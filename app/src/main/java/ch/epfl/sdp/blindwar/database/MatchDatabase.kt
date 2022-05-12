@@ -4,6 +4,7 @@ import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
 object MatchDatabase {
@@ -41,6 +42,7 @@ object MatchDatabase {
             isPrivate
         )
         db.collection(COLLECTION_PATH).add(match)
+        db.collection(UserDatabase.COLLECTION_PATH).document(userUID).update("matchId", match.uid)
         return match
     }
 
@@ -50,12 +52,16 @@ object MatchDatabase {
      * @param uid
      */
     fun removeMatch(uid: String, db: FirebaseFirestore): Boolean {
-        val matchDocument = getMatch(uid, db)
-        matchDocument?.listPlayers?.forEach { it ->
-            UserDatabase.removeMatchId(it)
+        val matchDocument = getMatchSnapshot(uid, db)
+        if (matchDocument != null) {
+            val match = matchDocument.toObject(Match::class.java)
+            match?.listPlayers?.forEach { it ->
+                UserDatabase.removeMatchId(it)
+            }
+            db.collection(COLLECTION_PATH).document(uid).delete()
+            return true
         }
-        db.collection(COLLECTION_PATH).document(uid).delete()
-        return true
+        return false
     }
 
     /**
@@ -79,16 +85,16 @@ object MatchDatabase {
     }
 
     /**
-     * Get a match from a uid
+     * Get match snapshot from a uid
      *
      * @param uid
      * @param db
      * @return
      */
-    fun getMatch(uid: String, db: FirebaseFirestore): Match? {
-        val match = db.collection(COLLECTION_PATH).document(uid).get()
-        while (!match.isComplete);
-        return if (match.isSuccessful && match.result.exists())
-            match.result.toObject(Match::class.java) else null
+    fun getMatchSnapshot(uid: String, db: FirebaseFirestore): DocumentSnapshot? {
+        val query = db.collection("match").whereEqualTo("uid", uid).limit(1).get()
+        while (!query.isComplete); //TODO avoid active waiting
+        Thread.sleep(500)
+        return query.result.documents[0]
     }
 }

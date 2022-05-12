@@ -223,10 +223,9 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private fun connectToDB(uid: String) {
         setProgressDialog("Wait for connexion")
         val user = UserDatabase.getCurrentUser()
-        val matchDoc = Firebase.firestore.collection("match").document(uid)
-        val match = matchDoc.get()
-        if (match.isSuccessful && !isCanceled) {
-            val matchObject = match.result.toObject(Match::class.java)!!
+        val match: DocumentSnapshot? = MatchDatabase.getMatchSnapshot(uid, Firebase.firestore)
+        if (!isCanceled && match != null) {
+            val matchObject = match.toObject(Match::class.java)!!
             val connect =
                 MatchDatabase.connect(
                     matchObject,
@@ -237,7 +236,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                 displayToast(R.string.multi_match_full)
                 dialog!!.hide()
             } else if (!isCanceled) {
-                setListener(matchDoc)
+                setListener(match.reference)
             }
         } else if (!isCanceled) {
             displayToast(R.string.multi_match_not_found)

@@ -121,7 +121,7 @@ class GameInstanceViewModel : ViewModel() {
         UserDatabase.getCurrentUser().let {
             val user =
                 it!!.getValue(User::class.java) as User //TODO find better solution to avoid active waiting
-            return if (user.matchId.isNotEmpty()) {
+            return if (user.matchId.isEmpty()) {
                 match = MatchDatabase.createMatch(
                     user.uid,
                     user.pseudo,

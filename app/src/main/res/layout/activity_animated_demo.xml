@@ -179,8 +179,6 @@
             app:lottie_autoPlay="false"
             app:lottie_loop="false"
             app:lottie_speed="2" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.airbnb.lottie.LottieAnimationView
@@ -261,5 +259,4 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.54" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

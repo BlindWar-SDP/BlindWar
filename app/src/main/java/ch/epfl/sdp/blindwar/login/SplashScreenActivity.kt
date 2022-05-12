@@ -52,9 +52,13 @@ class SplashScreenActivity : AppCompatActivity() {
                 if (pendingDynamicLinkData != null) {
                     data = pendingDynamicLinkData.link?.getQueryParameter("uid")
                 }
+                checkCurrentUser()
             }
-            .addOnFailureListener(this) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
-        checkCurrentUser()
+            .addOnFailureListener(this) { e ->
+                Log.w(TAG, "getDynamicLink:onFailure", e)
+                checkCurrentUser()
+            }
+
     }
 
 //    override fun onResume() {
