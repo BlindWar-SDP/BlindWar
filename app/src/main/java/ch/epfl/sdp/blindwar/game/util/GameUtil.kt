@@ -1,8 +1,6 @@
 package ch.epfl.sdp.blindwar.game.util
 
 import ch.epfl.sdp.blindwar.R
-//import ch.epfl.sdp.blindwar.data.music.ReverseMusicConstants
-//import ch.epfl.sdp.blindwar.data.music.ReverseMusicConstants.METADATA_REVERSE_MUSICS_PER_AUTHOR
 import ch.epfl.sdp.blindwar.data.music.metadata.ResourceMusicMetadata
 import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.game.model.Difficulty
@@ -50,22 +48,11 @@ object GameUtil {
         "https://i.scdn.co/image/ab67616d00001e02621b1b8858b7bfe2706fb7bb"
 
     private val urls = listOf(
-        LADY_GAGA, // LADY GAGA
-        GORILLAZ, // GORILLAZ
-        ACDC, // ACDC
-        THE_NOTORIOUS, // THE NOTORIOUS
-        THE_CLASH,
-        RENAUD,
-        RHCP,
-        SUM_41,
-        DAFT_PUNK,
-        MICHAEL_JACKSON,
-        QUEEN,
-        THE_BEATLES,
-        KLAUS_BADELT,
-        DEEP_PURPLE,
-        LED_ZEPPELIN,
-        THE_CHAMPS
+        LADY_GAGA, GORILLAZ, ACDC, THE_NOTORIOUS, THE_CLASH,
+        RENAUD, RHCP, SUM_41, DAFT_PUNK,
+        //REVERSED
+        MICHAEL_JACKSON, QUEEN, THE_BEATLES, KLAUS_BADELT,
+        DEEP_PURPLE, LED_ZEPPELIN, THE_CHAMPS
     )
 
     private val keys = listOf(
@@ -89,41 +76,20 @@ object GameUtil {
     )
 
     private val ids = listOf(
-        R.raw.lady_gaga_poker_face,
-        R.raw.gorillaz_feel_good,
-        R.raw.acdc_highway_to_hell,
-        R.raw.the_notorious_big_respect,
-        R.raw.the_clash_london_calling,
-        R.raw.renaud_mistral_gagnant,
-        R.raw.red_hot_chili_peppers_californication,
-        R.raw.sum_41_in_too_deep,
-        R.raw.daft_punk_one_more_time,
-        R.raw.billy_reversed,
-        R.raw.bohemian_reversed,
-        R.raw.hey_jude_reversed,
-        R.raw.pirates_reversed,
-        R.raw.smoke_reversed,
-        R.raw.stairway_reversed,
+        R.raw.lady_gaga_poker_face, R.raw.gorillaz_feel_good, R.raw.acdc_highway_to_hell,
+        R.raw.the_notorious_big_respect, R.raw.the_clash_london_calling,
+        R.raw.renaud_mistral_gagnant, R.raw.red_hot_chili_peppers_californication,
+        R.raw.sum_41_in_too_deep, R.raw.daft_punk_one_more_time,
+        //REVERSED
+        R.raw.billy_reversed, R.raw.bohemian_reversed, R.raw.hey_jude_reversed,
+        R.raw.pirates_reversed, R.raw.smoke_reversed, R.raw.stairway_reversed,
         R.raw.tequila_reversed
     )
 
     private val durations = listOf(
-        214000,
-        254000,
-        207000,
-        3200000,
-        203000,
-        162000,
-        321000,
-        222000,
-        321000,
-        30000,
-        30000,
-        30000,
-        30000,
-        30000,
-        30000,
-        30000
+        214000, 254000, 207000, 3200000, 203000, 162000, 321000, 222000, 321000,
+        //REVERSED
+        30000, 30000, 30000, 30000, 30000, 30000, 30000
     )
 
     fun metadataTutorial(): MutableMap<String, ResourceMusicMetadata> {
