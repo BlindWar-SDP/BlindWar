@@ -47,7 +47,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/userPseudo"
+                android:id="@+id/gameRounds"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -64,7 +64,7 @@
             android:gravity="left|center_vertical"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/userElo"
+                android:id="@+id/gameScore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="180dp"

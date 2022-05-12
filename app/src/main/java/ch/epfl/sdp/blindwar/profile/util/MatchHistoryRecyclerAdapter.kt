@@ -18,9 +18,10 @@ class MatchHistoryRecyclerAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val result: TextView = itemView.findViewById(R.id.userRank)
-        val gameMode: TextView = itemView.findViewById(R.id.userPseudo)
-        val userElo: TextView = itemView.findViewById(R.id.userElo)
+        val gameResult: TextView = itemView.findViewById(R.id.gameResult)
+        val gameMode: TextView = itemView.findViewById(R.id.gameMode)
+        val gameRounds: TextView = itemView.findViewById(R.id.gameRounds)
+        val gameScore: TextView = itemView.findViewById(R.id.gameScore)
 
 
     }
@@ -34,22 +35,14 @@ class MatchHistoryRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.gameResult.text = victories[position]
+        holder.gameMode.text = gameMode[position]
+        holder.gameRounds.text = rounds[position]
+        holder.gameScore.text = scores[position]
 
-        // Add an header to describe the data of the leaderboard
-        if (position == 0) {
-            holder.userRank.text = "Rank"
-            holder.userPseudo.text = "Name"
-            holder.userElo.text = "Wins/Losses"
-        } else {
-            holder.userRank.text = '#' + (position).toString()
-            holder.userPseudo.text = pseudos[position - 1]
-            holder.userElo.text =
-                "W:" + wins[position - 1] + "/L:" + losses[position - 1] + "  elo: " +
-                        elos[position - 1]
-        }
     }
 
     override fun getItemCount(): Int {
-        return ranks.size
+        return victories.size
     }
 }
