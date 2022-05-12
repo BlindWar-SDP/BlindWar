@@ -110,8 +110,6 @@ object UserDatabase {
         userRef.get().addOnSuccessListener {
             val user: User? = it.getValue(User::class.java)
             if (user != null) {
-                // temporarily added so that old profiles don't crash
-                user.matchHistory = mutableListOf()
                 user.matchHistory.add(gameResult)
                 userRef.setValue(user)
             }

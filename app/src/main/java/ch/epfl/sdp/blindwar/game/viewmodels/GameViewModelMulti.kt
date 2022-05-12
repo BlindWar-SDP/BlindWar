@@ -47,7 +47,7 @@ class GameViewModelMulti(
         var formatted = "never"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val current = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")
+            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
             formatted = current.format(formatter)
         }
         val gameResult = GameResult(mode, Mode.MULTI, result ,round, score, formatted)
