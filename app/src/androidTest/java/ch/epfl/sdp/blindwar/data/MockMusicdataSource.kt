@@ -7,7 +7,8 @@ import ch.epfl.sdp.blindwar.game.util.GameUtil
 object MockMusicdataSource {
 
     val searchin = (
-            URIMusicMetadata("Searchin",
+            URIMusicMetadata(
+                "Searchin",
                 "Matisyahu",
                 GameUtil.COVER_URL_SONG,
                 30000,

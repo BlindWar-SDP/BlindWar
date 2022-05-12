@@ -29,7 +29,8 @@ class GameViewModelSoloTest {
         val round = GameUtil.ROUND
 
         // Iterate 10 times since we have 10 different musics in tutorial
-        val toPlay: MutableSet<MusicMetadata> = GameUtil.gameInstanceSolo.onlinePlaylist.songs.toMutableSet()
+        val toPlay: MutableSet<MusicMetadata> =
+            GameUtil.gameInstanceSolo.onlinePlaylist.songs.toMutableSet()
         for (i in 0 until round) {
             gameTutorial.nextRound()
             //assertThat(toPlay.contains(gameTutorial.currentMetadata()), `is`(true))

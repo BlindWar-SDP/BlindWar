@@ -21,7 +21,8 @@ class MusicMetadataTest : TestCase() {
 
     fun testGetArtist() {
         val expected = "Shine On You Crazy Diamond"
-        val musicMetaData = URIMusicMetadata("Shine On You Crazy Diamond", "Pink Floyd", "", 650000, "URI")
+        val musicMetaData =
+            URIMusicMetadata("Shine On You Crazy Diamond", "Pink Floyd", "", 650000, "URI")
         assertThat(musicMetaData.title, `is`(expected))
     }
 

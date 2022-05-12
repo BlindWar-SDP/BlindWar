@@ -53,8 +53,8 @@ class MusicViewModel(playlist: Playlist, context: Context, resources: Resources)
             Log.d("ZAMBO ANGUISSA", musicMetadata.artist)
             val ready = player.ready.value!!
 
-        // Player's duration is -1 until the media is ready to be played
-        } while(!ready)
+            // Player's duration is -1 until the media is ready to be played
+        } while (!ready)
 
         // Remove it to the playlist
         mutableMediaPlayerPerMusic.remove(musicMetadata)

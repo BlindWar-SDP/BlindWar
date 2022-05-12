@@ -67,43 +67,44 @@ class UserDatabaseTest : TestCase() {
     @Test
     fun setNamesCorrectly() {
         launchFragmentInContainer<ProfileFragment>()
-            val firstName = "David"; val lastName = "Goodenough"
-            UserDatabase.database
-            runBlocking {
-                var user: User?
-                    withContext(Dispatchers.IO) {
-                    user =
-                        await(
+        val firstName = "David";
+        val lastName = "Goodenough"
+        UserDatabase.database
+        runBlocking {
+            var user: User?
+            withContext(Dispatchers.IO) {
+                user =
+                    await(
                         UserDatabase.setFirstName(testUID, firstName)
                             .continueWithTask {
-                        UserDatabase.setLastName(testUID, lastName)
-                    }.continueWithTask{
-                        UserDatabase.userReference.child(testUID).get()
-                    }).getValue(User::class.java)
-                }
-
-                assertTrue(user?.firstName == firstName)
-                assertTrue(user?.lastName == lastName)
+                                UserDatabase.setLastName(testUID, lastName)
+                            }.continueWithTask {
+                                UserDatabase.userReference.child(testUID).get()
+                            }).getValue(User::class.java)
             }
+
+            assertTrue(user?.firstName == firstName)
+            assertTrue(user?.lastName == lastName)
+        }
     }
 
     @Test
     fun setGenderCorrectly() {
         launchFragmentInContainer<ProfileFragment>()
-            val gender = "MALE"
-            runBlocking {
-                var user: User?
-                withContext(Dispatchers.IO) {
-                    user =
-                        await(
-                            UserDatabase.setGender(testUID, gender)
-                                .continueWithTask{
-                                    UserDatabase.userReference.child(testUID).get()
-                                }).getValue(User::class.java)
-                }
-
-                assertTrue(user?.gender == gender)
+        val gender = "MALE"
+        runBlocking {
+            var user: User?
+            withContext(Dispatchers.IO) {
+                user =
+                    await(
+                        UserDatabase.setGender(testUID, gender)
+                            .continueWithTask {
+                                UserDatabase.userReference.child(testUID).get()
+                            }).getValue(User::class.java)
             }
+
+            assertTrue(user?.gender == gender)
+        }
     }
 
     @Test
@@ -116,7 +117,7 @@ class UserDatabaseTest : TestCase() {
                 user =
                     await(
                         UserDatabase.setPseudo(testUID, pseudo)
-                            .continueWithTask{
+                            .continueWithTask {
                                 UserDatabase.userReference.child(testUID).get()
                             }).getValue(User::class.java)
             }
@@ -139,7 +140,8 @@ class UserDatabaseTest : TestCase() {
     @Test
     fun getUserStatisticsTest() {
         launchFragmentInContainer<ProfileFragment>()
-        val fail = 1; val score = 2
+        val fail = 1;
+        val score = 2
         var user: User?
         runBlocking {
             withContext(Dispatchers.IO) {
@@ -166,16 +168,16 @@ class UserDatabaseTest : TestCase() {
     @Test
     fun addLikedMusicTest() {
         launchFragmentInContainer<ProfileFragment>()
-            var user: User?
-            runBlocking {
-                withContext(Dispatchers.IO) {
-                    user = await(UserDatabase.addLikedMusic(testUID, GameUtil.fly).continueWithTask{
-                        UserDatabase.userReference.child(testUID).get()
-                    }).getValue(User::class.java)
-                }
+        var user: User?
+        runBlocking {
+            withContext(Dispatchers.IO) {
+                user = await(UserDatabase.addLikedMusic(testUID, GameUtil.fly).continueWithTask {
+                    UserDatabase.userReference.child(testUID).get()
+                }).getValue(User::class.java)
             }
+        }
 
-            assertTrue(user?.likedMusics?.last()?.getName() == GameUtil.fly.getName())
+        assertTrue(user?.likedMusics?.last()?.getName() == GameUtil.fly.getName())
     }
 
     @Test

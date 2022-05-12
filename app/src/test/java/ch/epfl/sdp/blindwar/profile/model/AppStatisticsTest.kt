@@ -48,17 +48,17 @@ class AppStatisticsTest {
 
     @Test
     fun getSoloCorrectPercent() {
-        testStats2.correctnessUpdate(1,0,  Mode.SOLO)
+        testStats2.correctnessUpdate(1, 0, Mode.SOLO)
         testStats2.correctnessUpdate(0, 1, Mode.SOLO)
         assert(testStats2.correctPercent[soloIndex] == 50.0F)
     }
 
     @Test
     fun getSoloWrongPercent() {
-        testStats3.correctnessUpdate(1, 0,  Mode.SOLO)
-        testStats3.correctnessUpdate(0, 1,  Mode.SOLO)
+        testStats3.correctnessUpdate(1, 0, Mode.SOLO)
+        testStats3.correctnessUpdate(0, 1, Mode.SOLO)
         assert(testStats3.wrongPercent[soloIndex] == 50.0F)
-        
+
     }
 
     @Test
@@ -85,15 +85,15 @@ class AppStatisticsTest {
 
     @Test
     fun getMultiCorrectPercent() {
-        testStats2.correctnessUpdate(1, 0,  Mode.MULTI)
-        testStats2.correctnessUpdate(0, 1,  Mode.MULTI)
+        testStats2.correctnessUpdate(1, 0, Mode.MULTI)
+        testStats2.correctnessUpdate(0, 1, Mode.MULTI)
         assert(testStats2.correctPercent[multiIndex] == 50.0F)
     }
 
     @Test
     fun getMultiWrongPercent() {
         testStats3.correctnessUpdate(1, 0, Mode.MULTI)
-        testStats3.correctnessUpdate(0, 1,  Mode.MULTI)
+        testStats3.correctnessUpdate(0, 1, Mode.MULTI)
         assert(testStats3.correctPercent[multiIndex] == 50.0F)
     }
 
@@ -208,7 +208,7 @@ class AppStatisticsTest {
     fun eloEqualLossNormal() {
         testStats5 = AppStatistics()
         testStats5.eloUpdate(Result.LOSS, 1000)
-        assertEquals(992,testStats5.elo)
+        assertEquals(992, testStats5.elo)
     }
 
     @Test
@@ -216,28 +216,28 @@ class AppStatisticsTest {
         testStats5 = AppStatistics()
         testStats5.eloSetter(6)
         testStats5.eloUpdate(Result.LOSS, 6)
-        assertEquals(0,testStats5.elo)
+        assertEquals(0, testStats5.elo)
     }
 
     @Test
     fun eloEqualDraw() {
         testStats5 = AppStatistics()
         testStats5.eloUpdate(Result.DRAW, 1000)
-        assertEquals(1000,testStats5.elo)
+        assertEquals(1000, testStats5.elo)
     }
 
     @Test
     fun eloEqualWin() {
         testStats5 = AppStatistics()
         testStats5.eloUpdate(Result.WIN, 1000)
-        assertEquals(1008,testStats5.elo)
+        assertEquals(1008, testStats5.elo)
     }
 
     @Test
     fun eloSmallerLossNormal() {
         testStats5 = AppStatistics()
         testStats5.eloUpdate(Result.LOSS, 1200)
-        assertEquals(995,testStats5.elo)
+        assertEquals(995, testStats5.elo)
     }
 
     @Test
@@ -245,28 +245,28 @@ class AppStatisticsTest {
         testStats5 = AppStatistics()
         testStats5.eloSetter(2)
         testStats5.eloUpdate(Result.LOSS, 3)
-        assertEquals(0,testStats5.elo)
+        assertEquals(0, testStats5.elo)
     }
 
     @Test
     fun eloSmallerDraw() {
         testStats5 = AppStatistics()
         testStats5.eloUpdate(Result.DRAW, 1200)
-        assertEquals(1010,testStats5.elo)
+        assertEquals(1010, testStats5.elo)
     }
 
     @Test
     fun eloSmallerWin() {
         testStats5 = AppStatistics()
         testStats5.eloUpdate(Result.WIN, 1200)
-        assertEquals(1012,testStats5.elo)
+        assertEquals(1012, testStats5.elo)
     }
 
     @Test
     fun eloGreaterLossNormal() {
         testStats5 = AppStatistics()
         testStats5.eloUpdate(Result.LOSS, 800)
-        assertEquals(988,testStats5.elo)
+        assertEquals(988, testStats5.elo)
     }
 
     @Test
@@ -274,14 +274,14 @@ class AppStatisticsTest {
         testStats5 = AppStatistics()
         testStats5.eloSetter(6)
         testStats5.eloUpdate(Result.LOSS, 5)
-        assertEquals(0,testStats5.elo)
+        assertEquals(0, testStats5.elo)
     }
 
     @Test
     fun eloGreaterDrawNormal() {
         testStats5 = AppStatistics()
         testStats5.eloUpdate(Result.DRAW, 800)
-        assertEquals(990,testStats5.elo)
+        assertEquals(990, testStats5.elo)
     }
 
     @Test
@@ -289,14 +289,14 @@ class AppStatisticsTest {
         testStats5 = AppStatistics()
         testStats5.eloSetter(6)
         testStats5.eloUpdate(Result.DRAW, 5)
-        assertEquals(0,testStats5.elo)
+        assertEquals(0, testStats5.elo)
     }
 
     @Test
     fun eloGreaterWinNormal() {
         testStats5 = AppStatistics()
         testStats5.eloUpdate(Result.WIN, 800)
-        assertEquals(1004,testStats5.elo)
+        assertEquals(1004, testStats5.elo)
     }
 
     @Test

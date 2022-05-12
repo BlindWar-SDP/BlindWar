@@ -134,25 +134,25 @@ class SpotifyServiceTest {
     /**
     @Test
     fun correctSearchTest() {
-        val mockSpotifyApi = spotifyApiFactory(mockWebServer.url(testPath).toString()).value
-        //val tokenSpotifyApi = apiAuth.value
+    val mockSpotifyApi = spotifyApiFactory(mockWebServer.url(testPath).toString()).value
+    //val tokenSpotifyApi = apiAuth.value
 
-        val mockResponse = MockResponse()
-            .addHeader("Content-Type", "application/json")
-            .setBody(spotifyToken)
+    val mockResponse = MockResponse()
+    .addHeader("Content-Type", "application/json")
+    .setBody(spotifyToken)
 
-        mockWebServer.enqueue(mockResponse)
+    mockWebServer.enqueue(mockResponse)
 
-        runBlocking { mockSpotifyApi.getToken(credentialsEncoding(), GRANT_TYPE) }
-        val response = mockWebServer.takeRequest()
+    runBlocking { mockSpotifyApi.getToken(credentialsEncoding(), GRANT_TYPE) }
+    val response = mockWebServer.takeRequest()
 
-        assertEquals("POST", response.method.toString())
-        assertEquals(
-            "application/x-www-form-urlencoded",
-            response.getHeader("Content-Type").toString()
-        )
-        assertNotNull(response.getHeader("Authorization"))
-        assertEquals("/${testPath}${tokenPath}", response.path.toString())
+    assertEquals("POST", response.method.toString())
+    assertEquals(
+    "application/x-www-form-urlencoded",
+    response.getHeader("Content-Type").toString()
+    )
+    assertNotNull(response.getHeader("Authorization"))
+    assertEquals("/${testPath}${tokenPath}", response.path.toString())
     } **/
 
     @After

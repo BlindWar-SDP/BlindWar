@@ -128,7 +128,8 @@ object GameUtil {
     }
 
     private val PLAYLIST: List<ResourceMusicMetadata> = metadataTutorial().values.toList()
-    private val REV_PLAYLIST: List<ResourceMusicMetadata> = METADATA_REVERSE_MUSICS_PER_AUTHOR.values.toList()
+    private val REV_PLAYLIST: List<ResourceMusicMetadata> =
+        METADATA_REVERSE_MUSICS_PER_AUTHOR.values.toList()
 
 
     private val gameParameter =
@@ -218,7 +219,8 @@ object GameUtil {
         Difficulty.EASY
     )
 
-    private val reversePlaylist = LocalPlaylist("tutorial",
+    private val reversePlaylist = LocalPlaylist(
+        "tutorial",
         "Reverse",
         "BlindWar LTD.",
         arrayListOf(Genre.POP, Genre.RAP),

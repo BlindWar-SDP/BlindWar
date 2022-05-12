@@ -3,7 +3,7 @@ package ch.epfl.sdp.blindwar.data.playlists
 import ch.epfl.sdp.blindwar.game.model.*
 import junit.framework.TestCase
 
-class PlaylistTest: TestCase() {
+class PlaylistTest : TestCase() {
 
     fun testPlaylistCreation() {
         val playlist = Playlist()

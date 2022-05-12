@@ -30,7 +30,7 @@ object ImageDatabase {
                     Snackbar.make(view, "Image uploaded", Snackbar.LENGTH_LONG).show()
 //                    UserDatabase.addProfilePicture(user!!.uid, uploadedImageRef.path)
                 }
-        /*
+            /*
         .addOnFailureListener {
             Toast.makeText(getApplicationContext(), "Failed to upload file",
                 Toast.LENGTH_LONG).show()

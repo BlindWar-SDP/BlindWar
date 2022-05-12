@@ -105,8 +105,8 @@ class DemoFragment : Fragment() {
 
         // Retrieve the game duration from the GameInstance object
         duration = gameInstanceViewModel.gameInstance.value?.gameConfig
-                                                           ?.parameter
-                                                           ?.timeToFind!!
+            ?.parameter
+            ?.timeToFind!!
 
         // Create and start countdown
         timer = createCountDown()
@@ -371,12 +371,13 @@ class DemoFragment : Fragment() {
         val songRecord = SongSummaryFragment()
         if (activity?.supportFragmentManager?.fragments!!.size > 1) {
             if (activity?.supportFragmentManager?.fragments?.get(1) is SongSummaryFragment) {
-                val songFragment = (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
+                val songFragment =
+                    (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
                 val bundle = createBundleSongSummary(songFragment.success())
 
                 duration = gameInstanceViewModel.gameInstance.value?.gameConfig
-                                                                   ?.parameter
-                                                                   ?.timeToFind!!
+                    ?.parameter
+                    ?.timeToFind!!
                 restartChronometer()
                 bundle.putBoolean("liked", songFragment.liked())
                 songRecord.arguments = bundle

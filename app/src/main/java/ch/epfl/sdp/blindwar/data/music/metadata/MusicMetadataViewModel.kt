@@ -7,7 +7,7 @@ import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadataRepository
 import kotlinx.coroutines.launch
 
-class MusicMetadataViewModel: ViewModel() {
+class MusicMetadataViewModel : ViewModel() {
     private val repository: MusicMetadataRepository =
         MusicMetadataRepository()
 
@@ -18,7 +18,7 @@ class MusicMetadataViewModel: ViewModel() {
         viewModelScope.launch {
             repository.fetchMusicMetadataSpotify(query)
             repository.fetchMusicMetadataDatabase()
-            repository.musicMetadata.observeForever{
+            repository.musicMetadata.observeForever {
                 metadata.postValue(it)
             }
         }
