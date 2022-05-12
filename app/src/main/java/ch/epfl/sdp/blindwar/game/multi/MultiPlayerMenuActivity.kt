@@ -17,6 +17,7 @@ import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.model.User
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -34,6 +35,8 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private var isCanceled = false
     private var listener: ListenerRegistration? = null
     private var toast: Toast? = null
+    private var currentUser: DataSnapshot? = null
+    private var matchId: String? = null
 
     companion object {
         private const val LIMIT_MATCH: Long = 10
@@ -45,12 +48,10 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_multiplayer_menu)
-        val match = MatchDatabase.getMatch(
-            UserDatabase.getCurrentUser()?.child("uid")?.value.toString(),
-            Firebase.firestore
-        )
+        currentUser = UserDatabase.getCurrentUser()
+        matchId = currentUser?.child("matchId")?.value as String?
 
-        if (match != null) {
+        if (matchId != null) {
             findViewById<FrameLayout>(R.id.frameLayout_create).visibility = View.GONE
             findViewById<FrameLayout>(R.id.frameLayout_join).visibility = View.VISIBLE
             findViewById<FrameLayout>(R.id.frameLayout_link).visibility = View.GONE
@@ -65,7 +66,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         }
         eloDelta = DEFAULT_ELO
         val matchUID: String? = intent.extras?.getString(DYNAMIC_LINK)
-        if (matchUID != null && match == null) { //TODO change with user match id
+        if (matchUID != null && matchId == null) {
             connectToDB(matchUID)
         }
     }
@@ -252,16 +253,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             }
             if (SnapshotListener.listenerOnLobby(snapshot, this, dialog!!)) {
                 listener?.remove()
-                /*(context as AppCompatActivity).supportFragmentManager.beginTransaction()
-    .replace(
-        (viewFragment.parent as ViewGroup).id,
-        DemoFragment(),
-        "DEMO"
-    )
-    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-    .commit()*/
-
-                //TODO launch game
+                launchGame(match.id)
             }
         }
     }
@@ -283,7 +275,9 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun quitMatch(view: View) {
-        //TODO remove matchId
+        UserDatabase.removeMatchId(currentUser?.child("uid")?.value.toString())
+        finish()
+        startActivity(intent)
     }
 
     /**
@@ -292,6 +286,22 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun joinMatch(view: View) {
-        //TODO
+        launchGame(matchId!!)
+    }
+
+    /**
+     * Launch the game for every player
+     * TODO
+     * @param matchId
+     */
+    private fun launchGame(matchId: String) {
+/*(context as AppCompatActivity).supportFragmentManager.beginTransaction()
+    .replace(
+        (viewFragment.parent as ViewGroup).id,
+        DemoFragment(),
+        "DEMO"
+    )
+    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+    .commit()*/
     }
 }

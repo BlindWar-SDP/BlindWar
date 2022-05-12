@@ -45,11 +45,15 @@ object MatchDatabase {
     }
 
     /**
-     * delete match when done
-     *
+     * Delete match when done
+     * TODO update elo ?
      * @param uid
      */
     fun removeMatch(uid: String, db: FirebaseFirestore): Boolean {
+        val matchDocument = getMatch(uid, db)
+        matchDocument?.listPlayers?.forEach { it ->
+            UserDatabase.removeMatchId(it)
+        }
         db.collection(COLLECTION_PATH).document(uid).delete()
         return true
     }
@@ -63,9 +67,11 @@ object MatchDatabase {
      */
     fun connect(match: Match, user: User, db: FirebaseFirestore): DocumentReference? {
         if (match.listPlayers!!.size < match.maxPlayer) return null
+        if (user.matchId != null) return null
         match.listPlayers!!.add(user.uid)
         match.listPseudo!!.add(user.pseudo)
         match.listResult!!.add(0)
+        db.collection(UserDatabase.COLLECTION_PATH).document(user.uid).update("matchId", match.uid)
         val matchDB = db.collection(COLLECTION_PATH).document(match.uid)
         matchDB.set(match)
         return matchDB

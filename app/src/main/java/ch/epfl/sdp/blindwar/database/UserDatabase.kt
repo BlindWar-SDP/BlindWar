@@ -15,8 +15,9 @@ import com.google.firebase.ktx.Firebase
 
 
 object UserDatabase {
+    const val COLLECTION_PATH = "Users"
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    val userReference = database.getReference("Users")
+    val userReference = database.getReference(COLLECTION_PATH)
 
     /**
      * Get user reference to manipulate user infos
@@ -66,6 +67,15 @@ object UserDatabase {
     // Add user to database
     fun updateUser(user: User): Task<Void> {
         return userReference.child(user.uid).setValue(user)
+    }
+
+    /**
+     * Set matchId of the uid user to null
+     *
+     * @param uid
+     */
+    fun removeMatchId(uid: String) {
+        userReference.child(uid).updateChildren(mapOf("matchId" to null))
     }
 
     /**
