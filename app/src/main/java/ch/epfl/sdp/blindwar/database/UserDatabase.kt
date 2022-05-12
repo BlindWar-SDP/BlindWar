@@ -75,7 +75,7 @@ object UserDatabase {
      * @param uid
      */
     fun removeMatchId(uid: String) {
-        userReference.child(uid).updateChildren(mapOf("matchId" to null))
+        userReference.child(uid).updateChildren(mapOf("matchId" to ""))
     }
 
     /**

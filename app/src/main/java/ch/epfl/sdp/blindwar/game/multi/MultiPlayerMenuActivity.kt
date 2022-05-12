@@ -1,25 +1,26 @@
 package ch.epfl.sdp.blindwar.game.multi
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import androidx.core.net.toUri
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
+import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 
 
 /**
@@ -28,7 +29,6 @@ import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
  * @constructor creates a MultiPlayerMenuActivity
  */
 class MultiPlayerMenuActivity : AppCompatActivity() {
-
     private var eloDelta = DEFAULT_ELO
     private var dialog: AlertDialog? = null
     private var isCanceled = false
@@ -43,6 +43,24 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         private const val DELTA_MATCHMAKING = 100
         private const val DEFAULT_ELO = 200
         const val DYNAMIC_LINK = "Dynamic link"
+
+        /**
+         * Launch the game for every player
+         * TODO
+         * @param matchId
+         */
+        fun launchGame(matchId: String, context: Context) {
+/*(context as AppCompatActivity).supportFragmentManager.beginTransaction()
+    .replace(
+        (viewFragment.parent as ViewGroup).id,
+        DemoFragment(),
+        "DEMO"
+    )
+    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+    .commit()*/
+            Toast.makeText(context, "Match $matchId connected (test message)", Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 
 
@@ -53,7 +71,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         currentUser = UserDatabase.getCurrentUser()
         matchId = currentUser?.child("matchId")?.value as String?
 
-        if (matchId != null) {
+        if (matchId != null && matchId!!.isNotEmpty()) {
             findViewById<FrameLayout>(R.id.frameLayout_create).visibility = View.GONE
             findViewById<FrameLayout>(R.id.frameLayout_join).visibility = View.VISIBLE
             findViewById<FrameLayout>(R.id.frameLayout_link).visibility = View.GONE
@@ -68,7 +86,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         }
         eloDelta = DEFAULT_ELO
         val matchUID: String? = intent.extras?.getString(DYNAMIC_LINK)
-        if (matchUID != null && matchId == null) {
+        if (matchUID != null && (matchId == null || matchId!!.isEmpty())) {
             connectToDB(matchUID)
         }
 
@@ -264,7 +282,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             }
             if (SnapshotListener.listenerOnLobby(snapshot, this, dialog!!)) {
                 listener?.remove()
-                launchGame(match.id)
+                launchGame(match.id, applicationContext)
             }
         }
     }
@@ -297,23 +315,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun joinMatch(view: View) {
-        launchGame(matchId!!)
-    }
-
-    /**
-     * Launch the game for every player
-     * TODO
-     * @param matchId
-     */
-    private fun launchGame(matchId: String) {
-/*(context as AppCompatActivity).supportFragmentManager.beginTransaction()
-    .replace(
-        (viewFragment.parent as ViewGroup).id,
-        DemoFragment(),
-        "DEMO"
-    )
-    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-    .commit()*/
+        launchGame(matchId!!, applicationContext)
     }
 
     /** Shows the selected fragment

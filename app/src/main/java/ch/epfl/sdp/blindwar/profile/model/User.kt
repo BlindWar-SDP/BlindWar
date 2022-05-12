@@ -28,7 +28,7 @@ data class User(
     var matchHistory: MutableList<GameResult> = mutableListOf(),
     var gender: String = "",
     var description: String = "",
-    var matchId: String? = null,
+    var matchId: String = "",
 ) {
 
     class Builder(

@@ -60,14 +60,15 @@ object MatchDatabase {
 
     /**
      * add a player to the match and return the document
-     *
+     * TODO use exception to handle diffrent errors
      * @param match
      * @param user
      * @return
      */
     fun connect(match: Match, user: User, db: FirebaseFirestore): DocumentReference? {
         if (match.listPlayers!!.size < match.maxPlayer) return null
-        if (user.matchId != null) return null
+        if (user.matchId.isNotEmpty()) return null
+        if (match.listPlayers!!.contains(user.uid)) return null
         match.listPlayers!!.add(user.uid)
         match.listPseudo!!.add(user.pseudo)
         match.listResult!!.add(0)

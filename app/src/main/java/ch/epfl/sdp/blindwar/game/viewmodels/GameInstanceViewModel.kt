@@ -117,20 +117,24 @@ class GameInstanceViewModel : ViewModel() {
      * create match for multiplayer mode
      *
      */
-    fun createMatch(): Match {
+    fun createMatch(): Match? {
         UserDatabase.getCurrentUser().let {
             val user =
                 it!!.getValue(User::class.java) as User //TODO find better solution to avoid active waiting
-            match = MatchDatabase.createMatch(
-                user.uid,
-                user.pseudo,
-                user.userStatistics.elo,
-                maxPlayer,
-                gameInstance.value!!,
-                Firebase.firestore,
-                isPrivate
-            )
-            return match!!
+            return if (user.matchId.isNotEmpty()) {
+                match = MatchDatabase.createMatch(
+                    user.uid,
+                    user.pseudo,
+                    user.userStatistics.elo,
+                    maxPlayer,
+                    gameInstance.value!!,
+                    Firebase.firestore,
+                    isPrivate
+                )
+                match
+            } else {
+                null
+            }
         }
     }
 }

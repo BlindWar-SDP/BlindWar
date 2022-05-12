@@ -23,6 +23,7 @@ import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
+import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.game.multi.SnapshotListener
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
@@ -196,23 +197,30 @@ class DisplayableItemAdapter(
                         startDemo()
                     }
                     GameFormat.MULTI -> {
-                        val match: Match = gameInstanceViewModel.createMatch()
-                        val dialog = DynamicLinkHelper.setDynamicLinkDialog(
-                            context.getString(R.string.multi_wait_players),
-                            match.uid,
-                            context
-                        )
-                        dialog.show()
-                        listener = Firebase.firestore.collection(MatchDatabase.COLLECTION_PATH)
-                            .document(match.uid).addSnapshotListener { snapshot, e ->
-                                if (e != null) {
-                                    return@addSnapshotListener
+                        val match: Match? = gameInstanceViewModel.createMatch()
+                        if (match != null) {
+                            val dialog = DynamicLinkHelper.setDynamicLinkDialog(
+                                context.getString(R.string.multi_wait_players),
+                                match.uid,
+                                context
+                            )
+                            dialog.show()
+                            listener = Firebase.firestore.collection(MatchDatabase.COLLECTION_PATH)
+                                .document(match.uid).addSnapshotListener { snapshot, e ->
+                                    if (e != null) {
+                                        return@addSnapshotListener
+                                    }
+                                    if (SnapshotListener.listenerOnLobby(
+                                            snapshot,
+                                            context,
+                                            dialog
+                                        )
+                                    ) {
+                                        listener?.remove()
+                                        MultiPlayerMenuActivity.launchGame(match.uid, context)
+                                    }
                                 }
-                                if (SnapshotListener.listenerOnLobby(snapshot, context, dialog)) {
-                                    listener?.remove()
-                                    //TODO LAUNCH GAME
-                                }
-                            }
+                        }
                     }
                 }
             }
