@@ -161,7 +161,8 @@ class DisplayHistoryFragment : Fragment() {
                     addToList("HELLO", "JOJO", "no image")
                 }
             }
-            musicRecyclerView.adapter = MusicDisplayRecyclerAdapter(titles, artists, images)
+            musicRecyclerView.adapter = MatchHistoryRecyclerAdapter(victoriesList, images,
+                titles, artists)
         }
 
 

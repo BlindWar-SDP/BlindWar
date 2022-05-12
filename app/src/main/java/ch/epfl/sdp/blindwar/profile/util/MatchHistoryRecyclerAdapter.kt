@@ -18,8 +18,8 @@ class MatchHistoryRecyclerAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val userRank: TextView = itemView.findViewById(R.id.userRank)
-        val userPseudo: TextView = itemView.findViewById(R.id.userPseudo)
+        val result: TextView = itemView.findViewById(R.id.userRank)
+        val gameMode: TextView = itemView.findViewById(R.id.userPseudo)
         val userElo: TextView = itemView.findViewById(R.id.userElo)
 
 
