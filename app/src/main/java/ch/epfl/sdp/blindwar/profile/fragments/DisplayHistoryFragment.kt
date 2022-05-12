@@ -149,7 +149,7 @@ class DisplayHistoryFragment : Fragment() {
                         result = "LOSS"
                     }
                     addToList(
-                        "Number of rounds: " + match.gameNbrRound.toString(),
+                        "Rounds: " + match.gameNbrRound.toString(),
                         "Score: " + match.gameScore.toString(),
                         match.mode.toString() + "  " + match.gameMode.toString()
                     )

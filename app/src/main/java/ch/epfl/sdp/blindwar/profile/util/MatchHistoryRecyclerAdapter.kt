@@ -28,7 +28,7 @@ class MatchHistoryRecyclerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v: View = LayoutInflater.from(parent.context).inflate(
-            R.layout.leaderboard_cardview,
+            R.layout.match_history_cardview,
             parent, false
         )
         return ViewHolder(v)
