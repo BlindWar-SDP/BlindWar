@@ -107,7 +107,7 @@ class DisplayHistoryFragment : Fragment() {
 
 
         override fun onCancelled(databaseError: DatabaseError) {
-            Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+            // Log.w("CANCELED REQUEST", "userLikedMusic:onCancelled", databaseError.toException())
         }
     }
 
@@ -137,7 +137,7 @@ class DisplayHistoryFragment : Fragment() {
 
 
         override fun onCancelled(databaseError: DatabaseError) {
-            Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
+            // Log.w("CANCELED REQUEST", "userMatchHistory:onCancelled", databaseError.toException())
         }
     }
 

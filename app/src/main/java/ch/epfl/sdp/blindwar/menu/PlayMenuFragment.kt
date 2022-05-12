@@ -15,6 +15,7 @@ import ch.epfl.sdp.blindwar.database.GlideApp
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.game.util.GameActivity
+import ch.epfl.sdp.blindwar.game.util.Util.updateProfileImage
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.google.firebase.storage.StorageReference
 
@@ -38,6 +39,7 @@ class PlayMenuFragment : Fragment() {
             startActivity(intent)
         }
 
+
         view.findViewById<ImageButton>(R.id.multiBtn).setOnClickListener {
             val intent = Intent(requireActivity(), MultiPlayerMenuActivity::class.java)
             startActivity(intent)
@@ -50,20 +52,8 @@ class PlayMenuFragment : Fragment() {
         btn.alpha = 0.3F
         } **/
 
-        updateProfileImage(profileViewModel.imageRef, view.findViewById(R.id.profileView))
+        updateProfileImage(profileViewModel.imageRef, view.findViewById(R.id.profileView), viewLifecycleOwner, requireContext())
 
         return view
-    }
-
-    /** TODO: Remove duplicated code **/
-    private fun updateProfileImage(liveData: LiveData<StorageReference>, imageView: ImageView) {
-        liveData.observe(viewLifecycleOwner) {
-            if (it.path != "") {
-                GlideApp.with(requireActivity())
-                    .load(it)
-                    .centerCrop()
-                    .into(imageView)
-            }
-        }
     }
 }

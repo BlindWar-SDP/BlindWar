@@ -19,6 +19,10 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.ARTIST_KEY
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.COVER_KEY
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.SUCCESS_KEY
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.TITLE_KEY
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
@@ -28,14 +32,12 @@ import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import java.util.*
 
-
 /**
  * Fragment containing the UI logic of a solo game
  *
  * @constructor creates a DemoFragment
  */
 class DemoFragment : Fragment() {
-
     // VIEW MODELS
     lateinit var gameViewModel: GameViewModel
     private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
@@ -99,16 +101,12 @@ class DemoFragment : Fragment() {
             }!!
         }
 
-
         gameViewModel.init()
 
         // Retrieve the game duration from the GameInstance object
-        duration = gameInstanceViewModel
-            .gameInstance
-            .value
-            ?.gameConfig
-            ?.parameter
-            ?.timeToFind!!
+        duration = gameInstanceViewModel.gameInstance.value?.gameConfig
+                                                           ?.parameter
+                                                           ?.timeToFind!!
 
         // Create and start countdown
         timer = createCountDown()
@@ -132,18 +130,8 @@ class DemoFragment : Fragment() {
             }
         }
 
-        // Create game summary
-        gameSummary = GameSummaryFragment()
-
-        // Start the game
-        gameViewModel.nextRound()
-        gameViewModel.play()
-        musicMetadata = gameViewModel.currentMetadata()!!
-        timer.start()
-
         // Get the widgets
         guessEditText = view.findViewById(R.id.guessEditText)
-        guessEditText.hint = musicMetadata.artist
         scoreTextView = view.findViewById(R.id.scoreTextView)
         guessButton = view.findViewById<ImageButton>(R.id.guessButton).also {
             it.setOnClickListener {
@@ -171,21 +159,17 @@ class DemoFragment : Fragment() {
         audioVisualizer = view.findViewById(R.id.audioVisualizer)
         startButton.setMinAndMaxFrame(30, 50)
 
-        /** TODO : Settings menu
-        guessEditText.doOnTextChanged { text, _, _, _ ->
-        if (text != "" && (text!!.length > game.currentMetadata()?.title!!.length / 2.0)) {
-        isVocal = voiceRecognizer.resultsRecognized != ""
-        guess(false, isAuto = true) //guess as a keyboard at every change
-        }
-        } **/
-
         microphoneButton = view.findViewById(R.id.microphone)
         context?.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
+        // Create game summary
+        gameSummary = GameSummaryFragment()
 
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         voiceRecognizer.resultString.observe(viewLifecycleOwner) {
-            //voiceRecognizer.stop()
             guessEditText.setText(it)
-            //Log.d("VOICE RECOGNITION RESULT", it)
             guess(isVocal, isAuto = false)
             isVocal = false
         }
@@ -207,7 +191,18 @@ class DemoFragment : Fragment() {
             true
         }
 
-        return view
+        startGame()
+
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun startGame() {
+        // Start the game
+        gameViewModel.nextRound()
+        gameViewModel.play()
+        musicMetadata = gameViewModel.currentMetadata()!!
+        guessEditText.hint = musicMetadata.artist
+        timer.start()
     }
 
     /**
@@ -217,7 +212,6 @@ class DemoFragment : Fragment() {
      */
     private fun createCountDown(): CountDownTimer {
         return object : CountDownTimer(duration.toLong(), 1000) {
-
             override fun onTick(millisUntilFinished: Long) {
                 duration = millisUntilFinished.toInt()
                 elapsed += 1000
@@ -242,7 +236,14 @@ class DemoFragment : Fragment() {
         guessButton.visibility = code
         scoreTextView.visibility = code
         guessEditText.visibility = code
-        setAnimVisibility(code)
+
+        // Set animation visibility
+        crossAnim.visibility = code
+        countDown.visibility = code
+        audioVisualizer.visibility = code
+        startButton.visibility = code
+        microphoneButton.visibility = code
+        view?.findViewById<ImageButton>(R.id.guessButton)?.visibility = code
     }
 
     /**
@@ -251,7 +252,12 @@ class DemoFragment : Fragment() {
     private fun playAndPause() {
         playing = if (playing) {
             gameViewModel.pause()
-            pauseAnim()
+            // Pause Animation
+            audioVisualizer.pauseAnimation()
+            startButton.setMinAndMaxFrame(30, 55)
+            startButton.repeatCount = 0
+            startButton.playAnimation()
+            // Timer cancel
             timer.cancel()
             timer = createCountDown()
             chronometer.stop()
@@ -259,7 +265,12 @@ class DemoFragment : Fragment() {
 
         } else {
             gameViewModel.play()
-            resumeAnim()
+
+            // Resume Animation
+            audioVisualizer.resumeAnimation()
+            startButton.setMinAndMaxFrame(10, 25)
+            startButton.playAnimation()
+
             restartChronometer()
             timer.start()
             true
@@ -300,7 +311,10 @@ class DemoFragment : Fragment() {
                 .hideSoftInputFromWindow(view?.windowToken, 0)
             launchSongSummary(success = true)
         } else if (!isAuto) {
-            animNotFound()
+            /** Resets the base frame value of the animation and keep the reversing mode **/
+            crossAnim.repeatMode = LottieDrawable.RESTART
+            crossAnim.repeatMode = LottieDrawable.REVERSE
+            crossAnim.playAnimation()
         }
     }
 
@@ -329,10 +343,10 @@ class DemoFragment : Fragment() {
      */
     private fun createBundleSongSummary(success: Boolean): Bundle {
         val bundle = Bundle()
-        bundle.putString("artist", musicMetadata.artist)
-        bundle.putString("title", musicMetadata.title)
-        bundle.putString("image", musicMetadata.imageUrl)
-        bundle.putBoolean("success", success)
+        bundle.putString(ARTIST_KEY, musicMetadata.artist)
+        bundle.putString(TITLE_KEY, musicMetadata.title)
+        bundle.putString(COVER_KEY, musicMetadata.imageUrl)
+        bundle.putBoolean(SUCCESS_KEY, success)
         return bundle
     }
 
@@ -341,7 +355,6 @@ class DemoFragment : Fragment() {
      */
     private fun launchGameSummary() {
         val transaction = activity?.supportFragmentManager?.beginTransaction()
-        //transaction?.addToBackStack(GameSummaryFragment::class.java.name)
         transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         transaction?.replace((view?.parent as ViewGroup).id, gameSummary, "Game Summary")
         transaction?.commit()
@@ -353,37 +366,27 @@ class DemoFragment : Fragment() {
      * Handle next round logic
      */
     override fun onResume() {
-        /** Put the UI logic inside the Play Activity / Put a listener on viewModel
-         * that indicates a round change **/
         super.onResume()
         val songRecord = SongSummaryFragment()
-
         if (activity?.supportFragmentManager?.fragments!!.size > 1) {
             if (activity?.supportFragmentManager?.fragments?.get(1) is SongSummaryFragment) {
-                val songFragment =
-                    (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
+                val songFragment = (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
                 val bundle = createBundleSongSummary(songFragment.success())
 
-                duration = gameInstanceViewModel
-                    .gameInstance
-                    .value
-                    ?.gameConfig
-                    ?.parameter
-                    ?.timeToFind!!
-
+                duration = gameInstanceViewModel.gameInstance.value?.gameConfig
+                                                                   ?.parameter
+                                                                   ?.timeToFind!!
                 restartChronometer()
-
                 bundle.putBoolean("liked", songFragment.liked())
                 songRecord.arguments = bundle
                 gameSummary.setSongFragment(songRecord)
+
                 if (!gameViewModel.nextRound()) {
                     setVisibilityLayout(View.VISIBLE)
                     // Pass to the next music
                     musicMetadata = gameViewModel.currentMetadata()!!
                     guessEditText.hint = musicMetadata.artist
                     guessEditText.setText("")
-                    // Cache song image
-                    // Picasso.get().load(viewModel.selectedMetadata.value?.imageUrl)
                     timer = createCountDown()
                     timer.start()
                 } else {
@@ -403,49 +406,5 @@ class DemoFragment : Fragment() {
         timer.cancel()
         voiceRecognizer.destroy()
         super.onDestroy()
-    }
-
-    // ANIMATIONS
-    /**
-     * Setter for the animation visibility
-     *
-     * @param code visibility code : VISIBLE or GONE
-     */
-    private fun setAnimVisibility(code: Int) {
-        crossAnim.visibility = code
-        countDown.visibility = code
-        audioVisualizer.visibility = code
-        startButton.visibility = code
-        microphoneButton.visibility = code
-        view?.findViewById<ImageButton>(R.id.guessButton)?.visibility = code
-    }
-
-    /**
-     * Animation played when the player has a wrong guess
-     */
-    private fun animNotFound() {
-        /** Resets the base frame value of the animation and keep the reversing mode **/
-        crossAnim.repeatMode = LottieDrawable.RESTART
-        crossAnim.repeatMode = LottieDrawable.REVERSE
-        crossAnim.playAnimation()
-    }
-
-    /**
-     * Animation played when the player pauses the game
-     */
-    private fun pauseAnim() {
-        audioVisualizer.pauseAnimation()
-        startButton.setMinAndMaxFrame(30, 55)
-        startButton.repeatCount = 0
-        startButton.playAnimation()
-    }
-
-    /**
-     * Animation played when the player pauses the game
-     */
-    private fun resumeAnim() {
-        audioVisualizer.resumeAnimation()
-        startButton.setMinAndMaxFrame(10, 25)
-        startButton.playAnimation()
     }
 }

@@ -27,7 +27,6 @@ class ModeSelectionFragment : Fragment() {
     private lateinit var regularButton: Button
     private lateinit var survivalButton: Button
     private lateinit var raceButton: Button
-    private lateinit var funnyButton: CheckBox
 
     private lateinit var backButton: ImageButton
 
@@ -49,16 +48,11 @@ class ModeSelectionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_animated_mode_selection, container, false)
-        regularButton = view.findViewById<Button>(R.id.regularButton_).also { selectMode(it) }
-        raceButton = view.findViewById<Button>(R.id.raceButton_).also { selectMode(it) }
-        survivalButton = view.findViewById<Button>(R.id.survivalButton_).also { selectMode(it) }
 
-        funnyButton = view.findViewById(R.id.checkBox)
-        backButton = view.findViewById<ImageButton>(R.id.back_button).also {
-            it.setOnClickListener {
-                activity?.onBackPressed()
-            }
-        }
+        regularButton = view.findViewById(R.id.regularButton_)
+        raceButton = view.findViewById(R.id.raceButton_)
+        survivalButton = view.findViewById(R.id.survivalButton_)
+        backButton = view.findViewById(R.id.back_button)
 
         particles = arrayListOf(
             view.findViewById(R.id.particles),
@@ -72,17 +66,24 @@ class ModeSelectionFragment : Fragment() {
             view.findViewById(R.id.chrono), view.findViewById(R.id.chrono2)
         )
 
-        funnyCheck = view.findViewById<CheckBox>(R.id.checkBox).also { checkBox ->
-            checkBox.setOnClickListener {
-                checked = !checked
-                setAnimationsSpeed()
-                toggleParticles()
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val buttons = arrayListOf(regularButton, survivalButton, raceButton)
+
+        for (button in buttons) {
+            selectMode(button)
+        }
+
+        backButton.also {
+            it.setOnClickListener {
+                activity?.onBackPressed()
             }
         }
 
-        funnyButton = funnyCheck
-
-        return view
+        setCheckBox(view)
+        super.onViewCreated(view, savedInstanceState)
     }
 
     /**
@@ -98,7 +99,7 @@ class ModeSelectionFragment : Fragment() {
                 }
             )
 
-            gameInstanceViewModel.setGameFunny(funnyButton.isChecked)
+            gameInstanceViewModel.setGameFunny(funnyCheck.isChecked)
             launchPlaylistSelection()
         }
     }
@@ -124,6 +125,16 @@ class ModeSelectionFragment : Fragment() {
     }
     }
      **/
+
+    private fun setCheckBox(view: View) {
+        funnyCheck = view.findViewById<CheckBox>(R.id.checkBox).also { checkBox ->
+            checkBox.setOnClickListener {
+                checked = !checked
+                setAnimationsSpeed()
+                toggleParticles()
+            }
+        }
+    }
 
     /**
      * Change the animation speed when the funny mode parameter is (un)checked
