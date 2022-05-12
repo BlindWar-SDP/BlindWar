@@ -132,6 +132,7 @@ class ProfileFragmentTest : TestCase() {
         }
         launchFragmentInContainer<ProfileFragment>()
         Thread.sleep(2000)
+        
         val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         onView(withId(R.id.statsBtn))
             .perform(click())
