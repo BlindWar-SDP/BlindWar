@@ -3,18 +3,14 @@ package ch.epfl.sdp.blindwar.game.multi
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.database.MatchDatabase
-import ch.epfl.sdp.blindwar.database.UserDatabase
-import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
-import ch.epfl.sdp.blindwar.profile.model.User
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 
 
 /**
@@ -26,15 +22,27 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private var eloDelta = 200
     private var dialog: AlertDialog? = null
     private var isCanceled = false
+    private lateinit var leaderboardButton: ImageButton
+
     private lateinit var toast: Toast
 
     companion object {
         private val LIMIT_MATCH: Long = 10
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_multiplayer_menu)
+
+        // Add leaderboardButton onClick
+        leaderboardButton = findViewById<ImageButton>(R.id.leaderboardButton).apply {
+            this.setOnClickListener {
+                showFragment(
+                DisplayHistoryFragment.newInstance("leaderboard"))
+            }
+        }
         toast = Toast.makeText(applicationContext, "default", Toast.LENGTH_SHORT)
         eloDelta = 200
     }
@@ -182,5 +190,18 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         }
         dialog = builder.create()
         dialog!!.show()
+    }
+
+    /**
+     * Shows the selected fragment
+     *
+     * @param fragment to show
+     */
+    private fun showFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment_multiplayer, fragment)
+            addToBackStack(null)
+            commit()
+        }
     }
 }

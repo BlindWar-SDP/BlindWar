@@ -6,12 +6,10 @@ import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.ktx.Firebase
 
 
 object UserDatabase {
@@ -112,8 +110,6 @@ object UserDatabase {
         userRef.get().addOnSuccessListener {
             val user: User? = it.getValue(User::class.java)
             if (user != null) {
-                // temporarily added so that old profiles don't crash
-                user.matchHistory = mutableListOf()
                 user.matchHistory.add(gameResult)
                 userRef.setValue(user)
             }
@@ -188,8 +184,19 @@ object UserDatabase {
         getImageReference(uid).setValue(path)
     }
 
+    /**
+     * Add a Listener for a specific User(specified by uid).
+     * @param uid
+     * @param listener
+     */
     fun addUserListener(uid: String, listener: ValueEventListener) {
         userReference.child(uid).addValueEventListener(listener)
+    }
+    /**
+     * Used to get Pseudo and Elo of all users once.
+     */
+    fun addSingleEventAllUsersListener(listener: ValueEventListener) {
+        userReference.addListenerForSingleValueEvent(listener)
     }
 
     /**
@@ -219,11 +226,9 @@ object UserDatabase {
         }
     }
 
-    /**
-     * Get current authenticated user
-     *
-     */
-    fun getCurrentUser(): DataSnapshot {
-        return getUserReference(Firebase.auth.currentUser!!.uid).get().result
-    }
+
+
+
+
+
 }
