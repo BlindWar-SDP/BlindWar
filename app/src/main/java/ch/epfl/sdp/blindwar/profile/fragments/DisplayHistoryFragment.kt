@@ -33,8 +33,8 @@ class DisplayHistoryFragment : Fragment() {
     private var images = mutableListOf<String>()
     private var winsList = mutableListOf<String>()
     private var lossesList = mutableListOf<String>()
-    private var modesList = mutableListOf<String>()
     private var victoriesList = mutableListOf<String>()
+    private var gameTimesList = mutableListOf<String>()
 
     private val LIKED_MUSIC_TYPE = "liked musics"
     private val MATCH_HISTORY_TYPE = "match history"
@@ -154,6 +154,7 @@ class DisplayHistoryFragment : Fragment() {
                         match.mode.toString() + "  " + match.gameMode.toString()
                     )
                     victoriesList.add(result)
+                    gameTimesList.add(match.gameTime)
 
                 }
             } else {
@@ -161,8 +162,8 @@ class DisplayHistoryFragment : Fragment() {
                     addToList("HELLO", "JOJO", "no image")
                 }
             }
-            musicRecyclerView.adapter = MatchHistoryRecyclerAdapter(victoriesList, images,
-                titles, artists)
+            musicRecyclerView.adapter = MatchHistoryRecyclerAdapter(victoriesList, gameTimesList,
+                images, titles, artists)
         }
 
 

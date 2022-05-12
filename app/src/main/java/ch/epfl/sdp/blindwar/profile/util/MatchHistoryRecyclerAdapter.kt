@@ -9,6 +9,7 @@ import ch.epfl.sdp.blindwar.R
 
 class MatchHistoryRecyclerAdapter(
     private var victories: List<String>,
+    private var gameTimes: List<String>,
     private var gameMode: List<String>,
     private var rounds: List<String>,
     private var scores: List<String>
@@ -23,7 +24,7 @@ class MatchHistoryRecyclerAdapter(
         val gameMode: TextView = itemView.findViewById(R.id.gameMode)
         val gameRounds: TextView = itemView.findViewById(R.id.gameRounds)
         val gameScore: TextView = itemView.findViewById(R.id.gameScore)
-
+        val gameTime: TextView = itemView.findViewById(R.id.gameTime)
 
     }
 
@@ -44,6 +45,7 @@ class MatchHistoryRecyclerAdapter(
         holder.gameMode.text = gameMode[position]
         holder.gameRounds.text = rounds[position]
         holder.gameScore.text = scores[position]
+        holder.gameTime.text = gameTimes[position]
 
     }
 
