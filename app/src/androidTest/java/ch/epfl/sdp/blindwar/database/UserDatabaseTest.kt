@@ -67,7 +67,7 @@ class UserDatabaseTest : TestCase() {
     @Test
     fun setNamesCorrectly() {
         launchFragmentInContainer<ProfileFragment>()
-        val firstName = "David";
+        val firstName = "David"
         val lastName = "Goodenough"
         UserDatabase.database
         runBlocking {
@@ -140,7 +140,7 @@ class UserDatabaseTest : TestCase() {
     @Test
     fun getUserStatisticsTest() {
         launchFragmentInContainer<ProfileFragment>()
-        val fail = 1;
+        val fail = 1
         val score = 2
         var user: User?
         runBlocking {

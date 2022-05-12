@@ -36,6 +36,7 @@ class LeaderboardTest {
     fun tearDown() {
         Intents.release()
     }
+
     @Test
     fun testShowLeaderboard() {
         val testEmail = "test@bot.ch"

@@ -30,7 +30,7 @@
             android:layout_alignTop="@id/musicImage"
             android:layout_alignBottom="@id/musicImage"
             android:layout_toEndOf="@id/musicImage"
-            android:gravity="left|center_vertical"
+            android:gravity="start|center_vertical"
             android:orientation="vertical">
 
             <TextView

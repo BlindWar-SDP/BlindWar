@@ -2,12 +2,10 @@ package ch.epfl.sdp.blindwar.login
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.ContentValues
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -163,7 +161,7 @@ class UserNewInfoActivity : AppCompatActivity() {
                     firstName,
                     lastName,
                     birthDate,
-                    profilePicture.toString(),
+                    profilePicture,
                     gender,
                     description
                 ) // TODO : Comment for TESTing -> need to uncomment

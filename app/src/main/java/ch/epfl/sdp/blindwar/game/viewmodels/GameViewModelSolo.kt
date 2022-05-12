@@ -33,11 +33,10 @@ class GameViewModelSolo(
      */
     override fun endGame() {
         val fails = round - score
-        var result: Result
-        if (fails == 0) {
-            result = Result.WIN
+        val result: Result = if (fails == 0) {
+            Result.WIN
         } else {
-            result = Result.LOSS
+            Result.LOSS
         }
         var formatted = "never"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
