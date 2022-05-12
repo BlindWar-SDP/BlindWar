@@ -52,7 +52,8 @@ class MusicDisplayRecyclerAdapter(
         runBlocking {
             withContext(Dispatchers.IO) {
                 try {
-                    holder.itemPicture.background = BitmapDrawable(Picasso.get().load(image).get())
+                    holder.itemPicture.background = BitmapDrawable(Picasso.get()
+                        .load(image).resize(500, 500).get())
                 } catch (e: Exception) {
                     holder.itemPicture.setImageResource(R.mipmap.ic_launcher_round_base)
                 }
