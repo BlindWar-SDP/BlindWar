@@ -19,9 +19,6 @@ class GameInstanceViewModel : ViewModel() {
         it.value = GameUtil.gameInstanceSolo
         it
     }
-
-
-
     /**
      * Setter for the game mode
      *

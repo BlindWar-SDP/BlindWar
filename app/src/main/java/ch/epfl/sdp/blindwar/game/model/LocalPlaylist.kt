@@ -3,7 +3,7 @@ package ch.epfl.sdp.blindwar.game.model
 import ch.epfl.sdp.blindwar.data.music.metadata.ResourceMusicMetadata
 
 class LocalPlaylist(
-    uid: String, // playlist unique id in database
+    pid: String, // playlist unique id in database
     name: String, // playlist name
     author: String = "", // playlist author
     genres: List<Genre> = emptyList(), // main genres of the playlist
@@ -11,4 +11,4 @@ class LocalPlaylist(
     imageUrl: String = "", // playlist cover
     previewUrl: String = "", // preview song url
     difficulty: Difficulty = Difficulty.EASY
-) : Playlist(uid, name, author, genres, songs, imageUrl, previewUrl, difficulty)
+) : Playlist(pid, name, author, genres, songs, imageUrl, previewUrl, difficulty)
