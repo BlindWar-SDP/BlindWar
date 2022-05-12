@@ -18,7 +18,8 @@ class MatchHistoryRecyclerAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val gameResult: TextView = itemView.findViewById(R.id.gameResult)
+        val gameResultWin: TextView = itemView.findViewById(R.id.gameResultWin)
+        val gameResultLoss: TextView = itemView.findViewById(R.id.gameResultLoss)
         val gameMode: TextView = itemView.findViewById(R.id.gameMode)
         val gameRounds: TextView = itemView.findViewById(R.id.gameRounds)
         val gameScore: TextView = itemView.findViewById(R.id.gameScore)
@@ -35,7 +36,11 @@ class MatchHistoryRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.gameResult.text = victories[position]
+        if (victories[position] == "WIN") {
+            holder.gameResultWin.text = victories[position]
+        } else {
+            holder.gameResultLoss.text = victories[position]
+        }
         holder.gameMode.text = gameMode[position]
         holder.gameRounds.text = rounds[position]
         holder.gameScore.text = scores[position]
