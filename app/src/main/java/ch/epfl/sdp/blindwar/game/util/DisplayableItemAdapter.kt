@@ -1,21 +1,17 @@
 package ch.epfl.sdp.blindwar.game.util
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.media.MediaPlayer
-import android.net.Uri
 import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
@@ -34,11 +30,6 @@ import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import com.google.firebase.dynamiclinks.DynamicLink
-import com.google.firebase.dynamiclinks.ktx.androidParameters
-import com.google.firebase.dynamiclinks.ktx.dynamicLink
-import com.google.firebase.dynamiclinks.ktx.dynamicLinks
-import com.google.firebase.dynamiclinks.ktx.socialMetaTagParameters
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -205,13 +196,11 @@ class DisplayableItemAdapter(
                         startDemo()
                     }
                     GameFormat.MULTI -> {
-                        // TODO : Use the new mutable live data to respect the view model architecture
-                        // TODO : what ?
-                        // Create the match object
                         val match: Match = gameInstanceViewModel.createMatch()
-                        val dialog = setProgressDialog(
+                        val dialog = DynamicLinkHelper.setDynamicLinkDialog(
                             context.getString(R.string.multi_wait_players),
-                            match.uid
+                            match.uid,
+                            context
                         )
                         dialog.show()
                         listener = Firebase.firestore.collection(MatchDatabase.COLLECTION_PATH)
@@ -219,7 +208,6 @@ class DisplayableItemAdapter(
                                 if (e != null) {
                                     return@addSnapshotListener
                                 }
-
                                 if (SnapshotListener.listenerOnLobby(snapshot, context, dialog)) {
                                     listener?.remove()
                                     //TODO LAUNCH GAME
@@ -239,50 +227,6 @@ class DisplayableItemAdapter(
                 )
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit()
-        }
-
-        /**
-         * display progressDialog cancelable for any messages
-         * TODO generify for multiMenu
-         * @param message
-         */
-        private fun setProgressDialog(message: String, matchUID: String): AlertDialog {
-            val builder = AlertDialog.Builder(context)
-            builder.setCancelable(true)
-            builder.setPositiveButton(
-                context.getString(R.string.cancel_btn)
-            ) { it, _ -> it.cancel() }
-            builder.setOnCancelListener {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.toast_canceled_match_creation),
-                    Toast.LENGTH_SHORT
-                ).show()
-                MatchDatabase.removeMatch(matchUID, Firebase.firestore)
-            }
-            val view = View.inflate(context, R.layout.fragment_dialog_loading_creation, null)
-
-            //setup dynamic link
-            val dynamicLink = createDynamicLink(matchUID)
-            view.findViewById<TextView>(R.id.textView_dynamic_link)
-                .setOnClickListener { createShareIntent(dynamicLink.uri) }
-
-            //setup QR code
-            val qrCode = view.findViewById<ImageView>(R.id.QR_code)
-            qrCode.setImageBitmap(QRCodeGenerator.encodeUrl(dynamicLink.uri.toString()))
-            val qrButton = view.findViewById<Button>(R.id.show_qr_button)
-            qrButton.setOnClickListener {
-                qrCode.visibility = if (qrCode.isVisible) View.GONE
-                else View.VISIBLE
-                qrButton.text = context.getString(
-                    if (qrCode.isVisible) R.string.hide_qr else R.string.show_qr
-                )
-            }
-            builder.setView(view)
-            (view.findViewById<TextView>(R.id.textView_multi_loading)).text = message
-            val dialog = builder.create()
-            dialog.setCanceledOnTouchOutside(false)
-            return dialog
         }
 
         /**
@@ -385,44 +329,6 @@ class DisplayableItemAdapter(
         const val TIMER_MAX_VALUE = 9
         const val DURATION_FAST = 20000L
         const val DURATION_DEFAULT = 30000L
-    }
-
-
-    /**
-     * Create a long dynamic link
-     *
-     * @param matchUID
-     * @return
-     */
-    private fun createDynamicLink(matchUID: String): DynamicLink {
-        return Firebase.dynamicLinks.dynamicLink {
-            link = Uri.parse("https://blindwar.page.link/game?uid=$matchUID")
-            domainUriPrefix = "https://blindwar.page.link"
-            // Open links with this app on Android
-            androidParameters("ch.epfl.sdp.blindwar") { }
-            socialMetaTagParameters {
-                title = "Join me to play !"
-                imageUrl =
-                    Uri.parse("https://github.com/BlindWar-SDP/BlindWar/wiki/img/logo.png")
-            }
-        }
-    }
-
-    /**
-     * create and run the Share intent to share dynamic link
-     *
-     * @param uri
-     */
-    private fun createShareIntent(uri: Uri) {
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "text/plain"
-        shareIntent.putExtra(Intent.EXTRA_TEXT, uri.toString())
-        context.startActivity(
-            Intent.createChooser(
-                shareIntent,
-                context.getString(R.string.share_title)
-            )
-        )
     }
 }
 
