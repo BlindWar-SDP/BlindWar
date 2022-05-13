@@ -92,17 +92,22 @@ class AppStatistics {
      * @param mode the current mode
      */
     fun multiWinLossCountUpdate(result: Result, mode: Mode) {
-        if (result == Result.WIN) {
-            wins[mode.ordinal]++
-        } else if (result == Result.DRAW) {
-            draws[mode.ordinal]++
-        } else {
-            losses[mode.ordinal]++
+        when (result) {
+            Result.WIN -> {
+                wins[mode.ordinal]++
+            }
+            Result.DRAW -> {
+                draws[mode.ordinal]++
+            }
+            else -> {
+                losses[mode.ordinal]++
+            }
         }
 
         val total = wins[mode.ordinal] + draws[mode.ordinal] + losses[mode.ordinal]
         winPercent[mode.ordinal] = computePercentage(wins[mode.ordinal].toFloat(), total.toFloat())
-        drawPercent[mode.ordinal] = computePercentage(draws[mode.ordinal].toFloat(), total.toFloat())
+        drawPercent[mode.ordinal] =
+            computePercentage(draws[mode.ordinal].toFloat(), total.toFloat())
         lossPercent[mode.ordinal] = 100F - winPercent[mode.ordinal] - drawPercent[mode.ordinal]
     }
 

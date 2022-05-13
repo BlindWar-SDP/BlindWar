@@ -65,7 +65,6 @@ class ModeSelectionFragment : Fragment() {
             view.findViewById(R.id.health), view.findViewById(R.id.health2),
             view.findViewById(R.id.chrono), view.findViewById(R.id.chrono2)
         )
-
         return view
     }
 

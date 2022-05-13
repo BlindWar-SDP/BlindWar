@@ -163,10 +163,10 @@ class VoiceRecognizerTest : TestCase() {
     @Test
     fun onEndOfSpeech() {
         testRule.scenario.onActivity { activity ->
-        val tv = EditText(activity)
-        voiceRecognizer.init(activity, Locale.ENGLISH.toLanguageTag())
-        voiceRecognizer.onEndOfSpeech()
-        Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
+            val tv = EditText(activity)
+            voiceRecognizer.init(activity, Locale.ENGLISH.toLanguageTag())
+            voiceRecognizer.onEndOfSpeech()
+            Assert.assertTrue(voiceRecognizer.resultsRecognized == "")
         }
     }
 

@@ -53,7 +53,6 @@ class DisplayHistoryFragment : Fragment() {
         musicRecyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
 
 
-
         // showing the back button in action bar
         //supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -145,7 +144,7 @@ class DisplayHistoryFragment : Fragment() {
                     var result = "DRAW"
                     if (match.result == Result.WIN) {
                         result = "WIN"
-                    } else if (match.result == Result.LOSS){
+                    } else if (match.result == Result.LOSS) {
                         result = "LOSS"
                     }
                     addToList(
@@ -162,8 +161,10 @@ class DisplayHistoryFragment : Fragment() {
                     addToList("HELLO", "JOJO", "no image")
                 }
             }
-            musicRecyclerView.adapter = MatchHistoryRecyclerAdapter(victoriesList, gameTimesList,
-                images, titles, artists)
+            musicRecyclerView.adapter = MatchHistoryRecyclerAdapter(
+                victoriesList, gameTimesList,
+                images, titles, artists
+            )
         }
 
 
@@ -183,7 +184,7 @@ class DisplayHistoryFragment : Fragment() {
                 null
             }
             if (usersMap != null) {
-                for(user in usersMap.values) {
+                for (user in usersMap.values) {
                     val userMap: Map<String, String> = user as Map<String, String>
                     val userStatMap: HashMap<String, Map<String, Long>> =
                         user as HashMap<String, Map<String, Long>>
@@ -196,7 +197,8 @@ class DisplayHistoryFragment : Fragment() {
                     val wins = userWinsMap["userStatistics"]?.get("wins")?.get(1)
                     val losses = userWinsMap["userStatistics"]?.get("losses")?.get(1)
                     if (pseudo != null && elo != null && pseudo != "" &&
-                        wins != null && losses != null) {
+                        wins != null && losses != null
+                    ) {
                         addToList("1", pseudo, elo.toString())
                         winsList.add(wins.toString())
                         lossesList.add(losses.toString())
@@ -208,11 +210,11 @@ class DisplayHistoryFragment : Fragment() {
                 }
             }
             // Create data class to contain data of an user to be displayed on the leaderboard
-            data class LeaderboardUserData(val elo: String, val wins: String, val losses: String )
+            data class LeaderboardUserData(val elo: String, val wins: String, val losses: String)
 
             // Create a List of (pseudo, elo) Pairs and order them by elo to have
             // an ordered leaderboard
-            var pseudoUserData = mutableListOf<Pair<String, LeaderboardUserData>>()
+            val pseudoUserData = mutableListOf<Pair<String, LeaderboardUserData>>()
             for (i in (0 until artists.size)) {
                 val userData = LeaderboardUserData(images[i], winsList[i], lossesList[i])
                 pseudoUserData.add(Pair(artists[i], userData))
@@ -226,8 +228,10 @@ class DisplayHistoryFragment : Fragment() {
                 lossesList[i] = sortedPseudoUsers[i].second.losses
             }
 
-            musicRecyclerView.adapter = LeaderboardRecyclerAdapter(titles, artists, images,
-                winsList, lossesList)
+            musicRecyclerView.adapter = LeaderboardRecyclerAdapter(
+                titles, artists, images,
+                winsList, lossesList
+            )
         }
 
 

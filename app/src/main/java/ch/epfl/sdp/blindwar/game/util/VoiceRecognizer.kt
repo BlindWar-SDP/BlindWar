@@ -59,7 +59,7 @@ class VoiceRecognizer : RecognitionListener {
 
             /**
             speechRecognizerIntent!!.putExtra(
-                    RecognizerIntent.EXTRA_CALLING_PACKAGE, context.applicationInfo.packageName
+            RecognizerIntent.EXTRA_CALLING_PACKAGE, context.applicationInfo.packageName
             )**/
 
             //only for android 13

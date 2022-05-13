@@ -9,7 +9,7 @@ import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
-class QRCodeGeneratorTest: TestCase() {
+class QRCodeGeneratorTest : TestCase() {
 
 
     @Test

@@ -96,11 +96,12 @@ class UserAdditionalInfoActivity : AppCompatActivity() {
     fun confirm(view: View) {
         val description: String = findViewById<EditText>(R.id.NUA_description).text.toString()
         val isNewUser = intent.getBooleanExtra("newUser", false)
-        startActivity(Intent(this, UserNewInfoActivity::class.java)
-            .putExtra("description", description)
-            .putExtra("gender", gender)
-            .putExtra("birthdate", birthDate)
-            .putExtra("newUser", isNewUser)
+        startActivity(
+            Intent(this, UserNewInfoActivity::class.java)
+                .putExtra("description", description)
+                .putExtra("gender", gender)
+                .putExtra("birthdate", birthDate)
+                .putExtra("newUser", isNewUser)
         )
     }
 }

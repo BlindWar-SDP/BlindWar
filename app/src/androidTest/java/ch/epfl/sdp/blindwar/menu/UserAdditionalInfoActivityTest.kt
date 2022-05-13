@@ -73,10 +73,10 @@ class UserAdditionalInfoActivityTest : TestCase() {
     /**
     @Test
     fun testCancel() {
-        clickOn(R.id.NUA_Cancel_Btn)
-        intended(hasComponent(UserNewInfoActivity::class.java.name))
+    clickOn(R.id.NUA_Cancel_Btn)
+    intended(hasComponent(UserNewInfoActivity::class.java.name))
     }
-    **/
+     **/
 
     @Test
     fun testResetBirthdate() {

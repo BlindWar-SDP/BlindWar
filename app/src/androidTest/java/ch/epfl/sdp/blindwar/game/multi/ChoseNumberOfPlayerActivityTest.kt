@@ -45,9 +45,15 @@ class ChoseNumberOfPlayerActivityTest {
         onView(withId(R.id.create_match)).perform(ViewActions.click())
         intended(hasComponent(GameActivity::class.java.name))
     }
-    
+
     @Test
     fun testDefaultNumberPicker() {
-        onView(withParent(withId(R.id.number_of_players))).check(matches(withText(ChoseNumberOfPlayerActivity.DEFAULT_NUMBER_OF_PLAYER.toString())))
+        onView(withParent(withId(R.id.number_of_players))).check(
+            matches(
+                withText(
+                    ChoseNumberOfPlayerActivity.DEFAULT_NUMBER_OF_PLAYER.toString()
+                )
+            )
+        )
     }
 }

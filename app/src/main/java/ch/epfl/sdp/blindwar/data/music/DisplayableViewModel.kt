@@ -8,7 +8,7 @@ import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.viewmodels.PlaylistViewModel
 import kotlinx.coroutines.launch
 
-class DisplayableViewModel: ViewModel() {
+class DisplayableViewModel : ViewModel() {
     private val musicMetadataViewModel: MusicMetadataViewModel =
         MusicMetadataViewModel()
 
@@ -18,7 +18,7 @@ class DisplayableViewModel: ViewModel() {
     val metadata = MutableLiveData<ArrayList<Displayable>>(arrayListOf())
 
     init {
-        viewModelScope.launch{
+        viewModelScope.launch {
             musicMetadataViewModel.fetchMusicMetadata("take on me")
             setObservable(musicMetadataViewModel.metadata as MutableLiveData<ArrayList<Displayable>>)
             setObservable(playlistViewModel.playlists as MutableLiveData<ArrayList<Displayable>>)
@@ -26,7 +26,7 @@ class DisplayableViewModel: ViewModel() {
     }
 
     private fun setObservable(liveData: MutableLiveData<ArrayList<Displayable>>) {
-        liveData.observeForever{
+        liveData.observeForever {
             addToList(it as ArrayList<Displayable>)
         }
     }

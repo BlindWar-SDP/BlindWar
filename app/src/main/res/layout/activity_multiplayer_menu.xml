@@ -31,6 +31,7 @@
             app:layout_constraintTop_toTopOf="@+id/imageView_background_multi"
             android:fillViewport="true">
             <FrameLayout
+                android:id="@+id/frameLayout_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -64,6 +65,7 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/frameLayout_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -96,6 +98,7 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/frameLayout_create"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -126,6 +129,76 @@
                     android:textColor="#3F88C5"
                     android:textSize="20sp" />
             </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/frameLayout_join"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="25dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imageJoinButton"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:contentDescription="@string/oval_description"
+                    android:onClick="joinMatch"
+                    android:src="@drawable/transparent_rectangle_green" />
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/icon_for_playing_with_random_people"
+                    app:srcCompat="@drawable/ic_baseline_add" />
+
+                <TextView
+                    android:id="@+id/joinMatchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:text="@string/multi_join_match"
+                    android:textColor="#3F88C5"
+                    android:textSize="20sp" />
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:id="@+id/frameLayout_quit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="25dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imageQuitButton"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:contentDescription="@string/oval_description"
+                    android:onClick="quitMatch"
+                    android:src="@drawable/transparent_rectangle_green" />
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/icon_for_playing_with_random_people"
+                    app:srcCompat="@drawable/ic_baseline_add" />
+
+                <TextView
+                    android:id="@+id/quitMatchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:text="@string/multi_quit_match"
+                    android:textColor="#3F88C5"
+                    android:textSize="20sp" />
+            </FrameLayout>
+
             <Button
                 android:id="@+id/cancel_multi_menu"
                 android:layout_width="wrap_content"

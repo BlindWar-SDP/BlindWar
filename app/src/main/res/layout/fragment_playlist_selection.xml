@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/bungee_inline"
-        android:text="Playlist"
+        android:text="@string/playlist_name"
         android:textColor="@color/ivory"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/selectionGuideline"

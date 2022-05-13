@@ -21,14 +21,14 @@ class MusicDatabaseTest : TestCase() {
 
     @Test
     fun testTaskNotNull() {
-        launchFragmentInContainer<ProfileFragment>().onFragment{
+        launchFragmentInContainer<ProfileFragment>().onFragment {
             assertNotNull(MusicDatabase.getSongReference())
         }
     }
 
     @Test
     fun testSongReferenceNotNull() {
-        launchFragmentInContainer<ProfileFragment>().onFragment{
+        launchFragmentInContainer<ProfileFragment>().onFragment {
             val task = MusicDatabase.getSongReference()
             task.addOnSuccessListener {
                 assertFalse(task.result.items.isEmpty())
