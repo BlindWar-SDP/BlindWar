@@ -1,8 +1,6 @@
 package ch.epfl.sdp.blindwar.game.util
 
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.music.ReverseMusicConstants
-import ch.epfl.sdp.blindwar.data.music.ReverseMusicConstants.METADATA_REVERSE_MUSICS_PER_AUTHOR
 import ch.epfl.sdp.blindwar.data.music.metadata.ResourceMusicMetadata
 import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.game.model.Difficulty
@@ -34,24 +32,27 @@ object GameUtil {
         "https://i.scdn.co/image/ab67616d0000b27394d08ab63e57b0cae74e8595"
     private const val SUM_41: String =
         "https://i.scdn.co/image/ab67616d0000b2739a482180e6a306229bff49dc"
+    private const val MICHAEL_JACKSON: String =
+        "https://i.scdn.co/image/ab6761610000e5eba2a0b9e3448c1e702de9dc90"
+    private const val QUEEN: String =
+        "https://i.scdn.co/image/ab67616d0000b273dada67d578bea0b446036e87"
+    private const val THE_BEATLES: String =
+        "https://i.scdn.co/image/ab6761610000e5ebe9348cc01ff5d55971b22433"
+    private const val KLAUS_BADELT: String =
+        "https://i.scdn.co/image/ab67616d0000b27338786c7492ac252797bb2648"
+    private const val DEEP_PURPLE: String =
+        "https://i.scdn.co/image/ab6761610000e5eb23a7b4c49d285729a974d6dd"
+    private const val LED_ZEPPELIN: String =
+        "https://i.scdn.co/image/207803ce008388d3427a685254f9de6a8f61dc2e"
+    private const val THE_CHAMPS: String =
+        "https://i.scdn.co/image/ab67616d00001e02621b1b8858b7bfe2706fb7bb"
 
     private val urls = listOf(
-        LADY_GAGA, // LADY GAGA
-        GORILLAZ, // GORILLAZ
-        ACDC, // ACDC
-        THE_NOTORIOUS, // THE NOTORIOUS
-        THE_CLASH,
-        RENAUD,
-        RHCP,
-        SUM_41,
-        DAFT_PUNK,
-        ReverseMusicConstants.MICHAEL_JACKSON,
-        ReverseMusicConstants.QUEEN,
-        ReverseMusicConstants.THE_BEATLES,
-        ReverseMusicConstants.KLAUS_BADELT,
-        ReverseMusicConstants.LED_ZEPPELIN,
-        ReverseMusicConstants.DEEP_PURPLE,
-        ReverseMusicConstants.THE_CHAMPS
+        LADY_GAGA, GORILLAZ, ACDC, THE_NOTORIOUS, THE_CLASH,
+        RENAUD, RHCP, SUM_41, DAFT_PUNK,
+        //REVERSED
+        MICHAEL_JACKSON, QUEEN, THE_BEATLES, KLAUS_BADELT,
+        DEEP_PURPLE, LED_ZEPPELIN, THE_CHAMPS
     )
 
     private val keys = listOf(
@@ -75,41 +76,20 @@ object GameUtil {
     )
 
     private val ids = listOf(
-        R.raw.lady_gaga_poker_face,
-        R.raw.gorillaz_feel_good,
-        R.raw.acdc_highway_to_hell,
-        R.raw.the_notorious_big_respect,
-        R.raw.the_clash_london_calling,
-        R.raw.renaud_mistral_gagnant,
-        R.raw.red_hot_chili_peppers_californication,
-        R.raw.sum_41_in_too_deep,
-        R.raw.daft_punk_one_more_time,
-        ReverseMusicConstants.idList[0],
-        ReverseMusicConstants.idList[1],
-        ReverseMusicConstants.idList[2],
-        ReverseMusicConstants.idList[3],
-        ReverseMusicConstants.idList[4],
-        ReverseMusicConstants.idList[5],
-        ReverseMusicConstants.idList[6]
+        R.raw.lady_gaga_poker_face, R.raw.gorillaz_feel_good, R.raw.acdc_highway_to_hell,
+        R.raw.the_notorious_big_respect, R.raw.the_clash_london_calling,
+        R.raw.renaud_mistral_gagnant, R.raw.red_hot_chili_peppers_californication,
+        R.raw.sum_41_in_too_deep, R.raw.daft_punk_one_more_time,
+        //REVERSED
+        R.raw.billy_reversed, R.raw.bohemian_reversed, R.raw.hey_jude_reversed,
+        R.raw.pirates_reversed, R.raw.smoke_reversed, R.raw.stairway_reversed,
+        R.raw.tequila_reversed
     )
 
     private val durations = listOf(
-        214000,
-        254000,
-        207000,
-        3200000,
-        203000,
-        162000,
-        321000,
-        222000,
-        321000,
-        30000,
-        30000,
-        30000,
-        30000,
-        30000,
-        30000,
-        30000
+        214000, 254000, 207000, 3200000, 203000, 162000, 321000, 222000, 321000,
+        //REVERSED
+        30000, 30000, 30000, 30000, 30000, 30000, 30000
     )
 
     fun metadataTutorial(): MutableMap<String, ResourceMusicMetadata> {
@@ -127,8 +107,14 @@ object GameUtil {
         }
     }
 
+    private const val tutorialPlaylistLength = 9
+    private const val reversedPlaylistLength = 7
+
     private val PLAYLIST: List<ResourceMusicMetadata> = metadataTutorial().values.toList()
-    private val REV_PLAYLIST: List<ResourceMusicMetadata> = METADATA_REVERSE_MUSICS_PER_AUTHOR.values.toList()
+    private val REV_PLAYLIST: List<ResourceMusicMetadata> = metadataTutorial().values.toList().subList(tutorialPlaylistLength,
+        tutorialPlaylistLength + reversedPlaylistLength)
+    private val TUTORIAL_PLAYLIST: List<ResourceMusicMetadata> = metadataTutorial().values.toList().subList(0,
+        tutorialPlaylistLength)
 
 
     private val gameParameter =
@@ -207,7 +193,7 @@ object GameUtil {
         Difficulty.EASY
     )
 
-    private val tutorialPlaylist = LocalPlaylist(
+    private val masterPlaylist = LocalPlaylist(
         "tutorial",
         "GameUtil",
         "BlindWar",
@@ -220,9 +206,19 @@ object GameUtil {
 
     private val reversePlaylist = LocalPlaylist("tutorial",
         "Reverse",
-        "BlindWar LTD.",
+        "BlindWar",
         arrayListOf(Genre.POP, Genre.RAP),
         REV_PLAYLIST,
+        "",
+        URL_PREVIEW_TUTORIAL,
+        Difficulty.EASY
+    )
+
+    private val tutorialPlaylist = LocalPlaylist("tutorial",
+        "Tutorial",
+        "BlindWar",
+        arrayListOf(Genre.POP, Genre.RAP),
+        TUTORIAL_PLAYLIST,
         "",
         URL_PREVIEW_TUTORIAL,
         Difficulty.EASY
@@ -258,6 +254,6 @@ object GameUtil {
 
     val BASE_PLAYLISTS = arrayListOf(tutorialPlaylist, testingPlaylist, reversePlaylist)
 
-    val gameInstanceSolo = GameInstance(gameConfig, tutorialPlaylist, GameFormat.SOLO)
-    val gameInstanceMulti = GameInstance(gameConfig, tutorialPlaylist, GameFormat.MULTI)
+    val gameInstanceSolo = GameInstance(gameConfig, masterPlaylist, GameFormat.SOLO)
+    val gameInstanceMulti = GameInstance(gameConfig, masterPlaylist, GameFormat.MULTI)
 }
