@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/scoreboard"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="10dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/scoreboard_item" />
 
     <ImageButton
         android:id="@+id/frameGuess"
