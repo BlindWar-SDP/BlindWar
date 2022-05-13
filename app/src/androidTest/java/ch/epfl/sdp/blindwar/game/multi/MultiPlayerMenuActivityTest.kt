@@ -44,12 +44,6 @@ class MultiPlayerMenuActivityTest {
     }
 
     @Test
-    fun testDisplayRandomButton() {
-        onView(withId(R.id.imageRandomButton)).perform(scrollTo(), ViewActions.click())
-        //TODO
-    }
-
-    @Test
     fun testCreateButton() {
         onView(withId(R.id.imageCreateButton)).perform(scrollTo(), ViewActions.click())
         intended(hasComponent(ChoseNumberOfPlayerActivity::class.java.name))
