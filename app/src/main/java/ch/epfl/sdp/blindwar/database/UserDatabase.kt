@@ -251,7 +251,7 @@ object UserDatabase {
             null
         }
     }
-    
+
     /**
      * Keep user's listener working on local cache when network is disconnect
      *
