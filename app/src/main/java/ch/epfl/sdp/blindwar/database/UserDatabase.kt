@@ -238,7 +238,20 @@ object UserDatabase {
             }
         }
     }
-
+    /**
+     * Get current authenticated user
+     * TODO check when null if internet is ok
+     */
+    fun getCurrentUser(): DataSnapshot? {
+        return try {
+            val task = getUserReference(Firebase.auth.currentUser!!.uid).get()
+            while (!task.isComplete);
+            if (task.isSuccessful) task.result else null
+        } catch (_: Exception) {
+            null
+        }
+    }
+    
     /**
      * Keep user's listener working on local cache when network is disconnect
      *
