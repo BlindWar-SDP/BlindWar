@@ -3,17 +3,15 @@
 
     <!--  General  -->
     <string name="app_name">BlindWar</string>
-    <string name="blindwar">BLINDWAR</string>
     <string name="blind_war">Blind War</string>
 
     <!-- Buttons  -->
     <string name="solo">SOLO</string>
     <string name="multi">MULTI</string>
-    <string name="profile">PROFILE</string>
     <string name="logout">LOGOUT</string>
-    <string name="login">LOGIN</string>
     <string name="Btn_email">Email</string>
     <string name="Btn_google">Google</string>
+    <string name="Btn_anonymous">Guest</string>
     <string name="confirm">Confirm</string>
     <string name="ok">OK</string>
 
@@ -31,6 +29,7 @@
     |Multi Game : Description placeholder</string>
     <string name="song_opt_description"> Random Song Sel : Description placeholder| Custom
     playlist </string>
+    >>>>>>> main
 
     <!--  Modes  -->
     <string name="survival">SURVIVAL</string>
@@ -46,22 +45,17 @@
     <string name="playlist_selection">PLAYLIST SELECTION</string>
 
     <!--  Text  -->
-    <string name="backText"><![CDATA[->]]></string>
     <string name="emailText">Your email here</string>
     <string name="statisticsText">Statistics</string>
     <string name="historyText">History</string>
     <string name="nameText">Your name here</string>
     <string name="editProfileText">Edit Profile</string>
-    <string name="logoutText">:( Logout</string>
     <string name="profilePicDescriptionText">The profile picture of the user</string>
     <string name="game">GAME</string>
     <string name="text_pseudo">Pseudo</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-    <string name="additional_info_text">provide more info</string>
-    <string name="eloText">ELO: Your ELO is 1435</string>
-    <string name="statisticsShowText">You have 4 wins and 8 losses</string>
-    <string name="your_elo_here">Your elo here</string>
+    <string name="additional_info_text">more ?</string>
     <string name="elo">ELO:</string>
 
     <!-- chars for Pseudo -->
@@ -69,52 +63,41 @@
 
     <!-- Alert Dialogue-->
     <string name="new_user_wrong_pseudo_title">Profile Creation Alert</string>
-    <string name="new_user_wrong_pseudo_text">Please, <b>enter a valid Pseudo</b>\n\nYour pseudo should be at least <b>2</b> characters, but <b>not \"Pseudo\"</b></string>
+    <string name="new_user_wrong_pseudo_text">Please, <b>enter a valid Pseudo</b>\n\nYour pseudo should be at least <b>2</b> characters</string>
 
     <!-- DatePicker -->
     <string name="new_user_birthdatePicker">Please, enter your Birthdate.</string>
 
+    <!-- MULTI -->
+    <string name="toast_connexion">Match are full, retrying…</string>
+    <string name="toast_canceled_connexion">Search canceled !</string>
+    <string name="multi_loading">Loading…</string>
+    <string name="multi_write_link">Please write your link invitation</string>
+    <string name="multi_match_full">match is full, sorry !</string>
+    <string name="multi_match_not_found">Match not found !</string>
+    <string name="multi_wait_matches">Wait for matches…</string>
+    <string name="multi_number_player">Give the maximum number of player</string>
+    <string name="button_create_match">Create</string>
+    <string name="multi_is_private">Do you want to create a private match ?</string>
+
+    <!-- PROFILE -->
+    <string name="userRank">Rank</string>
+    <string name="userPseudo">Pseudo</string>
+    <string name="userElo">Elo</string>
+    <string name="likedMusics">liked musics</string>
+    <string name="matchHistory">match history</string>
+    <string name="leaderboard">leaderboard</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="recognize_file">Recognize File</string>
-    <string name="recognize_microphone_en">Recognize Microphone english</string>
-    <string name="recognize_microphone_fr">Recognize Microphone french</string>
-    <string name="tutorial">TUTORIAL</string>
-    <string name="recognize_microphone_vosk">Recognize Microphone Offline(Vosk)</string>
-    <string name="recognize_microphone_google">Recognize Microphone Online(Google)</string>
-    <string name="stop_microphone">Stop Microphone</string>
-    <string name="preparing">Preparing the recognizer\n</string>
-    <string name="ready">Ready\n</string>
-    <string name="failed">Failed to init recognizer %s\n</string>
-    <string name="elapsed">Result %s elapsed %d millisecond\n</string>
-    <string name="starting">Starting\n</string>
-    <string name="say_something">Say something\n</string>
-    <string name="stop_file">Stop File</string>
-    <string name="pause">Pause</string>
-    <string name="continueRecognition">Continue</string>
-    <string name="speechRecognition">SR(only for demo)</string>
     <string name="content_description_background_image">Black Background Image</string>
     <string name="tutorial_textview">Tutorial</string>
-    <string name="tutorial_modes">Modes</string>
-    <string name="tutorial_formats">Formats</string>
-    <string name="tutorial_commands">Commands</string>
-    <string name="tutorial_options">Game Options</string>
     <string name="oval_description">Oval shape for profile</string>
-    <string name="hint_guess">A Forest</string>
     <string name="guess_button_text">Guess !</string>
     <string name="zero">0</string>
-    <string name="continue_to_demo_button_text">Continue to the demo</string>
     <string name="modes_textview">Modes</string>
     <string name="formats_textview">Formats</string>
     <string name="commands_textview">Commands</string>
     <string name="game_options_textview">Game Options</string>
-    <string name="tutorial_music_set">Tutorial music set</string>
-    <string name="online_music">Online Music</string>
-    <string name="your_musics">Your musics</string>
-    <string name="birthDate_txt">dd/mm/yyyy</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="song_summary_artist">Artist image view</string>
-    <string name="demo_tutorial_artist">Artist image</string>
 
     <string name="example_elo">1435</string>
     <string name="wins">Wins:</string>
@@ -136,25 +119,19 @@
     <string name="wrong_percent" formatted="false">"35%"</string>
 
     <string name="selected_item">Selected item:</string>
-    <string name="select_mode">Select mode</string>
     <string name="chose_sign_in_text">Sign In with:</string>
     <string name="signin_welcome_text">Welcome to BlindWar</string>
     <string name="avatar_description">Avatar image</string>
-    <string name="edit_text_hint_title">Please write your guess</string>
-    <string name="edit_text_hint_pseudo">Write your pseudo</string>
-    <string name="edit_text_hint_firstName">Write your first name</string>
-    <string name="edit_text_hint_lastName">Write your last name</string>
-    <string name="demo">DEMO</string>
-    <string name="button">BUTTON</string>
-    <string name="time">TIME</string>
+
     <string name="artist">ARTIST</string>
     <string name="track">TRACK</string>
     <string name="play_with_friends">Join a game via link</string>
     <string name="play_with_random">Play Now !</string>
     <string name="multi_create_match">Create a match</string>
+
     <string name="icon_for_playing_with_friends">Icon for playing with friends</string>
     <string name="icon_for_playing_with_random_people">Icon for playing with random people</string>
-    <string name="nu_chose_profile_picture">chose profile\npicture</string>
+    <string name="nu_chose_profile_picture">set profile picture</string>
     <string name="delete_profile">Delete\nProfile</string>
     <string name="deletion_success">account successfully deleted, <b>Bye Bye</b></string>
     <string name="account_not_deleted_confirm_toast">ouf, you still are family member</string>
@@ -163,32 +140,12 @@
     <string name="account_not_deleted_toast">deletion cancelled</string>
     <string name="account_deletion_title">Account Deletion</string>
     <string name="account_deletion_text">Are you sure you want to delete your account?</string>
-    <string name="select_birthdate">select birthdate</string>
-    <string name="select_your_gender">Please, select your gender</string>
-    <string name="cancel_btn">cancel</string>
+    <string name="select_birthdate">set birthdate</string>
+    <string name="select_your_gender">Please, set your gender</string>
     <string name="alert_dialogue_cancel_title">Cancel update</string>
     <string name="alert_dialogue_cancel_text">Are you sure to keep old info</string>
     <string name="newUser_ExtraName">newUser</string>
     <string name="reset">reset</string>
-    <string name="no_birthdate_selected">no birthdate selected</string>
-
-    <!-- PROFILE -->
-    <string name="userRank">Rank</string>
-    <string name="userPseudo">Pseudo</string>
-    <string name="userElo">Elo</string>
-    <string name="likedMusics">liked musics</string>
-    <string name="matchHistory">match history</string>
-    <string name="leaderboard">leaderboard</string>
-
-    <!-- MULTI -->
-    <string name="toast_connexion">Match are full, retrying…</string>
-    <string name="toast_canceled_connexion">Search canceled !</string>
-    <string name="multi_loading">Loading ...</string>
-    <string name="multi_write_link">Please write your link invitation</string>
-    <string name="multi_match_full">match is full, sorry !</string>
-    <string name="multi_match_not_found">Match not found !</string>
-    <string name="multi_wait_matches">Wait for matches...</string>
-    <string name="multi_number_player">Give the maximum number of player</string>
-    <string name="button_create_match">Create</string>
-    <string name="multi_is_private">Do you want to create a private match ?</string>
+    <string name="no_birthdate_selected"> </string>
+    <string name="describe_yourself">Describe yourself</string>
 </resources>

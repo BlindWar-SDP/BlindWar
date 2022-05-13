@@ -226,9 +226,12 @@ object UserDatabase {
         }
     }
 
-
-
-
-
-
+    /**
+     * Keep user's listener working on local cache when network is disconnect
+     *
+     * @param uid : User's ID
+     */
+    fun setKeepSynced(uid: String) {
+        getUserReference(uid).keepSynced(true)
+    }
 }
