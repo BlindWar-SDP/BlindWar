@@ -207,6 +207,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             '**/Manifest*.*',
             '**/*Test*.*',
             'android/**/*.*',
+            '**/DynamicLinkHelper**',
             // Exclude Hilt generated classes
             '**/*Hilt*.*',
             'hilt_aggregated_deps/**',
