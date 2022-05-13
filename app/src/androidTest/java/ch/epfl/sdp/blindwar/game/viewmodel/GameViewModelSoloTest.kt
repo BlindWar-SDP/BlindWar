@@ -3,13 +3,13 @@ package ch.epfl.sdp.blindwar.game.viewmodel
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
+import ch.epfl.sdp.blindwar.game.util.GameUtil
+import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModelSolo
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
-import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModelSolo
-import ch.epfl.sdp.blindwar.game.util.GameUtil
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -30,7 +30,7 @@ class GameViewModelSoloTest {
 
         // Iterate 10 times since we have 10 different musics in tutorial
         val toPlay: MutableSet<MusicMetadata> =
-            GameUtil.gameInstanceSolo.onlinePlaylist.songs.toMutableSet()
+            GameUtil.gameInstanceSolo.onlinePlaylist?.songs!!.toMutableSet()
         for (i in 0 until round) {
             gameTutorial.nextRound()
             //assertThat(toPlay.contains(gameTutorial.currentMetadata()), `is`(true))
