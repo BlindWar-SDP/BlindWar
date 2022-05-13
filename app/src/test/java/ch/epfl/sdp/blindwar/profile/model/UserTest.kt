@@ -91,18 +91,22 @@ class UserTest {
     fun getPseudo() {
         assertEquals(testUser1.pseudo, pseudo1)
     }
+
     @Test
     fun getUid() {
         assertEquals(testUser1.uid, uid1)
     }
+
     @Test
     fun getDescription() {
         assertEquals(testUser1.description, description1)
     }
+
     @Test
     fun getGender() {
         assertEquals(testUser1.gender, gender1)
     }
+
     @Test
     fun getProfilePicture() {
         assertEquals(testUser1.profilePicture, profilePicture1)
@@ -152,21 +156,25 @@ class UserTest {
         val testUser = User.Builder().setProfilePicture(profilePicture1).build()
         assertEquals(testUser.profilePicture, profilePicture1)
     }
+
     @Test
     fun setGender() {
         val testUser = User.Builder().setGender(gender1).build()
         assertEquals(testUser.gender, gender1)
     }
+
     @Test
     fun setBirthdate() {
         val testUser = User.Builder().setBirthdate(birthdate1).build()
         assertEquals(testUser.birthDate, birthdate1)
     }
+
     @Test
     fun setDescription() {
         val testUser = User.Builder().setDescription(description1).build()
         assertEquals(testUser.description, description1)
     }
+
     @Test
     fun setUid() {
         val testUser = User.Builder().setUid(uid1).build()

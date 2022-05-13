@@ -19,7 +19,7 @@ class ImageDatabaseTest : TestCase() {
     fun testDownloadProfilePicture() {
         val fakeImagePath = "/gs:/blindwar-sdp.appspot.com/images/old_android.jpeg"
         launchFragmentInContainer<ProfileFragment>().onFragment {
-           val reference = ImageDatabase.getImageReference(fakeImagePath)
+            val reference = ImageDatabase.getImageReference(fakeImagePath)
             assertThat(reference.path, equalTo(fakeImagePath))
         }
     }

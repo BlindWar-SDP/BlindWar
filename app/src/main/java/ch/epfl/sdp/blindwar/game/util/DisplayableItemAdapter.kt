@@ -7,10 +7,7 @@ import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.ImageButton
-import android.widget.NumberPicker
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
@@ -21,18 +18,22 @@ import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.audio.AudioHelper
-import ch.epfl.sdp.blindwar.database.MatchDatabase.createMatch
+import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
+import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
+import ch.epfl.sdp.blindwar.game.multi.SnapshotListener
+import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
-import ch.epfl.sdp.blindwar.profile.model.User
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -52,7 +53,8 @@ class DisplayableItemAdapter(
     private val context: Context,
     private val viewFragment: View,
     private val gameInstanceViewModel: GameInstanceViewModel,
-    private val profileViewModel: ProfileViewModel
+    private val profileViewModel: ProfileViewModel,
+    private var listener: ListenerRegistration? = null
 ) :
     RecyclerView.Adapter<DisplayableItemAdapter.DisplayableItemViewHolder>() {
 
@@ -151,9 +153,9 @@ class DisplayableItemAdapter(
 
                 setStartGameListener(displayed as Playlist)
 
-                when (gameInstanceViewModel.gameInstance.value!!.gameConfig.mode) {
-                    GameMode.SURVIVAL -> roundTextView.text = "LIVES"
-                    else -> roundTextView.text = "ROUNDS"
+                when (gameInstanceViewModel.gameInstance.value!!.gameConfig!!.mode) {
+                    GameMode.SURVIVAL -> roundTextView.text = context.getString(R.string.lives)
+                    else -> roundTextView.text = context.getString(R.string.rounds)
                 }
 
                 /** Initialize timerPicker **/
@@ -190,15 +192,35 @@ class DisplayableItemAdapter(
                 )
 
                 // Separate solo logic from multiplayer one
-                when(gameInstanceViewModel.gameInstance.value?.gameFormat){
+                when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
                     GameFormat.SOLO -> {
                         startDemo()
                     }
                     GameFormat.MULTI -> {
-                        // TODO : Use the new mutable live data to respect the view model architecture
-                        // Create the match object
-                        createMatch(User(), 10, gameInstanceViewModel.gameInstance.value!!, FirebaseFirestore.getInstance())
-                        startDemo()
+                        val match: Match? = gameInstanceViewModel.createMatch()
+                        if (match != null) {
+                            val dialog = DynamicLinkHelper.setDynamicLinkDialog(
+                                context.getString(R.string.multi_wait_players),
+                                match.uid,
+                                context
+                            )
+                            dialog.show()
+                            listener = Firebase.firestore.collection(MatchDatabase.COLLECTION_PATH)
+                                .document(match.uid).addSnapshotListener { snapshot, e ->
+                                    if (e != null) {
+                                        return@addSnapshotListener
+                                    }
+                                    if (SnapshotListener.listenerOnLobby(
+                                            snapshot,
+                                            context,
+                                            dialog
+                                        )
+                                    ) {
+                                        listener?.remove()
+                                        MultiPlayerMenuActivity.launchGame(match.uid, context)
+                                    }
+                                }
+                        }
                     }
                 }
             }

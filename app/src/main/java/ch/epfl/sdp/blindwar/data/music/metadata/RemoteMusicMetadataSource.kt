@@ -11,9 +11,11 @@ import ch.epfl.sdp.blindwar.game.util.GameUtil
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
-class RemoteMusicMetadataSource(private val songMetadataSource: SpotifyApi = apiMeta.value,
-                                private val tokenSource: SpotifyApi,
-                                private val ioDispatcher: CoroutineDispatcher) {
+class RemoteMusicMetadataSource(
+    private val songMetadataSource: SpotifyApi = apiMeta.value,
+    private val tokenSource: SpotifyApi,
+    private val ioDispatcher: CoroutineDispatcher
+) {
 
     private var token = SpotifyToken("", 3600, "")
     private var logged: Boolean = false
@@ -26,8 +28,11 @@ class RemoteMusicMetadataSource(private val songMetadataSource: SpotifyApi = api
 
             if (logged) {
                 val response = try {
-                    songMetadataSource.searchTrack("Bearer ${token.access_token}", query = trackName)
-                }  catch (e: Exception) {
+                    songMetadataSource.searchTrack(
+                        "Bearer ${token.access_token}",
+                        query = trackName
+                    )
+                } catch (e: Exception) {
                     Log.e("An exception occured : ", e.toString())
                     logged = false
                     return@withContext
@@ -36,13 +41,13 @@ class RemoteMusicMetadataSource(private val songMetadataSource: SpotifyApi = api
                 if (response.isSuccessful && response.body() != null) {
 
                     //val tracks: List<URIMusicMetadata> =
-                    val tracks = (response.body()!!.tracks.items as ArrayList<SpotifyTrack>).map{
+                    val tracks = (response.body()!!.tracks.items as ArrayList<SpotifyTrack>).map {
                         URIMusicMetadata(
-                        it.name,
-                        it.artists[0].name,
-                        it.album.images[0].url,
-                        duration = 30000,
-                        uri = it.preview_url ?: GameUtil.URL_FIFA_SONG_2
+                            it.name,
+                            it.artists[0].name,
+                            it.album.images[0].url,
+                            duration = 30000,
+                            uri = it.preview_url ?: GameUtil.URL_FIFA_SONG_2
                         )
                     }
 
@@ -73,7 +78,12 @@ class RemoteMusicMetadataSource(private val songMetadataSource: SpotifyApi = api
                     Log.d(ContentValues.TAG, "AUTHENTICATION SUCCESSFUL")
                     Log.d(ContentValues.TAG, token.access_token)
                 } else {
-                    Log.d(ContentValues.TAG, "AUTHENTICATION NOT SUCCESSFUL ${auth.code().toString()+auth.message()+auth.toString()}")
+                    Log.d(
+                        ContentValues.TAG,
+                        "AUTHENTICATION NOT SUCCESSFUL ${
+                            auth.code().toString() + auth.message() + auth.toString()
+                        }"
+                    )
                 }
             }
         }

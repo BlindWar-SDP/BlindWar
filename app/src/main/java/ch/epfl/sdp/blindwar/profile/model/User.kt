@@ -27,7 +27,8 @@ data class User(
     var likedMusics: MutableList<URIMusicMetadata> = mutableListOf(),
     var matchHistory: MutableList<GameResult> = mutableListOf(),
     var gender: String = "",
-    var description: String = ""
+    var description: String = "",
+    var matchId: String = "",
 ) {
 
     class Builder(

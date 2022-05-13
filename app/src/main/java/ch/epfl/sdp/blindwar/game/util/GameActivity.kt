@@ -17,8 +17,8 @@ import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
-class GameActivity(): AppCompatActivity() {
-    val gameInstanceViewModel: GameInstanceViewModel  by viewModels()
+class GameActivity : AppCompatActivity() {
+    val gameInstanceViewModel: GameInstanceViewModel by viewModels()
     protected val profileViewModel: ProfileViewModel by viewModels()
 
     companion object {
@@ -26,6 +26,8 @@ class GameActivity(): AppCompatActivity() {
         const val PERMISSIONS_REQUEST_RECORD_AUDIO = 1
 
         const val GAME_FORMAT_EXTRA_NAME = "GAME_FORMAT"
+        const val GAME_IS_PRIVATE = "IS_PRIVATE"
+        const val GAME_MAX_PLAYERS = "MAX_PLAYERS"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +35,15 @@ class GameActivity(): AppCompatActivity() {
         setContentView(R.layout.activity_play)
 
         // Set the game format
-        gameInstanceViewModel.setGameFormat(intent.extras!!.get(GAME_FORMAT_EXTRA_NAME) as GameFormat)
-        val test = intent.extras!!.get(GAME_FORMAT_EXTRA_NAME) as GameFormat
+        val format: GameFormat = intent.extras!!.get(GAME_FORMAT_EXTRA_NAME) as GameFormat
+        gameInstanceViewModel.setGameFormat(format)
+        if (format == GameFormat.MULTI) {
+            gameInstanceViewModel.setMultiParameters(
+                intent.extras!!.get(GAME_IS_PRIVATE) as Boolean, intent.extras!!.get(
+                    GAME_MAX_PLAYERS
+                ) as Int
+            )
+        }
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.play_container, ModeSelectionFragment(), "MODE")
@@ -43,7 +52,10 @@ class GameActivity(): AppCompatActivity() {
 
         /** Permission handling **/
         val permissionCheck =
-            ContextCompat.checkSelfPermission(applicationContext!!, Manifest.permission.RECORD_AUDIO)
+            ContextCompat.checkSelfPermission(
+                applicationContext!!,
+                Manifest.permission.RECORD_AUDIO
+            )
         if (permissionCheck != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(
                 this,

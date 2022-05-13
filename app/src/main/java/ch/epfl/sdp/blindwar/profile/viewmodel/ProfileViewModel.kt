@@ -19,11 +19,12 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.storage.StorageReference
 
-class ProfileViewModel: ViewModel() {
+class ProfileViewModel : ViewModel() {
     // DATABASE
     private val database = UserDatabase
     private val auth = FirebaseAuth.getInstance()
     private val currentUser = auth.currentUser
+
     //private val userRepository = UserRepository
     private val imageDatabase = ImageDatabase
 

@@ -4,23 +4,23 @@ import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.util.GameUtil
 
 data class GameInstance(
-    val gameConfig: GameConfig, // configuration object of the game
-    val onlinePlaylist: Playlist, // playlist of the game
-    val gameFormat: GameFormat
+    val gameConfig: GameConfig? = null, // configuration object of the game
+    val onlinePlaylist: Playlist? = null, // playlist of the game
+    val gameFormat: GameFormat? = null
 ) {
     class Builder {
-        private var playlist: Playlist = GameUtil.gameInstanceSolo
+        private var playlist: Playlist? = GameUtil.gameInstanceSolo
             .onlinePlaylist
 
         private var gameFormat: GameFormat = GameFormat.SOLO
 
         private var gameParameter: GameParameter = GameUtil.gameInstanceSolo
-            .gameConfig
-            .parameter
+            .gameConfig!!
+            .parameter!!
 
         private var gameMode: GameMode = GameUtil.gameInstanceSolo
-            .gameConfig
-            .mode
+            .gameConfig!!
+            .mode!!
 
         fun setPlaylist(playlist: Playlist): Builder {
             this.playlist = playlist
@@ -43,10 +43,10 @@ data class GameInstance(
         }
 
         fun setGameInstance(gameInstance: GameInstance): Builder {
-            setPlaylist(gameInstance.onlinePlaylist)
-            setFormat(gameInstance.gameFormat)
-            setParameter(gameInstance.gameConfig.parameter)
-            setMode(gameInstance.gameConfig.mode)
+            setPlaylist(gameInstance.onlinePlaylist!!)
+            setFormat(gameInstance.gameFormat!!)
+            setParameter(gameInstance.gameConfig!!.parameter!!)
+            setMode(gameInstance.gameConfig.mode!!)
             return this
         }
 

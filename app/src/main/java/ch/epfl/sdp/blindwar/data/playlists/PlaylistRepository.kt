@@ -54,12 +54,10 @@ object PlaylistRepository {
                             }.toMutableList()
                     }
                 }
-
                 (response as ArrayList<Playlist>).addAll(GameUtil.BASE_PLAYLISTS)
                 playlists.value = (response as ArrayList<Playlist>)
             }
         }
-
         return playlists
     }
 }

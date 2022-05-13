@@ -4,7 +4,7 @@ import ch.epfl.sdp.blindwar.game.multi.model.Match
 import junit.framework.TestCase
 import org.junit.Test
 
-class MatchTest: TestCase() {
+class MatchTest : TestCase() {
     private var dummyPlayerList = mutableListOf("yeet1", "yeet2")
     private var dummyPseudoList = mutableListOf("yeet3", "yeet4")
     private var dummyResultList = mutableListOf(2, 3)

@@ -3,7 +3,7 @@ package ch.epfl.sdp.blindwar.data.spotify
 import junit.framework.TestCase
 import org.junit.Test
 
-class SpotifyResponseTest: TestCase() {
+class SpotifyResponseTest : TestCase() {
     private var spotifyImage = SpotifyImage(0, "", 0)
     private var spotifyFollowers = SpotifyFollowers("FollowersUrl", 9)
     private var spotifyUrls = SpotifyExternalUrls("SpotifyURL")
@@ -66,7 +66,7 @@ class SpotifyResponseTest: TestCase() {
         spotifyExternalUrlsXXX,
         "href",
         "id",
-        true,
+        is_local = true,
         true,
         "name",
         3,
@@ -76,7 +76,7 @@ class SpotifyResponseTest: TestCase() {
         "uri"
     )
     private var dummySpotifySearchTrack = SpotifySearchTrack(listOf(dummySpotifyTrack))
-    private var dummySpotifySearchTrackResult =  SpotifySearchTrackResult(
+    private var dummySpotifySearchTrackResult = SpotifySearchTrackResult(
         "href",
         dummySpotifySearchTrack,
         1,

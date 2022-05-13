@@ -34,7 +34,8 @@ class SearchFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_playlist_selection, container, false)
         musicMetadataRecyclerView = view.findViewById(R.id.playlistRecyclerView)
-        musicMetadataRecyclerView.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL, false)
+        musicMetadataRecyclerView.layoutManager =
+            LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL, false)
 
         view.findViewById<TextView>(R.id.textView).text = "Search"
 
@@ -56,7 +57,13 @@ class SearchFragment : Fragment() {
      * Resets the playlist recycler view with the updated list of playlist
      */
     private fun resetRecyclerView(view: View, list: ArrayList<Displayable>) {
-        musicMetadataRecyclerView.adapter = DisplayableItemAdapter(list, requireContext(), view, gameInstanceViewModel, profileViewModel)
+        musicMetadataRecyclerView.adapter = DisplayableItemAdapter(
+            list,
+            requireContext(),
+            view,
+            gameInstanceViewModel,
+            profileViewModel
+        )
         adapter = musicMetadataRecyclerView.adapter as DisplayableItemAdapter
     }
 

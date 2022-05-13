@@ -28,7 +28,10 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class SoloActivityTest {
 
-    var intent: Intent? = Intent(ApplicationProvider.getApplicationContext(), GameActivity::class.java).apply { putExtra(GameActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.SOLO) }
+    var intent: Intent? = Intent(
+        ApplicationProvider.getApplicationContext(),
+        GameActivity::class.java
+    ).apply { putExtra(GameActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.SOLO) }
 
     @get:Rule
     var testRule = ActivityScenarioRule<GameActivity>(
@@ -88,50 +91,50 @@ class SoloActivityTest {
     /** TODO: Debug Timeout
     @Test
     fun testLostThenWonGame() {
-        searchPlaylist("The witcher", 2)
+    searchPlaylist("The witcher", 2)
 
-        // Click on the playlist
-        onView(withId(R.id.playlistRecyclerView))
-            .perform(
-                RecyclerViewActions.actionOnItemAtPosition<DisplayableItemAdapter.DisplayableItemViewHolder>(
-                    0,
-                    click(),
-                )
-            )
+    // Click on the playlist
+    onView(withId(R.id.playlistRecyclerView))
+    .perform(
+    RecyclerViewActions.actionOnItemAtPosition<DisplayableItemAdapter.DisplayableItemViewHolder>(
+    0,
+    click(),
+    )
+    )
 
-        // Start game with the correct playlist
-        onView(
-            allOf(
-                withId(R.id.startGame),
-                withEffectiveVisibility(Visibility.VISIBLE)
-            )
-        ).perform(click())
-
-
-        // Assert that the game is launched
-        onView(withId(R.id.guessButton)).check(matches(isDisplayed()))
+    // Start game with the correct playlist
+    onView(
+    allOf(
+    withId(R.id.startGame),
+    withEffectiveVisibility(Visibility.VISIBLE)
+    )
+    ).perform(click())
 
 
-        // Create a function with a counter for the number of rounds
-        simulateLostRound(false)
+    // Assert that the game is launched
+    onView(withId(R.id.guessButton)).check(matches(isDisplayed()))
 
 
-        onView(withId(R.id.replay)).perform(click())
+    // Create a function with a counter for the number of rounds
+    simulateLostRound(false)
 
-        // Assert that the player is in the demo fragment
-        onView(withId(R.id.audioVisualizer)).check(matches(isDisplayed()))
 
-        guess(GameUtil.SONG_TESTING)
+    onView(withId(R.id.replay)).perform(click())
 
-        // Assert that the player has guessed the song
-        onView(withId(R.id.skip_next_summary)).check(matches(isDisplayed()))
+    // Assert that the player is in the demo fragment
+    onView(withId(R.id.audioVisualizer)).check(matches(isDisplayed()))
 
-        onView(withId(R.id.skip_next_summary)).perform(click())
+    guess(GameUtil.SONG_TESTING)
 
-        // Assert that the player has completed the game
-        onView(withId(R.id.game_summary_fragment)).check(matches(isDisplayed()))
+    // Assert that the player has guessed the song
+    onView(withId(R.id.skip_next_summary)).check(matches(isDisplayed()))
 
-        onView(withId(R.id.quit)).perform(click())
+    onView(withId(R.id.skip_next_summary)).perform(click())
+
+    // Assert that the player has completed the game
+    onView(withId(R.id.game_summary_fragment)).check(matches(isDisplayed()))
+
+    onView(withId(R.id.quit)).perform(click())
     } **/
 
     private fun guess(guess: String) {
