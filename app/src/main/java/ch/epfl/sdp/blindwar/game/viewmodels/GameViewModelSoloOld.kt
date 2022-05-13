@@ -17,7 +17,7 @@ import ch.epfl.sdp.blindwar.profile.model.Result
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-
+/*
 /**
  * Class representing an instance of a game
  *
@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter
  * @param context of the Game
  * @constructor Construct a class that represent the game logic
  */
-class GameViewModelSolo(
+class GameViewModel(
     gameInstance: GameInstance,
     context: Context,
     resources: Resources
@@ -72,6 +72,9 @@ class GameViewModelSolo(
             return true
         }
 
+        // TEST
+
+
         musicViewModel.nextRound()
         musicViewModel.normalMode()
         return false
@@ -117,3 +120,4 @@ class GameViewModelSolo(
         lives.value = lives.value?.minus(1)
     }
 }
+ */

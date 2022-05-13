@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
@@ -26,11 +25,13 @@ import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.TI
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
-import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModelMulti
-import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModelSolo
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import java.util.*
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import ch.epfl.sdp.blindwar.game.util.ScoreboardAdapter
 
 /**
  * Fragment containing the UI logic of a solo game
@@ -42,6 +43,9 @@ class DemoFragment : Fragment() {
     lateinit var gameViewModel: GameViewModel
     private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
 
+    // Adapter
+    private lateinit var scoreboardAdapter: ScoreboardAdapter
+
     // METADATA
     private lateinit var musicMetadata: MusicMetadata
     private var playing = true
@@ -52,6 +56,7 @@ class DemoFragment : Fragment() {
     private lateinit var guessButton: ImageButton
     private lateinit var countDown: TextView
     private lateinit var timer: CountDownTimer
+    private lateinit var scoreboard: RecyclerView
 
     // Animations / Buttons
     private lateinit var crossAnim: LottieAnimationView
@@ -83,22 +88,40 @@ class DemoFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.activity_animated_demo, container, false)
 
+        // Get the scoreboard
+        scoreboard = view.findViewById(R.id.scoreboard)
+
+        // Create the adapter for the score board
+        scoreboardAdapter = ScoreboardAdapter(listOf("Marty", "Joris", "Nael", "Arthur", "Paul", "Henrique"))
+        scoreboard.setHasFixedSize(true)
+
+        val layoutManager = LinearLayoutManager(context)
+        scoreboard.layoutManager = layoutManager
+        scoreboard.adapter = scoreboardAdapter
+        scoreboardAdapter.notifyDataSetChanged()
+
         // Switch between the two different game view model
         when(gameInstanceViewModel.gameInstance.value?.gameFormat){
-            GameFormat.SOLO -> gameViewModel = context?.let {
-                GameViewModelSolo(
-                    gameInstanceViewModel.gameInstance.value!!,
-                    it,
-                    resources
-                )
-            }!!
+            GameFormat.SOLO -> {
+                gameViewModel = context?.let {
+                    GameViewModel(
+                        gameInstanceViewModel.gameInstance.value!!,
+                        it,
+                        resources
+                    )
+                }!!
+
+                // Hide the scoreboard
+                scoreboard.visibility = View.INVISIBLE
+            }
             GameFormat.MULTI -> gameViewModel = context?.let {
-                GameViewModelMulti(
-                    gameInstanceViewModel.gameInstance.value!!,
-                    it,
-                    resources
-                )
-            }!!
+                    GameViewModel(
+                        gameInstanceViewModel.gameInstance.value!!,
+                        it,
+                        resources,
+                        scoreboardAdapter
+                    )
+                }!!
         }
 
         gameViewModel.init()
@@ -197,6 +220,11 @@ class DemoFragment : Fragment() {
     }
 
     private fun startGame() {
+        // TEST
+        gameViewModel.incrementPoint("Marty")
+        scoreboardAdapter.notifyDataSetChanged()
+
+
         // Start the game
         gameViewModel.nextRound()
         gameViewModel.play()
