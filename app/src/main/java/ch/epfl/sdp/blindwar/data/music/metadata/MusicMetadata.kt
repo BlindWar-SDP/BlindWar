@@ -2,7 +2,7 @@ package ch.epfl.sdp.blindwar.data.music.metadata
 
 import ch.epfl.sdp.blindwar.game.model.Displayable
 
-abstract class MusicMetadata(
+open class MusicMetadata(
     var title: String = "",
     var artist: String = "",
     var imageUrl: String = "",
@@ -16,6 +16,10 @@ abstract class MusicMetadata(
 
     override fun getCover(): String {
         return imageUrl
+    }
+
+    override fun getPreviewUrl(): String {
+        return ""
     }
 
     override fun getName(): String {

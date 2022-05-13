@@ -116,7 +116,7 @@ class DemoFragment : Fragment() {
         val mode = gameInstanceViewModel
             .gameInstance
             .value!!
-            .gameConfig
+            .gameConfig!!
             .mode
 
         chronometer = view.findViewById(R.id.simpleChronometer)

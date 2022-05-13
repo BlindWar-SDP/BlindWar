@@ -74,7 +74,7 @@ class GameInstanceViewModel : ViewModel() {
     fun setGameParameters(timeChosen: Int, roundChosen: Int, playlist: Playlist) {
         val mode = gameInstance
             .value!!
-            .gameConfig
+            .gameConfig!!
             .mode
 
         val currentParameter = gameInstance
@@ -119,8 +119,9 @@ class GameInstanceViewModel : ViewModel() {
      */
     fun createMatch(): Match? {
         UserDatabase.getCurrentUser().let {
-            val user =
-                it!!.getValue(User::class.java) as User //TODO find better solution to avoid active waiting
+            val user: User =
+                it!!.getValue(User::class.java)
+                    ?: return null //TODO find better solution to avoid active waiting
             return if (user.matchId.isEmpty()) {
                 match = MatchDatabase.createMatch(
                     user.uid,

@@ -58,7 +58,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     )
     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
     .commit()*/
-            Toast.makeText(context, "Match $matchId connected (test message)", Toast.LENGTH_SHORT)
+            Toast.makeText(context, "Match $matchId connected (test message)", Toast.LENGTH_LONG)
                 .show()
         }
     }

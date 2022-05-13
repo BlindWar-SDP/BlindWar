@@ -31,12 +31,12 @@ abstract class GameViewModel(
     protected val profileViewModel = ProfileViewModel()
 
     protected val gameParameter: GameParameter = gameInstance
-        .gameConfig
-        .parameter
+        .gameConfig!!
+        .parameter!!
 
     protected val mode: GameMode = gameInstance
-        .gameConfig
-        .mode
+        .gameConfig!!
+        .mode!!
 
     /** Player game score **/
     var score = 0
@@ -54,7 +54,7 @@ abstract class GameViewModel(
      */
     fun init() {
         musicViewModel = MusicViewModel(
-            game.onlinePlaylist,
+            game.onlinePlaylist!!,
             context, resources
         )
     }

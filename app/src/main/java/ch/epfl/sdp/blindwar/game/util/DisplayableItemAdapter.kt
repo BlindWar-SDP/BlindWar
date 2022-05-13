@@ -153,7 +153,7 @@ class DisplayableItemAdapter(
 
                 setStartGameListener(displayed as Playlist)
 
-                when (gameInstanceViewModel.gameInstance.value!!.gameConfig.mode) {
+                when (gameInstanceViewModel.gameInstance.value!!.gameConfig!!.mode) {
                     GameMode.SURVIVAL -> roundTextView.text = context.getString(R.string.lives)
                     else -> roundTextView.text = context.getString(R.string.rounds)
                 }

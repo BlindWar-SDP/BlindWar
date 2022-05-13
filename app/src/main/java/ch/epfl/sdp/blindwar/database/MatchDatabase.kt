@@ -30,20 +30,24 @@ object MatchDatabase {
         game: GameInstance,
         db: FirebaseFirestore,
         isPrivate: Boolean = false
-    ): Match {
-        val match = Match(
-            userUID,
-            userElo,
-            mutableListOf(userUID),
-            mutableListOf(userPseudo),
-            game,
-            mutableListOf(0),
-            numberOfPlayerMax,
-            isPrivate
-        )
-        db.collection(COLLECTION_PATH).add(match)
-        db.collection(UserDatabase.COLLECTION_PATH).document(userUID).update("matchId", match.uid)
-        return match
+    ): Match? {
+        if (userUID.isNotEmpty()) {
+            val match = Match(
+                userUID,
+                userElo,
+                mutableListOf(userUID),
+                mutableListOf(userPseudo),
+                game,
+                mutableListOf(0),
+                numberOfPlayerMax,
+                isPrivate
+            )
+            db.collection(COLLECTION_PATH).document(match.uid).set(match)
+            db.collection(UserDatabase.COLLECTION_PATH).document(userUID)
+                .update("matchId", match.uid)
+            return match
+        }
+        return null
     }
 
     /**
@@ -72,16 +76,15 @@ object MatchDatabase {
      * @return
      */
     fun connect(match: Match, user: User, db: FirebaseFirestore): DocumentReference? {
-        if (match.listPlayers!!.size < match.maxPlayer) return null
+        if (match.listPlayers!!.size >= match.maxPlayer) return null
         if (user.matchId.isNotEmpty()) return null
         if (match.listPlayers!!.contains(user.uid)) return null
         match.listPlayers!!.add(user.uid)
         match.listPseudo!!.add(user.pseudo)
         match.listResult!!.add(0)
         db.collection(UserDatabase.COLLECTION_PATH).document(user.uid).update("matchId", match.uid)
-        val matchDB = db.collection(COLLECTION_PATH).document(match.uid)
-        matchDB.set(match)
-        return matchDB
+        db.collection(COLLECTION_PATH).document(match.uid).set(match)
+        return db.collection(COLLECTION_PATH).document(match.uid)
     }
 
     /**
@@ -94,7 +97,6 @@ object MatchDatabase {
     fun getMatchSnapshot(uid: String, db: FirebaseFirestore): DocumentSnapshot? {
         val query = db.collection("match").whereEqualTo("uid", uid).limit(1).get()
         while (!query.isComplete); //TODO avoid active waiting
-        Thread.sleep(500)
         return query.result.documents[0]
     }
 }
