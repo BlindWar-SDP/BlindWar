@@ -25,7 +25,12 @@ open class Playlist(
     }
 
     override fun getGenre(): String {
-        return genres.elementAt(0).toString()
+        return if(genres.isNotEmpty()) {
+            genres.elementAt(0).toString()
+        } else {
+            ""
+        }
+
     }
 
     override fun getCover(): String {
