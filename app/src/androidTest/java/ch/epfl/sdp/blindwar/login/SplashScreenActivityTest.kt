@@ -41,6 +41,8 @@ class SplashScreenActivityTest : TestCase() {
     @Test
     fun testNewUser() {
         FirebaseAuth.getInstance().signOut()
+        while (FirebaseAuth.getInstance().currentUser != null){
+        }
         clickOn(R.id.Btn_email)
     }
 }
