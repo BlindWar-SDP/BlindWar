@@ -204,9 +204,7 @@ class DisplayableItemAdapter(
                         val match: Match? = gameInstanceViewModel.createMatch()
                         if (match != null) {
                             val dialog = DynamicLinkHelper.setDynamicLinkDialog(
-                                context.getString(R.string.multi_wait_players),
-                                match.uid,
-                                context
+                                context.getString(R.string.multi_wait_players), match.uid, context
                             )
                             dialog.show()
                             listener = Firebase.firestore.collection(MatchDatabase.COLLECTION_PATH)
@@ -215,9 +213,7 @@ class DisplayableItemAdapter(
                                         return@addSnapshotListener
                                     }
                                     if (SnapshotListener.listenerOnLobby(
-                                            snapshot,
-                                            context,
-                                            dialog
+                                            snapshot, context, dialog
                                         )
                                     ) {
                                         listener?.remove()
@@ -284,9 +280,7 @@ class DisplayableItemAdapter(
                     /** Modify the music preview to not spoil the playlist too much **/
                     if (displayed.extendable()) {
                         AudioHelper.soundAlter(
-                            player,
-                            AudioHelper.HIGH,
-                            AudioHelper.FAST
+                            player, AudioHelper.HIGH, AudioHelper.FAST
                         )
                         duration = DURATION_FAST
                     }
