@@ -9,7 +9,7 @@ class PlaylistTest : TestCase() {
         val playlist = Playlist()
         assertTrue(playlist.imageUrl.isEmpty())
         assertTrue(playlist.uid.isEmpty())
-        assertTrue(playlist.difficulty == Difficulty.EASY)
+        assertTrue(playlist.difficulty == null)
         assertTrue(playlist.genres.isEmpty())
         assertTrue(playlist.songs.isEmpty())
     }
@@ -18,7 +18,7 @@ class PlaylistTest : TestCase() {
         val playlist = LocalPlaylist("", "")
         assertTrue(playlist.imageUrl.isEmpty())
         assertTrue(playlist.uid.isEmpty())
-        assertTrue(playlist.difficulty == Difficulty.EASY)
+        assertTrue(playlist.difficulty == null)
         assertTrue(playlist.genres.isEmpty())
         assertTrue(playlist.songs.isEmpty())
     }
@@ -27,7 +27,7 @@ class PlaylistTest : TestCase() {
         val playlist = OnlinePlaylist("", "")
         assertTrue(playlist.imageUrl.isEmpty())
         assertTrue(playlist.uid.isEmpty())
-        assertTrue(playlist.difficulty == Difficulty.EASY)
+        assertTrue(playlist.difficulty == null)
         assertTrue(playlist.genres.isEmpty())
         assertTrue(playlist.songs.isEmpty())
     }
