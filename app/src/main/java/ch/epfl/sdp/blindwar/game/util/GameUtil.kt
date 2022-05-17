@@ -229,7 +229,7 @@ object GameUtil {
         TUTORIAL_PLAYLIST,
         "",
         URL_PREVIEW_TUTORIAL,
-        Difficulty.EASY
+        Difficulty.MEDIUM
     )
 
     private const val COVER_TESTING =
