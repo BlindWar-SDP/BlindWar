@@ -218,7 +218,7 @@ object GameUtil {
         REV_PLAYLIST,
         "",
         URL_PREVIEW_TUTORIAL,
-        Difficulty.EASY
+        Difficulty.DIFFICULT
     )
 
     private val tutorialPlaylist = LocalPlaylist(

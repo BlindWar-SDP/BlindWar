@@ -8,6 +8,10 @@ interface Displayable {
 
     fun getAuthor(): String
 
+    fun getLevel(): String
+
+    fun getGenre(): String
+
     fun getCover(): String
 
     fun getPreviewUrl(): String
