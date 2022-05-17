@@ -214,6 +214,5 @@
     <string name="hard">HARD</string>
     <string name="pop">POP</string>
     <string name="button_to_start_game">Button to start game</string>
-    <string name="rounds">ROUNDS</string>
     <string name="timer">TIMER</string>
 </resources>
