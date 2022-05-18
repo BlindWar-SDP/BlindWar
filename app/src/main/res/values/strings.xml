@@ -208,4 +208,11 @@
     <string name="share_title">Share invitation</string>
     <string name="share_text">Share BlindWar invitation !</string>
     <string name="share_subject">Invitation link !</string>
+    <string name="button_to_expand_playlist">Button to expand playlist</string>
+    <string name="button_to_play_preview_of_playlist">Button to play preview of playlist</string>
+    <string name="the_author_of_this_playlist">The author of this playlist</string>
+    <string name="hard">HARD</string>
+    <string name="pop">POP</string>
+    <string name="button_to_start_game">Button to start game</string>
+    <string name="timer">TIMER</string>
 </resources>

@@ -91,6 +91,8 @@ class DisplayableItemAdapter(
         /** Playlist info **/
         private val cardView = view.findViewById<ConstraintLayout>(R.id.base_cardview)
         private val name: TextView = view.findViewById(R.id.playlistName)
+        private val difficulty: TextView = view.findViewById(R.id.difficultyLabel)
+        private val genre: TextView = view.findViewById(R.id.genreLabel)
         private val author = view.findViewById<TextView>(R.id.authorTextview)
         private val coverCard = view.findViewById<CardView>(R.id.coverCard)
 
@@ -121,6 +123,8 @@ class DisplayableItemAdapter(
         fun bind(displayed: Displayable) {
             name.text = displayed.getName().uppercase()
             author.text = displayed.getAuthor()
+            difficulty.text = displayed.getLevel()
+            genre.text = displayed.getGenre()
 
             /** Retrieve the playlist cover : image retrieval must be done on another thread
              *  we use runBlocking to avoid this function to be suspendable **/
@@ -200,9 +204,7 @@ class DisplayableItemAdapter(
                         val match: Match? = gameInstanceViewModel.createMatch()
                         if (match != null) {
                             val dialog = DynamicLinkHelper.setDynamicLinkDialog(
-                                context.getString(R.string.multi_wait_players),
-                                match.uid,
-                                context
+                                context.getString(R.string.multi_wait_players), match.uid, context
                             )
                             dialog.show()
                             listener = Firebase.firestore.collection(MatchDatabase.COLLECTION_PATH)
@@ -211,9 +213,7 @@ class DisplayableItemAdapter(
                                         return@addSnapshotListener
                                     }
                                     if (SnapshotListener.listenerOnLobby(
-                                            snapshot,
-                                            context,
-                                            dialog
+                                            snapshot, context, dialog
                                         )
                                     ) {
                                         listener?.remove()
@@ -280,9 +280,7 @@ class DisplayableItemAdapter(
                     /** Modify the music preview to not spoil the playlist too much **/
                     if (displayed.extendable()) {
                         AudioHelper.soundAlter(
-                            player,
-                            AudioHelper.HIGH,
-                            AudioHelper.FAST
+                            player, AudioHelper.HIGH, AudioHelper.FAST
                         )
                         duration = DURATION_FAST
                     }

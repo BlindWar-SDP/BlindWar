@@ -10,5 +10,5 @@ class LocalPlaylist(
     override val songs: List<ResourceMusicMetadata> = emptyList(), // list of playlist's songs metadata
     imageUrl: String = "", // playlist cover
     previewUrl: String = "", // preview song url
-    difficulty: Difficulty = Difficulty.EASY
+    difficulty: Difficulty? = null
 ) : Playlist(pid, name, author, genres, songs, imageUrl, previewUrl, difficulty)

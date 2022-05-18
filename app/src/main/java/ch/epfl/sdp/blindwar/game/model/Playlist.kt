@@ -10,7 +10,7 @@ open class Playlist(
     open val songs: List<MusicMetadata> = emptyList(), // list of playlist's songs metadata
     val imageUrl: String = "", // playlist cover
     private val previewUrl: String = "", // preview song url
-    val difficulty: Difficulty = Difficulty.EASY
+    val difficulty: Difficulty? = null
 ) : Displayable {
     override fun getName(): String {
         return name
@@ -18,6 +18,19 @@ open class Playlist(
 
     override fun getAuthor(): String {
         return author
+    }
+
+    override fun getLevel(): String {
+        return difficulty.toString()
+    }
+
+    override fun getGenre(): String {
+        return if(genres.isNotEmpty()) {
+            genres.elementAt(0).toString()
+        } else {
+            ""
+        }
+
     }
 
     override fun getCover(): String {

@@ -14,6 +14,14 @@ open class MusicMetadata(
         return artist
     }
 
+    override fun getLevel(): String {
+        return ""
+    }
+
+    override fun getGenre(): String {
+        return ""
+    }
+
     override fun getCover(): String {
         return imageUrl
     }
