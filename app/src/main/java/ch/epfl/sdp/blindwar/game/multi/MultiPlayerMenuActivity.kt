@@ -5,15 +5,18 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.multi.model.Match
+import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 import ch.epfl.sdp.blindwar.profile.model.User
@@ -50,14 +53,16 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
          * @param matchId
          */
         fun launchGame(matchId: String, context: Context) {
-/*(context as AppCompatActivity).supportFragmentManager.beginTransaction()
-    .replace(
-        (viewFragment.parent as ViewGroup).id,
-        DemoFragment(),
-        "DEMO"
-    )
-    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-    .commit()*/
+            (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                .replace(
+
+                    (context.parent as ViewGroup).id,
+                    DemoFragment(),
+                    "DEMO"
+                )
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(null)
+                .commit()
             Toast.makeText(context, "Match $matchId connected (test message)", Toast.LENGTH_LONG)
                 .show()
         }
