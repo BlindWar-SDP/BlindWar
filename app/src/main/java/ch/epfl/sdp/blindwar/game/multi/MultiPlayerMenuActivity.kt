@@ -61,7 +61,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                     "DEMO"
                 )
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .addToBackStack(null)
                 .commit()
             Toast.makeText(context, "Match $matchId connected (test message)", Toast.LENGTH_LONG)
                 .show()

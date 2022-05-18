@@ -30,6 +30,7 @@ class ProfileFragment : Fragment() {
     // BUTTONS
     private lateinit var statsButton: Button
     private lateinit var historyButton: Button
+    private lateinit var likedButton: Button
     private lateinit var editButton: Button
     private lateinit var logOutButton: Button
 
@@ -72,11 +73,26 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        likedButton = view.findViewById<Button>(R.id.favoritesBtn).apply {
+            this.setOnClickListener {
+                activity?.supportFragmentManager?.beginTransaction()?.apply {
+                    replace(
+                        R.id.fragment_profile,
+                        DisplayHistoryFragment.newInstance("liked musics")
+                    )
+                    disallowAddToBackStack()
+                    commit()
+                    addToBackStack(null)
+                }
+            }
+        }
+
         view.findViewById<ImageButton>(R.id.deleteBtn).apply {
             this.setOnClickListener {
                 //deleteProfile()
             }
         }
+
 
         observeUserValue(profileViewModel.name, view.findViewById(R.id.nameView))
         observeUserValue(profileViewModel.elo, view.findViewById(R.id.eloView))
