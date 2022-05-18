@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.DisplayableViewModel
+import ch.epfl.sdp.blindwar.game.util.MainMusic
 import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -33,12 +34,15 @@ class MainMenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_menu)
 
         // Start the main menu music
+        /*
         mediaPlayer = MediaPlayer.create(this, R.raw.noisestorm_crab_rave)
         mediaPlayer.isLooping = true
         mediaPlayer.setVolume(volume, volume)
         mediaPlayer.setOnPreparedListener {
             mediaPlayer.start()
         }
+         */
+        MainMusic.prepareAndPlay(this)
 
         val play = PlayMenuFragment()
         val search = SearchFragment()
