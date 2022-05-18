@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
@@ -54,6 +55,7 @@ class DisplayableItemAdapter(
     private val viewFragment: View,
     private val gameInstanceViewModel: GameInstanceViewModel,
     private val profileViewModel: ProfileViewModel,
+    private val fragmentManager: FragmentManager,
     private var listener: ListenerRegistration? = null
 ) :
     RecyclerView.Adapter<DisplayableItemAdapter.DisplayableItemViewHolder>() {
@@ -217,7 +219,11 @@ class DisplayableItemAdapter(
                                         )
                                     ) {
                                         listener?.remove()
-                                        MultiPlayerMenuActivity.launchGame(match.uid, context)
+                                        MultiPlayerMenuActivity.launchGame(
+                                            match.uid,
+                                            context,
+                                            fragmentManager
+                                        )
                                     }
                                 }
                         }

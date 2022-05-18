@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.MatchDatabase
@@ -52,11 +53,10 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
          * TODO
          * @param matchId
          */
-        fun launchGame(matchId: String, context: Context) {
-            (context as AppCompatActivity).supportFragmentManager.beginTransaction()
+        fun launchGame(matchId: String, context: Context, supportFragmentManager: FragmentManager) {
+            supportFragmentManager.beginTransaction()
                 .replace(
-
-                    (context.parent as ViewGroup).id,
+                    R.id.fragment_multiplayer,
                     DemoFragment(),
                     "DEMO"
                 )
@@ -286,7 +286,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             }
             if (SnapshotListener.listenerOnLobby(snapshot, this, dialog!!)) {
                 listener?.remove()
-                launchGame(match.id, applicationContext)
+                launchGame(match.id, this, supportFragmentManager)
             }
         }
     }
@@ -319,7 +319,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun joinMatch(view: View) {
-        launchGame(matchId!!, applicationContext)
+        launchGame(matchId!!, applicationContext, supportFragmentManager)
     }
 
     /** Shows the selected fragment
