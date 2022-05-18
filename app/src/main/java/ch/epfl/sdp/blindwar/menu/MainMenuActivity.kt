@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.menu
 
 import android.annotation.SuppressLint
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,10 @@ class MainMenuActivity : AppCompatActivity() {
     private val profileViewModel: ProfileViewModel by viewModels()
     private val displayableViewModel: DisplayableViewModel by viewModels()
 
+    // For main menu music
+    private lateinit var mediaPlayer: MediaPlayer
+    val volume = .4f
+
     @SuppressLint("UseCompatLoadingForDrawables")
     /**
      * Generates the layout and sets up bottom navigation
@@ -26,6 +31,14 @@ class MainMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
+
+        // Start the main menu music
+        mediaPlayer = MediaPlayer.create(this, R.raw.noisestorm_crab_rave)
+        mediaPlayer.isLooping = true
+        mediaPlayer.setVolume(volume, volume)
+        mediaPlayer.setOnPreparedListener {
+            mediaPlayer.start()
+        }
 
         val play = PlayMenuFragment()
         val search = SearchFragment()

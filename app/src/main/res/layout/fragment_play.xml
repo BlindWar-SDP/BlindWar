@@ -83,13 +83,13 @@
         android:ellipsize="marquee"
         android:fontFamily="@font/oxygen"
         android:gravity="center"
-        android:text="Us Against the World - Clement Marfo"
+        android:text="Crabe Rave - Noisestorm"
         android:textColor="@color/ivory"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
         app:layout_constraintTop_toBottomOf="@+id/titleText"
-        tools:text="Us Against the World - Clement Marfo" />
+        tools:text="Crabe Rave - Noisestorm" />
 
     <TextView
         android:id="@+id/textView8"
