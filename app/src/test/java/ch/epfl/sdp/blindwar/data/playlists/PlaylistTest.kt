@@ -7,10 +7,13 @@ class PlaylistTest : TestCase() {
 
     fun testPlaylistCreation() {
         val playlist = Playlist()
+        val genreList = listOf<Genre>(Genre.CLASSIC)
+        val playlist2 = Playlist("", "", "", genreList)
         assertTrue(playlist.imageUrl.isEmpty())
         assertTrue(playlist.uid.isEmpty())
         assertTrue(playlist.difficulty == null)
         assertTrue(playlist.genres.isEmpty())
+        assertEquals(playlist2.getGenre(), "CLASSIC")
         assertTrue(playlist.songs.isEmpty())
     }
 
