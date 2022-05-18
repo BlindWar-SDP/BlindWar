@@ -6,24 +6,24 @@ import ch.epfl.sdp.blindwar.R
 
 object MainMusic {
     private const val volume = .4f
-    public lateinit var mediaPlayer: MediaPlayer
+    private var mediaPlayer: MediaPlayer? = null
 
     fun prepareAndPlay(context: Context) {
         mediaPlayer = MediaPlayer.create(context, R.raw.noisestorm_crab_rave)
-        mediaPlayer.isLooping = true
-        mediaPlayer.setVolume(volume, volume)
-        mediaPlayer.setOnPreparedListener {
-            mediaPlayer.start()
+        mediaPlayer?.isLooping = true
+        mediaPlayer?.setVolume(volume, volume)
+        mediaPlayer?.setOnPreparedListener {
+            mediaPlayer?.start()
         }
     }
 
     fun play() {
-        mediaPlayer.start()
+        mediaPlayer?.start()
     }
 
     fun pause() {
-        if(mediaPlayer.isPlaying) {
-            mediaPlayer.pause();
+        if(mediaPlayer?.isPlaying == true) {
+            mediaPlayer?.pause();
         }
     }
 }
