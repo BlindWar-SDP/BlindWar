@@ -7,10 +7,14 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.util.GameActivity
 import ch.epfl.sdp.blindwar.game.util.ViewPagerAdapter
+import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 
 /**
  * Game over fragment displayed after a game is completed
@@ -24,6 +28,7 @@ class GameSummaryFragment : Fragment() {
     private lateinit var replay: ImageButton
     private lateinit var adapter: ViewPagerAdapter
     private lateinit var viewPager: ViewPager2
+    private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +57,12 @@ class GameSummaryFragment : Fragment() {
                     ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     ?.commit()
             }
+        }
+
+        // If the game is in multiplayer, add the final score
+        // Switch between the two different game view model
+        if(gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI) {
+            fragments.add(ScoreFragment())
         }
 
         return view
