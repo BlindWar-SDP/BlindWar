@@ -56,7 +56,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         fun launchGame(matchId: String, context: Context, supportFragmentManager: FragmentManager) {
             supportFragmentManager.beginTransaction()
                 .replace(
-                    R.id.fragment_multiplayer,
+                    android.R.id.content,
                     DemoFragment(),
                     "DEMO"
                 )
