@@ -42,7 +42,7 @@
             android:drawableStart="@drawable/ic_baseline_favorite_border_24"
             android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
             android:fontFamily="@font/oxygen"
-            android:text="Favorites"
+            android:text="@string/Profile_favorites"
             android:textColor="@color/ivory" />
 
         <Button
@@ -54,7 +54,7 @@
             android:drawableStart="@drawable/ic_baseline_history_24"
             android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
             android:fontFamily="@font/oxygen"
-            android:text="History"
+            android:text="@string/Profile_history"
             android:textColor="@color/ivory"
             tools:text="History" />
 
@@ -67,7 +67,7 @@
             android:drawableStart="@drawable/ic_baseline_bar_chart_24"
             android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
             android:fontFamily="@font/oxygen"
-            android:text="Statistics"
+            android:text="@string/Profile_statistics"
             android:textColor="@color/ivory"
             tools:text="Statistics" />
     </LinearLayout>
@@ -77,7 +77,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/oxygen"
-        android:text="NAME"
+        android:text="@string/Profile_name"
         android:textColor="@color/ivory"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/eloView"
@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
         android:fontFamily="@font/oxygen"
-        android:text="1000"
+        android:text="@string/Profile_1000"
         android:textColor="@color/ivory"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/containerBtn"

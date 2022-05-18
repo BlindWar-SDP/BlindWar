@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:ems="10"
-        android:hint="Describe yourself"
+        android:hint="@string/NU_describe_yourself"
         android:maxLines="@integer/max_lines_user_desc"
         android:inputType="textMultiLine"
         android:maxLength="@integer/self_description_max_length"

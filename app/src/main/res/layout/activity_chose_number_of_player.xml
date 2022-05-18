@@ -61,7 +61,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:onClick="cancel"
-                android:text="@string/cancel_btn" />
+                android:text="@android:string/cancel" />
 
             <Button
                 android:id="@+id/create_match"

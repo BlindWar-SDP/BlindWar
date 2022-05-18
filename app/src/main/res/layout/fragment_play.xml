@@ -83,7 +83,7 @@
         android:ellipsize="marquee"
         android:fontFamily="@font/oxygen"
         android:gravity="center"
-        android:text="Us Against the World - Clement Marfo"
+        android:text="@string/Play_us_against_the_world_clement_marfo"
         android:textColor="@color/ivory"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"

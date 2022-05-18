@@ -168,4 +168,23 @@
     <string name="share_title">Share invitation</string>
     <string name="share_text">Share BlindWar invitation !</string>
     <string name="share_subject">Invitation link !</string>
+    <string name="AnimatedDemo_x_1">x 1</string>
+    <string name="multi_button">Button</string>
+    <string name="NU_describe_yourself">Describe yourself</string>
+    <string name="MusicCadreview_title">Title</string>
+    <string name="MusicCadreview_this_is_an_artist">This is an artist</string>
+    <string name="Play_us_against_the_world_clement_marfo">Us Against the World - Clement Marfo</string>
+    <string name="Profile_favorites">Favorites</string>
+    <string name="Profile_history">History</string>
+    <string name="Profile_statistics">Statistics</string>
+    <string name="Profile_name">NAME</string>
+    <string name="Profile_1000">1000</string>
+    <string name="SongSum_track">TRACK</string>
+    <string name="SomgSum_time">TIME</string>
+    <string name="RowItem_zero">0</string>
+    <string name="Playlist_difficulty">HARD</string>
+    <string name="Playlist_pop">POP</string>
+    <string name="Playlist_rounds">ROUNDS</string>
+    <string name="Playlist_timer">TIMER</string>
+    <string name="Scoreboard_unknown">UNKNOWN</string>
 </resources>
