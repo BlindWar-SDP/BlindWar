@@ -80,9 +80,8 @@ class ProfileFragment : Fragment() {
                         R.id.fragment_profile,
                         DisplayHistoryFragment.newInstance("liked musics")
                     )
-                    disallowAddToBackStack()
-                    commit()
                     addToBackStack(null)
+                    commit()
                 }
             }
         }
@@ -133,4 +132,5 @@ class ProfileFragment : Fragment() {
             view.text = it
         }
     }
+
 }

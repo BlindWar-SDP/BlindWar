@@ -7,17 +7,23 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
+import ch.epfl.sdp.blindwar.game.util.GameUtil
+import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 import ch.epfl.sdp.blindwar.profile.model.User
@@ -42,11 +48,13 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private var matchId: String? = null
     private lateinit var leaderboardButton: ImageButton
 
+
     companion object {
         private const val LIMIT_MATCH: Long = 10
         private const val DELTA_MATCHMAKING = 100
         private const val DEFAULT_ELO = 200
         const val DYNAMIC_LINK = "Dynamic link"
+
 
         /**
          * Launch the game for every player
@@ -54,6 +62,17 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
          * @param matchId
          */
         fun launchGame(matchId: String, context: Context, supportFragmentManager: FragmentManager) {
+            MatchDatabase.getMatchSnapshot(matchId, Firebase.firestore)?.let {
+                val gameInstanceShared: GameInstance = it.data?.get("gameConfig") as GameInstance
+                val gameInstanceViewModel = GameInstanceViewModel()
+                gameInstanceViewModel.gameInstance.let {
+                    it.value = gameInstanceShared
+                    it
+                }
+            }
+            // Goal: have the game with same config launched for all users
+            // Then we need to launch the fragment with a specific match_id as the tag
+            // so that the fragments knows it has to fetch value from a particular tag.
             supportFragmentManager.beginTransaction()
                 .replace(
                     android.R.id.content,
@@ -74,6 +93,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_multiplayer_menu)
         currentUser = UserDatabase.getCurrentUser()
         matchId = currentUser?.child("matchId")?.value as String?
+
 
         if (matchId != null && matchId!!.isNotEmpty()) {
             findViewById<FrameLayout>(R.id.frameLayout_create).visibility = View.GONE

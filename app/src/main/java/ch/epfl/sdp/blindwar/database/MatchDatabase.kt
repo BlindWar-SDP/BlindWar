@@ -99,4 +99,6 @@ object MatchDatabase {
         while (!query.isComplete); //TODO avoid active waiting
         return query.result.documents[0]
     }
+
+
 }
