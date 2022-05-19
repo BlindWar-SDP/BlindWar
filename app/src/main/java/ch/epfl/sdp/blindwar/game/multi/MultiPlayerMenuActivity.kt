@@ -5,17 +5,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.viewmodel.compose.viewModel
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
@@ -23,12 +19,15 @@ import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
 import ch.epfl.sdp.blindwar.game.util.GameUtil
-import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.firebase.database.DataSnapshot
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -62,22 +61,25 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
          * @param matchId
          */
         fun launchGame(matchId: String, context: Context, supportFragmentManager: FragmentManager) {
+            var gameInstanceShared: GameInstance? = null
             MatchDatabase.getMatchSnapshot(matchId, Firebase.firestore)?.let {
                 val match = it.toObject(Match::class.java)
-                val gameInstanceShared = match?.game
+                gameInstanceShared = match?.game
 
 
-                val gameInstanceViewModel = GameInstanceViewModel()
-                //val gameInstanceViewModel by viewModels<GameInstanceViewModel>()
+                val gameInstanceViewModel = GameViewModel(
+                    GameUtil.gameInstanceSolo, context, context.resources
+                )
 
-                gameInstanceViewModel.gameInstance.let {
-                    it.value = gameInstanceShared
-                    it
-                }
             }
             // Goal: have the game with same config launched for all users
             // Then we need to launch the fragment with a specific match_id as the tag
             // so that the fragments knows it has to fetch value from a particular tag.
+            var demoFragment = DemoFragment()
+            val bundle = Bundle().apply {
+                putString("match_id", matchId)
+            }
+            demoFragment.arguments = bundle
             supportFragmentManager.beginTransaction()
                 .replace(
                     android.R.id.content,
