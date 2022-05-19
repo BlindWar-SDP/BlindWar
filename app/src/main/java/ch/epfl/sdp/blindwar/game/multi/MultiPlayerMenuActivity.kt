@@ -83,7 +83,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(
                     android.R.id.content,
-                    DemoFragment(),
+                    demoFragment,
                     "DEMO"
                 )
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

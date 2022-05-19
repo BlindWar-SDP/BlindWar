@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.database.MatchDatabase
+import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.multi.model.Match
@@ -34,6 +35,7 @@ import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
@@ -86,6 +88,10 @@ class DemoFragment : Fragment() {
     private lateinit var heartImage: ImageView
     private lateinit var heartNumber: TextView
 
+    // Multiplayer infos
+    private lateinit var matchId: String
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -107,18 +113,17 @@ class DemoFragment : Fragment() {
         scoreboardAdapter.notifyDataSetChanged()
 
         // if multi mode, get gameInstance from matchId
-        if (arguments != null) {
-            MatchDatabase.getMatchSnapshot(matchId, Firebase.firestore)?.let {
+        matchId = arguments?.getString("match_id")!!
+        /*
+        if (arguments?.getString("match_id") != null) {
+            val matchId = requireArguments().getString("match_id")
+            MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
                 val match = it.toObject(Match::class.java)
-                gameInstanceShared = match?.game
-
-
-                val gameInstanceViewModel = GameViewModel(
-                    GameUtil.gameInstanceSolo, context, context.resources
-                )
-
+                val gameInstanceShared = match?.game
+                gameInstanceViewModel.gameInstance.value = gameInstanceShared
             }
         }
+        */
 
         when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
             GameFormat.SOLO -> {
@@ -133,6 +138,7 @@ class DemoFragment : Fragment() {
                 // Hide the scoreboard
                 scoreboard.visibility = View.INVISIBLE
             }
+
             GameFormat.MULTI -> gameViewModel = context?.let {
                 GameViewModel(
                     gameInstanceViewModel.gameInstance.value!!,
@@ -354,6 +360,7 @@ class DemoFragment : Fragment() {
     private fun guess(isVocal: Boolean, isAuto: Boolean) {
         if (gameViewModel.guess(guessEditText.text.toString(), isVocal)) {
             // Update the number of point view
+            increaseScore(Firebase.auth.currentUser!!.uid)
             scoreTextView.text = gameViewModel.score.toString()
             (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
                 .hideSoftInputFromWindow(view?.windowToken, 0)
@@ -363,6 +370,25 @@ class DemoFragment : Fragment() {
             crossAnim.repeatMode = LottieDrawable.RESTART
             crossAnim.repeatMode = LottieDrawable.REVERSE
             crossAnim.playAnimation()
+        }
+    }
+
+    /**
+     * Increases the score of a User(designated by uid) after a good guess.
+     * @param uid
+     */
+    private fun increaseScore(uid: String) {
+        when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
+            GameFormat.MULTI -> {
+                // find the index of the player in the userList of the match
+                // (ideally we should not have to retrieve this every time).
+                MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
+                    val match = it.toObject(Match::class.java)
+                    val gameInstanceShared = match?.game
+                    gameInstanceViewModel.gameInstance.value = gameInstanceShared
+                }
+
+            }
         }
     }
 
