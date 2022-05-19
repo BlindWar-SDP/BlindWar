@@ -63,8 +63,13 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
          */
         fun launchGame(matchId: String, context: Context, supportFragmentManager: FragmentManager) {
             MatchDatabase.getMatchSnapshot(matchId, Firebase.firestore)?.let {
-                val gameInstanceShared: GameInstance = it.data?.get("gameConfig") as GameInstance
+                val match = it.toObject(Match::class.java)
+                val gameInstanceShared = match?.game
+
+
                 val gameInstanceViewModel = GameInstanceViewModel()
+                //val gameInstanceViewModel by viewModels<GameInstanceViewModel>()
+
                 gameInstanceViewModel.gameInstance.let {
                     it.value = gameInstanceShared
                     it
