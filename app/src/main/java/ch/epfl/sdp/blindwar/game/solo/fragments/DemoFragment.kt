@@ -89,7 +89,7 @@ class DemoFragment : Fragment() {
     private lateinit var heartNumber: TextView
 
     // Multiplayer infos
-    private lateinit var matchId: String
+    private var matchId: String? = null
     private var playerIndex = -1
 
 
@@ -120,21 +120,29 @@ class DemoFragment : Fragment() {
         val currentUser = Firebase.auth.currentUser
         if (currentUser != null) {
             MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
-                val userList: MutableList<String>? = it.toObject(MutableList::class.java)
-                        as MutableList<String>?
+                val match = it.toObject(Match::class.java)
+                val userList = match?.listPlayers
                 playerIndex = userList?.indexOf(currentUser.uid)!!
             }
         }
-    /*
-    if (arguments?.getString("match_id") != null) {
-        val matchId = requireArguments().getString("match_id")
-        MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
-            val match = it.toObject(Match::class.java)
-            val gameInstanceShared = match?.game
-            gameInstanceViewModel.gameInstance.value = gameInstanceShared
+
+        if (matchId != null) {
+            MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
+                val match = it.toObject(Match::class.java)
+                val gameInstanceShared = match?.game
+                gameInstanceViewModel.gameInstance.value = gameInstanceShared
+                gameViewModel = context?.let {
+                    GameViewModel(
+                        gameInstanceViewModel.gameInstance.value!!,
+                        it,
+                        resources,
+                        scoreboardAdapter
+                    )
+                }!!
+            }
         }
-    }
-    */
+
+
 
     when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
         GameFormat.SOLO -> {
@@ -149,15 +157,17 @@ class DemoFragment : Fragment() {
             // Hide the scoreboard
             scoreboard.visibility = View.INVISIBLE
         }
-
-        GameFormat.MULTI -> gameViewModel = context?.let {
-            GameViewModel(
-                gameInstanceViewModel.gameInstance.value!!,
-                it,
-                resources,
-                scoreboardAdapter
-            )
-        }!!
+/*
+        GameFormat.MULTI -> {
+            gameViewModel = context?.let {
+                GameViewModel(
+                    gameInstanceViewModel.gameInstance.value!!,
+                    it,
+                    resources,
+                    scoreboardAdapter
+                )
+            }!!
+        }*/
     }
 
     gameViewModel.init()
@@ -390,9 +400,7 @@ class DemoFragment : Fragment() {
         private fun increaseScore() {
             when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
                 GameFormat.MULTI -> {
-                    // find the index of the player in the userList of the match
-                    // (ideally we should not have to retrieve this every time).
-
+                    MatchDatabase.incrementScore(matchId!!, playerIndex, Firebase.firestore)
                     }
 
                 }

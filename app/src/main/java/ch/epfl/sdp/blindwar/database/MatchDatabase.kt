@@ -5,7 +5,10 @@ import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 object MatchDatabase {
     const val COLLECTION_PATH = "match"
@@ -98,6 +101,27 @@ object MatchDatabase {
         val query = db.collection("match").whereEqualTo("uid", uid).limit(1).get()
         while (!query.isComplete); //TODO avoid active waiting
         return query.result.documents[0]
+    }
+
+    /**
+     * Increments the score of a player in the list of score for a specific match.
+     * For this we need to do a transaction, because multiple players may have the score
+     * updated at the same time.
+     * @param matchId
+     * @param playerIndex
+     */
+    fun incrementScore(matchId: String, playerIndex: Int, db: FirebaseFirestore) {
+        val matchRef = db.collection("match").document(matchId)
+        db.runTransaction { transaction ->
+            val snapshot = transaction.get(matchRef)
+            val match = snapshot.toObject(Match::class.java)
+            val listScore = match?.listResult
+            listScore!![playerIndex] += 1
+            transaction.update(matchRef, "listResult", listScore)
+
+            // Success
+            null
+        }
     }
 
 
