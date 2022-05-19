@@ -35,7 +35,8 @@
         <ScrollView
             android:id="@+id/fragment_userNewInfo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
