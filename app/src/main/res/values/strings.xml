@@ -16,6 +16,7 @@
     <string name="Btn_google">Google</string>
     <string name="confirm">Confirm</string>
     <string name="ok">OK</string>
+    <string name="Btn_anonymous">Guest</string>
 
     <!--  GameUtil  -->
     <string name="play_button_description">Click here to play or stop the game</string>
@@ -161,14 +162,14 @@
     <string name="account_not_deleted_toast">deletion cancelled</string>
     <string name="account_deletion_title">Account Deletion</string>
     <string name="account_deletion_text">Are you sure you want to delete your account?</string>
-    <string name="select_birthdate">select birthdate</string>
+    <string name="select_birthdate">set birthdate</string>
     <string name="select_your_gender">Please, select your gender</string>
     <string name="cancel_btn">Cancel</string>
     <string name="alert_dialogue_cancel_title">Cancel update</string>
     <string name="alert_dialogue_cancel_text">Are you sure to keep old info</string>
     <string name="newUser_ExtraName">newUser</string>
     <string name="reset">reset</string>
-    <string name="no_birthdate_selected">no birthdate selected</string>
+    <string name="no_birthdate_selected"></string>
 
     <!-- PROFILE -->
     <string name="userRank">Rank</string>
@@ -215,4 +216,5 @@
     <string name="pop">POP</string>
     <string name="button_to_start_game">Button to start game</string>
     <string name="timer">TIMER</string>
+    <string name="NU_describe_yourself">describe yourself</string>
 </resources>

@@ -1,5 +1,7 @@
 package ch.epfl.sdp.blindwar.profile.fragments
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,15 +10,18 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.game.util.Util.updateProfileImage
+import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.game.util.Util.loadProfileImage
 import ch.epfl.sdp.blindwar.login.SplashScreenActivity
-import ch.epfl.sdp.blindwar.login.UserNewInfoActivity
 import ch.epfl.sdp.blindwar.profile.HistoryActivity
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
+import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 /**
  * Fragment that displays a connected user info
@@ -27,17 +32,6 @@ import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 class ProfileFragment : Fragment() {
     private val profileViewModel: ProfileViewModel by activityViewModels()
 
-    // BUTTONS
-    private lateinit var statsButton: Button
-    private lateinit var historyButton: Button
-    private lateinit var editButton: Button
-    private lateinit var logOutButton: Button
-
-    // TEXT VIEW
-    private lateinit var nameTextView: TextView
-    private lateinit var emailTextView: TextView
-    private lateinit var eloTextView: TextView
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,41 +40,25 @@ class ProfileFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         // Buttons
-        statsButton = view.findViewById<Button>(R.id.statsBtn).apply {
-            this.setOnClickListener {
-                val intent = Intent(requireActivity(), StatisticsActivity::class.java)
-                startActivity(intent)
-            }
+        view.findViewById<Button>(R.id.statsBtn).setOnClickListener {
+            startActivity(Intent(requireActivity(), StatisticsActivity::class.java))
+        }
+        view.findViewById<Button>(R.id.historyBtn).setOnClickListener {
+            startActivity(Intent(requireActivity(), HistoryActivity::class.java))
+        }
+        view.findViewById<ImageButton>(R.id.editBtn).setOnClickListener { editProfile() }
+        view.findViewById<ImageButton>(R.id.logoutBtn).setOnClickListener { logOut() }
+        view.findViewById<ImageButton>(R.id.deleteBtn).setOnClickListener { deleteProfile() }
+
+
+        // text view
+        profileViewModel.user.observe(viewLifecycleOwner) {
+            view.findViewById<TextView>(R.id.nameView).text = it.pseudo
+            view.findViewById<TextView>(R.id.eloView).text = it.userStatistics.elo.toString()
         }
 
-        view.findViewById<ImageButton>(R.id.editBtn).apply {
-            this.setOnClickListener {
-                editProfile()
-            }
-        }
-
-        view.findViewById<ImageButton>(R.id.logoutBtn).apply {
-            this.setOnClickListener {
-                logOut()
-            }
-        }
-
-        historyButton = view.findViewById<Button>(R.id.historyBtn).apply {
-            this.setOnClickListener {
-                val intent = Intent(requireActivity(), HistoryActivity::class.java)
-                startActivity(intent)
-            }
-        }
-
-        view.findViewById<ImageButton>(R.id.deleteBtn).apply {
-            this.setOnClickListener {
-                //deleteProfile()
-            }
-        }
-
-        observeUserValue(profileViewModel.name, view.findViewById(R.id.nameView))
-        observeUserValue(profileViewModel.elo, view.findViewById(R.id.eloView))
-        updateProfileImage(
+        // profilePicture
+        loadProfileImage(
             profileViewModel.imageRef,
             view.findViewById(R.id.profileImgView),
             viewLifecycleOwner,
@@ -95,9 +73,12 @@ class ProfileFragment : Fragment() {
      * Opens profile edition activity
      */
     private fun editProfile() {
-        val intent = Intent(requireActivity(), UserNewInfoActivity::class.java)
-        intent.putExtra("activity", "profile")
-        startActivity(intent)
+        fragmentManager?.let {
+            it.beginTransaction().apply {
+                replace(R.id.fragment_menu_container, UserNewInfoFragment())
+                commit()
+            }
+        }
     }
 
     /**
@@ -111,10 +92,44 @@ class ProfileFragment : Fragment() {
         startActivity(Intent(requireActivity(), SplashScreenActivity::class.java))
     }
 
-    // OBSERVABLES
-    private fun observeUserValue(liveData: LiveData<String>, view: TextView) {
-        liveData.observe(viewLifecycleOwner) {
-            view.text = it
+    /**
+     * Handle the profile deletion logic
+     */
+    private fun deleteProfile() {
+        // Alert Dialog
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+        val positiveButtonClick = { _: DialogInterface, _: Int ->
+
+            Firebase.auth.currentUser?.let {
+                UserDatabase.removeUser(it.uid)
+                AuthUI.getInstance().delete(requireActivity()).addOnCompleteListener {
+                    startActivity(Intent(requireActivity(), SplashScreenActivity::class.java))
+                }
+                Toast.makeText(
+                    requireActivity(),
+                    getString(R.string.deletion_success), Toast.LENGTH_SHORT
+                ).show()
+            } ?: run {
+                Toast.makeText(
+                    requireActivity(),
+                    "something went wrong on deletion", Toast.LENGTH_SHORT
+                ).show()
+                startActivity(Intent(requireActivity(), SplashScreenActivity::class.java))
+            }
         }
+        val negativeButtonClick = { _: DialogInterface, _: Int ->
+            Toast.makeText(
+                requireActivity(),
+                getString(R.string.account_not_deleted_toast), Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        builder.setTitle(getString(R.string.account_deletion_title))
+            .setMessage(getString(R.string.account_deletion_text))
+            .setCancelable(false)
+            .setPositiveButton(android.R.string.ok, positiveButtonClick)
+            .setNegativeButton(android.R.string.cancel, negativeButtonClick)
+        builder.create().show()
     }
+
 }

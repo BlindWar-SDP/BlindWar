@@ -12,7 +12,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.login.SplashScreenActivity
-import ch.epfl.sdp.blindwar.login.UserNewInfoActivity
+//import ch.epfl.sdp.blindwar.login.UserNewInfoActivity
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
@@ -192,12 +192,12 @@ class ProfileFragmentTest : TestCase() {
         intended(hasComponent(SplashScreenActivity::class.java.name))
     }
 
-    @Test
-    fun testEditProfileButton() {
-        launchFragmentInContainer<ProfileFragment>()
-        closeSoftKeyboard()
-        onView(withId(R.id.editBtn))
-            .perform(click())
-        intended(hasComponent(UserNewInfoActivity::class.java.name))
-    }
+//    @Test
+//    fun testEditProfileButton() {
+//        launchFragmentInContainer<ProfileFragment>()
+//        closeSoftKeyboard()
+//        onView(withId(R.id.editBtn))
+//            .perform(click())
+//        intended(hasComponent(UserNewInfoActivity::class.java.name))
+//    }
 }
