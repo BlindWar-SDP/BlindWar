@@ -90,6 +90,7 @@ class DemoFragment : Fragment() {
 
     // Multiplayer infos
     private lateinit var matchId: String
+    private var playerIndex = -1
 
 
     override fun onCreateView(
@@ -114,285 +115,290 @@ class DemoFragment : Fragment() {
 
         // if multi mode, get gameInstance from matchId
         matchId = arguments?.getString("match_id")!!
-        /*
-        if (arguments?.getString("match_id") != null) {
-            val matchId = requireArguments().getString("match_id")
+
+        // store locally the index of the player
+        val currentUser = Firebase.auth.currentUser
+        if (currentUser != null) {
             MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
-                val match = it.toObject(Match::class.java)
-                val gameInstanceShared = match?.game
-                gameInstanceViewModel.gameInstance.value = gameInstanceShared
+                val userList: MutableList<String>? = it.toObject(MutableList::class.java)
+                        as MutableList<String>?
+                playerIndex = userList?.indexOf(currentUser.uid)!!
             }
         }
-        */
+    /*
+    if (arguments?.getString("match_id") != null) {
+        val matchId = requireArguments().getString("match_id")
+        MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
+            val match = it.toObject(Match::class.java)
+            val gameInstanceShared = match?.game
+            gameInstanceViewModel.gameInstance.value = gameInstanceShared
+        }
+    }
+    */
 
-        when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
-            GameFormat.SOLO -> {
-                gameViewModel = context?.let {
-                    GameViewModel(
-                        gameInstanceViewModel.gameInstance.value!!,
-                        it,
-                        resources
-                    )
-                }!!
-
-                // Hide the scoreboard
-                scoreboard.visibility = View.INVISIBLE
-            }
-
-            GameFormat.MULTI -> gameViewModel = context?.let {
+    when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
+        GameFormat.SOLO -> {
+            gameViewModel = context?.let {
                 GameViewModel(
                     gameInstanceViewModel.gameInstance.value!!,
                     it,
-                    resources,
-                    scoreboardAdapter
+                    resources
                 )
             }!!
+
+            // Hide the scoreboard
+            scoreboard.visibility = View.INVISIBLE
         }
 
-        gameViewModel.init()
+        GameFormat.MULTI -> gameViewModel = context?.let {
+            GameViewModel(
+                gameInstanceViewModel.gameInstance.value!!,
+                it,
+                resources,
+                scoreboardAdapter
+            )
+        }!!
+    }
 
-        // Retrieve the game duration from the GameInstance object
-        duration = gameInstanceViewModel.gameInstance.value?.gameConfig
-            ?.parameter
-            ?.timeToFind!!
+    gameViewModel.init()
 
-        // Create and start countdown
-        timer = createCountDown()
-        countDown = view.findViewById(R.id.countdown)
+    // Retrieve the game duration from the GameInstance object
+    duration = gameInstanceViewModel.gameInstance.value?.gameConfig
+        ?.parameter
+        ?.timeToFind!!
 
-        // Mode specific interface
-        val mode = gameInstanceViewModel
-            .gameInstance
-            .value!!
-            .gameConfig!!
-            .mode
+    // Create and start countdown
+    timer = createCountDown()
+    countDown = view.findViewById(R.id.countdown)
 
-        chronometer = view.findViewById(R.id.simpleChronometer)
-        heartImage = view.findViewById(R.id.heartImage)
-        heartNumber = view.findViewById(R.id.heartNumber)
+    // Mode specific interface
+    val mode = gameInstanceViewModel
+        .gameInstance
+        .value!!
+        .gameConfig!!
+        .mode
 
-        when (mode) {
-            GameMode.TIMED -> initRaceMode()
-            GameMode.SURVIVAL -> initSurvivalMode()
-            else -> {
-            }
+    chronometer = view.findViewById(R.id.simpleChronometer)
+    heartImage = view.findViewById(R.id.heartImage)
+    heartNumber = view.findViewById(R.id.heartNumber)
+
+    when (mode) {
+        GameMode.TIMED -> initRaceMode()
+        GameMode.SURVIVAL -> initSurvivalMode()
+        else -> {
         }
+    }
 
-        // Get the widgets
-        guessEditText = view.findViewById(R.id.guessEditText)
-        scoreTextView = view.findViewById(R.id.scoreTextView)
-        guessButton = view.findViewById<ImageButton>(R.id.guessButton).also {
-            it.setOnClickListener {
-                guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
-                guess(isVocal, isAuto = false)
-                // Delete the text of the guess
-                guessEditText.setText("")
-            }
-        }
-
-        startButton = view.findViewById<LottieAnimationView>(R.id.startButton).also {
-            it.setOnClickListener {
-                playAndPause()
-            }
-        }
-
-        crossAnim = view.findViewById(R.id.cross)
-        crossAnim.repeatCount = 1
-
-        view.findViewById<ConstraintLayout>(R.id.fragment_container).setOnClickListener {
+    // Get the widgets
+    guessEditText = view.findViewById(R.id.guessEditText)
+    scoreTextView = view.findViewById(R.id.scoreTextView)
+    guessButton = view.findViewById<ImageButton>(R.id.guessButton).also {
+        it.setOnClickListener {
             guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
-        }
-
-        voiceRecognizer = VoiceRecognizer()
-        audioVisualizer = view.findViewById(R.id.audioVisualizer)
-        startButton.setMinAndMaxFrame(30, 50)
-
-        microphoneButton = view.findViewById(R.id.microphone)
-        context?.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
-        // Create game summary
-        gameSummary = GameSummaryFragment()
-
-        return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        voiceRecognizer.resultString.observe(viewLifecycleOwner) {
-            guessEditText.setText(it)
             guess(isVocal, isAuto = false)
-            isVocal = false
+            // Delete the text of the guess
+            guessEditText.setText("")
         }
+    }
 
-        //warning seems ok, no need to override performClick
-        microphoneButton.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    gameViewModel.pause()
-                    voiceRecognizer.start()
-                    isVocal = true
+    startButton = view.findViewById<LottieAnimationView>(R.id.startButton).also {
+        it.setOnClickListener {
+            playAndPause()
+        }
+    }
+
+    crossAnim = view.findViewById(R.id.cross)
+    crossAnim.repeatCount = 1
+
+    view.findViewById<ConstraintLayout>(R.id.fragment_container).setOnClickListener {
+        guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
+    }
+
+    voiceRecognizer = VoiceRecognizer()
+    audioVisualizer = view.findViewById(R.id.audioVisualizer)
+    startButton.setMinAndMaxFrame(30, 50)
+
+    microphoneButton = view.findViewById(R.id.microphone)
+    context?.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
+    // Create game summary
+    gameSummary = GameSummaryFragment()
+
+    return view
+}
+
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            voiceRecognizer.resultString.observe(viewLifecycleOwner) {
+                guessEditText.setText(it)
+                guess(isVocal, isAuto = false)
+                isVocal = false
+            }
+
+            //warning seems ok, no need to override performClick
+            microphoneButton.setOnTouchListener { _, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        gameViewModel.pause()
+                        voiceRecognizer.start()
+                        isVocal = true
+                    }
+
+                    MotionEvent.ACTION_UP -> {
+                        gameViewModel.play()
+                        voiceRecognizer.stop()
+                    }
                 }
-
-                MotionEvent.ACTION_UP -> {
-                    gameViewModel.play()
-                    voiceRecognizer.stop()
-                }
+                true
             }
-            true
+
+            startGame()
+
+            super.onViewCreated(view, savedInstanceState)
         }
 
-        startGame()
-
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    private fun startGame() {
-        // TEST
-        gameViewModel.incrementPoint("Marty")
-        scoreboardAdapter.notifyDataSetChanged()
+        private fun startGame() {
+            // TEST
+            gameViewModel.incrementPoint("Marty")
+            scoreboardAdapter.notifyDataSetChanged()
 
 
-        // Start the game
-        gameViewModel.nextRound()
-        gameViewModel.play()
-        musicMetadata = gameViewModel.currentMetadata()!!
-        guessEditText.hint = musicMetadata.artist
-        timer.start()
-    }
-
-    /**
-     * Creates the countdown timer
-     *
-     * @return creates countdown timer with the duration of the round
-     */
-    private fun createCountDown(): CountDownTimer {
-        return object : CountDownTimer(duration.toLong(), 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                duration = millisUntilFinished.toInt()
-                elapsed += 1000
-                //Log.d("DURATION", duration.toString())
-                countDown.text = (millisUntilFinished / 1000).toString()
-            }
-
-            override fun onFinish() {
-                gameViewModel.timeout()
-                this.cancel()
-                launchSongSummary(success = false)
-            }
-        }
-    }
-
-    /**
-     * Set the demo fragment visibility
-     *
-     * @param code visibility code : either VISIBLE or GONE
-     */
-    private fun setVisibilityLayout(code: Int) {
-        guessButton.visibility = code
-        scoreTextView.visibility = code
-        guessEditText.visibility = code
-
-        // Set animation visibility
-        crossAnim.visibility = code
-        countDown.visibility = code
-        audioVisualizer.visibility = code
-        startButton.visibility = code
-        microphoneButton.visibility = code
-        view?.findViewById<ImageButton>(R.id.guessButton)?.visibility = code
-    }
-
-    /**
-     * Handle pause and resume game logic
-     */
-    private fun playAndPause() {
-        playing = if (playing) {
-            gameViewModel.pause()
-            // Pause Animation
-            audioVisualizer.pauseAnimation()
-            startButton.setMinAndMaxFrame(30, 55)
-            startButton.repeatCount = 0
-            startButton.playAnimation()
-            // Timer cancel
-            timer.cancel()
-            timer = createCountDown()
-            chronometer.stop()
-            false
-
-        } else {
+            // Start the game
+            gameViewModel.nextRound()
             gameViewModel.play()
-
-            // Resume Animation
-            audioVisualizer.resumeAnimation()
-            startButton.setMinAndMaxFrame(10, 25)
-            startButton.playAnimation()
-
-            restartChronometer()
+            musicMetadata = gameViewModel.currentMetadata()!!
+            guessEditText.hint = musicMetadata.artist
             timer.start()
-            true
         }
-    }
 
-    // RACE MODE
-    private fun restartChronometer() {
-        chronometer.base = SystemClock.elapsedRealtime() - elapsed
-        chronometer.start()
-    }
-
-    private fun initRaceMode() {
-        chronometer.visibility = View.VISIBLE
-        chronometer.start()
-    }
-
-    // SURVIVAL MODE
-    private fun initSurvivalMode() {
-        heartImage.visibility = View.VISIBLE
-        heartNumber.visibility = View.VISIBLE
-        gameViewModel.lives.observe(requireActivity()) {
-            heartNumber.text =
-                getString(R.string.heart_number, it) //TODO check if it works (x $it)
-        }
-    }
-
-    /**
-     * Verify the guess of the player
-     *
-     * @param isVocal true is player used its microphone to guess
-     * @param isAuto true if autoGuessing is activated
-     */
-    private fun guess(isVocal: Boolean, isAuto: Boolean) {
-        if (gameViewModel.guess(guessEditText.text.toString(), isVocal)) {
-            // Update the number of point view
-            increaseScore(Firebase.auth.currentUser!!.uid)
-            scoreTextView.text = gameViewModel.score.toString()
-            (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
-                .hideSoftInputFromWindow(view?.windowToken, 0)
-            launchSongSummary(success = true)
-        } else if (!isAuto) {
-            /** Resets the base frame value of the animation and keep the reversing mode **/
-            crossAnim.repeatMode = LottieDrawable.RESTART
-            crossAnim.repeatMode = LottieDrawable.REVERSE
-            crossAnim.playAnimation()
-        }
-    }
-
-    /**
-     * Increases the score of a User(designated by uid) after a good guess.
-     * @param uid
-     */
-    private fun increaseScore(uid: String) {
-        when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
-            GameFormat.MULTI -> {
-                // find the index of the player in the userList of the match
-                // (ideally we should not have to retrieve this every time).
-                MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
-                    val match = it.toObject(Match::class.java)
-                    val gameInstanceShared = match?.game
-                    gameInstanceViewModel.gameInstance.value = gameInstanceShared
+        /**
+         * Creates the countdown timer
+         *
+         * @return creates countdown timer with the duration of the round
+         */
+        private fun createCountDown(): CountDownTimer {
+            return object : CountDownTimer(duration.toLong(), 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    duration = millisUntilFinished.toInt()
+                    elapsed += 1000
+                    //Log.d("DURATION", duration.toString())
+                    countDown.text = (millisUntilFinished / 1000).toString()
                 }
 
+                override fun onFinish() {
+                    gameViewModel.timeout()
+                    this.cancel()
+                    launchSongSummary(success = false)
+                }
             }
         }
-    }
 
-    /** Launches the Game Over fragment after a song
+        /**
+         * Set the demo fragment visibility
+         *
+         * @param code visibility code : either VISIBLE or GONE
+         */
+        private fun setVisibilityLayout(code: Int) {
+            guessButton.visibility = code
+            scoreTextView.visibility = code
+            guessEditText.visibility = code
+
+            // Set animation visibility
+            crossAnim.visibility = code
+            countDown.visibility = code
+            audioVisualizer.visibility = code
+            startButton.visibility = code
+            microphoneButton.visibility = code
+            view?.findViewById<ImageButton>(R.id.guessButton)?.visibility = code
+        }
+
+        /**
+         * Handle pause and resume game logic
+         */
+        private fun playAndPause() {
+            playing = if (playing) {
+                gameViewModel.pause()
+                // Pause Animation
+                audioVisualizer.pauseAnimation()
+                startButton.setMinAndMaxFrame(30, 55)
+                startButton.repeatCount = 0
+                startButton.playAnimation()
+                // Timer cancel
+                timer.cancel()
+                timer = createCountDown()
+                chronometer.stop()
+                false
+
+            } else {
+                gameViewModel.play()
+
+                // Resume Animation
+                audioVisualizer.resumeAnimation()
+                startButton.setMinAndMaxFrame(10, 25)
+                startButton.playAnimation()
+
+                restartChronometer()
+                timer.start()
+                true
+            }
+        }
+
+        // RACE MODE
+        private fun restartChronometer() {
+            chronometer.base = SystemClock.elapsedRealtime() - elapsed
+            chronometer.start()
+        }
+
+        private fun initRaceMode() {
+            chronometer.visibility = View.VISIBLE
+            chronometer.start()
+        }
+
+        // SURVIVAL MODE
+        private fun initSurvivalMode() {
+            heartImage.visibility = View.VISIBLE
+            heartNumber.visibility = View.VISIBLE
+            gameViewModel.lives.observe(requireActivity()) {
+                heartNumber.text =
+                    getString(R.string.heart_number, it) //TODO check if it works (x $it)
+            }
+        }
+
+        /**
+         * Verify the guess of the player
+         *
+         * @param isVocal true is player used its microphone to guess
+         * @param isAuto true if autoGuessing is activated
+         */
+        private fun guess(isVocal: Boolean, isAuto: Boolean) {
+            if (gameViewModel.guess(guessEditText.text.toString(), isVocal)) {
+                // Update the number of point view
+                increaseScore()
+                scoreTextView.text = gameViewModel.score.toString()
+                (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
+                    .hideSoftInputFromWindow(view?.windowToken, 0)
+                launchSongSummary(success = true)
+            } else if (!isAuto) {
+                /** Resets the base frame value of the animation and keep the reversing mode **/
+                crossAnim.repeatMode = LottieDrawable.RESTART
+                crossAnim.repeatMode = LottieDrawable.REVERSE
+                crossAnim.playAnimation()
+            }
+        }
+
+        /**
+         * Increases the score of a User(designated by uid) after a good guess.
+         */
+        private fun increaseScore() {
+            when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
+                GameFormat.MULTI -> {
+                    // find the index of the player in the userList of the match
+                    // (ideally we should not have to retrieve this every time).
+
+                    }
+
+                }
+            }
+
+        /** Launches the Game Over fragment after a song
      *
      * @param success indicates if the user found the sound or not
      */
