@@ -19,7 +19,6 @@ import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.util.Util.loadProfileImage
 import ch.epfl.sdp.blindwar.login.*
-import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.model.Gender
 import ch.epfl.sdp.blindwar.profile.model.User
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
@@ -172,7 +171,14 @@ class UserNewInfoFragment : Fragment() {
         } else {
             uploadImage(localPPuri)
             UserDatabase.updateUser(user)
-            startActivity(Intent(requireActivity(), MainMenuActivity::class.java))
+
+            // set view to ProfileFragment
+            fragmentManager?.let {
+                it.beginTransaction().apply {
+                    replace(R.id.fragment_menu_container, ProfileFragment())
+                    commit()
+                }
+            }
         }
     }
     /**
@@ -283,18 +289,6 @@ class UserNewInfoFragment : Fragment() {
             }
         }
 
-    /**
-     * Lets the user choose their own profile picture
-     *
-     * @param v
-     */
-    fun choosePicture(v: View) {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        resultLauncher.launch(intent)
-    }
-
     private fun setPicture() {
         val intent = Intent()
         intent.type = imagePath
@@ -327,8 +321,8 @@ class UserNewInfoFragment : Fragment() {
                 day
             )
         datePickerDialog.datePicker.maxDate = calendar.timeInMillis
-        calendar.add(Calendar.YEAR, -resources.getInteger(R.integer.age_max))
-        datePickerDialog.datePicker.minDate = calendar.timeInMillis
+//        calendar.add(Calendar.YEAR, -resources.getInteger(R.integer.age_max))
+//        datePickerDialog.datePicker.minDate = calendar.timeInMillis
         datePickerDialog.setIcon(R.drawable.logo)
         datePickerDialog.setTitle(R.string.new_user_birthdatePicker)
         datePickerDialog.show()

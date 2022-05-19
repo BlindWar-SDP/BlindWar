@@ -41,10 +41,10 @@ class ProfileFragment : Fragment() {
 
         // Buttons
         view.findViewById<Button>(R.id.statsBtn).setOnClickListener {
-            startActivity(Intent(requireActivity(), StatisticsActivity::class.java))
+            startActivity(Intent(requireContext(), StatisticsActivity::class.java))
         }
         view.findViewById<Button>(R.id.historyBtn).setOnClickListener {
-            startActivity(Intent(requireActivity(), HistoryActivity::class.java))
+            startActivity(Intent(requireContext(), HistoryActivity::class.java))
         }
         view.findViewById<ImageButton>(R.id.editBtn).setOnClickListener { editProfile() }
         view.findViewById<ImageButton>(R.id.logoutBtn).setOnClickListener { logOut() }
@@ -89,7 +89,7 @@ class ProfileFragment : Fragment() {
         // TODO : same on backpressed on MainMenuActivity ?
         profileViewModel.logout()
         //removeCache(activity?.applicationContext!!)
-        startActivity(Intent(requireActivity(), SplashScreenActivity::class.java))
+        startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
     }
 
     /**
@@ -97,29 +97,29 @@ class ProfileFragment : Fragment() {
      */
     private fun deleteProfile() {
         // Alert Dialog
-        val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
         val positiveButtonClick = { _: DialogInterface, _: Int ->
 
             Firebase.auth.currentUser?.let {
                 UserDatabase.removeUser(it.uid)
-                AuthUI.getInstance().delete(requireActivity()).addOnCompleteListener {
-                    startActivity(Intent(requireActivity(), SplashScreenActivity::class.java))
+                AuthUI.getInstance().delete(requireContext()).addOnCompleteListener {
+                    startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
                 }
                 Toast.makeText(
-                    requireActivity(),
+                    requireContext(),
                     getString(R.string.deletion_success), Toast.LENGTH_SHORT
                 ).show()
             } ?: run {
                 Toast.makeText(
-                    requireActivity(),
+                    requireContext(),
                     "something went wrong on deletion", Toast.LENGTH_SHORT
                 ).show()
-                startActivity(Intent(requireActivity(), SplashScreenActivity::class.java))
+                startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
             }
         }
         val negativeButtonClick = { _: DialogInterface, _: Int ->
             Toast.makeText(
-                requireActivity(),
+                requireContext(),
                 getString(R.string.account_not_deleted_toast), Toast.LENGTH_SHORT
             ).show()
         }
