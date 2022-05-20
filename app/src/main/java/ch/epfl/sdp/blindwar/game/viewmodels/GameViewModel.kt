@@ -35,7 +35,7 @@ open class GameViewModel(
     /** Encapsulates the characteristics of a game instead of its logic
      *
      */
-    protected val game: GameInstance = gameInstance
+    protected val gameInstance: GameInstance = gameInstance
     protected lateinit var musicViewModel: MusicViewModel
     protected val profileViewModel = ProfileViewModel()
 
@@ -63,7 +63,7 @@ open class GameViewModel(
      */
     fun init() {
         musicViewModel = MusicViewModel(
-            game.onlinePlaylist!!,
+            gameInstance.onlinePlaylist!!,
             context, resources
         )
     }

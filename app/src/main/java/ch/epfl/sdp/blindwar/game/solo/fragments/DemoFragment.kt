@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
@@ -22,6 +23,7 @@ import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
+import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.ARTIST_KEY
@@ -141,6 +143,9 @@ class DemoFragment : Fragment() {
         }
         if (playerList != null) {
             scoreboardAdapter = ScoreboardAdapter(playerList!!)
+        } else {
+            scoreboardAdapter =
+                ScoreboardAdapter(listOf("Marty", "Joris", "Nael", "Arthur", "Paul", "Henrique"))
         }
         scoreboard.setHasFixedSize(true)
 
@@ -151,17 +156,15 @@ class DemoFragment : Fragment() {
 
 
 
-        MatchDatabase.addScoreListener(matchId!!, Firebase.firestore, scoreboardListener)
 
-        /*
         if (matchId != null) {
+            MatchDatabase.addScoreListener(matchId!!, Firebase.firestore, scoreboardListener)
             MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
                 val match = it.toObject(Match::class.java)
                 val gameInstanceShared = match?.game
                 gameInstanceViewModel.gameInstance.value = gameInstanceShared
             }
-        }*/
-
+        }
 
     when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
         GameFormat.SOLO -> {

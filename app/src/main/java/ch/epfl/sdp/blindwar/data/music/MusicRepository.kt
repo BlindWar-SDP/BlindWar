@@ -21,10 +21,15 @@ class MusicRepository(
     private val fetcherFactory: FetcherFactory = FetcherFactory(context, resources)
     fun fetchMusics(playlist: Playlist): Map<MusicMetadata, ReadyMediaPlayer> {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            /*
             playlist.songs.parallelStream()
                 .map {
                     fetcherFactory.getFetcher(it).fetchMusic(it)
                 }.collect(Collectors.toList()).toMap()
+             */
+            playlist.songs.associate {
+                fetcherFactory.getFetcher(it).fetchMusic(it)
+            }
         } else {
             playlist.songs.associate {
                 fetcherFactory.getFetcher(it).fetchMusic(it)

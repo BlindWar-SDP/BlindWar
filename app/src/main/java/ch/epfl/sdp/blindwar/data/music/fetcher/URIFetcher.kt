@@ -14,7 +14,10 @@ class URIFetcher : Fetcher {
         val player = MediaPlayer()
         val readyMediaPlayer = ReadyMediaPlayer(player, MutableLiveData(true))
 
-        player.setDataSource((musicMetadata as URIMusicMetadata).uri)
+        val uriMusicMetadata = musicMetadata as URIMusicMetadata
+        val uri = uriMusicMetadata.uri
+
+        player.setDataSource(uri)
 
         /** TODO: Debug
         player.setOnPreparedListener{
@@ -25,17 +28,17 @@ class URIFetcher : Fetcher {
         player.prepare()
 
         // Random start if the music duration is superior to 30s
-        if (musicMetadata.duration > 30000) {
+        if (uriMusicMetadata.duration > 30000) {
             //TODO: Remove code duplication
 
             // Keep the start time low enough so that at least half the song can be heard (for now)
-            val time = Random().nextInt(musicMetadata.duration.div(2))
+            val time = Random().nextInt(uriMusicMetadata.duration.div(2))
 
             // Change the current music
             player.seekTo(time)
             readyMediaPlayer.ready.postValue(true)
         }
 
-        return Pair(musicMetadata, readyMediaPlayer)
+        return Pair(uriMusicMetadata, readyMediaPlayer)
     }
 }
