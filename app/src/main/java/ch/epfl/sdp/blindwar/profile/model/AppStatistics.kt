@@ -104,11 +104,14 @@ class AppStatistics {
             }
         }
 
-        val total = wins[mode.ordinal] + draws[mode.ordinal] + losses[mode.ordinal]
-        winPercent[mode.ordinal] = computePercentage(wins[mode.ordinal].toFloat(), total.toFloat())
+        val total =
+            wins[mode.ordinal] + draws[mode.ordinal] + losses[mode.ordinal]
+        winPercent[mode.ordinal] =
+            computePercentage(wins[mode.ordinal].toFloat(), total.toFloat())
         drawPercent[mode.ordinal] =
             computePercentage(draws[mode.ordinal].toFloat(), total.toFloat())
-        lossPercent[mode.ordinal] = 100F - winPercent[mode.ordinal] - drawPercent[mode.ordinal]
+        lossPercent[mode.ordinal] =
+            100F - winPercent[mode.ordinal] - drawPercent[mode.ordinal]
     }
 
     private fun computePercentage(quantity: Float, total: Float): Float {
@@ -181,11 +184,13 @@ class AppStatistics {
      * @return the new elo of the user
      */
     private fun greaterElo(result: Result, opponentElo: Int): Int {
-        var ratio = (elo.toFloat() / opponentElo.toFloat())
+        var ratio =
+            (elo.toFloat() / opponentElo.toFloat())
         if (result == Result.LOSS) {
             ratio = ratio.pow(2)
-        } else if (result == Result.WIN)
+        } else if (result == Result.WIN) {
             ratio = 0 - ((1 / ratio).pow(3))
+        }
         val diff = round((ratio * standardEqualValue)).toInt()
         return if (elo - diff < 0) {
             0
