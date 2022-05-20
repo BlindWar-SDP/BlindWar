@@ -102,6 +102,8 @@ class DemoFragment : Fragment() {
         override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
             val match = value?.toObject(Match::class.java)
             gameInstanceViewModel.match?.listResult = match?.listResult
+            scoreboardAdapter.updateScoreboardFromList(gameInstanceViewModel.match?.listResult)
+            scoreboardAdapter.notifyDataSetChanged()
         }
     }
 
@@ -129,6 +131,8 @@ class DemoFragment : Fragment() {
         // if multi mode, get gameInstance from matchId
         matchId = arguments?.getString("match_id")!!
 
+        MatchDatabase.addScoreListener(matchId!!, Firebase.firestore, scoreboardListener)
+
         // store locally the index of the player
         val currentUser = Firebase.auth.currentUser
         if (currentUser != null) {
@@ -138,14 +142,14 @@ class DemoFragment : Fragment() {
                 playerIndex = userList?.indexOf(currentUser.uid)!!
             }
         }
-
+        /*
         if (matchId != null) {
             MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
                 val match = it.toObject(Match::class.java)
                 val gameInstanceShared = match?.game
                 gameInstanceViewModel.gameInstance.value = gameInstanceShared
             }
-        }
+        }*/
 
 
 

@@ -54,7 +54,7 @@ class ScoreboardAdapter(private var playersName: List<String>)  :
 
     fun updateScoreboardFromList(listResult: MutableList<Int>?) {
         if (listResult != null) {
-            for (i in 0 until dataSet.size) {
+            for (i in 0 until dataSet.size - 1) {
                 dataSet[i] = Pair(listResult[i], dataSet[i].second)
             }
         }
