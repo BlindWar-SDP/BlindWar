@@ -131,14 +131,6 @@ class DemoFragment : Fragment() {
                 val match = it.toObject(Match::class.java)
                 val gameInstanceShared = match?.game
                 gameInstanceViewModel.gameInstance.value = gameInstanceShared
-                gameViewModel = context?.let {
-                    GameViewModel(
-                        gameInstanceViewModel.gameInstance.value!!,
-                        it,
-                        resources,
-                        scoreboardAdapter
-                    )
-                }!!
             }
         }
 
@@ -157,7 +149,7 @@ class DemoFragment : Fragment() {
             // Hide the scoreboard
             scoreboard.visibility = View.INVISIBLE
         }
-/*
+
         GameFormat.MULTI -> {
             gameViewModel = context?.let {
                 GameViewModel(
@@ -167,7 +159,7 @@ class DemoFragment : Fragment() {
                     scoreboardAdapter
                 )
             }!!
-        }*/
+        }
     }
 
     gameViewModel.init()

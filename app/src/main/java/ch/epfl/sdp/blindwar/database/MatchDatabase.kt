@@ -3,10 +3,8 @@ package ch.epfl.sdp.blindwar.database
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.profile.model.User
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -122,6 +120,18 @@ object MatchDatabase {
             // Success
             null
         }
+    }
+
+    /**
+     * Listen to changes in the score(actually we can only listen to changes in the document
+     * and not a specific field)
+     * @param matchId
+     * @param db
+     */
+
+    fun addScoreListener(matchId: String, db: FirebaseFirestore, listener: EventListener<DocumentSnapshot>) {
+        val matchRef = db.collection("match").document(matchId)
+        matchRef.addSnapshotListener(listener)
     }
 
 
