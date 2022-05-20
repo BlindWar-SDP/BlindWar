@@ -80,7 +80,8 @@ class AppStatistics {
     fun correctnessUpdate(correct: Int, wrong: Int, mode: Mode) {
         correctArray[mode.ordinal] += correct
         wrongArray[mode.ordinal] += wrong
-        val (a, b) = correctnessPercentUpdate(correctArray[mode.ordinal], wrongArray[mode.ordinal])
+        val (a, b) =
+            correctnessPercentUpdate(correctArray[mode.ordinal], wrongArray[mode.ordinal])
         correctPercent[mode.ordinal] = a
         wrongPercent[mode.ordinal] = b
     }
@@ -201,6 +202,9 @@ class AppStatistics {
 
 
     override fun toString(): String {
-        return "hello $elo"
+        return "Statistics: ELO: $elo, Correct array: $correctArray, Wrong array: $wrongArray, " +
+                "Correct%: $correctPercent, Wrong%: $wrongPercent, " +
+                "Wins: $wins, Draws: $draws, Losses: $losses, " +
+                "Win%: $winPercent, Draw%: $drawPercent, Loss%: $lossPercent"
     }
 }

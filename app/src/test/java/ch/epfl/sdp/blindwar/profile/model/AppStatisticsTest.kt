@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.profile.model
 
+import android.util.Log
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
@@ -302,6 +303,10 @@ class AppStatisticsTest {
     @Test
     fun toStringTest() {
         testStats5 = AppStatistics()
-        assertEquals("hello 1000", testStats5.toString())
+        val res = "Statistics: ELO: 1000, Correct array: [0, 0], Wrong array: [0, 0], " +
+                "Correct%: [0.0, 0.0], Wrong%: [0.0, 0.0], " +
+                "Wins: [0, 0], Draws: [0, 0], Losses: [0, 0], " +
+                "Win%: [0.0, 0.0], Draw%: [0.0, 0.0], Loss%: [0.0, 0.0]"
+        assertEquals(res, testStats5.toString())
     }
 }
