@@ -3,12 +3,19 @@ package ch.epfl.sdp.blindwar.profile.fragments
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.menu.MainMenuActivity
+import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -34,6 +41,7 @@ class UserNewInfoFragmentTest : TestCase() {
 
     @Before
     fun setup() {
+        Firebase.auth.signOut()
         Intents.init()
     }
 
@@ -49,15 +57,34 @@ class UserNewInfoFragmentTest : TestCase() {
             .perform(scrollTo())
             .perform(click())
         clickOn(android.R.string.ok)
+        onView(withId(R.id.NU_reset_birthdate))
+            .check(
+                matches(
+                    withEffectiveVisibility(
+                        ViewMatchers.Visibility.VISIBLE
+                    )
+                )
+            )
     }
 
     @Test
     fun testResetBirthdate() {
-        Firebase.auth.signOut()
         launchFragmentInContainer<UserNewInfoFragment>()
+        onView(withId(R.id.NU_select_birthdate))
+            .perform(scrollTo())
+            .perform(click())
+        clickOn(android.R.string.ok)
         onView(withId(R.id.NU_reset_birthdate))
             .perform(scrollTo())
             .perform(click())
+        onView(withId(R.id.NU_reset_birthdate))
+            .check(
+                matches(
+                    withEffectiveVisibility(
+                        ViewMatchers.Visibility.INVISIBLE
+                    )
+                )
+            )
     }
 
     @Test
@@ -75,15 +102,42 @@ class UserNewInfoFragmentTest : TestCase() {
             device.pressBack()
             currentPackageName = device.currentPackageName
         } while (currentPackageName != oldPackageName)
+
+//        no assert because of ...
     }
 
     @Test
     fun testResetProfilePicture() {
-        Firebase.auth.signOut()
         launchFragmentInContainer<UserNewInfoFragment>()
         onView(withId(R.id.NU_resetProfilePicture))
             .perform(scrollTo())
             .perform(click())
+        onView(withId(R.id.NU_resetProfilePicture))
+            .check(
+                matches(
+                    withEffectiveVisibility(
+                        ViewMatchers.Visibility.INVISIBLE
+                    )
+                )
+            )
+    }
+
+    @Test
+    fun clickConfirm_TEST() {
+        val login: Task<AuthResult> = FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(email, password)
+        try {
+            Tasks.await(login)
+        } catch (e: ExecutionException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        launchFragmentInContainer<UserNewInfoFragment>()
+        Thread.sleep(1000)
+        onView(withId(R.id.NU_pseudo))
+            .perform(scrollTo())
+            .perform(replaceText("pjio009"))
     }
 
     @Test
@@ -100,9 +154,12 @@ class UserNewInfoFragmentTest : TestCase() {
         launchFragmentInContainer<UserNewInfoFragment>()
         Thread.sleep(1000)
         onView(withId(R.id.NU_pseudo))
+            .perform(scrollTo())
             .perform(replaceText(validPseudo))
-        clickOn(R.id.NU_Confirm_Btn)
-//        intended(hasComponent(MainMenuActivity::class.java.name))
+        onView(withId(R.id.NU_Confirm_Btn))
+            .perform(scrollTo())
+            .perform(click())
+        intended(hasComponent(MainMenuActivity::class.java.name))
     }
 
     @Test
@@ -119,9 +176,12 @@ class UserNewInfoFragmentTest : TestCase() {
         launchFragmentInContainer<UserNewInfoFragment>()
         Thread.sleep(1000)
         onView(withId(R.id.NU_pseudo))
+            .perform(scrollTo())
             .perform(replaceText(invalidPseudo))
-        clickOn(R.id.NU_Confirm_Btn)
-//        assertDisplayed(R.string.new_user_wrong_pseudo_title)
-
+        onView(withId(R.id.NU_Confirm_Btn))
+            .perform(scrollTo())
+            .perform(click())
+        assertDisplayed(R.string.new_user_wrong_pseudo_title)
+        clickOn(android.R.string.ok)
     }
 }

@@ -18,20 +18,6 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="1." />
 
-        <Button
-            android:id="@+id/NU_Confirm_Btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/NU_left_margin"
-            android:layout_marginBottom="@dimen/NU_between_field_margin"
-            android:background="@android:color/transparent"
-            android:text="@string/confirm"
-            android:textColor="@color/light_red"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toTopOf="@id/NU_Bottom_guideline"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-
         <ScrollView
             android:id="@+id/fragment_userNewInfo"
             android:layout_width="match_parent"
@@ -253,6 +239,20 @@
                     app:layout_constraintBottom_toTopOf="@id/NU_BOTTOM_Scroll_guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/gender_spinner" />
+
+                <Button
+                    android:id="@+id/NU_Confirm_Btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/NU_left_margin"
+                    android:layout_marginBottom="@dimen/NU_between_field_margin"
+                    android:background="@android:color/transparent"
+                    android:text="@string/confirm"
+                    android:textColor="@color/light_red"
+                    android:textStyle="italic"
+                    app:layout_constraintTop_toBottomOf="@id/NU_description"
+                    app:layout_constraintBottom_toTopOf="@id/NU_BOTTOM_Scroll_guideline"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

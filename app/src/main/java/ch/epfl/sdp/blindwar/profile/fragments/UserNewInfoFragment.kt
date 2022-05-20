@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.util.Util.loadProfileImage
 import ch.epfl.sdp.blindwar.login.*
+import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.model.Gender
 import ch.epfl.sdp.blindwar.profile.model.User
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
@@ -31,10 +33,6 @@ import java.util.*
  */
 class UserNewInfoFragment : Fragment() {
 
-    //    private val database = UserDatabase
-//    private val imageDatabase = ImageDatabase
-//    private var profilePictureUri: Uri? = null
-//    private val auth = FirebaseAuth.getInstance()
     private var dynamicLink: String? = null
 
     private val imagePath = "image/*"
@@ -105,7 +103,6 @@ class UserNewInfoFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_user_new_info, container, false)
 //        dynamicLink = intent?.extras?.getString(MultiPlayerMenuActivity.DYNAMIC_LINK) // TODO : DynLink
-
         profileViewModel.user.observe(viewLifecycleOwner) {
             user = it
             if (user.profilePicture.isEmpty()) {
@@ -114,21 +111,11 @@ class UserNewInfoFragment : Fragment() {
             setView(user)
         }
         // Buttons
-        view.findViewById<Button>(R.id.NU_editProfilePicture).apply {
-            this.setOnClickListener { setPicture() }
-        }
-        view.findViewById<Button>(R.id.NU_resetProfilePicture).apply {
-            this.setOnClickListener { resetPicture() }
-        }
-        view.findViewById<Button>(R.id.NU_select_birthdate).apply {
-            this.setOnClickListener { setBirthdate() }
-        }
-        view.findViewById<Button>(R.id.NU_reset_birthdate).apply {
-            this.setOnClickListener { resetBirthdate() }
-        }
-        view.findViewById<Button>(R.id.NU_Confirm_Btn).apply {
-            this.setOnClickListener { confirm() }
-        }
+        view.findViewById<Button>(R.id.NU_editProfilePicture).setOnClickListener { setPicture() }
+        view.findViewById<Button>(R.id.NU_resetProfilePicture).setOnClickListener { resetPicture() }
+        view.findViewById<Button>(R.id.NU_select_birthdate).setOnClickListener { setBirthdate() }
+        view.findViewById<Button>(R.id.NU_reset_birthdate).setOnClickListener { resetBirthdate() }
+        view.findViewById<Button>(R.id.NU_Confirm_Btn).setOnClickListener { confirm() }
         return view
     }
 
@@ -158,7 +145,6 @@ class UserNewInfoFragment : Fragment() {
     private fun confirm() {
         setFromText()
         // check validity of pseudo
-//        Log.i(">>> User Pseudo", user.pseudo)
         if (user.pseudo.length < resources.getInteger(R.integer.pseudo_minLength)) {
             // Alert Dialog
             val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
@@ -172,13 +158,15 @@ class UserNewInfoFragment : Fragment() {
             uploadImage(localPPuri)
             UserDatabase.updateUser(user)
 
-            // set view to ProfileFragment
-            fragmentManager?.let {
-                it.beginTransaction().apply {
-                    replace(R.id.fragment_menu_container, ProfileFragment())
-                    commit()
-                }
-            }
+//            // set view to ProfileFragment
+//            // -> crash while test ... ?
+//            fragmentManager?.let {
+//                it.beginTransaction().apply {
+//                    replace(R.id.fragment_menu_container, ProfileFragment())
+//                    commit()
+//                }
+//            }
+            startActivity(Intent(requireContext(), MainMenuActivity::class.java))
         }
     }
     /**
@@ -373,14 +361,15 @@ class UserNewInfoFragment : Fragment() {
     private fun setView(user: User) {
         view?.let { v ->
             v.findViewById<EditText>(R.id.NU_pseudo).setText(user.pseudo)
+            Log.i(">>> User Pseudo <<<", user.pseudo)
             v.findViewById<EditText>(R.id.NU_FirstName).setText(user.firstName)
             v.findViewById<EditText>(R.id.NU_LastName).setText(user.lastName)
             showImage()
-            if (user.birthdate != User().birthdate) {
+            if (user.birthdate == User().birthdate) {
+                hideButton(R.id.NU_reset_birthdate)
+            } else {
                 setBirthdateText(user.birthdate)
                 v.findViewById<Button>(R.id.NU_reset_birthdate).visibility = View.VISIBLE
-            } else {
-                hideButton(R.id.NU_reset_birthdate)
             }
             v.findViewById<TextView>(R.id.NU_description).text = user.description
 
@@ -443,7 +432,7 @@ class UserNewInfoFragment : Fragment() {
         cal.timeInMillis = birthdate
         view?.let {
             val textView = it.findViewById<TextView>(R.id.NU_selected_birthdate_text)
-            val textStr = "birthdate set to\n" +
+            val textStr = getString(R.string.birthdate_set_to) + "\n" +
                     "${cal.get(Calendar.DAY_OF_MONTH)}/" +
                     "${cal.get(Calendar.MONTH) + 1}/" +
                     "${cal.get(Calendar.YEAR)}"
