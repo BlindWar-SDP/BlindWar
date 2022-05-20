@@ -144,7 +144,7 @@ class ProfileFragmentTest : TestCase() {
 //    @Test
 //    fun testEditProfileButton() {
 //        launchFragmentInContainer<ProfileFragment>()
+//        assertDisplayed(R.id.editBtn)
 //        clickOn(R.id.editBtn)
-//        intended(hasComponent(UserNewInfoActivity::class.java.name))
 //    }
 }

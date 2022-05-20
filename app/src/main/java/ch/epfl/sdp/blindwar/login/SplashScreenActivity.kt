@@ -21,6 +21,7 @@ import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
 
@@ -50,7 +51,10 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-//        Firebase.database.setPersistenceEnabled(true) // TODO: might bring problem in tests ... !!
+        if (!BuildConfig.DEBUG) { // not called when testing
+            Firebase.database.setPersistenceEnabled(true)
+        }
+
         if (hasInternet()) {
             checkCurrentUser()
         } else {
@@ -117,7 +121,7 @@ class SplashScreenActivity : AppCompatActivity() {
         if (result.resultCode == RESULT_OK) {
             // Successfully signed in
             // https://www.tabnine.com/code/java/classes/com.google.firebase.auth.FirebaseAuth
-                if (response!!.isNewUser) {
+            if (response!!.isNewUser) {
                 // old check :
                 // user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp
                 Firebase.auth.currentUser?.let {
