@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.game.util
 import android.content.Context
 import android.media.MediaPlayer
 import ch.epfl.sdp.blindwar.R
+import java.lang.IllegalStateException
 
 object MainMusic {
     private const val volume = .4f
@@ -18,12 +19,26 @@ object MainMusic {
     }
 
     fun play() {
-        mediaPlayer?.start()
+        if(mediaPlayer != null) {
+            mediaPlayer?.start()
+        }
+        else {
+            throw IllegalStateException()
+        }
     }
 
     fun pause() {
-        if(mediaPlayer?.isPlaying == true) {
-            mediaPlayer?.pause();
+        if(mediaPlayer != null) {
+            if(mediaPlayer?.isPlaying == true)
+                mediaPlayer?.pause()
         }
+        else {
+            throw IllegalStateException()
+        }
+    }
+
+    fun reset() {
+        mediaPlayer?.reset()
+        mediaPlayer = null
     }
 }

@@ -1,11 +1,11 @@
 package ch.epfl.sdp.blindwar.game.util
 
 import android.content.Context
-import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import junit.framework.TestCase
+import org.junit.Assert.assertThrows
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -15,19 +15,38 @@ class MainMusicTest : TestCase() {
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
 
-    @Test
-    fun startTheMusic(){
+    @Before
+    fun setup() {
+        MainMusic.reset()
+    }
+
+    @Test(expected = Test.None::class)
+    fun playAndPauseMusicTheMusic(){
+        // Test now exception is thrown
         MainMusic.prepareAndPlay(context)
+        MainMusic.pause()
     }
 
     @Test
-    fun startAndPauseTheMusic(){
+    fun resetAndPause(){
         MainMusic.prepareAndPlay(context)
-        MainMusic.pause()
+        MainMusic.reset()
+        assertThrows(IllegalStateException::class.java) {
+            MainMusic.pause()
+        }
+    }
+
+    @Test
+    fun playUnpreparedMusic(){
+        assertThrows(IllegalStateException::class.java) {
+            MainMusic.play()
+        }
     }
 
     @Test
     fun pauseUnpreparedMusic(){
-        MainMusic.pause()
+        assertThrows(IllegalStateException::class.java) {
+            MainMusic.pause()
+        }
     }
 }
