@@ -43,12 +43,7 @@ class ProfileFragmentTest : TestCase() {
 
     @Test
     fun testStatisticsButton() {
-        val scenario = launchFragmentInContainer<ProfileFragment>(
-//            initialState = Lifecycle.State.STARTED
-        )
-//        scenario.onFragment { f ->
-//            f.requireContext()
-//        }
+        launchFragmentInContainer<ProfileFragment>()
         clickOn(R.id.statsBtn)
         intended(hasComponent(StatisticsActivity::class.java.name))
     }

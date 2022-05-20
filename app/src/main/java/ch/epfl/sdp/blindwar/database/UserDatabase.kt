@@ -66,7 +66,7 @@ object UserDatabase {
      */
     // Add user to database
     fun updateUser(user: User): Task<Void> {
-        // TODO : should return a Task of what ?
+        // return task only for test... maybe should be modified
         return userReference.child(user.uid).setValue(user)
     }
 
@@ -128,42 +128,6 @@ object UserDatabase {
             }
         }
     }
-
-    /**
-     * Set elo of an user
-     *
-     * @param uid user identification
-     */
-//    fun setElo(uid: String, elo: Int) {
-//        getEloReference(uid).setValue(elo)
-//    }
-//    fun setFirstName(uid: String, fn: String): Task<Void> {
-//        return userReference.child(uid).child("firstName").setValue(fn)
-//    }
-//
-//    fun setLastName(uid: String, ln: String): Task<Void> {
-//        return userReference.child(uid).child("lastName").setValue(ln)
-//    }
-//
-//    fun setPseudo(uid: String, pseudo: String): Task<Void> {
-//        return userReference.child(uid).child("pseudo").setValue(pseudo)
-//    }
-//
-//    fun setProfilePicture(uid: String, pp: String): Task<Void> {
-//        return userReference.child(uid).child("profilePicture").setValue(pp)
-//    }
-//
-//    fun setBirthdate(uid: String, date: Long): Task<Void> {
-//        return userReference.child(uid).child("birthDate").setValue(date)
-//    }
-//
-//    fun setGender(uid: String, gender: String): Task<Void> {
-//        return userReference.child(uid).child("gender").setValue(gender)
-//    }
-//
-//    fun setDescription(uid: String, desc: String): Task<Void> {
-//        return userReference.child(uid).child("description").setValue(desc)
-//    }
 
     /**
      * Reset set user statistics

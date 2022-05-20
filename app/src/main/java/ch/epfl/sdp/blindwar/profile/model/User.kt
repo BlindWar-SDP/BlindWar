@@ -65,7 +65,7 @@ data class User(
             this.pseudo = user.pseudo
             this.firstName = user.firstName
             this.lastName = user.lastName
-            this.birthdate = user.birthdate!!
+            this.birthdate = user.birthdate
             this.profilePicture = user.profilePicture
             this.likedMusics = user.likedMusics
             this.matchHistory = user.matchHistory

@@ -7,7 +7,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,68 +32,10 @@ import java.util.*
  */
 class UserNewInfoFragment : Fragment() {
 
-    private var dynamicLink: String? = null
-
     private val imagePath = "image/*"
     private val profileViewModel: ProfileViewModel by activityViewModels()
     private var localPPuri: Uri? = null
     private var user = User()
-
-    /**
-     * Listener for user entering new information
-     *
-    private val userInfoListener = object : ValueEventListener {
-    override fun onDataChange(dataSnapshot: DataSnapshot) {
-    // Get User info and use the values to update the UI
-    val user: User? = try {
-    dataSnapshot.getValue<User>()
-    } catch (e: DatabaseException) {
-    null
-    }
-    val firstName = findViewById<EditText>(R.id.NU_FirstName)
-    val lastName = findViewById<EditText>(R.id.NU_LastName)
-    val pseudo = findViewById<EditText>(R.id.NU_pseudo)
-    val profileImageView = findViewById<ImageView>(R.id.NU_profileImageView)
-
-    user?.let {
-    firstName.setText(it.firstName)
-    lastName.setText(it.lastName)
-    pseudo.setText(it.pseudo)
-    if (!intent.getBooleanExtra("newUser", false)) {
-    if (it.profilePicture != "null") {
-    // TODO: Refactor UserNewInfoActivity
-    //imageDatabase.downloadProfilePicture(
-    //  it.profilePicture!!,
-    // profileImageView,
-    // applicationContext
-    //)
-    }
-    }
-    }
-    }
-
-    override fun onCancelled(databaseError: DatabaseError) {
-    // Getting Post failed, log a message
-    // Log.w("CANCELED REQUEST", "loadPost:onCancelled", databaseError.toException())
-    }
-    }
-     */
-
-    /**
-     * Generates the layout and adds listener for current user
-     *
-     * @param savedInstanceState
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_user_new_info)
-    dynamicLink = intent?.extras?.getString(MultiPlayerMenuActivity.DYNAMIC_LINK) // TODO : DynLink
-    // user id should be set according to authentication
-    FirebaseAuth.getInstance().currentUser?.let {
-    database.addUserListener(it.uid, userInfoListener)
-    }
-    }
-     */
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -120,24 +61,6 @@ class UserNewInfoFragment : Fragment() {
     }
 
     /**
-     * To avoid crashing the app, if the back button is pressed, user will log out
-     *
-     */
-//    override fun onBackPressed() {
-//        //this.moveTaskToBack(true);
-//        val intent = intent
-//        val activity = intent.getStringExtra("activity")
-//        //Log.w("yeet", activity!!)
-//        if (activity != "profile") {
-//            AuthUI.getInstance().delete(this)
-//            auth.signOut()
-//            startActivity(Intent(this, SplashScreenActivity::class.java))
-//        } else {
-//            super.onBackPressed()
-//        }
-//    }
-
-    /**
      * Function for confirming and saving all info entered by user
      *
      * @param v
@@ -157,109 +80,9 @@ class UserNewInfoFragment : Fragment() {
         } else {
             uploadImage(localPPuri)
             UserDatabase.updateUser(user)
-
-//            // set view to ProfileFragment
-//            // -> crash while test ... ?
-//            fragmentManager?.let {
-//                it.beginTransaction().apply {
-//                    replace(R.id.fragment_menu_container, ProfileFragment())
-//                    commit()
-//                }
-//            }
             startActivity(Intent(requireContext(), MainMenuActivity::class.java))
         }
     }
-    /**
-    fun confirm(v: View) {
-    val pseudo: String = findViewById<EditText>(R.id.NU_pseudo).text.toString()
-    val firstName: String = checkNotDefault(
-    findViewById<EditText>(R.id.NU_FirstName).text.toString(),
-    R.string.first_name
-    )
-    val lastName: String = checkNotDefault(
-    findViewById<EditText>(R.id.NU_LastName).text.toString(),
-    R.string.last_name
-    )
-    val birthDate: Long = intent.getLongExtra("birthdate", -1)
-    val profilePicture: String = profilePictureUri.toString()
-    val gender = intent.getStringExtra("gender") ?: Gender.None.toString()
-    val description = intent.getStringExtra("description") ?: ""
-    val isNewUser = intent.getBooleanExtra("newUser", false)
-
-    // check validity of pseudo
-    if (pseudo.length < resources.getInteger(R.integer.pseudo_minLength) || pseudo == resources.getString(
-    R.string.text_pseudo
-    )
-    ) {
-    // Alert Dialog
-    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-    val positiveButtonClick = { _: DialogInterface, _: Int ->
-    }
-
-    builder.setTitle(R.string.new_user_wrong_pseudo_title)
-    .setMessage(R.string.new_user_wrong_pseudo_text)
-    .setCancelable(false)
-    .setPositiveButton(android.R.string.ok, positiveButtonClick)
-    builder.create().show()
-
-    // Or Toast
-    //            Toast.makeText(this, R.string.new_user_wrong_pseudo_text, Toast.LENGTH_SHORT).show()
-
-    } else {
-    // check if new user or update already existing user
-    if (isNewUser) {
-    createUser(
-    pseudo,
-    firstName,
-    lastName,
-    birthDate,
-    profilePicture,
-    gender,
-    description
-    ) // TODO : Comment for TESTing -> need to uncomment
-    //            AuthUI.getInstance().delete(this) // TODO : uncomment for TESTing
-    if (dynamicLink == null) { // TODO : DynLink
-    startActivity(Intent(this, MainMenuActivity::class.java))
-    } else {
-    startActivity(
-    Intent(this, MultiPlayerMenuActivity::class.java).putExtra(
-    MultiPlayerMenuActivity.DYNAMIC_LINK,
-    dynamicLink // TODO : DynLink
-    )
-    )
-    }
-    } else {
-    FirebaseAuth.getInstance().currentUser?.let {
-    UserDatabase.setPseudo(it.uid, pseudo)
-    UserDatabase.setFirstName(it.uid, firstName)
-    UserDatabase.setLastName(it.uid, lastName)
-    UserDatabase.setProfilePicture(it.uid, profilePicture)
-    UserDatabase.setGender(it.uid, gender)
-    UserDatabase.setBirthdate(it.uid, birthDate)
-    UserDatabase.setDescription(it.uid, description)
-    if (dynamicLink == null) { // TODO : DynLink
-    startActivity(Intent(this, MainMenuActivity::class.java))
-    } else {
-    startActivity(
-    Intent(this, MultiPlayerMenuActivity::class.java).putExtra(
-    MultiPlayerMenuActivity.DYNAMIC_LINK,
-    dynamicLink // TODO : DynLink
-    )
-    )
-    }
-    }
-    }
-
-    // Upload picture to database
-    profilePictureUri?.let {
-    imageDatabase.uploadProfilePicture(
-    FirebaseAuth.getInstance().currentUser, it,
-    findViewById(android.R.id.content)
-    )
-    }
-    }
-    }
-     */
 
     /**
      * Makes sure data is ok, before launching
@@ -277,6 +100,10 @@ class UserNewInfoFragment : Fragment() {
             }
         }
 
+    /**
+     * set Profile Picture to local image path
+     *
+     */
     private fun setPicture() {
         val intent = Intent()
         intent.type = imagePath
@@ -284,6 +111,10 @@ class UserNewInfoFragment : Fragment() {
         resultLauncher.launch(intent)
     }
 
+    /**
+     * Reset Profile Picture to default value
+     *
+     */
     private fun resetPicture() {
         localPPuri = null
         profileViewModel.imageRef.value = null
@@ -292,6 +123,10 @@ class UserNewInfoFragment : Fragment() {
         showImage()
     }
 
+    /**
+     * set Birthdate attribute to selected value via a dialog
+     *
+     */
     private fun setBirthdate() {
         val calendar: Calendar = Calendar.getInstance() // current date
         val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -316,6 +151,10 @@ class UserNewInfoFragment : Fragment() {
         datePickerDialog.show()
     }
 
+    /**
+     * reset Birthdate attribute to default value
+     *
+     */
     private fun resetBirthdate() {
         view?.let {
             user.birthdate = User().birthdate
@@ -330,12 +169,21 @@ class UserNewInfoFragment : Fragment() {
 // ================================== HELPER FUNCTIONS ========================================
 // =============================================================================================
 
+    /**
+     * given a Button ID, hide it
+     *
+     * @param id
+     */
     private fun hideButton(id: Int) {
         view?.let {
             it.findViewById<Button>(id).visibility = View.INVISIBLE
         }
     }
 
+    /**
+     * hide resetProfilePicture button and image
+     *
+     */
     private fun hideProfilePicture() {
         view?.let {
             it.findViewById<ImageView>(R.id.NU_profileImageView).setImageResource(
@@ -345,6 +193,10 @@ class UserNewInfoFragment : Fragment() {
         }
     }
 
+    /**
+     * set user from textView
+     *
+     */
     private fun setFromText() {
         view?.let {
             user.pseudo =
@@ -358,10 +210,14 @@ class UserNewInfoFragment : Fragment() {
         }
     }
 
+    /**
+     * set UI from user's info
+     *
+     * @param user
+     */
     private fun setView(user: User) {
         view?.let { v ->
             v.findViewById<EditText>(R.id.NU_pseudo).setText(user.pseudo)
-            Log.i(">>> User Pseudo <<<", user.pseudo)
             v.findViewById<EditText>(R.id.NU_FirstName).setText(user.firstName)
             v.findViewById<EditText>(R.id.NU_LastName).setText(user.lastName)
             showImage()
@@ -380,6 +236,11 @@ class UserNewInfoFragment : Fragment() {
         }
     }
 
+    /**
+     * show Spinner for Gender selection
+     *
+     * @param spinner
+     */
     private fun showSpinner(spinner: Spinner) {
         val adapter = ArrayAdapter(
             requireActivity(),
@@ -416,6 +277,10 @@ class UserNewInfoFragment : Fragment() {
         }
     }
 
+    /**
+     * show ProfilePicture from local or load it from database if required
+     *
+     */
     private fun showImage() {
         view?.let { v ->
             localPPuri?.let { uri ->
@@ -427,6 +292,11 @@ class UserNewInfoFragment : Fragment() {
         }
     }
 
+    /**
+     * set textView to the selected date
+     *
+     * @param birthdate
+     */
     private fun setBirthdateText(birthdate: Long) {
         val cal: Calendar = Calendar.getInstance()
         cal.timeInMillis = birthdate
@@ -441,6 +311,15 @@ class UserNewInfoFragment : Fragment() {
         }
     }
 
+    /**
+     * given the detailed date, set user's birthdate attribute to selected date
+     * and return the date as a Long value
+     *
+     * @param year
+     * @param month
+     * @param day
+     * @return
+     */
     private fun setDate(year: Int, month: Int, day: Int): Long {
         val cal: Calendar = Calendar.getInstance()
         cal.set(year, month, day)
@@ -459,11 +338,16 @@ class UserNewInfoFragment : Fragment() {
         }
     }
 
+    /**
+     * upload ProfilePicture when chosen from local storage
+     *
+     * @param uri
+     */
     private fun uploadImage(uri: Uri?) {
         // TODO : Should be done in ViewModel but need return value to set profile picture ...
         uri?.let { it_uri ->
             user.profilePicture =
-                ImageDatabase.uploadProfilePicture(it_uri /*, requireContext()*/)
+                ImageDatabase.uploadProfilePicture(it_uri)
         }
     }
 }

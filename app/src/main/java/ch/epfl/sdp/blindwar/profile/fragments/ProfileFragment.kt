@@ -46,9 +46,15 @@ class ProfileFragment : Fragment() {
         view.findViewById<Button>(R.id.historyBtn).setOnClickListener {
             startActivity(Intent(requireContext(), HistoryActivity::class.java))
         }
-        view.findViewById<ImageButton>(R.id.editBtn).setOnClickListener { editProfile() }
-        view.findViewById<ImageButton>(R.id.logoutBtn).setOnClickListener { logOut() }
-        view.findViewById<ImageButton>(R.id.deleteBtn).setOnClickListener { deleteProfile() }
+        view.findViewById<ImageButton>(R.id.editBtn).setOnClickListener {
+            editProfile()
+        }
+        view.findViewById<ImageButton>(R.id.logoutBtn).setOnClickListener {
+            logOut()
+        }
+        view.findViewById<ImageButton>(R.id.deleteBtn).setOnClickListener {
+            deleteProfile()
+        }
 
 
         // text view
@@ -85,11 +91,10 @@ class ProfileFragment : Fragment() {
      * Handle the logout logic
      */
     private fun logOut() {
-        // TODO : add warning for offline logout (lost of userinfo update)
-        // TODO : same on backpressed on MainMenuActivity ?
         profileViewModel.logout()
-        //removeCache(activity?.applicationContext!!)
-        startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
+        startActivity(
+            Intent(requireContext(), SplashScreenActivity::class.java)
+        )
     }
 
     /**
@@ -111,8 +116,7 @@ class ProfileFragment : Fragment() {
                 ).show()
             } ?: run {
                 Toast.makeText(
-                    requireContext(),
-                    "something went wrong on deletion", Toast.LENGTH_SHORT
+                    requireContext(), "something went wrong on deletion", Toast.LENGTH_SHORT
                 ).show()
                 startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
             }

@@ -18,13 +18,6 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 
 class ProfileViewModel : ViewModel() {
-    // DATABASE
-    private val database = UserDatabase
-    private val auth = FirebaseAuth.getInstance()
-    private val currentUser = auth.currentUser
-
-    //private val userRepository = UserRepository
-    private val imageDatabase = ImageDatabase
 
     // OBSERVABLES
     val imageRef = MutableLiveData<StorageReference?>()
@@ -41,7 +34,7 @@ class ProfileViewModel : ViewModel() {
 
             userDB?.let {
                 if (it.profilePicture.isNotEmpty()) {
-                    imageRef.postValue(imageDatabase.getImageReference(it.profilePicture))
+                    imageRef.postValue(ImageDatabase.getImageReference(it.profilePicture))
                 } else {
                     imageRef.postValue(null)
                 }
@@ -63,6 +56,10 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
+    /**
+     * logout user from firebase object
+     *
+     */
     fun logout() {
         Firebase.auth.signOut()
     }
