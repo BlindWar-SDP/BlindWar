@@ -137,7 +137,7 @@ class SplashScreenActivity : AppCompatActivity() {
                     )
                     Toast.makeText(
                         this,
-                        Html.fromHtml("Hi, your pseudo is <b>${user0.pseudo}</b>,<br> you can personalize if in \"Profile\""),
+                        Html.fromHtml("Hi, your pseudo is <b>${user0.pseudo}</b>,<br> you can personalize it in \"Profile\""),
                         Toast.LENGTH_LONG
                     ).show()
                     // TODO: should also initiate a liveData ?
