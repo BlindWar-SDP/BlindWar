@@ -51,4 +51,12 @@ class ScoreboardAdapter(private var playersName: List<String>)  :
         dataSet?.indexOfFirst { it.second == playerName }.let { dataSet?.set(it!!, Pair(
             dataSet!![it].first + 1, playerName))}
     }
+
+    fun updateScoreboardFromList(listResult: MutableList<Int>?) {
+        if (listResult != null) {
+            for (i in 0 until dataSet.size) {
+                dataSet[i] = Pair(listResult[i], dataSet[i].second)
+            }
+        }
+    }
 }

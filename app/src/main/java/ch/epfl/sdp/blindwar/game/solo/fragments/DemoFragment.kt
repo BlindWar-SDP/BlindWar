@@ -36,6 +36,11 @@ import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
@@ -91,6 +96,14 @@ class DemoFragment : Fragment() {
     // Multiplayer infos
     private var matchId: String? = null
     private var playerIndex = -1
+
+    // Scoreboard listener
+    private val scoreboardListener = object : EventListener<DocumentSnapshot> {
+        override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
+            val match = value?.toObject(Match::class.java)
+            gameInstanceViewModel.match?.listResult = match?.listResult
+        }
+    }
 
 
     override fun onCreateView(
