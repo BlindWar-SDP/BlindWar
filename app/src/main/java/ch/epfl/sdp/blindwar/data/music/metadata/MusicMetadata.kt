@@ -2,14 +2,14 @@ package ch.epfl.sdp.blindwar.data.music.metadata
 
 import ch.epfl.sdp.blindwar.game.model.Displayable
 
-class MusicMetadata private constructor(
-    var title: String,
-    var artist: String,
-    var imageUrl: String,
-    var duration: Int,
-) : Displayable {
-    var uri: String? = null
+class MusicMetadata(
+    var title: String = "",
+    var artist: String = "",
+    var imageUrl: String = "",
+    var duration: Int = 0,
+    var uri: String? = null,
     var resourceId: Int? = null
+) : Displayable {
 
     companion object {
         fun createWithURI(title:String, artist:String, imageUrl: String, duration: Int, uri: String): MusicMetadata{
@@ -17,7 +17,7 @@ class MusicMetadata private constructor(
             musicMetadata.uri = uri
             return musicMetadata
         }
-        fun createWithURI(title:String, artist:String, imageUrl: String, duration: Int, resourceId: Int): MusicMetadata{
+        fun createWithResourceId(title:String, artist:String, imageUrl: String, duration: Int, resourceId: Int): MusicMetadata{
             var musicMetadata = MusicMetadata(title, artist, imageUrl, duration)
             musicMetadata.resourceId = resourceId
             return musicMetadata

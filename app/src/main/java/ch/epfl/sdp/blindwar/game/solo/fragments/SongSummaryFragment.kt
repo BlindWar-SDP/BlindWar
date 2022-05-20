@@ -12,8 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import ch.epfl.sdp.blindwar.R
-
-import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.util.AnimationSetterHelper
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.airbnb.lottie.LottieAnimationView
@@ -127,7 +126,7 @@ class SongSummaryFragment : Fragment() {
                 // Reconstruct MusicMetadata from arguments
                 val defaultDuration = 10000
                 val defaultUri = ""
-                val music = URIMusicMetadata(title, artist, cover, defaultDuration, defaultUri)
+                val music = MusicMetadata.createWithURI(title, artist, cover, defaultDuration, defaultUri)
                 profileViewModel.likeMusic(music)
             }
         }

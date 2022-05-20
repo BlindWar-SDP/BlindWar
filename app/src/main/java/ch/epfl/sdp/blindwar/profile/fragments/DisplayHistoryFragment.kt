@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
@@ -113,7 +113,7 @@ class DisplayHistoryFragment : Fragment() {
                 null
             }
             if (user != null) {
-                val likedMusics: MutableList<URIMusicMetadata> = user.likedMusics
+                val likedMusics: MutableList<MusicMetadata> = user.likedMusics
                 for (music in likedMusics) {
                     addToList(music.title, music.artist, music.imageUrl)
                 }
