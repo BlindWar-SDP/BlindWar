@@ -11,7 +11,8 @@ class FetcherFactory(
 ) {
 
     fun getFetcher(musicMetadata: MusicMetadata): Fetcher {
-        return if (musicMetadata is URIMusicMetadata) URIFetcher()
-        else ResourceFetcher(context, resources)
+        /*return if (musicMetadata is URIMusicMetadata) URIFetcher()
+        else ResourceFetcher(context, resources)*/
+        return URIFetcher()
     }
 }

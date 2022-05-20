@@ -129,28 +129,30 @@ class DemoFragment : Fragment() {
         scoreboardAdapter.notifyDataSetChanged()
 
         // if multi mode, get gameInstance from matchId
-        matchId = arguments?.getString("match_id")!!
+        if (arguments != null){
+            matchId = arguments?.getString("match_id")!!
+        }
 
-        MatchDatabase.addScoreListener(matchId!!, Firebase.firestore, scoreboardListener)
+
+        //MatchDatabase.addScoreListener(matchId!!, Firebase.firestore, scoreboardListener)
 
         // store locally the index of the player
         val currentUser = Firebase.auth.currentUser
-        if (currentUser != null) {
+        if (currentUser != null && matchId != null) {
             MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
                 val match = it.toObject(Match::class.java)
                 val userList = match?.listPlayers
                 playerIndex = userList?.indexOf(currentUser.uid)!!
             }
         }
-        /*
+
         if (matchId != null) {
             MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
                 val match = it.toObject(Match::class.java)
                 val gameInstanceShared = match?.game
                 gameInstanceViewModel.gameInstance.value = gameInstanceShared
             }
-        }*/
-
+        }
 
 
     when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
@@ -180,7 +182,7 @@ class DemoFragment : Fragment() {
     }
 
     gameViewModel.init()
-
+    increaseScore()
     // Retrieve the game duration from the GameInstance object
     duration = gameInstanceViewModel.gameInstance.value?.gameConfig
         ?.parameter
@@ -411,7 +413,6 @@ class DemoFragment : Fragment() {
                 GameFormat.MULTI -> {
                     MatchDatabase.incrementScore(matchId!!, playerIndex, Firebase.firestore)
                     }
-
                 }
             }
 

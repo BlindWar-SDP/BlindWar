@@ -61,17 +61,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
          * @param matchId
          */
         fun launchGame(matchId: String, context: Context, supportFragmentManager: FragmentManager) {
-            var gameInstanceShared: GameInstance? = null
-            MatchDatabase.getMatchSnapshot(matchId, Firebase.firestore)?.let {
-                val match = it.toObject(Match::class.java)
-                gameInstanceShared = match?.game
-
-
-                val gameInstanceViewModel = GameViewModel(
-                    GameUtil.gameInstanceSolo, context, context.resources
-                )
-
-            }
             // Goal: have the game with same config launched for all users
             // Then we need to launch the fragment with a specific match_id as the tag
             // so that the fragments knows it has to fetch value from a particular tag.
