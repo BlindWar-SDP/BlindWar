@@ -96,6 +96,7 @@ class DemoFragment : Fragment() {
     // Multiplayer infos
     private var matchId: String? = null
     private var playerIndex = -1
+    private var playerList : MutableList<String>? = null
 
     // Scoreboard listener
     private val scoreboardListener = object : EventListener<DocumentSnapshot> {
@@ -115,12 +116,32 @@ class DemoFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.activity_animated_demo, container, false)
 
+        // if multi mode, get gameInstance from matchId
+        if (arguments != null){
+            matchId = arguments?.getString("match_id")!!
+        }
+
         // Get the scoreboard
         scoreboard = view.findViewById(R.id.scoreboard)
 
         // Create the adapter for the score board
+        /*
         scoreboardAdapter =
             ScoreboardAdapter(listOf("Marty", "Joris", "Nael", "Arthur", "Paul", "Henrique"))
+        */
+        // store locally the index of the player and retrieve the list of players
+        val currentUser = Firebase.auth.currentUser
+        if (currentUser != null && matchId != null) {
+            MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
+                val match = it.toObject(Match::class.java)
+                val userList = match?.listPlayers
+                playerIndex = userList?.indexOf(currentUser.uid)!!
+                playerList = match.listPseudo
+            }
+        }
+        if (playerList != null) {
+            scoreboardAdapter = ScoreboardAdapter(playerList!!)
+        }
         scoreboard.setHasFixedSize(true)
 
         val layoutManager = LinearLayoutManager(context)
@@ -128,31 +149,18 @@ class DemoFragment : Fragment() {
         scoreboard.adapter = scoreboardAdapter
         scoreboardAdapter.notifyDataSetChanged()
 
-        // if multi mode, get gameInstance from matchId
-        if (arguments != null){
-            matchId = arguments?.getString("match_id")!!
-        }
 
 
-        //MatchDatabase.addScoreListener(matchId!!, Firebase.firestore, scoreboardListener)
+        MatchDatabase.addScoreListener(matchId!!, Firebase.firestore, scoreboardListener)
 
-        // store locally the index of the player
-        val currentUser = Firebase.auth.currentUser
-        if (currentUser != null && matchId != null) {
-            MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
-                val match = it.toObject(Match::class.java)
-                val userList = match?.listPlayers
-                playerIndex = userList?.indexOf(currentUser.uid)!!
-            }
-        }
-
+        /*
         if (matchId != null) {
             MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
                 val match = it.toObject(Match::class.java)
                 val gameInstanceShared = match?.game
                 gameInstanceViewModel.gameInstance.value = gameInstanceShared
             }
-        }
+        }*/
 
 
     when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
@@ -182,7 +190,6 @@ class DemoFragment : Fragment() {
     }
 
     gameViewModel.init()
-    increaseScore()
     // Retrieve the game duration from the GameInstance object
     duration = gameInstanceViewModel.gameInstance.value?.gameConfig
         ?.parameter
@@ -278,7 +285,8 @@ class DemoFragment : Fragment() {
 
         private fun startGame() {
             // TEST
-            gameViewModel.incrementPoint("Marty")
+            //gameViewModel.increm
+            // entPoint("Marty")
             scoreboardAdapter.notifyDataSetChanged()
 
 
@@ -402,6 +410,7 @@ class DemoFragment : Fragment() {
                 crossAnim.repeatMode = LottieDrawable.RESTART
                 crossAnim.repeatMode = LottieDrawable.REVERSE
                 crossAnim.playAnimation()
+                increaseScore()
             }
         }
 
