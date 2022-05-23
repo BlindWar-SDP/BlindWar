@@ -21,9 +21,10 @@ import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ktx.database
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
+
 
 /**
  * Launcher activity that let the user log/register to the app
@@ -52,13 +53,14 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
 
         if (!BuildConfig.DEBUG) { // not called when testing
-            Firebase.database.setPersistenceEnabled(true)
+            val database = FirebaseDatabase.getInstance()
+            database.setPersistenceEnabled(true)
+            database.setPersistenceCacheSizeBytes(10000000) // 10MB cache
         }
 
         if (hasInternet()) {
             checkCurrentUser()
         } else {
-            Firebase.auth.signOut() // TODO: Should be done ? /!\ What happens if already sign out ?
             startActivity(Intent(this, MainMenuActivity::class.java))
         }
     }

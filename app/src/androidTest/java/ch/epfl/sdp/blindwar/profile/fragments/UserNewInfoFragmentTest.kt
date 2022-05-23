@@ -8,15 +8,16 @@ import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
+import ch.epfl.sdp.blindwar.profile.model.Gender
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
 import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
+import com.adevinta.android.barista.interaction.BaristaSpinnerInteractions.clickSpinnerItem
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
@@ -24,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import junit.framework.TestCase
+import org.hamcrest.Matchers.containsString
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -48,43 +50,6 @@ class UserNewInfoFragmentTest : TestCase() {
     @After
     fun cleanup() {
         Intents.release()
-    }
-
-    @Test
-    fun testSetBirthdate() {
-        launchFragmentInContainer<UserNewInfoFragment>()
-        onView(withId(R.id.NU_select_birthdate))
-            .perform(scrollTo())
-            .perform(click())
-        clickOn(android.R.string.ok)
-        onView(withId(R.id.NU_reset_birthdate))
-            .check(
-                matches(
-                    withEffectiveVisibility(
-                        ViewMatchers.Visibility.VISIBLE
-                    )
-                )
-            )
-    }
-
-    @Test
-    fun testResetBirthdate() {
-        launchFragmentInContainer<UserNewInfoFragment>()
-        onView(withId(R.id.NU_select_birthdate))
-            .perform(scrollTo())
-            .perform(click())
-        clickOn(android.R.string.ok)
-        onView(withId(R.id.NU_reset_birthdate))
-            .perform(scrollTo())
-            .perform(click())
-        onView(withId(R.id.NU_reset_birthdate))
-            .check(
-                matches(
-                    withEffectiveVisibility(
-                        ViewMatchers.Visibility.INVISIBLE
-                    )
-                )
-            )
     }
 
     @Test
@@ -183,5 +148,151 @@ class UserNewInfoFragmentTest : TestCase() {
             .perform(click())
         assertDisplayed(R.string.new_user_wrong_pseudo_title)
         clickOn(android.R.string.ok)
+    }
+
+    @Test
+    fun testSetBirthdate() {
+        val login: Task<AuthResult> = FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(email, password)
+        try {
+            Tasks.await(login)
+        } catch (e: ExecutionException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        launchFragmentInContainer<UserNewInfoFragment>()
+        Thread.sleep(1000)
+        onView(withId(R.id.NU_select_birthdate))
+            .perform(scrollTo())
+            .perform(click())
+        clickOn(android.R.string.ok)
+        onView(withId(R.id.NU_Confirm_Btn))
+            .perform(scrollTo())
+            .perform(click())
+
+        launchFragmentInContainer<UserNewInfoFragment>()
+        onView(withId(R.id.NU_reset_birthdate))
+            .check(
+                matches(
+                    withEffectiveVisibility(
+                        ViewMatchers.Visibility.VISIBLE
+                    )
+                )
+            )
+        onView(withId(R.id.NU_Confirm_Btn))
+            .perform(scrollTo())
+            .perform(click())
+    }
+
+    @Test
+    fun testResetBirthdate() {
+        val login: Task<AuthResult> = FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(email, password)
+        try {
+            Tasks.await(login)
+        } catch (e: ExecutionException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        launchFragmentInContainer<UserNewInfoFragment>()
+        Thread.sleep(1000)
+        onView(withId(R.id.NU_select_birthdate))
+            .perform(scrollTo())
+            .perform(click())
+        clickOn(android.R.string.ok)
+
+        onView(withId(R.id.NU_Confirm_Btn))
+            .perform(scrollTo())
+            .perform(click())
+
+        launchFragmentInContainer<UserNewInfoFragment>()
+        onView(withId(R.id.NU_reset_birthdate))
+            .perform(scrollTo())
+            .perform(click())
+        onView(withId(R.id.NU_reset_birthdate))
+            .check(
+                matches(
+                    withEffectiveVisibility(
+                        ViewMatchers.Visibility.INVISIBLE
+                    )
+                )
+            )
+        onView(withId(R.id.NU_Confirm_Btn))
+            .perform(scrollTo())
+            .perform(click())
+
+    }
+
+    @Test
+    fun testSetGender_Female() {
+        val genderId = 1
+        val login: Task<AuthResult> = FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(email, password)
+        try {
+            Tasks.await(login)
+        } catch (e: ExecutionException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        launchFragmentInContainer<UserNewInfoFragment>()
+        Thread.sleep(1000)
+        onView(withId(R.id.gender_spinner))
+            .perform(scrollTo())
+        clickSpinnerItem(R.id.gender_spinner, genderId)
+        onView(withId(R.id.NU_Confirm_Btn))
+            .perform(scrollTo())
+            .perform(click())
+
+        launchFragmentInContainer<UserNewInfoFragment>()
+        onView(withId(R.id.gender_spinner))
+            .perform(scrollTo())
+        onView(withId(R.id.gender_spinner))
+            .check(
+                matches(
+                    withSpinnerText(
+                        containsString(Gender.values()[genderId].toString())
+                    )
+                )
+            )
+    }
+
+    @Test
+    fun testSetGender_None() {
+        val genderId = 4
+        val login: Task<AuthResult> = FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(email, password)
+        try {
+            Tasks.await(login)
+        } catch (e: ExecutionException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        launchFragmentInContainer<UserNewInfoFragment>()
+        Thread.sleep(1000)
+        onView(withId(R.id.gender_spinner))
+            .perform(scrollTo())
+        clickSpinnerItem(R.id.gender_spinner, genderId)
+        onView(withId(R.id.NU_Confirm_Btn))
+            .perform(scrollTo())
+            .perform(click())
+
+        launchFragmentInContainer<UserNewInfoFragment>()
+        onView(withId(R.id.gender_spinner))
+            .perform(scrollTo())
+        onView(withId(R.id.gender_spinner))
+            .check(
+                matches(
+                    withSpinnerText(
+                        containsString(Gender.values()[genderId].toString())
+                    )
+                )
+            )
+        onView(withId(R.id.NU_Confirm_Btn))
+            .perform(scrollTo())
+            .perform(click())
     }
 }

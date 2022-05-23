@@ -75,26 +75,33 @@ class ProfileFragmentTest : TestCase() {
         clickOn(android.R.string.cancel)
     }
 
-    // get ERROR: not attached to a context:
-//    @Test
-//    fun testDeleteButton_ok() {
-//        Firebase.auth.signOut()
-//        val login: Task<AuthResult> = FirebaseAuth.getInstance()
-//            .signInAnonymously()
-//        try {
-//            Tasks.await(login)
-//        } catch (e: ExecutionException) {
-//            e.printStackTrace()
-//        } catch (e: InterruptedException) {
-//            e.printStackTrace()
-//        }
-//        launchFragmentInContainer<ProfileFragment>()
-//        clickOn(R.id.deleteBtn)
-//        assertDisplayed(R.string.account_deletion_text)
-//        clickOn(android.R.string.ok)
-////        intended(hasComponent(SplashScreenActivity::class.java.name))
-////        assertDisplayed(R.string.deletion_success)
-//    }
+    // If no second sign in: get ERROR: "not attached to a context"
+    @Test
+    fun testDeleteButton_ok() {
+        val loginAnon: Task<AuthResult> = FirebaseAuth.getInstance().signInAnonymously()
+        try {
+            Tasks.await(loginAnon)
+        } catch (e: ExecutionException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        launchFragmentInContainer<ProfileFragment>()
+        clickOn(R.id.deleteBtn)
+        assertDisplayed(R.string.account_deletion_text)
+        clickOn(android.R.string.ok)
+        // I don't know why but this brings back the context to the fragment
+        val loginMail: Task<AuthResult> = FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(email, password)
+        try {
+            Tasks.await(loginMail)
+        } catch (e: ExecutionException) {
+            e.printStackTrace()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
+        intended(hasComponent(SplashScreenActivity::class.java.name))
+    }
 
     @Test
     fun historyUpdatedCorrectly() {
