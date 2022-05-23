@@ -217,4 +217,12 @@
     <string name="timer">TIMER</string>
     <string name="NU_describe_yourself">describe yourself</string>
     <string name="birthdate_set_to">birthdate set to</string>
+    <string name="_1000">1000</string>
+    <string name="name">NAME</string>
+    <string name="statistics">Statistics</string>
+    <string name="history">History</string>
+    <string name="favorites">Favorites</string>
+    <string name="pen_image">PenImage</string>
+    <string name="login_image">login image</string>
+    <string name="delete_profile_image">delete profile image</string>
 </resources>

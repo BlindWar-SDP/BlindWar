@@ -78,7 +78,10 @@ class ProfileFragmentTest : TestCase() {
     // If no second sign in: get ERROR: "not attached to a context"
     @Test
     fun testDeleteButton_ok() {
-        val loginAnon: Task<AuthResult> = FirebaseAuth.getInstance().signInAnonymously()
+        val loginAnon: Task<AuthResult> =
+            FirebaseAuth.getInstance().signInAnonymously()
+        val loginMail: Task<AuthResult> =
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
         try {
             Tasks.await(loginAnon)
         } catch (e: ExecutionException) {
@@ -87,12 +90,11 @@ class ProfileFragmentTest : TestCase() {
             e.printStackTrace()
         }
         launchFragmentInContainer<ProfileFragment>()
+        Thread.sleep(1000)
         clickOn(R.id.deleteBtn)
         assertDisplayed(R.string.account_deletion_text)
         clickOn(android.R.string.ok)
         // I don't know why but this brings back the context to the fragment
-        val loginMail: Task<AuthResult> = FirebaseAuth.getInstance()
-            .signInWithEmailAndPassword(email, password)
         try {
             Tasks.await(loginMail)
         } catch (e: ExecutionException) {
@@ -100,7 +102,8 @@ class ProfileFragmentTest : TestCase() {
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
-        intended(hasComponent(SplashScreenActivity::class.java.name))
+        Thread.sleep(1000)
+        assertDisplayed(R.string.signin_welcome_text)
     }
 
     @Test
@@ -143,10 +146,11 @@ class ProfileFragmentTest : TestCase() {
         intended(hasComponent(SplashScreenActivity::class.java.name))
     }
 
-//    @Test
-//    fun testEditProfileButton() {
-//        launchFragmentInContainer<ProfileFragment>()
-//        assertDisplayed(R.id.editBtn)
+    @Test
+    fun testEditProfileButton() {
+        launchFragmentInContainer<ProfileFragment>()
+        assertDisplayed(R.id.editBtn)
+        // Not able to click on Button... Why ? -> certainly in the background of something else
 //        clickOn(R.id.editBtn)
-//    }
+    }
 }
