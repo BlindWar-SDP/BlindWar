@@ -99,6 +99,8 @@ class DemoFragment : Fragment() {
     private var matchId: String? = null
     private var playerIndex = -1
     private var playerList : MutableList<String>? = null
+    private var success: Boolean = false
+    private val TIME_TO_NEXT_ROUND = 500
 
     // Scoreboard listener
     private val scoreboardListener = object : EventListener<DocumentSnapshot> {
@@ -316,9 +318,13 @@ class DemoFragment : Fragment() {
                 }
 
                 override fun onFinish() {
-                    gameViewModel.timeout()
-                    this.cancel()
-                    launchSongSummary(success = false)
+                    if (gameInstanceViewModel.gameInstance.value?.gameFormat
+                        == GameFormat.MULTI) {
+                    } else if (gameInstanceViewModel.gameInstance.value?.gameFormat
+                        == GameFormat.SOLO) {
+                        gameViewModel.timeout()
+                        this.cancel()
+                        launchSongSummary(success = false)
                 }
             }
         }
@@ -407,7 +413,13 @@ class DemoFragment : Fragment() {
                 scoreTextView.text = gameViewModel.score.toString()
                 (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
                     .hideSoftInputFromWindow(view?.windowToken, 0)
-                launchSongSummary(success = true)
+                if (gameInstanceViewModel.gameInstance.value?.gameFormat
+                    == GameFormat.MULTI) {
+                    success = true
+                } else if (gameInstanceViewModel.gameInstance.value?.gameFormat
+                    == GameFormat.SOLO) {
+                    launchSongSummary(success = true)
+                }
             } else if (!isAuto) {
                 /** Resets the base frame value of the animation and keep the reversing mode **/
                 crossAnim.repeatMode = LottieDrawable.RESTART
@@ -436,6 +448,11 @@ class DemoFragment : Fragment() {
         setVisibilityLayout(View.GONE)
         timer.cancel()
         chronometer.stop()
+
+        // Set chronometer for transition to next round
+        duration = TIME_TO_NEXT_ROUND
+        timer = createCountDown()
+        timer.start()
 
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         transaction?.addToBackStack("DEMO")
