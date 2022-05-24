@@ -15,23 +15,18 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.testing.launchFragment
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.database.MatchDatabase
-import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
-import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.ARTIST_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.COVER_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.SUCCESS_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.TITLE_KEY
-import ch.epfl.sdp.blindwar.game.util.GameUtil
 import ch.epfl.sdp.blindwar.game.util.ScoreboardAdapter
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
@@ -39,11 +34,8 @@ import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
@@ -54,6 +46,9 @@ import java.util.*
  * @constructor creates a DemoFragment
  */
 class DemoFragment : Fragment() {
+    companion object {
+        const val TIME_TO_NEXT_ROUND = 2000
+    }
 
     // VIEW MODELS
     lateinit var gameViewModel: GameViewModel
@@ -100,22 +95,19 @@ class DemoFragment : Fragment() {
     // Multiplayer infos
     private var matchId: String? = null
     private var playerIndex = -1
-    private var playerList : MutableList<String>? = null
+    private var playerList: MutableList<String>? = null
     private var success: Boolean = false
-    private val TIME_TO_NEXT_ROUND = 2000
     private var fragmentCountDown: Boolean = false
 
 
     // Scoreboard listener
-    private val scoreboardListener = object : EventListener<DocumentSnapshot> {
-        override fun onEvent(value: DocumentSnapshot?, error: FirebaseFirestoreException?) {
+    private val scoreboardListener =
+        EventListener<DocumentSnapshot> { value, _ ->
             val match = value?.toObject(Match::class.java)
             gameInstanceViewModel.match?.listResult = match?.listResult
             scoreboardAdapter.updateScoreboardFromList(gameInstanceViewModel.match?.listResult)
             scoreboardAdapter.notifyDataSetChanged()
         }
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -125,18 +117,13 @@ class DemoFragment : Fragment() {
         val view = inflater.inflate(R.layout.activity_animated_demo, container, false)
 
         // if multi mode, get gameInstance from matchId
-        if (arguments != null){
+        if (arguments != null) {
             matchId = arguments?.getString("match_id")!!
         }
 
         // Get the scoreboard
         scoreboard = view.findViewById(R.id.scoreboard)
 
-        // Create the adapter for the score board
-        /*
-        scoreboardAdapter =
-            ScoreboardAdapter(listOf("Marty", "Joris", "Nael", "Arthur", "Paul", "Henrique"))
-        */
         // store locally the index of the player and retrieve the list of players
         val currentUser = Firebase.auth.currentUser
         if (currentUser != null && matchId != null) {
@@ -147,11 +134,10 @@ class DemoFragment : Fragment() {
                 playerList = match.listPseudo
             }
         }
-        if (playerList != null) {
-            scoreboardAdapter = ScoreboardAdapter(playerList!!)
-        } else {
-            scoreboardAdapter =
-                ScoreboardAdapter(listOf("Marty", "Joris", "Nael", "Arthur", "Paul", "Henrique"))
+        scoreboardAdapter = if (playerList != null) {
+            ScoreboardAdapter(playerList!!)
+        } else { //TODO this not what we want ^^'
+            ScoreboardAdapter(listOf("Marty", "Joris", "Nael", "Arthur", "Paul", "Henrique"))
         }
         scoreboard.setHasFixedSize(true)
 
@@ -159,9 +145,6 @@ class DemoFragment : Fragment() {
         scoreboard.layoutManager = layoutManager
         scoreboard.adapter = scoreboardAdapter
         scoreboardAdapter.notifyDataSetChanged()
-
-
-
 
         if (matchId != null) {
             MatchDatabase.addScoreListener(matchId!!, Firebase.firestore, scoreboardListener)
@@ -172,294 +155,292 @@ class DemoFragment : Fragment() {
             }
         }
 
-    when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
-        GameFormat.SOLO -> {
-            gameViewModel = context?.let {
-                GameViewModel(
-                    gameInstanceViewModel.gameInstance.value!!,
-                    it,
-                    resources
-                )
-            }!!
-
-            // Hide the scoreboard
-            scoreboard.visibility = View.INVISIBLE
+        when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
+            GameFormat.SOLO -> {
+                gameViewModel = context?.let {
+                    GameViewModel(
+                        gameInstanceViewModel.gameInstance.value!!,
+                        it,
+                        resources
+                    )
+                }!!
+                // Hide the scoreboard
+                scoreboard.visibility = View.INVISIBLE
+            }
+            GameFormat.MULTI -> {
+                gameViewModel = context?.let {
+                    GameViewModel(
+                        gameInstanceViewModel.gameInstance.value!!,
+                        it,
+                        resources,
+                        scoreboardAdapter
+                    )
+                }!!
+            }
         }
 
-        GameFormat.MULTI -> {
-            gameViewModel = context?.let {
-                GameViewModel(
-                    gameInstanceViewModel.gameInstance.value!!,
-                    it,
-                    resources,
-                    scoreboardAdapter
-                )
-            }!!
+        gameViewModel.init()
+        // Retrieve the game duration from the GameInstance object
+        duration = gameInstanceViewModel.gameInstance.value?.gameConfig
+            ?.parameter
+            ?.timeToFind!!
+
+        // Create and start countdown
+        timer = createCountDown()
+        countDown = view.findViewById(R.id.countdown)
+
+        // Mode specific interface
+        val mode = gameInstanceViewModel
+            .gameInstance
+            .value!!
+            .gameConfig!!
+            .mode
+
+        chronometer = view.findViewById(R.id.simpleChronometer)
+        heartImage = view.findViewById(R.id.heartImage)
+        heartNumber = view.findViewById(R.id.heartNumber)
+
+        when (mode) {
+            GameMode.TIMED -> initRaceMode()
+            GameMode.SURVIVAL -> initSurvivalMode()
+            else -> {
+            }
         }
-    }
 
-    gameViewModel.init()
-    // Retrieve the game duration from the GameInstance object
-    duration = gameInstanceViewModel.gameInstance.value?.gameConfig
-        ?.parameter
-        ?.timeToFind!!
-
-    // Create and start countdown
-    timer = createCountDown()
-    countDown = view.findViewById(R.id.countdown)
-
-    // Mode specific interface
-    val mode = gameInstanceViewModel
-        .gameInstance
-        .value!!
-        .gameConfig!!
-        .mode
-
-    chronometer = view.findViewById(R.id.simpleChronometer)
-    heartImage = view.findViewById(R.id.heartImage)
-    heartNumber = view.findViewById(R.id.heartNumber)
-
-    when (mode) {
-        GameMode.TIMED -> initRaceMode()
-        GameMode.SURVIVAL -> initSurvivalMode()
-        else -> {
-        }
-    }
-
-    // Get the widgets
-    guessEditText = view.findViewById(R.id.guessEditText)
-    scoreTextView = view.findViewById(R.id.scoreTextView)
-    guessButton = view.findViewById<ImageButton>(R.id.guessButton).also {
-        it.setOnClickListener {
-            guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
-            guess(isVocal, isAuto = false)
-            // Delete the text of the guess
-            guessEditText.setText("")
-        }
-    }
-
-    startButton = view.findViewById<LottieAnimationView>(R.id.startButton).also {
-        it.setOnClickListener {
-            playAndPause()
-        }
-    }
-
-    crossAnim = view.findViewById(R.id.cross)
-    crossAnim.repeatCount = 1
-
-    view.findViewById<ConstraintLayout>(R.id.fragment_container).setOnClickListener {
-        guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
-    }
-
-    voiceRecognizer = VoiceRecognizer()
-    audioVisualizer = view.findViewById(R.id.audioVisualizer)
-    startButton.setMinAndMaxFrame(30, 50)
-
-    microphoneButton = view.findViewById(R.id.microphone)
-    context?.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
-    // Create game summary
-    gameSummary = GameSummaryFragment()
-
-    return view
-}
-
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            voiceRecognizer.resultString.observe(viewLifecycleOwner) {
-                guessEditText.setText(it)
+        // Get the widgets
+        guessEditText = view.findViewById(R.id.guessEditText)
+        scoreTextView = view.findViewById(R.id.scoreTextView)
+        guessButton = view.findViewById<ImageButton>(R.id.guessButton).also {
+            it.setOnClickListener {
+                guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
                 guess(isVocal, isAuto = false)
-                isVocal = false
+                // Delete the text of the guess
+                guessEditText.setText("")
             }
-
-            //warning seems ok, no need to override performClick
-            microphoneButton.setOnTouchListener { _, event ->
-                when (event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        gameViewModel.pause()
-                        voiceRecognizer.start()
-                        isVocal = true
-                    }
-
-                    MotionEvent.ACTION_UP -> {
-                        gameViewModel.play()
-                        voiceRecognizer.stop()
-                    }
-                }
-                true
-            }
-
-            startGame()
-
-            super.onViewCreated(view, savedInstanceState)
         }
 
-        private fun startGame() {
-            // TEST
-            //gameViewModel.increm
-            // entPoint("Marty")
-            scoreboardAdapter.notifyDataSetChanged()
-
-
-            // Start the game
-            gameViewModel.nextRound()
-            gameViewModel.play()
-            musicMetadata = gameViewModel.currentMetadata()!!
-            guessEditText.hint = musicMetadata.artist
-            timer.start()
+        startButton = view.findViewById<LottieAnimationView>(R.id.startButton).also {
+            it.setOnClickListener {
+                playAndPause()
+            }
         }
 
-        /**
-         * Creates the countdown timer
-         *
-         * @return creates countdown timer with the duration of the round
-         */
-        private fun createCountDown(): CountDownTimer {
-            return object : CountDownTimer(duration.toLong(), 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                    duration = millisUntilFinished.toInt()
-                    elapsed += 1000
-                    //Log.d("DURATION", duration.toString())
-                    countDown.text = (millisUntilFinished / 1000).toString()
+        crossAnim = view.findViewById(R.id.cross)
+        crossAnim.repeatCount = 1
+
+        view.findViewById<ConstraintLayout>(R.id.fragment_container).setOnClickListener {
+            guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
+        }
+
+        voiceRecognizer = VoiceRecognizer()
+        audioVisualizer = view.findViewById(R.id.audioVisualizer)
+        startButton.setMinAndMaxFrame(30, 50)
+
+        microphoneButton = view.findViewById(R.id.microphone)
+        context?.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
+        gameSummary = GameSummaryFragment()
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        voiceRecognizer.resultString.observe(viewLifecycleOwner) {
+            guessEditText.setText(it)
+            guess(isVocal, isAuto = false)
+            isVocal = false
+        }
+
+        //warning seems ok, no need to override performClick
+        microphoneButton.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    gameViewModel.pause()
+                    voiceRecognizer.start()
+                    isVocal = true
                 }
 
-                override fun onFinish() {
-                    if (gameInstanceViewModel.gameInstance.value?.gameFormat
-                        == GameFormat.MULTI) {
-                        if (fragmentCountDown) {
-                            fragmentCountDown = false
-                            activity?.onBackPressed()
-                        }
-                        if (success) {
-                            // reset success boolean
-                            success = false
-                            launchSongSummary(success = true)
-                        } else {
-                            gameViewModel.timeout()
-                            this.cancel()
-                            launchSongSummary(success = false)
-                        }
+                MotionEvent.ACTION_UP -> {
+                    gameViewModel.play()
+                    voiceRecognizer.stop()
+                }
+            }
+            true
+        }
+        startGame()
+        super.onViewCreated(view, savedInstanceState)
+    }
 
-                    } else if (gameInstanceViewModel.gameInstance.value?.gameFormat
-                        == GameFormat.SOLO) {
+    private fun startGame() {
+        // TEST
+        //gameViewModel.increm
+        // entPoint("Marty")
+        scoreboardAdapter.notifyDataSetChanged()
+
+        // Start the game
+        gameViewModel.nextRound()
+        gameViewModel.play()
+        musicMetadata = gameViewModel.currentMetadata()!!
+        guessEditText.hint = musicMetadata.artist
+        timer.start()
+    }
+
+    /**
+     * Creates the countdown timer
+     *
+     * @return creates countdown timer with the duration of the round
+     */
+    private fun createCountDown(): CountDownTimer {
+        return object : CountDownTimer(duration.toLong(), 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                duration = millisUntilFinished.toInt()
+                elapsed += 1000
+                //Log.d("DURATION", duration.toString())
+                countDown.text = (millisUntilFinished / 1000).toString()
+            }
+
+            override fun onFinish() {
+                if (gameInstanceViewModel.gameInstance.value?.gameFormat
+                    == GameFormat.MULTI
+                ) {
+                    if (fragmentCountDown) {
+                        fragmentCountDown = false
+                        activity?.onBackPressed()
+                    }
+                    if (success) {
+                        // reset success boolean
+                        success = false
+                        launchSongSummary(success = true)
+                    } else {
                         gameViewModel.timeout()
                         this.cancel()
                         launchSongSummary(success = false)
                     }
+                } else if (gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.SOLO) {
+                    gameViewModel.timeout()
+                    this.cancel()
+                    launchSongSummary(success = false)
                 }
             }
         }
+    }
 
-        /**
-         * Set the demo fragment visibility
-         *
-         * @param code visibility code : either VISIBLE or GONE
-         */
-        private fun setVisibilityLayout(code: Int) {
-            guessButton.visibility = code
-            scoreTextView.visibility = code
-            guessEditText.visibility = code
+    /**
+     * Set the demo fragment visibility
+     *
+     * @param code visibility code : either VISIBLE or GONE
+     */
+    private fun setVisibilityLayout(code: Int) {
+        guessButton.visibility = code
+        scoreTextView.visibility = code
+        guessEditText.visibility = code
 
-            // Set animation visibility
-            crossAnim.visibility = code
-            countDown.visibility = code
-            audioVisualizer.visibility = code
-            startButton.visibility = code
-            microphoneButton.visibility = code
-            view?.findViewById<ImageButton>(R.id.guessButton)?.visibility = code
+        // Set animation visibility
+        crossAnim.visibility = code
+        countDown.visibility = code
+        audioVisualizer.visibility = code
+        startButton.visibility = code
+        microphoneButton.visibility = code
+        view?.findViewById<ImageButton>(R.id.guessButton)?.visibility = code
+    }
+
+    /**
+     * Handle pause and resume game logic
+     */
+    private fun playAndPause() {
+        playing = if (playing) {
+            gameViewModel.pause()
+            // Pause Animation
+            audioVisualizer.pauseAnimation()
+            startButton.setMinAndMaxFrame(30, 55)
+            startButton.repeatCount = 0
+            startButton.playAnimation()
+            // Timer cancel
+            timer.cancel()
+            timer = createCountDown()
+            chronometer.stop()
+            false
+
+        } else {
+            gameViewModel.play()
+
+            // Resume Animation
+            audioVisualizer.resumeAnimation()
+            startButton.setMinAndMaxFrame(10, 25)
+            startButton.playAnimation()
+
+            restartChronometer()
+            timer.start()
+            true
         }
+    }
 
-        /**
-         * Handle pause and resume game logic
-         */
-        private fun playAndPause() {
-            playing = if (playing) {
-                gameViewModel.pause()
-                // Pause Animation
-                audioVisualizer.pauseAnimation()
-                startButton.setMinAndMaxFrame(30, 55)
-                startButton.repeatCount = 0
-                startButton.playAnimation()
-                // Timer cancel
-                timer.cancel()
-                timer = createCountDown()
-                chronometer.stop()
-                false
+    // RACE MODE
+    private fun restartChronometer() {
+        chronometer.base = SystemClock.elapsedRealtime() - elapsed
+        chronometer.start()
+    }
 
-            } else {
-                gameViewModel.play()
+    private fun initRaceMode() {
+        chronometer.visibility = View.VISIBLE
+        chronometer.start()
+    }
 
-                // Resume Animation
-                audioVisualizer.resumeAnimation()
-                startButton.setMinAndMaxFrame(10, 25)
-                startButton.playAnimation()
+    // SURVIVAL MODE
+    private fun initSurvivalMode() {
+        heartImage.visibility = View.VISIBLE
+        heartNumber.visibility = View.VISIBLE
+        gameViewModel.lives.observe(requireActivity()) {
+            heartNumber.text =
+                getString(R.string.heart_number, it) //TODO check if it works (x $it)
+        }
+    }
 
-                restartChronometer()
-                timer.start()
-                true
+    /**
+     * Verify the guess of the player
+     *
+     * @param isVocal true is player used its microphone to guess
+     * @param isAuto true if autoGuessing is activated
+     */
+    private fun guess(isVocal: Boolean, isAuto: Boolean) {
+        if (gameViewModel.guess(guessEditText.text.toString(), isVocal)) {
+            // Update the number of point view
+            increaseScore()
+            scoreTextView.text = gameViewModel.score.toString()
+            (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
+                .hideSoftInputFromWindow(view?.windowToken, 0)
+            if (gameInstanceViewModel.gameInstance.value?.gameFormat
+                == GameFormat.MULTI
+            ) {
+                success = true
+            } else if (gameInstanceViewModel.gameInstance.value?.gameFormat
+                == GameFormat.SOLO
+            ) {
+                launchSongSummary(success = true)
+            }
+        } else if (!isAuto) {
+            /** Resets the base frame value of the animation and keep the reversing mode **/
+            crossAnim.repeatMode = LottieDrawable.RESTART
+            crossAnim.repeatMode = LottieDrawable.REVERSE
+            crossAnim.playAnimation()
+            increaseScore()
+        }
+    }
+
+    /**
+     * Increases the score of a User(designated by uid) after a good guess.
+     */
+    private fun increaseScore() {
+        when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
+            GameFormat.MULTI -> {
+                MatchDatabase.incrementScore(matchId!!, playerIndex, Firebase.firestore)
+            }
+            GameFormat.SOLO -> {
+                //TODO
             }
         }
+    }
 
-        // RACE MODE
-        private fun restartChronometer() {
-            chronometer.base = SystemClock.elapsedRealtime() - elapsed
-            chronometer.start()
-        }
-
-        private fun initRaceMode() {
-            chronometer.visibility = View.VISIBLE
-            chronometer.start()
-        }
-
-        // SURVIVAL MODE
-        private fun initSurvivalMode() {
-            heartImage.visibility = View.VISIBLE
-            heartNumber.visibility = View.VISIBLE
-            gameViewModel.lives.observe(requireActivity()) {
-                heartNumber.text =
-                    getString(R.string.heart_number, it) //TODO check if it works (x $it)
-            }
-        }
-
-        /**
-         * Verify the guess of the player
-         *
-         * @param isVocal true is player used its microphone to guess
-         * @param isAuto true if autoGuessing is activated
-         */
-        private fun guess(isVocal: Boolean, isAuto: Boolean) {
-            if (gameViewModel.guess(guessEditText.text.toString(), isVocal)) {
-                // Update the number of point view
-                increaseScore()
-                scoreTextView.text = gameViewModel.score.toString()
-                (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
-                    .hideSoftInputFromWindow(view?.windowToken, 0)
-                if (gameInstanceViewModel.gameInstance.value?.gameFormat
-                    == GameFormat.MULTI) {
-                    success = true
-                } else if (gameInstanceViewModel.gameInstance.value?.gameFormat
-                    == GameFormat.SOLO) {
-                    launchSongSummary(success = true)
-                }
-            } else if (!isAuto) {
-                /** Resets the base frame value of the animation and keep the reversing mode **/
-                crossAnim.repeatMode = LottieDrawable.RESTART
-                crossAnim.repeatMode = LottieDrawable.REVERSE
-                crossAnim.playAnimation()
-                increaseScore()
-            }
-        }
-
-        /**
-         * Increases the score of a User(designated by uid) after a good guess.
-         */
-        private fun increaseScore() {
-            when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
-                GameFormat.MULTI -> {
-                    MatchDatabase.incrementScore(matchId!!, playerIndex, Firebase.firestore)
-                    }
-                }
-            }
-
-        /** Launches the Game Over fragment after a song
+    /** Launches the Game Over fragment after a song
      *
      * @param success indicates if the user found the sound or not
      */
