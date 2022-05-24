@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.testing.launchFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -53,6 +54,7 @@ import java.util.*
  * @constructor creates a DemoFragment
  */
 class DemoFragment : Fragment() {
+
     // VIEW MODELS
     lateinit var gameViewModel: GameViewModel
     private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
@@ -100,7 +102,9 @@ class DemoFragment : Fragment() {
     private var playerIndex = -1
     private var playerList : MutableList<String>? = null
     private var success: Boolean = false
-    private val TIME_TO_NEXT_ROUND = 500
+    private val TIME_TO_NEXT_ROUND = 2000
+    private var fragmentCountDown: Boolean = false
+
 
     // Scoreboard listener
     private val scoreboardListener = object : EventListener<DocumentSnapshot> {
@@ -320,11 +324,26 @@ class DemoFragment : Fragment() {
                 override fun onFinish() {
                     if (gameInstanceViewModel.gameInstance.value?.gameFormat
                         == GameFormat.MULTI) {
+                        if (fragmentCountDown) {
+                            fragmentCountDown = false
+                            activity?.onBackPressed()
+                        }
+                        if (success) {
+                            // reset success boolean
+                            success = false
+                            launchSongSummary(success = true)
+                        } else {
+                            gameViewModel.timeout()
+                            this.cancel()
+                            launchSongSummary(success = false)
+                        }
+
                     } else if (gameInstanceViewModel.gameInstance.value?.gameFormat
                         == GameFormat.SOLO) {
                         gameViewModel.timeout()
                         this.cancel()
                         launchSongSummary(success = false)
+                    }
                 }
             }
         }
@@ -451,6 +470,7 @@ class DemoFragment : Fragment() {
 
         // Set chronometer for transition to next round
         duration = TIME_TO_NEXT_ROUND
+        fragmentCountDown = true
         timer = createCountDown()
         timer.start()
 
