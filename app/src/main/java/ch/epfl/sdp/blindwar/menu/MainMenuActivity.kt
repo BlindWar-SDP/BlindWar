@@ -1,12 +1,14 @@
 package ch.epfl.sdp.blindwar.menu
 
 import android.annotation.SuppressLint
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.DisplayableViewModel
+import ch.epfl.sdp.blindwar.game.util.MainMusic
 import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -17,6 +19,10 @@ class MainMenuActivity : AppCompatActivity() {
     private val profileViewModel: ProfileViewModel by viewModels()
     private val displayableViewModel: DisplayableViewModel by viewModels()
 
+    // For main menu music
+    private lateinit var mediaPlayer: MediaPlayer
+    val volume = .4f
+
     @SuppressLint("UseCompatLoadingForDrawables")
     /**
      * Generates the layout and sets up bottom navigation
@@ -26,6 +32,17 @@ class MainMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
+
+        // Start the main menu music
+        /*
+        mediaPlayer = MediaPlayer.create(this, R.raw.noisestorm_crab_rave)
+        mediaPlayer.isLooping = true
+        mediaPlayer.setVolume(volume, volume)
+        mediaPlayer.setOnPreparedListener {
+            mediaPlayer.start()
+        }
+         */
+        MainMusic.prepareAndPlay(this)
 
         val play = PlayMenuFragment()
         val search = SearchFragment()
