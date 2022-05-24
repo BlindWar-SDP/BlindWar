@@ -79,6 +79,15 @@ object UserDatabase {
     }
 
     /**
+     * Set matchId of the uid user
+     *
+     * @param uid
+     */
+    fun addMatchId(uid: String, matchId: String) {
+        userReference.child(uid).updateChildren(mapOf("matchId" to matchId))
+    }
+
+    /**
      * Remove user from database
      *
      * @param uid user identification

@@ -92,13 +92,12 @@ class DemoFragment : Fragment() {
     private lateinit var heartImage: ImageView
     private lateinit var heartNumber: TextView
 
-    // Multiplayer infos
+    // Multiplayer
     private var matchId: String? = null
     private var playerIndex = -1
     private var playerList: MutableList<String>? = null
     private var success: Boolean = false
     private var fragmentCountDown: Boolean = false
-
 
     // Scoreboard listener
     private val scoreboardListener =
@@ -117,9 +116,7 @@ class DemoFragment : Fragment() {
         val view = inflater.inflate(R.layout.activity_animated_demo, container, false)
 
         // if multi mode, get gameInstance from matchId
-        if (arguments != null) {
-            matchId = arguments?.getString("match_id")!!
-        }
+        matchId = arguments?.getString("match_id")
 
         // Get the scoreboard
         scoreboard = view.findViewById(R.id.scoreboard)
@@ -390,8 +387,7 @@ class DemoFragment : Fragment() {
         heartImage.visibility = View.VISIBLE
         heartNumber.visibility = View.VISIBLE
         gameViewModel.lives.observe(requireActivity()) {
-            heartNumber.text =
-                getString(R.string.heart_number, it) //TODO check if it works (x $it)
+            heartNumber.text = getString(R.string.heart_number, it)
         }
     }
 
@@ -491,7 +487,7 @@ class DemoFragment : Fragment() {
     // LIFECYCLE
 
     /**
-     * Handle next round logic
+     * Handle next round logic //TODO handle multi
      */
     override fun onResume() {
         super.onResume()

@@ -3,10 +3,10 @@ package ch.epfl.sdp.blindwar.database
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.profile.model.User
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.firestore.*
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestore
 
 object MatchDatabase {
     const val COLLECTION_PATH = "match"
@@ -44,8 +44,7 @@ object MatchDatabase {
                 isPrivate
             )
             db.collection(COLLECTION_PATH).document(match.uid).set(match)
-            db.collection(UserDatabase.COLLECTION_PATH).document(userUID)
-                .update("matchId", match.uid)
+            UserDatabase.addMatchId(userUID,match.uid)
             return match
         }
         return null
@@ -83,7 +82,7 @@ object MatchDatabase {
         match.listPlayers!!.add(user.uid)
         match.listPseudo!!.add(user.pseudo)
         match.listResult!!.add(0)
-        db.collection(UserDatabase.COLLECTION_PATH).document(user.uid).update("matchId", match.uid)
+        UserDatabase.addMatchId(user.uid,match.uid)
         db.collection(COLLECTION_PATH).document(match.uid).set(match)
         return db.collection(COLLECTION_PATH).document(match.uid)
     }
