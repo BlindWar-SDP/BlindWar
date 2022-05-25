@@ -13,10 +13,8 @@ import androidx.core.view.isVisible
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import com.google.firebase.dynamiclinks.DynamicLink
-import com.google.firebase.dynamiclinks.ktx.androidParameters
-import com.google.firebase.dynamiclinks.ktx.dynamicLink
-import com.google.firebase.dynamiclinks.ktx.dynamicLinks
-import com.google.firebase.dynamiclinks.ktx.socialMetaTagParameters
+import com.google.firebase.dynamiclinks.ShortDynamicLink
+import com.google.firebase.dynamiclinks.ktx.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -27,9 +25,9 @@ object DynamicLinkHelper {
      * @param matchUID
      * @return
      */
-    private fun createDynamicLink(matchUID: String): DynamicLink {
+    private fun createLongDynamicLink(matchUID: String): DynamicLink {
         return Firebase.dynamicLinks.dynamicLink {
-            link = Uri.parse("https://blindwar.page.link/game?uid=$matchUID")
+            link = Uri.parse("https://blindwar.ch/game?uid=$matchUID")
             domainUriPrefix = "https://blindwar.page.link"
             // Open links with this app on Android
             androidParameters("ch.epfl.sdp.blindwar") { }
@@ -38,6 +36,31 @@ object DynamicLinkHelper {
                 imageUrl =
                     Uri.parse("https://github.com/BlindWar-SDP/BlindWar/wiki/img/logo.png")
             }
+        }
+    }
+
+    /**
+     * Create a short dynamic link and display it when ready
+     *
+     * @param longDynamicLink
+     */
+    private fun createShortDynamicLink(longDynamicLink: Uri, context: Context) {
+        Firebase.dynamicLinks.shortLinkAsync(ShortDynamicLink.Suffix.SHORT) {
+            longLink = longDynamicLink
+        }.addOnSuccessListener { (shortLink, _) ->
+            if (shortLink != null) {
+                View.inflate(context, R.layout.fragment_dialog_loading_creation, null)
+                    .findViewById<TextView>(R.id.textView_dynamic_link)
+                    .setOnClickListener {
+                        createShareIntent(
+                            shortLink,
+                            context
+                        )
+                    }
+                //no need to modify QR as the user don't really see the uri -> it would be too resourceful
+            }
+        }.addOnFailureListener {
+            it.printStackTrace()
         }
     }
 
@@ -60,8 +83,8 @@ object DynamicLinkHelper {
     }
 
     /**
-     * display progressDialog cancelable for any messages
-     * TODO generify for multiMenu
+     * Display progressDialog cancelable for any messages
+     *
      * @param message
      */
     fun setDynamicLinkDialog(
@@ -85,7 +108,7 @@ object DynamicLinkHelper {
         val view = View.inflate(context, R.layout.fragment_dialog_loading_creation, null)
 
         //setup dynamic link
-        val dynamicLink = createDynamicLink(matchUID)
+        val dynamicLink = createLongDynamicLink(matchUID)
         view.findViewById<TextView>(R.id.textView_dynamic_link)
             .setOnClickListener {
                 createShareIntent(
@@ -93,7 +116,7 @@ object DynamicLinkHelper {
                     context
                 )
             }
-
+        createShortDynamicLink(dynamicLink.uri, context)
         //setup QR code
         val qrCode = view.findViewById<ImageView>(R.id.QR_code)
         qrCode.setImageBitmap(QRCodeGenerator.encodeUrl(dynamicLink.uri.toString()))
