@@ -19,6 +19,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 object DynamicLinkHelper {
+    private var dialog: AlertDialog? = null
+
     /**
      * Create a long dynamic link
      *
@@ -42,16 +44,18 @@ object DynamicLinkHelper {
     /**
      * Create a short dynamic link and display it when ready
      *
-     * @param longDynamicLink
+     * @param matchUID
      */
-    private fun createShortDynamicLink(longDynamicLink: Uri, context: Context) {
+    private fun createShortDynamicLink(matchUID: String, context: Context) {
         Firebase.dynamicLinks.shortLinkAsync(ShortDynamicLink.Suffix.SHORT) {
-            longLink = longDynamicLink
+            link = Uri.parse("https://blindwar.ch/game?uid=$matchUID")
+            domainUriPrefix = "https://blindwar.page.link"
+            // Open links with this app on Android
+            androidParameters("ch.epfl.sdp.blindwar") { }
         }.addOnSuccessListener { (shortLink, _) ->
             if (shortLink != null) {
-                View.inflate(context, R.layout.fragment_dialog_loading_creation, null)
-                    .findViewById<TextView>(R.id.textView_dynamic_link)
-                    .setOnClickListener {
+                dialog?.findViewById<TextView>(R.id.textView_dynamic_link)
+                    ?.setOnClickListener {
                         createShareIntent(
                             shortLink,
                             context
@@ -116,7 +120,7 @@ object DynamicLinkHelper {
                     context
                 )
             }
-        createShortDynamicLink(dynamicLink.uri, context)
+        createShortDynamicLink(matchUID, context)
         //setup QR code
         val qrCode = view.findViewById<ImageView>(R.id.QR_code)
         qrCode.setImageBitmap(QRCodeGenerator.encodeUrl(dynamicLink.uri.toString()))
@@ -130,8 +134,8 @@ object DynamicLinkHelper {
         }
         builder.setView(view)
         (view.findViewById<TextView>(R.id.textView_multi_loading)).text = message
-        val dialog = builder.create()
-        dialog.setCanceledOnTouchOutside(false)
-        return dialog
+        dialog = builder.create()
+        dialog!!.setCanceledOnTouchOutside(false)
+        return dialog!!
     }
 }
