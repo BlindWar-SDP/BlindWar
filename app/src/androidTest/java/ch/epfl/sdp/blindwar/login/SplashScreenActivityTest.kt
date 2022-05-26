@@ -44,7 +44,7 @@ class SplashScreenActivityTest : TestCase() {
         }
         assertDisplayed(R.id.textView_signIn)
     }
-
+}
     /*
     @Test
     fun testSignInGuest() {
@@ -63,7 +63,7 @@ class SplashScreenActivityTest : TestCase() {
         clickOn(R.id.deleteBtn)
         clickOn(android.R.string.ok)
     }
-    
+
     @Test
     fun testLoggedIn() {
         val login: Task<AuthResult> = FirebaseAuth.getInstance()
@@ -84,4 +84,3 @@ class SplashScreenActivityTest : TestCase() {
         assertDisplayed(R.id.nameView)
     }
     */
-}

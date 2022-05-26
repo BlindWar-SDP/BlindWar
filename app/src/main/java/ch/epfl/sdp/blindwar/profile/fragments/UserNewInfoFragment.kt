@@ -51,11 +51,16 @@ class UserNewInfoFragment : Fragment() {
             setView(user)
         }
         // Buttons
-        view.findViewById<Button>(R.id.NU_editProfilePicture).setOnClickListener { setPicture() }
-        view.findViewById<Button>(R.id.NU_resetProfilePicture).setOnClickListener { resetPicture() }
-        view.findViewById<Button>(R.id.NU_select_birthdate).setOnClickListener { setBirthdate() }
-        view.findViewById<Button>(R.id.NU_reset_birthdate).setOnClickListener { resetBirthdate() }
-        view.findViewById<Button>(R.id.NU_Confirm_Btn).setOnClickListener { confirm() }
+        val btnEditPP = view.findViewById<Button>(R.id.NU_editProfilePicture)
+        btnEditPP.setOnClickListener { setPicture() }
+        val btnResetPP = view.findViewById<Button>(R.id.NU_resetProfilePicture)
+        btnResetPP.setOnClickListener { resetPicture() }
+        val btnSetBirthdate = view.findViewById<Button>(R.id.NU_select_birthdate)
+        btnSetBirthdate.setOnClickListener { setBirthdate() }
+        val btnResetBirthdate = view.findViewById<Button>(R.id.NU_reset_birthdate)
+        btnResetBirthdate.setOnClickListener { resetBirthdate() }
+        val btnConfirm = view.findViewById<Button>(R.id.NU_Confirm_Btn)
+        btnConfirm.setOnClickListener { confirm() }
         return view
     }
 

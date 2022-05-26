@@ -1,9 +1,7 @@
 package ch.epfl.sdp.blindwar.login
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
@@ -13,6 +11,7 @@ import ch.epfl.sdp.blindwar.BuildConfig
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
+import ch.epfl.sdp.blindwar.game.util.NetworkConnectivityChecker.isOnline
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.firebase.ui.auth.AuthMethodPickerLayout
@@ -58,7 +57,7 @@ class SplashScreenActivity : AppCompatActivity() {
             database.setPersistenceCacheSizeBytes(10000000) // 10MB cache
         }
 
-        if (hasInternet()) {
+        if (isOnline()) {
             checkCurrentUser()
         } else {
             startActivity(Intent(this, MainMenuActivity::class.java))
@@ -161,11 +160,13 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
+    /*
     private fun hasInternet(): Boolean {
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return connectivityManager.activeNetworkInfo?.isConnected ?: false
     }
+     */
 
     private fun getIntentData(): Intent {
         return data?.let {

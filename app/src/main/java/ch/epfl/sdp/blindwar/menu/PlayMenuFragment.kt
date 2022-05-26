@@ -40,26 +40,24 @@ class PlayMenuFragment : Fragment() {
             startActivity(intent)
         }
 
-
-        view.findViewById<ImageButton>(R.id.multiBtn).setOnClickListener {
-            if (NetworkConnectivityChecker.isOnline()) {
-                val intent = Intent(requireActivity(), MultiPlayerMenuActivity::class.java)
-                startActivity(intent)
-            } else {
-                Toast.makeText(
-                    context,
-                    getString(R.string.toast_connexion_internet_unavailable),
-                    Toast.LENGTH_SHORT
-                ).show()
+        val btnMulti = view.findViewById<ImageButton>(R.id.multiBtn)
+        if (NetworkConnectivityChecker.isOnline()) {
+            btnMulti.setOnClickListener {
+                if (NetworkConnectivityChecker.isOnline()) {
+                    val intent = Intent(requireActivity(), MultiPlayerMenuActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.toast_connexion_internet_unavailable),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
+        } else {
+            btnMulti.isClickable = false
+            btnMulti.alpha = 0.3F
         }
-
-        /**
-        if (isOffline(activity?.applicationContext!!)) {
-        val btn = view.findViewById<ImageButton>(R.id.multiBtn)
-        btn.isClickable = false
-        btn.alpha = 0.3F
-        } **/
 
         loadProfileImage(
             profileViewModel.imageRef,
