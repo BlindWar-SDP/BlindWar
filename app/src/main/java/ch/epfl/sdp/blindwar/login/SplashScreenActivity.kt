@@ -60,6 +60,7 @@ class SplashScreenActivity : AppCompatActivity() {
         if (isOnline()) {
             checkCurrentUser()
         } else {
+            Firebase.auth.signOut()
             startActivity(Intent(this, MainMenuActivity::class.java))
         }
     }
