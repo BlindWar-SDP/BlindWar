@@ -44,43 +44,42 @@ class SplashScreenActivityTest : TestCase() {
         }
         assertDisplayed(R.id.textView_signIn)
     }
-}
-    /*
-    @Test
-    fun testSignInGuest() {
-        Firebase.auth.signOut()
-        testRule.scenario.onActivity {
-            it.recreate()
-        }
-        clickOn(R.id.Btn_anonymous)
-        Thread.sleep(1000)
-        testRule.scenario.onActivity {
-            it.recreate()
-        }
-        Thread.sleep(1000)
-        assertDisplayed(R.id.titleText)
-        clickOn(R.id.item_profile)
-        clickOn(R.id.deleteBtn)
-        clickOn(android.R.string.ok)
-    }
 
-    @Test
-    fun testLoggedIn() {
-        val login: Task<AuthResult> = FirebaseAuth.getInstance()
-            .signInWithEmailAndPassword(email, password)
-        try {
-            Tasks.await(login)
-        } catch (e: ExecutionException) {
-            e.printStackTrace()
-        } catch (e: InterruptedException) {
-            e.printStackTrace()
-        }
-        Thread.sleep(2000)
-        testRule.scenario.onActivity {
-            Thread.sleep(2000)
-            it.recreate()
-        }
-        clickOn(R.id.item_profile)
-        assertDisplayed(R.id.nameView)
-    }
-    */
+//    @Test
+//    fun testSignInGuest() {
+//        Firebase.auth.signOut()
+//        testRule.scenario.onActivity {
+//            it.recreate()
+//        }
+//        clickOn(R.id.Btn_anonymous)
+//        Thread.sleep(1000)
+//        testRule.scenario.onActivity {
+//            it.recreate()
+//        }
+//        Thread.sleep(1000)
+//        assertDisplayed(R.id.titleText)
+//        clickOn(R.id.item_profile)
+//        clickOn(R.id.deleteBtn)
+//        clickOn(android.R.string.ok)
+//    }
+
+//    @Test
+//    fun testLoggedIn() {
+//        val login: Task<AuthResult> = FirebaseAuth.getInstance()
+//            .signInWithEmailAndPassword(email, password)
+//        try {
+//            Tasks.await(login)
+//        } catch (e: ExecutionException) {
+//            e.printStackTrace()
+//        } catch (e: InterruptedException) {
+//            e.printStackTrace()
+//        }
+//        Thread.sleep(2000)
+//        testRule.scenario.onActivity {
+//            Thread.sleep(2000)
+//            it.recreate()
+//        }
+//        clickOn(R.id.item_profile)
+//        assertDisplayed(R.id.nameView)
+//    }
+}
