@@ -40,19 +40,24 @@ class ProfileFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         // Buttons
-        view.findViewById<Button>(R.id.statsBtn).setOnClickListener {
+        val btnStat = view.findViewById<Button>(R.id.statsBtn)
+        btnStat.setOnClickListener {
             startActivity(Intent(requireContext(), StatisticsActivity::class.java))
         }
-        view.findViewById<Button>(R.id.historyBtn).setOnClickListener {
+        val btnHistory = view.findViewById<Button>(R.id.historyBtn)
+        btnHistory.setOnClickListener {
             startActivity(Intent(requireContext(), HistoryActivity::class.java))
         }
-        view.findViewById<ImageButton>(R.id.editBtn).setOnClickListener {
+        val btnEdit = view.findViewById<ImageButton>(R.id.editBtn)
+        btnEdit.setOnClickListener {
             editProfile()
         }
-        view.findViewById<ImageButton>(R.id.logoutBtn).setOnClickListener {
+        val btnLogout = view.findViewById<ImageButton>(R.id.logoutBtn)
+        btnLogout.setOnClickListener {
             logOut()
         }
-        view.findViewById<ImageButton>(R.id.deleteBtn).setOnClickListener {
+        val btnDelete = view.findViewById<ImageButton>(R.id.deleteBtn)
+        btnDelete.setOnClickListener {
             deleteProfile()
         }
 
@@ -102,38 +107,45 @@ class ProfileFragment : Fragment() {
      */
     private fun deleteProfile() {
         // Alert Dialog
-        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
-        val positiveButtonClick = { _: DialogInterface, _: Int ->
-
-            Firebase.auth.currentUser?.let {
-                UserDatabase.removeUser(it.uid)
-                AuthUI.getInstance().delete(requireContext()).addOnCompleteListener {
-                    startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
-                }
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.deletion_success), Toast.LENGTH_SHORT
-                ).show()
-            } ?: run {
-                Toast.makeText(
-                    requireContext(), "something went wrong on deletion", Toast.LENGTH_SHORT
-                ).show()
-                startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
-            }
-        }
-        val negativeButtonClick = { _: DialogInterface, _: Int ->
-            Toast.makeText(
-                requireContext(),
-                getString(R.string.account_not_deleted_toast), Toast.LENGTH_SHORT
-            ).show()
-        }
-
-        builder.setTitle(getString(R.string.account_deletion_title))
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.account_deletion_title))
             .setMessage(getString(R.string.account_deletion_text))
             .setCancelable(false)
             .setPositiveButton(android.R.string.ok, positiveButtonClick)
             .setNegativeButton(android.R.string.cancel, negativeButtonClick)
-        builder.create().show()
+            .create()
+            .show()
+    }
+
+    /**
+     * delete profile and sign out auth
+     */
+    private val positiveButtonClick = { _: DialogInterface, _: Int ->
+        Firebase.auth.currentUser?.let {
+            UserDatabase.removeUser(it.uid)
+            AuthUI.getInstance().delete(requireContext()).addOnCompleteListener {
+                startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
+            }
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.deletion_success), Toast.LENGTH_SHORT
+            ).show()
+        } ?: run {
+            Toast.makeText(
+                requireContext(), "something went wrong on deletion", Toast.LENGTH_SHORT
+            ).show()
+            startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
+        }
+    }
+
+    /**
+     * show toast if deletion is cancelled
+     */
+    private val negativeButtonClick = { _: DialogInterface, _: Int ->
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.account_not_deleted_toast), Toast.LENGTH_SHORT
+        ).show()
     }
 
 }
