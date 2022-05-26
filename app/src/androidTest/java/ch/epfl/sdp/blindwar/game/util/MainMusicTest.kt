@@ -21,14 +21,14 @@ class MainMusicTest : TestCase() {
     }
 
     @Test(expected = Test.None::class)
-    fun playAndPauseMusicTheMusic(){
+    fun playAndPauseMusicTheMusic() {
         // Test now exception is thrown
         MainMusic.prepareAndPlay(context)
         MainMusic.pause()
     }
 
     @Test
-    fun resetAndPause(){
+    fun resetAndPause() {
         MainMusic.prepareAndPlay(context)
         MainMusic.reset()
         assertThrows(IllegalStateException::class.java) {
@@ -37,14 +37,14 @@ class MainMusicTest : TestCase() {
     }
 
     @Test
-    fun playUnpreparedMusic(){
+    fun playUnpreparedMusic() {
         assertThrows(IllegalStateException::class.java) {
             MainMusic.play()
         }
     }
 
     @Test
-    fun pauseUnpreparedMusic(){
+    fun pauseUnpreparedMusic() {
         assertThrows(IllegalStateException::class.java) {
             MainMusic.pause()
         }

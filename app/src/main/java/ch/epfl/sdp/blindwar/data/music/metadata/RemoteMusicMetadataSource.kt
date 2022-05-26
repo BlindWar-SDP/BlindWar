@@ -40,11 +40,13 @@ class RemoteMusicMetadataSource(
 
                 if (response.isSuccessful && response.body() != null) {
                     val tracks = (response.body()!!.tracks.items as ArrayList<SpotifyTrack>).map {
-                        MusicMetadata.createWithURI(it.name,
+                        MusicMetadata.createWithURI(
+                            it.name,
                             it.artists[0].name,
                             it.album.images[0].url,
                             duration = 30000,
-                            uri = it.preview_url ?: GameUtil.URL_FIFA_SONG_2)
+                            uri = it.preview_url ?: GameUtil.URL_FIFA_SONG_2
+                        )
                     }
 
                     musicMetadata.postValue(tracks as ArrayList<MusicMetadata>)

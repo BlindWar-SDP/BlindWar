@@ -35,14 +35,20 @@ class ResourceFetcher(
 
         val updateMetadata =
             baseMetadata?.artist?.let {
-                MusicMetadata.createWithResourceId(baseMetadata.title, baseMetadata?.artist, baseMetadata.imageUrl, baseMetadata.duration, resourceId)
-            } ?: MusicMetadata.createWithResourceId(
-                    title = "",
-                    artist = "",
-                    imageUrl = "",
-                    duration = 0,
-                    resourceId = musicMetadata.resourceId!!
+                MusicMetadata.createWithResourceId(
+                    baseMetadata.title,
+                    baseMetadata.artist,
+                    baseMetadata.imageUrl,
+                    baseMetadata.duration,
+                    resourceId
                 )
+            } ?: MusicMetadata.createWithResourceId(
+                title = "",
+                artist = "",
+                imageUrl = "",
+                duration = 0,
+                resourceId = musicMetadata.resourceId!!
+            )
 
 
         val player = MediaPlayer.create(this.context, musicMetadata.resourceId!!)

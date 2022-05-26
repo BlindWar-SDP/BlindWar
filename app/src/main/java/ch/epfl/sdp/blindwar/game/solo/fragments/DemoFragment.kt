@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.game.solo.fragments
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -240,6 +241,7 @@ class DemoFragment : Fragment() {
         return view
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         voiceRecognizer.resultString.observe(viewLifecycleOwner) {
             guessEditText.setText(it)
@@ -248,7 +250,7 @@ class DemoFragment : Fragment() {
         }
 
         //warning seems ok, no need to override performClick
-        microphoneButton.setOnTouchListener { _, event ->
+        microphoneButton.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     gameViewModel.pause()
@@ -259,6 +261,7 @@ class DemoFragment : Fragment() {
                 MotionEvent.ACTION_UP -> {
                     gameViewModel.play()
                     voiceRecognizer.stop()
+                    v.performClick()
                 }
             }
             true

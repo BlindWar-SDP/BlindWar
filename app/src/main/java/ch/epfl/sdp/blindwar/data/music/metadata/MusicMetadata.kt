@@ -31,7 +31,7 @@ open class MusicMetadata(
             duration: Int,
             resourceId: Int
         ): MusicMetadata {
-            var musicMetadata = MusicMetadata(title, artist, imageUrl, duration)
+            val musicMetadata = MusicMetadata(title, artist, imageUrl, duration)
             musicMetadata.resourceId = resourceId
             return musicMetadata
         }
