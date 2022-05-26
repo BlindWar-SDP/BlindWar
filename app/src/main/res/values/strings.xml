@@ -168,7 +168,7 @@
     <string name="alert_dialogue_cancel_text">Are you sure to keep old info</string>
     <string name="newUser_ExtraName">newUser</string>
     <string name="reset">reset</string>
-    <string name="no_birthdate_selected"></string>
+    <string name="no_birthdate_selected"/>
 
     <!-- PROFILE -->
     <string name="userRank">Rank</string>
@@ -215,6 +215,7 @@
     <string name="pop">POP</string>
     <string name="button_to_start_game">Button to start game</string>
     <string name="timer">TIMER</string>
+    <string name="multi_already_started">Match has already started, disconnexion…</string>
     <string name="NU_describe_yourself">describe yourself</string>
     <string name="birthdate_set_to">birthdate set to</string>
     <string name="_1000">1000</string>

@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 
-class ScoreboardAdapter(private var playersName: List<String>)  :
+class ScoreboardAdapter(playersName: List<String>) :
     RecyclerView.Adapter<ScoreboardAdapter.ViewHolder>() {
     private var dataSet = playersName.map { Pair(0, it) }.toMutableList()
 
@@ -25,7 +25,6 @@ class ScoreboardAdapter(private var playersName: List<String>)  :
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.scoreboard_item, viewGroup, false)
-
         return ViewHolder(view)
     }
 
@@ -48,7 +47,16 @@ class ScoreboardAdapter(private var playersName: List<String>)  :
      * @return
      */
     fun incrementPoint(playerName: String) {
-        dataSet?.indexOfFirst { it.second == playerName }.let { dataSet?.set(it!!, Pair(
-            dataSet!![it].first + 1, playerName))}
+        dataSet.indexOfFirst { it.second == playerName }.let {
+            dataSet.set(it, Pair(dataSet[it].first + 1, playerName))
+        }
+    }
+
+    fun updateScoreboardFromList(listResult: MutableList<Int>?) {
+        if (listResult != null) {
+            for (i in 0 until dataSet.size - 1) {
+                dataSet[i] = Pair(listResult[i], dataSet[i].second)
+            }
+        }
     }
 }

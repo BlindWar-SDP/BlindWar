@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.game.solo.fragments
 
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +13,13 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import ch.epfl.sdp.blindwar.R
-
-import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.util.AnimationSetterHelper
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
+import kotlin.concurrent.thread
 
 /**
  * Game over fragment displayed after a round
@@ -63,17 +64,21 @@ class SongSummaryFragment : Fragment() {
         } else {
             layout.setBackgroundColor(resources.getColor(R.color.black, activity?.theme))
         }
-
-        /** Like animation **/
+        val isMulti = arguments?.get(IS_MULTI) as Boolean?
+        if (isMulti != null && isMulti) { //avoid waiting for an afk player
+            thread {
+                val timerStart = SystemClock.elapsedRealtime()
+                while (SystemClock.elapsedRealtime() - timerStart < timeInterRounds);
+                activity?.onBackPressed()
+            }
+        }
         skip = view.findViewById<ImageButton>(R.id.skip_next_summary).also { button ->
             button.setOnClickListener {
                 activity?.onBackPressed()
             }
         }
-
         setLikeAnimation(view)
         setLikeListener()
-
         return view
     }
 
@@ -99,7 +104,6 @@ class SongSummaryFragment : Fragment() {
             arguments?.getBoolean("liked")!!
         } else
             false
-
         setLikeListener()
     }
 
@@ -127,7 +131,8 @@ class SongSummaryFragment : Fragment() {
                 // Reconstruct MusicMetadata from arguments
                 val defaultDuration = 10000
                 val defaultUri = ""
-                val music = URIMusicMetadata(title, artist, cover, defaultDuration, defaultUri)
+                val music =
+                    MusicMetadata.createWithURI(title, artist, cover, defaultDuration, defaultUri)
                 profileViewModel.likeMusic(music)
             }
         }
@@ -152,9 +157,11 @@ class SongSummaryFragment : Fragment() {
     }
 
     companion object {
+        const val timeInterRounds = 3500
         const val ARTIST_KEY = "ARTIST"
         const val TITLE_KEY = "TITLE"
         const val COVER_KEY = "COVER"
         const val SUCCESS_KEY = "SUCCESS"
+        const val IS_MULTI = "IS_MULTI"
     }
 }

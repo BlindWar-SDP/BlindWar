@@ -61,7 +61,6 @@ class GameSummaryFragment : Fragment() {
 
         // If the game is in multiplayer, add the final score
         // Switch between the two different game view model
-        // TODO
         if(gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI) {
             fragments.add(ScoreFragment())
         }

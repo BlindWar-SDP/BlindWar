@@ -1,8 +1,7 @@
 package ch.epfl.sdp.blindwar.game.util
 
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.data.music.metadata.ResourceMusicMetadata
-import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.Difficulty
 import ch.epfl.sdp.blindwar.game.model.Genre
 import ch.epfl.sdp.blindwar.game.model.LocalPlaylist
@@ -92,16 +91,10 @@ object GameUtil {
         30000, 30000, 30000, 30000, 30000, 30000, 30000
     )
 
-    fun metadataTutorial(): MutableMap<String, ResourceMusicMetadata> {
-        return mutableMapOf<String, ResourceMusicMetadata>().let {
+    fun metadataTutorial(): MutableMap<String, MusicMetadata> {
+        return mutableMapOf<String, MusicMetadata>().let {
             for ((index, key) in keys.withIndex()) {
-                it[key.first] = ResourceMusicMetadata(
-                    artist = key.first,
-                    title = key.second,
-                    imageUrl = urls[index],
-                    duration = durations[index],
-                    resourceId = ids[index]
-                )
+                it[key.first] = MusicMetadata.createWithResourceId(key.second, key.first, urls[index], durations[index], ids[index])
             }
             it
         }
@@ -110,14 +103,14 @@ object GameUtil {
     private const val tutorialPlaylistLength = 9
     private const val reversedPlaylistLength = 7
 
-    private val PLAYLIST: List<ResourceMusicMetadata> = metadataTutorial().values.toList()
+    private val PLAYLIST: List<MusicMetadata> = metadataTutorial().values.toList()
 
-    private val REV_PLAYLIST: List<ResourceMusicMetadata> =
+    private val REV_PLAYLIST: List<MusicMetadata> =
         metadataTutorial().values.toList().subList(
             tutorialPlaylistLength,
             tutorialPlaylistLength + reversedPlaylistLength
         )
-    private val TUTORIAL_PLAYLIST: List<ResourceMusicMetadata> =
+    private val TUTORIAL_PLAYLIST: List<MusicMetadata> =
         metadataTutorial().values.toList().subList(
             0,
             tutorialPlaylistLength
@@ -160,7 +153,7 @@ object GameUtil {
 
 
     private val searchin = (
-            URIMusicMetadata(
+            MusicMetadata.createWithURI(
                 "Searchin",
                 "Matisyahu",
                 COVER_URL_SONG,
@@ -168,7 +161,7 @@ object GameUtil {
                 URL_PREVIEW_FIFA
             ))
 
-    private val uatw = URIMusicMetadata(
+    private val uatw = MusicMetadata.createWithURI(
         "Us Against the World",
         "Clement Marfo",
         "https://i.scdn.co/image/ab67616d0000b273b6e0b1707eea74cd006df458",
@@ -176,7 +169,7 @@ object GameUtil {
         URL_FIFA_SONG_2
     )
 
-    val fly = URIMusicMetadata(
+    val fly = MusicMetadata.createWithURI(
         "Fly Or Die",
         "Rock Mafia",
         "https://i.scdn.co/image/ab67616d0000b273711f517eabfb36486a6d96f2",
@@ -247,7 +240,7 @@ object GameUtil {
         "Marcin Przybyłowicz",
         arrayListOf(Genre.POP),
         arrayListOf(
-            URIMusicMetadata(
+            MusicMetadata.createWithURI(
                 SONG_TESTING,
                 "Marcin Przybyłowicz",
                 COVER_TESTING,

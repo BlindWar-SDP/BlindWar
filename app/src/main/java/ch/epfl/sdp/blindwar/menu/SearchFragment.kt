@@ -62,7 +62,8 @@ class SearchFragment : Fragment() {
             requireContext(),
             view,
             gameInstanceViewModel,
-            profileViewModel
+            profileViewModel,
+            requireFragmentManager()
         )
         adapter = musicMetadataRecyclerView.adapter as DisplayableItemAdapter
     }

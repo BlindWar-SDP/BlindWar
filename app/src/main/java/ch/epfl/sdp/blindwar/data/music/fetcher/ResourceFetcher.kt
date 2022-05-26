@@ -7,7 +7,6 @@ import android.media.MediaPlayer
 import androidx.lifecycle.MutableLiveData
 import ch.epfl.sdp.blindwar.audio.ReadyMediaPlayer
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
-import ch.epfl.sdp.blindwar.data.music.metadata.ResourceMusicMetadata
 import ch.epfl.sdp.blindwar.game.util.GameUtil
 import java.util.*
 
@@ -19,7 +18,7 @@ class ResourceFetcher(
 
         // Create a file descriptor to get the author from
         val mediaMetadataRetriever = MediaMetadataRetriever()
-        val resourceId = (musicMetadata as ResourceMusicMetadata).resourceId
+        val resourceId = musicMetadata.resourceId!!
         val assetFileDescriptor = resources.openRawResourceFd(resourceId)
         mediaMetadataRetriever.setDataSource(
             assetFileDescriptor.fileDescriptor,
@@ -36,24 +35,17 @@ class ResourceFetcher(
 
         val updateMetadata =
             baseMetadata?.artist?.let {
-                ResourceMusicMetadata(
-                    baseMetadata.title,
-                    it,
-                    baseMetadata.imageUrl,
-                    baseMetadata.duration,
-                    resourceId
-                )
-            }
-                ?: ResourceMusicMetadata(
-                    artist = "",
+                MusicMetadata.createWithResourceId(baseMetadata.title, baseMetadata?.artist, baseMetadata.imageUrl, baseMetadata.duration, resourceId)
+            } ?: MusicMetadata.createWithResourceId(
                     title = "",
+                    artist = "",
                     imageUrl = "",
                     duration = 0,
-                    resourceId = musicMetadata.resourceId
+                    resourceId = musicMetadata.resourceId!!
                 )
 
 
-        val player = MediaPlayer.create(this.context, musicMetadata.resourceId)
+        val player = MediaPlayer.create(this.context, musicMetadata.resourceId!!)
 
         // Keep the start time low enough so that at least half the song can be heard (for now)
         val time = Random().nextInt(musicMetadata.duration.div(2))

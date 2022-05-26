@@ -5,6 +5,7 @@ import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 
 object MatchDatabase {
@@ -39,12 +40,12 @@ object MatchDatabase {
                 mutableListOf(userPseudo),
                 game,
                 mutableListOf(0),
+                mutableListOf(false),
                 numberOfPlayerMax,
                 isPrivate
             )
             db.collection(COLLECTION_PATH).document(match.uid).set(match)
-            db.collection(UserDatabase.COLLECTION_PATH).document(userUID)
-                .update("matchId", match.uid)
+            UserDatabase.addMatchId(userUID, match.uid)
             return match
         }
         return null
@@ -70,7 +71,7 @@ object MatchDatabase {
 
     /**
      * add a player to the match and return the document
-     * TODO use exception to handle diffrent errors
+     *
      * @param match
      * @param user
      * @return
@@ -82,7 +83,8 @@ object MatchDatabase {
         match.listPlayers!!.add(user.uid)
         match.listPseudo!!.add(user.pseudo)
         match.listResult!!.add(0)
-        db.collection(UserDatabase.COLLECTION_PATH).document(user.uid).update("matchId", match.uid)
+        match.listFinished!!.add(false)
+        UserDatabase.addMatchId(user.uid, match.uid)
         db.collection(COLLECTION_PATH).document(match.uid).set(match)
         return db.collection(COLLECTION_PATH).document(match.uid)
     }
@@ -99,4 +101,43 @@ object MatchDatabase {
         while (!query.isComplete); //TODO avoid active waiting
         return query.result.documents[0]
     }
+
+    /**
+     * Increments the score of a player in the list of score for a specific match.
+     * For this we need to do a transaction, because multiple players may have the score
+     * updated at the same time.
+     * @param matchId
+     * @param playerIndex
+     */
+    fun incrementScore(matchId: String, playerIndex: Int, db: FirebaseFirestore) {
+        val matchRef = db.collection("match").document(matchId)
+        db.runTransaction { transaction ->
+            val snapshot = transaction.get(matchRef)
+            val match = snapshot.toObject(Match::class.java)
+            val listScore = match?.listResult
+            listScore!![playerIndex] += 1
+            transaction.update(matchRef, "listResult", listScore)
+
+            // Success
+            null
+        }
+    }
+
+    /**
+     * Listen to changes in the score(actually we can only listen to changes in the document
+     * and not a specific field)
+     * @param matchId
+     * @param db
+     */
+
+    fun addScoreListener(
+        matchId: String,
+        db: FirebaseFirestore,
+        listener: EventListener<DocumentSnapshot>
+    ) {
+        val matchRef = db.collection("match").document(matchId)
+        matchRef.addSnapshotListener(listener)
+    }
+
+
 }

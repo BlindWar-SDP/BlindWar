@@ -3,7 +3,9 @@ package ch.epfl.sdp.blindwar.profile
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 

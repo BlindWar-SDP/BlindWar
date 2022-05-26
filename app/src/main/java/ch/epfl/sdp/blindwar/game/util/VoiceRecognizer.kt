@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 
 /**
@@ -57,12 +56,6 @@ class VoiceRecognizer : RecognitionListener {
                 false
             )
 
-            /**
-            speechRecognizerIntent!!.putExtra(
-            RecognizerIntent.EXTRA_CALLING_PACKAGE, context.applicationInfo.packageName
-            )**/
-
-            //only for android 13
             resultsRecognized = ""
             (speechRecognizer as SpeechRecognizer).setRecognitionListener(this)
         }
@@ -87,10 +80,14 @@ class VoiceRecognizer : RecognitionListener {
      * Destroy speech recognizer
      */
     fun destroy() {
-        speechRecognizer?.destroy()
-        speechRecognizer = null
-        speechRecognizerIntent = null
-        resultsRecognized = ""
+        try {
+            speechRecognizer?.destroy()
+            speechRecognizer = null
+            speechRecognizerIntent = null
+            resultsRecognized = ""
+        } catch (_: IllegalArgumentException) {
+
+        }
     }
 
     // UNUSED OVERRIDDEN FUNCTIONS
