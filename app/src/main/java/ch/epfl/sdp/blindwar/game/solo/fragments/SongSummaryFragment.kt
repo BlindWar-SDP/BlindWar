@@ -18,6 +18,7 @@ import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
+import kotlin.concurrent.thread
 
 /**
  * Game over fragment displayed after a round
@@ -29,7 +30,6 @@ class SongSummaryFragment : Fragment() {
     private lateinit var skip: ImageButton
     private var likeSwitch: Boolean = false
     private var success: Boolean = false
-    private var timerStart: Long = 0
     private val profileViewModel: ProfileViewModel by activityViewModels()
     private lateinit var title: String
     private lateinit var artist: String
@@ -63,14 +63,22 @@ class SongSummaryFragment : Fragment() {
         } else {
             layout.setBackgroundColor(resources.getColor(R.color.black, activity?.theme))
         }
-
-        /** Like animation **/
-        skip = view.findViewById<ImageButton>(R.id.skip_next_summary).also { button ->
-            button.setOnClickListener {
+        val isMulti = arguments?.get(IS_MULTI) as Boolean
+        if (isMulti) {
+            view.findViewById<ImageButton>(R.id.skip_next_summary).visibility = View.GONE
+            thread {
+                val timerStart = System.currentTimeMillis()
+                while (System.currentTimeMillis() - timerStart < timeInterRounds);
                 activity?.onBackPressed()
             }
+        } else {
+            view.findViewById<ImageButton>(R.id.skip_next_summary).visibility = View.GONE
+            skip = view.findViewById<ImageButton>(R.id.skip_next_summary).also { button ->
+                button.setOnClickListener {
+                    activity?.onBackPressed()
+                }
+            }
         }
-        timerStart = System.currentTimeMillis()
         setLikeAnimation(view)
         setLikeListener()
 
@@ -153,9 +161,11 @@ class SongSummaryFragment : Fragment() {
     }
 
     companion object {
+        const val timeInterRounds = 4000
         const val ARTIST_KEY = "ARTIST"
         const val TITLE_KEY = "TITLE"
         const val COVER_KEY = "COVER"
         const val SUCCESS_KEY = "SUCCESS"
+        const val IS_MULTI = "IS_MULTI"
     }
 }

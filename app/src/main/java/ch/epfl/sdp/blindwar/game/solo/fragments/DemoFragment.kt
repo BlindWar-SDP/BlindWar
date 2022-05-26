@@ -25,6 +25,7 @@ import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.ARTIST_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.COVER_KEY
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.IS_MULTI
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.SUCCESS_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.TITLE_KEY
 import ch.epfl.sdp.blindwar.game.util.MainMusic
@@ -47,9 +48,6 @@ import java.util.*
  * @constructor creates a DemoFragment
  */
 class DemoFragment : Fragment() {
-    companion object {
-        const val TIME_TO_NEXT_ROUND = 2000
-    }
 
     // VIEW MODELS
     lateinit var gameViewModel: GameViewModel
@@ -97,8 +95,6 @@ class DemoFragment : Fragment() {
     private var matchId: String? = null
     private var playerIndex = -1
     private var playerList: MutableList<String>? = null
-    private var success: Boolean = false
-    private var fragmentCountDown: Boolean = false
 
     // Scoreboard listener
     private val scoreboardListener =
@@ -300,27 +296,9 @@ class DemoFragment : Fragment() {
             }
 
             override fun onFinish() {
-                if (gameInstanceViewModel.gameInstance.value?.gameFormat
-                    == GameFormat.MULTI
-                ) {
-                    if (fragmentCountDown) {
-                        fragmentCountDown = false
-                        activity?.onBackPressed()
-                    }
-                    if (success) {
-                        // reset success boolean
-                        success = false
-                        launchSongSummary(success = true)
-                    } else {
-                        gameViewModel.timeout()
-                        this.cancel()
-                        launchSongSummary(success = false)
-                    }
-                } else if (gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.SOLO) {
-                    gameViewModel.timeout()
-                    this.cancel()
-                    launchSongSummary(success = false)
-                }
+                gameViewModel.timeout()
+                this.cancel()
+                launchSongSummary(success = false)
             }
         }
     }
@@ -408,15 +386,7 @@ class DemoFragment : Fragment() {
             scoreTextView.text = gameViewModel.score.toString()
             (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
                 .hideSoftInputFromWindow(view?.windowToken, 0)
-            if (gameInstanceViewModel.gameInstance.value?.gameFormat
-                == GameFormat.MULTI
-            ) {
-                success = true
-            } else if (gameInstanceViewModel.gameInstance.value?.gameFormat
-                == GameFormat.SOLO
-            ) {
-                launchSongSummary(success = true)
-            }
+            launchSongSummary(success = true)
         } else if (!isAuto) {
             /** Resets the base frame value of the animation and keep the reversing mode **/
             crossAnim.repeatMode = LottieDrawable.RESTART
@@ -449,12 +419,6 @@ class DemoFragment : Fragment() {
         timer.cancel()
         chronometer.stop()
 
-        // Set chronometer for transition to next round
-        duration = TIME_TO_NEXT_ROUND
-        fragmentCountDown = true
-        timer = createCountDown()
-        timer.start()
-
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         transaction?.addToBackStack("DEMO")
         transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -475,6 +439,10 @@ class DemoFragment : Fragment() {
         bundle.putString(TITLE_KEY, musicMetadata.title)
         bundle.putString(COVER_KEY, musicMetadata.imageUrl)
         bundle.putBoolean(SUCCESS_KEY, success)
+        bundle.putBoolean(
+            IS_MULTI,
+            gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI
+        )
         return bundle
     }
 
