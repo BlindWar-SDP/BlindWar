@@ -17,6 +17,7 @@ import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
+import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 import ch.epfl.sdp.blindwar.profile.model.User
@@ -329,16 +330,24 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      */
     fun joinMatch(view: View) {
         val snapshot = MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)
-            ?.toObject(Match::class.java)
-        if (snapshot != null) {
-            if (){ //TODO check if matchmaking or in game
-                //TODO if in game, get current round
-                launchGame(matchId!!, applicationContext, supportFragmentManager)
+        val match = snapshot?.toObject(Match::class.java)
+        if (snapshot != null && match != null) {
+            if (match.isStarted) {
+                displayToast(R.string.multi_already_started)
+                quitMatch(view)
             } else {
-                if () {
-                    //Match making creator : qr code dialog
+                if (match.listPlayers?.get(0)
+                        .equals(currentUser?.child("uid")?.value as String?)
+                    && match.listPlayers?.get(0) != null
+                ) {
+                    DisplayableItemAdapter.createDialog(
+                        match,
+                        applicationContext,
+                        supportFragmentManager
+                    )
                 } else {
-                    //match making connector, progress dialog
+                    setListener(snapshot.reference)
+                    setProgressDialog("Wait for connexion")
                 }
             }
         } else {

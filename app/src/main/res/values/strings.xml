@@ -215,4 +215,5 @@
     <string name="pop">POP</string>
     <string name="button_to_start_game">Button to start game</string>
     <string name="timer">TIMER</string>
+    <string name="multi_already_started">Match has already started, disconnexion...</string>
 </resources>

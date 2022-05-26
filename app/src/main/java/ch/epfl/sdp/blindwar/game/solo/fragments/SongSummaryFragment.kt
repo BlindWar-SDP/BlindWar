@@ -64,8 +64,8 @@ class SongSummaryFragment : Fragment() {
         } else {
             layout.setBackgroundColor(resources.getColor(R.color.black, activity?.theme))
         }
-        val isMulti = arguments?.get(IS_MULTI) as Boolean
-        if (isMulti) {
+        val isMulti = arguments?.get(IS_MULTI) as Boolean?
+        if (isMulti != null && isMulti) {
             view.findViewById<ImageButton>(R.id.skip_next_summary).visibility = View.GONE
             thread {
                 val timerStart = SystemClock.elapsedRealtime()
