@@ -101,12 +101,12 @@ class StatisticsActivity : AppCompatActivity() {
         winView.text = userStatistics.wins[position].toString()
         drawView.text = userStatistics.draws[position].toString()
         lossView.text = userStatistics.losses[position].toString()
-        winPercent.text = userStatistics.winPercent[position].toString()
-        drawPercent.text = userStatistics.drawPercent[position].toString()
-        lossPercent.text = userStatistics.lossPercent[position].toString()
+        winPercent.text = userStatistics.winPercent[position].toString() + "%"
+        drawPercent.text = userStatistics.drawPercent[position].toString() + "%"
+        lossPercent.text = userStatistics.lossPercent[position].toString() + "%"
         correctView.text = userStatistics.correctArray[position].toString()
         wrongView.text = userStatistics.wrongArray[position].toString()
-        correctPercent.text = userStatistics.correctPercent[position].toString()
-        wrongPercent.text = userStatistics.wrongPercent[position].toString()
+        correctPercent.text = userStatistics.correctPercent[position].toString() + "%"
+        wrongPercent.text = userStatistics.wrongPercent[position].toString() + "%"
     }
 }
