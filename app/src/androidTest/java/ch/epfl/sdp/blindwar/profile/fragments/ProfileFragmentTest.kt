@@ -75,7 +75,6 @@ class ProfileFragmentTest : TestCase() {
         clickOn(android.R.string.cancel)
     }
 
-    /*
     // If no second sign in: get ERROR: "not attached to a context"
     @Test
     fun testDeleteButton_ok() {
@@ -106,7 +105,6 @@ class ProfileFragmentTest : TestCase() {
         Thread.sleep(1500)
         assertDisplayed(R.string.signin_welcome_text)
     }
-     */
 
     @Test
     fun historyUpdatedCorrectly() {
