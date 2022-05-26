@@ -43,7 +43,6 @@ class UserNewInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_user_new_info, container, false)
-//        dynamicLink = intent?.extras?.getString(MultiPlayerMenuActivity.DYNAMIC_LINK) // TODO : DynLink
         profileViewModel.user.observe(viewLifecycleOwner) {
             user = it
             if (user.profilePicture.isEmpty()) {

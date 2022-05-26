@@ -66,23 +66,19 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun checkCurrentUser() {
+        Firebase.dynamicLinks
+            .getDynamicLink(intent)
+            .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                // Get deep link from result (may be null if no link is found)
+                pendingDynamicLinkData?.let {
+                    data =
+                        pendingDynamicLinkData.link?.getQueryParameter("uid") // what if not connected? uid=UserID?
+                }
+            }
         Firebase.auth.currentUser?.let {
+            startActivity(getIntentData())
             // TODO : if not logged in and open the app with a QR code -> show login layout... is it ok >
-            Firebase.dynamicLinks
-                .getDynamicLink(intent)
-                .addOnSuccessListener(this) { pendingDynamicLinkData ->
-                    // Get deep link from result (may be null if no link is found)
-                    pendingDynamicLinkData?.let {
-                        data =
-                            pendingDynamicLinkData.link?.getQueryParameter("uid") // what if not connected? uid=UserID?
-                    }
-                    startActivity(getIntent(data))
-                }
-                .addOnFailureListener(this) { e ->
-                    Log.w(TAG, "getDynamicLink:onFailure", e)
-                    startActivity(getIntent(data))
-                }
-        } ?: run {
+                    } ?: run {
             signInLauncher.launch(createSignInIntent())
         }
     }
@@ -145,7 +141,7 @@ class SplashScreenActivity : AppCompatActivity() {
                     // TODO: should also initiate a liveData ?
                 }
             }
-            return setNewUser(data)
+            return setNewUser()
 
         } else {
             // Sign in failed. If response is null the user canceled the
@@ -171,7 +167,7 @@ class SplashScreenActivity : AppCompatActivity() {
         return connectivityManager.activeNetworkInfo?.isConnected ?: false
     }
 
-    private fun getIntent(data: String?): Intent {
+    private fun getIntentData(): Intent {
         return data?.let {
             // TODO: check if not connected to a match MainMenuActivity ?
             Intent(this, MultiPlayerMenuActivity::class.java)
@@ -181,10 +177,10 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
-    private fun setNewUser(data: String?): Intent {
+    private fun setNewUser(): Intent {
         Firebase.auth.currentUser?.let {
             UserDatabase.setKeepSynced(it.uid)
         }
-        return getIntent(data)
+        return getIntentData()
     }
 }
