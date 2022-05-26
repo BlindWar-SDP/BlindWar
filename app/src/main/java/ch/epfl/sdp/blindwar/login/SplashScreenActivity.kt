@@ -3,25 +3,30 @@ package ch.epfl.sdp.blindwar.login
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.BuildConfig
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
+import ch.epfl.sdp.blindwar.game.util.NetworkConnectivityChecker.isOnline
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
+import ch.epfl.sdp.blindwar.profile.model.User
 import com.firebase.ui.auth.AuthMethodPickerLayout
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
 
+
 /**
  * Launcher activity that let the user log/register to the app
- * TODO: CodeClimate / Cirrus warnings
  *
  * @constructor creates a SplashScreenActivity
  */
@@ -35,7 +40,6 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private var data: String? = null
-//    private var userAuth = UserAuth()
 
     // See: https://developer.android.com/training/basics/intents/result
     private val signInLauncher = registerForActivityResult(
@@ -45,37 +49,34 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
+
+        if (!BuildConfig.DEBUG) { // not called when testing
+            val database = FirebaseDatabase.getInstance()
+            database.setPersistenceEnabled(true)
+            database.setPersistenceCacheSizeBytes(10000000) // 10MB cache
+        }
+
+        if (isOnline()) {
+            checkCurrentUser()
+        } else {
+            Firebase.auth.signOut()
+            startActivity(Intent(this, MainMenuActivity::class.java))
+        }
+    }
+
+    private fun checkCurrentUser() {
         Firebase.dynamicLinks
             .getDynamicLink(intent)
             .addOnSuccessListener(this) { pendingDynamicLinkData ->
                 // Get deep link from result (may be null if no link is found)
-                if (pendingDynamicLinkData != null) {
-                    data = pendingDynamicLinkData.link?.getQueryParameter("uid")
+                pendingDynamicLinkData?.let {
+                    data =
+                        pendingDynamicLinkData.link?.getQueryParameter("uid") // what if not connected? uid=UserID?
                 }
-                checkCurrentUser()
             }
-            .addOnFailureListener(this) { e ->
-                Log.w(TAG, "getDynamicLink:onFailure", e)
-                checkCurrentUser()
-            }
-    }
-
-//    override fun onResume() {
-//        super.onResume()
-//        checkCurrentUser()
-//    }
-
-
-    private fun checkCurrentUser() {
-        if (isSignedIn()) {
-            if (data == null)
-                startActivity(Intent(this, MainMenuActivity::class.java))
-            else {
-                val intent = Intent(this, MultiPlayerMenuActivity::class.java)
-                intent.putExtra(MultiPlayerMenuActivity.DYNAMIC_LINK, data)
-                startActivity(intent)
-            }
-        } else {
+        Firebase.auth.currentUser?.let {
+            startActivity(getIntentData())
+        } ?: run {
             signInLauncher.launch(createSignInIntent())
         }
     }
@@ -83,14 +84,15 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun createSignInIntent(): Intent {
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().setRequireName(false).build(),
-            AuthUI.IdpConfig.GoogleBuilder().build()
+            AuthUI.IdpConfig.GoogleBuilder().build(),
+            AuthUI.IdpConfig.AnonymousBuilder().build()
         )
-//            AuthUI.IdpConfig.AnonymousBuilder().build())
 
         val customLayout = AuthMethodPickerLayout
             .Builder(R.layout.activity_login)
             .setGoogleButtonId(R.id.Btn_google)
             .setEmailButtonId(R.id.Btn_email)
+            .setAnonymousButtonId(R.id.Btn_anonymous)
             .build()
 
         // Create and launch sign-in intent
@@ -101,8 +103,8 @@ class SplashScreenActivity : AppCompatActivity() {
                 true /* hints */
             ) // -> for TESTs only
             .setAvailableProviders(providers)
-            .setLogo(R.drawable.logo) // still used if setAuthMethodPickerLayout(customLayout) ?
-            .setTheme(R.style.Theme_BlindWar) // Set theme
+            .setLogo(R.drawable.logo)
+            .setTheme(R.style.Theme_BlindWar)
             .setAuthMethodPickerLayout(customLayout)
             .build()
     }
@@ -114,34 +116,31 @@ class SplashScreenActivity : AppCompatActivity() {
         val response = result.idpResponse
         if (result.resultCode == RESULT_OK) {
             // Successfully signed in
-            val user = FirebaseAuth.getInstance().currentUser // =?= Firebase.auth.currentUser
             // https://www.tabnine.com/code/java/classes/com.google.firebase.auth.FirebaseAuth
-
-            return if (user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp) {
-                // new user: 1st signIn
-                if (data != null) {
-                    Intent(activity, UserNewInfoActivity::class.java).putExtra("newUser", true)
-                        .putExtra(
-                            MultiPlayerMenuActivity.DYNAMIC_LINK,
-                            data.toString()
-                        )
-                } else {
-                    Intent(activity, UserNewInfoActivity::class.java).putExtra("newUser", true)
-                }
-            } else {
-                /*
-                    - should we update the online database with the local cache here ?
-                     */
-                if (data == null)
-                    Intent(activity, MainMenuActivity::class.java)
-                else {
-                    Intent(this, MultiPlayerMenuActivity::class.java).putExtra(
-                        MultiPlayerMenuActivity.DYNAMIC_LINK,
-                        data.toString()
+            if (response!!.isNewUser) {
+                // old check :
+                // user?.metadata?.lastSignInTimestamp == user?.metadata?.creationTimestamp
+                Firebase.auth.currentUser?.let {
+                    val user0 = User.Builder()
+                        .setPseudo(it.uid.take(5))
+                        .setUid(it.uid)
+                        .build()
+                    it.email?.let { email ->
+                        user0.email = email
+                    }
+                    UserDatabase.updateUser(
+                        user0
                     )
+                    Toast.makeText(
+                        this,
+                        Html.fromHtml("Hi, your pseudo is <b>${user0.pseudo}</b>,<br> you can personalize it in \"Profile\""),
+                        Toast.LENGTH_LONG
+                    ).show()
+                    // TODO: should also initiate a liveData ?
                 }
-
             }
+            return setNewUser()
+
         } else {
             // Sign in failed. If response is null the user canceled the
             // sign-in flow using the back button. Otherwise check
@@ -160,7 +159,19 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
-    private fun isSignedIn(): Boolean {
-        return Firebase.auth.currentUser != null
+    private fun getIntentData(): Intent {
+        return data?.let {
+            Intent(this, MultiPlayerMenuActivity::class.java)
+                .putExtra(MultiPlayerMenuActivity.DYNAMIC_LINK, data.toString())
+        } ?: run {
+            Intent(this, MainMenuActivity::class.java)
+        }
+    }
+
+    private fun setNewUser(): Intent {
+        Firebase.auth.currentUser?.let {
+            UserDatabase.setKeepSynced(it.uid)
+        }
+        return getIntentData()
     }
 }

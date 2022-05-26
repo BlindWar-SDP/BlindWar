@@ -11,7 +11,6 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
-import com.google.firebase.database.*
 
 
 // TODO: Remove unused activity
@@ -43,9 +42,9 @@ class StatisticsActivity : AppCompatActivity() {
         spinner = findViewById(R.id.modes_spinner)
 
         // Observe the stats value from the viewModel
-        profileViewModel.userStatistics.observe(this) {
-            if (it != AppStatistics()) {
-                userStatistics = it
+        profileViewModel.user.observe(this) {
+            if (it.userStatistics != AppStatistics()) {
+                userStatistics = it.userStatistics
                 setSpinner()
             }
         }
