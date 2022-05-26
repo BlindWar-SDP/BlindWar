@@ -20,6 +20,8 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class UserDatabaseTest : TestCase() {
     private val testUID = "JOJO"
+    private var user0 = User.Builder().setUid(testUID).build()
+
 
     @Before
     fun init() {
@@ -32,8 +34,9 @@ class UserDatabaseTest : TestCase() {
     fun setEloCorrectly() {
         launchFragmentInContainer<ProfileFragment>().onFragment {
             val elo = 1000
+            user0.userStatistics.eloSetter(elo)
             UserDatabase.database
-            UserDatabase.setElo(testUID, elo)
+            UserDatabase.updateUser(user0)
             UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
                 assertTrue((it.getValue(User::class.java)?.userStatistics?.elo == elo))
             }
@@ -44,10 +47,11 @@ class UserDatabaseTest : TestCase() {
     fun setBirthdateCorrectly() {
         launchFragmentInContainer<ProfileFragment>().onFragment {
             val birthdate = 1000L
+            user0.birthdate = birthdate
             UserDatabase.database
-            UserDatabase.setBirthdate(testUID, birthdate)
+            UserDatabase.updateUser(user0)
             UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
-                assertTrue((it.getValue(User::class.java)?.birthDate == birthdate))
+                assertTrue((it.getValue(User::class.java)?.birthdate == birthdate))
             }
         }
     }
@@ -56,8 +60,9 @@ class UserDatabaseTest : TestCase() {
     fun setDescriptionCorrectly() {
         launchFragmentInContainer<ProfileFragment>().onFragment {
             val description = "User description"
+            user0.description = description
             UserDatabase.database
-            UserDatabase.setDescription(testUID, description)
+            UserDatabase.updateUser(user0)
             UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
                 assertTrue((it.getValue(User::class.java)?.description == description))
             }
@@ -69,16 +74,16 @@ class UserDatabaseTest : TestCase() {
         launchFragmentInContainer<ProfileFragment>()
         val firstName = "David"
         val lastName = "Goodenough"
+        user0.firstName = firstName
+        user0.lastName = lastName
         UserDatabase.database
         runBlocking {
             var user: User?
             withContext(Dispatchers.IO) {
                 user =
                     await(
-                        UserDatabase.setFirstName(testUID, firstName)
+                        UserDatabase.updateUser(user0)
                             .continueWithTask {
-                                UserDatabase.setLastName(testUID, lastName)
-                            }.continueWithTask {
                                 UserDatabase.userReference.child(testUID).get()
                             }).getValue(User::class.java)
             }
@@ -92,12 +97,13 @@ class UserDatabaseTest : TestCase() {
     fun setGenderCorrectly() {
         launchFragmentInContainer<ProfileFragment>()
         val gender = "MALE"
+        user0.gender = gender
         runBlocking {
             var user: User?
             withContext(Dispatchers.IO) {
                 user =
                     await(
-                        UserDatabase.setGender(testUID, gender)
+                        UserDatabase.updateUser(user0)
                             .continueWithTask {
                                 UserDatabase.userReference.child(testUID).get()
                             }).getValue(User::class.java)
@@ -111,12 +117,13 @@ class UserDatabaseTest : TestCase() {
     fun setPseudoCorrectly() {
         launchFragmentInContainer<ProfileFragment>()
         val pseudo = "Cirrus"
+        user0.pseudo = pseudo
         runBlocking {
             var user: User?
             withContext(Dispatchers.IO) {
                 user =
                     await(
-                        UserDatabase.setPseudo(testUID, pseudo)
+                        UserDatabase.updateUser(user0)
                             .continueWithTask {
                                 UserDatabase.userReference.child(testUID).get()
                             }).getValue(User::class.java)

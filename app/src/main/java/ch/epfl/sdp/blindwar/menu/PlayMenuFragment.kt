@@ -14,7 +14,7 @@ import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.game.util.GameActivity
 import ch.epfl.sdp.blindwar.game.util.NetworkConnectivityChecker
-import ch.epfl.sdp.blindwar.game.util.Util.updateProfileImage
+import ch.epfl.sdp.blindwar.game.util.Util.loadProfileImage
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 /**
@@ -40,28 +40,26 @@ class PlayMenuFragment : Fragment() {
             startActivity(intent)
         }
 
-
-        view.findViewById<ImageButton>(R.id.multiBtn).setOnClickListener {
-            if (NetworkConnectivityChecker.isOnline()) {
-                val intent = Intent(requireActivity(), MultiPlayerMenuActivity::class.java)
-                startActivity(intent)
-            } else {
-                Toast.makeText(
-                    context,
-                    getString(R.string.toast_connexion_internet_unavailable),
-                    Toast.LENGTH_SHORT
-                ).show()
+        val btnMulti = view.findViewById<ImageButton>(R.id.multiBtn)
+        if (NetworkConnectivityChecker.isOnline()) {
+            btnMulti.setOnClickListener {
+                if (NetworkConnectivityChecker.isOnline()) {
+                    val intent = Intent(requireActivity(), MultiPlayerMenuActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.toast_connexion_internet_unavailable),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
+        } else {
+            btnMulti.isClickable = false
+            btnMulti.alpha = 0.3F
         }
 
-        /**
-        if (isOffline(activity?.applicationContext!!)) {
-        val btn = view.findViewById<ImageButton>(R.id.multiBtn)
-        btn.isClickable = false
-        btn.alpha = 0.3F
-        } **/
-
-        updateProfileImage(
+        loadProfileImage(
             profileViewModel.imageRef,
             view.findViewById(R.id.profileView),
             viewLifecycleOwner,
