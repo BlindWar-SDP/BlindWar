@@ -5,6 +5,11 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.R
 import com.adevinta.android.barista.assertion.BaristaVisibilityAssertions.assertDisplayed
+import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import junit.framework.TestCase
@@ -13,6 +18,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.ExecutionException
 
 
 @RunWith(AndroidJUnit4::class)
@@ -63,7 +69,7 @@ class SplashScreenActivityTest : TestCase() {
         clickOn(R.id.deleteBtn)
         clickOn(android.R.string.ok)
     }
-
+*/
     @Test
     fun testLoggedIn() {
         val login: Task<AuthResult> = FirebaseAuth.getInstance()
@@ -83,5 +89,4 @@ class SplashScreenActivityTest : TestCase() {
         clickOn(R.id.item_profile)
         assertDisplayed(R.id.nameView)
     }
-    */
 }
