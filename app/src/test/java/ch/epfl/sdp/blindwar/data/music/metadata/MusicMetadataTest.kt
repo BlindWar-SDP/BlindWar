@@ -9,7 +9,7 @@ class MusicMetadataTest : TestCase() {
 
     fun testTestToString() {
         val expected = "Poker Face by Lady Gaga"
-        val musicMetaData = URIMusicMetadata("Poker Face", "Lady Gaga", "", 0)
+        val musicMetaData = MusicMetadata("Poker Face", "Lady Gaga", "", 0)
         assertThat(musicMetaData.toString(), `is`(expected))
     }
 
@@ -28,14 +28,14 @@ class MusicMetadataTest : TestCase() {
     fun testGetTitle() {
         val expected = "Shine On You Crazy Diamond"
         val musicMetaData =
-            URIMusicMetadata("Shine On You Crazy Diamond", "Pink Floyd", "", 650000)
+            MusicMetadata("Shine On You Crazy Diamond", "Pink Floyd", "", 650000)
         assertThat(musicMetaData.title, `is`(expected))
     }
 
     fun testGetTitleWithMethod() {
         val expected = "Shine On You Crazy Diamond"
         val musicMetaData =
-            URIMusicMetadata("Shine On You Crazy Diamond", "Pink Floyd", "", 650000)
+            MusicMetadata("Shine On You Crazy Diamond", "Pink Floyd", "", 650000)
         assertThat(musicMetaData.getName(), `is`(expected))
     }
 
