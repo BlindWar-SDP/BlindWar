@@ -2,12 +2,18 @@ package ch.epfl.sdp.blindwar.game.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ch.epfl.sdp.blindwar.database.MatchDatabase
+import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
+import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.util.GameUtil
+import ch.epfl.sdp.blindwar.profile.model.User
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 /**
  * Game Instance viewModel used during game creation
@@ -19,6 +25,10 @@ class GameInstanceViewModel : ViewModel() {
         it.value = GameUtil.gameInstanceSolo
         it
     }
+    var match: Match? = null
+    private var isPrivate = false
+    private var maxPlayer = 2
+
     /**
      * Setter for the game mode
      *
@@ -64,7 +74,7 @@ class GameInstanceViewModel : ViewModel() {
     fun setGameParameters(timeChosen: Int, roundChosen: Int, playlist: Playlist) {
         val mode = gameInstance
             .value!!
-            .gameConfig
+            .gameConfig!!
             .mode
 
         val currentParameter = gameInstance
@@ -90,5 +100,42 @@ class GameInstanceViewModel : ViewModel() {
         gameInstance.value = GameInstance.Builder().setGameInstance(gameInstance.value!!)
             .setFormat(gameFormat)
             .build()
+    }
+
+    /**
+     * Set parameters for multiplayer mode
+     *
+     * @param isPrivate
+     * @param maxPlayer
+     */
+    fun setMultiParameters(isPrivate: Boolean, maxPlayer: Int) {
+        this.isPrivate = isPrivate
+        this.maxPlayer = maxPlayer
+    }
+
+    /**
+     * create match for multiplayer mode
+     *
+     */
+    fun createMatch(): Match? {
+        UserDatabase.getCurrentUser().let {
+            val user: User =
+                it!!.getValue(User::class.java)
+                    ?: return null //TODO find better solution to avoid active waiting
+            return if (user.matchId.isEmpty()) {
+                match = MatchDatabase.createMatch(
+                    user.uid,
+                    user.pseudo,
+                    user.userStatistics.elo,
+                    maxPlayer,
+                    gameInstance.value!!,
+                    Firebase.firestore,
+                    isPrivate
+                )
+                match
+            } else {
+                null
+            }
+        }
     }
 }

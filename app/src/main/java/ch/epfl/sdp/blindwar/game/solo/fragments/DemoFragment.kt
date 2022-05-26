@@ -11,9 +11,12 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
@@ -22,16 +25,14 @@ import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.AR
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.COVER_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.SUCCESS_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.TITLE_KEY
+import ch.epfl.sdp.blindwar.game.util.MainMusic
+import ch.epfl.sdp.blindwar.game.util.ScoreboardAdapter
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import java.util.*
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import ch.epfl.sdp.blindwar.game.util.ScoreboardAdapter
 
 /**
  * Fragment containing the UI logic of a solo game
@@ -88,11 +89,15 @@ class DemoFragment : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.activity_animated_demo, container, false)
 
+        // Pause the main menu music
+        MainMusic.pause()
+
         // Get the scoreboard
         scoreboard = view.findViewById(R.id.scoreboard)
 
         // Create the adapter for the score board
-        scoreboardAdapter = ScoreboardAdapter(listOf("Marty", "Joris", "Nael", "Arthur", "Paul", "Henrique"))
+        scoreboardAdapter =
+            ScoreboardAdapter(listOf("Marty", "Joris", "Nael", "Arthur", "Paul", "Henrique"))
         scoreboard.setHasFixedSize(true)
 
         val layoutManager = LinearLayoutManager(context)
@@ -100,8 +105,7 @@ class DemoFragment : Fragment() {
         scoreboard.adapter = scoreboardAdapter
         scoreboardAdapter.notifyDataSetChanged()
 
-        // Switch between the two different game view model
-        when(gameInstanceViewModel.gameInstance.value?.gameFormat){
+        when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
             GameFormat.SOLO -> {
                 gameViewModel = context?.let {
                     GameViewModel(
@@ -115,21 +119,21 @@ class DemoFragment : Fragment() {
                 scoreboard.visibility = View.INVISIBLE
             }
             GameFormat.MULTI -> gameViewModel = context?.let {
-                    GameViewModel(
-                        gameInstanceViewModel.gameInstance.value!!,
-                        it,
-                        resources,
-                        scoreboardAdapter
-                    )
-                }!!
+                GameViewModel(
+                    gameInstanceViewModel.gameInstance.value!!,
+                    it,
+                    resources,
+                    scoreboardAdapter
+                )
+            }!!
         }
 
         gameViewModel.init()
 
         // Retrieve the game duration from the GameInstance object
         duration = gameInstanceViewModel.gameInstance.value?.gameConfig
-                                                           ?.parameter
-                                                           ?.timeToFind!!
+            ?.parameter
+            ?.timeToFind!!
 
         // Create and start countdown
         timer = createCountDown()
@@ -139,7 +143,7 @@ class DemoFragment : Fragment() {
         val mode = gameInstanceViewModel
             .gameInstance
             .value!!
-            .gameConfig
+            .gameConfig!!
             .mode
 
         chronometer = view.findViewById(R.id.simpleChronometer)
@@ -321,7 +325,8 @@ class DemoFragment : Fragment() {
         heartImage.visibility = View.VISIBLE
         heartNumber.visibility = View.VISIBLE
         gameViewModel.lives.observe(requireActivity()) {
-            heartNumber.text = "x $it"
+            heartNumber.text =
+                getString(R.string.heart_number, it) //TODO check if it works (x $it)
         }
     }
 
@@ -398,12 +403,13 @@ class DemoFragment : Fragment() {
         val songRecord = SongSummaryFragment()
         if (activity?.supportFragmentManager?.fragments!!.size > 1) {
             if (activity?.supportFragmentManager?.fragments?.get(1) is SongSummaryFragment) {
-                val songFragment = (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
+                val songFragment =
+                    (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
                 val bundle = createBundleSongSummary(songFragment.success())
 
                 duration = gameInstanceViewModel.gameInstance.value?.gameConfig
-                                                                   ?.parameter
-                                                                   ?.timeToFind!!
+                    ?.parameter
+                    ?.timeToFind!!
                 restartChronometer()
                 bundle.putBoolean("liked", songFragment.liked())
                 songRecord.arguments = bundle
@@ -433,6 +439,10 @@ class DemoFragment : Fragment() {
     override fun onDestroy() {
         timer.cancel()
         voiceRecognizer.destroy()
+
+        // Restart the menu music
+        MainMusic.play()
+
         super.onDestroy()
     }
 }

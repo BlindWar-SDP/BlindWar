@@ -1,16 +1,26 @@
 package ch.epfl.sdp.blindwar.game.multi
 
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageButton
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.database.MatchDatabase
+import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
+import ch.epfl.sdp.blindwar.profile.model.User
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.firestore.*
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 /**
@@ -19,15 +29,38 @@ import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
  * @constructor creates a MultiPlayerMenuActivity
  */
 class MultiPlayerMenuActivity : AppCompatActivity() {
-    private var eloDelta = 200
+    private var eloDelta = DEFAULT_ELO
     private var dialog: AlertDialog? = null
     private var isCanceled = false
+    private var listener: ListenerRegistration? = null
+    private var toast: Toast? = null
+    private var currentUser: DataSnapshot? = null
+    private var matchId: String? = null
     private lateinit var leaderboardButton: ImageButton
 
-    private lateinit var toast: Toast
-
     companion object {
-        private val LIMIT_MATCH: Long = 10
+        private const val LIMIT_MATCH: Long = 10
+        private const val DELTA_MATCHMAKING = 100
+        private const val DEFAULT_ELO = 200
+        const val DYNAMIC_LINK = "Dynamic link"
+
+        /**
+         * Launch the game for every player
+         * TODO
+         * @param matchId
+         */
+        fun launchGame(matchId: String, context: Context) {
+/*(context as AppCompatActivity).supportFragmentManager.beginTransaction()
+    .replace(
+        (viewFragment.parent as ViewGroup).id,
+        DemoFragment(),
+        "DEMO"
+    )
+    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+    .commit()*/
+            Toast.makeText(context, "Match $matchId connected (test message)", Toast.LENGTH_LONG)
+                .show()
+        }
     }
 
 
@@ -35,16 +68,36 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_multiplayer_menu)
+        currentUser = UserDatabase.getCurrentUser()
+        matchId = currentUser?.child("matchId")?.value as String?
+
+        if (matchId != null && matchId!!.isNotEmpty()) {
+            findViewById<FrameLayout>(R.id.frameLayout_create).visibility = View.GONE
+            findViewById<FrameLayout>(R.id.frameLayout_join).visibility = View.VISIBLE
+            findViewById<FrameLayout>(R.id.frameLayout_link).visibility = View.GONE
+            findViewById<FrameLayout>(R.id.frameLayout_play).visibility = View.GONE
+            findViewById<FrameLayout>(R.id.frameLayout_quit).visibility = View.VISIBLE
+        } else {
+            findViewById<FrameLayout>(R.id.frameLayout_create).visibility = View.VISIBLE
+            findViewById<FrameLayout>(R.id.frameLayout_join).visibility = View.GONE
+            findViewById<FrameLayout>(R.id.frameLayout_link).visibility = View.VISIBLE
+            findViewById<FrameLayout>(R.id.frameLayout_play).visibility = View.VISIBLE
+            findViewById<FrameLayout>(R.id.frameLayout_quit).visibility = View.GONE
+        }
+        eloDelta = DEFAULT_ELO
+        val matchUID: String? = intent.extras?.getString(DYNAMIC_LINK)
+        if (matchUID != null && (matchId == null || matchId!!.isEmpty())) {
+            connectToDB(matchUID)
+        }
 
         // Add leaderboardButton onClick
         leaderboardButton = findViewById<ImageButton>(R.id.leaderboardButton).apply {
             this.setOnClickListener {
                 showFragment(
-                DisplayHistoryFragment.newInstance("leaderboard"))
+                    DisplayHistoryFragment.newInstance("leaderboard")
+                )
             }
         }
-        toast = Toast.makeText(applicationContext, "default", Toast.LENGTH_SHORT)
-        eloDelta = 200
     }
 
     /**
@@ -53,8 +106,8 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun friendButton(view: View) {
+        assert(view.isEnabled)
         setLinkDialog()
-        //dialog!!.hide() //TODO REMOVE WHEN TESTS OK
     }
 
     /**
@@ -63,6 +116,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun createMatch(view: View) {
+        assert(view.isEnabled)
         startActivity(Intent(this, ChoseNumberOfPlayerActivity::class.java))
     }
 
@@ -72,6 +126,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun cancel(view: View) {
+        assert(view.isEnabled)
         startActivity(Intent(this, MainMenuActivity::class.java))
     }
 
@@ -81,39 +136,47 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun randomButton(view: View) {
-        //setProgressDialog(getString(R.string.multi_wait_matches))
-        /*val user = UserDatabase.getCurrentUser()
-        val elo = user.child("userStatistics/elo").value!! as Int
-        val matchs = Firebase.firestore.collection("match").whereLessThan("elo", elo + eloDelta)
-            .whereGreaterThan("elo", elo - 200)
-            .orderBy("elo", Query.Direction.DESCENDING)
-            .limit(LIMIT_MATCH).get()
-        if (matchs.isSuccessful && !isCanceled) {
-            var i = 0
-            var match: DocumentReference? = null
-            while (match == null && i < LIMIT_MATCH) {
-                match =
-                    MatchDatabase.connect(
-                        matchs.result.documents[i].toObject(Match::class.java)!!,
-                        user.getValue(User::class.java)!!,
-                        Firebase.firestore
-                    )
-                i++
+        if (dialog == null || !dialog!!.isShowing)
+            setProgressDialog(getString(R.string.multi_wait_matches))
+        val user = UserDatabase.getCurrentUser()
+        if (user != null) {
+            val elo = user.child("userStatistics/elo").value as Long
+            var isOk = false
+            while (!isOk) {
+                val matches = Firebase.firestore.collection("match")
+                    .whereEqualTo("isPrivate", false)
+                    .whereLessThan("elo", elo + eloDelta)
+                    .whereGreaterThan("elo", elo - eloDelta)
+                    .orderBy("elo", Query.Direction.DESCENDING)
+                    .limit(LIMIT_MATCH).get()
+                if (matches.isSuccessful && !isCanceled) {
+                    var i = 0
+                    var match: DocumentReference? = null
+                    while (match == null && i < LIMIT_MATCH) {
+                        match = MatchDatabase.connect(
+                            matches.result.documents[i].toObject(Match::class.java)!!,
+                            user.getValue(User::class.java)!!,
+                            Firebase.firestore
+                        )
+                        i++
+                    }
+                    if (match == null && !isCanceled) {
+                        displayToast(R.string.toast_connexion)
+                        eloDelta += DELTA_MATCHMAKING
+                        isOk = false
+                    } else if (!isCanceled) {
+                        isOk = true
+                        setListener(match!!)
+                    }
+                } else if (!isCanceled) {
+                    displayToast(R.string.toast_connexion_internet)
+                    isOk = false
+                }
             }
-            if (match == null && !isCanceled) {
-                toast.setText(getString(R.string.toast_connexion))
-                toast.show()
-                eloDelta += 100
-                randomButton(view)
-            } else if (!isCanceled) {
-                //match.addSnapshotListener {} //TODO add listener
-                dialog!!.hide()
-                //TODO CONNECT TO MATCH
-            }
-        } else if (!isCanceled) {
+        } else {
+            displayToast(R.string.toast_connexion_internet)
             randomButton(view)
-        }*/
-        //dialog!!.hide() //TODO REMOVE WHEN TESTS OK
+        }
     }
 
     /**
@@ -121,56 +184,65 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      *
      * @param message
      */
-    /*
     private fun setProgressDialog(message: String) {
         val builder = AlertDialog.Builder(this)
-        builder.setCancelable(true)
+        builder.setCancelable(false)
+        builder.setPositiveButton(
+            getString(R.string.cancel_btn)
+        ) { it, _ -> it.cancel() }
         builder.setOnCancelListener {
             isCanceled = true
-            toast.setText(getString(R.string.toast_canceled_connexion))
-            toast.show()
+            displayToast(R.string.toast_canceled_connexion)
         }
         val view = View.inflate(applicationContext, R.layout.fragment_dialog_loading, null)
         builder.setView(view)
         (view.findViewById<TextView>(R.id.textView_multi_loading)).text = message
         dialog = builder.create()
+        dialog!!.setCanceledOnTouchOutside(false)
         dialog!!.show()
     }
-     */
 
     /**
-     * find a match on DB which is free
+     * return null if dynamic link is false, otherwise return the match uid
      *
-     * @param text
+     * @param uri the dynamic link
+     * @return
      */
-    /*
-    private fun connectToDB(text: String) {
+    private fun parseDynamicLink(uri: Uri?): String? {
+        if (uri != null) {
+            return uri.getQueryParameter("uid")
+        }
+        return null
+    }
+
+    /**
+     * find a match with the link on DB which is free
+     *
+     * @param uid
+     */
+    private fun connectToDB(uid: String) {
         setProgressDialog("Wait for connexion")
         val user = UserDatabase.getCurrentUser()
-        val match = Firebase.firestore.collection("match").document(text).get() //TODO get only uid
-        if (match.isSuccessful && !isCanceled) {
+        val match: DocumentSnapshot? = MatchDatabase.getMatchSnapshot(uid, Firebase.firestore)
+        if (!isCanceled && match != null) {
+            val matchObject = match.toObject(Match::class.java)!!
             val connect =
                 MatchDatabase.connect(
-                    match.result.toObject(Match::class.java)!!,
-                    user.getValue(User::class.java)!!,
+                    matchObject,
+                    user?.getValue(User::class.java)!!,
                     Firebase.firestore
                 )
             if (connect == null && !isCanceled) {
-                toast.setText(getString(R.string.multi_match_full))
-                toast.show()
+                displayToast(R.string.multi_match_full)
                 dialog!!.hide()
             } else if (!isCanceled) {
-                //match.addSnapshotListener {} //TODO add listener
-                dialog!!.hide()
-                //TODO CONNECT TO MATCH
+                setListener(match.reference)
             }
         } else if (!isCanceled) {
-            toast.setText(getString(R.string.multi_match_not_found))
-            toast.show()
+            displayToast(R.string.multi_match_not_found)
             dialog!!.hide()
         }
     }
-     */
 
     /**
      * create a dialog which ask for the uid of the match
@@ -178,22 +250,74 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      */
     private fun setLinkDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setCancelable(true)
+        builder.setCancelable(false)
         val view = View.inflate(applicationContext, R.layout.fragment_multi_connexion_link, null)
+        val editText = view.findViewById<EditText>(R.id.editTextLink)
         builder.setView(view)
-        builder.setNeutralButton(resources.getText(R.string.cancel_btn)) { _, _ ->
-            dialog!!.hide()
-        }
+        builder.setNeutralButton(resources.getText(R.string.cancel_btn)) { di, _ -> di.cancel() }
         builder.setPositiveButton(resources.getText(R.string.ok)) { _, _ ->
-            //connectToDB(findViewById<EditText>(R.id.editTextLink).text.toString())
-            dialog!!.hide()
+            val isCorrect = parseDynamicLink(editText.text.toString().toUri())
+            if (isCorrect != null) {
+                connectToDB(isCorrect)
+                dialog!!.hide()
+            } else {
+                displayToast(R.string.multi_bad_link)
+            }
         }
         dialog = builder.create()
+        dialog!!.setCanceledOnTouchOutside(false)
         dialog!!.show()
     }
 
     /**
-     * Shows the selected fragment
+     * add a listener to the match to know when it is ready to play
+     *
+     * @param match
+     */
+    private fun setListener(match: DocumentReference) {
+        listener = match.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                return@addSnapshotListener
+            }
+            if (SnapshotListener.listenerOnLobby(snapshot, this, dialog!!)) {
+                listener?.remove()
+                launchGame(match.id, applicationContext)
+            }
+        }
+    }
+
+    /**
+     * Display a toast from a string resource and cancel any toast currently displayed
+     *
+     * @param message
+     */
+    private fun displayToast(message: Int) {
+        toast?.cancel()
+        toast = Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
+        toast?.show()
+    }
+
+    /**
+     * Quit current match
+     *
+     * @param view
+     */
+    fun quitMatch(view: View) {
+        UserDatabase.removeMatchId(currentUser?.child("uid")?.value.toString())
+        finish()
+        startActivity(intent)
+    }
+
+    /**
+     * Join current match
+     *
+     * @param view
+     */
+    fun joinMatch(view: View) {
+        launchGame(matchId!!, applicationContext)
+    }
+
+    /** Shows the selected fragment
      *
      * @param fragment to show
      */

@@ -13,7 +13,7 @@ class PlaylistDatabaseTest : TestCase() {
 
     @Test
     fun testAddAndRemovePlaylist() {
-        launchFragmentInContainer<ProfileFragment>().onFragment{
+        launchFragmentInContainer<ProfileFragment>().onFragment {
             val pid = "Test_Playlist"
             val playlist = OnlinePlaylist(uid = pid)
             PlaylistDatabase.addPlaylist(playlist)

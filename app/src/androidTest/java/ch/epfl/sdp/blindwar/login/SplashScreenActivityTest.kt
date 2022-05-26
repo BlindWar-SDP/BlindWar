@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.login
 
+import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -41,6 +42,8 @@ class SplashScreenActivityTest : TestCase() {
     @Test
     fun testNewUser() {
         FirebaseAuth.getInstance().signOut()
+        Thread.sleep(2000)
+        closeSoftKeyboard()
         clickOn(R.id.Btn_email)
     }
 }

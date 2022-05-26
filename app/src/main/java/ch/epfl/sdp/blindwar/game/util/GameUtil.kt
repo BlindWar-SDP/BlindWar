@@ -111,11 +111,17 @@ object GameUtil {
     private const val reversedPlaylistLength = 7
 
     private val PLAYLIST: List<ResourceMusicMetadata> = metadataTutorial().values.toList()
-    private val REV_PLAYLIST: List<ResourceMusicMetadata> = metadataTutorial().values.toList().subList(tutorialPlaylistLength,
-        tutorialPlaylistLength + reversedPlaylistLength)
-    private val TUTORIAL_PLAYLIST: List<ResourceMusicMetadata> = metadataTutorial().values.toList().subList(0,
-        tutorialPlaylistLength)
 
+    private val REV_PLAYLIST: List<ResourceMusicMetadata> =
+        metadataTutorial().values.toList().subList(
+            tutorialPlaylistLength,
+            tutorialPlaylistLength + reversedPlaylistLength
+        )
+    private val TUTORIAL_PLAYLIST: List<ResourceMusicMetadata> =
+        metadataTutorial().values.toList().subList(
+            0,
+            tutorialPlaylistLength
+        )
 
     private val gameParameter =
         GameParameter(
@@ -204,24 +210,26 @@ object GameUtil {
         Difficulty.EASY
     )
 
-    private val reversePlaylist = LocalPlaylist("tutorial",
+    private val reversePlaylist = LocalPlaylist(
+        "tutorial",
         "Reverse",
         "BlindWar",
         arrayListOf(Genre.POP, Genre.RAP),
         REV_PLAYLIST,
         "",
         URL_PREVIEW_TUTORIAL,
-        Difficulty.EASY
+        Difficulty.DIFFICULT
     )
 
-    private val tutorialPlaylist = LocalPlaylist("tutorial",
+    private val tutorialPlaylist = LocalPlaylist(
+        "tutorial",
         "Tutorial",
         "BlindWar",
         arrayListOf(Genre.POP, Genre.RAP),
         TUTORIAL_PLAYLIST,
         "",
         URL_PREVIEW_TUTORIAL,
-        Difficulty.EASY
+        Difficulty.MEDIUM
     )
 
     private const val COVER_TESTING =

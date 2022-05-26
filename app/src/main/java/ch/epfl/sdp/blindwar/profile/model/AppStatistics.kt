@@ -80,7 +80,8 @@ class AppStatistics {
     fun correctnessUpdate(correct: Int, wrong: Int, mode: Mode) {
         correctArray[mode.ordinal] += correct
         wrongArray[mode.ordinal] += wrong
-        val (a, b) = correctnessPercentUpdate(correctArray[mode.ordinal], wrongArray[mode.ordinal])
+        val (a, b) =
+            correctnessPercentUpdate(correctArray[mode.ordinal], wrongArray[mode.ordinal])
         correctPercent[mode.ordinal] = a
         wrongPercent[mode.ordinal] = b
     }
@@ -92,18 +93,26 @@ class AppStatistics {
      * @param mode the current mode
      */
     fun multiWinLossCountUpdate(result: Result, mode: Mode) {
-        if (result == Result.WIN) {
-            wins[mode.ordinal]++
-        } else if (result == Result.DRAW) {
-            draws[mode.ordinal]++
-        } else {
-            losses[mode.ordinal]++
+        when (result) {
+            Result.WIN -> {
+                wins[mode.ordinal]++
+            }
+            Result.DRAW -> {
+                draws[mode.ordinal]++
+            }
+            else -> {
+                losses[mode.ordinal]++
+            }
         }
 
-        val total = wins[mode.ordinal] + draws[mode.ordinal] + losses[mode.ordinal]
-        winPercent[mode.ordinal] = computePercentage(wins[mode.ordinal].toFloat(), total.toFloat())
-        drawPercent[mode.ordinal] = computePercentage(draws[mode.ordinal].toFloat(), total.toFloat())
-        lossPercent[mode.ordinal] = 100F - winPercent[mode.ordinal] - drawPercent[mode.ordinal]
+        val total =
+            wins[mode.ordinal] + draws[mode.ordinal] + losses[mode.ordinal]
+        winPercent[mode.ordinal] =
+            computePercentage(wins[mode.ordinal].toFloat(), total.toFloat())
+        drawPercent[mode.ordinal] =
+            computePercentage(draws[mode.ordinal].toFloat(), total.toFloat())
+        lossPercent[mode.ordinal] =
+            100F - winPercent[mode.ordinal] - drawPercent[mode.ordinal]
     }
 
     private fun computePercentage(quantity: Float, total: Float): Float {
@@ -176,11 +185,13 @@ class AppStatistics {
      * @return the new elo of the user
      */
     private fun greaterElo(result: Result, opponentElo: Int): Int {
-        var ratio = (elo.toFloat() / opponentElo.toFloat())
+        var ratio =
+            (elo.toFloat() / opponentElo.toFloat())
         if (result == Result.LOSS) {
             ratio = ratio.pow(2)
-        } else if (result == Result.WIN)
+        } else if (result == Result.WIN) {
             ratio = 0 - ((1 / ratio).pow(3))
+        }
         val diff = round((ratio * standardEqualValue)).toInt()
         return if (elo - diff < 0) {
             0
@@ -191,6 +202,9 @@ class AppStatistics {
 
 
     override fun toString(): String {
-        return "hello $elo"
+        return "Statistics: ELO: $elo, Correct array: $correctArray, Wrong array: $wrongArray, " +
+                "Correct%: $correctPercent, Wrong%: $wrongPercent, " +
+                "Wins: $wins, Draws: $draws, Losses: $losses, " +
+                "Win%: $winPercent, Draw%: $drawPercent, Loss%: $lossPercent"
     }
 }

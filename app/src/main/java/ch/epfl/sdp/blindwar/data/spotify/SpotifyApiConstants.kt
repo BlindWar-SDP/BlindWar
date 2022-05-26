@@ -14,7 +14,7 @@ object SpotifyApiConstants {
     fun credentialsEncoding(): String {
         return "Basic ${
             Base64.encodeToString(
-                "${VALUE+VALUE_3}:${VALUE_2+VALUE_4}".toByteArray(Charsets.UTF_8),
+                "${VALUE + VALUE_3}:${VALUE_2 + VALUE_4}".toByteArray(Charsets.UTF_8),
                 Base64.NO_WRAP
             )
         }"

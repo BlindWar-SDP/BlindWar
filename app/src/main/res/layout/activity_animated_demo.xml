@@ -163,7 +163,7 @@
             android:fontFamily="@font/oxygen"
             android:gravity="center"
             android:textAlignment="center"
-            android:textSize="30dp"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.563"
@@ -180,7 +180,7 @@
             android:gravity="center"
             android:text="@string/zero"
             android:textAlignment="center"
-            android:textSize="30dp"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.274"
@@ -190,8 +190,6 @@
             app:lottie_autoPlay="false"
             app:lottie_loop="false"
             app:lottie_speed="2" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.airbnb.lottie.LottieAnimationView
@@ -272,5 +270,4 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.54" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

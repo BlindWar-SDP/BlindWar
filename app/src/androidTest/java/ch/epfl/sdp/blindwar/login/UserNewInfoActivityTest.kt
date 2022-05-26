@@ -57,238 +57,238 @@ class UserNewInfoActivityTest : TestCase() {
     }
 
     /**
-//    private fun putNewUserExtra(bool: Boolean){
-//        testRule.scenario.onActivity {
-//            val bundle = Bundle()
-//            bundle.putBoolean("newUser", bool)
-//            it.startActivity(it.intent.putExtras(bundle))
-//        }
-//    }
-//
-//    @Test
-//    fun testLayoutInvisibility() {
-//        putNewUserExtra(true)
-//        val invisibleIds = listOf(
-//            R.id.NU_Cancel_Btn,
-//            R.id.NU_deleteProfile
-//        )
-//        for (id in invisibleIds) {
-//            onView(withId(id))
-//                .check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
-//        }
-//    }
+    //    private fun putNewUserExtra(bool: Boolean){
+    //        testRule.scenario.onActivity {
+    //            val bundle = Bundle()
+    //            bundle.putBoolean("newUser", bool)
+    //            it.startActivity(it.intent.putExtras(bundle))
+    //        }
+    //    }
+    //
+    //    @Test
+    //    fun testLayoutInvisibility() {
+    //        putNewUserExtra(true)
+    //        val invisibleIds = listOf(
+    //            R.id.NU_Cancel_Btn,
+    //            R.id.NU_deleteProfile
+    //        )
+    //        for (id in invisibleIds) {
+    //            onView(withId(id))
+    //                .check(matches(withEffectiveVisibility(Visibility.INVISIBLE)))
+    //        }
+    //    }
 
     @Test
     fun testLayoutVisibility() {
-        val visibleIds = listOf(
-            R.id.NU_pseudo,
-            R.id.NU_FirstName,
-            R.id.NU_LastName,
-            R.id.NU_additional_info,
-            R.id.NU_Confirm_Btn,
-            R.id.NU_Cancel_Btn,
-            R.id.NU_deleteProfile
-        )
-        for (id in visibleIds) {
-            onView(withId(id))
-                .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-        }
+    val visibleIds = listOf(
+    R.id.NU_pseudo,
+    R.id.NU_FirstName,
+    R.id.NU_LastName,
+    R.id.NU_additional_info,
+    R.id.NU_Confirm_Btn,
+    R.id.NU_Cancel_Btn,
+    R.id.NU_deleteProfile
+    )
+    for (id in visibleIds) {
+    onView(withId(id))
+    .check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+    }
     }
 
     @Test
     fun testConfirm_PseudoTooShort() {
-        onView(withId(R.id.NU_pseudo))
-            .perform(replaceText(""))
-        onView(withId(R.id.NU_Confirm_Btn))
-            .perform(click())
-        assertDisplayed(R.string.new_user_wrong_pseudo_text)
-        clickOn(android.R.string.ok)
+    onView(withId(R.id.NU_pseudo))
+    .perform(replaceText(""))
+    onView(withId(R.id.NU_Confirm_Btn))
+    .perform(click())
+    assertDisplayed(R.string.new_user_wrong_pseudo_text)
+    clickOn(android.R.string.ok)
     }
 
     @Test
     fun testConfirm_PseudoIsPseudo() {
-        onView(withId(R.id.NU_pseudo))
-            .perform(replaceText("Pseudo"))
-        onView(withId(R.id.NU_Confirm_Btn))
-            .perform(click())
-        assertDisplayed(R.string.new_user_wrong_pseudo_text)
-        clickOn(android.R.string.ok)
+    onView(withId(R.id.NU_pseudo))
+    .perform(replaceText("Pseudo"))
+    onView(withId(R.id.NU_Confirm_Btn))
+    .perform(click())
+    assertDisplayed(R.string.new_user_wrong_pseudo_text)
+    clickOn(android.R.string.ok)
     }
 
     fun testAdditionalInfoBtn() {
-        onView(withId(R.id.NU_additional_info))
-            .perform(click())
-        intended(hasComponent(UserAdditionalInfoActivity::class.java.name))
+    onView(withId(R.id.NU_additional_info))
+    .perform(click())
+    intended(hasComponent(UserAdditionalInfoActivity::class.java.name))
     }
 
     // =====================================
     // Delete default value when click on it
     @Test
     fun testClearPseudo() {
-        val id = R.id.NU_pseudo
-        onView(withId(id))
-            .perform(
-                replaceText("Pseudo"),
-                click(),
-                click(),
-                closeSoftKeyboard()
-            ) // TODO: Why should click twice to delete text
-        onView(withId(id)).check(matches(withText("")))
+    val id = R.id.NU_pseudo
+    onView(withId(id))
+    .perform(
+    replaceText("Pseudo"),
+    click(),
+    click(),
+    closeSoftKeyboard()
+    ) // TODO: Why should click twice to delete text
+    onView(withId(id)).check(matches(withText("")))
     }
 
     @Test
     fun testClearFirstName() {
-        val id = R.id.NU_FirstName
-        onView(withId(id))
-            .perform(
-                replaceText("First Name"),
-                click(), click(), closeSoftKeyboard()
-            )
-        onView(withId(id)).check(matches(withText("")))
+    val id = R.id.NU_FirstName
+    onView(withId(id))
+    .perform(
+    replaceText("First Name"),
+    click(), click(), closeSoftKeyboard()
+    )
+    onView(withId(id)).check(matches(withText("")))
     }
 
     @Test
     fun testClearLastName() {
-        val id = R.id.NU_LastName
-        closeSoftKeyboard()
-        onView(withId(id))
-            .perform(
-                replaceText("Last Name"),
-                click(), click(), closeSoftKeyboard()
-            )
-        onView(withId(id)).check(matches(withText("")))
+    val id = R.id.NU_LastName
+    closeSoftKeyboard()
+    onView(withId(id))
+    .perform(
+    replaceText("Last Name"),
+    click(), click(), closeSoftKeyboard()
+    )
+    onView(withId(id)).check(matches(withText("")))
     }
 
     // ========================================
     // Don't delete text when not default value
     @Test
     fun testNotClearPseudo() {
-        val id = R.id.NU_pseudo
-        onView(withId(id))
-            .perform(replaceText(strNotDefault), closeSoftKeyboard())
-        onView(withId(id)).check(matches(withText(strNotDefault)))
+    val id = R.id.NU_pseudo
+    onView(withId(id))
+    .perform(replaceText(strNotDefault), closeSoftKeyboard())
+    onView(withId(id)).check(matches(withText(strNotDefault)))
     }
 
     @Test
     fun testNotClearFirstName() {
-        val id = R.id.NU_FirstName
-        onView(withId(id))
-            .perform(replaceText(strNotDefault), closeSoftKeyboard())
-        onView(withId(id)).check(matches(withText(strNotDefault)))
+    val id = R.id.NU_FirstName
+    onView(withId(id))
+    .perform(replaceText(strNotDefault), closeSoftKeyboard())
+    onView(withId(id)).check(matches(withText(strNotDefault)))
     }
 
     @Test
     fun testNotClearLastName() {
-        val id = R.id.NU_LastName
-        onView(withId(id))
-            .perform(replaceText(strNotDefault), closeSoftKeyboard())
-        onView(withId(id)).check(matches(withText(strNotDefault)))
+    val id = R.id.NU_LastName
+    onView(withId(id))
+    .perform(replaceText(strNotDefault), closeSoftKeyboard())
+    onView(withId(id)).check(matches(withText(strNotDefault)))
     }
 
     // check No Default Values:
 
     @Test
     fun testChooseImage() {
-        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        val oldPackageName = device.currentPackageName
+    val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+    val oldPackageName = device.currentPackageName
 
-        onView(withId(R.id.NU_editProfilePicture))
-            .perform(click())
+    onView(withId(R.id.NU_editProfilePicture))
+    .perform(click())
 
-        // Press back until we get back to our activity
-        var currentPackageName: String
-        do {
-            device.pressBack()
-            currentPackageName = device.currentPackageName
-        } while (currentPackageName != oldPackageName)
+    // Press back until we get back to our activity
+    var currentPackageName: String
+    do {
+    device.pressBack()
+    currentPackageName = device.currentPackageName
+    } while (currentPackageName != oldPackageName)
 
-//        onView(withId(R.id.statsButton))
-//            .perform(click())
-//        intended(hasComponent(StatisticsActivity::class.java.name))
+    //        onView(withId(R.id.statsButton))
+    //            .perform(click())
+    //        intended(hasComponent(StatisticsActivity::class.java.name))
     }
 
 
-//    @Test
-//    fun testNewUser() {
-//        putNewUserExtra(true)
-//        onView(withId(R.id.NU_pseudo))
-//            .perform(replaceText(validPseudo))
-//        clickOn(R.id.NU_Confirm_Btn)
-//        intended(hasComponent(MainMenuActivity::class.java.name))
-//    }
+    //    @Test
+    //    fun testNewUser() {
+    //        putNewUserExtra(true)
+    //        onView(withId(R.id.NU_pseudo))
+    //            .perform(replaceText(validPseudo))
+    //        clickOn(R.id.NU_Confirm_Btn)
+    //        intended(hasComponent(MainMenuActivity::class.java.name))
+    //    }
 
     /**
     @Test
     fun testUpdateUser() {
-        onView(withId(R.id.NU_pseudo))
-            .perform(replaceText(validPseudo))
-        clickOn(R.id.NU_Confirm_Btn)
-        //intended(hasComponent(MainMenuActivity::class.java.name))
+    onView(withId(R.id.NU_pseudo))
+    .perform(replaceText(validPseudo))
+    clickOn(R.id.NU_Confirm_Btn)
+    //intended(hasComponent(MainMenuActivity::class.java.name))
     }
     **/
 
 
     @Test
     fun testAdditionalInfo() {
-        clickOn(R.id.NU_additional_info)
-        intended(hasComponent(UserAdditionalInfoActivity::class.java.name))
+    clickOn(R.id.NU_additional_info)
+    intended(hasComponent(UserAdditionalInfoActivity::class.java.name))
     }
 
     fun testDeleteButton_cancel() {
-        closeSoftKeyboard()
-        clickOn(R.id.NU_deleteProfile)
-        assertDisplayed(R.string.account_deletion_text)
-        clickOn(android.R.string.cancel)
+    closeSoftKeyboard()
+    clickOn(R.id.NU_deleteProfile)
+    assertDisplayed(R.string.account_deletion_text)
+    clickOn(android.R.string.cancel)
     }
 
     @Test
     fun testDeleteButton_ok_cancel() {
-        closeSoftKeyboard()
-        onView(withId(R.id.NU_deleteProfile))
-            .perform(click())
-        assertDisplayed(R.string.account_deletion_text)
-        clickOn(android.R.string.ok)
-        assertDisplayed(R.string.account_deletion_confirm_text)
-        clickOn(android.R.string.cancel)
+    closeSoftKeyboard()
+    onView(withId(R.id.NU_deleteProfile))
+    .perform(click())
+    assertDisplayed(R.string.account_deletion_text)
+    clickOn(android.R.string.ok)
+    assertDisplayed(R.string.account_deletion_confirm_text)
+    clickOn(android.R.string.cancel)
     }
 
     // This test delete Test account from database... we should use the emulator
-//    @Test
-//    fun testDeleteButton_ok_ok() {
-//        closeSoftKeyboard()
-//        onView(withId(R.id.NU_deleteProfile))
-//            .perform(click())
-//        assertDisplayed(R.string.account_deletion_text)
-//        clickOn(android.R.string.ok)
-//        assertDisplayed(R.string.account_deletion_confirm_text)
-//        clickOn(android.R.string.ok)
-//        intended(hasComponent(SplashScreenActivity::class.java.name))
-//    }
+    //    @Test
+    //    fun testDeleteButton_ok_ok() {
+    //        closeSoftKeyboard()
+    //        onView(withId(R.id.NU_deleteProfile))
+    //            .perform(click())
+    //        assertDisplayed(R.string.account_deletion_text)
+    //        clickOn(android.R.string.ok)
+    //        assertDisplayed(R.string.account_deletion_confirm_text)
+    //        clickOn(android.R.string.ok)
+    //        intended(hasComponent(SplashScreenActivity::class.java.name))
+    //    }
 
     @Test
     fun testCancelBtnOK() {
-        closeSoftKeyboard()
-//        putNewUserExtra(false)
-        clickOn(R.id.NU_Cancel_Btn)
-        assertDisplayed(R.string.alert_dialogue_cancel_text)
-        clickOn(android.R.string.ok)
-        intended(hasComponent(MainMenuActivity::class.java.name))
+    closeSoftKeyboard()
+    //        putNewUserExtra(false)
+    clickOn(R.id.NU_Cancel_Btn)
+    assertDisplayed(R.string.alert_dialogue_cancel_text)
+    clickOn(android.R.string.ok)
+    intended(hasComponent(MainMenuActivity::class.java.name))
     }
 
     @Test
     fun testCancelBtnCancel() {
-        closeSoftKeyboard()
-//        putNewUserExtra(false)
-        clickOn(R.id.NU_Cancel_Btn)
-        assertDisplayed(R.string.alert_dialogue_cancel_text)
-        clickOn(android.R.string.cancel)
-        assertDisplayed(R.id.NU_Cancel_Btn)
+    closeSoftKeyboard()
+    //        putNewUserExtra(false)
+    clickOn(R.id.NU_Cancel_Btn)
+    assertDisplayed(R.string.alert_dialogue_cancel_text)
+    clickOn(android.R.string.cancel)
+    assertDisplayed(R.id.NU_Cancel_Btn)
     }
 
     @Test
     fun testBackButton() {
-        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        assertTrue("Back button can't be pressed", device.pressBack())
+    val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+    assertTrue("Back button can't be pressed", device.pressBack())
     }
-    **/
+     **/
 }

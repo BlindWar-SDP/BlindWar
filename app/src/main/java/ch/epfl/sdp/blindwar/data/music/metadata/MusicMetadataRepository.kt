@@ -33,7 +33,7 @@ class MusicMetadataRepository {
      */
     suspend fun fetchMusicMetadataSpotify(query: String) {
         remoteSourceApi.fetchSongMetadata(query)
-        remoteSourceApi.musicMetadata.observeForever{
+        remoteSourceApi.musicMetadata.observeForever {
             addToRepo(it as ArrayList<URIMusicMetadata>)
         }
     }
@@ -47,14 +47,14 @@ class MusicMetadataRepository {
             val partial = MutableLiveData<URIMusicMetadata>()
             val fetched = ArrayList<URIMusicMetadata>()
 
-            partial.observeForever{ meta ->
+            partial.observeForever { meta ->
                 fetched.add(meta)
                 if (fetched.size == it.items.size) {
                     addToRepo(fetched)
                 }
             }
 
-            it.items.forEach{ t ->
+            it.items.forEach { t ->
                 val metadata = tokenizeMetadata(t.name)
 
                 t.downloadUrl.addOnSuccessListener { uri ->
@@ -63,7 +63,7 @@ class MusicMetadataRepository {
                     partial.postValue(uriMetadata)
                 }
             }
-        }.addOnFailureListener{
+        }.addOnFailureListener {
             Log.d("An error occured", it.toString())
         }
     }
@@ -82,13 +82,14 @@ class MusicMetadataRepository {
 
     /** Put these functions in string util **/
     private fun capitalizeString(string: String): String {
-        return string.split(" ").joinToString(" ") { w -> w.lowercase().replaceFirstChar {c -> c.uppercase()}}
+        return string.split(" ")
+            .joinToString(" ") { w -> w.lowercase().replaceFirstChar { c -> c.uppercase() } }
     }
 
     private fun tokenizeMetadata(name: String): List<String> {
         return name.removeSuffix(".mp3")
             .split("-")
-            .map{s -> s.trim()}
+            .map { s -> s.trim() }
     }
 
     private fun sanitizeMetadata(metadata: List<String>, uri: Uri): URIMusicMetadata {
@@ -96,6 +97,7 @@ class MusicMetadataRepository {
             artist = capitalizeString(metadata[0]),
             title = capitalizeString(metadata[1]),
             imageUrl = "https://yt3.ggpht.com/ytc/AKedOLQEPKJQm1iJn986SkSpabjJSdcoh8gPxDtHfpCQ=s88-c-k-c0x00ffffff-no-rj",
-            uri = uri.toString())
+            uri = uri.toString()
+        )
     }
 }

@@ -75,18 +75,16 @@
     <string name="new_user_birthdatePicker">Please, enter your Birthdate.</string>
 
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Voice Recognizer -->
     <string name="recognize_file">Recognize File</string>
     <string name="recognize_microphone_en">Recognize Microphone english</string>
     <string name="recognize_microphone_fr">Recognize Microphone french</string>
     <string name="tutorial">TUTORIAL</string>
-    <string name="recognize_microphone_vosk">Recognize Microphone Offline(Vosk)</string>
-    <string name="recognize_microphone_google">Recognize Microphone Online(Google)</string>
     <string name="stop_microphone">Stop Microphone</string>
     <string name="preparing">Preparing the recognizer\n</string>
     <string name="ready">Ready\n</string>
     <string name="failed">Failed to init recognizer %s\n</string>
-    <string name="elapsed">Result %s elapsed %d millisecond\n</string>
+    <string name="elapsed">Result %s elapsed %d milliseconds\n</string>
     <string name="starting">Starting\n</string>
     <string name="say_something">Say something\n</string>
     <string name="stop_file">Stop File</string>
@@ -165,7 +163,7 @@
     <string name="account_deletion_text">Are you sure you want to delete your account?</string>
     <string name="select_birthdate">select birthdate</string>
     <string name="select_your_gender">Please, select your gender</string>
-    <string name="cancel_btn">cancel</string>
+    <string name="cancel_btn">Cancel</string>
     <string name="alert_dialogue_cancel_title">Cancel update</string>
     <string name="alert_dialogue_cancel_text">Are you sure to keep old info</string>
     <string name="newUser_ExtraName">newUser</string>
@@ -183,12 +181,38 @@
     <!-- MULTI -->
     <string name="toast_connexion">Match are full, retrying…</string>
     <string name="toast_canceled_connexion">Search canceled !</string>
-    <string name="multi_loading">Loading ...</string>
+    <string name="multi_loading">Loading …</string>
     <string name="multi_write_link">Please write your link invitation</string>
     <string name="multi_match_full">match is full, sorry !</string>
     <string name="multi_match_not_found">Match not found !</string>
-    <string name="multi_wait_matches">Wait for matches...</string>
+    <string name="multi_wait_matches">Wait for matches…</string>
     <string name="multi_number_player">Give the maximum number of player</string>
     <string name="button_create_match">Create</string>
     <string name="multi_is_private">Do you want to create a private match ?</string>
+    <string name="playlist_name">Playlist</string>
+    <string name="multi_wait_players">Waiting for players…</string>
+    <string name="multi_wait_players_nb">Waiting for players : %1$d/%2$d</string>
+    <string name="lives">LIVES</string>
+    <string name="rounds">ROUNDS</string>
+    <string name="toast_connexion_internet">Connexion error, retrying…</string>
+    <string name="heart_number">x %1$d</string>
+    <string name="multi_bad_link">Verify the correctness of your link</string>
+    <string name="toast_canceled_match_creation">Match canceled !</string>
+    <string name="toast_connexion_internet_unavailable">You seems disconnected from Internet !</string>
+    <string name="multi_quit_match">Quit current match</string>
+    <string name="multi_join_match">Join current match</string>
+    <string name="multi_dynamic_link">Click here to share a link invitation !</string>
+    <string name="show_qr">Show QR code</string>
+    <string name="qr_code_description">QR code to join a game</string>
+    <string name="hide_qr">Hide QR</string>
+    <string name="share_title">Share invitation</string>
+    <string name="share_text">Share BlindWar invitation !</string>
+    <string name="share_subject">Invitation link !</string>
+    <string name="button_to_expand_playlist">Button to expand playlist</string>
+    <string name="button_to_play_preview_of_playlist">Button to play preview of playlist</string>
+    <string name="the_author_of_this_playlist">The author of this playlist</string>
+    <string name="hard">HARD</string>
+    <string name="pop">POP</string>
+    <string name="button_to_start_game">Button to start game</string>
+    <string name="timer">TIMER</string>
 </resources>

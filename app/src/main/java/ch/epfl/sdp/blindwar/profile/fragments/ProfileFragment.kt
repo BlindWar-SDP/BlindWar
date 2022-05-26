@@ -80,7 +80,12 @@ class ProfileFragment : Fragment() {
 
         observeUserValue(profileViewModel.name, view.findViewById(R.id.nameView))
         observeUserValue(profileViewModel.elo, view.findViewById(R.id.eloView))
-        updateProfileImage(profileViewModel.imageRef, view.findViewById(R.id.profileImgView), viewLifecycleOwner, requireContext())
+        updateProfileImage(
+            profileViewModel.imageRef,
+            view.findViewById(R.id.profileImgView),
+            viewLifecycleOwner,
+            requireContext()
+        )
 
         return view
     }

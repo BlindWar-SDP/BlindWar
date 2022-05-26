@@ -21,7 +21,7 @@ class URIFetcher : Fetcher {
         }
 
         player.prepareAsync()
-        **/
+         **/
         player.prepare()
 
         // Random start if the music duration is superior to 30s

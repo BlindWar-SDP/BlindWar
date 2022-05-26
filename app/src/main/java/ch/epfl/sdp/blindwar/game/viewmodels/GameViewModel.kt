@@ -35,17 +35,17 @@ open class GameViewModel(
     /** Encapsulates the characteristics of a game instead of its logic
      *
      */
-    protected    val game: GameInstance = gameInstance
+    protected val game: GameInstance = gameInstance
     protected lateinit var musicViewModel: MusicViewModel
     protected val profileViewModel = ProfileViewModel()
 
     protected val gameParameter: GameParameter = gameInstance
-        .gameConfig
-        .parameter
+        .gameConfig!!
+        .parameter!!
 
     protected val mode: GameMode = gameInstance
-        .gameConfig
-        .mode
+        .gameConfig!!
+        .mode!!
 
     /** Player game score **/
     var score = 0
@@ -62,8 +62,8 @@ open class GameViewModel(
      *
      */
     fun init() {
-        this.musicViewModel = MusicViewModel(
-            game.onlinePlaylist,
+        musicViewModel = MusicViewModel(
+            game.onlinePlaylist!!,
             context, resources
         )
     }
@@ -99,7 +99,7 @@ open class GameViewModel(
      */
     fun endGame() {
         val fails = round - score
-        var result = if (fails == 0) Result.WIN else Result.LOSS
+        val result = if (fails == 0) Result.WIN else Result.LOSS
 
         var formatted = "never"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -107,7 +107,7 @@ open class GameViewModel(
             val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
             formatted = current.format(formatter)
         }
-        val gameResult = GameResult(mode, Mode.SOLO, result ,round, score, formatted)
+        val gameResult = GameResult(mode, Mode.SOLO, result, round, score, formatted)
 
         profileViewModel.updateStats(score, fails, gameResult)
         musicViewModel.soundTeardown()

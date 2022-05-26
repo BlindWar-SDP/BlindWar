@@ -1,10 +1,7 @@
 package ch.epfl.sdp.blindwar.profile.viewmodel
 
-import android.content.ContentValues
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
@@ -19,11 +16,12 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.storage.StorageReference
 
-class ProfileViewModel: ViewModel() {
+class ProfileViewModel : ViewModel() {
     // DATABASE
     private val database = UserDatabase
     private val auth = FirebaseAuth.getInstance()
     private val currentUser = auth.currentUser
+
     //private val userRepository = UserRepository
     private val imageDatabase = ImageDatabase
 
@@ -78,8 +76,8 @@ class ProfileViewModel: ViewModel() {
 
     fun updateStats(score: Int, fails: Int, gameResult: GameResult) {
         if (currentUser != null) {
-            UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
             UserDatabase.addGameResult(currentUser.uid, gameResult)
+            UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
         }
     }
 

@@ -1,10 +1,11 @@
 package ch.epfl.sdp.blindwar.data.music.metadata
+
 import junit.framework.TestCase
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert.assertThat
 
 
-class URIMusicMetadataTest: TestCase() {
+class URIMusicMetadataTest : TestCase() {
 
     fun testTestToString() {
         val expected = "Poker Face by Lady Gaga"
@@ -28,7 +29,8 @@ class URIMusicMetadataTest: TestCase() {
 
     fun testGetImageUrl() {
         val expected = "https://i.scdn.co/image/ab67616d0000b273b33d46dfa2635a47eebf63b2"
-        val uriMetadata = URIMusicMetadata("Shine On You Crazy Diamond", "Pink Floyd", "", 650000, "URI")
+        val uriMetadata =
+            URIMusicMetadata("Shine On You Crazy Diamond", "Pink Floyd", "", 650000, "URI")
         uriMetadata.imageUrl = expected
         assertThat(uriMetadata.imageUrl, CoreMatchers.`is`(expected))
     }
@@ -42,7 +44,8 @@ class URIMusicMetadataTest: TestCase() {
 
     fun testGetURI() {
         val expected = 90
-        val uriMetadata = URIMusicMetadata("Shine On You Crazy Diamond", "Pink Floyd", "", 650000, "URI")
+        val uriMetadata =
+            URIMusicMetadata("Shine On You Crazy Diamond", "Pink Floyd", "", 650000, "URI")
         uriMetadata.duration = expected
         assertThat(uriMetadata.uri, CoreMatchers.`is`("URI"))
     }
