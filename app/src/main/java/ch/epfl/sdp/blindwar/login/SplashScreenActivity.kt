@@ -58,7 +58,6 @@ class SplashScreenActivity : AppCompatActivity() {
                 Log.w(TAG, "getDynamicLink:onFailure", e)
                 checkCurrentUser()
             }
-
     }
 
 //    override fun onResume() {

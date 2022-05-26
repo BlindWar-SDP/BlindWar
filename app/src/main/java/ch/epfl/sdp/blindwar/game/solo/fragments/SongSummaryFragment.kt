@@ -29,6 +29,7 @@ class SongSummaryFragment : Fragment() {
     private lateinit var skip: ImageButton
     private var likeSwitch: Boolean = false
     private var success: Boolean = false
+    private var timerStart: Long = 0
     private val profileViewModel: ProfileViewModel by activityViewModels()
     private lateinit var title: String
     private lateinit var artist: String
@@ -69,7 +70,7 @@ class SongSummaryFragment : Fragment() {
                 activity?.onBackPressed()
             }
         }
-
+        timerStart = System.currentTimeMillis()
         setLikeAnimation(view)
         setLikeListener()
 
@@ -126,7 +127,8 @@ class SongSummaryFragment : Fragment() {
                 // Reconstruct MusicMetadata from arguments
                 val defaultDuration = 10000
                 val defaultUri = ""
-                val music = MusicMetadata.createWithURI(title, artist, cover, defaultDuration, defaultUri)
+                val music =
+                    MusicMetadata.createWithURI(title, artist, cover, defaultDuration, defaultUri)
                 profileViewModel.likeMusic(music)
             }
         }
