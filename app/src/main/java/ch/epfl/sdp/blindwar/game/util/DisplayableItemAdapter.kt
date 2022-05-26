@@ -232,7 +232,6 @@ class DisplayableItemAdapter(
                                         listener?.remove()
                                         MultiPlayerMenuActivity.launchGame(
                                             match.uid,
-                                            context,
                                             fragmentManager
                                         )
                                     }

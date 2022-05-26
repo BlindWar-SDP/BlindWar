@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar.game.multi
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -54,13 +53,13 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
 
         /**
          * Launch the game for every player
-         * TODO
+         *
          * @param matchId
          */
-        fun launchGame(matchId: String, context: Context, supportFragmentManager: FragmentManager) {
-            // Goal: have the game with same config launched for all users
-            // Then we need to launch the fragment with a specific match_id as the tag
-            // so that the fragments knows it has to fetch value from a particular tag.
+        fun launchGame(matchId: String, supportFragmentManager: FragmentManager) {
+            /* Goal: have the game with same config launched for all users
+             Then we need to launch the fragment with a specific match_id as the tag
+             so that the fragments knows it has to fetch value from a particular tag.*/
             val demoFragment = DemoFragment()
             val bundle = Bundle().apply {
                 putString("match_id", matchId)
@@ -295,7 +294,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             }
             if (SnapshotListener.listenerOnLobby(snapshot, this, dialog!!)) {
                 listener?.remove()
-                launchGame(match.id, this, supportFragmentManager)
+                launchGame(match.id, supportFragmentManager)
             }
         }
     }
@@ -355,7 +354,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                                 listener?.remove()
                                 launchGame(
                                     match.uid,
-                                    this,
                                     supportFragmentManager
                                 )
                             }

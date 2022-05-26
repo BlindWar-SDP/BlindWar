@@ -9,20 +9,20 @@ class URIMusicMetadataTest : TestCase() {
 
     fun testTestToString() {
         val expected = "Poker Face by Lady Gaga"
-        val uriMetadata = URIMusicMetadata("Poker Face", "Lady Gaga", "", 0, "URI")
+        val uriMetadata = URIMusicMetadata("Poker Face", "Lady Gaga", "", 0)
         assertThat(uriMetadata.toString(), CoreMatchers.`is`(expected))
     }
 
     fun testGetTitle() {
         val expected = "Lady Gaga"
-        val uriMetadata = URIMusicMetadata("Poker Face", "", "", 0, "URI")
+        val uriMetadata = URIMusicMetadata("Poker Face", "", "", 0)
         uriMetadata.artist = expected
         assertThat(uriMetadata.artist, CoreMatchers.`is`(expected))
     }
 
     fun testGetArtist() {
         val expected = "Shine On You Crazy Diamond"
-        val uriMetadata = URIMusicMetadata("", "Pink Floyd", "", 650000, "URI")
+        val uriMetadata = URIMusicMetadata("", "Pink Floyd", "", 650000)
         uriMetadata.title = expected
         assertThat(uriMetadata.title, CoreMatchers.`is`(expected))
     }
@@ -30,7 +30,7 @@ class URIMusicMetadataTest : TestCase() {
     fun testGetImageUrl() {
         val expected = "https://i.scdn.co/image/ab67616d0000b273b33d46dfa2635a47eebf63b2"
         val uriMetadata =
-            URIMusicMetadata("Shine On You Crazy Diamond", "Pink Floyd", "", 650000, "URI")
+            URIMusicMetadata("Shine On You Crazy Diamond", "Pink Floyd", "", 650000)
         uriMetadata.imageUrl = expected
         assertThat(uriMetadata.imageUrl, CoreMatchers.`is`(expected))
     }
@@ -45,7 +45,7 @@ class URIMusicMetadataTest : TestCase() {
     fun testGetURI() {
         val expected = 90
         val uriMetadata =
-            URIMusicMetadata("Shine On You Crazy Diamond", "Pink Floyd", "", 650000, "URI")
+            URIMusicMetadata("Shine On You Crazy Diamond", "Pink Floyd", "", 650000)
         uriMetadata.duration = expected
         assertThat(uriMetadata.uri, CoreMatchers.`is`("URI"))
     }
