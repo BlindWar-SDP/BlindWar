@@ -5,9 +5,9 @@
     android:adjustViewBounds="true"
     android:scaleType="fitCenter">
     <shape
-        android:innerRadius="85dp"
+        android:innerRadius="68dp"
         android:shape="ring"
-        android:thickness="30dp"
+        android:thickness="26dp"
         android:useLevel="true"
         >
         <solid android:color="@color/cadet_blue_crayola" />
