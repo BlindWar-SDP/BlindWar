@@ -102,4 +102,22 @@ class GameActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+
+    /**
+     * Stop the main menu music
+     *
+     */
+    override fun onStop() {
+        MainMusic.pause()
+        super.onStop()
+    }
+
+    /**
+     * Resume the main menu music
+     *
+     */
+    override fun onResume() {
+        MainMusic.play()
+        super.onResume()
+    }
 }
