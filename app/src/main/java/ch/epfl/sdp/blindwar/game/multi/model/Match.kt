@@ -20,4 +20,5 @@ data class Match(
     var listResult: MutableList<Int>? = null,
     var maxPlayer: Int = 2,
     var isPrivate: Boolean = false
+var currentRound:
 )

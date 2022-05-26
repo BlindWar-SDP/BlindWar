@@ -37,7 +37,6 @@ import com.google.firebase.ktx.Firebase
 class MultiPlayerMenuActivity : AppCompatActivity() {
     private var eloDelta = DEFAULT_ELO
     private var dialog: AlertDialog? = null
-    private var isCanceled = false
     private var listener: ListenerRegistration? = null
     private var toast: Toast? = null
     private var currentUser: DataSnapshot? = null
@@ -164,7 +163,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                     .whereGreaterThan("elo", elo - eloDelta)
                     .orderBy("elo", Query.Direction.DESCENDING)
                     .limit(LIMIT_MATCH).get()
-                if (matches.isSuccessful && !isCanceled) {
+                if (matches.isSuccessful) {
                     var i = 0
                     var match: DocumentReference? = null
                     while (match == null && i < LIMIT_MATCH) {
@@ -175,15 +174,15 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                         )
                         i++
                     }
-                    if (match == null && !isCanceled) {
+                    if (match == null) {
                         displayToast(R.string.toast_connexion)
                         eloDelta += DELTA_MATCHMAKING
                         isOk = false
-                    } else if (!isCanceled) {
+                    } else {
                         isOk = true
-                        setListener(match!!)
+                        setListener(match)
                     }
-                } else if (!isCanceled) {
+                } else {
                     displayToast(R.string.toast_connexion_internet)
                     isOk = false
                 }
@@ -206,8 +205,8 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             getString(R.string.cancel_btn)
         ) { it, _ -> it.cancel() }
         builder.setOnCancelListener {
-            isCanceled = true
             displayToast(R.string.toast_canceled_connexion)
+            quitMatch(Button(applicationContext))
         }
         val view = View.inflate(applicationContext, R.layout.fragment_dialog_loading, null)
         builder.setView(view)
@@ -239,7 +238,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         setProgressDialog("Wait for connexion")
         val user = UserDatabase.getCurrentUser()
         val match: DocumentSnapshot? = MatchDatabase.getMatchSnapshot(uid, Firebase.firestore)
-        if (!isCanceled && match != null) {
+        if (match != null) {
             val matchObject = match.toObject(Match::class.java)!!
             val connect =
                 MatchDatabase.connect(
@@ -247,13 +246,13 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                     user?.getValue(User::class.java)!!,
                     Firebase.firestore
                 )
-            if (connect == null && !isCanceled) {
+            if (connect == null) {
                 displayToast(R.string.multi_match_full)
                 dialog!!.hide()
-            } else if (!isCanceled) {
+            } else {
                 setListener(match.reference)
             }
-        } else if (!isCanceled) {
+        } else {
             displayToast(R.string.multi_match_not_found)
             dialog!!.hide()
         }
@@ -329,7 +328,23 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun joinMatch(view: View) {
-        launchGame(matchId!!, applicationContext, supportFragmentManager)
+        val snapshot = MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)
+            ?.toObject(Match::class.java)
+        if (snapshot != null) {
+            if (){ //TODO check if matchmaking or in game
+                //TODO if in game, get current round
+                launchGame(matchId!!, applicationContext, supportFragmentManager)
+            } else {
+                if () {
+                    //Match making creator : qr code dialog
+                } else {
+                    //match making connector, progress dialog
+                }
+            }
+        } else {
+            displayToast(R.string.multi_match_not_found)
+            quitMatch(view)
+        }
     }
 
     /** Shows the selected fragment

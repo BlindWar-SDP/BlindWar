@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.game.solo.fragments
 
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,8 +68,8 @@ class SongSummaryFragment : Fragment() {
         if (isMulti) {
             view.findViewById<ImageButton>(R.id.skip_next_summary).visibility = View.GONE
             thread {
-                val timerStart = System.currentTimeMillis()
-                while (System.currentTimeMillis() - timerStart < timeInterRounds);
+                val timerStart = SystemClock.elapsedRealtime()
+                while (SystemClock.elapsedRealtime() - timerStart < timeInterRounds);
                 activity?.onBackPressed()
             }
         } else {
@@ -81,7 +82,6 @@ class SongSummaryFragment : Fragment() {
         }
         setLikeAnimation(view)
         setLikeListener()
-
         return view
     }
 
@@ -107,7 +107,6 @@ class SongSummaryFragment : Fragment() {
             arguments?.getBoolean("liked")!!
         } else
             false
-
         setLikeListener()
     }
 
