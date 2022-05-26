@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import junit.framework.TestCase
 import org.junit.After
 import org.junit.Before
@@ -82,6 +84,8 @@ class ProfileFragmentTest : TestCase() {
             FirebaseAuth.getInstance().signInAnonymously()
         val loginMail: Task<AuthResult> =
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+        Firebase.auth.signOut()
+        Thread.sleep(1500)
         try {
             Tasks.await(loginAnon)
         } catch (e: ExecutionException) {
