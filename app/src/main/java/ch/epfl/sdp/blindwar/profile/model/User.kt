@@ -4,31 +4,20 @@ package ch.epfl.sdp.blindwar.profile.model
 import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.game.model.GameResult
 
-//const val UID = "uid"
-//const val EMAIL = "email`"
-//const val STATS = "userStatistics"
-//const val PSEUDO = "pseudo"
-//const val FIRSTNAME = "firstName"
-//const val LASTNAME = "lastName"
-//const val BIRTHDATE = "birthdate"
-//const val PROFILE_PICTURE = "profilePicture"
-//const val GENDER = "gender"
-//const val DESCRIPTION = "description"
-
 data class User(
     var uid: String = "",
     var email: String = "",
     var userStatistics: AppStatistics = AppStatistics(),
     var pseudo: String = "",
-    var firstName: String? = null,
-    var lastName: String? = null,
-    var birthDate: Long? = 0,
+    var firstName: String = "",
+    var lastName: String = "",
+    var birthdate: Long = -1,
     var profilePicture: String = "",
     var likedMusics: MutableList<URIMusicMetadata> = mutableListOf(),
     var matchHistory: MutableList<GameResult> = mutableListOf(),
     var gender: String = "",
     var description: String = "",
-    var matchId: String = "",
+    var matchId: String = ""
 ) {
 
     class Builder(
@@ -38,12 +27,13 @@ data class User(
         private var pseudo: String = "",
         private var firstName: String = "",
         private var lastName: String = "",
-        private var birthDate: Long = -1,
+        private var birthdate: Long = -1,
         private var profilePicture: String = "",
         private var likedMusics: MutableList<URIMusicMetadata> = mutableListOf(),
         private var matchHistory: MutableList<GameResult> = mutableListOf(),
         private var gender: String = "",
-        private var description: String = ""
+        private var description: String = "",
+        private var matchId: String = ""
     ) {
 
         fun setUid(uid: String) = apply { this.uid = uid }
@@ -52,10 +42,8 @@ data class User(
         fun setPseudo(pseudo: String) = apply { this.pseudo = pseudo }
         fun setFirstName(name: String) = apply { this.firstName = name }
         fun setLastName(name: String) = apply { this.lastName = name }
-        fun setBirthdate(date: Long) = apply { this.birthDate = date }
+        fun setBirthdate(date: Long) = apply { this.birthdate = date }
         fun setProfilePicture(imagePath: String) = apply { this.profilePicture = imagePath }
-        fun setGender(gender: String) = apply { this.gender = gender }
-        fun setDescription(desc: String) = apply { this.description = desc }
         fun setLikedMusics(likedMusics: MutableList<URIMusicMetadata>) = apply {
             this.likedMusics =
                 likedMusics
@@ -65,6 +53,9 @@ data class User(
             this.matchHistory =
                 matchHistory
         }
+        fun setGender(gender: String) = apply { this.gender = gender }
+        fun setDescription(desc: String) = apply { this.description = desc }
+        fun setMatchId(mid: String) = apply {this.matchId = mid}
 
 
         fun fromUser(user: User) = apply {
@@ -72,12 +63,15 @@ data class User(
             this.email = user.email
             this.userStatistics = user.userStatistics
             this.pseudo = user.pseudo
-            this.firstName = user.firstName.toString()
-            this.lastName = user.lastName.toString()
-            this.birthDate = user.birthDate!!
+            this.firstName = user.firstName
+            this.lastName = user.lastName
+            this.birthdate = user.birthdate
             this.profilePicture = user.profilePicture
+            this.likedMusics = user.likedMusics
+            this.matchHistory = user.matchHistory
             this.gender = user.gender
             this.description = user.description
+            this.matchId = user.matchId
         }
 
         fun build(): User {
@@ -88,12 +82,13 @@ data class User(
                 pseudo,
                 firstName,
                 lastName,
-                birthDate,
+                birthdate,
                 profilePicture,
                 likedMusics,
                 matchHistory,
                 gender,
-                description
+                description,
+                matchId
             )
         }
     }

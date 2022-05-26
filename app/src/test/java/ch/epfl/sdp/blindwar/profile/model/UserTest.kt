@@ -1,7 +1,5 @@
 package ch.epfl.sdp.blindwar.profile.model
 
-import ch.epfl.sdp.blindwar.profile.model.AppStatistics
-import ch.epfl.sdp.blindwar.profile.model.User
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -26,6 +24,7 @@ class UserTest {
     private var uid2 = "Male"
     private var profilePicture1: String = "image1"
     private var profilePicture2: String = "image2"
+    // TODO : update with new parameters
 
     private lateinit var testUser1: User
     private lateinit var testUser2: User
@@ -84,7 +83,7 @@ class UserTest {
 
     @Test
     fun getBirthdate() {
-        assertEquals(testUser1.birthDate, birthdate1)
+        assertEquals(testUser1.birthdate, birthdate1)
     }
 
     @Test
@@ -148,7 +147,7 @@ class UserTest {
     @Test
     fun setBirthDate() {
         val testUser = User.Builder().setBirthdate(birthdate1).build()
-        assertEquals(testUser.birthDate, birthdate1)
+        assertEquals(testUser.birthdate, birthdate1)
     }
 
     @Test
@@ -166,7 +165,7 @@ class UserTest {
     @Test
     fun setBirthdate() {
         val testUser = User.Builder().setBirthdate(birthdate1).build()
-        assertEquals(testUser.birthDate, birthdate1)
+        assertEquals(testUser.birthdate, birthdate1)
     }
 
     @Test

@@ -41,10 +41,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".login.UserNewInfoActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".game.util.GameActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"
@@ -53,11 +49,6 @@
             android:name=".game.solo.TutorialActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".login.UserAdditionalInfoActivity"
-            android:exported="false"
-            android:parentActivityName=".login.UserNewInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".game.multi.MultiPlayerMenuActivity"

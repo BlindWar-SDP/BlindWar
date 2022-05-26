@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="NU_left_margin">16dp</dimen>
+    <dimen name="NU_between_field_margin">45dp</dimen>
+    <dimen name="NU_image_size">158dp</dimen>
+    <dimen name="NU_top_guideline">20dp</dimen>
+
+    <dimen name="bottom_margin">32dp</dimen>
+</resources>
