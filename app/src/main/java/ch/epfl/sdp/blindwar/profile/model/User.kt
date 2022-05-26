@@ -2,7 +2,6 @@ package ch.epfl.sdp.blindwar.profile.model
 
 
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
-import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import ch.epfl.sdp.blindwar.game.model.GameResult
 
 data class User(
@@ -14,7 +13,7 @@ data class User(
     var lastName: String = "",
     var birthdate: Long = -1,
     var profilePicture: String = "",
-    var likedMusics: MutableList<URIMusicMetadata> = mutableListOf(),
+    var likedMusics: MutableList<MusicMetadata> = mutableListOf(),
     var matchHistory: MutableList<GameResult> = mutableListOf(),
     var gender: String = "",
     var description: String = "",
@@ -30,7 +29,7 @@ data class User(
         private var lastName: String = "",
         private var birthdate: Long = -1,
         private var profilePicture: String = "",
-        private var likedMusics: MutableList<URIMusicMetadata> = mutableListOf(),
+        private var likedMusics: MutableList<MusicMetadata> = mutableListOf(),
         private var matchHistory: MutableList<GameResult> = mutableListOf(),
         private var gender: String = "",
         private var description: String = "",
@@ -45,7 +44,7 @@ data class User(
         fun setLastName(name: String) = apply { this.lastName = name }
         fun setBirthdate(date: Long) = apply { this.birthdate = date }
         fun setProfilePicture(imagePath: String) = apply { this.profilePicture = imagePath }
-        fun setLikedMusics(likedMusics: MutableList<URIMusicMetadata>) = apply {
+        fun setLikedMusics(likedMusics: MutableList<MusicMetadata>) = apply {
             this.likedMusics =
                 likedMusics
         }
