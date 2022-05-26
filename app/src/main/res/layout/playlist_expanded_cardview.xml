@@ -58,7 +58,8 @@
                     app:layout_constraintVertical_bias="0.0"
                     app:srcCompat="@drawable/baseline_navigate_before_24"
                     app:tint="@color/ivory"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    tools:ignore="SpeakableTextPresentCheck"
+                    android:contentDescription="@string/button_to_expand_playlist" />
 
                 <ImageButton
                     android:id="@+id/playPreview"
@@ -70,7 +71,8 @@
                     app:layout_constraintStart_toEndOf="@+id/playlistName"
                     app:layout_constraintTop_toTopOf="@+id/progress_preview"
                     app:srcCompat="@drawable/play_arrow_small"
-                    app:tint="@color/ivory" />
+                    app:tint="@color/ivory"
+                    android:contentDescription="@string/button_to_play_preview_of_playlist" />
 
                 <ImageView
                     android:id="@+id/authorIcon"
@@ -83,7 +85,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/playlistName"
                     app:layout_constraintVertical_bias="0.0"
                     app:srcCompat="@drawable/ic_baseline_check_24"
-                    app:tint="@color/ivory" />
+                    app:tint="@color/ivory"
+                    android:contentDescription="@string/the_author_of_this_playlist" />
 
 
                 <TextView
@@ -104,7 +107,7 @@
                     app:layout_constraintStart_toEndOf="@+id/coverGuideline"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="1.0"
-                    tools:text="LONG PLAYLIST HAHAH" />
+                    tools:text="LONG PLAYLIST HAHA" />
 
                 <TextView
                     android:id="@+id/authorTextview"
@@ -131,7 +134,7 @@
                     android:layout_marginTop="6dp"
                     android:background="@drawable/hard_label_frame"
                     android:fontFamily="@font/oxygen_light"
-                    android:text="HARD"
+                    android:text="@string/hard"
                     android:textColor="@color/ivory"
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -150,7 +153,7 @@
                     android:layout_marginTop="6dp"
                     android:background="@drawable/genre_label_frame"
                     android:fontFamily="@font/oxygen_light"
-                    android:text="POP"
+                    android:text="@string/pop"
                     android:textColor="@color/ivory"
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -276,7 +279,8 @@
                     app:layout_constraintStart_toEndOf="@+id/guideline8"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/play_arrow"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    tools:ignore="SpeakableTextPresentCheck"
+                    android:contentDescription="@string/button_to_start_game" />
 
                 <NumberPicker
                     android:id="@+id/roundPicker"
@@ -314,7 +318,7 @@
                     android:layout_marginEnd="8dp"
                     android:autoSizeTextType="uniform"
                     android:fontFamily="@font/oxygen"
-                    android:text="ROUNDS"
+                    android:text="@string/rounds"
                     android:textColor="@color/ivory"
                     app:layout_constraintBottom_toBottomOf="@+id/roundPicker"
                     app:layout_constraintEnd_toStartOf="@+id/timerPicker"
@@ -332,7 +336,7 @@
                     android:layout_marginEnd="8dp"
                     android:autoSizeTextType="uniform"
                     android:fontFamily="@font/oxygen"
-                    android:text="TIMER"
+                    android:text="@string/timer"
                     android:textColor="@color/ivory"
                     app:layout_constraintBottom_toBottomOf="@+id/timerPicker"
                     app:layout_constraintEnd_toStartOf="@+id/guideline8"

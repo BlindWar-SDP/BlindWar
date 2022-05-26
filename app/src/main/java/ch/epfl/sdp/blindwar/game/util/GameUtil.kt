@@ -211,7 +211,7 @@ object GameUtil {
         REV_PLAYLIST,
         "",
         URL_PREVIEW_TUTORIAL,
-        Difficulty.EASY
+        Difficulty.DIFFICULT
     )
 
     private val tutorialPlaylist = LocalPlaylist(
@@ -222,7 +222,7 @@ object GameUtil {
         TUTORIAL_PLAYLIST,
         "",
         URL_PREVIEW_TUTORIAL,
-        Difficulty.EASY
+        Difficulty.MEDIUM
     )
 
     private const val COVER_TESTING =

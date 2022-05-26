@@ -1,9 +1,8 @@
 package ch.epfl.sdp.blindwar.profile.viewmodel
 
-import android.content.ContentValues
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
@@ -78,8 +77,8 @@ class ProfileViewModel : ViewModel() {
 
     fun updateStats(score: Int, fails: Int, gameResult: GameResult) {
         if (currentUser != null) {
-            UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
             UserDatabase.addGameResult(currentUser.uid, gameResult)
+            UserDatabase.updateSoloUserStatistics(currentUser.uid, score, fails)
         }
     }
 
