@@ -56,6 +56,7 @@ class DisplayableItemAdapter(
     private val gameInstanceViewModel: GameInstanceViewModel,
     private val profileViewModel: ProfileViewModel,
     private val fragmentManager: FragmentManager,
+    private var listener: ListenerRegistration? = null
 ) :
     RecyclerView.Adapter<DisplayableItemAdapter.DisplayableItemViewHolder>() {
 
@@ -204,7 +205,30 @@ class DisplayableItemAdapter(
                     GameFormat.MULTI -> {
                         val match: Match? = gameInstanceViewModel.createMatch()
                         if (match != null) {
-                            createDialog(match, context, fragmentManager)
+                            val dialog = DynamicLinkHelper.setDynamicLinkDialog(
+                                context.getString(R.string.multi_wait_players),
+                                match.uid,
+                                context,
+                                false
+                            )
+                            dialog.show()
+                            listener = Firebase.firestore.collection(MatchDatabase.COLLECTION_PATH)
+                                .document(match.uid).addSnapshotListener { snapshot, e ->
+                                    if (e != null) {
+                                        return@addSnapshotListener
+                                    }
+                                    if (SnapshotListener.listenerOnLobby(
+                                            snapshot, context, dialog
+                                        )
+                                    ) {
+                                        listener?.remove()
+                                        MultiPlayerMenuActivity.launchGame(
+                                            match.uid,
+                                            context,
+                                            fragmentManager
+                                        )
+                                    }
+                                }
                         }
                     }
                 }
@@ -320,27 +344,6 @@ class DisplayableItemAdapter(
         const val TIMER_MAX_VALUE = 9
         const val DURATION_FAST = 20000L
         const val DURATION_DEFAULT = 30000L
-        fun createDialog(match: Match, context: Context, fragmentManager: FragmentManager) {
-            val dialog = DynamicLinkHelper.setDynamicLinkDialog(
-                context.getString(R.string.multi_wait_players), match.uid, context
-            )
-            dialog.show()
-            var listener: ListenerRegistration? = null
-            listener = Firebase.firestore.collection(MatchDatabase.COLLECTION_PATH)
-                .document(match.uid).addSnapshotListener { snapshot, e ->
-                    if (e != null) {
-                        return@addSnapshotListener
-                    }
-                    if (SnapshotListener.listenerOnLobby(snapshot, context, dialog)) {
-                        listener?.remove()
-                        MultiPlayerMenuActivity.launchGame(
-                            match.uid,
-                            context,
-                            fragmentManager
-                        )
-                    }
-                }
-        }
     }
 }
 

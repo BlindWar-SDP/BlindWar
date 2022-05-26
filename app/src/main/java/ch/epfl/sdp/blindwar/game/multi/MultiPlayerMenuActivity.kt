@@ -17,7 +17,7 @@ import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
-import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
+import ch.epfl.sdp.blindwar.game.util.DynamicLinkHelper
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 import ch.epfl.sdp.blindwar.profile.model.User
@@ -84,7 +84,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_multiplayer_menu)
         currentUser = UserDatabase.getCurrentUser()
         matchId = currentUser?.child("matchId")?.value as String?
-
 
         if (matchId != null && matchId!!.isNotEmpty()) {
             findViewById<FrameLayout>(R.id.frameLayout_create).visibility = View.GONE
@@ -340,11 +339,27 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                         .equals(currentUser?.child("uid")?.value as String?)
                     && match.listPlayers?.get(0) != null
                 ) {
-                    DisplayableItemAdapter.createDialog(
-                        match,
-                        applicationContext,
-                        supportFragmentManager
+                    dialog = DynamicLinkHelper.setDynamicLinkDialog(
+                        getString(R.string.multi_wait_players), match.uid, this, true
                     )
+                    dialog?.show()
+                    listener = Firebase.firestore.collection(MatchDatabase.COLLECTION_PATH)
+                        .document(match.uid).addSnapshotListener { snapshotListener, e ->
+                            if (e != null) {
+                                return@addSnapshotListener
+                            }
+                            if (SnapshotListener.listenerOnLobby(
+                                    snapshotListener, this, dialog!!
+                                )
+                            ) {
+                                listener?.remove()
+                                launchGame(
+                                    match.uid,
+                                    this,
+                                    supportFragmentManager
+                                )
+                            }
+                        }
                 } else {
                     setListener(snapshot.reference)
                     setProgressDialog("Wait for connexion")
