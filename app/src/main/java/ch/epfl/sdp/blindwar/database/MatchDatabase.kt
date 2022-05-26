@@ -40,11 +40,12 @@ object MatchDatabase {
                 mutableListOf(userPseudo),
                 game,
                 mutableListOf(0),
+                mutableListOf(false),
                 numberOfPlayerMax,
                 isPrivate
             )
             db.collection(COLLECTION_PATH).document(match.uid).set(match)
-            UserDatabase.addMatchId(userUID,match.uid)
+            UserDatabase.addMatchId(userUID, match.uid)
             return match
         }
         return null
@@ -70,7 +71,7 @@ object MatchDatabase {
 
     /**
      * add a player to the match and return the document
-     * TODO use exception to handle diffrent errors
+     *
      * @param match
      * @param user
      * @return
@@ -82,7 +83,8 @@ object MatchDatabase {
         match.listPlayers!!.add(user.uid)
         match.listPseudo!!.add(user.pseudo)
         match.listResult!!.add(0)
-        UserDatabase.addMatchId(user.uid,match.uid)
+        match.listFinished!!.add(false)
+        UserDatabase.addMatchId(user.uid, match.uid)
         db.collection(COLLECTION_PATH).document(match.uid).set(match)
         return db.collection(COLLECTION_PATH).document(match.uid)
     }
@@ -128,7 +130,11 @@ object MatchDatabase {
      * @param db
      */
 
-    fun addScoreListener(matchId: String, db: FirebaseFirestore, listener: EventListener<DocumentSnapshot>) {
+    fun addScoreListener(
+        matchId: String,
+        db: FirebaseFirestore,
+        listener: EventListener<DocumentSnapshot>
+    ) {
         val matchRef = db.collection("match").document(matchId)
         matchRef.addSnapshotListener(listener)
     }

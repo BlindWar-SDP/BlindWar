@@ -65,19 +65,16 @@ class SongSummaryFragment : Fragment() {
             layout.setBackgroundColor(resources.getColor(R.color.black, activity?.theme))
         }
         val isMulti = arguments?.get(IS_MULTI) as Boolean?
-        if (isMulti != null && isMulti) {
-            view.findViewById<ImageButton>(R.id.skip_next_summary).visibility = View.GONE
+        if (isMulti != null && isMulti) { //avoid waiting for an afk player
             thread {
                 val timerStart = SystemClock.elapsedRealtime()
                 while (SystemClock.elapsedRealtime() - timerStart < timeInterRounds);
                 activity?.onBackPressed()
             }
-        } else {
-            view.findViewById<ImageButton>(R.id.skip_next_summary).visibility = View.GONE
-            skip = view.findViewById<ImageButton>(R.id.skip_next_summary).also { button ->
-                button.setOnClickListener {
-                    activity?.onBackPressed()
-                }
+        }
+        skip = view.findViewById<ImageButton>(R.id.skip_next_summary).also { button ->
+            button.setOnClickListener {
+                activity?.onBackPressed()
             }
         }
         setLikeAnimation(view)
@@ -160,7 +157,7 @@ class SongSummaryFragment : Fragment() {
     }
 
     companion object {
-        const val timeInterRounds = 4000
+        const val timeInterRounds = 3500
         const val ARTIST_KEY = "ARTIST"
         const val TITLE_KEY = "TITLE"
         const val COVER_KEY = "COVER"

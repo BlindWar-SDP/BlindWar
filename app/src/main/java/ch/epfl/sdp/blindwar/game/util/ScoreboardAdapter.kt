@@ -25,7 +25,6 @@ class ScoreboardAdapter(playersName: List<String>) :
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.scoreboard_item, viewGroup, false)
-
         return ViewHolder(view)
     }
 

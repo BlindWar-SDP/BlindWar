@@ -133,8 +133,8 @@ class DemoFragment : Fragment() {
         }
         scoreboardAdapter = if (playerList != null) {
             ScoreboardAdapter(playerList!!)
-        } else { //TODO this not what we want ^^'
-            ScoreboardAdapter(listOf("Marty", "Joris", "Nael", "Arthur", "Paul", "Henrique"))
+        } else {
+            ScoreboardAdapter(listOf(""))
         }
         scoreboard.setHasFixedSize(true)
 

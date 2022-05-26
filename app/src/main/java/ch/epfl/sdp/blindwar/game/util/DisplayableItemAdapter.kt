@@ -217,7 +217,15 @@ class DisplayableItemAdapter(
                                     if (e != null) {
                                         return@addSnapshotListener
                                     }
-                                    if (SnapshotListener.listenerOnLobby(
+                                    if (snapshot == null || !snapshot.exists()) {
+                                        Toast.makeText(
+                                            context,
+                                            R.string.toast_canceled_match_creation,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        listener?.remove()
+                                        dialog.cancel()
+                                    } else if (SnapshotListener.listenerOnLobby(
                                             snapshot, context, dialog
                                         )
                                     ) {
