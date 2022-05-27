@@ -122,10 +122,7 @@ class DemoFragment : Fragment() {
 
         // if multi mode, get gameInstance from matchId
         matchId = arguments?.getString("match_id")
-
-        // Pause the main menu music
-        MainMusic.pause()
-
+        
         // Get the scoreboard
         scoreboard = view.findViewById(R.id.scoreboard)
 
