@@ -37,6 +37,7 @@ class UserDatabaseTest : TestCase() {
             user0.userStatistics.eloSetter(elo)
             UserDatabase.database
             UserDatabase.updateUser(user0)
+            // TODO: Use Tasks.await to make sure that the assertions are called
             UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
                 assertTrue((it.getValue(User::class.java)?.userStatistics?.elo == elo))
             }
@@ -50,6 +51,7 @@ class UserDatabaseTest : TestCase() {
             user0.birthdate = birthdate
             UserDatabase.database
             UserDatabase.updateUser(user0)
+            // TODO: Use Tasks.await to make sure that the assertions are called
             UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
                 assertTrue((it.getValue(User::class.java)?.birthdate == birthdate))
             }
@@ -63,6 +65,7 @@ class UserDatabaseTest : TestCase() {
             user0.description = description
             UserDatabase.database
             UserDatabase.updateUser(user0)
+            // TODO: Use Tasks.await to make sure that the assertions are called
             UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
                 assertTrue((it.getValue(User::class.java)?.description == description))
             }
@@ -158,6 +161,7 @@ class UserDatabaseTest : TestCase() {
                     }).getValue(User::class.java)
             }
         }
+        
 
         //assertTrue(user?.userStatistics?.correctArray?.last() == score)
         //assertTrue(user?.userStatistics?.wrongArray?.last() == fail)
