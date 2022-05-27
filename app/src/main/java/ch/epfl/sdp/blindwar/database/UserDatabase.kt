@@ -1,6 +1,6 @@
 package ch.epfl.sdp.blindwar.database
 
-import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Mode
@@ -15,7 +15,7 @@ import com.google.firebase.ktx.Firebase
 
 
 object UserDatabase {
-    const val COLLECTION_PATH = "Users"
+    private const val COLLECTION_PATH = "Users"
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     val userReference = database.getReference(COLLECTION_PATH)
 
@@ -66,6 +66,7 @@ object UserDatabase {
      */
     // Add user to database
     fun updateUser(user: User): Task<Void> {
+        // return task only for test... maybe should be modified
         return userReference.child(user.uid).setValue(user)
     }
 
@@ -76,6 +77,15 @@ object UserDatabase {
      */
     fun removeMatchId(uid: String) {
         userReference.child(uid).updateChildren(mapOf("matchId" to ""))
+    }
+
+    /**
+     * Set matchId of the uid user
+     *
+     * @param uid
+     */
+    fun addMatchId(uid: String, matchId: String) {
+        userReference.child(uid).updateChildren(mapOf("matchId" to matchId))
     }
 
     /**
@@ -93,7 +103,7 @@ object UserDatabase {
      * @param uid
      * @param music
      */
-    fun addLikedMusic(uid: String, music: URIMusicMetadata): Task<DataSnapshot> {
+    fun addLikedMusic(uid: String, music: MusicMetadata): Task<DataSnapshot> {
         val userRef = getUserReference(uid)
         return userRef.get().addOnSuccessListener {
             val user: User? = it.getValue(User::class.java)
@@ -126,55 +136,6 @@ object UserDatabase {
                 userRef.setValue(user)
             }
         }
-    }
-
-    /**
-     * Set elo of an user
-     *
-     * @param uid user identification
-     */
-    fun setElo(uid: String, elo: Int) {
-        getEloReference(uid).setValue(elo)
-    }
-
-//    fun updateUser(user: User){
-//        val ref = userReference.child(user.uid)
-//        // TODO no statistics ...
-//        ref.child(User.VarName.pseudo.name).setValue(user.pseudo)
-//        ref.child(User.VarName.firstName.name).setValue(user.firstName)
-//        ref.child(User.VarName.lastName.name).setValue(user.lastName)
-//        ref.child(User.VarName.profilePicture.name).setValue(user.profilePicture)
-//        ref.child(User.VarName.description.name).setValue(user.description)
-//        ref.child(User.VarName.gender.name).setValue(user.gender)
-//        ref.child(User.VarName.birthdate.name).setValue(user.birthdate)
-//    }
-
-    fun setFirstName(uid: String, fn: String): Task<Void> {
-        return userReference.child(uid).child("firstName").setValue(fn)
-    }
-
-    fun setLastName(uid: String, ln: String): Task<Void> {
-        return userReference.child(uid).child("lastName").setValue(ln)
-    }
-
-    fun setPseudo(uid: String, pseudo: String): Task<Void> {
-        return userReference.child(uid).child("pseudo").setValue(pseudo)
-    }
-
-    fun setProfilePicture(uid: String, pp: String): Task<Void> {
-        return userReference.child(uid).child("profilePicture").setValue(pp)
-    }
-
-    fun setBirthdate(uid: String, date: Long): Task<Void> {
-        return userReference.child(uid).child("birthDate").setValue(date)
-    }
-
-    fun setGender(uid: String, gender: String): Task<Void> {
-        return userReference.child(uid).child("gender").setValue(gender)
-    }
-
-    fun setDescription(uid: String, desc: String): Task<Void> {
-        return userReference.child(uid).child("description").setValue(desc)
     }
 
     /**
@@ -251,5 +212,15 @@ object UserDatabase {
         } catch (_: Exception) {
             null
         }
+    }
+
+    /**
+     * set keepSynced to true for the User
+     * keep cache to prevent connection loss
+     *
+     * @param uid
+     */
+    fun setKeepSynced(uid: String) {
+        getUserReference(uid).keepSynced(true)
     }
 }

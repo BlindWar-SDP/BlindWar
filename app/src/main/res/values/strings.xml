@@ -16,6 +16,7 @@
     <string name="Btn_google">Google</string>
     <string name="confirm">Confirm</string>
     <string name="ok">OK</string>
+    <string name="Btn_anonymous">Guest</string>
 
     <!--  GameUtil  -->
     <string name="play_button_description">Click here to play or stop the game</string>
@@ -109,7 +110,6 @@
     <string name="tutorial_music_set">Tutorial music set</string>
     <string name="online_music">Online Music</string>
     <string name="your_musics">Your musics</string>
-    <string name="birthDate_txt">dd/mm/yyyy</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="song_summary_artist">Artist image view</string>
     <string name="demo_tutorial_artist">Artist image</string>
@@ -144,9 +144,7 @@
     <string name="edit_text_hint_lastName">Write your last name</string>
     <string name="demo">DEMO</string>
     <string name="button">BUTTON</string>
-    <string name="time">TIME</string>
     <string name="artist">ARTIST</string>
-    <string name="track">TRACK</string>
     <string name="play_with_friends">Join a game via link</string>
     <string name="play_with_random">Play Now !</string>
     <string name="multi_create_match">Create a match</string>
@@ -161,14 +159,14 @@
     <string name="account_not_deleted_toast">deletion cancelled</string>
     <string name="account_deletion_title">Account Deletion</string>
     <string name="account_deletion_text">Are you sure you want to delete your account?</string>
-    <string name="select_birthdate">select birthdate</string>
+    <string name="select_birthdate">set birthdate</string>
     <string name="select_your_gender">Please, select your gender</string>
     <string name="cancel_btn">Cancel</string>
     <string name="alert_dialogue_cancel_title">Cancel update</string>
     <string name="alert_dialogue_cancel_text">Are you sure to keep old info</string>
     <string name="newUser_ExtraName">newUser</string>
     <string name="reset">reset</string>
-    <string name="no_birthdate_selected">no birthdate selected</string>
+    <string name="no_birthdate_selected"/>
 
     <!-- PROFILE -->
     <string name="userRank">Rank</string>
@@ -215,4 +213,28 @@
     <string name="pop">POP</string>
     <string name="button_to_start_game">Button to start game</string>
     <string name="timer">TIMER</string>
+    <string name="multi_already_started">Match has already started, disconnexion…</string>
+    <string name="NU_describe_yourself">describe yourself</string>
+    <string name="birthdate_set_to">birthdate set to</string>
+    <string name="_1000">1000</string>
+    <string name="name">NAME</string>
+    <string name="statistics">Statistics</string>
+    <string name="history">History</string>
+    <string name="favorites">Favorites</string>
+    <string name="pen_image">PenImage</string>
+    <string name="login_image">login image</string>
+    <string name="delete_profile_image">delete profile image</string>
+    <string name="content_description_ImageButton">Image button</string>
+    <string name="content_description_Image">Image</string>
+    <string name="x_1">x 1</string>
+    <string name="track">TRACK</string>
+    <string name="time">TIME</string>
+    <string name="main_menu_music_name">Crabe Rave - Noisestorm</string>
+    <string name="play">Play</string>
+    <string name="search">Search</string>
+    <string name="title">Title</string>
+    <string name="this_is_an_artist">This is an artist</string>
+    <string name="_0">0</string>
+    <string name="delete">Delete</string>
+    <string name="unknown">UNKNOWN</string>
 </resources>

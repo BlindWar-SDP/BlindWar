@@ -21,14 +21,14 @@ class MainMusicTest : TestCase() {
     }
 
     @Test(expected = Test.None::class)
-    fun playAndPauseMusicTheMusic(){
+    fun playAndPauseMusicTheMusic() {
         // Test now exception is thrown
         MainMusic.prepareAndPlay(context)
         MainMusic.pause()
     }
 
     @Test
-    fun resetAndPause(){
+    fun resetAndPause() {
         MainMusic.prepareAndPlay(context)
         MainMusic.reset()
         assertFalse(MainMusic.pause())

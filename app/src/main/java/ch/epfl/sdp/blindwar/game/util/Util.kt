@@ -67,14 +67,14 @@ object Util {
         }
     }
 
-    fun updateProfileImage(
-        liveData: LiveData<StorageReference>,
+    fun loadProfileImage(
+        liveData: LiveData<StorageReference?>,
         imageView: ImageView,
         viewLifecycleOwner: LifecycleOwner,
         context: Context
     ) {
         liveData.observe(viewLifecycleOwner) {
-            if (it.path.isNotEmpty()) {
+            it?.let {
                 GlideApp.with(context)
                     .load(it)
                     .centerCrop()
@@ -82,4 +82,19 @@ object Util {
             }
         }
     }
+//    fun updateProfileImage(
+//        liveData: LiveData<StorageReference>,
+//        imageView: ImageView,
+//        viewLifecycleOwner: LifecycleOwner,
+//        context: Context
+//    ) {
+//        liveData.observe(viewLifecycleOwner) {
+//            if (it.path.isNotEmpty()) {
+//                GlideApp.with(context)
+//                    .load(it)
+//                    .centerCrop()
+//                    .into(imageView)
+//            }
+//        }
+//    }
 }

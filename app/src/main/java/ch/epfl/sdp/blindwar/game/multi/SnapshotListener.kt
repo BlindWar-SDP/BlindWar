@@ -9,7 +9,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 
 object SnapshotListener {
 
-
     /**
      * Listener used during lobby ot connect every players
      *
@@ -36,13 +35,5 @@ object SnapshotListener {
             }
         }
         return false
-    }
-
-    /**
-     * Listener used to update the game state in multiplayer game
-     *
-     */
-    fun listenerOnGame() {
-
     }
 }

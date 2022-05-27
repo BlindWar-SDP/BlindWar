@@ -3,9 +3,7 @@ package ch.epfl.sdp.blindwar.audio
 import android.content.Context
 import android.content.res.Resources
 import android.media.MediaPlayer
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import ch.epfl.sdp.blindwar.data.music.MusicRepository
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.Playlist

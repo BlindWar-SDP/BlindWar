@@ -29,7 +29,8 @@
         app:layout_constraintStart_toStartOf="@+id/guessButton"
         app:layout_constraintTop_toTopOf="@+id/guessButton"
         app:srcCompat="@drawable/back_frame_white"
-        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
+        android:contentDescription="@string/content_description_ImageButton" />
 
     <ImageButton
         android:id="@+id/guessButton"
@@ -45,7 +46,8 @@
         app:layout_constraintTop_toTopOf="@+id/guideline17"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/border_button_white"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:contentDescription="@string/guess_button_text" />
 
     <ImageButton
         android:id="@+id/microphone"
@@ -59,7 +61,8 @@
         app:layout_constraintTop_toBottomOf="@+id/audioVisualizer"
         app:layout_constraintVertical_bias="0.595"
         app:srcCompat="@drawable/ic_baseline_mic_24"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:contentDescription="@string/content_description_ImageButton" />
 
     <ImageButton
         android:id="@+id/skip_next_play"
@@ -73,7 +76,8 @@
         app:layout_constraintTop_toTopOf="@+id/guessEditText"
         app:layout_constraintVertical_bias="0.764"
         app:srcCompat="@drawable/ic_baseline_skip_next_24"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:contentDescription="@string/content_description_ImageButton" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayoutCompat"
@@ -97,7 +101,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/ic_baseline_help_24"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            android:contentDescription="@string/content_description_ImageButton" />
 
         <Chronometer
             android:id="@+id/simpleChronometer"
@@ -124,7 +129,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/baseline_settings_24_white"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            android:contentDescription="@string/content_description_ImageButton" />
 
         <ImageView
             android:id="@+id/heartImage"
@@ -137,7 +143,8 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/scoreTextView"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/heart" />
+            app:srcCompat="@drawable/heart"
+            android:contentDescription="@string/content_description_ImageButton" />
 
         <TextView
             android:id="@+id/heartNumber"
@@ -146,7 +153,7 @@
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/bungee_inline"
             android:gravity="top"
-            android:text="x 1"
+            android:text="@string/x_1"
             android:textColor="@color/ivory"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/heartImage"
@@ -255,7 +262,8 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guessButton"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="LabelFor,SpeakableTextPresentCheck"
+        android:importantForAutofill="no" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline17"

@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.game.solo.fragments
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -19,10 +20,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
+import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
+import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.ARTIST_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.COVER_KEY
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.IS_MULTI
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.SUCCESS_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.TITLE_KEY
 import ch.epfl.sdp.blindwar.game.util.MainMusic
@@ -32,6 +36,11 @@ import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
 /**
@@ -40,6 +49,7 @@ import java.util.*
  * @constructor creates a DemoFragment
  */
 class DemoFragment : Fragment() {
+
     // VIEW MODELS
     lateinit var gameViewModel: GameViewModel
     private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
@@ -82,25 +92,63 @@ class DemoFragment : Fragment() {
     private lateinit var heartImage: ImageView
     private lateinit var heartNumber: TextView
 
+    // Multiplayer
+    private var matchId: String? = null
+    private var playerIndex = -1
+    private var playerList: MutableList<String>? = null
+
+    // Scoreboard listener
+    private val scoreboardListener =
+        EventListener<DocumentSnapshot> { value, _ ->
+            val match = value?.toObject(Match::class.java)
+            gameInstanceViewModel.match?.listResult = match?.listResult
+            scoreboardAdapter.updateScoreboardFromList(gameInstanceViewModel.match?.listResult)
+            scoreboardAdapter.notifyDataSetChanged()
+        }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.activity_animated_demo, container, false)
-        
+
+        // if multi mode, get gameInstance from matchId
+        matchId = arguments?.getString("match_id")
+
         // Get the scoreboard
         scoreboard = view.findViewById(R.id.scoreboard)
 
-        // Create the adapter for the score board
-        scoreboardAdapter =
-            ScoreboardAdapter(listOf("Marty", "Joris", "Nael", "Arthur", "Paul", "Henrique"))
+        // store locally the index of the player and retrieve the list of players
+        val currentUser = Firebase.auth.currentUser
+        if (currentUser != null && matchId != null) {
+            MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
+                val match = it.toObject(Match::class.java)
+                val userList = match?.listPlayers
+                playerIndex = userList?.indexOf(currentUser.uid)!!
+                playerList = match.listPseudo
+            }
+        }
+        scoreboardAdapter = if (playerList != null) {
+            ScoreboardAdapter(playerList!!)
+        } else {
+            ScoreboardAdapter(listOf(""))
+        }
         scoreboard.setHasFixedSize(true)
 
         val layoutManager = LinearLayoutManager(context)
         scoreboard.layoutManager = layoutManager
         scoreboard.adapter = scoreboardAdapter
         scoreboardAdapter.notifyDataSetChanged()
+
+        if (matchId != null) {
+            MatchDatabase.addScoreListener(matchId!!, Firebase.firestore, scoreboardListener)
+            MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
+                val match = it.toObject(Match::class.java)
+                val gameInstanceShared = match?.game
+                gameInstanceViewModel.gameInstance.value = gameInstanceShared
+            }
+        }
 
         when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
             GameFormat.SOLO -> {
@@ -111,22 +159,22 @@ class DemoFragment : Fragment() {
                         resources
                     )
                 }!!
-
                 // Hide the scoreboard
                 scoreboard.visibility = View.INVISIBLE
             }
-            GameFormat.MULTI -> gameViewModel = context?.let {
-                GameViewModel(
-                    gameInstanceViewModel.gameInstance.value!!,
-                    it,
-                    resources,
-                    scoreboardAdapter
-                )
-            }!!
+            GameFormat.MULTI -> {
+                gameViewModel = context?.let {
+                    GameViewModel(
+                        gameInstanceViewModel.gameInstance.value!!,
+                        it,
+                        resources,
+                        scoreboardAdapter
+                    )
+                }!!
+            }
         }
 
         gameViewModel.init()
-
         // Retrieve the game duration from the GameInstance object
         duration = gameInstanceViewModel.gameInstance.value?.gameConfig
             ?.parameter
@@ -185,12 +233,12 @@ class DemoFragment : Fragment() {
 
         microphoneButton = view.findViewById(R.id.microphone)
         context?.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
-        // Create game summary
         gameSummary = GameSummaryFragment()
 
         return view
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         voiceRecognizer.resultString.observe(viewLifecycleOwner) {
             guessEditText.setText(it)
@@ -199,7 +247,7 @@ class DemoFragment : Fragment() {
         }
 
         //warning seems ok, no need to override performClick
-        microphoneButton.setOnTouchListener { _, event ->
+        microphoneButton.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     gameViewModel.pause()
@@ -210,21 +258,20 @@ class DemoFragment : Fragment() {
                 MotionEvent.ACTION_UP -> {
                     gameViewModel.play()
                     voiceRecognizer.stop()
+                    v.performClick()
                 }
             }
             true
         }
-
         startGame()
-
         super.onViewCreated(view, savedInstanceState)
     }
 
     private fun startGame() {
         // TEST
-        gameViewModel.incrementPoint("Marty")
+        //gameViewModel.increm
+        // entPoint("Marty")
         scoreboardAdapter.notifyDataSetChanged()
-
 
         // Start the game
         gameViewModel.nextRound()
@@ -322,8 +369,7 @@ class DemoFragment : Fragment() {
         heartImage.visibility = View.VISIBLE
         heartNumber.visibility = View.VISIBLE
         gameViewModel.lives.observe(requireActivity()) {
-            heartNumber.text =
-                getString(R.string.heart_number, it) //TODO check if it works (x $it)
+            heartNumber.text = getString(R.string.heart_number, it)
         }
     }
 
@@ -336,6 +382,7 @@ class DemoFragment : Fragment() {
     private fun guess(isVocal: Boolean, isAuto: Boolean) {
         if (gameViewModel.guess(guessEditText.text.toString(), isVocal)) {
             // Update the number of point view
+            increaseScore()
             scoreTextView.text = gameViewModel.score.toString()
             (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
                 .hideSoftInputFromWindow(view?.windowToken, 0)
@@ -345,6 +392,21 @@ class DemoFragment : Fragment() {
             crossAnim.repeatMode = LottieDrawable.RESTART
             crossAnim.repeatMode = LottieDrawable.REVERSE
             crossAnim.playAnimation()
+            increaseScore()
+        }
+    }
+
+    /**
+     * Increases the score of a User(designated by uid) after a good guess.
+     */
+    private fun increaseScore() {
+        when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
+            GameFormat.MULTI -> {
+                MatchDatabase.incrementScore(matchId!!, playerIndex, Firebase.firestore)
+            }
+            GameFormat.SOLO -> {
+                //TODO
+            }
         }
     }
 
@@ -377,6 +439,10 @@ class DemoFragment : Fragment() {
         bundle.putString(TITLE_KEY, musicMetadata.title)
         bundle.putString(COVER_KEY, musicMetadata.imageUrl)
         bundle.putBoolean(SUCCESS_KEY, success)
+        bundle.putBoolean(
+            IS_MULTI,
+            gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI
+        )
         return bundle
     }
 
@@ -393,7 +459,7 @@ class DemoFragment : Fragment() {
     // LIFECYCLE
 
     /**
-     * Handle next round logic
+     * Handle next round logic //TODO handle multi
      */
     override fun onResume() {
         super.onResume()

@@ -18,6 +18,8 @@ data class Match(
     var listPseudo: MutableList<String>? = null,
     val game: GameInstance? = null,
     var listResult: MutableList<Int>? = null,
+    var listFinished: MutableList<Boolean>? = null,
     var maxPlayer: Int = 2,
-    var isPrivate: Boolean = false
+    var isPrivate: Boolean = false,
+    var isStarted: Boolean = false
 )

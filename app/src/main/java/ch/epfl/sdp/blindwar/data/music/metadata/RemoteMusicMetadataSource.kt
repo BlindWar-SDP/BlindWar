@@ -39,10 +39,8 @@ class RemoteMusicMetadataSource(
                 }
 
                 if (response.isSuccessful && response.body() != null) {
-
-                    //val tracks: List<URIMusicMetadata> =
                     val tracks = (response.body()!!.tracks.items as ArrayList<SpotifyTrack>).map {
-                        URIMusicMetadata(
+                        MusicMetadata.createWithURI(
                             it.name,
                             it.artists[0].name,
                             it.album.images[0].url,
