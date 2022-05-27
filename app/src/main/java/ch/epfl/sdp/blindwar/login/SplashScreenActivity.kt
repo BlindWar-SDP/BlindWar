@@ -75,12 +75,18 @@ class SplashScreenActivity : AppCompatActivity() {
                     data =
                         pendingDynamicLinkData.link?.getQueryParameter("uid") // what if not connected? uid=UserID?
                 }
+                Firebase.auth.currentUser?.let {
+                    startActivity(getIntentData())
+                } ?: run {
+                    signInLauncher.launch(createSignInIntent())
+                }
+            }.addOnFailureListener {
+                Firebase.auth.currentUser?.let {
+                    startActivity(getIntentData())
+                } ?: run {
+                    signInLauncher.launch(createSignInIntent())
+                }
             }
-        Firebase.auth.currentUser?.let {
-            startActivity(getIntentData())
-        } ?: run {
-            signInLauncher.launch(createSignInIntent())
-        }
     }
 
     private fun createSignInIntent(): Intent {

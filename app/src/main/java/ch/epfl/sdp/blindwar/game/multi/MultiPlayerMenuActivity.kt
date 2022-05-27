@@ -15,9 +15,9 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.multi.model.Match
-import ch.epfl.sdp.blindwar.game.util.MainMusic
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
 import ch.epfl.sdp.blindwar.game.util.DynamicLinkHelper
+import ch.epfl.sdp.blindwar.game.util.MainMusic
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 import ch.epfl.sdp.blindwar.profile.model.User
@@ -44,15 +44,13 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private var matchId: String? = null
     private lateinit var leaderboardButton: ImageButton
 
-
     companion object {
         private const val LIMIT_MATCH = 10L
         private const val DELTA_MATCHMAKING = 100
         private const val DEFAULT_ELO = 200
         const val DYNAMIC_LINK = "Dynamic link"
 
-
-        /**
+        /**v
          * Launch the game for every player
          *
          * @param matchId
@@ -76,7 +74,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                 .commit()
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -272,9 +269,9 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         builder.setView(view)
         builder.setNeutralButton(resources.getText(R.string.cancel_btn)) { di, _ -> di.cancel() }
         builder.setPositiveButton(resources.getText(R.string.ok)) { _, _ ->
-            val isCorrect = parseDynamicLink(editText.text.toString().toUri())
-            if (isCorrect != null) {
-                connectToDB(isCorrect)
+            val link = parseDynamicLink(editText.text.toString().toUri())
+            if (link != null) {
+                connectToDB(link)
                 dialog!!.hide()
             } else {
                 displayToast(R.string.multi_bad_link)
