@@ -161,6 +161,7 @@ class UserDatabaseTest : TestCase() {
                     }).getValue(User::class.java)
             }
         }
+        
 
         //assertTrue(user?.userStatistics?.correctArray?.last() == score)
         //assertTrue(user?.userStatistics?.wrongArray?.last() == fail)
