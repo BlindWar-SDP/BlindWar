@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.menu
 import android.annotation.SuppressLint
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -12,6 +13,7 @@ import ch.epfl.sdp.blindwar.game.util.MainMusic
 import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 class MainMenuActivity : AppCompatActivity() {
     //private val database = UserDatabase
@@ -34,7 +36,7 @@ class MainMenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_menu)
 
         // Start the main menu music
-        // MainMusic.prepareAndPlay(this)
+        MainMusic.prepareAndPlay(this)
 
         val play = PlayMenuFragment()
         val search = SearchFragment()
@@ -73,5 +75,23 @@ class MainMenuActivity : AppCompatActivity() {
      */
     override fun onBackPressed() {
         this.moveTaskToBack(true)
+    }
+
+    /**
+     * Stop the main menu music
+     *
+     */
+    override fun onStop() {
+        MainMusic.pause()
+        super.onStop()
+    }
+
+    /**
+     * Resume the main menu music
+     *
+     */
+    override fun onResume() {
+        MainMusic.play()
+        super.onResume()
     }
 }

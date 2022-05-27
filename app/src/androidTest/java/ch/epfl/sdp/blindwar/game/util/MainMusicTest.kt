@@ -31,22 +31,16 @@ class MainMusicTest : TestCase() {
     fun resetAndPause() {
         MainMusic.prepareAndPlay(context)
         MainMusic.reset()
-        assertThrows(IllegalStateException::class.java) {
-            MainMusic.pause()
-        }
+        assertFalse(MainMusic.pause())
     }
 
     @Test
-    fun playUnpreparedMusic() {
-        assertThrows(IllegalStateException::class.java) {
-            MainMusic.play()
-        }
+    fun playUnpreparedMusic(){
+        assertFalse(MainMusic.play())
     }
 
     @Test
-    fun pauseUnpreparedMusic() {
-        assertThrows(IllegalStateException::class.java) {
-            MainMusic.pause()
-        }
+    fun pauseUnpreparedMusic(){
+        assertFalse(MainMusic.pause())
     }
 }

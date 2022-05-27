@@ -29,7 +29,6 @@ import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.CO
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.IS_MULTI
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.SUCCESS_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.TITLE_KEY
-import ch.epfl.sdp.blindwar.game.util.MainMusic
 import ch.epfl.sdp.blindwar.game.util.ScoreboardAdapter
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
@@ -122,9 +121,6 @@ class DemoFragment : Fragment() {
 
         // if multi mode, get gameInstance from matchId
         matchId = arguments?.getString("match_id")
-
-        // Pause the main menu music
-        MainMusic.pause()
 
         // Get the scoreboard
         scoreboard = view.findViewById(R.id.scoreboard)
@@ -527,9 +523,6 @@ class DemoFragment : Fragment() {
     override fun onDestroy() {
         timer.cancel()
         voiceRecognizer.destroy()
-
-        // Restart the menu music
-        MainMusic.play()
 
         super.onDestroy()
     }
