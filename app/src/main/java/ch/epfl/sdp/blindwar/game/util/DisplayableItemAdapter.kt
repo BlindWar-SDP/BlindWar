@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
@@ -54,6 +55,7 @@ class DisplayableItemAdapter(
     private val viewFragment: View,
     private val gameInstanceViewModel: GameInstanceViewModel,
     private val profileViewModel: ProfileViewModel,
+    private val fragmentManager: FragmentManager,
     private var listener: ListenerRegistration? = null
 ) :
     RecyclerView.Adapter<DisplayableItemAdapter.DisplayableItemViewHolder>() {
@@ -204,7 +206,10 @@ class DisplayableItemAdapter(
                         val match: Match? = gameInstanceViewModel.createMatch()
                         if (match != null) {
                             val dialog = DynamicLinkHelper.setDynamicLinkDialog(
-                                context.getString(R.string.multi_wait_players), match.uid, context
+                                context.getString(R.string.multi_wait_players),
+                                match.uid,
+                                context,
+                                false
                             )
                             dialog.show()
                             listener = Firebase.firestore.collection(MatchDatabase.COLLECTION_PATH)
@@ -212,12 +217,23 @@ class DisplayableItemAdapter(
                                     if (e != null) {
                                         return@addSnapshotListener
                                     }
-                                    if (SnapshotListener.listenerOnLobby(
+                                    if (snapshot == null || !snapshot.exists()) {
+                                        Toast.makeText(
+                                            context,
+                                            R.string.toast_canceled_match_creation,
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        listener?.remove()
+                                        dialog.cancel()
+                                    } else if (SnapshotListener.listenerOnLobby(
                                             snapshot, context, dialog
                                         )
                                     ) {
                                         listener?.remove()
-                                        MultiPlayerMenuActivity.launchGame(match.uid, context)
+                                        MultiPlayerMenuActivity.launchGame(
+                                            match.uid,
+                                            fragmentManager
+                                        )
                                     }
                                 }
                         }

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="4dp"
-    android:background="@drawable/blurred_back"
+    android:background="@drawable/back_res"
     android:orientation="vertical">
 
 
@@ -43,7 +43,8 @@
             app:layout_constraintTop_toTopOf="@+id/checkBox"
             app:srcCompat="@drawable/ic_baseline_info_24"
             tools:ignore="SpeakableTextPresentCheck"
-            app:tint="@color/ivory" />
+            app:tint="@color/ivory"
+            android:contentDescription="@string/content_description_ImageButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--                    TIMED MODE                         -->
@@ -76,7 +77,8 @@
             app:layout_constraintVertical_bias="0.302"
             app:srcCompat="@drawable/ic_baseline_info_24"
             tools:ignore="SpeakableTextPresentCheck"
-            app:tint="@color/ivory" />
+            app:tint="@color/ivory"
+            android:contentDescription="@string/content_description_ImageButton" />
 
         <TextView
             android:id="@+id/timedDescription"
@@ -148,6 +150,7 @@
             app:lottie_autoPlay="true"
             app:lottie_colorFilter="@color/ivory"
             app:lottie_fileName="chronometer.json"
+            app:lottie_renderMode="hardware"
             app:lottie_loop="true"
             app:lottie_speed="0.5"
             tools:ignore="SpeakableTextPresentCheck" />
@@ -164,6 +167,7 @@
             app:layout_constraintTop_toTopOf="@+id/raceButton_"
             app:layout_constraintVertical_bias="0.0"
             app:lottie_autoPlay="true"
+            app:lottie_renderMode="hardware"
             app:lottie_colorFilter="@color/ivory"
             app:lottie_fileName="chronometer.json"
             app:lottie_loop="true"
@@ -233,7 +237,8 @@
             app:layout_constraintVertical_bias="0.29"
             app:srcCompat="@drawable/ic_baseline_info_24"
             tools:ignore="SpeakableTextPresentCheck"
-            app:tint="@color/white" />
+            app:tint="@color/white"
+            android:contentDescription="@string/content_description_ImageButton" />
 
         <TextView
             android:id="@+id/survivalDescription"
@@ -258,6 +263,7 @@
             app:layout_constraintStart_toStartOf="@+id/survivalButton_"
             app:layout_constraintTop_toTopOf="@+id/survivalButton_"
             app:lottie_autoPlay="false"
+            app:lottie_renderMode="hardware"
             app:lottie_fileName="particles.json"
             app:lottie_loop="true"
             app:lottie_speed="1.0"
@@ -274,6 +280,7 @@
             app:layout_constraintTop_toTopOf="@+id/survivalButton_"
             app:lottie_autoPlay="true"
             app:lottie_fileName="health.json"
+            app:lottie_renderMode="hardware"
             app:lottie_loop="true"
             app:lottie_repeatMode="reverse"
             app:lottie_speed="0.5"
@@ -290,6 +297,7 @@
             app:layout_constraintTop_toTopOf="@+id/survivalButton_"
             app:layout_constraintVertical_bias="0.0"
             app:lottie_autoPlay="true"
+            app:lottie_renderMode="hardware"
             app:lottie_fileName="health.json"
             app:lottie_loop="true"
             app:lottie_repeatMode="reverse"
@@ -321,7 +329,8 @@
             app:layout_constraintVertical_bias="0.282"
             app:srcCompat="@drawable/ic_baseline_info_24"
             tools:ignore="SpeakableTextPresentCheck"
-            app:tint="@color/ivory" />
+            app:tint="@color/ivory"
+            android:contentDescription="@string/content_description_ImageButton" />
 
         <TextView
             android:id="@+id/classicDescription"
@@ -397,6 +406,7 @@
             app:layout_constraintStart_toStartOf="@+id/regularButton_"
             app:layout_constraintTop_toTopOf="@+id/regularButton_"
             app:lottie_autoPlay="false"
+            app:lottie_renderMode="hardware"
             app:lottie_fileName="particles.json"
             app:lottie_loop="true"
             app:lottie_speed="1.0"
@@ -414,6 +424,7 @@
             app:layout_constraintTop_toTopOf="@+id/vinylGuidelineStart"
             app:layout_constraintVertical_bias="0.387"
             app:lottie_autoPlay="true"
+            app:lottie_renderMode="hardware"
             app:lottie_colorFilter="@color/ivory"
             app:lottie_fileName="vinyl.json"
             app:lottie_loop="true"
@@ -432,6 +443,7 @@
             app:layout_constraintTop_toTopOf="@+id/vinylGuidelineStart"
             app:layout_constraintVertical_bias="0.508"
             app:lottie_autoPlay="true"
+            app:lottie_renderMode="hardware"
             app:lottie_colorFilter="@color/ivory"
             app:lottie_fileName="vinyl.json"
             app:lottie_loop="true"
@@ -463,7 +475,8 @@
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/baseline_navigate_before_24"
             tools:ignore="SpeakableTextPresentCheck"
-            app:tint="@color/ivory" />
+            app:tint="@color/ivory"
+            android:contentDescription="@string/content_description_ImageButton" />
 
         <ImageButton
             android:id="@+id/info"
@@ -478,7 +491,8 @@
             app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/baseline_settings_24"
             tools:ignore="SpeakableTextPresentCheck"
-            app:tint="@color/ivory" />
+            app:tint="@color/ivory"
+            android:contentDescription="@string/content_description_ImageButton" />
 
         <TextView
             android:id="@+id/mode_selection"

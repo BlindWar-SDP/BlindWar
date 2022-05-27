@@ -18,7 +18,6 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.util.Util.loadProfileImage
-import ch.epfl.sdp.blindwar.login.*
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.model.Gender
 import ch.epfl.sdp.blindwar.profile.model.User
@@ -67,7 +66,6 @@ class UserNewInfoFragment : Fragment() {
     /**
      * Function for confirming and saving all info entered by user
      *
-     * @param v
      */
     private fun confirm() {
         setFromText()

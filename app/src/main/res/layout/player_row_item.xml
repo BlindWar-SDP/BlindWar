@@ -9,7 +9,7 @@
         android:id="@+id/row_number_point"
         android:layout_width="34dp"
         android:layout_height="31dp"
-        android:text="0"
+        android:text="@string/_0"
         android:textAlignment="viewStart"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"

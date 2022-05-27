@@ -1,14 +1,11 @@
 package ch.epfl.sdp.blindwar.database
 
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.test.espresso.intent.Intents
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import junit.framework.TestCase
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.After
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 

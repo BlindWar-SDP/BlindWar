@@ -11,8 +11,6 @@ import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.GRANT_TYPE
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.LIMIT
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.QUERY
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.SEARCH_PATH
-import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.TRACK_ID
-import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.TRACK_PATH
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.TYPE
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.URL_ENCODED_FORM
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyApiConstants.credentialsEncoding

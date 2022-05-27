@@ -1,9 +1,7 @@
 package ch.epfl.sdp.blindwar.database
 
-import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ListResult
 import com.google.firebase.storage.ktx.storage
 

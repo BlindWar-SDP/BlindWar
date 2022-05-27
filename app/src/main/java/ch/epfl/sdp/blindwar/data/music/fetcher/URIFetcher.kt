@@ -1,11 +1,9 @@
 package ch.epfl.sdp.blindwar.data.music.fetcher
 
 import android.media.MediaPlayer
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import ch.epfl.sdp.blindwar.audio.ReadyMediaPlayer
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
-import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 import java.util.*
 
 class URIFetcher : Fetcher {
@@ -14,7 +12,9 @@ class URIFetcher : Fetcher {
         val player = MediaPlayer()
         val readyMediaPlayer = ReadyMediaPlayer(player, MutableLiveData(true))
 
-        player.setDataSource((musicMetadata as URIMusicMetadata).uri)
+        val uri = musicMetadata.uri
+
+        player.setDataSource(uri)
 
         /** TODO: Debug
         player.setOnPreparedListener{

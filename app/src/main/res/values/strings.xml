@@ -9,7 +9,7 @@
     <!-- Buttons  -->
     <string name="solo">SOLO</string>
     <string name="multi">MULTI</string>
-    <string name="profile">PROFILE</string>
+    <string name="profile">Profile</string>
     <string name="logout">LOGOUT</string>
     <string name="login">LOGIN</string>
     <string name="Btn_email">Email</string>
@@ -144,9 +144,7 @@
     <string name="edit_text_hint_lastName">Write your last name</string>
     <string name="demo">DEMO</string>
     <string name="button">BUTTON</string>
-    <string name="time">TIME</string>
     <string name="artist">ARTIST</string>
-    <string name="track">TRACK</string>
     <string name="play_with_friends">Join a game via link</string>
     <string name="play_with_random">Play Now !</string>
     <string name="multi_create_match">Create a match</string>
@@ -168,7 +166,7 @@
     <string name="alert_dialogue_cancel_text">Are you sure to keep old info</string>
     <string name="newUser_ExtraName">newUser</string>
     <string name="reset">reset</string>
-    <string name="no_birthdate_selected"></string>
+    <string name="no_birthdate_selected"/>
 
     <!-- PROFILE -->
     <string name="userRank">Rank</string>
@@ -215,6 +213,7 @@
     <string name="pop">POP</string>
     <string name="button_to_start_game">Button to start game</string>
     <string name="timer">TIMER</string>
+    <string name="multi_already_started">Match has already started, disconnexion…</string>
     <string name="NU_describe_yourself">describe yourself</string>
     <string name="birthdate_set_to">birthdate set to</string>
     <string name="_1000">1000</string>
@@ -225,4 +224,17 @@
     <string name="pen_image">PenImage</string>
     <string name="login_image">login image</string>
     <string name="delete_profile_image">delete profile image</string>
+    <string name="content_description_ImageButton">Image button</string>
+    <string name="content_description_Image">Image</string>
+    <string name="x_1">x 1</string>
+    <string name="track">TRACK</string>
+    <string name="time">TIME</string>
+    <string name="main_menu_music_name">Crabe Rave - Noisestorm</string>
+    <string name="play">Play</string>
+    <string name="search">Search</string>
+    <string name="title">Title</string>
+    <string name="this_is_an_artist">This is an artist</string>
+    <string name="_0">0</string>
+    <string name="delete">Delete</string>
+    <string name="unknown">UNKNOWN</string>
 </resources>

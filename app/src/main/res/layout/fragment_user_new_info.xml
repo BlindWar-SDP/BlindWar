@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/first_name"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:textSize="11sp"
                     app:layout_constraintBottom_toTopOf="@id/NU_FirstName"
                     app:layout_constraintStart_toStartOf="@id/NU_FirstName" />
 
@@ -65,14 +65,15 @@
                     android:textColorHint="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/NU_TOP_Scroll_guideline"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/last_name"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:textSize="11sp"
                     app:layout_constraintBottom_toTopOf="@id/NU_LastName"
                     app:layout_constraintStart_toStartOf="@id/NU_LastName" />
 
@@ -88,7 +89,8 @@
                     android:textColor="@color/green_blue_crayola"
                     android:textColorHint="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/NU_FirstName" />
+                    app:layout_constraintTop_toBottomOf="@+id/NU_FirstName"
+                    android:importantForAutofill="no" />
 
                 <Button
                     android:id="@+id/NU_editProfilePicture"
@@ -122,7 +124,7 @@
                     android:minHeight="0sp"
                     android:text="@string/reset"
                     android:textColor="@color/light_red"
-                    android:textSize="9sp"
+                    android:textSize="11sp"
                     app:layout_constraintEnd_toEndOf="@+id/NU_profileImageView"
                     app:layout_constraintStart_toStartOf="@+id/NU_profileImageView"
                     app:layout_constraintTop_toBottomOf="@+id/NU_profileImageView" />
@@ -132,7 +134,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_pseudo"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:textSize="11sp"
                     app:layout_constraintBottom_toTopOf="@id/NU_pseudo"
                     app:layout_constraintStart_toStartOf="@id/NU_pseudo" />
 
@@ -151,7 +153,8 @@
                     android:textColorHint="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/NU_editProfilePicture"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    tools:ignore="TouchTargetSizeCheck"
+                    android:importantForAutofill="no" />
 
 
                 <Button
@@ -218,7 +221,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/NU_describe_yourself"
                     android:textColor="@color/white"
-                    android:textSize="10sp"
+                    android:textSize="11sp"
                     app:layout_constraintBottom_toTopOf="@id/NU_description"
                     app:layout_constraintStart_toStartOf="@id/NU_description" />
 
@@ -238,7 +241,8 @@
                     android:textColorHint="@color/white"
                     app:layout_constraintBottom_toTopOf="@id/NU_BOTTOM_Scroll_guideline"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/gender_spinner" />
+                    app:layout_constraintTop_toBottomOf="@id/gender_spinner"
+                    android:importantForAutofill="no" />
 
                 <Button
                     android:id="@+id/NU_Confirm_Btn"
