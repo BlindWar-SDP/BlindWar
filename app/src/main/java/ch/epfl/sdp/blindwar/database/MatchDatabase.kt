@@ -132,7 +132,7 @@ object MatchDatabase {
      * @param db
      */
 
-    fun addScoreListener(
+    fun addListener(
         matchId: String,
         db: FirebaseFirestore,
         listener: EventListener<DocumentSnapshot>
@@ -141,5 +141,24 @@ object MatchDatabase {
         matchRef.addSnapshotListener(listener)
     }
 
+    /**
+     * Tell the server that a specific player finished the game
+     *
+     * @param matchId
+     * @param playerIndex
+     * @param db
+     */
+    fun playerFinish(matchId: String, playerIndex: Int, db: FirebaseFirestore) {
+        val matchRef = db.collection("match").document(matchId)
+        db.runTransaction { transaction ->
+            val snapshot = transaction.get(matchRef)
+            val match = snapshot.toObject(Match::class.java)
+            val listFinished = match?.listFinished
+            listFinished!![playerIndex] = true
+            transaction.update(matchRef, "listFinised", listFinished)
 
+            // Success
+            null
+        }
+    }
 }

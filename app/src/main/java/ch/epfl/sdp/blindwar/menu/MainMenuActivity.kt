@@ -34,15 +34,7 @@ class MainMenuActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main_menu)
 
         // Start the main menu music
-        /*
-        mediaPlayer = MediaPlayer.create(this, R.raw.noisestorm_crab_rave)
-        mediaPlayer.isLooping = true
-        mediaPlayer.setVolume(volume, volume)
-        mediaPlayer.setOnPreparedListener {
-            mediaPlayer.start()
-        }
-         */
-        MainMusic.prepareAndPlay(this)
+        // MainMusic.prepareAndPlay(this)
 
         val play = PlayMenuFragment()
         val search = SearchFragment()

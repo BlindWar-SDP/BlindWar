@@ -97,13 +97,20 @@ class DemoFragment : Fragment() {
     private var playerIndex = -1
     private var playerList: MutableList<String>? = null
 
-    // Scoreboard listener
-    private val scoreboardListener =
+    // Database listener
+    private val databaseListener =
         EventListener<DocumentSnapshot> { value, _ ->
             val match = value?.toObject(Match::class.java)
+
+            // Set the score board
             gameInstanceViewModel.match?.listResult = match?.listResult
             scoreboardAdapter.updateScoreboardFromList(gameInstanceViewModel.match?.listResult)
             scoreboardAdapter.notifyDataSetChanged()
+
+            // Check if every players has finished
+            if(!match?.listFinished?.any { !it }!!) {
+                launchGameSummaray()
+            }
         }
 
     override fun onCreateView(
@@ -145,7 +152,7 @@ class DemoFragment : Fragment() {
         scoreboardAdapter.notifyDataSetChanged()
 
         if (matchId != null) {
-            MatchDatabase.addScoreListener(matchId!!, Firebase.firestore, scoreboardListener)
+            MatchDatabase.addListener(matchId!!, Firebase.firestore, databaseListener)
             MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
                 val match = it.toObject(Match::class.java)
                 val gameInstanceShared = match?.game
@@ -452,7 +459,22 @@ class DemoFragment : Fragment() {
     /**
      * Launches the Game Over fragment after a game
      */
-    private fun launchGameSummary() {
+    private fun waitOtherPlayers() {
+        // If we are in multiplayer, wait for the others
+        if(gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI) {
+            MatchDatabase.playerFinish(matchId!!, playerIndex, Firebase.firestore)
+        }
+        else{
+            launchGameSummaray()
+        }
+
+    }
+
+    /**
+     * Lauch the game over summary
+     *
+     */
+    private fun launchGameSummaray() {
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         transaction?.replace((view?.parent as ViewGroup).id, gameSummary, "Game Summary")
@@ -490,7 +512,7 @@ class DemoFragment : Fragment() {
                     timer = createCountDown()
                     timer.start()
                 } else {
-                    launchGameSummary()
+                    waitOtherPlayers()
                 }
             }
         }
