@@ -37,6 +37,7 @@ class UserDatabaseTest : TestCase() {
             user0.userStatistics.eloSetter(elo)
             UserDatabase.database
             UserDatabase.updateUser(user0)
+            // TODO: Fix test
             UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
                 assertTrue((it.getValue(User::class.java)?.userStatistics?.elo == elo))
             }
@@ -50,6 +51,7 @@ class UserDatabaseTest : TestCase() {
             user0.birthdate = birthdate
             UserDatabase.database
             UserDatabase.updateUser(user0)
+            // TODO: Fix test
             UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
                 assertTrue((it.getValue(User::class.java)?.birthdate == birthdate))
             }
@@ -63,6 +65,7 @@ class UserDatabaseTest : TestCase() {
             user0.description = description
             UserDatabase.database
             UserDatabase.updateUser(user0)
+            // TODO: Fix test
             UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
                 assertTrue((it.getValue(User::class.java)?.description == description))
             }
