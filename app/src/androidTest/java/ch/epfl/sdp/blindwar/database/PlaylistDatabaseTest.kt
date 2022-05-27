@@ -26,10 +26,10 @@ class PlaylistDatabaseTest : TestCase() {
 
         runBlocking {
             withContext(Dispatchers.IO) {
-                var playlist =
+                playlist =
                     Tasks.await(PlaylistDatabase.addPlaylist(testPlaylist).continueWithTask{
                         PlaylistDatabase.getPlaylistReference(pid).get()
-                    }).getValue(OnlinePlaylist::class.java)
+                    }).getValue(OnlinePlaylist::class.java)!!
             }
         }
 
