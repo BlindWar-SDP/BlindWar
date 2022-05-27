@@ -6,10 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyService.apiAuth
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyService.apiMeta
 import ch.epfl.sdp.blindwar.database.MusicDatabase
-import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.Dispatchers
-import kotlinx.serialization.descriptors.PrimitiveKind
-import java.net.URI
 
 class MusicMetadataRepository {
     private var _musicMetadatas: MutableLiveData<ArrayList<MusicMetadata>> =
@@ -34,7 +31,7 @@ class MusicMetadataRepository {
     suspend fun fetchMusicMetadataSpotify(query: String) {
         remoteSourceApi.fetchSongMetadata(query)
         remoteSourceApi.musicMetadata.observeForever {
-            addToRepo(it as ArrayList<URIMusicMetadata>)
+            addToRepo(it as ArrayList<MusicMetadata>)
         }
     }
 
@@ -44,8 +41,8 @@ class MusicMetadataRepository {
      */
     fun fetchMusicMetadataDatabase() {
         remoteMusicDatabase.getSongReference().addOnSuccessListener {
-            val partial = MutableLiveData<URIMusicMetadata>()
-            val fetched = ArrayList<URIMusicMetadata>()
+            val partial = MutableLiveData<MusicMetadata>()
+            val fetched = ArrayList<MusicMetadata>()
 
             partial.observeForever { meta ->
                 fetched.add(meta)
@@ -68,7 +65,7 @@ class MusicMetadataRepository {
         }
     }
 
-    private fun addToRepo(it: ArrayList<URIMusicMetadata>) {
+    private fun addToRepo(it: ArrayList<MusicMetadata>) {
         if (!it.isNullOrEmpty()) {
             _musicMetadatas.postValue(
                 _musicMetadatas.value.let { value ->
@@ -92,12 +89,13 @@ class MusicMetadataRepository {
             .map { s -> s.trim() }
     }
 
-    private fun sanitizeMetadata(metadata: List<String>, uri: Uri): URIMusicMetadata {
-        return URIMusicMetadata(
-            artist = capitalizeString(metadata[0]),
-            title = capitalizeString(metadata[1]),
-            imageUrl = "https://yt3.ggpht.com/ytc/AKedOLQEPKJQm1iJn986SkSpabjJSdcoh8gPxDtHfpCQ=s88-c-k-c0x00ffffff-no-rj",
-            uri = uri.toString()
+    private fun sanitizeMetadata(metadata: List<String>, uri: Uri): MusicMetadata {
+        return MusicMetadata.createWithURI(
+            capitalizeString(metadata[1]),
+            capitalizeString(metadata[0]),
+            "https://yt3.ggpht.com/ytc/AKedOLQEPKJQm1iJn986SkSpabjJSdcoh8gPxDtHfpCQ=s88-c-k-c0x00ffffff-no-rj",
+            0,
+            uri.toString()
         )
     }
 }

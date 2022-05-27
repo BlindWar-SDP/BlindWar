@@ -61,7 +61,6 @@ class ProfileFragment : Fragment() {
             deleteProfile()
         }
 
-
         // text view
         profileViewModel.user.observe(viewLifecycleOwner) {
             view.findViewById<TextView>(R.id.nameView).text = it.pseudo
@@ -147,5 +146,4 @@ class ProfileFragment : Fragment() {
             getString(R.string.account_not_deleted_toast), Toast.LENGTH_SHORT
         ).show()
     }
-
 }

@@ -19,20 +19,18 @@ object MainMusic {
     }
 
     fun play() {
-        if(mediaPlayer != null) {
+        if (mediaPlayer != null) {
             mediaPlayer?.start()
-        }
-        else {
+        } else {
             throw IllegalStateException()
         }
     }
 
     fun pause() {
-        if(mediaPlayer != null) {
-            if(mediaPlayer?.isPlaying == true)
+        if (mediaPlayer != null) {
+            if (mediaPlayer?.isPlaying == true)
                 mediaPlayer?.pause()
-        }
-        else {
+        } else {
             throw IllegalStateException()
         }
     }

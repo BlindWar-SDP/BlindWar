@@ -32,7 +32,6 @@ class StatisticsActivity : AppCompatActivity() {
     private lateinit var correctPercent: TextView
     private lateinit var wrongPercent: TextView
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)

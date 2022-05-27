@@ -1,6 +1,6 @@
 package ch.epfl.sdp.blindwar.database
 
-import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.GameResult
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
 import ch.epfl.sdp.blindwar.profile.model.Mode
@@ -15,7 +15,7 @@ import com.google.firebase.ktx.Firebase
 
 
 object UserDatabase {
-    const val COLLECTION_PATH = "Users"
+    private const val COLLECTION_PATH = "Users"
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     val userReference = database.getReference(COLLECTION_PATH)
 
@@ -80,6 +80,15 @@ object UserDatabase {
     }
 
     /**
+     * Set matchId of the uid user
+     *
+     * @param uid
+     */
+    fun addMatchId(uid: String, matchId: String) {
+        userReference.child(uid).updateChildren(mapOf("matchId" to matchId))
+    }
+
+    /**
      * Remove user from database
      *
      * @param uid user identification
@@ -94,7 +103,7 @@ object UserDatabase {
      * @param uid
      * @param music
      */
-    fun addLikedMusic(uid: String, music: URIMusicMetadata): Task<DataSnapshot> {
+    fun addLikedMusic(uid: String, music: MusicMetadata): Task<DataSnapshot> {
         val userRef = getUserReference(uid)
         return userRef.get().addOnSuccessListener {
             val user: User? = it.getValue(User::class.java)
@@ -198,7 +207,7 @@ object UserDatabase {
     fun getCurrentUser(): DataSnapshot? {
         return try {
             val task = getUserReference(Firebase.auth.currentUser!!.uid).get()
-            while (!task.isComplete){}
+            while (!task.isComplete);
             if (task.isSuccessful) task.result else null
         } catch (_: Exception) {
             null

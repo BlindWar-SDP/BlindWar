@@ -10,7 +10,6 @@ import androidx.test.rule.GrantPermissionRule
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import junit.framework.TestCase
 import org.junit.*
-import org.junit.Assert.assertThrows
 import org.junit.runner.RunWith
 import java.util.*
 import kotlin.collections.ArrayList

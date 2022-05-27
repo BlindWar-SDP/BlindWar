@@ -2,7 +2,7 @@ package ch.epfl.sdp.blindwar.profile.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.database.ImageDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.GameResult
@@ -40,7 +40,7 @@ class ProfileViewModel : ViewModel() {
                 }
                 user.postValue(it)
 
-            }?: run {
+            } ?: run {
                 user.postValue(User()) // TODO : Wrong -> if not found should watch local data, not an empty user
                 imageRef.postValue(null)
             }
@@ -71,7 +71,7 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    fun likeMusic(music: URIMusicMetadata) {
+    fun likeMusic(music: MusicMetadata) {
         FirebaseAuth.getInstance().currentUser?.let {
             UserDatabase.addLikedMusic(it.uid, music)
         }

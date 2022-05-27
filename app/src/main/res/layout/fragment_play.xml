@@ -19,7 +19,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@tools:sample/avatars"
+        android:contentDescription="@string/content_description_ImageButton" />
 
     <ImageButton
         android:id="@+id/btnVolume"
@@ -32,7 +33,8 @@
         app:layout_constraintStart_toStartOf="@+id/guideline11"
         app:layout_constraintTop_toTopOf="@+id/guideline10"
         app:srcCompat="@drawable/ic_baseline_volume_down_24"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:contentDescription="@string/content_description_ImageButton" />
 
 
     <ImageButton
@@ -45,7 +47,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8"
         app:srcCompat="@drawable/play_arrow"
-        app:tint="@color/ivory" />
+        app:tint="@color/ivory"
+        android:contentDescription="@string/content_description_ImageButton" />
 
     <ImageButton
         android:id="@+id/multiBtn"
@@ -57,7 +60,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9"
         app:srcCompat="@drawable/play_arrow"
-        app:tint="@color/ivory" />
+        app:tint="@color/ivory"
+        android:contentDescription="@string/content_description_ImageButton" />
 
     <TextView
         android:id="@+id/titleText"
@@ -73,7 +77,8 @@
         app:layout_constraintEnd_toEndOf="@id/guideline11"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="@id/guideline9"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="o" />
 
     <TextView
         android:id="@+id/textView3"
@@ -83,13 +88,14 @@
         android:ellipsize="marquee"
         android:fontFamily="@font/oxygen"
         android:gravity="center"
-        android:text="Crabe Rave - Noisestorm"
+        android:text="@string/main_menu_music_name"
         android:textColor="@color/ivory"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
         app:layout_constraintTop_toBottomOf="@+id/titleText"
-        tools:text="Crabe Rave - Noisestorm" />
+        tools:text="Crabe Rave - Noisestorm"
+        tools:targetApi="o" />
 
     <TextView
         android:id="@+id/textView8"

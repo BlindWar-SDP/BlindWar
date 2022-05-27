@@ -1,3 +1,5 @@
+@file:Suppress("ControlFlowWithEmptyBody", "ControlFlowWithEmptyBody")
+
 package ch.epfl.sdp.blindwar.game.viewmodels
 
 import android.content.Context
@@ -8,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import ch.epfl.sdp.blindwar.audio.MusicViewModel
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.GameResult
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
@@ -27,19 +30,18 @@ import java.time.format.DateTimeFormatter
  * @constructor Construct a class that represent the game logic
  */
 open class GameViewModel(
-    gameInstance: GameInstance,
+    /** Encapsulates the characteristics of a game instead of its logic
+     *
+     */
+    protected val gameInstance: GameInstance,
     private val context: Context,
     private val resources: Resources,
     private var scoreboardAdapter: ScoreboardAdapter? = null
 ) : ViewModel() {
-    /** Encapsulates the characteristics of a game instead of its logic
-     *
-     */
-    protected val game: GameInstance = gameInstance
-    protected lateinit var musicViewModel: MusicViewModel
+    private lateinit var musicViewModel: MusicViewModel
     protected val profileViewModel = ProfileViewModel()
 
-    protected val gameParameter: GameParameter = gameInstance
+    private val gameParameter: GameParameter = gameInstance
         .gameConfig!!
         .parameter!!
 
@@ -63,7 +65,7 @@ open class GameViewModel(
      */
     fun init() {
         musicViewModel = MusicViewModel(
-            game.onlinePlaylist!!,
+            gameInstance.onlinePlaylist!!,
             context, resources
         )
     }
@@ -97,20 +99,24 @@ open class GameViewModel(
      * clean up player and assets
      *
      */
-    fun endGame() {
-        val fails = round - score
-        val result = if (fails == 0) Result.WIN else Result.LOSS
+    private fun endGame() {
+        if (gameInstance.gameFormat == GameFormat.SOLO) {
+            val fails = round - score
+            val result = if (fails == 0) Result.WIN else Result.LOSS
 
-        var formatted = "never"
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val current = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
-            formatted = current.format(formatter)
+            var formatted = "never"
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val current = LocalDateTime.now()
+                val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
+                formatted = current.format(formatter)
+            }
+            val gameResult = GameResult(mode, Mode.SOLO, result, round, score, formatted)
+
+            profileViewModel.updateStats(score, fails, gameResult)
+            musicViewModel.soundTeardown()
+        } else {
+            //TODO GAME OVER
         }
-        val gameResult = GameResult(mode, Mode.SOLO, result, round, score, formatted)
-
-        profileViewModel.updateStats(score, fails, gameResult)
-        musicViewModel.soundTeardown()
     }
 
     /**
@@ -140,11 +146,9 @@ open class GameViewModel(
      * @return
      */
     fun currentMetadata(): MusicMetadata? {
-        if (gameParameter.hint) {
-            return musicViewModel.getCurrentMetadata()
-        }
-
-        return null
+        return if (gameParameter.hint) {
+            musicViewModel.getCurrentMetadata()
+        } else null
     }
 
     /**

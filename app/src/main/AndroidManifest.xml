@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ch.epfl.sdp.blindwar">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -20,11 +21,13 @@
         android:roundIcon="@mipmap/ic_launcher_round_base"
         android:supportsRtl="true"
         android:theme="@style/Theme.BlindWar"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:ignore="AllowBackup">
         <activity
             android:name=".login.SplashScreenActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,35 +47,42 @@
             android:name=".game.util.GameActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".game.solo.TutorialActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".game.multi.MultiPlayerMenuActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".game.multi.ChoseNumberOfPlayerActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".profile.HistoryActivity"
             android:parentActivityName=".profile.fragments.ProfileFragment"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".profile.fragments.StatisticsActivity"
             android:parentActivityName=".profile.fragments.ProfileFragment"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".menu.MainMenuActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
         </activity>
 
         <meta-data

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.MatchDatabase
+import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.ShortDynamicLink
 import com.google.firebase.dynamiclinks.ktx.*
@@ -94,13 +95,22 @@ object DynamicLinkHelper {
     fun setDynamicLinkDialog(
         message: String,
         matchUID: String,
-        context: Context
+        context: Context,
+        isRejoin: Boolean
     ): AlertDialog {
         val builder = AlertDialog.Builder(context)
         builder.setCancelable(true)
         builder.setPositiveButton(
             context.getString(R.string.cancel_btn)
-        ) { it, _ -> it.cancel() }
+        ) { it, _ ->
+            it.cancel()
+            if (isRejoin) context.startActivity(
+                Intent(
+                    context,
+                    MultiPlayerMenuActivity::class.java
+                )
+            )
+        }
         builder.setOnCancelListener {
             Toast.makeText(
                 context,

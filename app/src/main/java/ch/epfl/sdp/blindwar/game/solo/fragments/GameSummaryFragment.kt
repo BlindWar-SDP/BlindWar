@@ -53,7 +53,6 @@ class GameSummaryFragment : Fragment() {
                     ?.commit()
             }
         }
-
         return view
     }
 

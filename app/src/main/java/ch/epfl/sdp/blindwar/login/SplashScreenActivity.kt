@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.login
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -27,10 +28,10 @@ import com.google.firebase.ktx.Firebase
 
 /**
  * Launcher activity that let the user log/register to the app
- * TODO: CodeClimate / Cirrus warnings
  *
  * @constructor creates a SplashScreenActivity
  */
+@SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
     // inspired by :
     // https://github.com/firebase/snippets-android/blob/master/auth/app/src/main/java/com/google/firebase/quickstart/auth/kotlin/FirebaseUIActivity.kt
@@ -77,8 +78,7 @@ class SplashScreenActivity : AppCompatActivity() {
             }
         Firebase.auth.currentUser?.let {
             startActivity(getIntentData())
-            // TODO : if not logged in and open the app with a QR code -> show login layout... is it ok >
-                    } ?: run {
+        } ?: run {
             signInLauncher.launch(createSignInIntent())
         }
     }
@@ -161,17 +161,8 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
-    /*
-    private fun hasInternet(): Boolean {
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return connectivityManager.activeNetworkInfo?.isConnected ?: false
-    }
-     */
-
     private fun getIntentData(): Intent {
         return data?.let {
-            // TODO: check if not connected to a match MainMenuActivity ?
             Intent(this, MultiPlayerMenuActivity::class.java)
                 .putExtra(MultiPlayerMenuActivity.DYNAMIC_LINK, data.toString())
         } ?: run {

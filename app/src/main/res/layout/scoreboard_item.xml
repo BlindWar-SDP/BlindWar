@@ -9,7 +9,7 @@
         android:id="@+id/row_name"
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:text="UNKNOWN"
+        android:text="@string/unknown"
         android:textColor="#FFFFFF"
         android:textSize="16sp" />
 
@@ -17,7 +17,7 @@
         android:id="@+id/row_number_point"
         android:layout_width="20dp"
         android:layout_height="30dp"
-        android:text="0"
+        android:text="@string/_0"
         android:textColor="#FFFFFF"
         android:textSize="16sp" />
 </LinearLayout>

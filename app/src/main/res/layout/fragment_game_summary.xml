@@ -8,9 +8,7 @@
     android:background="@color/success"
     tools:context=".game.solo.fragments.GameSummaryFragment">
 
-
     <!-- Guidelines -->
-
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="57dp"
@@ -24,7 +22,8 @@
         app:layout_constraintStart_toEndOf="@+id/title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:contentDescription="@string/content_description_ImageButton" />
 
     <ImageButton
         android:id="@+id/replay"
@@ -40,7 +39,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
         app:layout_constraintVertical_bias="0.272"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:contentDescription="@string/content_description_ImageButton" />
 
     <ImageButton
         android:id="@+id/quit"
@@ -56,7 +56,8 @@
         app:layout_constraintStart_toStartOf="@+id/guideline21"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
         app:layout_constraintVertical_bias="0.272"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:contentDescription="@string/content_description_ImageButton" />
 
     <TextView
         android:id="@+id/title"

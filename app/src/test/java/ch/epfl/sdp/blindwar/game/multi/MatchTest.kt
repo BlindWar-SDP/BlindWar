@@ -8,6 +8,7 @@ class MatchTest : TestCase() {
     private var dummyPlayerList = mutableListOf("yeet1", "yeet2")
     private var dummyPseudoList = mutableListOf("yeet3", "yeet4")
     private var dummyResultList = mutableListOf(2, 3)
+    private var dummyFinishedList = mutableListOf(false, false)
     private var dummyMatch = Match(
         "uid",
         1,
@@ -15,6 +16,7 @@ class MatchTest : TestCase() {
         dummyPseudoList,
         null,
         dummyResultList,
+        dummyFinishedList,
         4
     )
 

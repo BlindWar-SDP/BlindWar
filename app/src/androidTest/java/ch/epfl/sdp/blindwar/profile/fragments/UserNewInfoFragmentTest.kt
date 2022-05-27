@@ -7,7 +7,6 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -81,7 +80,7 @@ class UserNewInfoFragmentTest : TestCase() {
             .check(
                 matches(
                     withEffectiveVisibility(
-                        ViewMatchers.Visibility.INVISIBLE
+                        Visibility.INVISIBLE
                     )
                 )
             )
@@ -176,7 +175,7 @@ class UserNewInfoFragmentTest : TestCase() {
             .check(
                 matches(
                     withEffectiveVisibility(
-                        ViewMatchers.Visibility.VISIBLE
+                        Visibility.VISIBLE
                     )
                 )
             )
@@ -215,7 +214,7 @@ class UserNewInfoFragmentTest : TestCase() {
             .check(
                 matches(
                     withEffectiveVisibility(
-                        ViewMatchers.Visibility.INVISIBLE
+                        Visibility.INVISIBLE
                     )
                 )
             )

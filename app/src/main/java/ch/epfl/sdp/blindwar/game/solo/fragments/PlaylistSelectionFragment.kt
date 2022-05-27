@@ -81,7 +81,8 @@ class PlaylistSelectionFragment : Fragment() {
             requireActivity(),
             view,
             gameInstanceViewModel,
-            profileViewModel
+            profileViewModel,
+            requireFragmentManager()
         )
         adapter = playlistRecyclerView.adapter as DisplayableItemAdapter
     }

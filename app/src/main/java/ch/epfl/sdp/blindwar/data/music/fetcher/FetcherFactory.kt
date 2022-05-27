@@ -3,7 +3,6 @@ package ch.epfl.sdp.blindwar.data.music.fetcher
 import android.content.Context
 import android.content.res.Resources
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
-import ch.epfl.sdp.blindwar.data.music.metadata.URIMusicMetadata
 
 class FetcherFactory(
     private val context: Context,
@@ -11,7 +10,6 @@ class FetcherFactory(
 ) {
 
     fun getFetcher(musicMetadata: MusicMetadata): Fetcher {
-        return if (musicMetadata is URIMusicMetadata) URIFetcher()
-        else ResourceFetcher(context, resources)
+        return if (musicMetadata.uri == null) ResourceFetcher(context, resources) else URIFetcher()
     }
 }

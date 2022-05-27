@@ -19,7 +19,7 @@ import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 class GameActivity : AppCompatActivity() {
     val gameInstanceViewModel: GameInstanceViewModel by viewModels()
-    protected val profileViewModel: ProfileViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by viewModels()
 
     companion object {
         /* Used to handle permission request */

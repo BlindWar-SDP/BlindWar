@@ -107,7 +107,8 @@
                     app:layout_constraintStart_toEndOf="@+id/coverGuideline"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="1.0"
-                    tools:text="LONG PLAYLIST HAHA" />
+                    tools:text="LONG PLAYLIST HAHA"
+                    tools:targetApi="o" />
 
                 <TextView
                     android:id="@+id/authorTextview"
@@ -125,7 +126,8 @@
                     app:layout_constraintStart_toEndOf="@+id/coverGuideline"
                     app:layout_constraintTop_toTopOf="@+id/nameGuideline"
                     app:layout_constraintVertical_bias="0.0"
-                    tools:text="AUTHOR" />
+                    tools:text="AUTHOR"
+                    tools:targetApi="o" />
 
                 <TextView
                     android:id="@+id/difficultyLabel"
@@ -197,7 +199,8 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:targetApi="s" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -326,7 +329,8 @@
                     app:layout_constraintStart_toEndOf="@+id/roundPicker"
                     app:layout_constraintTop_toTopOf="@+id/roundPicker"
                     app:layout_constraintVertical_bias="0.5"
-                    tools:text="ROUNDS" />
+                    tools:text="ROUNDS"
+                    tools:targetApi="o" />
 
                 <TextView
                     android:id="@+id/timerTextView"
@@ -343,7 +347,8 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/timerPicker"
                     app:layout_constraintTop_toTopOf="@+id/timerPicker"
-                    tools:text="TIMER" />
+                    tools:text="TIMER"
+                    tools:targetApi="o" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline8"

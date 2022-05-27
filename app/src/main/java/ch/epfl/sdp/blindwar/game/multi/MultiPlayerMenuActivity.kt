@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar.game.multi
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,15 +9,22 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.multi.model.Match
+import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
+import ch.epfl.sdp.blindwar.game.util.DynamicLinkHelper
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.firebase.database.DataSnapshot
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -31,35 +37,42 @@ import com.google.firebase.ktx.Firebase
 class MultiPlayerMenuActivity : AppCompatActivity() {
     private var eloDelta = DEFAULT_ELO
     private var dialog: AlertDialog? = null
-    private var isCanceled = false
     private var listener: ListenerRegistration? = null
     private var toast: Toast? = null
     private var currentUser: DataSnapshot? = null
     private var matchId: String? = null
     private lateinit var leaderboardButton: ImageButton
 
+
     companion object {
-        private const val LIMIT_MATCH: Long = 10
+        private const val LIMIT_MATCH = 10L
         private const val DELTA_MATCHMAKING = 100
         private const val DEFAULT_ELO = 200
         const val DYNAMIC_LINK = "Dynamic link"
 
+
         /**
          * Launch the game for every player
-         * TODO
+         *
          * @param matchId
          */
-        fun launchGame(matchId: String, context: Context) {
-/*(context as AppCompatActivity).supportFragmentManager.beginTransaction()
-    .replace(
-        (viewFragment.parent as ViewGroup).id,
-        DemoFragment(),
-        "DEMO"
-    )
-    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-    .commit()*/
-            Toast.makeText(context, "Match $matchId connected (test message)", Toast.LENGTH_LONG)
-                .show()
+        fun launchGame(matchId: String, supportFragmentManager: FragmentManager) {
+            /* Goal: have the game with same config launched for all users
+             Then we need to launch the fragment with a specific match_id as the tag
+             so that the fragments knows it has to fetch value from a particular tag.*/
+            val demoFragment = DemoFragment()
+            val bundle = Bundle().apply {
+                putString("match_id", matchId)
+            }
+            demoFragment.arguments = bundle
+            supportFragmentManager.beginTransaction()
+                .replace(
+                    android.R.id.content,
+                    demoFragment,
+                    "DEMO"
+                )
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit()
         }
     }
 
@@ -149,7 +162,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                     .whereGreaterThan("elo", elo - eloDelta)
                     .orderBy("elo", Query.Direction.DESCENDING)
                     .limit(LIMIT_MATCH).get()
-                if (matches.isSuccessful && !isCanceled) {
+                if (matches.isSuccessful) {
                     var i = 0
                     var match: DocumentReference? = null
                     while (match == null && i < LIMIT_MATCH) {
@@ -160,15 +173,15 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                         )
                         i++
                     }
-                    if (match == null && !isCanceled) {
+                    if (match == null) {
                         displayToast(R.string.toast_connexion)
                         eloDelta += DELTA_MATCHMAKING
                         isOk = false
-                    } else if (!isCanceled) {
+                    } else {
                         isOk = true
-                        setListener(match!!)
+                        setListener(match)
                     }
-                } else if (!isCanceled) {
+                } else {
                     displayToast(R.string.toast_connexion_internet)
                     isOk = false
                 }
@@ -191,8 +204,8 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             getString(R.string.cancel_btn)
         ) { it, _ -> it.cancel() }
         builder.setOnCancelListener {
-            isCanceled = true
             displayToast(R.string.toast_canceled_connexion)
+            quitMatch(Button(applicationContext))
         }
         val view = View.inflate(applicationContext, R.layout.fragment_dialog_loading, null)
         builder.setView(view)
@@ -224,7 +237,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         setProgressDialog("Wait for connexion")
         val user = UserDatabase.getCurrentUser()
         val match: DocumentSnapshot? = MatchDatabase.getMatchSnapshot(uid, Firebase.firestore)
-        if (!isCanceled && match != null) {
+        if (match != null) {
             val matchObject = match.toObject(Match::class.java)!!
             val connect =
                 MatchDatabase.connect(
@@ -232,13 +245,13 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                     user?.getValue(User::class.java)!!,
                     Firebase.firestore
                 )
-            if (connect == null && !isCanceled) {
+            if (connect == null) {
                 displayToast(R.string.multi_match_full)
                 dialog!!.hide()
-            } else if (!isCanceled) {
+            } else {
                 setListener(match.reference)
             }
-        } else if (!isCanceled) {
+        } else {
             displayToast(R.string.multi_match_not_found)
             dialog!!.hide()
         }
@@ -281,7 +294,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             }
             if (SnapshotListener.listenerOnLobby(snapshot, this, dialog!!)) {
                 listener?.remove()
-                launchGame(match.id, applicationContext)
+                launchGame(match.id, supportFragmentManager)
             }
         }
     }
@@ -314,7 +327,46 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun joinMatch(view: View) {
-        launchGame(matchId!!, applicationContext)
+        val snapshot = MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)
+        val match = snapshot?.toObject(Match::class.java)
+        if (snapshot != null && match != null) {
+            if (match.isStarted) {
+                displayToast(R.string.multi_already_started)
+                quitMatch(view)
+            } else {
+                if (match.listPlayers?.get(0)
+                        .equals(currentUser?.child("uid")?.value as String?)
+                    && match.listPlayers?.get(0) != null
+                ) {
+                    dialog = DynamicLinkHelper.setDynamicLinkDialog(
+                        getString(R.string.multi_wait_players), match.uid, this, true
+                    )
+                    dialog?.show()
+                    listener = Firebase.firestore.collection(MatchDatabase.COLLECTION_PATH)
+                        .document(match.uid).addSnapshotListener { snapshotListener, e ->
+                            if (e != null) {
+                                return@addSnapshotListener
+                            }
+                            if (SnapshotListener.listenerOnLobby(
+                                    snapshotListener, this, dialog!!
+                                )
+                            ) {
+                                listener?.remove()
+                                launchGame(
+                                    match.uid,
+                                    supportFragmentManager
+                                )
+                            }
+                        }
+                } else {
+                    setListener(snapshot.reference)
+                    setProgressDialog("Wait for connexion")
+                }
+            }
+        } else {
+            displayToast(R.string.multi_match_not_found)
+            quitMatch(view)
+        }
     }
 
     /** Shows the selected fragment
