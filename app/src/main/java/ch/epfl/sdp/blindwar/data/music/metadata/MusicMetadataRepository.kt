@@ -6,10 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyService.apiAuth
 import ch.epfl.sdp.blindwar.data.spotify.SpotifyService.apiMeta
 import ch.epfl.sdp.blindwar.database.MusicDatabase
-import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.Dispatchers
-import kotlinx.serialization.descriptors.PrimitiveKind
-import java.net.URI
 
 class MusicMetadataRepository {
     private var _musicMetadatas: MutableLiveData<ArrayList<MusicMetadata>> =
@@ -93,6 +90,12 @@ class MusicMetadataRepository {
     }
 
     private fun sanitizeMetadata(metadata: List<String>, uri: Uri): MusicMetadata {
-        return MusicMetadata.createWithURI(capitalizeString(metadata[1]), capitalizeString(metadata[0]), "https://yt3.ggpht.com/ytc/AKedOLQEPKJQm1iJn986SkSpabjJSdcoh8gPxDtHfpCQ=s88-c-k-c0x00ffffff-no-rj", 0, uri.toString())
+        return MusicMetadata.createWithURI(
+            capitalizeString(metadata[1]),
+            capitalizeString(metadata[0]),
+            "https://yt3.ggpht.com/ytc/AKedOLQEPKJQm1iJn986SkSpabjJSdcoh8gPxDtHfpCQ=s88-c-k-c0x00ffffff-no-rj",
+            0,
+            uri.toString()
+        )
     }
 }

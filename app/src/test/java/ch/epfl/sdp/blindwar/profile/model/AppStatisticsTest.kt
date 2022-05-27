@@ -1,6 +1,5 @@
 package ch.epfl.sdp.blindwar.profile.model
 
-import android.util.Log
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 

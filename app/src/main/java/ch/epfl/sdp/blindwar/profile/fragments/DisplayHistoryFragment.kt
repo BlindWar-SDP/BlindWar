@@ -7,14 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.GameResult
-import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.profile.model.Result
 import ch.epfl.sdp.blindwar.profile.model.User
 import ch.epfl.sdp.blindwar.profile.util.LeaderboardRecyclerAdapter
@@ -37,11 +35,6 @@ class DisplayHistoryFragment : Fragment() {
     private var lossesList = mutableListOf<String>()
     private var victoriesList = mutableListOf<String>()
     private var gameTimesList = mutableListOf<String>()
-
-    private val LIKED_MUSIC_TYPE = "liked musics"
-    private val MATCH_HISTORY_TYPE = "match history"
-    private val LEADERBOARD_TYPE = "leaderboard"
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -244,7 +237,9 @@ class DisplayHistoryFragment : Fragment() {
 
     companion object {
         const val HISTORY_TYPE = "type"
-
+        const val LIKED_MUSIC_TYPE = "liked musics"
+        const val MATCH_HISTORY_TYPE = "match history"
+        const val LEADERBOARD_TYPE = "leaderboard"
 
         fun newInstance(name: String): DisplayHistoryFragment {
             val fragment = DisplayHistoryFragment()

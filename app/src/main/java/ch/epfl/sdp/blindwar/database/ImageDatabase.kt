@@ -1,3 +1,5 @@
+@file:Suppress("ControlFlowWithEmptyBody")
+
 package ch.epfl.sdp.blindwar.database
 
 import android.net.Uri
@@ -26,8 +28,7 @@ object ImageDatabase {
 //            var progress = (100*p.bytesTransferred/p.totalByteCount).toInt()
 //            progressDialog.setMessage("uploaded $progress %")
 //        }
-        while (!uploadTask.isComplete) {
-        } // TODO : Bad practice, waste cycles
+        while (!uploadTask.isComplete);// TODO : Bad practice, waste cycles
         return uploadedImageRef.path
     }
 

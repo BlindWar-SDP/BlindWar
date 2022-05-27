@@ -1,7 +1,6 @@
 package ch.epfl.sdp.blindwar.data.music.fetcher
 
 import android.media.MediaPlayer
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import ch.epfl.sdp.blindwar.audio.ReadyMediaPlayer
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata

@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.login
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -30,6 +31,7 @@ import com.google.firebase.ktx.Firebase
  *
  * @constructor creates a SplashScreenActivity
  */
+@SuppressLint("CustomSplashScreen")
 class SplashScreenActivity : AppCompatActivity() {
     // inspired by :
     // https://github.com/firebase/snippets-android/blob/master/auth/app/src/main/java/com/google/firebase/quickstart/auth/kotlin/FirebaseUIActivity.kt

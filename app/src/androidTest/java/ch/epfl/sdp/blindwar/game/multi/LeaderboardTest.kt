@@ -1,16 +1,11 @@
 package ch.epfl.sdp.blindwar.game.multi
 
-import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.uiautomator.UiDevice
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
@@ -53,7 +48,5 @@ class LeaderboardTest {
         Espresso.onView(ViewMatchers.withId(R.id.leaderboardButton))
             .perform(ViewActions.click())
         FirebaseAuth.getInstance().signOut()
-
-
     }
 }

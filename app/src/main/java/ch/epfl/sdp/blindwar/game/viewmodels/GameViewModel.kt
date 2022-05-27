@@ -1,3 +1,5 @@
+@file:Suppress("ControlFlowWithEmptyBody", "ControlFlowWithEmptyBody")
+
 package ch.epfl.sdp.blindwar.game.viewmodels
 
 import android.content.Context
@@ -28,19 +30,18 @@ import java.time.format.DateTimeFormatter
  * @constructor Construct a class that represent the game logic
  */
 open class GameViewModel(
-    gameInstance: GameInstance,
+    /** Encapsulates the characteristics of a game instead of its logic
+     *
+     */
+    protected val gameInstance: GameInstance,
     private val context: Context,
     private val resources: Resources,
     private var scoreboardAdapter: ScoreboardAdapter? = null
 ) : ViewModel() {
-    /** Encapsulates the characteristics of a game instead of its logic
-     *
-     */
-    protected val gameInstance: GameInstance = gameInstance
-    protected lateinit var musicViewModel: MusicViewModel
+    private lateinit var musicViewModel: MusicViewModel
     protected val profileViewModel = ProfileViewModel()
 
-    protected val gameParameter: GameParameter = gameInstance
+    private val gameParameter: GameParameter = gameInstance
         .gameConfig!!
         .parameter!!
 
@@ -98,8 +99,8 @@ open class GameViewModel(
      * clean up player and assets
      *
      */
-    fun endGame() {
-        if(gameInstance.gameFormat == GameFormat.SOLO) {
+    private fun endGame() {
+        if (gameInstance.gameFormat == GameFormat.SOLO) {
             val fails = round - score
             val result = if (fails == 0) Result.WIN else Result.LOSS
 

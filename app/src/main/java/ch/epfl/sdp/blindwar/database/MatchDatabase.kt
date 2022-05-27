@@ -1,3 +1,5 @@
+@file:Suppress("ControlFlowWithEmptyBody", "ControlFlowWithEmptyBody")
+
 package ch.epfl.sdp.blindwar.database
 
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance

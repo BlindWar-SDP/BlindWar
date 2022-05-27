@@ -70,17 +70,17 @@ android {
 
 dependencies {
     implementation "com.google.code.gson:gson:2.8.9"
-    def lifecycle_version = "2.5.0-beta01"
+    def lifecycle_version = "2.5.0-rc01"
     def activity_version = "1.4.0"
     def fragment_version = "1.4.1"
     def arch_version = "2.1.0"
 
     implementation 'com.spotify.android:auth:1.2.5'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.fragment:fragment-ktx:1.5.0-beta01@aar'
-    androidTestImplementation 'androidx.fragment:fragment-ktx:1.5.0-beta01@aar'
-    implementation 'androidx.activity:activity-ktx:1.6.0-alpha03@aar'
-    androidTestImplementation 'androidx.activity:activity-ktx:1.6.0-alpha03@aar'
+    implementation 'androidx.fragment:fragment-ktx:1.5.0-rc01@aar'
+    androidTestImplementation 'androidx.fragment:fragment-ktx:1.5.0-rc01@aar'
+    implementation 'androidx.activity:activity-ktx:1.6.0-alpha04@aar'
+    androidTestImplementation 'androidx.activity:activity-ktx:1.6.0-alpha04@aar'
 
 
     // ViewModel
@@ -118,7 +118,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.6.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.test:monitor:1.5.0'
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'com.google.firebase:firebase-dynamic-links-ktx'
@@ -167,7 +167,7 @@ dependencies {
     }
 
     // Firebase
-    implementation 'com.google.firebase:firebase-auth-ktx:21.0.3'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.5'
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
     implementation 'com.google.firebase:firebase-firestore-ktx:24.1.2'
@@ -175,15 +175,15 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx:20.0.5'
 
     debugImplementation("androidx.fragment:fragment-testing:1.4.1")
-    debugImplementation("androidx.fragment:fragment-ktx:1.5.0-beta01")
+    debugImplementation("androidx.fragment:fragment-ktx:1.5.0-rc01")
     debugImplementation("androidx.test:core:1.4.0")
 
     // JVM-based unit tests (that don't need a real device or emulator)
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1"
     // Instrumentation unit tests (that will require a real device or emulator)
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1"
     // Coroutines, and the much-recommended library to add lifecycle-awareness to coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
 
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
     androidTestImplementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'

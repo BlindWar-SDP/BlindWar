@@ -1,7 +1,6 @@
 package ch.epfl.sdp.blindwar.data.spotify
 
 import android.util.Base64
-import ch.epfl.sdp.blindwar.BuildConfig
 
 object SpotifyApiConstants {
     /** Credentials constants **/

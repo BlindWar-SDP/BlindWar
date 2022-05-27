@@ -1,3 +1,5 @@
+@file:Suppress("ControlFlowWithEmptyBody")
+
 package ch.epfl.sdp.blindwar.game.solo.fragments
 
 import android.os.Bundle

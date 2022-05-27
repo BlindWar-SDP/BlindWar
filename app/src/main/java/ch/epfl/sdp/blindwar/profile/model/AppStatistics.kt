@@ -128,12 +128,10 @@ class AppStatistics {
         if (elo < 0) {
             elo = 0
         }
-        elo = if (opponentElo == elo) {
-            equalElo(result)
-        } else if (opponentElo > elo) {
-            smallerElo(result, opponentElo)
-        } else {
-            greaterElo(result, opponentElo)
+        elo = when {
+            opponentElo == elo -> equalElo(result)
+            opponentElo > elo -> smallerElo(result, opponentElo)
+            else -> greaterElo(result, opponentElo)
         }
 
     }

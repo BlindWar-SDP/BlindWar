@@ -15,7 +15,7 @@ import com.google.firebase.ktx.Firebase
 
 
 object UserDatabase {
-    const val COLLECTION_PATH = "Users"
+    private const val COLLECTION_PATH = "Users"
     val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     val userReference = database.getReference(COLLECTION_PATH)
 
@@ -207,7 +207,7 @@ object UserDatabase {
     fun getCurrentUser(): DataSnapshot? {
         return try {
             val task = getUserReference(Firebase.auth.currentUser!!.uid).get()
-            while (!task.isComplete){}
+            while (!task.isComplete);
             if (task.isSuccessful) task.result else null
         } catch (_: Exception) {
             null
