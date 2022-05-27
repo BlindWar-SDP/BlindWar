@@ -88,10 +88,7 @@ class DemoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.activity_animated_demo, container, false)
-
-        // Pause the main menu music
-        MainMusic.pause()
-
+        
         // Get the scoreboard
         scoreboard = view.findViewById(R.id.scoreboard)
 
