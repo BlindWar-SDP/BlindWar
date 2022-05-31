@@ -3,14 +3,18 @@ package ch.epfl.sdp.blindwar.data.music.metadata
 import ch.epfl.sdp.blindwar.game.model.Displayable
 
 open class MusicMetadata(
-    var title: String = "",
-    var artist: String = "",
-    var imageUrl: String = "",
     var duration: Int = 0,
     var uri: String? = null,
-    var resourceId: Int? = null
+    var resourceId: Int? = null,
+    override var name: String = "",
+    override var author: String = "",
+    override var level: String = "",
+    override var genre: String = "",
+    override var cover: String = "",
+    override var previewUrl: String = "",
+    override var size: Int = 0,
+    override val extendable: Boolean = false
 ) : Displayable {
-
     companion object {
         fun createWithURI(
             title: String,
@@ -19,7 +23,8 @@ open class MusicMetadata(
             duration: Int,
             uri: String
         ): MusicMetadata {
-            val musicMetadata = MusicMetadata(title, artist, imageUrl, duration)
+            val musicMetadata =
+                MusicMetadata(name = title, author = artist, cover = imageUrl, duration = duration)
             musicMetadata.uri = uri
             return musicMetadata
         }
@@ -31,45 +36,14 @@ open class MusicMetadata(
             duration: Int,
             resourceId: Int
         ): MusicMetadata {
-            val musicMetadata = MusicMetadata(title, artist, imageUrl, duration)
+            val musicMetadata =
+                MusicMetadata(name = title, author = artist, cover = imageUrl, duration = duration)
             musicMetadata.resourceId = resourceId
             return musicMetadata
         }
     }
 
-    override fun toString(): String = "$title by $artist"
-
-    override fun getAuthor(): String {
-        return artist
-    }
-
-    override fun getLevel(): String {
-        return ""
-    }
-
-    override fun getGenre(): String {
-        return ""
-    }
-
-    override fun getCover(): String {
-        return imageUrl
-    }
-
-    override fun getPreviewUrl(): String {
-        return ""
-    }
-
-    override fun getName(): String {
-        return title
-    }
-
-    override fun getSize(): Int {
-        return 0
-    }
-
-    override fun extendable(): Boolean {
-        return false
-    }
+    override fun toString(): String = "$name by $author"
 }
 
 

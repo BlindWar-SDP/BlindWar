@@ -99,9 +99,13 @@ object MatchDatabase {
      * @return
      */
     fun getMatchSnapshot(uid: String, db: FirebaseFirestore): DocumentSnapshot? {
-        val query = db.collection("match").whereEqualTo("uid", uid).limit(1).get()
+        val query = db.collection(COLLECTION_PATH).whereEqualTo("uid", uid).limit(1).get()
         while (!query.isComplete); //TODO avoid active waiting
         return query.result.documents[0]
+    }
+
+    fun getMatchReference(uid: String, db: FirebaseFirestore): DocumentReference {
+        return db.collection(COLLECTION_PATH).document(uid)
     }
 
     /**
@@ -112,7 +116,7 @@ object MatchDatabase {
      * @param playerIndex
      */
     fun incrementScore(matchId: String, playerIndex: Int, db: FirebaseFirestore) {
-        val matchRef = db.collection("match").document(matchId)
+        val matchRef = getMatchReference(matchId, db)
         db.runTransaction { transaction ->
             val snapshot = transaction.get(matchRef)
             val match = snapshot.toObject(Match::class.java)
@@ -137,7 +141,7 @@ object MatchDatabase {
         db: FirebaseFirestore,
         listener: EventListener<DocumentSnapshot>
     ) {
-        val matchRef = db.collection("match").document(matchId)
+        val matchRef = getMatchReference(matchId, db)
         matchRef.addSnapshotListener(listener)
     }
 
@@ -149,13 +153,13 @@ object MatchDatabase {
      * @param db
      */
     fun playerFinish(matchId: String, playerIndex: Int, db: FirebaseFirestore) {
-        val matchRef = db.collection("match").document(matchId)
+        val matchRef = getMatchReference(matchId, db)
         db.runTransaction { transaction ->
             val snapshot = transaction.get(matchRef)
             val match = snapshot.toObject(Match::class.java)
             val listFinished = match?.listFinished
             listFinished!![playerIndex] = true
-            transaction.update(matchRef, "listFinised", listFinished)
+            transaction.update(matchRef, "listFinished", listFinished)
 
             // Success
             null

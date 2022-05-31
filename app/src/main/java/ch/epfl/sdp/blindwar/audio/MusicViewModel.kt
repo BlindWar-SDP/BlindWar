@@ -48,7 +48,7 @@ class MusicViewModel(playlist: Playlist, context: Context, resources: Resources)
             val player =
                 mutableMediaPlayerPerMusic.values.elementAt(random)
 
-            Log.d("ZAMBO ANGUISSA", musicMetadata.artist)
+            Log.d("ZAMBO ANGUISSA", musicMetadata.author)
             val ready = player.ready.value!!
 
             // Player's duration is -1 until the media is ready to be played

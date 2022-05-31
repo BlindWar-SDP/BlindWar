@@ -110,7 +110,7 @@ object UserDatabase {
             if (user != null) {
                 var duplicate = false
                 for (likedMusic in user.likedMusics) {
-                    if (music.title == likedMusic.title) {
+                    if (music.name == likedMusic.name) {
                         duplicate = true
                     }
                 }

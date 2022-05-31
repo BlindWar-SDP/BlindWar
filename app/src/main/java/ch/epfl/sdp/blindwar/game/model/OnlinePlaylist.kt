@@ -11,6 +11,6 @@ class OnlinePlaylist(
     imageUrl: String = "", // playlist cover
     previewUrl: String = "", // preview song url
     difficulty: Difficulty? = null
-) : Playlist(uid, name, author, genres, songs, imageUrl, previewUrl, difficulty)
+) : Playlist(uid, name, author, genres, songs, previewUrl, difficulty, cover = imageUrl)
 
 

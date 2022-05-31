@@ -159,7 +159,7 @@ open class GameViewModel(
      */
     fun guess(titleGuess: String, isVocal: Boolean): Boolean {
         return if (
-            GameHelper.isTheCorrectTitle(titleGuess, currentMetadata()!!.title, isVocal)
+            GameHelper.isTheCorrectTitle(titleGuess, currentMetadata()!!.name, isVocal)
         ) {
             score += 1
             round += 1

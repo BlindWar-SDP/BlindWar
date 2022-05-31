@@ -48,7 +48,7 @@ object Util {
             } else {
                 val query = constraint.toString().trim().lowercase(Locale.getDefault())
                 initialOnlinePlaylists.forEach {
-                    if (it.getName().lowercase(Locale.getDefault()).contains(query)) {
+                    if (it.name.lowercase(Locale.getDefault()).contains(query)) {
                         filteredList.add(it)
                     }
                 }

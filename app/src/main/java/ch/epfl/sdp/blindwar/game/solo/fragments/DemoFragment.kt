@@ -174,6 +174,8 @@ class DemoFragment : Fragment() {
                     )
                 }!!
             }
+            else -> {
+            }
         }
 
         gameViewModel.init()
@@ -279,7 +281,7 @@ class DemoFragment : Fragment() {
         gameViewModel.nextRound()
         gameViewModel.play()
         musicMetadata = gameViewModel.currentMetadata()!!
-        guessEditText.hint = musicMetadata.artist
+        guessEditText.hint = musicMetadata.author
         timer.start()
     }
 
@@ -409,6 +411,8 @@ class DemoFragment : Fragment() {
             GameFormat.SOLO -> {
                 //TODO
             }
+            else -> {
+            }
         }
     }
 
@@ -437,9 +441,9 @@ class DemoFragment : Fragment() {
      */
     private fun createBundleSongSummary(success: Boolean): Bundle {
         val bundle = Bundle()
-        bundle.putString(ARTIST_KEY, musicMetadata.artist)
-        bundle.putString(TITLE_KEY, musicMetadata.title)
-        bundle.putString(COVER_KEY, musicMetadata.imageUrl)
+        bundle.putString(ARTIST_KEY, musicMetadata.author)
+        bundle.putString(TITLE_KEY, musicMetadata.name)
+        bundle.putString(COVER_KEY, musicMetadata.cover)
         bundle.putBoolean(SUCCESS_KEY, success)
         bundle.putBoolean(
             IS_MULTI,
@@ -453,7 +457,7 @@ class DemoFragment : Fragment() {
      */
     private fun gameOver() {
         // If we are in multiplayer, wait for the others
-        if(gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI) {
+        if (gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI) {
             MatchDatabase.playerFinish(matchId!!, playerIndex, Firebase.firestore)
         }
         launchGameSummary()
@@ -504,7 +508,7 @@ class DemoFragment : Fragment() {
                     setVisibilityLayout(View.VISIBLE)
                     // Pass to the next music
                     musicMetadata = gameViewModel.currentMetadata()!!
-                    guessEditText.hint = musicMetadata.artist
+                    guessEditText.hint = musicMetadata.author
                     guessEditText.setText("")
                     timer = createCountDown()
                     timer.start()

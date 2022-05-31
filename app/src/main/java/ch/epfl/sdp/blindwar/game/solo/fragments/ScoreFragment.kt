@@ -83,7 +83,7 @@ class ScoreFragment : Fragment() {
             gameInstanceViewModel.gameInstance.value = gameInstanceShared
         }
 
-        val matchRef = Firebase.firestore.collection("match").document(matchId)
+        val matchRef = MatchDatabase.getMatchReference(matchId, Firebase.firestore)
         Firebase.firestore.runTransaction { transaction ->
             val snapshot = transaction.get(matchRef)
             val match = snapshot.toObject(Match::class.java)

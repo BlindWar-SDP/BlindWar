@@ -34,11 +34,11 @@ class ResourceFetcher(
         val baseMetadata = GameUtil.metadataTutorial()[author]
 
         val updateMetadata =
-            baseMetadata?.artist?.let {
+            baseMetadata?.author?.let {
                 MusicMetadata.createWithResourceId(
-                    baseMetadata.title,
-                    baseMetadata.artist,
-                    baseMetadata.imageUrl,
+                    baseMetadata.name,
+                    baseMetadata.author,
+                    baseMetadata.cover,
                     baseMetadata.duration,
                     resourceId
                 )

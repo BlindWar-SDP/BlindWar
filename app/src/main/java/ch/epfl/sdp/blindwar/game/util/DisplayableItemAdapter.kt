@@ -123,10 +123,10 @@ class DisplayableItemAdapter(
          * @param displayed object to represent
          */
         fun bind(displayed: Displayable) {
-            name.text = displayed.getName().uppercase()
-            author.text = displayed.getAuthor()
-            difficulty.text = displayed.getLevel()
-            genre.text = displayed.getGenre()
+            name.text = displayed.name.uppercase()
+            author.text = displayed.author
+            difficulty.text = displayed.level
+            genre.text = displayed.genre
 
             /** Retrieve the playlist cover : image retrieval must be done on another thread
              *  we use runBlocking to avoid this function to be suspendable **/
@@ -135,7 +135,7 @@ class DisplayableItemAdapter(
                 withContext(Dispatchers.IO) {
                     try {
                         coverCard.background =
-                            BitmapDrawable(Picasso.get().load(displayed.getCover()).get())
+                            BitmapDrawable(Picasso.get().load(displayed.cover).get())
                     } catch (e: Exception) {
                         coverCard.background =
                             AppCompatResources.getDrawable(context, R.drawable.logo)
@@ -148,12 +148,12 @@ class DisplayableItemAdapter(
             setPreviewListener(displayed)
 
             /** Expandable type **/
-            if (displayed.extendable()) {
+            if (displayed.extendable) {
                 expandButton.visibility = View.VISIBLE
                 setExpansionListener()
 
                 /** Initialize roundPicker **/
-                roundPicker.maxValue = displayed.getSize()
+                roundPicker.maxValue = displayed.size
                 roundPicker.minValue = ROUND_MIN_VALUE
                 roundPicker.value = ROUND_DEFAULT_VALUE
 
@@ -238,6 +238,8 @@ class DisplayableItemAdapter(
                                 }
                         }
                     }
+                    else -> {
+                    }
                 }
             }
         }
@@ -289,12 +291,12 @@ class DisplayableItemAdapter(
             playPreview.setOnClickListener {
                 if (!playing) {
                     player = MediaPlayer()
-                    player.setDataSource(displayed.getPreviewUrl())
+                    player.setDataSource(displayed.previewUrl)
 
                     var duration = DURATION_DEFAULT
 
                     /** Modify the music preview to not spoil the playlist too much **/
-                    if (displayed.extendable()) {
+                    if (displayed.extendable) {
                         AudioHelper.soundAlter(
                             player, AudioHelper.HIGH, AudioHelper.FAST
                         )

@@ -108,7 +108,7 @@ class DisplayHistoryFragment : Fragment() {
             if (user != null) {
                 val likedMusics: MutableList<MusicMetadata> = user.likedMusics
                 for (music in likedMusics) {
-                    addToList(music.title, music.artist, music.imageUrl)
+                    addToList(music.name, music.author, music.cover)
                 }
             } else {
                 for (i in 1..10) {

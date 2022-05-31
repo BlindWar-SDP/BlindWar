@@ -73,13 +73,14 @@ class SongSummaryFragment : Fragment() {
             thread {
                 val timerStart = SystemClock.elapsedRealtime()
                 while (SystemClock.elapsedRealtime() - timerStart < timeInterRounds);
-                //activity?.onBackPressed()
-                // TODO: Uncomment and debug
+                Log.w("TAG", "onBackPressed after 3.5s")
+                activity?.onBackPressed()
             }
         }
 
         skip = view.findViewById<ImageButton>(R.id.skip_next_summary).also { button ->
             button.setOnClickListener {
+                Log.w("TAG", "onBackPressed")
                 activity?.onBackPressed()
             }
         }
