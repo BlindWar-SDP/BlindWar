@@ -14,26 +14,10 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class MatchDatabaseTest : TestCase() {
 
-    //private val dbReference =
-
     @Before
     fun init() {
 
     }
-
-    /*@Test
-    fun testMatchCreation() {
-        val match = MatchDatabase.createMatch(
-            "test",
-            "test",
-            1000,
-            2,
-            GameInstance.Builder().build(),
-            Firebase.firestore,
-            false
-        )
-        assertTrue(match?.listPlayers!!.contains("test"))
-    }*/
 
     @Test
     fun testMatchCreationNull() {
@@ -49,39 +33,10 @@ class MatchDatabaseTest : TestCase() {
         assertTrue(match == null)
     }
 
-    /*@Test
-    fun testMatchRemove() {
-        val match = MatchDatabase.createMatch(
-            "test",
-            "test",
-            1000,
-            2,
-            GameInstance.Builder().build(),
-            Firebase.firestore,
-            false
-        )
-        MatchDatabase.removeMatch("test", FirebaseFirestore.getInstance())
-    }*/
-
-    /*@Test
-    fun testGetMatch() {
-        val match = MatchDatabase.createMatch(
-            "test",
-            "test",
-            1000,
-            2,
-            GameInstance.Builder().build(),
-            Firebase.firestore,
-            false
-        )
-        assertTrue(MatchDatabase.getMatchSnapshot("test", Firebase.firestore) != null)
-    }*/
-
     @Test
     fun testConnectFail() {
         val match = Match("", 0, mutableListOf("t"), maxPlayer = 1)
         val result = MatchDatabase.connect(match, User(), Firebase.firestore)
         assertTrue(result == null)
     }
-
 }
