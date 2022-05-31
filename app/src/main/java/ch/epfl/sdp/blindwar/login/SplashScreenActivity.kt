@@ -1,13 +1,12 @@
 package ch.epfl.sdp.blindwar.login
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.text.Html
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat
 import ch.epfl.sdp.blindwar.BuildConfig
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.UserDatabase
@@ -46,7 +45,7 @@ class SplashScreenActivity : AppCompatActivity() {
     // See: https://developer.android.com/training/basics/intents/result
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
-    ) { res -> startActivity(onSignInResult(this, res)) }
+    ) { res -> startActivity(onSignInResult(res)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,7 +85,7 @@ class SplashScreenActivity : AppCompatActivity() {
      * depending if the user is new or not
      *
      */
-    private fun startActivityAfterSplash(){
+    private fun startActivityAfterSplash() {
         Firebase.auth.currentUser?.let {
             startActivity(getIntentData())
         } ?: run {
@@ -130,12 +129,10 @@ class SplashScreenActivity : AppCompatActivity() {
     /**
      * When the new user has sign in
      *
-     * @param activity
      * @param result
      * @return
      */
     private fun onSignInResult(
-        activity: Activity,
         result: FirebaseAuthUIAuthenticationResult
     ): Intent? {
         val response = result.idpResponse
@@ -158,7 +155,10 @@ class SplashScreenActivity : AppCompatActivity() {
                     )
                     Toast.makeText(
                         this,
-                        Html.fromHtml("Hi, your pseudo is <b>${user0.pseudo}</b>,<br> you can personalize it in \"Profile\""),
+                        HtmlCompat.fromHtml(
+                            "Hi, your pseudo is <b>${user0.pseudo}</b>,<br> you can personalize it in \"Profile\"",
+                            HtmlCompat.FROM_HTML_MODE_LEGACY
+                        ),
                         Toast.LENGTH_LONG
                     ).show()
                     // TODO: should also initiate a liveData ?

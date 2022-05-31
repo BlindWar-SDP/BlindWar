@@ -171,6 +171,7 @@ class DisplayHistoryFragment : Fragment() {
     /**
      * Retrieves all Users from the database an get their pseudo and elo
      */
+    @Suppress("UNCHECKED_CAST")
     private val leaderboardListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val usersMap = try {

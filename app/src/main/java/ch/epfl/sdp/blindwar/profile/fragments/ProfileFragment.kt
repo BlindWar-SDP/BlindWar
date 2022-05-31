@@ -83,7 +83,7 @@ class ProfileFragment : Fragment() {
      * Opens profile edition activity
      */
     private fun editProfile() {
-        fragmentManager?.let {
+        parentFragmentManager.let {
             it.beginTransaction().apply {
                 replace(R.id.fragment_menu_container, UserNewInfoFragment())
                 commit()

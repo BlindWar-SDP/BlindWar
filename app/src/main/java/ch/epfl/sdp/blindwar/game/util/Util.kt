@@ -58,6 +58,7 @@ object Util {
             return results
         }
 
+        @Suppress("UNCHECKED_CAST")
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             if (results?.values is ArrayList<*>) {
                 onlinePlaylistSet.clear()

@@ -20,7 +20,7 @@ class PlaylistViewModel : ViewModel() {
         }
     }
 
-    fun queryFilterPlaylist(query: String) {
+    fun queryFilterPlaylist() {
         viewModelScope.launch {
             _playlists.postValue(
                 //this.value?.filter { it.getName().lowercase().contains(query)} as ArrayList<Playlist>

@@ -15,7 +15,9 @@ open class Playlist(
     override var size: Int = songs.size,
     override val extendable: Boolean = true,
 ) : Displayable {
-    override var level: String
+    override var level: String = ""
         get() = difficulty.toString()
-        set(value) {}
+        set(value) {
+            field = value
+        }
 }

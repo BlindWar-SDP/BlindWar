@@ -316,6 +316,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun quitMatch(view: View) {
+        assert(view.isEnabled)
         UserDatabase.removeMatchId(currentUser?.child("uid")?.value.toString())
         finish()
         startActivity(intent)

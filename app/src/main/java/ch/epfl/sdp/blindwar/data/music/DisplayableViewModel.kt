@@ -20,7 +20,9 @@ class DisplayableViewModel : ViewModel() {
     init {
         viewModelScope.launch {
             musicMetadataViewModel.fetchMusicMetadata("take on me")
+            @Suppress("UNCHECKED_CAST")
             setObservable(musicMetadataViewModel.metadata as MutableLiveData<ArrayList<Displayable>>)
+            @Suppress("UNCHECKED_CAST")
             setObservable(playlistViewModel.playlists as MutableLiveData<ArrayList<Displayable>>)
         }
     }
@@ -35,14 +37,9 @@ class DisplayableViewModel : ViewModel() {
         musicMetadataViewModel.fetchMusicMetadata(query)
     }
 
-    private fun queryPlaylistMetadata(query: String) {
-        playlistViewModel.queryFilterPlaylist(query)
-    }
-
     fun queryMetadata(query: String) {
         viewModelScope.launch {
             queryMusicMetadata(query)
-            //queryPlaylistMetadata(query)
         }
     }
 

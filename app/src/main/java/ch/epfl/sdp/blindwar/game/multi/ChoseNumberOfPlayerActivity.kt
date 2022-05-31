@@ -29,6 +29,7 @@ class ChoseNumberOfPlayerActivity : AppCompatActivity() {
     }
 
     fun createMatchSoloAttributes(view: View) {
+        assert(view.isEnabled)
         val nb: NumberPicker = findViewById(R.id.number_of_players)
         val checkBox: CheckBox = findViewById(R.id.checkBoxIsPrivate)
 
@@ -45,6 +46,7 @@ class ChoseNumberOfPlayerActivity : AppCompatActivity() {
      * @param view
      */
     fun cancel(view: View) {
+        assert(view.isEnabled)
         startActivity(Intent(this, MultiPlayerMenuActivity::class.java))
     }
 }
