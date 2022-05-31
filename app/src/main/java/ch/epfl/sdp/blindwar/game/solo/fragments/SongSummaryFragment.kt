@@ -4,6 +4,7 @@ package ch.epfl.sdp.blindwar.game.solo.fragments
 
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,19 +67,23 @@ class SongSummaryFragment : Fragment() {
         } else {
             layout.setBackgroundColor(resources.getColor(R.color.black, activity?.theme))
         }
+
         val isMulti = arguments?.get(IS_MULTI) as Boolean?
         if (isMulti != null && isMulti) { //avoid waiting for an afk player
             thread {
                 val timerStart = SystemClock.elapsedRealtime()
                 while (SystemClock.elapsedRealtime() - timerStart < timeInterRounds);
-                activity?.onBackPressed()
+                //activity?.onBackPressed()
+                // TODO: Uncomment and debug
             }
         }
+
         skip = view.findViewById<ImageButton>(R.id.skip_next_summary).also { button ->
             button.setOnClickListener {
                 activity?.onBackPressed()
             }
         }
+
         setLikeAnimation(view)
         setLikeListener()
         return view

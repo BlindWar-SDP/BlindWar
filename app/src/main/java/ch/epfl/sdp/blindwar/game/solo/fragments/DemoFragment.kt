@@ -5,6 +5,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -105,11 +106,6 @@ class DemoFragment : Fragment() {
             gameInstanceViewModel.match?.listResult = match?.listResult
             scoreboardAdapter.updateScoreboardFromList(gameInstanceViewModel.match?.listResult)
             scoreboardAdapter.notifyDataSetChanged()
-
-            // Check if every players has finished
-            if(!match?.listFinished?.any { !it }!!) {
-                launchGameSummaray()
-            }
         }
 
     override fun onCreateView(
@@ -455,41 +451,45 @@ class DemoFragment : Fragment() {
     /**
      * Launches the Game Over fragment after a game
      */
-    private fun waitOtherPlayers() {
+    private fun gameOver() {
         // If we are in multiplayer, wait for the others
         if(gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI) {
             MatchDatabase.playerFinish(matchId!!, playerIndex, Firebase.firestore)
         }
-        else{
-            launchGameSummaray()
-        }
-
+        launchGameSummary()
     }
 
     /**
      * Lauch the game over summary
      *
      */
-    private fun launchGameSummaray() {
+    private fun launchGameSummary() {
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        // Pass the match id
+        val bundle = Bundle()
+        bundle.putString("matchId", matchId)
+        gameSummary.arguments = bundle
         transaction?.replace((view?.parent as ViewGroup).id, gameSummary, "Game Summary")
         transaction?.commit()
     }
 
     // LIFECYCLE
-
     /**
      * Handle next round logic //TODO handle multi
      */
     override fun onResume() {
+        Log.d("debug", "onResume")
         super.onResume()
         val songRecord = SongSummaryFragment()
+        Log.d("debug", "size = " + activity?.supportFragmentManager?.fragments!!.size)
         if (activity?.supportFragmentManager?.fragments!!.size > 1) {
+            Log.d("debug", "if1")
             if (activity?.supportFragmentManager?.fragments?.get(1) is SongSummaryFragment) {
                 val songFragment =
                     (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
                 val bundle = createBundleSongSummary(songFragment.success())
+                Log.d("debug", "if2")
 
                 duration = gameInstanceViewModel.gameInstance.value?.gameConfig
                     ?.parameter
@@ -500,6 +500,7 @@ class DemoFragment : Fragment() {
                 gameSummary.setSongFragment(songRecord)
 
                 if (!gameViewModel.nextRound()) {
+                    Log.d("debug", "if3")
                     setVisibilityLayout(View.VISIBLE)
                     // Pass to the next music
                     musicMetadata = gameViewModel.currentMetadata()!!
@@ -508,7 +509,8 @@ class DemoFragment : Fragment() {
                     timer = createCountDown()
                     timer.start()
                 } else {
-                    waitOtherPlayers()
+                    Log.d("debug", "gameover")
+                    gameOver()
                 }
             }
         }
