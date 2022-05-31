@@ -75,20 +75,30 @@ class SplashScreenActivity : AppCompatActivity() {
                     data =
                         pendingDynamicLinkData.link?.getQueryParameter("uid") // what if not connected? uid=UserID?
                 }
-                Firebase.auth.currentUser?.let {
-                    startActivity(getIntentData())
-                } ?: run {
-                    signInLauncher.launch(createSignInIntent())
-                }
+                startActivityAfterSplash()
             }.addOnFailureListener {
-                Firebase.auth.currentUser?.let {
-                    startActivity(getIntentData())
-                } ?: run {
-                    signInLauncher.launch(createSignInIntent())
-                }
+                startActivityAfterSplash()
             }
     }
 
+    /**
+     * Start the next Activity, sign in or menu
+     * depending if the user is new or not
+     *
+     */
+    private fun startActivityAfterSplash(){
+        Firebase.auth.currentUser?.let {
+            startActivity(getIntentData())
+        } ?: run {
+            signInLauncher.launch(createSignInIntent())
+        }
+    }
+
+    /**
+     * Create the sign in intent for a new user
+     *
+     * @return
+     */
     private fun createSignInIntent(): Intent {
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().setRequireName(false).build(),
@@ -117,6 +127,13 @@ class SplashScreenActivity : AppCompatActivity() {
             .build()
     }
 
+    /**
+     * When the new user has sign in
+     *
+     * @param activity
+     * @param result
+     * @return
+     */
     private fun onSignInResult(
         activity: Activity,
         result: FirebaseAuthUIAuthenticationResult
@@ -167,6 +184,13 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Create the intent, if a dynamic link has been used,
+     * multiplayer menus displayed,
+     * else the main menu is displayed
+     *
+     * @return
+     */
     private fun getIntentData(): Intent {
         return data?.let {
             Intent(this, MultiPlayerMenuActivity::class.java)
@@ -176,6 +200,11 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Create a new user
+     *
+     * @return
+     */
     private fun setNewUser(): Intent {
         Firebase.auth.currentUser?.let {
             UserDatabase.setKeepSynced(it.uid)
