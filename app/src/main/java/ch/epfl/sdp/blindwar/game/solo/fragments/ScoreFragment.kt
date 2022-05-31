@@ -21,7 +21,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
-class ScoreFragment(): Fragment() {
+class ScoreFragment : Fragment() {
 
     private lateinit var scoreboard: RecyclerView
     private lateinit var scoreboardAdapter: ScoreboardAdapter
@@ -77,7 +77,7 @@ class ScoreFragment(): Fragment() {
     }
 
     private fun onLeave() {
-        MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
+        MatchDatabase.getMatchSnapshot(matchId, Firebase.firestore)?.let {
             val match = it.toObject(Match::class.java)
             val gameInstanceShared = match?.game
             gameInstanceViewModel.gameInstance.value = gameInstanceShared
@@ -87,22 +87,21 @@ class ScoreFragment(): Fragment() {
         Firebase.firestore.runTransaction { transaction ->
             val snapshot = transaction.get(matchRef)
             val match = snapshot.toObject(Match::class.java)
-            var pseudo: String = ""
-            profileViewModel.user.observe(viewLifecycleOwner) {
+            var pseudo = ""
+            profileViewModel.user.observe(viewLifecycleOwner) { it ->
                 it.pseudo.also { pseudo = it }
             }
 
             // Mark that the player has leave the game
             val listPseudo = match?.listPseudo!!
-            val index = listPseudo?.indexOf(pseudo)
-            listPseudo?.set(index!!, "")
+            val index = listPseudo.indexOf(pseudo)
+            listPseudo[index] = ""
             transaction.update(matchRef, "listPseudo", listPseudo)
 
             // If every player has finished, destroy the match
-            if(!listPseudo.any { it != "" }) {
+            if (!listPseudo.any { it != "" }) {
                 MatchDatabase.removeMatch(matchId, Firebase.firestore)
             }
-
             // Success
             null
         }
