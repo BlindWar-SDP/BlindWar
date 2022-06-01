@@ -68,6 +68,14 @@ object Util {
         }
     }
 
+    /**
+     * Load the profile image in the imageView provided
+     *
+     * @param liveData
+     * @param imageView
+     * @param viewLifecycleOwner
+     * @param context
+     */
     fun loadProfileImage(
         liveData: LiveData<StorageReference?>,
         imageView: ImageView,
@@ -85,7 +93,7 @@ object Util {
     }
 //    fun updateProfileImage(
 //        liveData: LiveData<StorageReference>,
-//        imageView: ImageView,
+//        imageView: ImageView,                     //TODO ?
 //        viewLifecycleOwner: LifecycleOwner,
 //        context: Context
 //    ) {

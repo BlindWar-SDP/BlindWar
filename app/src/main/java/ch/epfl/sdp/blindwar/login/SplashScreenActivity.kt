@@ -58,14 +58,18 @@ class SplashScreenActivity : AppCompatActivity() {
         }
 
         if (isOnline()) {
-            checkCurrentUser()
+            handleLink()
         } else {
             Firebase.auth.signOut()
             startActivity(Intent(this, MainMenuActivity::class.java))
         }
     }
 
-    private fun checkCurrentUser() {
+    /**
+     * Handle if there is a dynamic link in the intent or not
+     *
+     */
+    private fun handleLink() {
         Firebase.dynamicLinks
             .getDynamicLink(intent)
             .addOnSuccessListener(this) { pendingDynamicLinkData ->

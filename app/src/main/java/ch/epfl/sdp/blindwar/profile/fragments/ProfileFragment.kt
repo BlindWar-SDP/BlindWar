@@ -60,13 +60,11 @@ class ProfileFragment : Fragment() {
         btnDelete.setOnClickListener {
             deleteProfile()
         }
-
         // text view
         profileViewModel.user.observe(viewLifecycleOwner) {
             view.findViewById<TextView>(R.id.nameView).text = it.pseudo
             view.findViewById<TextView>(R.id.eloView).text = it.userStatistics.elo.toString()
         }
-
         // profilePicture
         loadProfileImage(
             profileViewModel.imageRef,
@@ -74,7 +72,6 @@ class ProfileFragment : Fragment() {
             viewLifecycleOwner,
             requireContext()
         )
-
         return view
     }
 

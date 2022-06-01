@@ -16,7 +16,6 @@ import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
 import ch.epfl.sdp.blindwar.game.util.GameHelper
 import ch.epfl.sdp.blindwar.game.util.ScoreboardAdapter
-import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.model.Result
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import java.time.LocalDateTime
@@ -108,7 +107,7 @@ open class GameViewModel(
                 val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
                 formatted = current.format(formatter)
             }
-            val gameResult = GameResult(mode, Mode.SOLO, result, round, score, formatted)
+            val gameResult = GameResult(mode, GameFormat.SOLO, result, round, score, formatted)
 
             profileViewModel.updateStats(score, fails, gameResult)
             musicViewModel.soundTeardown()

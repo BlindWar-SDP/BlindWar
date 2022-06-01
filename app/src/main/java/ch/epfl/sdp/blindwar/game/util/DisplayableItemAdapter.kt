@@ -86,9 +86,6 @@ class DisplayableItemAdapter(
         return Util.playlistFilterQuery(initialItems, displayableList, this)
     }
 
-    /**
-     *
-     */
     inner class DisplayableItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         /** Playlist info **/
         private val cardView = view.findViewById<ConstraintLayout>(R.id.base_cardview)
@@ -243,6 +240,10 @@ class DisplayableItemAdapter(
             }
         }
 
+        /**
+         * Start demo fragment
+         *
+         */
         private fun startDemo() {
             (context as AppCompatActivity).supportFragmentManager.beginTransaction()
                 .replace(
@@ -324,6 +325,9 @@ class DisplayableItemAdapter(
             }
         }
 
+        /**
+         * Start the Media player
+         */
         private fun startPlayer() {
             /** Audio player view model or global AudioManager needed **/
             player.prepare()
@@ -332,6 +336,9 @@ class DisplayableItemAdapter(
             progress.visibility = View.VISIBLE
         }
 
+        /**
+         * Pause the media player
+         */
         private fun pausePlayer() {
             playPreview.setImageResource(R.drawable.play_arrow_small)
             player.pause()

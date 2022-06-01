@@ -8,6 +8,11 @@ object MainMusic {
     private const val volume = .4f
     private var mediaPlayer: MediaPlayer? = null
 
+    /**
+     * Create mediaplayer and start music
+     *
+     * @param context
+     */
     fun prepareAndPlay(context: Context) {
         mediaPlayer = MediaPlayer.create(context, R.raw.noisestorm_crab_rave)
         mediaPlayer?.isLooping = true
@@ -46,6 +51,9 @@ object MainMusic {
         }
     }
 
+    /**
+     * Reset mediaplayer
+     */
     fun reset() {
         mediaPlayer?.reset()
         mediaPlayer = null

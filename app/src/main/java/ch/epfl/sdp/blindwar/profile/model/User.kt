@@ -48,6 +48,12 @@ data class User(
         fun setGender(gender: String) = apply { this.gender = gender }
         fun setDescription(desc: String) = apply { this.description = desc }
 
+        /**
+         * Create user from another
+         *
+         * @param user
+         * @return
+         */
         fun fromUser(user: User) = apply {
             this.uid = user.uid
             this.email = user.email
@@ -83,6 +89,11 @@ data class User(
         }
     }
 
+    /**
+     * Return pseudo
+     *
+     * @return
+     */
     override fun toString(): String {
         return pseudo
     }

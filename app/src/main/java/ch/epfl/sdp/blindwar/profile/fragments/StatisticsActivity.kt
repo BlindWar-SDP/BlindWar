@@ -8,13 +8,13 @@ import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
-import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 
 // TODO: Remove unused activity
-// seems used no ? TODO add kdoc
+// seems used no ?
 class StatisticsActivity : AppCompatActivity() {
     private val profileViewModel: ProfileViewModel by viewModels()
     private lateinit var spinner: Spinner
@@ -50,9 +50,13 @@ class StatisticsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Create spinner for modes
+     *
+     */
     private fun setSpinner() {
         // access the items of the list
-        val modes = Mode.values()
+        val modes = GameFormat.values()
 
         val adapter = ArrayAdapter(
             this,

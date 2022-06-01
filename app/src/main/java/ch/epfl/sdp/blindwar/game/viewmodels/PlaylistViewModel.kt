@@ -20,6 +20,10 @@ class PlaylistViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Filter playlist via a query
+     *
+     */
     fun queryFilterPlaylist() {
         viewModelScope.launch {
             _playlists.postValue(

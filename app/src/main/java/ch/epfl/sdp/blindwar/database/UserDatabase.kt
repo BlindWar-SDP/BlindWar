@@ -2,8 +2,8 @@ package ch.epfl.sdp.blindwar.database
 
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.GameResult
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
-import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.ktx.auth
@@ -194,7 +194,7 @@ object UserDatabase {
         return getUserStatistics(uid).addOnSuccessListener {
             val userStatistics: AppStatistics? = it.getValue(AppStatistics::class.java)
             userStatistics?.let { stat ->
-                stat.correctnessUpdate(score, fails, Mode.SOLO)
+                stat.correctnessUpdate(score, fails, GameFormat.SOLO)
                 setUserStatistics(uid, stat)
             }
         }

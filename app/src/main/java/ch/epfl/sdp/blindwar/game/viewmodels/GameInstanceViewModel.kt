@@ -96,6 +96,11 @@ class GameInstanceViewModel : ViewModel() {
             .build()
     }
 
+    /**
+     * Set the game format
+     *
+     * @param gameFormat
+     */
     fun setGameFormat(gameFormat: GameFormat) {
         gameInstance.value = GameInstance.Builder().setGameInstance(gameInstance.value!!)
             .setFormat(gameFormat)

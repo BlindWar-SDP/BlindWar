@@ -47,10 +47,6 @@ class DisplayHistoryFragment : Fragment() {
         musicRecyclerView = view.findViewById(R.id.musicRecyclerView)
         musicRecyclerView.layoutManager = LinearLayoutManager(activity?.applicationContext)
 
-
-        // showing the back button in action bar
-        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         return view
     }
 
@@ -78,24 +74,12 @@ class DisplayHistoryFragment : Fragment() {
         if (currentUser != null) {
             if (historyType == LIKED_MUSIC_TYPE) {
                 UserDatabase.addUserListener(currentUser.uid, userLikedMusicsListener)
-            }
-
-            if (historyType == MATCH_HISTORY_TYPE) {
+            } else if (historyType == MATCH_HISTORY_TYPE) {
                 UserDatabase.addUserListener(currentUser.uid, userMatchHistoryListener)
-            }
-
-            if (historyType == LEADERBOARD_TYPE) {
+            } else if (historyType == LEADERBOARD_TYPE) {
                 UserDatabase.addSingleEventAllUsersListener(leaderboardListener)
             }
         }
-
-        /*
-        else {
-            for (i in 1..20) {
-                addToList("HELLO", "JOJO", R.mipmap.ic_launcher_round_base)
-            }
-        }
-         */
     }
 
     private val userLikedMusicsListener = object : ValueEventListener {
@@ -125,6 +109,11 @@ class DisplayHistoryFragment : Fragment() {
     }
 
     private val userMatchHistoryListener = object : ValueEventListener {
+        /**
+         * Handle data changes from db
+         *
+         * @param dataSnapshot
+         */
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             val user: User? = try {
                 dataSnapshot.getValue<User>()
@@ -161,7 +150,6 @@ class DisplayHistoryFragment : Fragment() {
                 images, titles, artists
             )
         }
-
 
         override fun onCancelled(databaseError: DatabaseError) {
             Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
@@ -230,7 +218,6 @@ class DisplayHistoryFragment : Fragment() {
             )
         }
 
-
         override fun onCancelled(databaseError: DatabaseError) {
             // Log.w("CANCELED REQUEST", "userMatchHistory:onCancelled", databaseError.toException())
         }
@@ -254,16 +241,4 @@ class DisplayHistoryFragment : Fragment() {
             return fragment
         }
     }
-
-
-    /*
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    } */
 }

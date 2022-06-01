@@ -23,9 +23,7 @@ import kotlinx.coroutines.withContext
 class MusicDisplayRecyclerAdapter(
     private var titles: List<String>, private var artists: List<String>,
     private var imagesURL: List<String>
-) :
-
-    RecyclerView.Adapter<MusicDisplayRecyclerAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<MusicDisplayRecyclerAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemTitle: TextView = itemView.findViewById(R.id.musicTitle)
@@ -62,6 +60,5 @@ class MusicDisplayRecyclerAdapter(
     override fun getItemCount(): Int {
         return titles.size
     }
-
 }
 

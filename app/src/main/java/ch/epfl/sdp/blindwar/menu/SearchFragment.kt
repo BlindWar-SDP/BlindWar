@@ -49,12 +49,14 @@ class SearchFragment : Fragment() {
                 resetRecyclerView(view, it)
             }
         }
-
         return view
     }
 
     /**
      * Resets the playlist recycler view with the updated list of playlist
+     *
+     * @param view
+     * @param list
      */
     private fun resetRecyclerView(view: View, list: ArrayList<Displayable>) {
         musicMetadataRecyclerView.adapter = DisplayableItemAdapter(

@@ -91,6 +91,11 @@ object GameUtil {
         30000, 30000, 30000, 30000, 30000, 30000, 30000
     )
 
+    /**
+     * Create musicMetadata with resource Id from pair of name - author
+     *
+     * @return <name,musicmetadata>
+     */
     fun metadataTutorial(): MutableMap<String, MusicMetadata> {
         return mutableMapOf<String, MusicMetadata>().let {
             for ((index, key) in keys.withIndex()) {

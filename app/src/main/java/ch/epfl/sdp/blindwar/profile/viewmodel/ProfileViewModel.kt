@@ -64,6 +64,13 @@ class ProfileViewModel : ViewModel() {
         Firebase.auth.signOut()
     }
 
+    /**
+     * Update statistics
+     *
+     * @param score
+     * @param fails
+     * @param gameResult
+     */
     fun updateStats(score: Int, fails: Int, gameResult: GameResult) {
         FirebaseAuth.getInstance().currentUser?.let {
             UserDatabase.updateSoloUserStatistics(it.uid, score, fails)
@@ -71,6 +78,11 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Like a music
+     *
+     * @param music
+     */
     fun likeMusic(music: MusicMetadata) {
         FirebaseAuth.getInstance().currentUser?.let {
             UserDatabase.addLikedMusic(it.uid, music)
