@@ -200,5 +200,5 @@
     <string name="final_score">Final score</string>
     <string name="leave">Leave</string>
     <string name="Search">Search</string>
-    <string name="percent">%d %</string>
+    <string name="percent">%1$s %%</string>
 </resources>

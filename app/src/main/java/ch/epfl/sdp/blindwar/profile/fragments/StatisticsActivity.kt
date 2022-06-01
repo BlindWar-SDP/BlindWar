@@ -130,6 +130,7 @@ class StatisticsActivity : AppCompatActivity() {
      * @return
      */
     private fun <T> getPercentStringFormatted(arg: T): String {
-        return getString(R.string.percent).format(arg)
+        return getString(R.string.percent, arg.toString())
     }
+
 }

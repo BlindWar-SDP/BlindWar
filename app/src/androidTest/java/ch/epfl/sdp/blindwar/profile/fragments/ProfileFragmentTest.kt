@@ -63,8 +63,6 @@ class ProfileFragmentTest : TestCase() {
         }
         launchFragmentInContainer<ProfileFragment>()
         clickOn(R.id.statsBtn)
-        //val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        //device.pressBack()
         pressBack()
         clickOn(R.id.logoutBtn)
     }
