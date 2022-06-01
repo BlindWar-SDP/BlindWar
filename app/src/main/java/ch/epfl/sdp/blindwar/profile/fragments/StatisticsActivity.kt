@@ -100,12 +100,22 @@ class StatisticsActivity : AppCompatActivity() {
         winView.text = userStatistics.wins[position].toString()
         drawView.text = userStatistics.draws[position].toString()
         lossView.text = userStatistics.losses[position].toString()
-        winPercent.text = getString(R.string.percent).format(userStatistics.winPercent[position])
-        drawPercent.text = getString(R.string.percent).format(userStatistics.drawPercent[position])
-        lossPercent.text = getString(R.string.percent).format(userStatistics.lossPercent[position])
-        correctView.text = getString(R.string.percent).format(userStatistics.correctArray[position])
-        wrongView.text = getString(R.string.percent).format(userStatistics.wrongArray[position])
-        correctPercent.text = getString(R.string.percent).format(userStatistics.correctPercent[position])
-        wrongPercent.text = getString(R.string.percent).format(userStatistics.wrongPercent[position])
+        winPercent.text = getPercentStringFormatted(userStatistics.winPercent[position])
+        drawPercent.text = getPercentStringFormatted(userStatistics.drawPercent[position])
+        lossPercent.text = getPercentStringFormatted(userStatistics.lossPercent[position])
+        correctView.text = getPercentStringFormatted(userStatistics.correctArray[position])
+        wrongView.text = getPercentStringFormatted(userStatistics.wrongArray[position])
+        correctPercent.text = getPercentStringFormatted(userStatistics.correctPercent[position])
+        wrongPercent.text = getPercentStringFormatted(userStatistics.wrongPercent[position])
+    }
+
+    /**
+     * Get a Value (arg) followed by % character
+     *
+     * @param arg
+     * @return
+     */
+    private fun <T> getPercentStringFormatted(arg: T): String {
+        return getString(R.string.percent).format(arg)
     }
 }
