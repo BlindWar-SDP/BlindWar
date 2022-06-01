@@ -61,14 +61,7 @@ class SongSummaryFragment : Fragment() {
         /** Background color **/
         success = arguments?.get(SUCCESS_KEY) as Boolean
         layout = view.findViewById(R.id.song_summary_fragment)
-
-        if (success) {
-            //layout.setBackgroundColor(resources.getColor(R.color.success, activity?.theme))
-            layout.setBackgroundDrawable(resources.getDrawable(R.drawable.back_res, activity?.theme))
-        } else {
-            //layout.setBackgroundColor(resources.getColor(R.color.black, activity?.theme))
-            layout.setBackgroundDrawable(resources.getDrawable(R.drawable.back_fail, activity?.theme))
-        }
+        layout.setBackgroundResource(if (success) R.drawable.back_res else R.drawable.back_fail)
 
         val isMulti = arguments?.get(IS_MULTI) as Boolean?
         if (isMulti != null && isMulti) { //avoid waiting for an afk player
