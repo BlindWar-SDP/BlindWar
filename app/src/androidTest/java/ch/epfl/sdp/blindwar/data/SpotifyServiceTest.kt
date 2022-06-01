@@ -145,7 +145,6 @@ class SpotifyServiceTest {
         val response = mockWebServer.takeRequest()
 
         assertEquals("POST", response.method.toString())
-        assertEquals(true, false)
         assertEquals(
             "application/x-www-form-urlencoded",
             response.getHeader("Content-Type").toString()

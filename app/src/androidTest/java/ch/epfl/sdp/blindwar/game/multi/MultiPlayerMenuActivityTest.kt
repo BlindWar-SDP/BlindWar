@@ -3,9 +3,11 @@ package ch.epfl.sdp.blindwar.game.multi
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.scrollTo
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.Intents.intended
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.epfl.sdp.blindwar.R
@@ -40,7 +42,7 @@ class MultiPlayerMenuActivityTest {
     @Test
     fun testDisplayFriendButtonAndClose() {
         onView(withId(R.id.imageFriendsButton)).perform(scrollTo(), ViewActions.click())
-        //TODO
+        onView(withId(R.id.editTextLink)).check(matches(isDisplayed()))
     }
 
     @Test

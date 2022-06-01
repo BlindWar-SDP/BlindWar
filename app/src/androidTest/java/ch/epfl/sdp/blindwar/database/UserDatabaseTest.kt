@@ -147,23 +147,23 @@ class UserDatabaseTest : TestCase() {
     @Test
     fun getUserStatisticsTest() {
         launchFragmentInContainer<ProfileFragment>()
-        var user: User? = UserDatabase.userReference.child(testUID).get().result.getValue(User::class.java)
-        val oldFail = user!!.userStatistics.correctArray.last()
-        val oldScore = user!!.userStatistics.correctArray.last()
+        val oldFail = user0.userStatistics.correctArray.last()
+        val oldScore = user0.userStatistics.correctArray.last()
         val fail = 2
         val score = 1
 
+        var user: User?
         runBlocking {
             withContext(Dispatchers.IO) {
                 user = await(
                     UserDatabase.updateSoloUserStatistics(testUID, score, fail).continueWithTask {
                         UserDatabase.userReference.child(testUID).get()
                     }).getValue(User::class.java)
+
+                assertTrue(user?.userStatistics?.correctArray?.first() == score)
+                assertTrue(user?.userStatistics?.wrongArray?.first() == fail)
             }
         }
-
-        assertTrue(user?.userStatistics?.correctArray?.last() == score + oldScore)
-        assertTrue(user?.userStatistics?.wrongArray?.last() == fail + oldFail)
     }
 
     @Test

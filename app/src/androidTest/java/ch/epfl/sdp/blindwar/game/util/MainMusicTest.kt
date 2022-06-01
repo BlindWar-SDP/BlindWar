@@ -21,9 +21,9 @@ class MainMusicTest : TestCase() {
 
     @Test(expected = Test.None::class)
     fun playAndPauseMusicTheMusic() {
-        // Test now exception is thrown
+        // Test no exception is thrown
         MainMusic.prepareAndPlay(context)
-        MainMusic.pause()
+        assertTrue(MainMusic.pause())
     }
 
     @Test
