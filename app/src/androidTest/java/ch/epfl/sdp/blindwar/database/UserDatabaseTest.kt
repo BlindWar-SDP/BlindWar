@@ -150,8 +150,6 @@ class UserDatabaseTest : TestCase() {
     @Test
     fun getUserStatisticsTest() {
         launchFragmentInContainer<ProfileFragment>()
-        val oldFail = user0.userStatistics.correctArray.last()
-        val oldScore = user0.userStatistics.correctArray.last()
         val fail = 2
         val score = 1
 

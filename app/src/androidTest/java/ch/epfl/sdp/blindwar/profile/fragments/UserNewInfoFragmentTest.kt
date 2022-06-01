@@ -160,7 +160,6 @@ class UserNewInfoFragmentTest : TestCase() {
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
-        val scenario = launchFragmentInContainer<UserNewInfoFragment>()
         Thread.sleep(1000)
         onView(withId(R.id.NU_select_birthdate))
             .perform(scrollTo())
