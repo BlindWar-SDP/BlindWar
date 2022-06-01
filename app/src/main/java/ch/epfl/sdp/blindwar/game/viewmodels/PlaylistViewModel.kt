@@ -11,7 +11,7 @@ class PlaylistViewModel : ViewModel() {
     private val _playlists =
         MutableLiveData<ArrayList<Playlist>>(arrayListOf())
 
-    var playlists: MutableLiveData<ArrayList<Playlist>> = MutableLiveData()
+    val playlists: MutableLiveData<ArrayList<Playlist>>
         get() = _playlists
 
     init {

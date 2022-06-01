@@ -17,7 +17,4 @@ open class Playlist(
 ) : Displayable {
     override var level: String = ""
         get() = difficulty.toString()
-        set(value) {
-            field = value
-        }
 }

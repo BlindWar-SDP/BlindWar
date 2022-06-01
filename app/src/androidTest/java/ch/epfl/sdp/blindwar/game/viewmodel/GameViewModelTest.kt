@@ -23,8 +23,8 @@ class GameViewModelTest {
 
     @Test
     fun testNextRound() {
-        val gameTutorial = GameViewModel(GameUtil.gameInstanceSolo, context, context.resources)
-        gameTutorial.init()
+        val gameTutorial = GameViewModel(GameUtil.gameInstanceSolo, context.resources)
+        gameTutorial.createMusicViewModel(context)
         val round = GameUtil.ROUND
 
         // Iterate 10 times since we have 10 different musics in tutorial
@@ -48,12 +48,11 @@ class GameViewModelTest {
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
-        val gameTutorial = GameViewModel(GameUtil.gameInstanceSolo, context, context.resources)
-        gameTutorial.init()
+        val gameTutorial = GameViewModel(GameUtil.gameInstanceSolo, context.resources)
+        gameTutorial.createMusicViewModel(context)
         val round = GameUtil.ROUND
         for (i in 0 until round) {
             goodGuess(gameTutorial)
-            val round = gameTutorial.round
             val fails = gameTutorial.round - gameTutorial.score
             assertThat(fails, `is`(0))
         }
@@ -65,8 +64,8 @@ class GameViewModelTest {
 
     @Test
     fun testTwoGoodGuesses() {
-        val gameTutorial = GameViewModel(GameUtil.gameInstanceSolo, context, context.resources)
-        gameTutorial.init()
+        val gameTutorial = GameViewModel(GameUtil.gameInstanceSolo, context.resources)
+        gameTutorial.createMusicViewModel(context)
         goodGuess(gameTutorial)
         goodGuess(gameTutorial)
 
@@ -75,19 +74,19 @@ class GameViewModelTest {
 
     @Test
     fun testUpperCaseGuess() {
-        val gameTutorial = GameViewModel(GameUtil.gameInstanceSolo, context, context.resources)
-        gameTutorial.init()
+        val gameTutorial = GameViewModel(GameUtil.gameInstanceSolo, context.resources)
+        gameTutorial.createMusicViewModel(context)
         gameTutorial.nextRound()
         val music1 = gameTutorial.currentMetadata()
-        music1?.let { gameTutorial.guess(it.title.uppercase(Locale.getDefault()), false) }
+        music1?.let { gameTutorial.guess(it.name.uppercase(Locale.getDefault()), false) }
 
         assertThat(gameTutorial.score, `is`(1))
     }
 
     @Test
     fun testOneGoodAndOneBadGuesses() {
-        val gameTutorial = GameViewModel(GameUtil.gameInstanceSolo, context, context.resources)
-        gameTutorial.init()
+        val gameTutorial = GameViewModel(GameUtil.gameInstanceSolo, context.resources)
+        gameTutorial.createMusicViewModel(context)
         goodGuess(gameTutorial)
         badGuess(gameTutorial)
 
@@ -96,7 +95,7 @@ class GameViewModelTest {
 
     private fun goodGuess(gameViewModelTutorial: GameViewModel) {
         gameViewModelTutorial.nextRound()
-        gameViewModelTutorial.guess(gameViewModelTutorial.currentMetadata()?.title!!, false)
+        gameViewModelTutorial.guess(gameViewModelTutorial.currentMetadata()?.name!!, false)
     }
 
     private fun badGuess(gameViewModelTutorial: GameViewModel) {

@@ -43,9 +43,9 @@ class ResourceFetcher(
                     resourceId
                 )
             } ?: MusicMetadata.createWithResourceId(
-                title = "",
-                artist = "",
-                imageUrl = "",
+                name = "",
+                author = "",
+                cover = "",
                 duration = 0,
                 resourceId = musicMetadata.resourceId!!
             )

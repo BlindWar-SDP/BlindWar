@@ -97,7 +97,6 @@ class ModeSelectionFragment : Fragment() {
                     else -> GameMode.REGULAR
                 }
             )
-
             gameInstanceViewModel.setGameFunny(funnyCheck.isChecked)
             launchPlaylistSelection()
         }

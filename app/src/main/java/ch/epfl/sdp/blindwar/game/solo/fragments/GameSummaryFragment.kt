@@ -14,7 +14,6 @@ import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.util.GameActivity
 import ch.epfl.sdp.blindwar.game.util.ViewPagerAdapter
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
-import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 
 /**
  * Game over fragment displayed after a game is completed

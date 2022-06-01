@@ -14,7 +14,6 @@ import androidx.test.espresso.PerformException
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.viewpager2.widget.ViewPager2
 import org.hamcrest.CoreMatchers.allOf
@@ -85,7 +84,7 @@ private class WaitForInjectMotionEventsAction : ViewAction {
     }
 
     override fun getConstraints(): Matcher<View> {
-        return ViewMatchers.isDisplayed()
+        return isDisplayed()
     }
 
     override fun perform(uiController: UiController?, view: View?) {

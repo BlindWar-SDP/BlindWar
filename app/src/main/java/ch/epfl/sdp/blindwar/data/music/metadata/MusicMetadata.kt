@@ -17,27 +17,27 @@ open class MusicMetadata(
 ) : Displayable {
     companion object {
         fun createWithURI(
-            title: String,
-            artist: String,
-            imageUrl: String,
+            name: String,
+            author: String,
+            cover: String,
             duration: Int,
             uri: String
         ): MusicMetadata {
             val musicMetadata =
-                MusicMetadata(name = title, author = artist, cover = imageUrl, duration = duration)
+                MusicMetadata(name = name, author = author, cover = cover, duration = duration)
             musicMetadata.uri = uri
             return musicMetadata
         }
 
         fun createWithResourceId(
-            title: String,
-            artist: String,
-            imageUrl: String,
+            name: String,
+            author: String,
+            cover: String,
             duration: Int,
             resourceId: Int
         ): MusicMetadata {
             val musicMetadata =
-                MusicMetadata(name = title, author = artist, cover = imageUrl, duration = duration)
+                MusicMetadata(name = name, author = author, cover = cover, duration = duration)
             musicMetadata.resourceId = resourceId
             return musicMetadata
         }

@@ -130,7 +130,6 @@ class DisplayableItemAdapter(
 
             /** Retrieve the playlist cover : image retrieval must be done on another thread
              *  we use runBlocking to avoid this function to be suspendable **/
-            //Picasso.get().load(playlist.imageUrl).into(cover)
             runBlocking {
                 withContext(Dispatchers.IO) {
                     try {

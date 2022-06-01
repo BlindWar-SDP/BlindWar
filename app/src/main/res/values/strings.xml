@@ -237,4 +237,8 @@
     <string name="_0">0</string>
     <string name="delete">Delete</string>
     <string name="unknown">UNKNOWN</string>
+    <string name="final_score">Final score</string>
+    <string name="leave">Leave</string>
+    <string name="Search">Search</string>
+    <string name="percent">%d %</string>
 </resources>

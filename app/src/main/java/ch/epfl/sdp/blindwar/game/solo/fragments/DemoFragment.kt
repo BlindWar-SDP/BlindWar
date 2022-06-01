@@ -157,7 +157,6 @@ class DemoFragment : Fragment() {
                 gameViewModel = context?.let {
                     GameViewModel(
                         gameInstanceViewModel.gameInstance.value!!,
-                        it,
                         resources
                     )
                 }!!
@@ -168,7 +167,6 @@ class DemoFragment : Fragment() {
                 gameViewModel = context?.let {
                     GameViewModel(
                         gameInstanceViewModel.gameInstance.value!!,
-                        it,
                         resources,
                         scoreboardAdapter
                     )
@@ -178,7 +176,7 @@ class DemoFragment : Fragment() {
             }
         }
 
-        gameViewModel.init()
+        gameViewModel.createMusicViewModel(requireContext())
         // Retrieve the game duration from the GameInstance object
         duration = gameInstanceViewModel.gameInstance.value?.gameConfig
             ?.parameter
@@ -272,9 +270,6 @@ class DemoFragment : Fragment() {
     }
 
     private fun startGame() {
-        // TEST
-        //gameViewModel.increm
-        // entPoint("Marty")
         scoreboardAdapter.notifyDataSetChanged()
 
         // Start the game

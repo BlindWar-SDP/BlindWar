@@ -26,7 +26,6 @@ import java.time.format.DateTimeFormatter
  * Class representing an instance of a game
  *
  * @param gameInstance object that defines the parameters / configuration of a game
- * @param context of the Game
  * @constructor Construct a class that represent the game logic
  */
 open class GameViewModel(
@@ -34,7 +33,6 @@ open class GameViewModel(
      *
      */
     protected val gameInstance: GameInstance,
-    private val context: Context,
     private val resources: Resources,
     private var scoreboardAdapter: ScoreboardAdapter? = null
 ) : ViewModel() {
@@ -63,7 +61,7 @@ open class GameViewModel(
      * Prepares the game following the configuration
      *
      */
-    fun init() {
+    fun createMusicViewModel(context: Context) {
         musicViewModel = MusicViewModel(
             gameInstance.onlinePlaylist!!,
             context, resources

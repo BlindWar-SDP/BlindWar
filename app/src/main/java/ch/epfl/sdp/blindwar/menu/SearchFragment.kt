@@ -37,7 +37,7 @@ class SearchFragment : Fragment() {
         musicMetadataRecyclerView.layoutManager =
             LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL, false)
 
-        view.findViewById<TextView>(R.id.textView).text = "Search"
+        view.findViewById<TextView>(R.id.textView).text = getString(R.string.Search)
 
         gameInstanceViewModel = GameInstanceViewModel()
         musicMetadataRepository = MusicMetadataRepository()
