@@ -1,5 +1,3 @@
-@file:Suppress("ControlFlowWithEmptyBody")
-
 package ch.epfl.sdp.blindwar.database
 
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata

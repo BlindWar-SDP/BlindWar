@@ -3,20 +3,23 @@
 
     <!--  General  -->
     <string name="app_name">BlindWar</string>
+    <string name="blindwar">BLINDWAR</string>
     <string name="blind_war">Blind War</string>
 
     <!-- Buttons  -->
     <string name="solo">SOLO</string>
     <string name="multi">MULTI</string>
     <string name="profile">PROFILE</string>
-    <string name="Btn_email">Email</string>
     <string name="logout">LOGOUT</string>
+    <string name="login">LOGIN</string>
+    <string name="Btn_email">Email</string>
     <string name="Btn_google">Google</string>
     <string name="confirm">Confirm</string>
     <string name="ok">OK</string>
     <string name="Btn_anonymous">Guest</string>
 
     <!--  GameUtil  -->
+    <string name="play_button_description">Click here to play or stop the game</string>
     <string name="logo_description">Logo of the application</string>
     <string name="format_description"> Survival : Description placeholder
     |Against the Clock :
