@@ -160,7 +160,7 @@ class UserNewInfoFragmentTest : TestCase() {
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
-        launchFragmentInContainer<UserNewInfoFragment>()
+        val scenario = launchFragmentInContainer<UserNewInfoFragment>()
         Thread.sleep(1000)
         onView(withId(R.id.NU_select_birthdate))
             .perform(scrollTo())
@@ -170,6 +170,7 @@ class UserNewInfoFragmentTest : TestCase() {
             .perform(scrollTo())
             .perform(click())
 
+        Thread.sleep(1000)
         launchFragmentInContainer<UserNewInfoFragment>()
         onView(withId(R.id.NU_reset_birthdate))
             .check(
@@ -202,14 +203,21 @@ class UserNewInfoFragmentTest : TestCase() {
             .perform(click())
         clickOn(android.R.string.ok)
 
+        onView(withId(R.id.NU_pseudo))
+            .perform(scrollTo())
+            .perform(replaceText(validPseudo))
+
         onView(withId(R.id.NU_Confirm_Btn))
             .perform(scrollTo())
             .perform(click())
 
         launchFragmentInContainer<UserNewInfoFragment>()
+
+
         onView(withId(R.id.NU_reset_birthdate))
             .perform(scrollTo())
             .perform(click())
+
         onView(withId(R.id.NU_reset_birthdate))
             .check(
                 matches(

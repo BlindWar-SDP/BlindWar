@@ -143,4 +143,8 @@ class ProfileFragment : Fragment() {
             getString(R.string.account_not_deleted_toast), Toast.LENGTH_SHORT
         ).show()
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        //No call for super(). Bug on API Level > 11.
+    }
 }

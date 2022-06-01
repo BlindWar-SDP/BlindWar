@@ -154,6 +154,7 @@ class ProfileFragmentTest : TestCase() {
     fun testEditProfileButton() {
         launchFragmentInContainer<ProfileFragment>()
         assertDisplayed(R.id.editBtn)
+        // Here the fix : https://stackoverflow.com/questions/7575921/illegalstateexception-can-not-perform-this-action-after-onsaveinstancestate-wit
         // Not able to click on Button... Why ? -> certainly in the background of something else
 //        clickOn(R.id.editBtn)
     }

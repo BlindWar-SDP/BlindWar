@@ -150,8 +150,11 @@ class UserDatabaseTest : TestCase() {
     @Test
     fun getUserStatisticsTest() {
         launchFragmentInContainer<ProfileFragment>()
-        val fail = 1
-        val score = 2
+        val oldFail = user0.userStatistics.correctArray.last()
+        val oldScore = user0.userStatistics.correctArray.last()
+        val fail = 2
+        val score = 1
+
         var user: User?
         runBlocking {
             withContext(Dispatchers.IO) {
@@ -159,20 +162,18 @@ class UserDatabaseTest : TestCase() {
                     UserDatabase.updateSoloUserStatistics(testUID, score, fail).continueWithTask {
                         UserDatabase.userReference.child(testUID).get()
                     }).getValue(User::class.java)
+
+                assertTrue(user?.userStatistics?.correctArray?.first() == score)
+                assertTrue(user?.userStatistics?.wrongArray?.first() == fail)
             }
         }
-        
-
-        //assertTrue(user?.userStatistics?.correctArray?.last() == score)
-        //assertTrue(user?.userStatistics?.wrongArray?.last() == fail)
     }
 
-    // TODO
     @Test
     fun removeUserTest() {
         launchFragmentInContainer<ProfileFragment>().onFragment {
-            //UserDatabase.removeUser("")
-            //assertNotNull(UserDatabase.getImageReference(testUID))
+            UserDatabase.removeUser("")
+            assertNotNull(UserDatabase.getImageReference(testUID))
         }
     }
 
