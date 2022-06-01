@@ -6,4 +6,6 @@ import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 class PlaylistCreation : AppCompatActivity() {
     private val profileViewModel: ProfileViewModel by viewModels()
+    
+
 }
