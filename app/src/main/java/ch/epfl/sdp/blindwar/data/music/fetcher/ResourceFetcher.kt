@@ -14,6 +14,12 @@ class ResourceFetcher(
     private val context: Context,
     private val resources: Resources
 ) : Fetcher {
+    /**
+     * Fetch the music from resources
+     *
+     * @param musicMetadata
+     * @return a pair of musicMetadata and ReadyMediaPlayer
+     */
     override fun fetchMusic(musicMetadata: MusicMetadata): Pair<MusicMetadata, ReadyMediaPlayer> {
 
         // Create a file descriptor to get the author from
@@ -50,7 +56,6 @@ class ResourceFetcher(
                 resourceId = musicMetadata.resourceId!!
             )
 
-
         val player = MediaPlayer.create(this.context, musicMetadata.resourceId!!)
 
         // Keep the start time low enough so that at least half the song can be heard (for now)
@@ -58,7 +63,6 @@ class ResourceFetcher(
 
         // Change the current music
         player.seekTo(time)
-
 
         // Return a new media player from the give resource id
         return Pair(updateMetadata, ReadyMediaPlayer(player, MutableLiveData(true)))

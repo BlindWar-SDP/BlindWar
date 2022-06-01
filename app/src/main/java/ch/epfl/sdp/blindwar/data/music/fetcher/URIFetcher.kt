@@ -7,6 +7,12 @@ import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import java.util.*
 
 class URIFetcher : Fetcher {
+    /**
+     * Fetch the music from uri
+     *
+     * @param musicMetadata
+     * @return a pair of musicMetadata and ReadyMediaPlayer
+     */
     override fun fetchMusic(musicMetadata: MusicMetadata): Pair<MusicMetadata, ReadyMediaPlayer> {
 
         val player = MediaPlayer()

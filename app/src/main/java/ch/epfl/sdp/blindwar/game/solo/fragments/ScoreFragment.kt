@@ -76,6 +76,9 @@ class ScoreFragment : Fragment() {
         return view
     }
 
+    /**
+     * Function called when a player quit the scoreboard
+     */
     private fun onLeave() {
         MatchDatabase.getMatchSnapshot(matchId, Firebase.firestore)?.let {
             val match = it.toObject(Match::class.java)

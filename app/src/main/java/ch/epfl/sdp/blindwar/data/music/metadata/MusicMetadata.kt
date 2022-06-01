@@ -16,6 +16,16 @@ open class MusicMetadata(
     override val extendable: Boolean = false
 ) : Displayable {
     companion object {
+        /**
+         * Create e musicMetadata from uri
+         *
+         * @param name
+         * @param author
+         * @param cover
+         * @param duration
+         * @param uri
+         * @return
+         */
         fun createWithURI(
             name: String,
             author: String,
@@ -29,6 +39,16 @@ open class MusicMetadata(
             return musicMetadata
         }
 
+        /**
+         * Create a musicMetadata object from resources
+         *
+         * @param name
+         * @param author
+         * @param cover
+         * @param duration
+         * @param resourceId
+         * @return
+         */
         fun createWithResourceId(
             name: String,
             author: String,
@@ -43,6 +63,9 @@ open class MusicMetadata(
         }
     }
 
+    /**
+     * @return "$name by $author"
+     */
     override fun toString(): String = "$name by $author"
 }
 

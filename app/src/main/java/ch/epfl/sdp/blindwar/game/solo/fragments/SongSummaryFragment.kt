@@ -92,8 +92,12 @@ class SongSummaryFragment : Fragment() {
         return view
     }
 
+    /**
+     * Like a Music and add an animation
+     *
+     * @param view
+     */
     private fun setLikeAnimation(view: View) {
-        /** Like animation **/
         likeAnimation = view.findViewById(R.id.likeView)
 
         likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
@@ -117,6 +121,9 @@ class SongSummaryFragment : Fragment() {
         setLikeListener()
     }
 
+    /**
+     * Set the metadata of the music
+     */
     private fun setMetadata() {
         artist = arguments?.get(ARTIST_KEY).toString()
         title = arguments?.get(TITLE_KEY).toString()

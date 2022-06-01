@@ -2,13 +2,28 @@ package ch.epfl.sdp.blindwar.game.model
 
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 
+/**
+ * Class representing a playlist
+ *
+ * @property uid playlist unique id in database
+ * @property name
+ * @property author
+ * @property genres main genres of the playlist
+ * @property songs list of playlist's songs metadata
+ * @property previewUrl
+ * @property difficulty
+ * @property genre
+ * @property cover
+ * @property size
+ * @property extendable
+ */
 open class Playlist(
-    val uid: String = "", // playlist unique id in database
-    override var name: String = "", // playlist name
-    override var author: String = "", // playlist author
-    val genres: List<Genre> = emptyList(), // main genres of the playlist
-    open val songs: List<MusicMetadata> = emptyList(), // list of playlist's songs metadata
-    override var previewUrl: String = "", // preview song url
+    val uid: String = "",
+    override var name: String = "",
+    override var author: String = "",
+    val genres: List<Genre> = emptyList(),
+    open val songs: List<MusicMetadata> = emptyList(),
+    override var previewUrl: String = "",
     val difficulty: Difficulty? = null,
     override var genre: String = if (genres.isNotEmpty()) genres.elementAt(0).toString() else "",
     override var cover: String = "",

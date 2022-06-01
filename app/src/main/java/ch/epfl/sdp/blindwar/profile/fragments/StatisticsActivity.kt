@@ -14,6 +14,7 @@ import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 
 // TODO: Remove unused activity
+// seems used no ? TODO add kdoc
 class StatisticsActivity : AppCompatActivity() {
     private val profileViewModel: ProfileViewModel by viewModels()
     private lateinit var spinner: Spinner
@@ -81,6 +82,10 @@ class StatisticsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Find views for each attributes of textViews
+     *
+     */
     private fun setTextViews() {
         eloView = findViewById(R.id.eloExampleView)
         winView = findViewById(R.id.winNumberView)
@@ -95,6 +100,11 @@ class StatisticsActivity : AppCompatActivity() {
         wrongPercent = findViewById(R.id.wrongPercentView)
     }
 
+    /**
+     * Update the text views
+     *
+     * @param position
+     */
     private fun updateTextViews(position: Int) {
         eloView.text = userStatistics.elo.toString()
         winView.text = userStatistics.wins[position].toString()

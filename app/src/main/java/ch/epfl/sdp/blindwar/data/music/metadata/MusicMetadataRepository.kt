@@ -65,6 +65,11 @@ class MusicMetadataRepository {
         }
     }
 
+    /**
+     * Add it to the repository
+     *
+     * @param it
+     */
     private fun addToRepo(it: ArrayList<MusicMetadata>) {
         if (!it.isNullOrEmpty()) {
             _musicMetadatas.postValue(
@@ -77,18 +82,36 @@ class MusicMetadataRepository {
         }
     }
 
-    /** Put these functions in string util **/
+    /**
+     * Add a capital letter to each word in a string
+     *
+     * @param string
+     * @return
+     */
     private fun capitalizeString(string: String): String {
         return string.split(" ")
             .joinToString(" ") { w -> w.lowercase().replaceFirstChar { c -> c.uppercase() } }
     }
 
+    /**
+     * Get the metadata of a song from its name
+     *
+     * @param name
+     * @return
+     */
     private fun tokenizeMetadata(name: String): List<String> {
         return name.removeSuffix(".mp3")
             .split("-")
             .map { s -> s.trim() }
     }
 
+    /**
+     * Clean metadata and create a music metadata with it
+     *
+     * @param metadata
+     * @param uri
+     * @return
+     */
     private fun sanitizeMetadata(metadata: List<String>, uri: Uri): MusicMetadata {
         return MusicMetadata.createWithURI(
             capitalizeString(metadata[1]),

@@ -10,6 +10,11 @@ object SpotifyApiConstants {
     private const val VALUE_4 = "b53af1ffceb29a16"
     const val AUTH_TYPE = "client_credentials"
 
+    /**
+     * Encode credentials from base64
+     *
+     * @return
+     */
     fun credentialsEncoding(): String {
         return "Basic ${
             Base64.encodeToString(
@@ -19,6 +24,12 @@ object SpotifyApiConstants {
         }"
     }
 
+    /**
+     * create the token parameter (bearer)
+     *
+     * @param responseToken
+     * @return
+     */
     fun tokenParameter(responseToken: SpotifyToken): String {
         return "Bearer ${responseToken.access_token}"
     }

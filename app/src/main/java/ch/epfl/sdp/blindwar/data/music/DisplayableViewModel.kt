@@ -27,22 +27,42 @@ class DisplayableViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Add observer to livedata
+     *
+     * @param liveData
+     */
     private fun setObservable(liveData: MutableLiveData<ArrayList<Displayable>>) {
         liveData.observeForever {
             addToList(it as ArrayList<Displayable>)
         }
     }
 
+    /**
+     * Query a music metadata
+     *
+     * @param query
+     */
     private fun queryMusicMetadata(query: String) {
         musicMetadataViewModel.fetchMusicMetadata(query)
     }
 
+    /**
+     * Query a music metadata in coroutine
+     *
+     * @param query
+     */
     fun queryMetadata(query: String) {
         viewModelScope.launch {
             queryMusicMetadata(query)
         }
     }
 
+    /**
+     * Add it argument to the list of metadata(list of displayable)
+     *
+     * @param it
+     */
     private fun addToList(it: ArrayList<Displayable>) {
         if (!it.isNullOrEmpty()) {
             metadata.postValue(

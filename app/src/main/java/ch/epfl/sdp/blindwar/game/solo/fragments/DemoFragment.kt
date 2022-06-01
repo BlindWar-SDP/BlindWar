@@ -269,6 +269,9 @@ class DemoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    /**
+     * Start Game
+     */
     private fun startGame() {
         scoreboardAdapter.notifyDataSetChanged()
 
@@ -353,17 +356,27 @@ class DemoFragment : Fragment() {
     }
 
     // RACE MODE
+    /**
+     * Restart chronometer
+     *
+     */
     private fun restartChronometer() {
         chronometer.base = SystemClock.elapsedRealtime() - elapsed
         chronometer.start()
     }
 
+    /**
+     * Start chronometer
+     */
     private fun initRaceMode() {
         chronometer.visibility = View.VISIBLE
         chronometer.start()
     }
 
     // SURVIVAL MODE
+    /**
+     * Add the number of hearts on screen
+     */
     private fun initSurvivalMode() {
         heartImage.visibility = View.VISIBLE
         heartNumber.visibility = View.VISIBLE
@@ -524,7 +537,6 @@ class DemoFragment : Fragment() {
     override fun onDestroy() {
         timer.cancel()
         voiceRecognizer.destroy()
-
         super.onDestroy()
     }
 }

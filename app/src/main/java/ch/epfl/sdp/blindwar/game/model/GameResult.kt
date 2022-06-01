@@ -4,6 +4,16 @@ import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.model.Result
 
+/**
+ * Results for the game over
+ *
+ * @property gameMode
+ * @property mode
+ * @property result
+ * @property gameNbrRound
+ * @property gameScore
+ * @property gameTime
+ */
 class GameResult(
     var gameMode: GameMode = GameMode.REGULAR,
     var mode: Mode = Mode.SOLO,

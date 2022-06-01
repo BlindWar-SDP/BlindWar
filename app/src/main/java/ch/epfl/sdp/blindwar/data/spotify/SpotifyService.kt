@@ -9,15 +9,19 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object SpotifyService {
+    /**
+     * Create th SpotifyAPI
+     *
+     * @param endpoint
+     * @return SpotifyAPI
+     */
     fun spotifyApiFactory(endpoint: String): Lazy<SpotifyApi> {
         return lazy {
-
             val loggingInterceptor = HttpLoggingInterceptor()
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
             val okHttpClient: OkHttpClient = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
                 .build()
-
 
             Retrofit.Builder()
                 .baseUrl(endpoint)
