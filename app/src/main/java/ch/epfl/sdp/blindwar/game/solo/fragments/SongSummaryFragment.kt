@@ -63,9 +63,11 @@ class SongSummaryFragment : Fragment() {
         layout = view.findViewById(R.id.song_summary_fragment)
 
         if (success) {
-            layout.setBackgroundColor(resources.getColor(R.color.success, activity?.theme))
+            //layout.setBackgroundColor(resources.getColor(R.color.success, activity?.theme))
+            layout.setBackgroundDrawable(resources.getDrawable(R.drawable.back_res, activity?.theme))
         } else {
-            layout.setBackgroundColor(resources.getColor(R.color.black, activity?.theme))
+            //layout.setBackgroundColor(resources.getColor(R.color.black, activity?.theme))
+            layout.setBackgroundDrawable(resources.getDrawable(R.drawable.back_fail, activity?.theme))
         }
 
         val isMulti = arguments?.get(IS_MULTI) as Boolean?
