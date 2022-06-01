@@ -188,7 +188,7 @@ class UserDatabaseTest : TestCase() {
             }
         }
 
-        assertTrue(user?.likedMusics?.last()?.getName() == GameUtil.fly.getName())
+        assertTrue(user?.likedMusics?.last()?.name == GameUtil.fly.name)
     }
 
     @Test

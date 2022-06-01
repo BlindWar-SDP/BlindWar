@@ -5,7 +5,8 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
@@ -89,13 +90,5 @@ class MainMenuActivityTest : TestCase() {
         launchSearchFragment()
         onView(withId(R.id.searchBar)).perform(typeSearchViewText("cirrus"))
         // TODO: Assert that the correct music is displayed
-    }
-
-    @Test
-    fun testPlaylistCreationButton() {
-        launchSearchFragment()
-        onView(withId(R.id.addButton)).check(matches(isClickable())).perform(click())
-        // TODO: Assert that the playlist creation activity is launcheds
-        //onView(withId())
     }
 }
