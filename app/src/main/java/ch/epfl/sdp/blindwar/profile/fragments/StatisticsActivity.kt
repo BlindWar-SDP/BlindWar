@@ -105,7 +105,9 @@ class StatisticsActivity : AppCompatActivity() {
         lossPercent.text = getString(R.string.percent).format(userStatistics.lossPercent[position])
         correctView.text = getString(R.string.percent).format(userStatistics.correctArray[position])
         wrongView.text = getString(R.string.percent).format(userStatistics.wrongArray[position])
-        correctPercent.text = getString(R.string.percent).format(userStatistics.correctPercent[position])
-        wrongPercent.text = getString(R.string.percent).format(userStatistics.wrongPercent[position])
+        correctPercent.text =
+            getString(R.string.percent).format(userStatistics.correctPercent[position])
+        wrongPercent.text =
+            getString(R.string.percent).format(userStatistics.wrongPercent[position])
     }
 }
