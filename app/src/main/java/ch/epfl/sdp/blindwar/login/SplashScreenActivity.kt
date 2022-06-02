@@ -154,9 +154,7 @@ class SplashScreenActivity : AppCompatActivity() {
                     it.email?.let { email ->
                         user0.email = email
                     }
-                    UserDatabase.updateUser(
-                        user0
-                    )
+                    UserDatabase.updateUser(user0)
                     Toast.makeText(
                         this,
                         HtmlCompat.fromHtml(
@@ -165,7 +163,6 @@ class SplashScreenActivity : AppCompatActivity() {
                         ),
                         Toast.LENGTH_LONG
                     ).show()
-                    // TODO: should also initiate a liveData ?
                 }
             }
             return setNewUser()

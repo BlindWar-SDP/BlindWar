@@ -160,8 +160,8 @@ class UserNewInfoFragmentTest : TestCase() {
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
-        Thread.sleep(1000)
         launchFragmentInContainer<UserNewInfoFragment>()
+        Thread.sleep(1000)
         onView(withId(R.id.NU_select_birthdate))
             .perform(scrollTo())
             .perform(click())
@@ -170,9 +170,8 @@ class UserNewInfoFragmentTest : TestCase() {
             .perform(scrollTo())
             .perform(click())
 
+        launchFragmentInContainer<UserNewInfoFragment>()
         Thread.sleep(1000)
-        clickOn(android.R.string.ok)
-        //launchFragmentInContainer<UserNewInfoFragment>()
         onView(withId(R.id.NU_reset_birthdate))
             .check(
                 matches(
