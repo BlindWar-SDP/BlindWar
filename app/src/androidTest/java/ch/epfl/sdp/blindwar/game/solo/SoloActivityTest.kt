@@ -1,7 +1,6 @@
 package ch.epfl.sdp.blindwar.game.solo
 
 import android.content.Intent
-import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBackUnconditionally
@@ -21,7 +20,6 @@ import ch.epfl.sdp.blindwar.game.util.GameActivity
 import ch.epfl.sdp.blindwar.game.util.GameUtil
 import org.hamcrest.Matchers.allOf
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -43,12 +41,6 @@ class SoloActivityTest {
     @get:Rule
     var permissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(android.Manifest.permission.RECORD_AUDIO)
-
-    @Test
-    fun testBackButton() {
-        onView(withId(R.id.back_button)).perform(click())
-        assertTrue(testRule.scenario.state == Lifecycle.State.DESTROYED)
-    }
 
     @Test
     fun testModeSelectionDisplayedOnLaunch() {

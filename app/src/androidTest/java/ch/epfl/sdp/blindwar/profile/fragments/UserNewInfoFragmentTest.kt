@@ -228,7 +228,6 @@ class UserNewInfoFragmentTest : TestCase() {
         onView(withId(R.id.NU_Confirm_Btn))
             .perform(scrollTo())
             .perform(click())
-
     }
 
     @Test

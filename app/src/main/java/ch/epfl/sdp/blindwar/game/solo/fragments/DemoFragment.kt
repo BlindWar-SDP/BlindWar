@@ -491,7 +491,6 @@ class DemoFragment : Fragment() {
      * Handle next round logic //TODO handle multi
      */
     override fun onResume() {
-        Log.d("debug", "onResume")
         super.onResume()
         val songRecord = SongSummaryFragment()
         Log.d("debug", "size = " + activity?.supportFragmentManager?.fragments!!.size)
