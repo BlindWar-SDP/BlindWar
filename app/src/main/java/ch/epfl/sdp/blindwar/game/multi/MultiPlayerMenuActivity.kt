@@ -19,6 +19,7 @@ import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
 import ch.epfl.sdp.blindwar.game.util.DynamicLinkHelper
 import ch.epfl.sdp.blindwar.game.util.MainMusic
+import ch.epfl.sdp.blindwar.login.PermissionHandler
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 import ch.epfl.sdp.blindwar.profile.model.User
@@ -112,6 +113,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                 )
             }
         }
+        PermissionHandler.handle(applicationContext, this)
     }
 
     /**

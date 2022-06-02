@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.DisplayableViewModel
 import ch.epfl.sdp.blindwar.game.util.MainMusic
+import ch.epfl.sdp.blindwar.login.PermissionHandler
 import ch.epfl.sdp.blindwar.profile.fragments.ProfileFragment
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -34,6 +35,7 @@ class MainMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
 
+        PermissionHandler.handle(applicationContext, this)
         // Start the main menu music
         MainMusic.prepareAndPlay(this)
 
