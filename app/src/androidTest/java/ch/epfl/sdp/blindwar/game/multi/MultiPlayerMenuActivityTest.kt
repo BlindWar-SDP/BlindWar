@@ -65,12 +65,4 @@ class MultiPlayerMenuActivityTest {
         clickOn(R.string.ok)
         onView(withId(R.id.imageFriendsButton)).check(matches(isDisplayed()))
     }
-
-    @Test
-    fun testUseLinkTrue() {
-        onView(withId(R.id.imageFriendsButton)).perform(scrollTo(), ViewActions.click())
-        onView(withId(R.id.editTextLink)).perform(replaceText("https://blindwar.page.link/cker"))
-        clickOn(R.string.ok)
-        onView(withId(R.id.imageFriendsButton)).check(matches(isDisplayed()))
-    }
 }
