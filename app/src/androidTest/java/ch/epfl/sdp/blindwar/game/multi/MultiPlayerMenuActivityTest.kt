@@ -2,6 +2,7 @@ package ch.epfl.sdp.blindwar.game.multi
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents
@@ -13,6 +14,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.rule.GrantPermissionRule
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
+import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickOn
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -54,5 +56,21 @@ class MultiPlayerMenuActivityTest {
     fun testCreateButton() {
         onView(withId(R.id.imageCreateButton)).perform(scrollTo(), ViewActions.click())
         intended(hasComponent(ChoseNumberOfPlayerActivity::class.java.name))
+    }
+
+    @Test
+    fun testUseLinkFalse() {
+        onView(withId(R.id.imageFriendsButton)).perform(scrollTo(), ViewActions.click())
+        onView(withId(R.id.editTextLink)).perform(replaceText("htip"))
+        clickOn(R.string.ok)
+        onView(withId(R.id.imageFriendsButton)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun testUseLinkTrue() {
+        onView(withId(R.id.imageFriendsButton)).perform(scrollTo(), ViewActions.click())
+        onView(withId(R.id.editTextLink)).perform(replaceText("https://blindwar.page.link/cker"))
+        clickOn(R.string.ok)
+        onView(withId(R.id.imageFriendsButton)).check(matches(isDisplayed()))
     }
 }

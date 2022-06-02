@@ -18,7 +18,6 @@ class ScoreFragmentTest : TestCase() {
     @Test
     fun test() {
         launchFragment<ScoreFragment>()
-
         try {
             Espresso.onView(withId(R.id.result_scoreboard))
                 .check(matches(not(isDisplayed())))
