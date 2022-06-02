@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.webkit.URLUtil
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -222,8 +223,11 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @return
      */
     private fun parseDynamicLink(uri: Uri?): String? {
-        if (uri != null) {
-            return uri.getQueryParameter("uid")
+        if (uri != null && URLUtil.isValidUrl(uri.toString())) {
+            val parameter = uri.getQueryParameter("uid")
+            if (parameter != null) return parameter
+            val browserIntent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(browserIntent)
         }
         return null
     }

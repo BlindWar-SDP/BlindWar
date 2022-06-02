@@ -170,7 +170,7 @@ class UserDatabaseTest : TestCase() {
     @Test
     fun removeUserTest() {
         launchFragmentInContainer<ProfileFragment>().onFragment {
-            UserDatabase.removeUser("")
+            UserDatabase.removeUser("test")
             assertNotNull(UserDatabase.getImageReference(testUID))
         }
     }

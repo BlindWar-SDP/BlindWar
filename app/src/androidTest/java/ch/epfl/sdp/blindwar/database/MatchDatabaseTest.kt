@@ -7,17 +7,11 @@ import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import junit.framework.TestCase
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class MatchDatabaseTest : TestCase() {
-
-    @Before
-    fun init() {
-
-    }
 
     @Test
     fun testMatchCreationNull() {
