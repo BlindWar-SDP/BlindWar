@@ -32,8 +32,6 @@ class LeaderboardRecyclerAdapter(
         val userRank: TextView = itemView.findViewById(R.id.userRank)
         val userPseudo: TextView = itemView.findViewById(R.id.userPseudo)
         val userElo: TextView = itemView.findViewById(R.id.userElo)
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -62,5 +60,4 @@ class LeaderboardRecyclerAdapter(
     override fun getItemCount(): Int {
         return ranks.size
     }
-
 }
