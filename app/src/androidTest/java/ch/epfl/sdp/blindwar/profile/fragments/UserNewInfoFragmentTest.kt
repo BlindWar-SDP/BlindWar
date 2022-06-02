@@ -161,6 +161,7 @@ class UserNewInfoFragmentTest : TestCase() {
             e.printStackTrace()
         }
         Thread.sleep(1000)
+        launchFragmentInContainer<UserNewInfoFragment>()
         onView(withId(R.id.NU_select_birthdate))
             .perform(scrollTo())
             .perform(click())
@@ -211,7 +212,6 @@ class UserNewInfoFragmentTest : TestCase() {
             .perform(click())
 
         launchFragmentInContainer<UserNewInfoFragment>()
-
 
         onView(withId(R.id.NU_reset_birthdate))
             .perform(scrollTo())

@@ -20,7 +20,8 @@ import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
 import ch.epfl.sdp.blindwar.game.util.GameActivity
 import ch.epfl.sdp.blindwar.game.util.GameUtil
 import org.hamcrest.Matchers.allOf
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
