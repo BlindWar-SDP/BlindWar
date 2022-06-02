@@ -131,7 +131,6 @@ class UserDatabaseTest : TestCase() {
                                 UserDatabase.userReference.child(testUID).get()
                             }).getValue(User::class.java)
             }
-
             assertTrue(user?.pseudo == pseudo)
         }
     }

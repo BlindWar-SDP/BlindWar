@@ -10,6 +10,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.rule.GrantPermissionRule
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import org.junit.After
@@ -22,6 +23,10 @@ class MultiPlayerMenuActivityTest {
     var testRule = ActivityScenarioRule(
         MultiPlayerMenuActivity::class.java
     )
+
+    @get:Rule
+    var permissionRule: GrantPermissionRule =
+        GrantPermissionRule.grant(android.Manifest.permission.RECORD_AUDIO)
 
     @Before
     fun setUp() {
