@@ -4,7 +4,6 @@ package ch.epfl.sdp.blindwar.game.solo.fragments
 
 import android.os.Bundle
 import android.os.SystemClock
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,14 +67,12 @@ class SongSummaryFragment : Fragment() {
             thread {
                 val timerStart = SystemClock.elapsedRealtime()
                 while (SystemClock.elapsedRealtime() - timerStart < timeInterRounds);
-                Log.w("TAG", "onBackPressed after 3.5s")
                 activity?.onBackPressed()
             }
         }
 
         skip = view.findViewById<ImageButton>(R.id.skip_next_summary).also { button ->
             button.setOnClickListener {
-                Log.w("TAG", "onBackPressed")
                 activity?.onBackPressed()
             }
         }

@@ -39,9 +39,8 @@ class ProfileViewModel : ViewModel() {
                     imageRef.postValue(null)
                 }
                 user.postValue(it)
-
             } ?: run {
-                user.postValue(User()) // TODO : Wrong -> if not found should watch local data, not an empty user
+                //user.postValue(User()) // TODO : Wrong -> if not found should watch local data, not an empty user
                 imageRef.postValue(null)
             }
         }
