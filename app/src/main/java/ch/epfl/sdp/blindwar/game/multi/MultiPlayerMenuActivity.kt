@@ -10,14 +10,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.multi.model.Match
-import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
 import ch.epfl.sdp.blindwar.game.util.DynamicLinkHelper
+import ch.epfl.sdp.blindwar.game.util.GameActivity
 import ch.epfl.sdp.blindwar.game.util.MainMusic
 import ch.epfl.sdp.blindwar.login.PermissionHandler
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
@@ -48,32 +46,9 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     companion object {
         private const val LIMIT_MATCH = 10L
         private const val DELTA_MATCHMAKING = 100
+        const val MATCH_ID = "match_id"
         private const val DEFAULT_ELO = 200
         const val DYNAMIC_LINK = "Dynamic link"
-
-        /**v
-         * Launch the game for every player
-         *
-         * @param matchId
-         */
-        fun launchGame(matchId: String, supportFragmentManager: FragmentManager) {
-            /* Goal: have the game with same config launched for all users
-             Then we need to launch the fragment with a specific match_id as the tag
-             so that the fragments knows it has to fetch value from a particular tag.*/
-            val demoFragment = DemoFragment()
-            val bundle = Bundle().apply {
-                putString("match_id", matchId)
-            }
-            demoFragment.arguments = bundle
-            supportFragmentManager.beginTransaction()
-                .replace(
-                    android.R.id.content,
-                    demoFragment,
-                    "DEMO"
-                )
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit()
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -299,7 +274,9 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             }
             if (SnapshotListener.listenerOnLobby(snapshot, this, dialog!!)) {
                 listener?.remove()
-                launchGame(match.id, supportFragmentManager)
+                val i = Intent(applicationContext, GameActivity::class.java)
+                i.putExtra(MATCH_ID, snapshot?.get("matchId") as String?)
+                startActivity(i)
             }
         }
     }
@@ -358,10 +335,9 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                                 )
                             ) {
                                 listener?.remove()
-                                launchGame(
-                                    match.uid,
-                                    supportFragmentManager
-                                )
+                                val i = Intent(applicationContext, GameActivity::class.java)
+                                i.putExtra(MATCH_ID, snapshot.get("matchId") as String?)
+                                startActivity(i)
                             }
                         }
                 } else {

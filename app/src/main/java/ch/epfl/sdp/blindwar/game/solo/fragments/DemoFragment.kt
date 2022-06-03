@@ -433,15 +433,15 @@ class DemoFragment : Fragment() {
         timer.cancel()
         chronometer.stop()
 
-        val transaction = activity?.supportFragmentManager?.beginTransaction()
-        transaction?.addToBackStack("DEMO")
-        transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-
         val songSummary = SongSummaryFragment()
         songSummary.arguments = createBundleSongSummary(success)
 
-        transaction?.add((view?.parent as ViewGroup).id, songSummary, "Song Summary")
-        transaction?.commit()
+        activity?.supportFragmentManager!!.beginTransaction()
+            .addToBackStack("DEMO")
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .add((view?.parent as ViewGroup).id, songSummary, "Song Summary")
+            .commit()
+        Log.w("TAG", activity?.supportFragmentManager?.fragments?.size.toString())
     }
 
     /**
@@ -472,18 +472,20 @@ class DemoFragment : Fragment() {
     }
 
     /**
-     * Lauch the game over summary
+     * Launch the game over summary
      *
      */
     private fun launchGameSummary() {
-        val transaction = activity?.supportFragmentManager?.beginTransaction()
-        transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        // Pass the match id
-        val bundle = Bundle()
-        bundle.putString("matchId", matchId)
-        gameSummary.arguments = bundle
-        transaction?.replace((view?.parent as ViewGroup).id, gameSummary, "Game Summary")
-        transaction?.commit()
+        if (gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.SOLO) {
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            // Pass the match id
+            val bundle = Bundle()
+            bundle.putString("matchId", matchId)
+            gameSummary.arguments = bundle
+            transaction?.replace((view?.parent as ViewGroup).id, gameSummary, "Game Summary")
+            transaction?.commit()
+        }
     }
 
     // LIFECYCLE
@@ -493,14 +495,11 @@ class DemoFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         val songRecord = SongSummaryFragment()
-        Log.d("debug", "size = " + activity?.supportFragmentManager?.fragments!!.size)
         if (activity?.supportFragmentManager?.fragments!!.size > 1) {
-            Log.d("debug", "if1")
             if (activity?.supportFragmentManager?.fragments?.get(1) is SongSummaryFragment) {
                 val songFragment =
                     (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
                 val bundle = createBundleSongSummary(songFragment.success())
-                Log.d("debug", "if2")
 
                 duration = gameInstanceViewModel.gameInstance.value?.gameConfig
                     ?.parameter
@@ -511,7 +510,6 @@ class DemoFragment : Fragment() {
                 gameSummary.setSongFragment(songRecord)
 
                 if (!gameViewModel.nextRound()) {
-                    Log.d("debug", "if3")
                     setVisibilityLayout(View.VISIBLE)
                     // Pass to the next music
                     musicMetadata = gameViewModel.currentMetadata()!!
@@ -520,7 +518,6 @@ class DemoFragment : Fragment() {
                     timer = createCountDown()
                     timer.start()
                 } else {
-                    Log.d("debug", "gameover")
                     gameOver()
                 }
             }

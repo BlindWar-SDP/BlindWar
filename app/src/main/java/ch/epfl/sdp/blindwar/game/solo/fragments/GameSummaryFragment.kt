@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.game.solo.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.util.GameActivity
 import ch.epfl.sdp.blindwar.game.util.ViewPagerAdapter
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 
 /**
  * Game over fragment displayed after a game is completed
@@ -35,8 +37,7 @@ class GameSummaryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        val view: View =
-            inflater.inflate(R.layout.fragment_game_summary, container, false)
+        val view = inflater.inflate(R.layout.fragment_game_summary, container, false)
 
         viewPager = view.findViewById(R.id.pager)
         adapter = ViewPagerAdapter(fragments, requireActivity())
@@ -44,26 +45,27 @@ class GameSummaryFragment : Fragment() {
 
         quit = view.findViewById<ImageButton>(R.id.quit).also { button ->
             button.setOnClickListener {
-                activity?.onBackPressed()
+                startActivity(Intent(requireContext(), MainMenuActivity::class.java))
             }
         }
-
-        replay = view.findViewById<ImageButton>(R.id.replay).also { button ->
-            button.setOnClickListener {
-                (requireActivity() as GameActivity).removeAllFragments()
-                activity?.supportFragmentManager?.beginTransaction()
-                    ?.replace(R.id.play_container, DemoFragment(), "DEMO")
-                    ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    ?.commit()
-            }
-        }
-
         // If the game is in multiplayer, add the final score
         // Switch between the two different game view model
-        if(gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI) {
+        if (gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI) {
             fragments.add(ScoreFragment())
+            //Remove replay in multiplayer
+            view.findViewById<ImageButton>(R.id.replay).visibility = View.GONE
+        } else {
+            view.findViewById<ImageButton>(R.id.replay).visibility = View.VISIBLE
+            replay = view.findViewById<ImageButton>(R.id.replay).also { button ->
+                button.setOnClickListener {
+                    (requireActivity() as GameActivity).removeAllFragments()
+                    activity?.supportFragmentManager?.beginTransaction()
+                        ?.replace(R.id.play_container, DemoFragment(), "DEMO")
+                        ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        ?.commit()
+                }
+            }
         }
-
         return view
     }
 

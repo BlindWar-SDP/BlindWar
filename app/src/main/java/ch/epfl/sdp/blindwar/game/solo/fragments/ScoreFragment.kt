@@ -45,7 +45,7 @@ class ScoreFragment : Fragment() {
         scoreboard = view.findViewById(R.id.result_scoreboard)
 
         // Get the data from the match
-        try {
+        try { //TODO use data from db not local
             val listPseudos: List<String> = gameInstanceViewModel.match?.listPlayers!!
             val listResult = gameInstanceViewModel.match?.listResult
 

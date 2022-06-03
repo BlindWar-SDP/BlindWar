@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.game.util
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.media.MediaPlayer
 import android.os.CountDownTimer
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
@@ -226,10 +228,12 @@ class DisplayableItemAdapter(
                                         )
                                     ) {
                                         listener?.remove()
-                                        MultiPlayerMenuActivity.launchGame(
-                                            match.uid,
-                                            fragmentManager
+                                        val i = Intent(context, GameActivity::class.java)
+                                        i.extras?.putString(
+                                            MultiPlayerMenuActivity.MATCH_ID,
+                                            snapshot.get("uid") as String?
                                         )
+                                        startActivity(context, i, null)
                                     }
                                 }
                         }
