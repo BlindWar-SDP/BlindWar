@@ -5,6 +5,6 @@
         android:radius="10dp" />
     <stroke
         android:width="2dp"
-        android:color="@color/green_blue_crayola" />
+        android:color="@color/light_red" />
     <solid android:color="@android:color/transparent"/>
 </shape>

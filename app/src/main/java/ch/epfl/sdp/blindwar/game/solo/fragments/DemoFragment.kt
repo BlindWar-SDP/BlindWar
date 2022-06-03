@@ -244,7 +244,8 @@ class DemoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         voiceRecognizer.resultString.observe(viewLifecycleOwner) {
             guessEditText.setText(it)
-            guess(isVocal, isAuto = false)
+            if (guessEditText.text.toString() != "")
+                guess(isVocal, isAuto = false)
             isVocal = false
         }
 

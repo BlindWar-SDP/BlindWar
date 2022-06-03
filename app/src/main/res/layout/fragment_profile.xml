@@ -70,7 +70,9 @@
             android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
             android:fontFamily="@font/oxygen"
             android:text="Favorites"
-            android:textColor="@color/ivory" />
+            android:textColor="@color/ivory"
+            app:strokeColor="@color/ivory"
+            app:strokeWidth="2dp" />
 
         <Button
             android:id="@+id/historyBtn"
@@ -83,6 +85,8 @@
             android:fontFamily="@font/oxygen"
             android:text="History"
             android:textColor="@color/ivory"
+            app:strokeColor="@color/ivory"
+            app:strokeWidth="2dp"
             tools:text="History" />
 
         <Button
@@ -96,6 +100,8 @@
             android:fontFamily="@font/oxygen"
             android:text="Statistics"
             android:textColor="@color/ivory"
+            app:strokeColor="@color/ivory"
+            app:strokeWidth="2dp"
             tools:text="Statistics" />
     </LinearLayout>
 
