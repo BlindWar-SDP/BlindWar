@@ -6,9 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="4dp"
-    android:background="@drawable/back_res"
     android:orientation="vertical">
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/funnyLayout"
@@ -69,6 +67,8 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@null"
+            android:contentDescription="@string/content_description_ImageButton"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -76,9 +76,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.302"
             app:srcCompat="@drawable/ic_baseline_info_24"
-            tools:ignore="SpeakableTextPresentCheck"
             app:tint="@color/ivory"
-            android:contentDescription="@string/content_description_ImageButton" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
             android:id="@+id/timedDescription"
@@ -94,27 +93,29 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.49" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/raceButton_"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/very_opaque_black"
-            android:elevation="10dp"
             android:fontFamily="@font/bungee_inline"
             android:gravity="center_horizontal"
             android:text="@string/timed"
             android:textColor="@color/ivory"
             android:textSize="25sp"
+            app:cornerRadius="1dp"
+            app:iconTint="@color/fui_transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            app:strokeColor="@color/ivory" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/chronoGuidelineStart"
@@ -200,35 +201,37 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.38" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/survivalButton_"
-            style="@style/ThemeOverlay.Material3.Button.ElevatedButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/very_opaque_black"
             android:backgroundTintMode="multiply"
-            android:elevation="10dp"
-            android:fadingEdge="horizontal|vertical"
             android:fontFamily="@font/bungee_inline"
             android:gravity="center_horizontal"
             android:text="@string/survival"
             android:textColor="@color/ivory"
             android:textSize="25sp"
+            app:cornerRadius="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/ivory"
+            app:strokeWidth="1dp" />
 
         <ImageButton
             android:id="@+id/infoSurvival"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@null"
+            android:contentDescription="@string/content_description_ImageButton"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/survivalButton_"
             app:layout_constraintEnd_toEndOf="@+id/survivalButton_"
             app:layout_constraintHorizontal_bias="0.521"
@@ -236,9 +239,8 @@
             app:layout_constraintTop_toTopOf="@+id/survivalButton_"
             app:layout_constraintVertical_bias="0.29"
             app:srcCompat="@drawable/ic_baseline_info_24"
-            tools:ignore="SpeakableTextPresentCheck"
             app:tint="@color/white"
-            android:contentDescription="@string/content_description_ImageButton" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
             android:id="@+id/survivalDescription"
@@ -321,6 +323,8 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@null"
+            android:contentDescription="@string/content_description_ImageButton"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -328,9 +332,8 @@
             app:layout_constraintTop_toTopOf="@+id/regularButton_"
             app:layout_constraintVertical_bias="0.282"
             app:srcCompat="@drawable/ic_baseline_info_24"
-            tools:ignore="SpeakableTextPresentCheck"
             app:tint="@color/ivory"
-            android:contentDescription="@string/content_description_ImageButton" />
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
             android:id="@+id/classicDescription"
@@ -346,27 +349,29 @@
             app:layout_constraintTop_toTopOf="@+id/regularButton_"
             app:layout_constraintVertical_bias="0.5" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/regularButton_"
-            style="@style/ThemeOverlay.Material3.Button.ElevatedButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/very_opaque_black"
             android:fontFamily="@font/bungee_inline"
             android:gravity="center_horizontal"
             android:text="@string/classic"
             android:textColor="@color/ivory"
             android:textSize="25sp"
+            app:cornerRadius="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="1.0"
+            app:strokeColor="@color/ivory"
+            app:strokeWidth="1dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/vinylGuidelineStart"

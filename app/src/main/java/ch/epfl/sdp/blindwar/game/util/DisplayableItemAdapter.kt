@@ -20,6 +20,7 @@ import androidx.transition.TransitionManager
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.audio.AudioHelper
 import ch.epfl.sdp.blindwar.database.MatchDatabase
+import ch.epfl.sdp.blindwar.game.model.Difficulty
 import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
@@ -154,6 +155,13 @@ class DisplayableItemAdapter(
                 roundPicker.value = ROUND_DEFAULT_VALUE
 
                 setStartGameListener(displayed as Playlist)
+
+                difficulty.setBackgroundResource(when (displayed.difficulty) {
+                    Difficulty.EASY -> R.color.success
+                    Difficulty.MEDIUM -> R.color.medium
+                    Difficulty.DIFFICULT -> R.color.light_red
+                    else -> R.color.very_opaque_black
+                })
 
                 when (gameInstanceViewModel.gameInstance.value!!.gameConfig!!.mode) {
                     GameMode.SURVIVAL -> roundTextView.text = context.getString(R.string.lives)

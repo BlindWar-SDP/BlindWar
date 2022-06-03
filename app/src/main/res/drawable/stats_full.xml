@@ -10,6 +10,6 @@
         android:thickness="26dp"
         android:useLevel="true"
         >
-        <solid android:color="@color/cadet_blue_crayola" />
+        <solid android:color="@color/success" />
     </shape>
 </rotate>
