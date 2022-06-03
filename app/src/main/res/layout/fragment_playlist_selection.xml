@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/playlist_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/back_res">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textView"

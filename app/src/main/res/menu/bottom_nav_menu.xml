@@ -5,17 +5,17 @@
     <item
         android:id="@+id/item_play"
         android:icon="@drawable/play_drawable"
-        android:title="@string/play"
+        android:title="Play"
         app:showAsAction="collapseActionView" />
 
     <item
         android:id="@+id/item_search"
         android:icon="@drawable/search_drawable"
-        android:title="@string/search" />
+        android:title="Search" />
 
     <item
         android:id="@+id/item_profile"
         android:icon="@drawable/profile_drawable"
-        android:title="@string/profile" />
+        android:title="Profile" />
 
 </menu>

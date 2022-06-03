@@ -132,8 +132,8 @@
     <string name="userRank">Rank</string>
     <string name="userPseudo">Pseudo</string>
     <string name="userElo">Elo</string>
-    <string name="likedMusics">liked musics</string>
-    <string name="matchHistory">match history</string>
+    <string name="likedMusics">Liked</string>
+    <string name="matchHistory">History</string>
     <string name="leaderboard">leaderboard</string>
 
     <!-- MULTI -->

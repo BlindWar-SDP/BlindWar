@@ -2,6 +2,7 @@
 
 package ch.epfl.sdp.blindwar.game.solo.fragments
 
+import android.graphics.ColorFilter
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
@@ -12,7 +13,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.res.ResourcesCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import ch.epfl.sdp.blindwar.R
@@ -20,9 +21,14 @@ import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.util.AnimationSetterHelper
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieProperty
+import com.airbnb.lottie.SimpleColorFilter
+import com.airbnb.lottie.model.KeyPath
+import com.airbnb.lottie.value.LottieValueCallback
 import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
 import kotlin.concurrent.thread
+
 
 /**
  * Game over fragment displayed after a round
@@ -61,7 +67,17 @@ class SongSummaryFragment : Fragment() {
         /** Background color **/
         success = arguments?.get(SUCCESS_KEY) as Boolean
         layout = view.findViewById(R.id.song_summary_fragment)
-        layout.setBackgroundResource(if (success) R.drawable.back_res else R.drawable.back_fail)
+
+        val backs = arrayListOf(R.id.back, R.id.back2, R.id.back3, R.id.back4, R.id.back5, R.id.back6 )
+        val yourColor = ContextCompat.getColor(requireContext(), if (success) R.color.success else R.color.light_red)
+
+        val filter = SimpleColorFilter(yourColor)
+        val keyPath = KeyPath("**")
+        val callback: LottieValueCallback<ColorFilter> = LottieValueCallback(filter)
+        for (back in backs)
+            view.findViewById<LottieAnimationView>(back).addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
+        //layout.setBackgroundResource(if (success) R.drawable.back_res else R.drawable.back_fail)
+
 
         val isMulti = arguments?.get(IS_MULTI) as Boolean?
         if (isMulti != null && isMulti) { //avoid waiting for an afk player
@@ -95,7 +111,7 @@ class SongSummaryFragment : Fragment() {
 
         likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
             skip.visibility = View.GONE
-            layout.background =
+            /**layout.background =
                 if (success)
                     ResourcesCompat.getDrawable(
                         resources,
@@ -107,7 +123,7 @@ class SongSummaryFragment : Fragment() {
                         resources,
                         R.drawable.back_frame_failure,
                         activity?.theme
-                    )
+                    )**/
             arguments?.getBoolean("liked")!!
         } else
             false

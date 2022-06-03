@@ -7,14 +7,14 @@
     android:layout_margin="4dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?selectableItemBackground"
-    app:cardCornerRadius="20dp">
+    app:cardBackgroundColor="@color/very_opaque_black"
+    app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:id="@+id/rlWrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/prussian_blue"
+        android:background="@drawable/border"
         android:padding="5dp">
 
         <ImageView
@@ -31,6 +31,7 @@
             android:layout_alignTop="@id/musicImage"
             android:layout_alignBottom="@id/musicImage"
             android:layout_toEndOf="@id/musicImage"
+            android:backgroundTint="@color/fui_transparent"
             android:gravity="start|center_vertical"
             android:orientation="vertical">
 

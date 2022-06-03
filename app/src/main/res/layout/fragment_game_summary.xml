@@ -5,7 +5,6 @@
     android:id="@+id/game_summary_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/success"
     tools:context=".game.solo.fragments.GameSummaryFragment">
 
     <!-- Guidelines -->
@@ -15,6 +14,7 @@
         android:layout_height="50dp"
         android:layout_marginBottom="20dp"
         android:background="@null"
+        android:contentDescription="@string/content_description_ImageButton"
         android:src="@drawable/ic_baseline_list_24"
         app:layout_constraintBottom_toTopOf="@+id/pager"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,8 +22,7 @@
         app:layout_constraintStart_toEndOf="@+id/title"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:contentDescription="@string/content_description_ImageButton" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageButton
         android:id="@+id/replay"
@@ -31,6 +30,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="2dp"
         android:background="@drawable/border_button_white"
+        android:contentDescription="@string/content_description_ImageButton"
         android:src="@drawable/ic_baseline_replay_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
@@ -39,8 +39,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
         app:layout_constraintVertical_bias="0.272"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:contentDescription="@string/content_description_ImageButton" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageButton
         android:id="@+id/quit"
@@ -48,6 +47,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="2dp"
         android:background="@null"
+        android:contentDescription="@string/content_description_ImageButton"
         android:src="@drawable/ic_baseline_cancel_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
@@ -56,8 +56,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline21"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
         app:layout_constraintVertical_bias="0.272"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:contentDescription="@string/content_description_ImageButton" />
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/title"

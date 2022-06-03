@@ -9,9 +9,11 @@
     <!--color name="black">#FF000000</color-->
     <color name="light_red">#DF2935</color>
     <color name="opaque_black">#99000000</color>
-    <color name="very_opaque_black">#33000000</color>
+    <color name="very_opaque_black">#44000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="ivory">#FFFFF0</color>
+    <color name="medium">#FFA500</color>
+
     <color name="success">#1DB954</color>
     <color name="failure">#640000</color>
     <color name="cadet_blue_crayola">#FFA2AEBB</color>

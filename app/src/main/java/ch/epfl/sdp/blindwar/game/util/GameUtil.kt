@@ -237,7 +237,7 @@ object GameUtil {
     )
 
     private const val COVER_TESTING =
-        "https://i.scdn.co/image/ab67616d0000b273df756f52b91b4dcd656760b0"
+        "https://i.scdn.co/image/ab67616d0000b2730085dd4362653ef4c54ebbeb"
 
     private const val SONG_TESTING =
         "Silver for Monsters"
@@ -247,9 +247,9 @@ object GameUtil {
 
     private val testingPlaylist = OnlinePlaylist(
         "",
-        "The Witcher 3 OST",
-        "Marcin Przybyłowicz",
-        arrayListOf(Genre.POP),
+        "All Out 70s",
+        "Spotify",
+        arrayListOf(Genre.ROCK),
         arrayListOf(
             MusicMetadata.createWithURI(
                 SONG_TESTING,

@@ -4,13 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/play_fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/back_res">
+    android:layout_height="match_parent">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/astronaut3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:rotationY="-180"
+        app:layout_constraintBottom_toTopOf="@+id/multiBottomEnd"
+        app:layout_constraintEnd_toStartOf="@+id/guideline11"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline15"
+        app:layout_constraintTop_toTopOf="@+id/guideline12"
+        app:layout_constraintVertical_bias="1.0"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="astronaut_music.json"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse"
+        app:lottie_speed="1" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/astronaut2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/multiBottomEnd"
+        app:layout_constraintEnd_toStartOf="@+id/guideline15"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toTopOf="@+id/guideline12"
+        app:layout_constraintVertical_bias="1.0"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="astronaut_music.json"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse"
+        app:lottie_speed="1" />
 
     <ImageButton
         android:id="@+id/imageButton3"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/content_description_ImageButton"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintDimensionRatio="1:1"
@@ -19,49 +52,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck"
-        tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="@string/content_description_ImageButton" />
+        tools:srcCompat="@tools:sample/avatars" />
 
-    <ImageButton
-        android:id="@+id/btnVolume"
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/astronaut"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@null"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toStartOf="@+id/frameEndCard"
-        app:layout_constraintStart_toStartOf="@+id/guideline11"
-        app:layout_constraintTop_toTopOf="@+id/guideline10"
-        app:srcCompat="@drawable/ic_baseline_volume_down_24"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:contentDescription="@string/content_description_ImageButton" />
-
-
-    <ImageButton
-        android:id="@+id/soloBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/back_frame_failure"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
-        app:srcCompat="@drawable/play_arrow"
-        app:tint="@color/ivory"
-        android:contentDescription="@string/content_description_ImageButton" />
-
-    <ImageButton
-        android:id="@+id/multiBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/back_frame_failure"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:srcCompat="@drawable/play_arrow"
-        app:tint="@color/ivory"
-        android:contentDescription="@string/content_description_ImageButton" />
+        app:layout_constraintBottom_toTopOf="@+id/guideline13"
+        app:layout_constraintEnd_toStartOf="@+id/guideline11"
+        app:layout_constraintHorizontal_bias="0.364"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="astronaut_music.json"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse"
+        app:lottie_speed="1" />
 
     <TextView
         android:id="@+id/titleText"
@@ -82,7 +89,7 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="0dp"
+        android:layout_width="217dp"
         android:layout_height="0dp"
         android:autoSizeTextType="uniform"
         android:ellipsize="marquee"
@@ -94,43 +101,15 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
         app:layout_constraintTop_toBottomOf="@+id/titleText"
-        tools:text="Crabe Rave - Noisestorm"
-        tools:targetApi="o" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/oxygen"
-        android:text="@string/solo"
-        android:textColor="@color/ivory"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline12"
-        app:layout_constraintEnd_toEndOf="@+id/soloBtn"
-        app:layout_constraintStart_toStartOf="@+id/soloBtn"
-        app:layout_constraintTop_toTopOf="@+id/guideline7"
-        app:layout_constraintVertical_bias="0.08" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/oxygen"
-        android:text="@string/multi"
-        android:textColor="@color/ivory"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/multiBottomEnd"
-        app:layout_constraintEnd_toEndOf="@+id/multiBtn"
-        app:layout_constraintStart_toStartOf="@+id/multiBtn"
-        app:layout_constraintTop_toTopOf="@+id/guideline12"
-        app:layout_constraintVertical_bias="0.087" />
+        tools:targetApi="o"
+        tools:text="Crabe Rave - Noisestorm" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.16" />
+        app:layout_constraintGuide_percent="0.13" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline9"
@@ -144,7 +123,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.11" />
+        app:layout_constraintGuide_percent="0.09" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline11"
@@ -158,7 +137,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.58" />
+        app:layout_constraintGuide_percent="0.56" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/frameStartCard"
@@ -179,7 +158,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.93" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline13"
@@ -190,19 +169,39 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/audioVisualizer"
-        android:layout_width="0dp"
+        android:layout_width="37dp"
 
         android:layout_height="0dp"
+        android:tint="@color/ivory"
         app:layout_constraintBottom_toBottomOf="@id/guideline7"
-        app:layout_constraintEnd_toEndOf="@id/guideline9"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toStartOf="@+id/textView3"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/frameStartCard"
         app:layout_constraintTop_toTopOf="@id/guideline10"
         app:layout_constraintVertical_bias="1.0"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="audioVisualizer.json"
+        app:lottie_colorFilter="@color/white"
+        app:lottie_fileName="vinyl.json"
         app:lottie_loop="true"
-        app:lottie_speed="2" />
+        app:lottie_speed="1" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/audioVisualizer2"
+        android:layout_width="37dp"
+
+        android:layout_height="0dp"
+        android:tint="@color/ivory"
+        app:layout_constraintBottom_toBottomOf="@id/guideline7"
+        app:layout_constraintEnd_toStartOf="@+id/frameEndCard"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="@id/guideline10"
+        app:layout_constraintVertical_bias="0.0"
+        app:lottie_autoPlay="true"
+        app:lottie_colorFilter="@color/white"
+        app:lottie_fileName="vinyl.json"
+        app:lottie_loop="true"
+        app:lottie_speed="1" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profileView"
@@ -218,6 +217,78 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        app:strokeColor="@color/ivory"
+        app:strokeWidth="1dp"
         tools:srcCompat="@tools:sample/avatars" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profileView2"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/titleText"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        app:srcCompat="@color/success"
+        app:strokeColor="@color/ivory"
+        app:strokeWidth="1dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <Button
+        android:id="@+id/soloBtn"
+        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTint="@color/ivory"
+        android:fontFamily="@font/oxygen"
+        android:text="SOLO"
+        android:textColor="@color/ivory"
+        android:textSize="20sp"
+        app:cornerRadius="20dp"
+        app:icon="@drawable/play_arrow"
+        app:iconTint="@color/ivory"
+        app:layout_constraintBottom_toTopOf="@+id/multiBtn"
+        app:layout_constraintEnd_toStartOf="@+id/guideline11"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toTopOf="@+id/guideline7"
+        app:layout_constraintVertical_bias="1.0"
+        app:strokeColor="@color/ivory"
+        app:strokeWidth="2dp" />
+
+    <Button
+        android:id="@+id/multiBtn"
+        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTint="@color/ivory"
+        android:fontFamily="@font/oxygen"
+        android:text="MULTI"
+        android:textColor="@color/ivory"
+        android:textSize="20sp"
+        app:cornerRadius="20dp"
+        app:icon="@drawable/play_arrow"
+        app:iconTint="@color/ivory"
+        app:layout_constraintBottom_toBottomOf="@id/multiBottomEnd"
+        app:layout_constraintEnd_toEndOf="@+id/soloBtn"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="@+id/soloBtn"
+        app:layout_constraintTop_toBottomOf="@+id/astronaut"
+        app:layout_constraintVertical_bias="0.092"
+        app:strokeColor="@color/ivory"
+        app:strokeWidth="2dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
+        android:background="@drawable/border"
         app:cardBackgroundColor="@color/very_opaque_black"
         app:cardCornerRadius="8dp"
         app:cardElevation="0dp"
@@ -28,12 +29,13 @@
             android:id="@+id/playlistLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/very_opaque_black">
+            android:background="@drawable/border">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/base_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/very_opaque_black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -46,6 +48,7 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:background="@null"
+                    android:contentDescription="@string/button_to_expand_playlist"
                     android:rotation="-90"
                     android:rotationX="0"
                     android:rotationY="0"
@@ -58,26 +61,26 @@
                     app:layout_constraintVertical_bias="0.0"
                     app:srcCompat="@drawable/baseline_navigate_before_24"
                     app:tint="@color/ivory"
-                    tools:ignore="SpeakableTextPresentCheck"
-                    android:contentDescription="@string/button_to_expand_playlist" />
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <ImageButton
                     android:id="@+id/playPreview"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:background="@null"
+                    android:contentDescription="@string/button_to_play_preview_of_playlist"
                     app:layout_constraintBottom_toBottomOf="@+id/progress_preview"
                     app:layout_constraintEnd_toEndOf="@+id/progress_preview"
                     app:layout_constraintStart_toEndOf="@+id/playlistName"
                     app:layout_constraintTop_toTopOf="@+id/progress_preview"
                     app:srcCompat="@drawable/play_arrow_small"
-                    app:tint="@color/ivory"
-                    android:contentDescription="@string/button_to_play_preview_of_playlist" />
+                    app:tint="@color/ivory" />
 
                 <ImageView
                     android:id="@+id/authorIcon"
                     android:layout_width="24dp"
                     android:layout_height="0dp"
+                    android:contentDescription="@string/the_author_of_this_playlist"
                     app:layout_constraintBottom_toBottomOf="@+id/authorTextview"
                     app:layout_constraintEnd_toStartOf="@+id/progress_preview"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -85,8 +88,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/playlistName"
                     app:layout_constraintVertical_bias="0.0"
                     app:srcCompat="@drawable/ic_baseline_check_24"
-                    app:tint="@color/ivory"
-                    android:contentDescription="@string/the_author_of_this_playlist" />
+                    app:tint="@color/ivory" />
 
 
                 <TextView
@@ -107,8 +109,8 @@
                     app:layout_constraintStart_toEndOf="@+id/coverGuideline"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="1.0"
-                    tools:text="LONG PLAYLIST HAHA"
-                    tools:targetApi="o" />
+                    tools:targetApi="o"
+                    tools:text="LONG PLAYLIST HAHA" />
 
                 <TextView
                     android:id="@+id/authorTextview"
@@ -126,8 +128,8 @@
                     app:layout_constraintStart_toEndOf="@+id/coverGuideline"
                     app:layout_constraintTop_toTopOf="@+id/nameGuideline"
                     app:layout_constraintVertical_bias="0.0"
-                    tools:text="AUTHOR"
-                    tools:targetApi="o" />
+                    tools:targetApi="o"
+                    tools:text="AUTHOR" />
 
                 <TextView
                     android:id="@+id/difficultyLabel"
@@ -245,6 +247,7 @@
                     android:layout_width="52dp"
                     android:layout_height="52dp"
                     android:layout_centerInParent="true"
+                    android:progressBackgroundTint="@color/ivory"
                     app:indicatorColor="@color/opaque_black"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/likeView"
@@ -260,6 +263,7 @@
                 android:id="@+id/expanded"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:background="@color/very_opaque_black"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -274,16 +278,15 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="2dp"
-                    android:background="@drawable/border_button"
-                    android:backgroundTint="@color/black"
+                    android:background="@color/fui_transparent"
+                    android:contentDescription="@string/button_to_start_game"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/guideline8"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/play_arrow"
-                    tools:ignore="SpeakableTextPresentCheck"
-                    android:contentDescription="@string/button_to_start_game" />
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <NumberPicker
                     android:id="@+id/roundPicker"
@@ -329,8 +332,8 @@
                     app:layout_constraintStart_toEndOf="@+id/roundPicker"
                     app:layout_constraintTop_toTopOf="@+id/roundPicker"
                     app:layout_constraintVertical_bias="0.5"
-                    tools:text="ROUNDS"
-                    tools:targetApi="o" />
+                    tools:targetApi="o"
+                    tools:text="ROUNDS" />
 
                 <TextView
                     android:id="@+id/timerTextView"
@@ -347,8 +350,8 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@+id/timerPicker"
                     app:layout_constraintTop_toTopOf="@+id/timerPicker"
-                    tools:text="TIMER"
-                    tools:targetApi="o" />
+                    tools:targetApi="o"
+                    tools:text="TIMER" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline8"

@@ -1,10 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/history_menu_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/history_menu_container"
     android:background="@color/black">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/back5"
+        android:layout_width="221dp"
+        android:layout_height="276dp"
+        android:backgroundTint="@color/ivory"
+        android:foregroundTint="@color/ivory"
+        android:tint="@color/ivory"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.941"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.535"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="sparkles_white.json"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse"
+        app:lottie_speed="0.5"
+        app:tint="@color/ivory" />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/back4"
+        android:layout_width="223dp"
+        android:layout_height="196dp"
+        android:tint="@color/ivory"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.914"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="sparkles_white.json"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse"
+        app:lottie_speed="0.5" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/back3"
+        android:layout_width="218dp"
+        android:layout_height="210dp"
+        android:tint="@color/ivory"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="sparkles_white.json"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse"
+        app:lottie_speed="0.5" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/back2"
+        android:layout_width="235dp"
+        android:layout_height="267dp"
+        android:backgroundTint="@color/ivory"
+        android:foregroundTint="@color/ivory"
+        android:tint="@color/ivory"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.568"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="sparkles_white.json"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse"
+        app:lottie_speed="0.5"
+        app:tint="@color/ivory" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/back"
+        android:layout_width="162dp"
+        android:layout_height="232dp"
+        android:tint="@color/ivory"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.122"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="sparkles_white.json"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse"
+        app:lottie_speed="0.5" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/back6"
+        android:layout_width="211dp"
+        android:layout_height="272dp"
+        android:tint="@color/ivory"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.874"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.084"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="sparkles_white.json"
+        app:lottie_loop="true"
+        app:lottie_repeatMode="reverse"
+        app:lottie_speed="0.5" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fragment_history_menu_container"
@@ -14,8 +123,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Guideline
@@ -29,8 +136,8 @@
         android:id="@+id/historyBottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/black"
-        app:itemBackground="@drawable/gradient"
+        android:background="@color/fui_transparent"
+        app:itemBackground="@color/fui_transparent"
         app:itemIconTint="@color/ivory"
         app:itemTextColor="@color/ivory"
         app:layout_constraintBottom_toBottomOf="parent"

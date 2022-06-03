@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -31,14 +32,14 @@ class PlayMenuFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_play, container, false)
-        view.findViewById<ImageButton>(R.id.soloBtn).setOnClickListener {
+        view.findViewById<Button>(R.id.soloBtn).setOnClickListener {
             val intent = Intent(
                 requireActivity(),
                 GameActivity::class.java
             ).apply { putExtra(GameActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.SOLO) }
             startActivity(intent)
         }
-        val btnMulti = view.findViewById<ImageButton>(R.id.multiBtn)
+        val btnMulti = view.findViewById<Button>(R.id.multiBtn)
         if (NetworkConnectivityChecker.isOnline()) {
             btnMulti.setOnClickListener {
                 if (NetworkConnectivityChecker.isOnline()) {
