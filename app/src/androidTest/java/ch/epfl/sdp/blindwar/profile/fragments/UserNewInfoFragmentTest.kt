@@ -171,6 +171,7 @@ class UserNewInfoFragmentTest : TestCase() {
             .perform(click())
 
         launchFragmentInContainer<UserNewInfoFragment>()
+        Thread.sleep(1000)
         onView(withId(R.id.NU_reset_birthdate))
             .check(
                 matches(
@@ -202,14 +203,20 @@ class UserNewInfoFragmentTest : TestCase() {
             .perform(click())
         clickOn(android.R.string.ok)
 
+        onView(withId(R.id.NU_pseudo))
+            .perform(scrollTo())
+            .perform(replaceText(validPseudo))
+
         onView(withId(R.id.NU_Confirm_Btn))
             .perform(scrollTo())
             .perform(click())
 
         launchFragmentInContainer<UserNewInfoFragment>()
+
         onView(withId(R.id.NU_reset_birthdate))
             .perform(scrollTo())
             .perform(click())
+
         onView(withId(R.id.NU_reset_birthdate))
             .check(
                 matches(
@@ -221,7 +228,6 @@ class UserNewInfoFragmentTest : TestCase() {
         onView(withId(R.id.NU_Confirm_Btn))
             .perform(scrollTo())
             .perform(click())
-
     }
 
     @Test
@@ -238,6 +244,9 @@ class UserNewInfoFragmentTest : TestCase() {
         }
         launchFragmentInContainer<UserNewInfoFragment>()
         Thread.sleep(1000)
+        onView(withId(R.id.NU_pseudo))
+            .perform(scrollTo())
+            .perform(replaceText(validPseudo))
         onView(withId(R.id.gender_spinner))
             .perform(scrollTo())
         clickSpinnerItem(R.id.gender_spinner, genderId)
@@ -246,6 +255,7 @@ class UserNewInfoFragmentTest : TestCase() {
             .perform(click())
 
         launchFragmentInContainer<UserNewInfoFragment>()
+        Thread.sleep(1000)
         onView(withId(R.id.gender_spinner))
             .perform(scrollTo())
         onView(withId(R.id.gender_spinner))

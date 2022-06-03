@@ -48,7 +48,7 @@ object Util {
             } else {
                 val query = constraint.toString().trim().lowercase(Locale.getDefault())
                 initialOnlinePlaylists.forEach {
-                    if (it.getName().lowercase(Locale.getDefault()).contains(query)) {
+                    if (it.name.lowercase(Locale.getDefault()).contains(query)) {
                         filteredList.add(it)
                     }
                 }
@@ -58,6 +58,7 @@ object Util {
             return results
         }
 
+        @Suppress("UNCHECKED_CAST")
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
             if (results?.values is ArrayList<*>) {
                 onlinePlaylistSet.clear()
@@ -67,6 +68,14 @@ object Util {
         }
     }
 
+    /**
+     * Load the profile image in the imageView provided
+     *
+     * @param liveData
+     * @param imageView
+     * @param viewLifecycleOwner
+     * @param context
+     */
     fun loadProfileImage(
         liveData: LiveData<StorageReference?>,
         imageView: ImageView,
@@ -84,7 +93,7 @@ object Util {
     }
 //    fun updateProfileImage(
 //        liveData: LiveData<StorageReference>,
-//        imageView: ImageView,
+//        imageView: ImageView,                     //TODO ?
 //        viewLifecycleOwner: LifecycleOwner,
 //        context: Context
 //    ) {

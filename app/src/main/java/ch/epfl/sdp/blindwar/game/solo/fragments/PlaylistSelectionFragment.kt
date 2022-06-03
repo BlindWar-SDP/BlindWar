@@ -75,6 +75,7 @@ class PlaylistSelectionFragment : Fragment() {
     /**
      * Resets the playlist recycler view with the updated list of playlist
      */
+    @Suppress("UNCHECKED_CAST")
     private fun resetRecyclerView(view: View) {
         playlistRecyclerView.adapter = DisplayableItemAdapter(
             playlistViewModel.playlists.value as ArrayList<Displayable>,
@@ -82,7 +83,7 @@ class PlaylistSelectionFragment : Fragment() {
             view,
             gameInstanceViewModel,
             profileViewModel,
-            requireFragmentManager()
+            parentFragmentManager
         )
         adapter = playlistRecyclerView.adapter as DisplayableItemAdapter
     }

@@ -23,15 +23,29 @@ class MusicViewModel(playlist: Playlist, context: Context, resources: Resources)
     // Current player
     private var currentMediaPlayer: MediaPlayer? = null
 
+    /**
+     * Pause and reset the mediaplayer
+     *
+     */
     fun soundTeardown() {
         pause()
         reset()
     }
 
+    /**
+     * return the current MusicMetadata
+     *
+     * @return
+     */
     fun getCurrentMetadata(): MusicMetadata? {
         return currentMusicMetadata
     }
 
+    /**
+     * Launch next round of music
+     *
+     * @return
+     */
     fun nextRound(): MusicMetadata? {
         // Stop the music
         pause()
@@ -39,7 +53,6 @@ class MusicViewModel(playlist: Playlist, context: Context, resources: Resources)
         var musicMetadata: MusicMetadata
 
         do {
-
             // Get a random title
             val random = Random().nextInt(mutableMediaPlayerPerMusic.size)
             musicMetadata =
@@ -48,7 +61,7 @@ class MusicViewModel(playlist: Playlist, context: Context, resources: Resources)
             val player =
                 mutableMediaPlayerPerMusic.values.elementAt(random)
 
-            Log.d("ZAMBO ANGUISSA", musicMetadata.artist)
+            Log.d("ZAMBO ANGUISSA", musicMetadata.author)
             val ready = player.ready.value!!
 
             // Player's duration is -1 until the media is ready to be played
@@ -62,7 +75,6 @@ class MusicViewModel(playlist: Playlist, context: Context, resources: Resources)
         currentMusicMetadata = musicMetadata
         currentMediaPlayer = mediaPlayerPerMusic[musicMetadata]?.mediaPlayer
 
-
         // Play the music
         currentMediaPlayer?.start()
         currentMediaPlayer?.isLooping = true
@@ -71,22 +83,43 @@ class MusicViewModel(playlist: Playlist, context: Context, resources: Resources)
     }
 
     // GAME SOUND CONTROLS
+
+    /**
+     * Reset the mediaplayer
+     *
+     */
     private fun reset() {
         currentMediaPlayer?.reset()
     }
 
+    /**
+     * play the mediaplayer
+     *
+     */
     fun play() {
         currentMediaPlayer?.start()
     }
 
+    /**
+     * Pause the mediaplayer
+     *
+     */
     fun pause() {
         currentMediaPlayer?.pause()
     }
 
+    /**
+     * alter the music by slowing it and low pitching it
+     *
+     */
     fun summaryMode() {
         AudioHelper.soundAlter(currentMediaPlayer!!, AudioHelper.SLOWED, AudioHelper.LOW)
     }
 
+    /**
+     * Alter the music to normal
+     *
+     */
     fun normalMode() {
         AudioHelper.soundAlter(currentMediaPlayer!!, AudioHelper.NORMAL, AudioHelper.NORMAL)
     }

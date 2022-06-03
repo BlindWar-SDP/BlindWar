@@ -13,7 +13,6 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.game.util.GameActivity
-import ch.epfl.sdp.blindwar.game.util.MainMusic
 import ch.epfl.sdp.blindwar.game.util.NetworkConnectivityChecker
 import ch.epfl.sdp.blindwar.game.util.Util.loadProfileImage
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
@@ -32,7 +31,6 @@ class PlayMenuFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_play, container, false)
-
         view.findViewById<ImageButton>(R.id.soloBtn).setOnClickListener {
             val intent = Intent(
                 requireActivity(),
@@ -40,7 +38,6 @@ class PlayMenuFragment : Fragment() {
             ).apply { putExtra(GameActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.SOLO) }
             startActivity(intent)
         }
-
         val btnMulti = view.findViewById<ImageButton>(R.id.multiBtn)
         if (NetworkConnectivityChecker.isOnline()) {
             btnMulti.setOnClickListener {
@@ -66,7 +63,6 @@ class PlayMenuFragment : Fragment() {
             viewLifecycleOwner,
             requireContext()
         )
-
         return view
     }
 }

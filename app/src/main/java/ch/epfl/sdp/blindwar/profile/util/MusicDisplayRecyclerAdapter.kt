@@ -23,17 +23,12 @@ import kotlinx.coroutines.withContext
 class MusicDisplayRecyclerAdapter(
     private var titles: List<String>, private var artists: List<String>,
     private var imagesURL: List<String>
-) :
-
-    RecyclerView.Adapter<MusicDisplayRecyclerAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<MusicDisplayRecyclerAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         val itemTitle: TextView = itemView.findViewById(R.id.musicTitle)
         val itemArtist: TextView = itemView.findViewById(R.id.musicArtist)
         val itemPicture: ImageView = itemView.findViewById(R.id.musicImage)
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -47,7 +42,6 @@ class MusicDisplayRecyclerAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemTitle.text = titles[position]
         holder.itemArtist.text = artists[position]
-        //holder.itemPicture.setImageResource((imagesURL[position]))
         val image = imagesURL[position]
         runBlocking {
             withContext(Dispatchers.IO) {
@@ -66,6 +60,5 @@ class MusicDisplayRecyclerAdapter(
     override fun getItemCount(): Int {
         return titles.size
     }
-
 }
 

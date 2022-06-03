@@ -8,6 +8,9 @@ data class GameInstance(
     val onlinePlaylist: Playlist? = null, // playlist of the game
     val gameFormat: GameFormat? = null
 ) {
+    /**
+     * Build a Game Instance
+     */
     class Builder {
         private var playlist: Playlist? = GameUtil.gameInstanceSolo
             .onlinePlaylist

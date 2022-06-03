@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import junit.framework.TestCase
-import org.junit.Assert.assertThrows
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,9 +21,9 @@ class MainMusicTest : TestCase() {
 
     @Test(expected = Test.None::class)
     fun playAndPauseMusicTheMusic() {
-        // Test now exception is thrown
+        // Test no exception is thrown
         MainMusic.prepareAndPlay(context)
-        MainMusic.pause()
+        assertTrue(MainMusic.pause())
     }
 
     @Test
@@ -35,12 +34,12 @@ class MainMusicTest : TestCase() {
     }
 
     @Test
-    fun playUnpreparedMusic(){
+    fun playUnpreparedMusic() {
         assertFalse(MainMusic.play())
     }
 
     @Test
-    fun pauseUnpreparedMusic(){
+    fun pauseUnpreparedMusic() {
         assertFalse(MainMusic.pause())
     }
 }

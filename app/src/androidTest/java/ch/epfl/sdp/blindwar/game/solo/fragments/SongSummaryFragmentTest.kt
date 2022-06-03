@@ -35,9 +35,9 @@ class SongSummaryFragmentTest {
     private fun createBundle(success: Boolean, liked: Boolean): Bundle {
         return Bundle().let {
             val meta = metadataTutorial()["Daft Punk"]
-            it.putString(ARTIST_KEY, meta?.artist)
-            it.putString(TITLE_KEY, meta?.title)
-            it.putString(COVER_KEY, meta?.imageUrl)
+            it.putString(ARTIST_KEY, meta?.author)
+            it.putString(TITLE_KEY, meta?.name)
+            it.putString(COVER_KEY, meta?.cover)
             it.putBoolean(SUCCESS_KEY, success)
             it.putBoolean("liked", liked)
             it

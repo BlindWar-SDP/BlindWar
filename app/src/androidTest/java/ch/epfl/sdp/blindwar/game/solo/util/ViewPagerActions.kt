@@ -13,14 +13,8 @@ import androidx.test.espresso.InjectEventSecurityException
 import androidx.test.espresso.PerformException
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import androidx.test.espresso.action.ViewActions.swipeDown
-import androidx.test.espresso.action.ViewActions.swipeLeft
-import androidx.test.espresso.action.ViewActions.swipeRight
-import androidx.test.espresso.action.ViewActions.swipeUp
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
-import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayingAtLeast
+import androidx.test.espresso.action.ViewActions.*
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.viewpager2.widget.ViewPager2
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.anyOf
@@ -41,15 +35,6 @@ fun swipeNext(): ViewAction {
  */
 fun swipePrevious(): ViewAction {
     return SwipeAction(SwipeAction.Direction.BACKWARD)
-}
-
-/**
- * ViewAction that repetitively injects motion events until it succeeds. Useful as a black box
- * approach to dealing with window animations that happen when the test activity is launched, and
- * the test is trying to inject motion events before the activity is settled on the screen.
- */
-fun waitForInjectMotionEvents(): ViewAction {
-    return WaitForInjectMotionEventsAction()
 }
 
 private class SwipeAction(val direction: Direction) : ViewAction {
@@ -99,7 +84,7 @@ private class WaitForInjectMotionEventsAction : ViewAction {
     }
 
     override fun getConstraints(): Matcher<View> {
-        return ViewMatchers.isDisplayed()
+        return isDisplayed()
     }
 
     override fun perform(uiController: UiController?, view: View?) {

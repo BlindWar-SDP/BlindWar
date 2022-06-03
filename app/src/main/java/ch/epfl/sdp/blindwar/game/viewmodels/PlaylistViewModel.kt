@@ -11,7 +11,7 @@ class PlaylistViewModel : ViewModel() {
     private val _playlists =
         MutableLiveData<ArrayList<Playlist>>(arrayListOf())
 
-    var playlists: MutableLiveData<ArrayList<Playlist>> = MutableLiveData()
+    val playlists: MutableLiveData<ArrayList<Playlist>>
         get() = _playlists
 
     init {
@@ -20,7 +20,11 @@ class PlaylistViewModel : ViewModel() {
         }
     }
 
-    fun queryFilterPlaylist(query: String) {
+    /**
+     * Filter playlist via a query
+     *
+     */
+    fun queryFilterPlaylist() {
         viewModelScope.launch {
             _playlists.postValue(
                 //this.value?.filter { it.getName().lowercase().contains(query)} as ArrayList<Playlist>

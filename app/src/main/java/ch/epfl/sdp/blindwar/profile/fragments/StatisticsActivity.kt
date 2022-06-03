@@ -8,12 +8,13 @@ import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
-import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 
 // TODO: Remove unused activity
+// seems used no ?
 class StatisticsActivity : AppCompatActivity() {
     private val profileViewModel: ProfileViewModel by viewModels()
     private lateinit var spinner: Spinner
@@ -49,9 +50,13 @@ class StatisticsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Create spinner for modes
+     *
+     */
     private fun setSpinner() {
         // access the items of the list
-        val modes = Mode.values()
+        val modes = GameFormat.values()
 
         val adapter = ArrayAdapter(
             this,
@@ -81,6 +86,10 @@ class StatisticsActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Find views for each attributes of textViews
+     *
+     */
     private fun setTextViews() {
         eloView = findViewById(R.id.eloExampleView)
         winView = findViewById(R.id.winNumberView)
@@ -95,17 +104,33 @@ class StatisticsActivity : AppCompatActivity() {
         wrongPercent = findViewById(R.id.wrongPercentView)
     }
 
+    /**
+     * Update the text views
+     *
+     * @param position
+     */
     private fun updateTextViews(position: Int) {
         eloView.text = userStatistics.elo.toString()
         winView.text = userStatistics.wins[position].toString()
         drawView.text = userStatistics.draws[position].toString()
         lossView.text = userStatistics.losses[position].toString()
-        winPercent.text = userStatistics.winPercent[position].toString() + "%"
-        drawPercent.text = userStatistics.drawPercent[position].toString() + "%"
-        lossPercent.text = userStatistics.lossPercent[position].toString() + "%"
-        correctView.text = userStatistics.correctArray[position].toString()
-        wrongView.text = userStatistics.wrongArray[position].toString()
-        correctPercent.text = userStatistics.correctPercent[position].toString() + "%"
-        wrongPercent.text = userStatistics.wrongPercent[position].toString() + "%"
+        winPercent.text = getPercentStringFormatted(userStatistics.winPercent[position])
+        drawPercent.text = getPercentStringFormatted(userStatistics.drawPercent[position])
+        lossPercent.text = getPercentStringFormatted(userStatistics.lossPercent[position])
+        correctView.text = getPercentStringFormatted(userStatistics.correctArray[position])
+        wrongView.text = getPercentStringFormatted(userStatistics.wrongArray[position])
+        correctPercent.text = getPercentStringFormatted(userStatistics.correctPercent[position])
+        wrongPercent.text = getPercentStringFormatted(userStatistics.wrongPercent[position])
     }
+
+    /**
+     * Get a Value (arg) followed by % character
+     *
+     * @param arg
+     * @return
+     */
+    private fun <T> getPercentStringFormatted(arg: T): String {
+        return getString(R.string.percent, arg.toString())
+    }
+
 }

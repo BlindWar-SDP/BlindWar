@@ -39,9 +39,8 @@ class ProfileViewModel : ViewModel() {
                     imageRef.postValue(null)
                 }
                 user.postValue(it)
-
             } ?: run {
-                user.postValue(User()) // TODO : Wrong -> if not found should watch local data, not an empty user
+                //user.postValue(User()) // TODO : Wrong -> if not found should watch local data, not an empty user
                 imageRef.postValue(null)
             }
         }
@@ -64,6 +63,13 @@ class ProfileViewModel : ViewModel() {
         Firebase.auth.signOut()
     }
 
+    /**
+     * Update statistics
+     *
+     * @param score
+     * @param fails
+     * @param gameResult
+     */
     fun updateStats(score: Int, fails: Int, gameResult: GameResult) {
         FirebaseAuth.getInstance().currentUser?.let {
             UserDatabase.updateSoloUserStatistics(it.uid, score, fails)
@@ -71,6 +77,11 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Like a music
+     *
+     * @param music
+     */
     fun likeMusic(music: MusicMetadata) {
         FirebaseAuth.getInstance().currentUser?.let {
             UserDatabase.addLikedMusic(it.uid, music)

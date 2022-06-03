@@ -85,7 +85,7 @@ class UserDatabaseTest : TestCase() {
             withContext(Dispatchers.IO) {
                 user =
                     await(
-                        UserDatabase.updateUser(user0)
+                        UserDatabase.updateUser(user0)!!
                             .continueWithTask {
                                 UserDatabase.userReference.child(testUID).get()
                             }).getValue(User::class.java)
@@ -106,7 +106,7 @@ class UserDatabaseTest : TestCase() {
             withContext(Dispatchers.IO) {
                 user =
                     await(
-                        UserDatabase.updateUser(user0)
+                        UserDatabase.updateUser(user0)!!
                             .continueWithTask {
                                 UserDatabase.userReference.child(testUID).get()
                             }).getValue(User::class.java)
@@ -126,12 +126,11 @@ class UserDatabaseTest : TestCase() {
             withContext(Dispatchers.IO) {
                 user =
                     await(
-                        UserDatabase.updateUser(user0)
+                        UserDatabase.updateUser(user0)!!
                             .continueWithTask {
                                 UserDatabase.userReference.child(testUID).get()
                             }).getValue(User::class.java)
             }
-
             assertTrue(user?.pseudo == pseudo)
         }
     }
@@ -150,8 +149,9 @@ class UserDatabaseTest : TestCase() {
     @Test
     fun getUserStatisticsTest() {
         launchFragmentInContainer<ProfileFragment>()
-        val fail = 1
-        val score = 2
+        val fail = 2
+        val score = 1
+
         var user: User?
         runBlocking {
             withContext(Dispatchers.IO) {
@@ -159,20 +159,18 @@ class UserDatabaseTest : TestCase() {
                     UserDatabase.updateSoloUserStatistics(testUID, score, fail).continueWithTask {
                         UserDatabase.userReference.child(testUID).get()
                     }).getValue(User::class.java)
+
+                assertTrue(user?.userStatistics?.correctArray?.first() == score)
+                assertTrue(user?.userStatistics?.wrongArray?.first() == fail)
             }
         }
-        
-
-        //assertTrue(user?.userStatistics?.correctArray?.last() == score)
-        //assertTrue(user?.userStatistics?.wrongArray?.last() == fail)
     }
 
-    // TODO
     @Test
     fun removeUserTest() {
         launchFragmentInContainer<ProfileFragment>().onFragment {
-            //UserDatabase.removeUser("")
-            //assertNotNull(UserDatabase.getImageReference(testUID))
+            UserDatabase.removeUser("test")
+            assertNotNull(UserDatabase.getImageReference(testUID))
         }
     }
 
@@ -188,7 +186,7 @@ class UserDatabaseTest : TestCase() {
             }
         }
 
-        assertTrue(user?.likedMusics?.last()?.getName() == GameUtil.fly.getName())
+        assertTrue(user?.likedMusics?.last()?.name == GameUtil.fly.name)
     }
 
     @Test

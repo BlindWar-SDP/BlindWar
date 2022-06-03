@@ -14,6 +14,12 @@ class ResourceFetcher(
     private val context: Context,
     private val resources: Resources
 ) : Fetcher {
+    /**
+     * Fetch the music from resources
+     *
+     * @param musicMetadata
+     * @return a pair of musicMetadata and ReadyMediaPlayer
+     */
     override fun fetchMusic(musicMetadata: MusicMetadata): Pair<MusicMetadata, ReadyMediaPlayer> {
 
         // Create a file descriptor to get the author from
@@ -34,22 +40,21 @@ class ResourceFetcher(
         val baseMetadata = GameUtil.metadataTutorial()[author]
 
         val updateMetadata =
-            baseMetadata?.artist?.let {
+            baseMetadata?.author?.let {
                 MusicMetadata.createWithResourceId(
-                    baseMetadata.title,
-                    baseMetadata.artist,
-                    baseMetadata.imageUrl,
+                    baseMetadata.name,
+                    baseMetadata.author,
+                    baseMetadata.cover,
                     baseMetadata.duration,
                     resourceId
                 )
             } ?: MusicMetadata.createWithResourceId(
-                title = "",
-                artist = "",
-                imageUrl = "",
+                name = "",
+                author = "",
+                cover = "",
                 duration = 0,
                 resourceId = musicMetadata.resourceId!!
             )
-
 
         val player = MediaPlayer.create(this.context, musicMetadata.resourceId!!)
 
@@ -58,7 +63,6 @@ class ResourceFetcher(
 
         // Change the current music
         player.seekTo(time)
-
 
         // Return a new media player from the give resource id
         return Pair(updateMetadata, ReadyMediaPlayer(player, MutableLiveData(true)))

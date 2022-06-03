@@ -3,7 +3,6 @@
 
     <!--  General  -->
     <string name="app_name">BlindWar</string>
-    <string name="blindwar">BLINDWAR</string>
     <string name="blind_war">Blind War</string>
 
     <!-- Buttons  -->
@@ -11,7 +10,6 @@
     <string name="multi">MULTI</string>
     <string name="profile">Profile</string>
     <string name="logout">LOGOUT</string>
-    <string name="login">LOGIN</string>
     <string name="Btn_email">Email</string>
     <string name="Btn_google">Google</string>
     <string name="confirm">Confirm</string>
@@ -19,7 +17,6 @@
     <string name="Btn_anonymous">Guest</string>
 
     <!--  GameUtil  -->
-    <string name="play_button_description">Click here to play or stop the game</string>
     <string name="logo_description">Logo of the application</string>
     <string name="format_description"> Survival : Description placeholder
     |Against the Clock :
@@ -49,10 +46,7 @@
     <!--  Text  -->
     <string name="backText"><![CDATA[->]]></string>
     <string name="emailText">Your email here</string>
-    <string name="statisticsText">Statistics</string>
     <string name="historyText">History</string>
-    <string name="nameText">Your name here</string>
-    <string name="editProfileText">Edit Profile</string>
     <string name="logoutText">:( Logout</string>
     <string name="profilePicDescriptionText">The profile picture of the user</string>
     <string name="game">GAME</string>
@@ -60,7 +54,6 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="additional_info_text">provide more info</string>
-    <string name="eloText">ELO: Your ELO is 1435</string>
     <string name="statisticsShowText">You have 4 wins and 8 losses</string>
     <string name="your_elo_here">Your elo here</string>
     <string name="elo">ELO:</string>
@@ -78,42 +71,17 @@
 
     <!-- Voice Recognizer -->
     <string name="recognize_file">Recognize File</string>
-    <string name="recognize_microphone_en">Recognize Microphone english</string>
-    <string name="recognize_microphone_fr">Recognize Microphone french</string>
     <string name="tutorial">TUTORIAL</string>
     <string name="stop_microphone">Stop Microphone</string>
-    <string name="preparing">Preparing the recognizer\n</string>
-    <string name="ready">Ready\n</string>
-    <string name="failed">Failed to init recognizer %s\n</string>
-    <string name="elapsed">Result %s elapsed %d milliseconds\n</string>
-    <string name="starting">Starting\n</string>
-    <string name="say_something">Say something\n</string>
-    <string name="stop_file">Stop File</string>
-    <string name="pause">Pause</string>
-    <string name="continueRecognition">Continue</string>
-    <string name="speechRecognition">SR(only for demo)</string>
     <string name="content_description_background_image">Black Background Image</string>
     <string name="tutorial_textview">Tutorial</string>
-    <string name="tutorial_modes">Modes</string>
-    <string name="tutorial_formats">Formats</string>
-    <string name="tutorial_commands">Commands</string>
-    <string name="tutorial_options">Game Options</string>
     <string name="oval_description">Oval shape for profile</string>
-    <string name="hint_guess">A Forest</string>
     <string name="guess_button_text">Guess !</string>
     <string name="zero">0</string>
-    <string name="continue_to_demo_button_text">Continue to the demo</string>
     <string name="modes_textview">Modes</string>
     <string name="formats_textview">Formats</string>
     <string name="commands_textview">Commands</string>
     <string name="game_options_textview">Game Options</string>
-    <string name="tutorial_music_set">Tutorial music set</string>
-    <string name="online_music">Online Music</string>
-    <string name="your_musics">Your musics</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="song_summary_artist">Artist image view</string>
-    <string name="demo_tutorial_artist">Artist image</string>
-
     <string name="example_elo">1435</string>
     <string name="wins">Wins:</string>
     <string name="win_number">60</string>
@@ -134,16 +102,9 @@
     <string name="wrong_percent" formatted="false">"35%"</string>
 
     <string name="selected_item">Selected item:</string>
-    <string name="select_mode">Select mode</string>
     <string name="chose_sign_in_text">Sign In with:</string>
     <string name="signin_welcome_text">Welcome to BlindWar</string>
     <string name="avatar_description">Avatar image</string>
-    <string name="edit_text_hint_title">Please write your guess</string>
-    <string name="edit_text_hint_pseudo">Write your pseudo</string>
-    <string name="edit_text_hint_firstName">Write your first name</string>
-    <string name="edit_text_hint_lastName">Write your last name</string>
-    <string name="demo">DEMO</string>
-    <string name="button">BUTTON</string>
     <string name="artist">ARTIST</string>
     <string name="play_with_friends">Join a game via link</string>
     <string name="play_with_random">Play Now !</string>
@@ -151,7 +112,6 @@
     <string name="icon_for_playing_with_friends">Icon for playing with friends</string>
     <string name="icon_for_playing_with_random_people">Icon for playing with random people</string>
     <string name="nu_chose_profile_picture">chose profile\npicture</string>
-    <string name="delete_profile">Delete\nProfile</string>
     <string name="deletion_success">account successfully deleted, <b>Bye Bye</b></string>
     <string name="account_not_deleted_confirm_toast">ouf, you still are family member</string>
     <string name="account_deletion_confirm_title"><b>Account Deletion</b></string>
@@ -237,4 +197,8 @@
     <string name="_0">0</string>
     <string name="delete">Delete</string>
     <string name="unknown">UNKNOWN</string>
+    <string name="final_score">Final score</string>
+    <string name="leave">Leave</string>
+    <string name="Search">Search</string>
+    <string name="percent">%1$s %%</string>
 </resources>

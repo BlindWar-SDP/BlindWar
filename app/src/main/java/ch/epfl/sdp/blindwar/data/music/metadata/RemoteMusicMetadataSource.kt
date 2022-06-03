@@ -21,6 +21,11 @@ class RemoteMusicMetadataSource(
     private var logged: Boolean = false
     val musicMetadata = MutableLiveData<ArrayList<MusicMetadata>>()
 
+    /**
+     * Fetch a song metadata from its name
+     *
+     * @param trackName
+     */
     suspend fun fetchSongMetadata(trackName: String = "take on me") {
         withContext(ioDispatcher) {
             if (!logged)
@@ -37,7 +42,6 @@ class RemoteMusicMetadataSource(
                     logged = false
                     return@withContext
                 }
-
                 if (response.isSuccessful && response.body() != null) {
                     val tracks = (response.body()!!.tracks.items as ArrayList<SpotifyTrack>).map {
                         MusicMetadata.createWithURI(
@@ -48,9 +52,7 @@ class RemoteMusicMetadataSource(
                             uri = it.preview_url ?: GameUtil.URL_FIFA_SONG_2
                         )
                     }
-
                     musicMetadata.postValue(tracks as ArrayList<MusicMetadata>)
-
                 } else {
                     Log.e(ContentValues.TAG, "Response not successful")
                 }
@@ -58,8 +60,11 @@ class RemoteMusicMetadataSource(
         }
     }
 
+    /**
+     * Get the access token
+     *
+     */
     private suspend fun fetchToken() {
-        /* Get access token */
         withContext(ioDispatcher) {
             if (!logged) {
                 val auth = try {
