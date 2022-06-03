@@ -173,7 +173,6 @@ class SoloActivityTest {
 
     private fun launchDemoWithMode(btnId: Int, position: Int) {
         launchPlaylistSelection(btnId, position, 3)
-
         onView(
             allOf(
                 withId(R.id.startGame),

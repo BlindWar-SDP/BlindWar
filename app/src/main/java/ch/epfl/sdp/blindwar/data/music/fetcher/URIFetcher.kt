@@ -41,7 +41,6 @@ class URIFetcher : Fetcher {
             player.seekTo(time)
             readyMediaPlayer.ready.postValue(true)
         }
-
         return Pair(musicMetadata, readyMediaPlayer)
     }
 }

@@ -65,9 +65,11 @@ object UserDatabase {
      * @param user to be added
      */
     // Add user to database
-    fun updateUser(user: User): Task<Void> {
+    fun updateUser(user: User): Task<Void>? {
         // return task only for test... maybe should be modified
-        return userReference.child(user.uid).setValue(user)
+        return if(user.uid != "")
+            userReference.child(user.uid).setValue(user)
+        else null
     }
 
     /**

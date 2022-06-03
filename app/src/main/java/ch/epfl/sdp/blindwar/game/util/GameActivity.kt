@@ -1,12 +1,8 @@
 package ch.epfl.sdp.blindwar.game.util
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
@@ -49,19 +45,6 @@ class GameActivity : AppCompatActivity() {
             .replace(R.id.play_container, ModeSelectionFragment(), "MODE")
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .commit()
-
-        /** Permission handling **/
-        val permissionCheck =
-            ContextCompat.checkSelfPermission(
-                applicationContext!!,
-                Manifest.permission.RECORD_AUDIO
-            )
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED)
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.RECORD_AUDIO),
-                PERMISSIONS_REQUEST_RECORD_AUDIO
-            )
     }
 
     /**

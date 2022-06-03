@@ -231,13 +231,10 @@ class DisplayHistoryFragment : Fragment() {
 
         fun newInstance(name: String): DisplayHistoryFragment {
             val fragment = DisplayHistoryFragment()
-
             val bundle = Bundle().apply {
                 putString(HISTORY_TYPE, name)
             }
-
             fragment.arguments = bundle
-
             return fragment
         }
     }

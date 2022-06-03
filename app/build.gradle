@@ -86,7 +86,6 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.6.0-alpha04@aar'
     androidTestImplementation 'androidx.activity:activity-ktx:1.6.0-alpha04@aar'
 
-
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     // ViewModel utilities for Compose
@@ -119,9 +118,9 @@ dependencies {
     testImplementation("androidx.arch.core:core-testing:$arch_version")
 
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.test:monitor:1.5.0'
     implementation 'com.squareup.picasso:picasso:2.8'
@@ -195,9 +194,6 @@ dependencies {
     // Serialization
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2"
     implementation 'com.google.code.gson:gson:2.8.9'
-
-
-
 }
 
 tasks.withType(Test) {
@@ -224,12 +220,6 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
             '**/*_Factory.class',
             '**/*_MembersInjector.class',
             // Temporary
-            '**/data/**',
-            '**/database/**',
-            '**/game/**',
-            '**/login/**',
-            '**/menu/**',
-            '**/profile/**',
 
     ]
 

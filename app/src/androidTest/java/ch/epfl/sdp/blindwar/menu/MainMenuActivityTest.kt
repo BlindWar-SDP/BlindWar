@@ -10,6 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
+import androidx.test.rule.GrantPermissionRule
 import androidx.test.uiautomator.UiDevice
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.solo.util.typeSearchViewText
@@ -26,6 +27,10 @@ class MainMenuActivityTest : TestCase() {
     var testRule = ActivityScenarioRule(
         MainMenuActivity::class.java
     )
+
+    @get:Rule
+    var permissionRule: GrantPermissionRule =
+        GrantPermissionRule.grant(android.Manifest.permission.RECORD_AUDIO)
 
     @Before
     fun setup() {

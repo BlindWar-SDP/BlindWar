@@ -19,6 +19,7 @@ import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
 import ch.epfl.sdp.blindwar.game.util.DynamicLinkHelper
 import ch.epfl.sdp.blindwar.game.util.MainMusic
+import ch.epfl.sdp.blindwar.login.PermissionHandler
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 import ch.epfl.sdp.blindwar.profile.model.User
@@ -26,7 +27,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -112,6 +112,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                 )
             }
         }
+        PermissionHandler.handle(applicationContext, this)
     }
 
     /**
@@ -150,7 +151,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun randomButton(view: View) {
-        if (dialog == null || !dialog!!.isShowing)
+        /*if (dialog == null || !dialog!!.isShowing)
             setProgressDialog(getString(R.string.multi_wait_matches))
         val user = UserDatabase.getCurrentUser()
         if (user != null) {
@@ -190,7 +191,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         } else {
             displayToast(R.string.toast_connexion_internet)
             randomButton(view)
-        }
+        }*/
     }
 
     /**

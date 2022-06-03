@@ -23,17 +23,12 @@ class LeaderboardRecyclerAdapter(
     private var elos: List<String>,
     private var wins: List<String>,
     private var losses: List<String>
-) :
-
-    RecyclerView.Adapter<LeaderboardRecyclerAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<LeaderboardRecyclerAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         val userRank: TextView = itemView.findViewById(R.id.userRank)
         val userPseudo: TextView = itemView.findViewById(R.id.userPseudo)
         val userElo: TextView = itemView.findViewById(R.id.userElo)
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,7 +40,6 @@ class LeaderboardRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         // Add an header to describe the data of the leaderboard
         if (position == 0) {
             holder.userRank.text = "Rank"
@@ -62,5 +56,4 @@ class LeaderboardRecyclerAdapter(
     override fun getItemCount(): Int {
         return ranks.size
     }
-
 }

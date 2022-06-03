@@ -85,7 +85,7 @@ class UserDatabaseTest : TestCase() {
             withContext(Dispatchers.IO) {
                 user =
                     await(
-                        UserDatabase.updateUser(user0)
+                        UserDatabase.updateUser(user0)!!
                             .continueWithTask {
                                 UserDatabase.userReference.child(testUID).get()
                             }).getValue(User::class.java)
@@ -106,7 +106,7 @@ class UserDatabaseTest : TestCase() {
             withContext(Dispatchers.IO) {
                 user =
                     await(
-                        UserDatabase.updateUser(user0)
+                        UserDatabase.updateUser(user0)!!
                             .continueWithTask {
                                 UserDatabase.userReference.child(testUID).get()
                             }).getValue(User::class.java)
@@ -126,12 +126,11 @@ class UserDatabaseTest : TestCase() {
             withContext(Dispatchers.IO) {
                 user =
                     await(
-                        UserDatabase.updateUser(user0)
+                        UserDatabase.updateUser(user0)!!
                             .continueWithTask {
                                 UserDatabase.userReference.child(testUID).get()
                             }).getValue(User::class.java)
             }
-
             assertTrue(user?.pseudo == pseudo)
         }
     }
