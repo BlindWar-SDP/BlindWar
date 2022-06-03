@@ -1,10 +1,11 @@
 package ch.epfl.sdp.blindwar.profile.model
 
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import kotlin.math.pow
 import kotlin.math.round
 
 class AppStatistics {
-    private val numberOfMode = Mode.values().size
+    private val numberOfMode = GameFormat.values().size
     private val hundredPercent = 100
     private val standardEqualValue = 8
 
@@ -77,7 +78,7 @@ class AppStatistics {
      * @param correct true if guess was correct, false if wrong
      * @param mode the current game mode
      */
-    fun correctnessUpdate(correct: Int, wrong: Int, mode: Mode) {
+    fun correctnessUpdate(correct: Int, wrong: Int, mode: GameFormat) {
         correctArray[mode.ordinal] += correct
         wrongArray[mode.ordinal] += wrong
         val (a, b) =
@@ -92,7 +93,7 @@ class AppStatistics {
      * @param result the result of the game
      * @param mode the current mode
      */
-    fun multiWinLossCountUpdate(result: Result, mode: Mode) {
+    fun multiWinLossCountUpdate(result: Result, mode: GameFormat) {
         when (result) {
             Result.WIN -> {
                 wins[mode.ordinal]++
@@ -115,6 +116,13 @@ class AppStatistics {
             100F - winPercent[mode.ordinal] - drawPercent[mode.ordinal]
     }
 
+    /**
+     * Return percentage
+     *
+     * @param quantity
+     * @param total
+     * @return
+     */
     private fun computePercentage(quantity: Float, total: Float): Float {
         return quantity / total * hundredPercent
     }
@@ -199,6 +207,14 @@ class AppStatistics {
     }
 
 
+    /**
+     * "Statistics: ELO: $elo, Correct array: $correctArray, Wrong array: $wrongArray, " +
+     * "Correct%: $correctPercent, Wrong%: $wrongPercent, " +
+     * "Wins: $wins, Draws: $draws, Losses: $losses, " +
+     * "Win%: $winPercent, Draw%: $drawPercent, Loss%: $lossPercent"
+     *
+     * @return
+     */
     override fun toString(): String {
         return "Statistics: ELO: $elo, Correct array: $correctArray, Wrong array: $wrongArray, " +
                 "Correct%: $correctPercent, Wrong%: $wrongPercent, " +

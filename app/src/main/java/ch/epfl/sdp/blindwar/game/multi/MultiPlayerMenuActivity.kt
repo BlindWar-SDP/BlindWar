@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.webkit.URLUtil
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -15,9 +16,10 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.multi.model.Match
-import ch.epfl.sdp.blindwar.game.util.MainMusic
 import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
 import ch.epfl.sdp.blindwar.game.util.DynamicLinkHelper
+import ch.epfl.sdp.blindwar.game.util.MainMusic
+import ch.epfl.sdp.blindwar.login.PermissionHandler
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 import ch.epfl.sdp.blindwar.profile.model.User
@@ -25,7 +27,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -44,15 +45,13 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private var matchId: String? = null
     private lateinit var leaderboardButton: ImageButton
 
-
     companion object {
         private const val LIMIT_MATCH = 10L
         private const val DELTA_MATCHMAKING = 100
         private const val DEFAULT_ELO = 200
         const val DYNAMIC_LINK = "Dynamic link"
 
-
-        /**
+        /**v
          * Launch the game for every player
          *
          * @param matchId
@@ -76,7 +75,6 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                 .commit()
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,6 +112,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                 )
             }
         }
+        PermissionHandler.handle(applicationContext, this)
     }
 
     /**
@@ -152,7 +151,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun randomButton(view: View) {
-        if (dialog == null || !dialog!!.isShowing)
+        /*if (dialog == null || !dialog!!.isShowing)
             setProgressDialog(getString(R.string.multi_wait_matches))
         val user = UserDatabase.getCurrentUser()
         if (user != null) {
@@ -192,7 +191,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         } else {
             displayToast(R.string.toast_connexion_internet)
             randomButton(view)
-        }
+        }*/
     }
 
     /**
@@ -225,8 +224,11 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @return
      */
     private fun parseDynamicLink(uri: Uri?): String? {
-        if (uri != null) {
-            return uri.getQueryParameter("uid")
+        if (uri != null && URLUtil.isValidUrl(uri.toString())) {
+            val parameter = uri.getQueryParameter("uid")
+            if (parameter != null) return parameter
+            val browserIntent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(browserIntent)
         }
         return null
     }
@@ -272,9 +274,9 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
         builder.setView(view)
         builder.setNeutralButton(resources.getText(R.string.cancel_btn)) { di, _ -> di.cancel() }
         builder.setPositiveButton(resources.getText(R.string.ok)) { _, _ ->
-            val isCorrect = parseDynamicLink(editText.text.toString().toUri())
-            if (isCorrect != null) {
-                connectToDB(isCorrect)
+            val link = parseDynamicLink(editText.text.toString().toUri())
+            if (link != null) {
+                connectToDB(link)
                 dialog!!.hide()
             } else {
                 displayToast(R.string.multi_bad_link)
@@ -319,6 +321,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      * @param view
      */
     fun quitMatch(view: View) {
+        assert(view.isEnabled)
         UserDatabase.removeMatchId(currentUser?.child("uid")?.value.toString())
         finish()
         startActivity(intent)

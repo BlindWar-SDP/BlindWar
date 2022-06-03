@@ -16,7 +16,6 @@ import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.model.config.GameParameter
 import ch.epfl.sdp.blindwar.game.util.GameHelper
 import ch.epfl.sdp.blindwar.game.util.ScoreboardAdapter
-import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.model.Result
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import java.time.LocalDateTime
@@ -26,7 +25,6 @@ import java.time.format.DateTimeFormatter
  * Class representing an instance of a game
  *
  * @param gameInstance object that defines the parameters / configuration of a game
- * @param context of the Game
  * @constructor Construct a class that represent the game logic
  */
 open class GameViewModel(
@@ -34,7 +32,6 @@ open class GameViewModel(
      *
      */
     protected val gameInstance: GameInstance,
-    private val context: Context,
     private val resources: Resources,
     private var scoreboardAdapter: ScoreboardAdapter? = null
 ) : ViewModel() {
@@ -63,7 +60,7 @@ open class GameViewModel(
      * Prepares the game following the configuration
      *
      */
-    fun init() {
+    fun createMusicViewModel(context: Context) {
         musicViewModel = MusicViewModel(
             gameInstance.onlinePlaylist!!,
             context, resources
@@ -110,7 +107,7 @@ open class GameViewModel(
                 val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
                 formatted = current.format(formatter)
             }
-            val gameResult = GameResult(mode, Mode.SOLO, result, round, score, formatted)
+            val gameResult = GameResult(mode, GameFormat.SOLO, result, round, score, formatted)
 
             profileViewModel.updateStats(score, fails, gameResult)
             musicViewModel.soundTeardown()
@@ -159,7 +156,7 @@ open class GameViewModel(
      */
     fun guess(titleGuess: String, isVocal: Boolean): Boolean {
         return if (
-            GameHelper.isTheCorrectTitle(titleGuess, currentMetadata()!!.title, isVocal)
+            GameHelper.isTheCorrectTitle(titleGuess, currentMetadata()!!.name, isVocal)
         ) {
             score += 1
             round += 1

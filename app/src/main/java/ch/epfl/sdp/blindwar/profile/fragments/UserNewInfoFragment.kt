@@ -146,7 +146,7 @@ class UserNewInfoFragment : Fragment() {
                 day
             )
         datePickerDialog.datePicker.maxDate = calendar.timeInMillis
-        // test fails due to those two lines ... ??
+        // test fails due to those two lines ... ?? //TODO ?
 //        calendar.add(Calendar.YEAR, -resources.getInteger(R.integer.age_max))
 //        datePickerDialog.datePicker.minDate = calendar.timeInMillis
         datePickerDialog.setIcon(R.drawable.logo)
@@ -166,7 +166,6 @@ class UserNewInfoFragment : Fragment() {
             it.findViewById<Button>(R.id.NU_reset_birthdate).visibility = View.INVISIBLE
         }
     }
-
 
 // =============================================================================================
 // ================================== HELPER FUNCTIONS ========================================

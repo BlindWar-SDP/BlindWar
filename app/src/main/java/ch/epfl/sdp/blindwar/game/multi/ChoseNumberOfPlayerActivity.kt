@@ -28,7 +28,14 @@ class ChoseNumberOfPlayerActivity : AppCompatActivity() {
         nb.value = DEFAULT_NUMBER_OF_PLAYER
     }
 
+    /**
+     * Launch the intent to the activity where the user choose mode/playlist
+     * with attributes decided in this page
+     *
+     * @param view
+     */
     fun createMatchSoloAttributes(view: View) {
+        assert(view.isEnabled)
         val nb: NumberPicker = findViewById(R.id.number_of_players)
         val checkBox: CheckBox = findViewById(R.id.checkBoxIsPrivate)
 
@@ -40,11 +47,12 @@ class ChoseNumberOfPlayerActivity : AppCompatActivity() {
     }
 
     /**
-     * cancel the creation
+     * Cancel the creation
      *
      * @param view
      */
     fun cancel(view: View) {
+        assert(view.isEnabled)
         startActivity(Intent(this, MultiPlayerMenuActivity::class.java))
     }
 }

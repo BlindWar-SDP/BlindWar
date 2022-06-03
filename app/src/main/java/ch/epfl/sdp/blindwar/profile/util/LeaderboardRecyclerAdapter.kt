@@ -23,17 +23,12 @@ class LeaderboardRecyclerAdapter(
     private var elos: List<String>,
     private var wins: List<String>,
     private var losses: List<String>
-) :
-
-    RecyclerView.Adapter<LeaderboardRecyclerAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<LeaderboardRecyclerAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         val userRank: TextView = itemView.findViewById(R.id.userRank)
         val userPseudo: TextView = itemView.findViewById(R.id.userPseudo)
         val userElo: TextView = itemView.findViewById(R.id.userElo)
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,23 +40,20 @@ class LeaderboardRecyclerAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         // Add an header to describe the data of the leaderboard
         if (position == 0) {
             holder.userRank.text = "Rank"
             holder.userPseudo.text = "Name"
             holder.userElo.text = "Wins/Losses"
         } else {
-            holder.userRank.text = '#' + (position).toString()
+            holder.userRank.text = "#${(position)}"
             holder.userPseudo.text = pseudos[position - 1]
             holder.userElo.text =
-                "W:" + wins[position - 1] + "/L:" + losses[position - 1] + "  elo: " +
-                        elos[position - 1]
+                "W:${wins[position - 1]}/L:${losses[position - 1]}  elo: ${elos[position - 1]}"
         }
     }
 
     override fun getItemCount(): Int {
         return ranks.size
     }
-
 }

@@ -37,7 +37,7 @@ class SearchFragment : Fragment() {
         musicMetadataRecyclerView.layoutManager =
             LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL, false)
 
-        view.findViewById<TextView>(R.id.textView).text = "Search"
+        view.findViewById<TextView>(R.id.textView).text = getString(R.string.Search)
 
         gameInstanceViewModel = GameInstanceViewModel()
         musicMetadataRepository = MusicMetadataRepository()
@@ -49,12 +49,14 @@ class SearchFragment : Fragment() {
                 resetRecyclerView(view, it)
             }
         }
-
         return view
     }
 
     /**
      * Resets the playlist recycler view with the updated list of playlist
+     *
+     * @param view
+     * @param list
      */
     private fun resetRecyclerView(view: View, list: ArrayList<Displayable>) {
         musicMetadataRecyclerView.adapter = DisplayableItemAdapter(
@@ -63,7 +65,7 @@ class SearchFragment : Fragment() {
             view,
             gameInstanceViewModel,
             profileViewModel,
-            requireFragmentManager()
+            parentFragmentManager
         )
         adapter = musicMetadataRecyclerView.adapter as DisplayableItemAdapter
     }

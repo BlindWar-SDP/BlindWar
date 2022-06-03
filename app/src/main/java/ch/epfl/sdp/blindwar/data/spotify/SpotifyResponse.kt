@@ -1,5 +1,9 @@
 package ch.epfl.sdp.blindwar.data.spotify
 
+/**
+ * These classes are used to parse the spotify response
+ */
+
 data class SpotifyArtist(
     val external_urls: SpotifyExternalUrls,
     val followers: SpotifyFollowers,

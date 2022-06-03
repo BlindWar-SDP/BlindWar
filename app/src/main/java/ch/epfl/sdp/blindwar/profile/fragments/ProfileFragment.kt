@@ -60,13 +60,11 @@ class ProfileFragment : Fragment() {
         btnDelete.setOnClickListener {
             deleteProfile()
         }
-
         // text view
         profileViewModel.user.observe(viewLifecycleOwner) {
             view.findViewById<TextView>(R.id.nameView).text = it.pseudo
             view.findViewById<TextView>(R.id.eloView).text = it.userStatistics.elo.toString()
         }
-
         // profilePicture
         loadProfileImage(
             profileViewModel.imageRef,
@@ -74,7 +72,6 @@ class ProfileFragment : Fragment() {
             viewLifecycleOwner,
             requireContext()
         )
-
         return view
     }
 
@@ -83,7 +80,7 @@ class ProfileFragment : Fragment() {
      * Opens profile edition activity
      */
     private fun editProfile() {
-        fragmentManager?.let {
+        parentFragmentManager.let {
             it.beginTransaction().apply {
                 replace(R.id.fragment_menu_container, UserNewInfoFragment())
                 commit()
@@ -145,5 +142,9 @@ class ProfileFragment : Fragment() {
             requireContext(),
             getString(R.string.account_not_deleted_toast), Toast.LENGTH_SHORT
         ).show()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        //No call for super(). Bug on API Level > 11.
     }
 }

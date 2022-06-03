@@ -12,6 +12,12 @@ class MusicMetadataViewModel : ViewModel() {
     var metadata =
         MutableLiveData<ArrayList<MusicMetadata>>()
 
+    /**
+     * Fetch the musicMetadata from repository with a query
+     *
+     * @param query
+     * @return
+     */
     fun fetchMusicMetadata(query: String): MutableLiveData<ArrayList<MusicMetadata>> {
         viewModelScope.launch {
             repository.fetchMusicMetadataSpotify(query)
@@ -20,7 +26,6 @@ class MusicMetadataViewModel : ViewModel() {
                 metadata.postValue(it)
             }
         }
-
         return metadata
     }
 }

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -29,7 +30,6 @@ import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.CO
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.IS_MULTI
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.SUCCESS_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.TITLE_KEY
-import ch.epfl.sdp.blindwar.game.util.MainMusic
 import ch.epfl.sdp.blindwar.game.util.ScoreboardAdapter
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
@@ -97,10 +97,12 @@ class DemoFragment : Fragment() {
     private var playerIndex = -1
     private var playerList: MutableList<String>? = null
 
-    // Scoreboard listener
-    private val scoreboardListener =
+    // Database listener
+    private val databaseListener =
         EventListener<DocumentSnapshot> { value, _ ->
             val match = value?.toObject(Match::class.java)
+
+            // Set the score board
             gameInstanceViewModel.match?.listResult = match?.listResult
             scoreboardAdapter.updateScoreboardFromList(gameInstanceViewModel.match?.listResult)
             scoreboardAdapter.notifyDataSetChanged()
@@ -142,7 +144,7 @@ class DemoFragment : Fragment() {
         scoreboardAdapter.notifyDataSetChanged()
 
         if (matchId != null) {
-            MatchDatabase.addScoreListener(matchId!!, Firebase.firestore, scoreboardListener)
+            MatchDatabase.addListener(matchId!!, Firebase.firestore, databaseListener)
             MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
                 val match = it.toObject(Match::class.java)
                 val gameInstanceShared = match?.game
@@ -155,7 +157,6 @@ class DemoFragment : Fragment() {
                 gameViewModel = context?.let {
                     GameViewModel(
                         gameInstanceViewModel.gameInstance.value!!,
-                        it,
                         resources
                     )
                 }!!
@@ -166,15 +167,16 @@ class DemoFragment : Fragment() {
                 gameViewModel = context?.let {
                     GameViewModel(
                         gameInstanceViewModel.gameInstance.value!!,
-                        it,
                         resources,
                         scoreboardAdapter
                     )
                 }!!
             }
+            else -> {
+            }
         }
 
-        gameViewModel.init()
+        gameViewModel.createMusicViewModel(requireContext())
         // Retrieve the game duration from the GameInstance object
         duration = gameInstanceViewModel.gameInstance.value?.gameConfig
             ?.parameter
@@ -267,17 +269,17 @@ class DemoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    /**
+     * Start Game
+     */
     private fun startGame() {
-        // TEST
-        //gameViewModel.increm
-        // entPoint("Marty")
         scoreboardAdapter.notifyDataSetChanged()
 
         // Start the game
         gameViewModel.nextRound()
         gameViewModel.play()
         musicMetadata = gameViewModel.currentMetadata()!!
-        guessEditText.hint = musicMetadata.artist
+        guessEditText.hint = musicMetadata.author
         timer.start()
     }
 
@@ -354,17 +356,27 @@ class DemoFragment : Fragment() {
     }
 
     // RACE MODE
+    /**
+     * Restart chronometer
+     *
+     */
     private fun restartChronometer() {
         chronometer.base = SystemClock.elapsedRealtime() - elapsed
         chronometer.start()
     }
 
+    /**
+     * Start chronometer
+     */
     private fun initRaceMode() {
         chronometer.visibility = View.VISIBLE
         chronometer.start()
     }
 
     // SURVIVAL MODE
+    /**
+     * Add the number of hearts on screen
+     */
     private fun initSurvivalMode() {
         heartImage.visibility = View.VISIBLE
         heartNumber.visibility = View.VISIBLE
@@ -407,6 +419,8 @@ class DemoFragment : Fragment() {
             GameFormat.SOLO -> {
                 //TODO
             }
+            else -> {
+            }
         }
     }
 
@@ -435,9 +449,9 @@ class DemoFragment : Fragment() {
      */
     private fun createBundleSongSummary(success: Boolean): Bundle {
         val bundle = Bundle()
-        bundle.putString(ARTIST_KEY, musicMetadata.artist)
-        bundle.putString(TITLE_KEY, musicMetadata.title)
-        bundle.putString(COVER_KEY, musicMetadata.imageUrl)
+        bundle.putString(ARTIST_KEY, musicMetadata.author)
+        bundle.putString(TITLE_KEY, musicMetadata.name)
+        bundle.putString(COVER_KEY, musicMetadata.cover)
         bundle.putBoolean(SUCCESS_KEY, success)
         bundle.putBoolean(
             IS_MULTI,
@@ -449,26 +463,44 @@ class DemoFragment : Fragment() {
     /**
      * Launches the Game Over fragment after a game
      */
+    private fun gameOver() {
+        // If we are in multiplayer, wait for the others
+        if (gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI) {
+            MatchDatabase.playerFinish(matchId!!, playerIndex, Firebase.firestore)
+        }
+        launchGameSummary()
+    }
+
+    /**
+     * Lauch the game over summary
+     *
+     */
     private fun launchGameSummary() {
         val transaction = activity?.supportFragmentManager?.beginTransaction()
         transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        // Pass the match id
+        val bundle = Bundle()
+        bundle.putString("matchId", matchId)
+        gameSummary.arguments = bundle
         transaction?.replace((view?.parent as ViewGroup).id, gameSummary, "Game Summary")
         transaction?.commit()
     }
 
     // LIFECYCLE
-
     /**
      * Handle next round logic //TODO handle multi
      */
     override fun onResume() {
         super.onResume()
         val songRecord = SongSummaryFragment()
+        Log.d("debug", "size = " + activity?.supportFragmentManager?.fragments!!.size)
         if (activity?.supportFragmentManager?.fragments!!.size > 1) {
+            Log.d("debug", "if1")
             if (activity?.supportFragmentManager?.fragments?.get(1) is SongSummaryFragment) {
                 val songFragment =
                     (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
                 val bundle = createBundleSongSummary(songFragment.success())
+                Log.d("debug", "if2")
 
                 duration = gameInstanceViewModel.gameInstance.value?.gameConfig
                     ?.parameter
@@ -479,15 +511,17 @@ class DemoFragment : Fragment() {
                 gameSummary.setSongFragment(songRecord)
 
                 if (!gameViewModel.nextRound()) {
+                    Log.d("debug", "if3")
                     setVisibilityLayout(View.VISIBLE)
                     // Pass to the next music
                     musicMetadata = gameViewModel.currentMetadata()!!
-                    guessEditText.hint = musicMetadata.artist
+                    guessEditText.hint = musicMetadata.author
                     guessEditText.setText("")
                     timer = createCountDown()
                     timer.start()
                 } else {
-                    launchGameSummary()
+                    Log.d("debug", "gameover")
+                    gameOver()
                 }
             }
         }
@@ -502,10 +536,6 @@ class DemoFragment : Fragment() {
     override fun onDestroy() {
         timer.cancel()
         voiceRecognizer.destroy()
-
-        // Restart the menu music
-        MainMusic.play()
-
         super.onDestroy()
     }
 }

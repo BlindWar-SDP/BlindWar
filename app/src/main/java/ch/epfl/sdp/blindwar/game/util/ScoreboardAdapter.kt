@@ -20,7 +20,6 @@ class ScoreboardAdapter(playersName: List<String>) :
         val nameTextView: TextView = view.findViewById(R.id.row_name)
     }
 
-    // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context)
@@ -28,7 +27,6 @@ class ScoreboardAdapter(playersName: List<String>) :
         return ViewHolder(view)
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
@@ -37,7 +35,6 @@ class ScoreboardAdapter(playersName: List<String>) :
         viewHolder.nameTextView.text = sortedDataSet[position].second
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
     /**
@@ -52,6 +49,11 @@ class ScoreboardAdapter(playersName: List<String>) :
         }
     }
 
+    /**
+     * Update the scoreboard from a list of results
+     *
+     * @param listResult
+     */
     fun updateScoreboardFromList(listResult: MutableList<Int>?) {
         if (listResult != null) {
             for (i in 0 until dataSet.size - 1) {

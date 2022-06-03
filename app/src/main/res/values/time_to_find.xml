@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <integer name="easy_time_to_find">10</integer>
-    <integer name="hard_time_to_find">5000</integer>
-</resources>

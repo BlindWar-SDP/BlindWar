@@ -48,11 +48,11 @@ class GameUtilActivityTest {
     fun testSwipe() {
         // Swipe to page 2
         swipeToNextPage()
-        verifyCurrentPage("Tutorial")
+        verifyCurrentPage()
 
         // Swipe back to page 1
         swipeToPreviousPage()
-        verifyCurrentPage("Tutorial")
+        verifyCurrentPage()
     }
 
     private fun swipeToNextPage() {
@@ -67,8 +67,8 @@ class GameUtilActivityTest {
         onIdle()
     }
 
-    private fun verifyCurrentPage(pageText: String) {
-        verifyCurrentPage(hasDescendant(withText(pageText)))
+    private fun verifyCurrentPage() {
+        verifyCurrentPage(hasDescendant(withText("Tutorial")))
     }
 
     private fun verifyCurrentPage(matcher: Matcher<View>) {

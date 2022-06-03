@@ -48,7 +48,7 @@ object PlaylistRepository {
                             snapShot.getValue(OnlinePlaylist::class.java)!!
                         }
                             .filter {
-                                it.getName().contains(query)
+                                it.name.contains(query)
                                         && genreFilter.containsAll(it.genres)
                                         && difficultyFilter.contains(it.difficulty)
                             }.toMutableList()

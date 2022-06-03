@@ -44,21 +44,16 @@ data class User(
         fun setLastName(name: String) = apply { this.lastName = name }
         fun setBirthdate(date: Long) = apply { this.birthdate = date }
         fun setProfilePicture(imagePath: String) = apply { this.profilePicture = imagePath }
-        fun setLikedMusics(likedMusics: MutableList<MusicMetadata>) = apply {
-            this.likedMusics =
-                likedMusics
-        }
-
-        fun matchHistory(matchHistory: MutableList<GameResult>) = apply {
-            this.matchHistory =
-                matchHistory
-        }
 
         fun setGender(gender: String) = apply { this.gender = gender }
         fun setDescription(desc: String) = apply { this.description = desc }
-        fun setMatchId(mid: String) = apply { this.matchId = mid }
 
-
+        /**
+         * Create user from another
+         *
+         * @param user
+         * @return
+         */
         fun fromUser(user: User) = apply {
             this.uid = user.uid
             this.email = user.email
@@ -94,6 +89,11 @@ data class User(
         }
     }
 
+    /**
+     * Return pseudo
+     *
+     * @return
+     */
     override fun toString(): String {
         return pseudo
     }

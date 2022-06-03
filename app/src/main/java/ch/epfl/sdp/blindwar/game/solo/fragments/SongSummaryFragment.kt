@@ -60,14 +60,7 @@ class SongSummaryFragment : Fragment() {
         /** Background color **/
         success = arguments?.get(SUCCESS_KEY) as Boolean
         layout = view.findViewById(R.id.song_summary_fragment)
-
-        if (success) {
-            //layout.setBackgroundColor(resources.getColor(R.color.success, activity?.theme))
-            layout.setBackgroundDrawable(resources.getDrawable(R.drawable.back_res, activity?.theme))
-        } else {
-            //layout.setBackgroundColor(resources.getColor(R.color.black, activity?.theme))
-            layout.setBackgroundDrawable(resources.getDrawable(R.drawable.back_fail, activity?.theme))
-        }
+        layout.setBackgroundResource(if (success) R.drawable.back_res else R.drawable.back_fail)
 
         val isMulti = arguments?.get(IS_MULTI) as Boolean?
         if (isMulti != null && isMulti) { //avoid waiting for an afk player
@@ -77,18 +70,24 @@ class SongSummaryFragment : Fragment() {
                 activity?.onBackPressed()
             }
         }
+
         skip = view.findViewById<ImageButton>(R.id.skip_next_summary).also { button ->
             button.setOnClickListener {
                 activity?.onBackPressed()
             }
         }
+
         setLikeAnimation(view)
         setLikeListener()
         return view
     }
 
+    /**
+     * Like a Music and add an animation
+     *
+     * @param view
+     */
     private fun setLikeAnimation(view: View) {
-        /** Like animation **/
         likeAnimation = view.findViewById(R.id.likeView)
 
         likeSwitch = if (arguments != null && (arguments?.containsKey("liked")!!)) {
@@ -112,6 +111,9 @@ class SongSummaryFragment : Fragment() {
         setLikeListener()
     }
 
+    /**
+     * Set the metadata of the music
+     */
     private fun setMetadata() {
         artist = arguments?.get(ARTIST_KEY).toString()
         title = arguments?.get(TITLE_KEY).toString()

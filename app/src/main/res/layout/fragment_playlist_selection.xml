@@ -95,22 +95,4 @@
         app:layout_constraintStart_toStartOf="@id/verticalGuidelineStart"
         app:layout_constraintTop_toBottomOf="@+id/searchBar"
         app:layout_constraintVertical_bias="0.0" />
-
-    <ImageButton
-        android:id="@+id/addButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="104dp"
-        android:layout_marginBottom="16dp"
-        android:background="@null"
-        app:layout_constraintBottom_toTopOf="@+id/filterBtn"
-        app:layout_constraintEnd_toStartOf="@+id/verticalGuidelineEnd"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.41"
-        app:srcCompat="@drawable/ic_baseline_playlist_add_24"
-        tools:ignore="SpeakableTextPresentCheck"
-        app:tint="@color/ivory"
-        android:contentDescription="@string/content_description_ImageButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

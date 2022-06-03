@@ -1,5 +1,6 @@
 package ch.epfl.sdp.blindwar.profile.model
 
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
@@ -10,9 +11,9 @@ class AppStatisticsTest {
     private var testStats3 = AppStatistics() // for wrong/loss percentage
     private var testStats4 = AppStatistics() // for reset test
     private var testStats5 = AppStatistics() // for elo test
-    private val modeSize = Mode.values().size
-    private val soloIndex = Mode.SOLO.ordinal
-    private val multiIndex = Mode.MULTI.ordinal
+    private val modeSize = GameFormat.values().size
+    private val soloIndex = GameFormat.SOLO.ordinal
+    private val multiIndex = GameFormat.MULTI.ordinal
 
     @Test
     fun getCorrectInitial() {
@@ -26,7 +27,7 @@ class AppStatisticsTest {
 
     @Test
     fun soloCorrectnessUpdateCorrect() {
-        testStats.correctnessUpdate(1, 0, Mode.SOLO)
+        testStats.correctnessUpdate(1, 0, GameFormat.SOLO)
         assert(testStats.correctArray[soloIndex] == 1)
     }
 
@@ -42,21 +43,21 @@ class AppStatisticsTest {
 
     @Test
     fun soloCorrectnessUpdateWrong() {
-        testStats.correctnessUpdate(0, 1, Mode.SOLO)
+        testStats.correctnessUpdate(0, 1, GameFormat.SOLO)
         assert(testStats.wrongArray[soloIndex] == 1)
     }
 
     @Test
     fun getSoloCorrectPercent() {
-        testStats2.correctnessUpdate(1, 0, Mode.SOLO)
-        testStats2.correctnessUpdate(0, 1, Mode.SOLO)
+        testStats2.correctnessUpdate(1, 0, GameFormat.SOLO)
+        testStats2.correctnessUpdate(0, 1, GameFormat.SOLO)
         assert(testStats2.correctPercent[soloIndex] == 50.0F)
     }
 
     @Test
     fun getSoloWrongPercent() {
-        testStats3.correctnessUpdate(1, 0, Mode.SOLO)
-        testStats3.correctnessUpdate(0, 1, Mode.SOLO)
+        testStats3.correctnessUpdate(1, 0, GameFormat.SOLO)
+        testStats3.correctnessUpdate(0, 1, GameFormat.SOLO)
         assert(testStats3.wrongPercent[soloIndex] == 50.0F)
 
     }
@@ -68,7 +69,7 @@ class AppStatisticsTest {
 
     @Test
     fun multiCorrectnessUpdateCorrect() {
-        testStats.correctnessUpdate(1, 0, Mode.MULTI)
+        testStats.correctnessUpdate(1, 0, GameFormat.MULTI)
         assert(testStats.correctArray[multiIndex] == 1)
     }
 
@@ -79,21 +80,21 @@ class AppStatisticsTest {
 
     @Test
     fun multiCorrectnessUpdateWrong() {
-        testStats.correctnessUpdate(0, 1, Mode.MULTI)
+        testStats.correctnessUpdate(0, 1, GameFormat.MULTI)
         assert(testStats.wrongArray[multiIndex] == 1)
     }
 
     @Test
     fun getMultiCorrectPercent() {
-        testStats2.correctnessUpdate(1, 0, Mode.MULTI)
-        testStats2.correctnessUpdate(0, 1, Mode.MULTI)
+        testStats2.correctnessUpdate(1, 0, GameFormat.MULTI)
+        testStats2.correctnessUpdate(0, 1, GameFormat.MULTI)
         assert(testStats2.correctPercent[multiIndex] == 50.0F)
     }
 
     @Test
     fun getMultiWrongPercent() {
-        testStats3.correctnessUpdate(1, 0, Mode.MULTI)
-        testStats3.correctnessUpdate(0, 1, Mode.MULTI)
+        testStats3.correctnessUpdate(1, 0, GameFormat.MULTI)
+        testStats3.correctnessUpdate(0, 1, GameFormat.MULTI)
         assert(testStats3.correctPercent[multiIndex] == 50.0F)
     }
 
@@ -105,7 +106,7 @@ class AppStatisticsTest {
 
     @Test
     fun multiWinLossCountUpdateWin() {
-        testStats.multiWinLossCountUpdate(Result.WIN, Mode.MULTI)
+        testStats.multiWinLossCountUpdate(Result.WIN, GameFormat.MULTI)
         assert(testStats.wins[multiIndex] == 1)
     }
 
@@ -117,7 +118,7 @@ class AppStatisticsTest {
 
     @Test
     fun multiWinLossCountUpdateLoss() {
-        testStats.multiWinLossCountUpdate(Result.LOSS, Mode.MULTI)
+        testStats.multiWinLossCountUpdate(Result.LOSS, GameFormat.MULTI)
         assert(testStats.losses[multiIndex] == 1)
     }
 
@@ -129,29 +130,29 @@ class AppStatisticsTest {
 
     @Test
     fun multiWinLossCountUpdateDraw() {
-        testStats.multiWinLossCountUpdate(Result.DRAW, Mode.MULTI)
+        testStats.multiWinLossCountUpdate(Result.DRAW, GameFormat.MULTI)
         assert(testStats.draws[multiIndex] == 1)
     }
 
     @Test
     fun getWinPercent() {
-        testStats2.multiWinLossCountUpdate(Result.WIN, Mode.MULTI)
-        testStats2.multiWinLossCountUpdate(Result.LOSS, Mode.MULTI)
+        testStats2.multiWinLossCountUpdate(Result.WIN, GameFormat.MULTI)
+        testStats2.multiWinLossCountUpdate(Result.LOSS, GameFormat.MULTI)
         assertEquals(50.0F, testStats2.winPercent[multiIndex])
     }
 
     @Test
     fun getLossPercent() {
-        testStats3.multiWinLossCountUpdate(Result.WIN, Mode.MULTI)
-        testStats3.multiWinLossCountUpdate(Result.LOSS, Mode.MULTI)
+        testStats3.multiWinLossCountUpdate(Result.WIN, GameFormat.MULTI)
+        testStats3.multiWinLossCountUpdate(Result.LOSS, GameFormat.MULTI)
         assertEquals(50.0F, testStats3.lossPercent[multiIndex])
     }
 
     @Test
     fun getDrawPercent() {
         testStats3 = AppStatistics()
-        testStats3.multiWinLossCountUpdate(Result.DRAW, Mode.MULTI)
-        testStats3.multiWinLossCountUpdate(Result.LOSS, Mode.MULTI)
+        testStats3.multiWinLossCountUpdate(Result.DRAW, GameFormat.MULTI)
+        testStats3.multiWinLossCountUpdate(Result.LOSS, GameFormat.MULTI)
         assertEquals(50.0F, testStats3.drawPercent[multiIndex])
     }
 
@@ -162,13 +163,13 @@ class AppStatisticsTest {
 
     @Test
     fun resetStatistics() {
-        testStats4.correctnessUpdate(1, 0, Mode.SOLO)
-        testStats4.correctnessUpdate(0, 1, Mode.SOLO)
-        testStats4.correctnessUpdate(1, 0, Mode.MULTI)
-        testStats4.correctnessUpdate(0, 1, Mode.MULTI)
-        testStats4.multiWinLossCountUpdate(Result.DRAW, Mode.MULTI)
-        testStats4.multiWinLossCountUpdate(Result.WIN, Mode.MULTI)
-        testStats4.multiWinLossCountUpdate(Result.LOSS, Mode.MULTI)
+        testStats4.correctnessUpdate(1, 0, GameFormat.SOLO)
+        testStats4.correctnessUpdate(0, 1, GameFormat.SOLO)
+        testStats4.correctnessUpdate(1, 0, GameFormat.MULTI)
+        testStats4.correctnessUpdate(0, 1, GameFormat.MULTI)
+        testStats4.multiWinLossCountUpdate(Result.DRAW, GameFormat.MULTI)
+        testStats4.multiWinLossCountUpdate(Result.WIN, GameFormat.MULTI)
+        testStats4.multiWinLossCountUpdate(Result.LOSS, GameFormat.MULTI)
         testStats4.resetStatistics()
         assert(testStats4.correctArray[soloIndex] == 0)
         assert(testStats4.wrongArray[soloIndex] == 0)

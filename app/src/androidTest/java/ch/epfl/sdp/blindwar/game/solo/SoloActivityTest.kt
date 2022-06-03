@@ -18,8 +18,8 @@ import ch.epfl.sdp.blindwar.game.solo.util.typeSearchViewText
 import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
 import ch.epfl.sdp.blindwar.game.util.GameActivity
 import ch.epfl.sdp.blindwar.game.util.GameUtil
-import junit.framework.Assert.assertEquals
 import org.hamcrest.Matchers.allOf
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -41,12 +41,6 @@ class SoloActivityTest {
     @get:Rule
     var permissionRule: GrantPermissionRule =
         GrantPermissionRule.grant(android.Manifest.permission.RECORD_AUDIO)
-
-    @Test
-    fun testBackButton() {
-        onView(withId(R.id.back_button)).perform(click())
-        //assertTrue(testRule.scenario.state == Lifecycle.State.DESTROYED)
-    }
 
     @Test
     fun testModeSelectionDisplayedOnLaunch() {
@@ -179,7 +173,6 @@ class SoloActivityTest {
 
     private fun launchDemoWithMode(btnId: Int, position: Int) {
         launchPlaylistSelection(btnId, position, 3)
-
         onView(
             allOf(
                 withId(R.id.startGame),

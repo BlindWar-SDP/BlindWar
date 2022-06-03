@@ -2,8 +2,8 @@ package ch.epfl.sdp.blindwar.database
 
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.game.model.GameResult
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.profile.model.AppStatistics
-import ch.epfl.sdp.blindwar.profile.model.Mode
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.ktx.auth
@@ -65,9 +65,11 @@ object UserDatabase {
      * @param user to be added
      */
     // Add user to database
-    fun updateUser(user: User): Task<Void> {
+    fun updateUser(user: User): Task<Void>? {
         // return task only for test... maybe should be modified
-        return userReference.child(user.uid).setValue(user)
+        return if(user.uid != "")
+            userReference.child(user.uid).setValue(user)
+        else null
     }
 
     /**
@@ -110,7 +112,7 @@ object UserDatabase {
             if (user != null) {
                 var duplicate = false
                 for (likedMusic in user.likedMusics) {
-                    if (music.title == likedMusic.title) {
+                    if (music.name == likedMusic.name) {
                         duplicate = true
                     }
                 }
@@ -194,7 +196,7 @@ object UserDatabase {
         return getUserStatistics(uid).addOnSuccessListener {
             val userStatistics: AppStatistics? = it.getValue(AppStatistics::class.java)
             userStatistics?.let { stat ->
-                stat.correctnessUpdate(score, fails, Mode.SOLO)
+                stat.correctnessUpdate(score, fails, GameFormat.SOLO)
                 setUserStatistics(uid, stat)
             }
         }
