@@ -5,7 +5,7 @@ import android.media.MediaPlayer
 import ch.epfl.sdp.blindwar.R
 
 object MainMusic {
-    private const val volume = .4f
+    private const val volume = .2f
     private var mediaPlayer: MediaPlayer? = null
 
     /**
@@ -18,7 +18,7 @@ object MainMusic {
         mediaPlayer?.isLooping = true
         mediaPlayer?.setVolume(volume, volume)
         mediaPlayer?.setOnPreparedListener {
-            mediaPlayer?.start()
+            //mediaPlayer?.start()
         }
     }
 
@@ -29,7 +29,7 @@ object MainMusic {
      */
     fun play(): Boolean {
         return if (mediaPlayer != null) {
-            mediaPlayer?.start()
+            //mediaPlayer?.start()
             true
         } else {
             false
