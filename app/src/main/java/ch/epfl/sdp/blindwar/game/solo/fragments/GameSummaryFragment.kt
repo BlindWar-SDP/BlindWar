@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.game.GameFragment
+import ch.epfl.sdp.blindwar.game.GameActivity
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.util.GameSettingsActivity
 import ch.epfl.sdp.blindwar.game.util.ViewPagerAdapter
@@ -57,15 +57,20 @@ class GameSummaryFragment : Fragment() {
             view.findViewById<ImageButton>(R.id.replay).visibility = View.GONE
         } else {
             view.findViewById<ImageButton>(R.id.replay).visibility = View.VISIBLE
+
+            // TODO: Implement replay
+            /*
             replay = view.findViewById<ImageButton>(R.id.replay).also { button ->
                 button.setOnClickListener {
                     (requireActivity() as GameSettingsActivity).removeAllFragments()
                     activity?.supportFragmentManager?.beginTransaction()
-                        ?.replace(R.id.play_container, GameFragment(), "DEMO")
+                        ?.replace(R.id.play_container, GameActivity(), "DEMO")
                         ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         ?.commit()
                 }
             }
+
+             */
         }
         return view
     }
@@ -75,7 +80,7 @@ class GameSummaryFragment : Fragment() {
      *
      * @param songFragment to add in the list
      */
-    fun setSongFragment(songFragment: SongSummaryFragment) {
+    fun addNewSongFragment(songFragment: SongSummaryFragment) {
         fragments.add(songFragment)
     }
 }

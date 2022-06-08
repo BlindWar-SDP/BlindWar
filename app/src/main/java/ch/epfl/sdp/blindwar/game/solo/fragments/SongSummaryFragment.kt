@@ -4,6 +4,7 @@ package ch.epfl.sdp.blindwar.game.solo.fragments
 
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import ch.epfl.sdp.blindwar.R
@@ -161,6 +163,13 @@ class SongSummaryFragment : Fragment() {
      */
     fun success(): Boolean {
         return success
+    }
+
+    override fun onStop() {
+        // Return the like result to the parent activity
+        requireActivity().supportFragmentManager.setFragmentResult("SongSummaryExit", bundleOf("liked" to likeSwitch, "succeed" to success))
+
+        super.onStop()
     }
 
     companion object {

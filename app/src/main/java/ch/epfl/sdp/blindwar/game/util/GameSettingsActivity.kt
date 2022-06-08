@@ -1,18 +1,22 @@
 package ch.epfl.sdp.blindwar.game.util
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
-import ch.epfl.sdp.blindwar.game.GameFragment
+import ch.epfl.sdp.blindwar.game.GameActivity
 import ch.epfl.sdp.blindwar.game.solo.fragments.GameSummaryFragment
 import ch.epfl.sdp.blindwar.game.solo.fragments.ModeSelectionFragment
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.profile.model.User
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 class GameSettingsActivity : AppCompatActivity() {
@@ -36,12 +40,14 @@ class GameSettingsActivity : AppCompatActivity() {
         if (matchId != null) {
             launchGameMulti(matchId as String)
         } else {
+
             // Set the game format
             val format: GameFormat = intent.extras!!.get(GAME_FORMAT_EXTRA_NAME) as GameFormat
             gameInstanceViewModel.setGameFormat(format)
             if (format == GameFormat.MULTI) {
+                // TODO: Remove everywhere "isPrivate"
                 gameInstanceViewModel.setMultiParameters(
-                    intent.extras!!.get(GAME_IS_PRIVATE) as Boolean, intent.extras!!.get(
+                    false, intent.extras!!.get(
                         GAME_MAX_PLAYERS
                     ) as Int
                 )
@@ -60,18 +66,18 @@ class GameSettingsActivity : AppCompatActivity() {
      * @param matchId
      */
     private fun launchGameMulti(matchId: String) {
-        val demoFragment = GameFragment()
+
+        val matchId = intent.extras?.get(MultiPlayerMenuActivity.MATCH_ID) as String?
+
+        // Create the bundle with the match id
         val bundle = Bundle().apply {
             putString("match_id", matchId)
         }
-        demoFragment.arguments = bundle
-        supportFragmentManager.beginTransaction()
-            .replace(
-                android.R.id.content,
-                demoFragment,
-                "DEMO"
-            ).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .commit()
+
+        // Create the intent and give it the bundle
+        val intent = Intent(this, GameActivity::class.java)
+        intent.putExtras(bundle)
+        startActivity(Intent(this, GameActivity::class.java))
     }
 
     /**

@@ -4,24 +4,27 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.media.MediaPlayer
+import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.audio.AudioHelper
 import ch.epfl.sdp.blindwar.database.MatchDatabase
+import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.game.GameActivity
 import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
@@ -29,8 +32,8 @@ import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.game.multi.SnapshotListener
 import ch.epfl.sdp.blindwar.game.multi.model.Match
-import ch.epfl.sdp.blindwar.game.GameFragment
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.profile.model.User
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.progressindicator.CircularProgressIndicator
@@ -61,6 +64,7 @@ class DisplayableItemAdapter(
     private var listener: ListenerRegistration? = null
 ) :
     RecyclerView.Adapter<DisplayableItemAdapter.DisplayableItemViewHolder>() {
+    
 
     private val initialItems = ArrayList<Displayable>().apply {
         addAll(displayableList)
@@ -189,16 +193,25 @@ class DisplayableItemAdapter(
         private fun setStartGameListener(playlist: Playlist) {
             playButton.setOnClickListener {
                 player.pause()
+                // TODO : REMOVE
+                val a = timerPicker.value
+                val b = roundPicker.value
+                val c = playlist
                 gameInstanceViewModel.setGameParameters(
                     timeChosen = (timerPicker.value * 5 + 1) * 1000,
                     roundChosen = roundPicker.value,
                     playlist = playlist
                 )
 
+                Log.d("DEBUG", "start listener")
+                Log.d("DEBUG", gameInstanceViewModel.gameInstance.value?.gameConfig
+                    ?.parameter
+                    ?.timeToFind!!.toString())
+
                 // Separate solo logic from multiplayer one
                 when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
                     GameFormat.SOLO -> {
-                        startDemo()
+                        startGameSolo()
                     }
                     GameFormat.MULTI -> {
                         val match: Match? = gameInstanceViewModel.createMatch()
@@ -228,12 +241,7 @@ class DisplayableItemAdapter(
                                         )
                                     ) {
                                         listener?.remove()
-                                        val i = Intent(context, GameSettingsActivity::class.java)
-                                        i.extras?.putString(
-                                            MultiPlayerMenuActivity.MATCH_ID,
-                                            snapshot.get("uid") as String?
-                                        )
-                                        startActivity(context, i, null)
+                                        startGameMulti()
                                     }
                                 }
                         }
@@ -248,15 +256,29 @@ class DisplayableItemAdapter(
          * Start demo fragment
          *
          */
-        private fun startDemo() {
-            (context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                .replace(
-                    (viewFragment.parent as ViewGroup).id,
-                    GameFragment(),
-                    "DEMO"
-                )
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit()
+        private fun startGameMulti() {
+            // Get the match id from the database
+            val matchId = UserDatabase.getCurrentUser()?.getValue(User::class.java)!!.matchId
+
+            // Create the bundle with the match id
+            val bundle = Bundle().apply {
+                putString("match_id", matchId)
+            }
+
+            // Create the intent and give it the bundle
+            val intent = Intent(context, GameActivity::class.java)
+            intent.putExtras(bundle)
+            context.startActivity(intent)
+        }
+
+        private fun startGameSolo() {
+            Log.d("DEBUG", "game solo")
+            Log.d("DEBUG", gameInstanceViewModel.gameInstance.value?.gameConfig
+                ?.parameter
+                ?.timeToFind!!.toString())
+            // Create the intent and give it the bundle
+            val intent = Intent(context, GameActivity::class.java)
+            context.startActivity(intent)
         }
 
         /**

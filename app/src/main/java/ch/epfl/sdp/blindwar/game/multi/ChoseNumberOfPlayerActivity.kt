@@ -34,7 +34,7 @@ class ChoseNumberOfPlayerActivity : AppCompatActivity() {
      *
      * @param view
      */
-    fun createMatchSoloAttributes(view: View) {
+    fun createMatchAttributes(view: View) {
         assert(view.isEnabled)
         val nb: NumberPicker = findViewById(R.id.number_of_players)
         val checkBox: CheckBox = findViewById(R.id.checkBoxIsPrivate)

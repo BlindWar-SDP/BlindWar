@@ -3,6 +3,7 @@ package ch.epfl.sdp.blindwar.game.multi
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.webkit.URLUtil
 import android.widget.*
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.util.DynamicLinkHelper
 import ch.epfl.sdp.blindwar.game.util.GameSettingsActivity
@@ -274,9 +276,14 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             }
             if (SnapshotListener.listenerOnLobby(snapshot, this, dialog!!)) {
                 listener?.remove()
-                val i = Intent(applicationContext, GameSettingsActivity::class.java)
-                i.putExtra(MATCH_ID, snapshot?.get("matchId") as String?)
-                startActivity(i)
+                val intent = Intent(applicationContext, GameSettingsActivity::class.java)
+
+                // Get the match id from the database and put it in extra
+                intent.putExtra(MATCH_ID, UserDatabase.getCurrentUser()?.child("matchId")?.value as String?)
+                // TODO: Set the correct value
+                intent.putExtra(GameSettingsActivity.GAME_MAX_PLAYERS, 10)
+                intent.putExtra(GameSettingsActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.MULTI)
+                startActivity(intent)
             }
         }
     }

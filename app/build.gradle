@@ -86,6 +86,7 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.6.0-alpha04@aar'
     androidTestImplementation 'androidx.activity:activity-ktx:1.6.0-alpha04@aar'
 
+
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     // ViewModel utilities for Compose

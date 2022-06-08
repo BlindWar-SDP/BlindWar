@@ -1,22 +1,18 @@
 package ch.epfl.sdp.blindwar.game
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.activityViewModels
+import androidx.core.os.bundleOf
+import androidx.fragment.app.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
@@ -45,16 +41,17 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
+
 /**
  * Fragment containing the UI logic of a solo game
  *
- * @constructor creates a GameFragment
+ * @constructor creates a GameActivity
  */
-class GameFragment : Fragment() {
+class GameActivity : AppCompatActivity() {
 
     // VIEW MODELS
     lateinit var gameViewModel: GameViewModel
-    private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
+    private val gameInstanceViewModel: GameInstanceViewModel by viewModels()
 
     // Adapter
     private lateinit var scoreboardAdapter: ScoreboardAdapter
@@ -110,18 +107,25 @@ class GameFragment : Fragment() {
             scoreboardAdapter.notifyDataSetChanged()
         }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val view = inflater.inflate(R.layout.activity_animated_demo, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d("DEBUG", "GameActivit")
+        Log.d("DEBUG", gameInstanceViewModel.gameInstance.value?.gameConfig
+            ?.parameter
+            ?.timeToFind!!.toString())
+        super.onCreate(savedInstanceState)
+        Log.d("DEBUG", gameInstanceViewModel.gameInstance.value?.gameConfig
+            ?.parameter
+            ?.timeToFind!!.toString())
+        setContentView(R.layout.activity_animated_demo)
+
+        // Get the arguments
+        val arguments = intent.extras
 
         // if multi mode, get gameInstance from matchId
         matchId = arguments?.getString("match_id")
 
         // Get the scoreboard
-        scoreboard = view.findViewById(R.id.scoreboard)
+        scoreboard = findViewById(R.id.scoreboard)
 
         // store locally the index of the player and retrieve the list of players
         val currentUser = Firebase.auth.currentUser
@@ -140,7 +144,7 @@ class GameFragment : Fragment() {
         }
         scoreboard.setHasFixedSize(true)
 
-        val layoutManager = LinearLayoutManager(context)
+        val layoutManager = LinearLayoutManager(this)
         scoreboard.layoutManager = layoutManager
         scoreboard.adapter = scoreboardAdapter
         scoreboardAdapter.notifyDataSetChanged()
@@ -156,7 +160,7 @@ class GameFragment : Fragment() {
 
         when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
             GameFormat.SOLO -> {
-                gameViewModel = context?.let {
+                gameViewModel = this?.let {
                     GameViewModel(
                         gameInstanceViewModel.gameInstance.value!!,
                         resources
@@ -166,7 +170,7 @@ class GameFragment : Fragment() {
                 scoreboard.visibility = View.INVISIBLE
             }
             GameFormat.MULTI -> {
-                gameViewModel = context?.let {
+                gameViewModel = this?.let {
                     GameViewModel(
                         gameInstanceViewModel.gameInstance.value!!,
                         resources,
@@ -178,7 +182,15 @@ class GameFragment : Fragment() {
             }
         }
 
-        gameViewModel.createMusicViewModel(requireContext())
+        Log.d("DEBUG", gameInstanceViewModel.gameInstance.value?.gameConfig
+            ?.parameter
+            ?.timeToFind!!.toString())
+
+        gameViewModel.createMusicViewModel(this)
+
+        Log.d("DEBUG", gameInstanceViewModel.gameInstance.value?.gameConfig
+            ?.parameter
+            ?.timeToFind!!.toString())
         // Retrieve the game duration from the GameInstance object
         duration = gameInstanceViewModel.gameInstance.value?.gameConfig
             ?.parameter
@@ -186,7 +198,7 @@ class GameFragment : Fragment() {
 
         // Create and start countdown
         timer = createCountDown()
-        countDown = view.findViewById(R.id.countdown)
+        countDown = this.findViewById(R.id.countdown)
 
         // Mode specific interface
         val mode = gameInstanceViewModel
@@ -195,9 +207,9 @@ class GameFragment : Fragment() {
             .gameConfig!!
             .mode
 
-        chronometer = view.findViewById(R.id.simpleChronometer)
-        heartImage = view.findViewById(R.id.heartImage)
-        heartNumber = view.findViewById(R.id.heartNumber)
+        chronometer = findViewById(R.id.simpleChronometer)
+        heartImage = findViewById(R.id.heartImage)
+        heartNumber = findViewById(R.id.heartNumber)
 
         when (mode) {
             GameMode.TIMED -> initRaceMode()
@@ -207,9 +219,9 @@ class GameFragment : Fragment() {
         }
 
         // Get the widgets
-        guessEditText = view.findViewById(R.id.guessEditText)
-        scoreTextView = view.findViewById(R.id.scoreTextView)
-        guessButton = view.findViewById<ImageButton>(R.id.guessButton).also {
+        guessEditText = findViewById(R.id.guessEditText)
+        scoreTextView = findViewById(R.id.scoreTextView)
+        guessButton = findViewById<ImageButton>(R.id.guessButton).also {
             it.setOnClickListener {
                 guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
                 guess(isVocal, isAuto = false)
@@ -218,33 +230,56 @@ class GameFragment : Fragment() {
             }
         }
 
-        startButton = view.findViewById<LottieAnimationView>(R.id.startButton).also {
+        startButton = findViewById<LottieAnimationView>(R.id.startButton).also {
             it.setOnClickListener {
                 playAndPause()
             }
         }
 
-        crossAnim = view.findViewById(R.id.cross)
+        crossAnim = findViewById(R.id.cross)
         crossAnim.repeatCount = 1
 
-        view.findViewById<ConstraintLayout>(R.id.fragment_container).setOnClickListener {
+        findViewById<ConstraintLayout>(R.id.fragment_container).setOnClickListener {
             guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
         }
 
         voiceRecognizer = VoiceRecognizer()
-        audioVisualizer = view.findViewById(R.id.audioVisualizer)
+        audioVisualizer = findViewById(R.id.audioVisualizer)
         startButton.setMinAndMaxFrame(30, 50)
 
-        microphoneButton = view.findViewById(R.id.microphone)
-        context?.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
+        microphoneButton = findViewById(R.id.microphone)
+        this.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
         gameSummary = GameSummaryFragment()
 
-        return view
+        // Listen for fragment result
+        this.supportFragmentManager.setFragmentResultListener("SongSummaryExit", this
+        ) { _, bundle ->
+            fragmentResultListener(bundle)
+        }
+
+        // Prepare the voice recognizer
+        prepareVoiceRecognizer()
+
+        // Start the game
+        startGame()
+    }
+
+    private fun fragmentResultListener(bundle: Bundle) {
+
+        // Does the user liked the music ?
+        val liked = bundle.getBoolean("liked")
+
+        // Does the user succeed ?
+        val succeed = bundle.getBoolean("succeed")
+
+        // Start the next round
+        nextRound(liked, succeed)
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        voiceRecognizer.resultString.observe(viewLifecycleOwner) {
+    fun prepareVoiceRecognizer() {
+        // TODO Check this == viewLifecycleOwner
+        voiceRecognizer.resultString.observe(this) {
             guessEditText.setText(it)
             guess(isVocal, isAuto = false)
             isVocal = false
@@ -267,8 +302,6 @@ class GameFragment : Fragment() {
             }
             true
         }
-        startGame()
-        super.onViewCreated(view, savedInstanceState)
     }
 
     /**
@@ -323,7 +356,7 @@ class GameFragment : Fragment() {
         audioVisualizer.visibility = code
         startButton.visibility = code
         microphoneButton.visibility = code
-        view?.findViewById<ImageButton>(R.id.guessButton)?.visibility = code
+        findViewById<ImageButton>(R.id.guessButton)?.visibility = code
     }
 
     /**
@@ -382,7 +415,7 @@ class GameFragment : Fragment() {
     private fun initSurvivalMode() {
         heartImage.visibility = View.VISIBLE
         heartNumber.visibility = View.VISIBLE
-        gameViewModel.lives.observe(requireActivity()) {
+        gameViewModel.lives.observe(this) {
             heartNumber.text = getString(R.string.heart_number, it)
         }
     }
@@ -398,8 +431,7 @@ class GameFragment : Fragment() {
             // Update the number of point view
             increaseScore()
             scoreTextView.text = gameViewModel.score.toString()
-            (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
-                .hideSoftInputFromWindow(view?.windowToken, 0)
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
             launchSongSummary(success = true)
         } else if (!isAuto) {
             /** Resets the base frame value of the animation and keep the reversing mode **/
@@ -435,15 +467,11 @@ class GameFragment : Fragment() {
         timer.cancel()
         chronometer.stop()
 
-        val songSummary = SongSummaryFragment()
-        songSummary.arguments = createBundleSongSummary(success)
-
-        activity?.supportFragmentManager!!.beginTransaction()
+        this.supportFragmentManager.beginTransaction()
             .addToBackStack("DEMO")
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .add((view?.parent as ViewGroup).id, songSummary, "Song Summary")
+            .add<SongSummaryFragment>(R.id.fragment_container, "Song Summary", args = createBundleSongSummary(success))
             .commit()
-        Log.w("TAG", activity?.supportFragmentManager?.fragments?.size.toString())
     }
 
     /**
@@ -479,50 +507,44 @@ class GameFragment : Fragment() {
      */
     private fun launchGameSummary() {
         if (gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.SOLO) {
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
-            transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            // Pass the match id
-            val bundle = Bundle()
-            bundle.putString("matchId", matchId)
-            gameSummary.arguments = bundle
-            transaction?.replace((view?.parent as ViewGroup).id, gameSummary, "Game Summary")
-            transaction?.commit()
+            // Get the match id and give the bundle to the fragment
+            gameSummary.arguments = bundleOf("matchId" to matchId)
+
+            supportFragmentManager.beginTransaction()
+                .addToBackStack("SUMMARY")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .add(R.id.fragment_container, gameSummary)
+                .commit()
         }
     }
 
-    // LIFECYCLE
-    /**
-     * Handle next round logic //TODO handle multi
-     */
-    override fun onResume() {
-        super.onResume()
+
+    private fun nextRound(isLastMusicLiked: Boolean, isLastMusicSuccess: Boolean) {
+
+        val bundle = createBundleSongSummary(isLastMusicSuccess)
+
+        duration = gameInstanceViewModel.gameInstance.value?.gameConfig
+            ?.parameter
+            ?.timeToFind!!
+        restartChronometer()
+
+        bundle.putBoolean("liked", isLastMusicLiked)
+
+        // Add a new song record to the final game summary fragment
         val songRecord = SongSummaryFragment()
-        if (activity?.supportFragmentManager?.fragments!!.size > 1) {
-            if (activity?.supportFragmentManager?.fragments?.get(1) is SongSummaryFragment) {
-                val songFragment =
-                    (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
-                val bundle = createBundleSongSummary(songFragment.success())
+        songRecord.arguments = bundle
+        gameSummary.addNewSongFragment(songRecord)
 
-                duration = gameInstanceViewModel.gameInstance.value?.gameConfig
-                    ?.parameter
-                    ?.timeToFind!!
-                restartChronometer()
-                bundle.putBoolean("liked", songFragment.liked())
-                songRecord.arguments = bundle
-                gameSummary.setSongFragment(songRecord)
-
-                if (!gameViewModel.nextRound()) {
-                    setVisibilityLayout(View.VISIBLE)
-                    // Pass to the next music
-                    musicMetadata = gameViewModel.currentMetadata()!!
-                    guessEditText.hint = musicMetadata.author
-                    guessEditText.setText("")
-                    timer = createCountDown()
-                    timer.start()
-                } else {
-                    gameOver()
-                }
-            }
+        if (!gameViewModel.nextRound()) {
+            setVisibilityLayout(View.VISIBLE)
+            // Pass to the next music
+            musicMetadata = gameViewModel.currentMetadata()!!
+            guessEditText.hint = musicMetadata.author
+            guessEditText.setText("")
+            timer = createCountDown()
+            timer.start()
+        } else {
+            gameOver()
         }
     }
 
