@@ -11,8 +11,9 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import ch.epfl.sdp.blindwar.R
+import ch.epfl.sdp.blindwar.game.GameFragment
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
-import ch.epfl.sdp.blindwar.game.util.GameActivity
+import ch.epfl.sdp.blindwar.game.util.GameSettingsActivity
 import ch.epfl.sdp.blindwar.game.util.ViewPagerAdapter
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
@@ -58,9 +59,9 @@ class GameSummaryFragment : Fragment() {
             view.findViewById<ImageButton>(R.id.replay).visibility = View.VISIBLE
             replay = view.findViewById<ImageButton>(R.id.replay).also { button ->
                 button.setOnClickListener {
-                    (requireActivity() as GameActivity).removeAllFragments()
+                    (requireActivity() as GameSettingsActivity).removeAllFragments()
                     activity?.supportFragmentManager?.beginTransaction()
-                        ?.replace(R.id.play_container, DemoFragment(), "DEMO")
+                        ?.replace(R.id.play_container, GameFragment(), "DEMO")
                         ?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         ?.commit()
                 }

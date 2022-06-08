@@ -15,7 +15,7 @@ import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.util.DynamicLinkHelper
-import ch.epfl.sdp.blindwar.game.util.GameActivity
+import ch.epfl.sdp.blindwar.game.util.GameSettingsActivity
 import ch.epfl.sdp.blindwar.game.util.MainMusic
 import ch.epfl.sdp.blindwar.login.PermissionHandler
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
@@ -274,7 +274,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             }
             if (SnapshotListener.listenerOnLobby(snapshot, this, dialog!!)) {
                 listener?.remove()
-                val i = Intent(applicationContext, GameActivity::class.java)
+                val i = Intent(applicationContext, GameSettingsActivity::class.java)
                 i.putExtra(MATCH_ID, snapshot?.get("matchId") as String?)
                 startActivity(i)
             }
@@ -335,7 +335,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                                 )
                             ) {
                                 listener?.remove()
-                                val i = Intent(applicationContext, GameActivity::class.java)
+                                val i = Intent(applicationContext, GameSettingsActivity::class.java)
                                 i.putExtra(MATCH_ID, snapshot.get("matchId") as String?)
                                 startActivity(i)
                             }

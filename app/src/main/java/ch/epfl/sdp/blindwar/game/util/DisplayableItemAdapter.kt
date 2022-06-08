@@ -29,7 +29,7 @@ import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.game.multi.SnapshotListener
 import ch.epfl.sdp.blindwar.game.multi.model.Match
-import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
+import ch.epfl.sdp.blindwar.game.GameFragment
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.airbnb.lottie.LottieAnimationView
@@ -228,7 +228,7 @@ class DisplayableItemAdapter(
                                         )
                                     ) {
                                         listener?.remove()
-                                        val i = Intent(context, GameActivity::class.java)
+                                        val i = Intent(context, GameSettingsActivity::class.java)
                                         i.extras?.putString(
                                             MultiPlayerMenuActivity.MATCH_ID,
                                             snapshot.get("uid") as String?
@@ -252,7 +252,7 @@ class DisplayableItemAdapter(
             (context as AppCompatActivity).supportFragmentManager.beginTransaction()
                 .replace(
                     (viewFragment.parent as ViewGroup).id,
-                    DemoFragment(),
+                    GameFragment(),
                     "DEMO"
                 )
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

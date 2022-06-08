@@ -8,7 +8,7 @@ import android.widget.NumberPicker
 import androidx.appcompat.app.AppCompatActivity
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
-import ch.epfl.sdp.blindwar.game.util.GameActivity
+import ch.epfl.sdp.blindwar.game.util.GameSettingsActivity
 
 class ChoseNumberOfPlayerActivity : AppCompatActivity() {
 
@@ -39,10 +39,10 @@ class ChoseNumberOfPlayerActivity : AppCompatActivity() {
         val nb: NumberPicker = findViewById(R.id.number_of_players)
         val checkBox: CheckBox = findViewById(R.id.checkBoxIsPrivate)
 
-        val intent = Intent(this, GameActivity::class.java)
-        intent.putExtra(GameActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.MULTI)
-        intent.putExtra(GameActivity.GAME_IS_PRIVATE, checkBox.isChecked)
-        intent.putExtra(GameActivity.GAME_MAX_PLAYERS, nb.value)
+        val intent = Intent(this, GameSettingsActivity::class.java)
+        intent.putExtra(GameSettingsActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.MULTI)
+        intent.putExtra(GameSettingsActivity.GAME_IS_PRIVATE, checkBox.isChecked)
+        intent.putExtra(GameSettingsActivity.GAME_MAX_PLAYERS, nb.value)
         startActivity(intent)
     }
 

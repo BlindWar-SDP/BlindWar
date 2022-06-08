@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import ch.epfl.sdp.blindwar.game.util.GameActivity
+import ch.epfl.sdp.blindwar.game.util.GameSettingsActivity
 
 object PermissionHandler {
     /** Permission handling **/
@@ -20,7 +20,7 @@ object PermissionHandler {
             ActivityCompat.requestPermissions(
                 activity,
                 arrayOf(Manifest.permission.RECORD_AUDIO),
-                GameActivity.PERMISSIONS_REQUEST_RECORD_AUDIO
+                GameSettingsActivity.PERMISSIONS_REQUEST_RECORD_AUDIO
             )
     }
 }

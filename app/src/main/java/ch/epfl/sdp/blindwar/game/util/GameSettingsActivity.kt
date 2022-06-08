@@ -8,14 +8,14 @@ import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
-import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
+import ch.epfl.sdp.blindwar.game.GameFragment
 import ch.epfl.sdp.blindwar.game.solo.fragments.GameSummaryFragment
 import ch.epfl.sdp.blindwar.game.solo.fragments.ModeSelectionFragment
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
-class GameActivity : AppCompatActivity() {
+class GameSettingsActivity : AppCompatActivity() {
     val gameInstanceViewModel: GameInstanceViewModel by viewModels()
     private val profileViewModel: ProfileViewModel by viewModels()
 
@@ -60,7 +60,7 @@ class GameActivity : AppCompatActivity() {
      * @param matchId
      */
     private fun launchGameMulti(matchId: String) {
-        val demoFragment = DemoFragment()
+        val demoFragment = GameFragment()
         val bundle = Bundle().apply {
             putString("match_id", matchId)
         }

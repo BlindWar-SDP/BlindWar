@@ -16,7 +16,7 @@ import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.solo.util.typeSearchViewText
 import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
-import ch.epfl.sdp.blindwar.game.util.GameActivity
+import ch.epfl.sdp.blindwar.game.util.GameSettingsActivity
 import ch.epfl.sdp.blindwar.game.util.GameUtil
 import org.hamcrest.Matchers.allOf
 import org.junit.Assert.assertEquals
@@ -30,11 +30,11 @@ class SoloActivityTest {
 
     var intent: Intent? = Intent(
         ApplicationProvider.getApplicationContext(),
-        GameActivity::class.java
-    ).apply { putExtra(GameActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.SOLO) }
+        GameSettingsActivity::class.java
+    ).apply { putExtra(GameSettingsActivity.GAME_FORMAT_EXTRA_NAME, GameFormat.SOLO) }
 
     @get:Rule
-    var testRule = ActivityScenarioRule<GameActivity>(
+    var testRule = ActivityScenarioRule<GameSettingsActivity>(
         intent
     )
 

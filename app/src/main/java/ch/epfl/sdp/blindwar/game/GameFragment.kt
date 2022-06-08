@@ -1,4 +1,4 @@
-package ch.epfl.sdp.blindwar.game.solo.fragments
+package ch.epfl.sdp.blindwar.game
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -25,6 +25,8 @@ import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.multi.model.Match
+import ch.epfl.sdp.blindwar.game.solo.fragments.GameSummaryFragment
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.ARTIST_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.COVER_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.IS_MULTI
@@ -46,9 +48,9 @@ import java.util.*
 /**
  * Fragment containing the UI logic of a solo game
  *
- * @constructor creates a DemoFragment
+ * @constructor creates a GameFragment
  */
-class DemoFragment : Fragment() {
+class GameFragment : Fragment() {
 
     // VIEW MODELS
     lateinit var gameViewModel: GameViewModel
