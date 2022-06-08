@@ -14,13 +14,14 @@ import ch.epfl.sdp.blindwar.game.util.GameUtil
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.io.Serializable
 
 /**
  * Game Instance viewModel used during game creation
  *
  * @constructor creates a GameInstanceViewModel
  */
-class GameInstanceViewModel : ViewModel() {
+class GameInstanceViewModel : ViewModel(), Serializable {
     var gameInstance = MutableLiveData<GameInstance>().let {
         it.value = GameUtil.gameInstanceSolo
         it
@@ -141,6 +142,14 @@ class GameInstanceViewModel : ViewModel() {
             } else {
                 null
             }
+        }
+    }
+
+    companion object {
+        fun createFromGameInstance(gameInstance: GameInstance): GameInstanceViewModel {
+            val gameInstanceViewModel = GameInstanceViewModel()
+            gameInstanceViewModel.gameInstance.value = gameInstance
+            gameInstance.crea
         }
     }
 }

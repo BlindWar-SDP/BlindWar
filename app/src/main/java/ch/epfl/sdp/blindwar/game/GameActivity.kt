@@ -13,12 +13,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.*
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
+import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.solo.fragments.GameSummaryFragment
@@ -28,6 +30,7 @@ import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.CO
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.IS_MULTI
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.SUCCESS_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.TITLE_KEY
+import ch.epfl.sdp.blindwar.game.util.GameUtil
 import ch.epfl.sdp.blindwar.game.util.ScoreboardAdapter
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
 import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
@@ -51,7 +54,7 @@ class GameActivity : AppCompatActivity() {
 
     // VIEW MODELS
     lateinit var gameViewModel: GameViewModel
-    private val gameInstanceViewModel: GameInstanceViewModel by viewModels()
+    private lateinit var gameInstance: GameInstance
 
     // Adapter
     private lateinit var scoreboardAdapter: ScoreboardAdapter
@@ -108,14 +111,7 @@ class GameActivity : AppCompatActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d("DEBUG", "GameActivit")
-        Log.d("DEBUG", gameInstanceViewModel.gameInstance.value?.gameConfig
-            ?.parameter
-            ?.timeToFind!!.toString())
         super.onCreate(savedInstanceState)
-        Log.d("DEBUG", gameInstanceViewModel.gameInstance.value?.gameConfig
-            ?.parameter
-            ?.timeToFind!!.toString())
         setContentView(R.layout.activity_animated_demo)
 
         // Get the arguments
@@ -149,12 +145,19 @@ class GameActivity : AppCompatActivity() {
         scoreboard.adapter = scoreboardAdapter
         scoreboardAdapter.notifyDataSetChanged()
 
+        // If currently in a match, get the gameInstanceViewModel from the server
         if (matchId != null) {
             MatchDatabase.addListener(matchId!!, Firebase.firestore, databaseListener)
             MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
                 val match = it.toObject(Match::class.java)
                 val gameInstanceShared = match?.game
                 gameInstanceViewModel.gameInstance.value = gameInstanceShared
+            }
+        }
+        else { // Else create a gameInstanceViewModel
+            var gameInstance = MutableLiveData<GameInstance>().let {
+                it.value = GameUtil.gameInstanceSolo
+                it
             }
         }
 

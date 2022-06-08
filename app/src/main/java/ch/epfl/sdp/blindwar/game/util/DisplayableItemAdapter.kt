@@ -16,6 +16,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
@@ -64,7 +65,6 @@ class DisplayableItemAdapter(
     private var listener: ListenerRegistration? = null
 ) :
     RecyclerView.Adapter<DisplayableItemAdapter.DisplayableItemViewHolder>() {
-    
 
     private val initialItems = ArrayList<Displayable>().apply {
         addAll(displayableList)
@@ -276,8 +276,13 @@ class DisplayableItemAdapter(
             Log.d("DEBUG", gameInstanceViewModel.gameInstance.value?.gameConfig
                 ?.parameter
                 ?.timeToFind!!.toString())
+
+            // Create the bundle with the match id
+            val bundle = bundleOf("gameInstanceViewModel" to gameInstanceViewModel)
+
             // Create the intent and give it the bundle
             val intent = Intent(context, GameActivity::class.java)
+            intent.putExtras(bundle)
             context.startActivity(intent)
         }
 
