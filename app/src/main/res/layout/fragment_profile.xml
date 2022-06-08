@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
+        app:layout_constraintGuide_percent="0.12311901" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/menuGuidelineBottom"
@@ -35,11 +35,18 @@
         app:layout_constraintGuide_percent="0.92" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/menuGuidelineTopHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.65" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.12" />
+        app:layout_constraintGuide_percent="0.124087594" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineRight"
@@ -53,23 +60,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="36dp"
+        android:layout_marginBottom="36dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/menuGuidelineBottom"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/eloView">
-
-        <Button
-            android:id="@+id/favoritesBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="33.3"
-            android:backgroundTint="@color/very_opaque_black"
-            android:drawableStart="@drawable/ic_baseline_favorite_border_24"
-            android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
-            android:fontFamily="@font/oxygen"
-            android:text="@string/favorites"
-            android:textColor="@color/ivory" />
+        app:layout_constraintTop_toBottomOf="@+id/menuGuidelineTopHistory">
 
         <Button
             android:id="@+id/historyBtn"
@@ -117,12 +113,12 @@
         android:id="@+id/eloView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="50dp"
         android:fontFamily="@font/oxygen"
         android:text="@string/_1000"
         android:textColor="@color/ivory"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/containerBtn"
+        app:layout_constraintBottom_toTopOf="@+id/menuGuidelineTopHistory"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/nameView" />

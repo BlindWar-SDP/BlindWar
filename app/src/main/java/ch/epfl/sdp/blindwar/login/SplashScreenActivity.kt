@@ -54,13 +54,13 @@ class SplashScreenActivity : AppCompatActivity() {
         if (!BuildConfig.DEBUG) { // not called when testing
             val database = FirebaseDatabase.getInstance()
             database.setPersistenceEnabled(true)
-            database.setPersistenceCacheSizeBytes(10000000) // 10MB cache
+            database.setPersistenceCacheSizeBytes(10_000_000) // 10MB cache
         }
 
         if (isOnline()) {
             handleLink()
         } else {
-            Firebase.auth.signOut()
+//            Firebase.auth.signOut()
             startActivity(Intent(this, MainMenuActivity::class.java))
         }
     }

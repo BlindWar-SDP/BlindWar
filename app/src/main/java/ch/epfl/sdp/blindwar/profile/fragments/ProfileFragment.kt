@@ -60,6 +60,7 @@ class ProfileFragment : Fragment() {
         btnDelete.setOnClickListener {
             deleteProfile()
         }
+
         // text view
         profileViewModel.user.observe(viewLifecycleOwner) {
             view.findViewById<TextView>(R.id.nameView).text = it.pseudo
