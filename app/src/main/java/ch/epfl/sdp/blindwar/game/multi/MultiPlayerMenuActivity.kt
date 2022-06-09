@@ -23,7 +23,6 @@ import ch.epfl.sdp.blindwar.login.PermissionHandler
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 import ch.epfl.sdp.blindwar.profile.fragments.DisplayHistoryFragment
 import ch.epfl.sdp.blindwar.profile.model.User
-import com.google.firebase.database.DataSnapshot
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ListenerRegistration
@@ -41,7 +40,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
     private var dialog: AlertDialog? = null
     private var listener: ListenerRegistration? = null
     private var toast: Toast? = null
-    private var currentUser: DataSnapshot? = null
+    private var currentUser: User? = null
     private var matchId: String? = null
     private lateinit var leaderboardButton: ImageButton
 
@@ -83,7 +82,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_multiplayer_menu)
         currentUser = UserDatabase.getCurrentUser()
-        matchId = currentUser?.child("matchId")?.value as String?
+        matchId = currentUser?.matchId
 
         if (matchId != null && matchId!!.isNotEmpty()) {
             findViewById<FrameLayout>(R.id.frameLayout_create).visibility = View.GONE
@@ -247,7 +246,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
             val connect =
                 MatchDatabase.connect(
                     matchObject,
-                    user?.getValue(User::class.java)!!,
+                    user!!,
                     Firebase.firestore
                 )
             if (connect == null) {
@@ -322,7 +321,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
      */
     fun quitMatch(view: View) {
         assert(view.isEnabled)
-        UserDatabase.removeMatchId(currentUser?.child("uid")?.value.toString())
+        UserDatabase.removeMatchId(currentUser!!.uid)
         finish()
         startActivity(intent)
     }
@@ -341,7 +340,7 @@ class MultiPlayerMenuActivity : AppCompatActivity() {
                 quitMatch(view)
             } else {
                 if (match.listPlayers?.get(0)
-                        .equals(currentUser?.child("uid")?.value as String?)
+                        .equals(currentUser!!.uid)
                     && match.listPlayers?.get(0) != null
                 ) {
                     dialog = DynamicLinkHelper.setDynamicLinkDialog(

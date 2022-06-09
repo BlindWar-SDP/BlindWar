@@ -1,6 +1,8 @@
 package ch.epfl.sdp.blindwar.login
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -20,7 +22,6 @@ import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
 
@@ -50,18 +51,31 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-
-        if (!BuildConfig.DEBUG) { // not called when testing
-            val database = FirebaseDatabase.getInstance()
-            database.setPersistenceEnabled(true)
-            database.setPersistenceCacheSizeBytes(10_000_000) // 10MB cache
-        }
+//
+//        if (!BuildConfig.DEBUG) { // not called when testing
+//            val database = FirebaseDatabase.getInstance()
+//            database.setPersistenceEnabled(true)
+//            database.setPersistenceCacheSizeBytes(10_000_000) // 10MB cache
+//        }
 
         if (isOnline()) {
             handleLink()
         } else {
-//            Firebase.auth.signOut()
-            startActivity(Intent(this, MainMenuActivity::class.java))
+            Firebase.auth.currentUser?.let {
+                startActivity(Intent(this, MainMenuActivity::class.java))
+            } ?: run {
+                val positiveButtonClick = { _: DialogInterface, _: Int ->
+                    startActivity(Intent(this, SplashScreenActivity::class.java))
+                }
+                // Alert Dialog
+                AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.not_logged_in_title))
+                    .setMessage(getString(R.string.not_logged_in_msg))
+                    .setCancelable(false)
+                    .setPositiveButton(android.R.string.ok, positiveButtonClick)
+                    .create()
+                    .show()
+            }
         }
     }
 
@@ -206,9 +220,9 @@ class SplashScreenActivity : AppCompatActivity() {
      * @return
      */
     private fun setNewUser(): Intent {
-        Firebase.auth.currentUser?.let {
-            UserDatabase.setKeepSynced(it.uid)
-        }
+//        Firebase.auth.currentUser?.let {
+//            UserDatabase.setKeepSynced(it.uid)
+//        }
         return getIntentData()
     }
 }
