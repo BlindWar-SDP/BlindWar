@@ -7,15 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.game.GameActivity
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
-import ch.epfl.sdp.blindwar.game.util.GameSettingsActivity
 import ch.epfl.sdp.blindwar.game.util.ViewPagerAdapter
-import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.game.viewmodels.GameSettingsViewModel
 import ch.epfl.sdp.blindwar.menu.MainMenuActivity
 
 /**
@@ -30,7 +27,7 @@ class GameSummaryFragment : Fragment() {
     private lateinit var replay: ImageButton
     private lateinit var adapter: ViewPagerAdapter
     private lateinit var viewPager: ViewPager2
-    private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
+    private val gameSettingsViewModel: GameSettingsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,7 +48,7 @@ class GameSummaryFragment : Fragment() {
         }
         // If the game is in multiplayer, add the final score
         // Switch between the two different game view model
-        if (gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI) {
+        if (gameSettingsViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI) {
             fragments.add(ScoreFragment())
             //Remove replay in multiplayer
             view.findViewById<ImageButton>(R.id.replay).visibility = View.GONE

@@ -20,7 +20,7 @@ class OnlinePlaylist(
     name: String = "",
     author: String = "",
     genres: List<Genre> = emptyList(),
-    override val songs: List<MusicMetadata> = emptyList(),
+    override val songs: ArrayList<MusicMetadata> = ArrayList(),
     cover: String = "",
     previewUrl: String = "",
     difficulty: Difficulty? = null

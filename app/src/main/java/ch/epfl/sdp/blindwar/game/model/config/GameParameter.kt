@@ -1,5 +1,8 @@
 package ch.epfl.sdp.blindwar.game.model.config
 
+import java.io.Serializable
+
+
 /**
  * Parameters for the games
  *
@@ -15,4 +18,4 @@ data class GameParameter(
     val funny: Boolean = false,
     val hint: Boolean = false,
     val lives: Int = 0
-)
+) : Serializable

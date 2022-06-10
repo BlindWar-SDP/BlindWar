@@ -13,7 +13,7 @@ import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.game.multi.model.Match
 import ch.epfl.sdp.blindwar.game.util.ScoreboardAdapter
-import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.game.viewmodels.GameSettingsViewModel
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.EventListener
@@ -25,7 +25,7 @@ class ScoreFragment : Fragment() {
 
     private lateinit var scoreboard: RecyclerView
     private lateinit var scoreboardAdapter: ScoreboardAdapter
-    private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
+    private val gameSettingsViewModel: GameSettingsViewModel by activityViewModels()
     private lateinit var matchId: String
     private val profileViewModel: ProfileViewModel by activityViewModels()
 
@@ -46,16 +46,16 @@ class ScoreFragment : Fragment() {
 
         // Get the data from the match
         try { //TODO use data from db not local
-            val listPseudos: List<String> = gameInstanceViewModel.match?.listPlayers!!
-            val listResult = gameInstanceViewModel.match?.listResult
+            val listPseudos: List<String> = gameSettingsViewModel.match?.listPlayers!!
+            val listResult = gameSettingsViewModel.match?.listResult
 
             // Add a listener to update the score
             val databaseListener = EventListener<DocumentSnapshot> { value, _ ->
                 val match = value?.toObject(Match::class.java)
 
                 // Set the score board on new result
-                gameInstanceViewModel.match?.listResult = match?.listResult
-                scoreboardAdapter.updateScoreboardFromList(gameInstanceViewModel.match?.listResult)
+                gameSettingsViewModel.match?.listResult = match?.listResult
+                scoreboardAdapter.updateScoreboardFromList(gameSettingsViewModel.match?.listResult)
                 scoreboardAdapter.notifyDataSetChanged()
             }
 
@@ -85,7 +85,7 @@ class ScoreFragment : Fragment() {
         MatchDatabase.getMatchSnapshot(matchId, Firebase.firestore)?.let {
             val match = it.toObject(Match::class.java)
             val gameInstanceShared = match?.game
-            gameInstanceViewModel.gameInstance.value = gameInstanceShared
+            gameSettingsViewModel.gameInstance.value = gameInstanceShared
         }
 
         val matchRef = MatchDatabase.getMatchReference(matchId, Firebase.firestore)

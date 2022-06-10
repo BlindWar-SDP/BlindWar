@@ -68,7 +68,7 @@ class SoloActivityTest {
     private fun testLaunchMode(btnId: Int) {
         onView(withId(btnId)).perform(click())
         testRule.scenario.onActivity {
-            val observedMode = it.gameInstanceViewModel
+            val observedMode = it.gameSettingsViewModel
                 .gameInstance
                 .value
                 ?.gameConfig?.mode

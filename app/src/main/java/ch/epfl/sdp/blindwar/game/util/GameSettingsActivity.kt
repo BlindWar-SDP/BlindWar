@@ -2,25 +2,22 @@ package ch.epfl.sdp.blindwar.game.util
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.game.GameActivity
 import ch.epfl.sdp.blindwar.game.solo.fragments.GameSummaryFragment
 import ch.epfl.sdp.blindwar.game.solo.fragments.ModeSelectionFragment
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment
-import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
-import ch.epfl.sdp.blindwar.profile.model.User
+import ch.epfl.sdp.blindwar.game.viewmodels.GameSettingsViewModel
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 class GameSettingsActivity : AppCompatActivity() {
-    val gameInstanceViewModel: GameInstanceViewModel by viewModels()
+    val gameSettingsViewModel: GameSettingsViewModel by viewModels()
     private val profileViewModel: ProfileViewModel by viewModels()
 
     companion object {
@@ -43,10 +40,10 @@ class GameSettingsActivity : AppCompatActivity() {
 
             // Set the game format
             val format: GameFormat = intent.extras!!.get(GAME_FORMAT_EXTRA_NAME) as GameFormat
-            gameInstanceViewModel.setGameFormat(format)
+            gameSettingsViewModel.setGameFormat(format)
             if (format == GameFormat.MULTI) {
                 // TODO: Remove everywhere "isPrivate"
-                gameInstanceViewModel.setMultiParameters(
+                gameSettingsViewModel.setMultiParameters(
                     false, intent.extras!!.get(
                         GAME_MAX_PLAYERS
                     ) as Int

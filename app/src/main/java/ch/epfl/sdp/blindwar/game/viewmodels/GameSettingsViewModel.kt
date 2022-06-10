@@ -19,9 +19,9 @@ import java.io.Serializable
 /**
  * Game Instance viewModel used during game creation
  *
- * @constructor creates a GameInstanceViewModel
+ * @constructor creates a GameSettingsViewModel
  */
-class GameInstanceViewModel : ViewModel(), Serializable {
+class GameSettingsViewModel : ViewModel(), Serializable {
     var gameInstance = MutableLiveData<GameInstance>().let {
         it.value = GameUtil.gameInstanceSolo
         it
@@ -142,14 +142,6 @@ class GameInstanceViewModel : ViewModel(), Serializable {
             } else {
                 null
             }
-        }
-    }
-
-    companion object {
-        fun createFromGameInstance(gameInstance: GameInstance): GameInstanceViewModel {
-            val gameInstanceViewModel = GameInstanceViewModel()
-            gameInstanceViewModel.gameInstance.value = gameInstance
-            gameInstance.crea
         }
     }
 }

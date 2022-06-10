@@ -114,18 +114,18 @@ object GameUtil {
     private const val tutorialPlaylistLength = 9
     private const val reversedPlaylistLength = 7
 
-    private val PLAYLIST: List<MusicMetadata> = metadataTutorial().values.toList()
+    private val PLAYLIST: ArrayList<MusicMetadata> = ArrayList(metadataTutorial().values.toList())
 
-    private val REV_PLAYLIST: List<MusicMetadata> =
-        metadataTutorial().values.toList().subList(
+    private val REV_PLAYLIST: ArrayList<MusicMetadata> =
+        ArrayList(metadataTutorial().values.toList().subList(
             tutorialPlaylistLength,
             tutorialPlaylistLength + reversedPlaylistLength
-        )
-    private val TUTORIAL_PLAYLIST: List<MusicMetadata> =
-        metadataTutorial().values.toList().subList(
+        ))
+    private val TUTORIAL_PLAYLIST: ArrayList<MusicMetadata> =
+        ArrayList(metadataTutorial().values.toList().subList(
             0,
             tutorialPlaylistLength
-        )
+        ))
 
     private val gameParameter =
         GameParameter(

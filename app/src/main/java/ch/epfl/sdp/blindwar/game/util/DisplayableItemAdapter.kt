@@ -11,11 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,17 +21,18 @@ import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.audio.AudioHelper
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.database.MatchDatabase
 import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.GameActivity
 import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.model.Playlist
+import ch.epfl.sdp.blindwar.game.model.config.GameConfig
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
-import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.game.multi.SnapshotListener
 import ch.epfl.sdp.blindwar.game.multi.model.Match
-import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.game.viewmodels.GameSettingsViewModel
 import ch.epfl.sdp.blindwar.profile.model.User
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.airbnb.lottie.LottieAnimationView
@@ -53,13 +52,13 @@ import kotlinx.coroutines.withContext
  * @param displayableList playlist data
  * @param context Play Activity context
  * @param viewFragment playlist creation view
- * @param gameInstanceViewModel shared viewModel needed to create a game
+ * @param gameSettingsViewModel shared viewModel needed to create a game
  */
 class DisplayableItemAdapter(
     private var displayableList: ArrayList<Displayable>,
     private val context: Context,
     private val viewFragment: View,
-    private val gameInstanceViewModel: GameInstanceViewModel,
+    private val gameSettingsViewModel: GameSettingsViewModel,
     private val profileViewModel: ProfileViewModel,
     private val fragmentManager: FragmentManager,
     private var listener: ListenerRegistration? = null
@@ -161,7 +160,7 @@ class DisplayableItemAdapter(
 
                 setStartGameListener(displayed as Playlist)
 
-                when (gameInstanceViewModel.gameInstance.value!!.gameConfig!!.mode) {
+                when (gameSettingsViewModel.gameInstance.value!!.gameConfig!!.mode) {
                     GameMode.SURVIVAL -> roundTextView.text = context.getString(R.string.lives)
                     else -> roundTextView.text = context.getString(R.string.rounds)
                 }
@@ -197,24 +196,24 @@ class DisplayableItemAdapter(
                 val a = timerPicker.value
                 val b = roundPicker.value
                 val c = playlist
-                gameInstanceViewModel.setGameParameters(
+                gameSettingsViewModel.setGameParameters(
                     timeChosen = (timerPicker.value * 5 + 1) * 1000,
                     roundChosen = roundPicker.value,
                     playlist = playlist
                 )
 
                 Log.d("DEBUG", "start listener")
-                Log.d("DEBUG", gameInstanceViewModel.gameInstance.value?.gameConfig
+                Log.d("DEBUG", gameSettingsViewModel.gameInstance.value?.gameConfig
                     ?.parameter
                     ?.timeToFind!!.toString())
 
                 // Separate solo logic from multiplayer one
-                when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
+                when (gameSettingsViewModel.gameInstance.value?.gameFormat) {
                     GameFormat.SOLO -> {
                         startGameSolo()
                     }
                     GameFormat.MULTI -> {
-                        val match: Match? = gameInstanceViewModel.createMatch()
+                        val match: Match? = gameSettingsViewModel.createMatch()
                         if (match != null) {
                             val dialog = DynamicLinkHelper.setDynamicLinkDialog(
                                 context.getString(R.string.multi_wait_players),
@@ -273,12 +272,13 @@ class DisplayableItemAdapter(
 
         private fun startGameSolo() {
             Log.d("DEBUG", "game solo")
-            Log.d("DEBUG", gameInstanceViewModel.gameInstance.value?.gameConfig
+            Log.d("DEBUG", gameSettingsViewModel.gameInstance.value?.gameConfig
                 ?.parameter
                 ?.timeToFind!!.toString())
 
-            // Create the bundle with the match id
-            val bundle = bundleOf("gameInstanceViewModel" to gameInstanceViewModel)
+            // Create the bundle with the match id and the game instance that contain the parameter
+            val gameInstance = gameSettingsViewModel.gameInstance.value!!//gameSettingsViewModel.gameInstance.value
+            val bundle = bundleOf("match_id" to null, "game_instance" to gameInstance)
 
             // Create the intent and give it the bundle
             val intent = Intent(context, GameActivity::class.java)

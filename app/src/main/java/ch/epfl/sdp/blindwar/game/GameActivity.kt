@@ -8,12 +8,10 @@ import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.*
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.*
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
@@ -30,10 +28,8 @@ import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.CO
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.IS_MULTI
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.SUCCESS_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.TITLE_KEY
-import ch.epfl.sdp.blindwar.game.util.GameUtil
 import ch.epfl.sdp.blindwar.game.util.ScoreboardAdapter
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
-import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
@@ -52,8 +48,9 @@ import java.util.*
  */
 class GameActivity : AppCompatActivity() {
 
-    // VIEW MODELS
-    lateinit var gameViewModel: GameViewModel
+    // Game instance and match
+    private lateinit var gameViewModel: GameViewModel
+    private lateinit var match: Match
     private lateinit var gameInstance: GameInstance
 
     // Adapter
@@ -100,13 +97,14 @@ class GameActivity : AppCompatActivity() {
     private var playerList: MutableList<String>? = null
 
     // Database listener
+    @SuppressLint("NotifyDataSetChanged")
     private val databaseListener =
         EventListener<DocumentSnapshot> { value, _ ->
-            val match = value?.toObject(Match::class.java)
+            // Set the match object
+            this.match = value?.toObject(Match::class.java)!!
 
             // Set the score board
-            gameInstanceViewModel.match?.listResult = match?.listResult
-            scoreboardAdapter.updateScoreboardFromList(gameInstanceViewModel.match?.listResult)
+            scoreboardAdapter.updateScoreboardFromList(match.listResult)
             scoreboardAdapter.notifyDataSetChanged()
         }
 
@@ -123,11 +121,11 @@ class GameActivity : AppCompatActivity() {
         // Get the scoreboard
         scoreboard = findViewById(R.id.scoreboard)
 
-        // store locally the index of the player and retrieve the list of players
+        // Set match and store locally the index of the player and retrieve the list of players
         val currentUser = Firebase.auth.currentUser
         if (currentUser != null && matchId != null) {
             MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
-                val match = it.toObject(Match::class.java)
+                this.match = it.toObject(Match::class.java)!!
                 val userList = match?.listPlayers
                 playerIndex = userList?.indexOf(currentUser.uid)!!
                 playerList = match.listPseudo
@@ -145,70 +143,30 @@ class GameActivity : AppCompatActivity() {
         scoreboard.adapter = scoreboardAdapter
         scoreboardAdapter.notifyDataSetChanged()
 
-        // If currently in a match, get the gameInstanceViewModel from the server
-        if (matchId != null) {
-            MatchDatabase.addListener(matchId!!, Firebase.firestore, databaseListener)
-            MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
-                val match = it.toObject(Match::class.java)
-                val gameInstanceShared = match?.game
-                gameInstanceViewModel.gameInstance.value = gameInstanceShared
-            }
-        }
-        else { // Else create a gameInstanceViewModel
-            var gameInstance = MutableLiveData<GameInstance>().let {
-                it.value = GameUtil.gameInstanceSolo
-                it
-            }
-        }
+        // Set gameInstance
+        setGameInstance()
 
-        when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
-            GameFormat.SOLO -> {
-                gameViewModel = this?.let {
-                    GameViewModel(
-                        gameInstanceViewModel.gameInstance.value!!,
-                        resources
-                    )
-                }!!
-                // Hide the scoreboard
-                scoreboard.visibility = View.INVISIBLE
-            }
-            GameFormat.MULTI -> {
-                gameViewModel = this?.let {
-                    GameViewModel(
-                        gameInstanceViewModel.gameInstance.value!!,
-                        resources,
-                        scoreboardAdapter
-                    )
-                }!!
-            }
-            else -> {
-            }
-        }
+        // Set the gameViewModel
+        setGameViewModel()
 
-        Log.d("DEBUG", gameInstanceViewModel.gameInstance.value?.gameConfig
+        Log.d("DEBUG", gameInstance.gameConfig
             ?.parameter
             ?.timeToFind!!.toString())
 
         gameViewModel.createMusicViewModel(this)
 
-        Log.d("DEBUG", gameInstanceViewModel.gameInstance.value?.gameConfig
+        Log.d("DEBUG", gameInstance.gameConfig
             ?.parameter
             ?.timeToFind!!.toString())
         // Retrieve the game duration from the GameInstance object
-        duration = gameInstanceViewModel.gameInstance.value?.gameConfig
-            ?.parameter
-            ?.timeToFind!!
+        duration = gameInstance.gameConfig?.parameter?.timeToFind!!
 
         // Create and start countdown
         timer = createCountDown()
         countDown = this.findViewById(R.id.countdown)
 
         // Mode specific interface
-        val mode = gameInstanceViewModel
-            .gameInstance
-            .value!!
-            .gameConfig!!
-            .mode
+        val mode = gameInstance.gameConfig!!.mode
 
         chronometer = findViewById(R.id.simpleChronometer)
         heartImage = findViewById(R.id.heartImage)
@@ -265,6 +223,47 @@ class GameActivity : AppCompatActivity() {
 
         // Start the game
         startGame()
+    }
+
+    private fun setGameViewModel() {
+        when (gameInstance.gameFormat) {
+            GameFormat.SOLO -> {
+                gameViewModel = GameViewModel(
+                    gameInstance,
+                    resources
+                )
+
+                // Hide the scoreboard
+                scoreboard.visibility = View.INVISIBLE
+            }
+            GameFormat.MULTI -> {
+                gameViewModel = GameViewModel(
+                    gameInstance,
+                    resources,
+                    scoreboardAdapter
+                )
+            }
+            else -> {
+            }
+        }
+
+    }
+
+    private fun setGameInstance() {
+        // If currently in a match, get the gameSettingsViewModel from the server
+        if (matchId != null) {
+            MatchDatabase.addListener(matchId!!, Firebase.firestore, databaseListener)
+            MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
+                val match = it.toObject(Match::class.java)
+                val gameInstanceShared = match?.game
+                this.gameInstance = gameInstanceShared!!
+            }
+        }
+        else {
+            // Get the game instance from the arguments
+            this.gameInstance = (intent.getSerializableExtra("game_instance") as? GameInstance)!!
+        }
+
     }
 
     private fun fragmentResultListener(bundle: Bundle) {
@@ -449,7 +448,7 @@ class GameActivity : AppCompatActivity() {
      * Increases the score of a User(designated by uid) after a good guess.
      */
     private fun increaseScore() {
-        when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
+        when (gameInstance.gameFormat) {
             GameFormat.MULTI -> {
                 MatchDatabase.incrementScore(matchId!!, playerIndex, Firebase.firestore)
             }
@@ -488,7 +487,7 @@ class GameActivity : AppCompatActivity() {
         bundle.putBoolean(SUCCESS_KEY, success)
         bundle.putBoolean(
             IS_MULTI,
-            gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI
+            gameInstance.gameFormat == GameFormat.MULTI
         )
         return bundle
     }
@@ -498,7 +497,7 @@ class GameActivity : AppCompatActivity() {
      */
     private fun gameOver() {
         // If we are in multiplayer, wait for the others
-        if (gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI) {
+        if (gameInstance.gameFormat == GameFormat.MULTI) {
             MatchDatabase.playerFinish(matchId!!, playerIndex, Firebase.firestore)
         }
         launchGameSummary()
@@ -509,7 +508,7 @@ class GameActivity : AppCompatActivity() {
      *
      */
     private fun launchGameSummary() {
-        if (gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.SOLO) {
+        if (gameInstance.gameFormat == GameFormat.SOLO) {
             // Get the match id and give the bundle to the fragment
             gameSummary.arguments = bundleOf("matchId" to matchId)
 
@@ -526,7 +525,7 @@ class GameActivity : AppCompatActivity() {
 
         val bundle = createBundleSongSummary(isLastMusicSuccess)
 
-        duration = gameInstanceViewModel.gameInstance.value?.gameConfig
+        duration = gameInstance.gameConfig
             ?.parameter
             ?.timeToFind!!
         restartChronometer()

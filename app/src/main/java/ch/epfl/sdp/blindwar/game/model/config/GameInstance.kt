@@ -2,16 +2,17 @@ package ch.epfl.sdp.blindwar.game.model.config
 
 import ch.epfl.sdp.blindwar.game.model.Playlist
 import ch.epfl.sdp.blindwar.game.util.GameUtil
+import java.io.Serializable
 
 data class GameInstance(
     val gameConfig: GameConfig? = null, // configuration object of the game
     val onlinePlaylist: Playlist? = null, // playlist of the game
     val gameFormat: GameFormat? = null
-) {
+): Serializable {
     /**
      * Build a Game Instance
      */
-    class Builder {
+    class Builder: Serializable {
         private var playlist: Playlist? = GameUtil.gameInstanceSolo
             .onlinePlaylist
 
