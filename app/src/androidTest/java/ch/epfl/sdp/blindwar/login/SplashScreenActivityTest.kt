@@ -77,7 +77,6 @@ class SplashScreenActivityTest : TestCase() {
             e.printStackTrace()
         }
         testRule.scenario.onActivity {
-//            Thread.sleep(1000)
             it.startActivity(it.intent)
         }
         clickOn(R.id.item_profile)

@@ -1,34 +1,39 @@
 package ch.epfl.sdp.blindwar.game.util
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.media.MediaPlayer
+import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.audio.AudioHelper
+import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.database.MatchDatabase
+import ch.epfl.sdp.blindwar.database.UserDatabase
+import ch.epfl.sdp.blindwar.game.GameActivity
 import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.model.Playlist
+import ch.epfl.sdp.blindwar.game.model.config.GameConfig
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
-import ch.epfl.sdp.blindwar.game.multi.MultiPlayerMenuActivity
 import ch.epfl.sdp.blindwar.game.multi.SnapshotListener
 import ch.epfl.sdp.blindwar.game.multi.model.Match
-import ch.epfl.sdp.blindwar.game.solo.fragments.DemoFragment
-import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.game.viewmodels.GameSettingsViewModel
+import ch.epfl.sdp.blindwar.profile.model.User
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.progressindicator.CircularProgressIndicator
@@ -47,13 +52,13 @@ import kotlinx.coroutines.withContext
  * @param displayableList playlist data
  * @param context Play Activity context
  * @param viewFragment playlist creation view
- * @param gameInstanceViewModel shared viewModel needed to create a game
+ * @param gameSettingsViewModel shared viewModel needed to create a game
  */
 class DisplayableItemAdapter(
     private var displayableList: ArrayList<Displayable>,
     private val context: Context,
     private val viewFragment: View,
-    private val gameInstanceViewModel: GameInstanceViewModel,
+    private val gameSettingsViewModel: GameSettingsViewModel,
     private val profileViewModel: ProfileViewModel,
     private val fragmentManager: FragmentManager,
     private var listener: ListenerRegistration? = null
@@ -155,7 +160,7 @@ class DisplayableItemAdapter(
 
                 setStartGameListener(displayed as Playlist)
 
-                when (gameInstanceViewModel.gameInstance.value!!.gameConfig!!.mode) {
+                when (gameSettingsViewModel.gameInstance.value!!.gameConfig!!.mode) {
                     GameMode.SURVIVAL -> roundTextView.text = context.getString(R.string.lives)
                     else -> roundTextView.text = context.getString(R.string.rounds)
                 }
@@ -187,19 +192,28 @@ class DisplayableItemAdapter(
         private fun setStartGameListener(playlist: Playlist) {
             playButton.setOnClickListener {
                 player.pause()
-                gameInstanceViewModel.setGameParameters(
+                // TODO : REMOVE
+                val a = timerPicker.value
+                val b = roundPicker.value
+                val c = playlist
+                gameSettingsViewModel.setGameParameters(
                     timeChosen = (timerPicker.value * 5 + 1) * 1000,
                     roundChosen = roundPicker.value,
                     playlist = playlist
                 )
 
+                Log.d("DEBUG", "start listener")
+                Log.d("DEBUG", gameSettingsViewModel.gameInstance.value?.gameConfig
+                    ?.parameter
+                    ?.timeToFind!!.toString())
+
                 // Separate solo logic from multiplayer one
-                when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
+                when (gameSettingsViewModel.gameInstance.value?.gameFormat) {
                     GameFormat.SOLO -> {
-                        startDemo()
+                        startGameSolo()
                     }
                     GameFormat.MULTI -> {
-                        val match: Match? = gameInstanceViewModel.createMatch()
+                        val match: Match? = gameSettingsViewModel.createMatch()
                         if (match != null) {
                             val dialog = DynamicLinkHelper.setDynamicLinkDialog(
                                 context.getString(R.string.multi_wait_players),
@@ -226,10 +240,7 @@ class DisplayableItemAdapter(
                                         )
                                     ) {
                                         listener?.remove()
-                                        MultiPlayerMenuActivity.launchGame(
-                                            match.uid,
-                                            fragmentManager
-                                        )
+                                        startGameMulti()
                                     }
                                 }
                         }
@@ -244,15 +255,21 @@ class DisplayableItemAdapter(
          * Start demo fragment
          *
          */
-        private fun startDemo() {
-            (context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                .replace(
-                    (viewFragment.parent as ViewGroup).id,
-                    DemoFragment(),
-                    "DEMO"
-                )
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit()
+        private fun startGameMulti() {
+            // Create the intent and give it the bundle
+            val intent = Intent(context, GameActivity::class.java)
+            context.startActivity(intent)
+        }
+
+        private fun startGameSolo() {
+            // Create the bundle with the match id and the game instance that contain the parameter
+            val gameInstance = gameSettingsViewModel.gameInstance.value!!//gameSettingsViewModel.gameInstance.value
+            val bundle = bundleOf("game_instance" to gameInstance)
+
+            // Create the intent and give it the bundle
+            val intent = Intent(context, GameActivity::class.java)
+            intent.putExtras(bundle)
+            context.startActivity(intent)
         }
 
         /**

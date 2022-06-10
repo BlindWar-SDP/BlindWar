@@ -13,7 +13,7 @@ import ch.epfl.sdp.blindwar.R
 
 import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
-import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.game.viewmodels.GameSettingsViewModel
 import ch.epfl.sdp.blindwar.game.viewmodels.PlaylistViewModel
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
@@ -24,7 +24,7 @@ import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
  */
 class PlaylistSelectionFragment : Fragment() {
     //private lateinit var backButton: ImageButton
-    private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
+    private val gameSettingsViewModel: GameSettingsViewModel by activityViewModels()
     private val profileViewModel: ProfileViewModel by activityViewModels()
     private lateinit var playlistRecyclerView: RecyclerView
     private lateinit var searchBar: SearchView
@@ -81,7 +81,7 @@ class PlaylistSelectionFragment : Fragment() {
             playlistViewModel.playlists.value as ArrayList<Displayable>,
             requireActivity(),
             view,
-            gameInstanceViewModel,
+            gameSettingsViewModel,
             profileViewModel,
             parentFragmentManager
         )

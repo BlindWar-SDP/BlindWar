@@ -9,7 +9,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ch.epfl.sdp.blindwar.R
-import ch.epfl.sdp.blindwar.game.util.GameActivity
+import ch.epfl.sdp.blindwar.game.util.GameSettingsActivity
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -40,7 +40,7 @@ class ChoseNumberOfPlayerActivityTest {
     @Test
     fun testCreateMatchButton() {
         onView(withId(R.id.create_match)).perform(ViewActions.click())
-        intended(hasComponent(GameActivity::class.java.name))
+        intended(hasComponent(GameSettingsActivity::class.java.name))
     }
 
     @Test

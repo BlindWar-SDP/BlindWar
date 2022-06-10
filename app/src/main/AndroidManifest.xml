@@ -44,7 +44,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".game.util.GameActivity"
+            android:name=".game.util.GameSettingsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".game.GameActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"

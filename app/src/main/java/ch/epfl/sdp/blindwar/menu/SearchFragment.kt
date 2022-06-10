@@ -15,13 +15,13 @@ import ch.epfl.sdp.blindwar.data.music.DisplayableViewModel
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadataRepository
 import ch.epfl.sdp.blindwar.game.model.Displayable
 import ch.epfl.sdp.blindwar.game.util.DisplayableItemAdapter
-import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.game.viewmodels.GameSettingsViewModel
 import ch.epfl.sdp.blindwar.profile.viewmodel.ProfileViewModel
 
 class SearchFragment : Fragment() {
     private lateinit var musicMetadataRecyclerView: RecyclerView
     private lateinit var musicMetadataRepository: MusicMetadataRepository
-    private lateinit var gameInstanceViewModel: GameInstanceViewModel
+    private lateinit var gameSettingsViewModel: GameSettingsViewModel
     private lateinit var adapter: DisplayableItemAdapter
     private lateinit var searchBar: SearchView
     private val displayableViewModel: DisplayableViewModel by activityViewModels()
@@ -39,7 +39,7 @@ class SearchFragment : Fragment() {
 
         view.findViewById<TextView>(R.id.textView).text = getString(R.string.Search)
 
-        gameInstanceViewModel = GameInstanceViewModel()
+        gameSettingsViewModel = GameSettingsViewModel()
         musicMetadataRepository = MusicMetadataRepository()
         searchBar = view.findViewById(R.id.searchBar)
         setUpSearchView()
@@ -63,7 +63,7 @@ class SearchFragment : Fragment() {
             list,
             requireContext(),
             view,
-            gameInstanceViewModel,
+            gameSettingsViewModel,
             profileViewModel,
             parentFragmentManager
         )

@@ -1,30 +1,29 @@
-package ch.epfl.sdp.blindwar.game.solo.fragments
+package ch.epfl.sdp.blindwar.game
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.activityViewModels
+import androidx.core.os.bundleOf
+import androidx.fragment.app.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.database.MatchDatabase
+import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
+import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
 import ch.epfl.sdp.blindwar.game.multi.model.Match
+import ch.epfl.sdp.blindwar.game.solo.fragments.GameSummaryFragment
+import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.ARTIST_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.COVER_KEY
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.IS_MULTI
@@ -32,8 +31,8 @@ import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.SU
 import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.TITLE_KEY
 import ch.epfl.sdp.blindwar.game.util.ScoreboardAdapter
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
-import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
 import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
+import ch.epfl.sdp.blindwar.profile.model.User
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.google.firebase.auth.ktx.auth
@@ -43,16 +42,18 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
+
 /**
  * Fragment containing the UI logic of a solo game
  *
- * @constructor creates a DemoFragment
+ * @constructor creates a GameActivity
  */
-class DemoFragment : Fragment() {
+class GameActivity : AppCompatActivity() {
 
-    // VIEW MODELS
-    lateinit var gameViewModel: GameViewModel
-    private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
+    // Game instance and match
+    private lateinit var gameViewModel: GameViewModel
+    private lateinit var match: Match
+    private lateinit var gameInstance: GameInstance
 
     // Adapter
     private lateinit var scoreboardAdapter: ScoreboardAdapter
@@ -98,34 +99,33 @@ class DemoFragment : Fragment() {
     private var playerList: MutableList<String>? = null
 
     // Database listener
+    @SuppressLint("NotifyDataSetChanged")
     private val databaseListener =
         EventListener<DocumentSnapshot> { value, _ ->
-            val match = value?.toObject(Match::class.java)
+            // Set the match object
+            this.match = value?.toObject(Match::class.java)!!
 
             // Set the score board
-            gameInstanceViewModel.match?.listResult = match?.listResult
-            scoreboardAdapter.updateScoreboardFromList(gameInstanceViewModel.match?.listResult)
+            scoreboardAdapter.updateScoreboardFromList(match.listResult)
             scoreboardAdapter.notifyDataSetChanged()
         }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val view = inflater.inflate(R.layout.activity_animated_demo, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_animated_demo)
 
-        // if multi mode, get gameInstance from matchId
-        matchId = arguments?.getString("match_id")
+        // if multi mode, get matchId from the user database
+        matchId = UserDatabase.getCurrentUser()?.getValue(User::class.java)!!.matchId
+
 
         // Get the scoreboard
-        scoreboard = view.findViewById(R.id.scoreboard)
+        scoreboard = findViewById(R.id.scoreboard)
 
-        // store locally the index of the player and retrieve the list of players
+        // Set match and store locally the index of the player and retrieve the list of players
         val currentUser = Firebase.auth.currentUser
         if (currentUser != null && matchId != null) {
             MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
-                val match = it.toObject(Match::class.java)
+                this.match = it.toObject(Match::class.java)!!
                 val userList = match?.listPlayers
                 playerIndex = userList?.indexOf(currentUser.uid)!!
                 playerList = match.listPseudo
@@ -138,64 +138,32 @@ class DemoFragment : Fragment() {
         }
         scoreboard.setHasFixedSize(true)
 
-        val layoutManager = LinearLayoutManager(context)
+        val layoutManager = LinearLayoutManager(this)
         scoreboard.layoutManager = layoutManager
         scoreboard.adapter = scoreboardAdapter
         scoreboardAdapter.notifyDataSetChanged()
 
-        if (matchId != null) {
-            MatchDatabase.addListener(matchId!!, Firebase.firestore, databaseListener)
-            MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
-                val match = it.toObject(Match::class.java)
-                val gameInstanceShared = match?.game
-                gameInstanceViewModel.gameInstance.value = gameInstanceShared
-            }
-        }
+        // Set gameInstance
+        setGameInstance()
 
-        when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
-            GameFormat.SOLO -> {
-                gameViewModel = context?.let {
-                    GameViewModel(
-                        gameInstanceViewModel.gameInstance.value!!,
-                        resources
-                    )
-                }!!
-                // Hide the scoreboard
-                scoreboard.visibility = View.INVISIBLE
-            }
-            GameFormat.MULTI -> {
-                gameViewModel = context?.let {
-                    GameViewModel(
-                        gameInstanceViewModel.gameInstance.value!!,
-                        resources,
-                        scoreboardAdapter
-                    )
-                }!!
-            }
-            else -> {
-            }
-        }
+        // Set the gameViewModel
+        setGameViewModel()
 
-        gameViewModel.createMusicViewModel(requireContext())
+        gameViewModel.createMusicViewModel(this)
+
         // Retrieve the game duration from the GameInstance object
-        duration = gameInstanceViewModel.gameInstance.value?.gameConfig
-            ?.parameter
-            ?.timeToFind!!
+        duration = gameInstance.gameConfig?.parameter?.timeToFind!!
 
         // Create and start countdown
         timer = createCountDown()
-        countDown = view.findViewById(R.id.countdown)
+        countDown = this.findViewById(R.id.countdown)
 
         // Mode specific interface
-        val mode = gameInstanceViewModel
-            .gameInstance
-            .value!!
-            .gameConfig!!
-            .mode
+        val mode = gameInstance.gameConfig!!.mode
 
-        chronometer = view.findViewById(R.id.simpleChronometer)
-        heartImage = view.findViewById(R.id.heartImage)
-        heartNumber = view.findViewById(R.id.heartNumber)
+        chronometer = findViewById(R.id.simpleChronometer)
+        heartImage = findViewById(R.id.heartImage)
+        heartNumber = findViewById(R.id.heartNumber)
 
         when (mode) {
             GameMode.TIMED -> initRaceMode()
@@ -205,9 +173,9 @@ class DemoFragment : Fragment() {
         }
 
         // Get the widgets
-        guessEditText = view.findViewById(R.id.guessEditText)
-        scoreTextView = view.findViewById(R.id.scoreTextView)
-        guessButton = view.findViewById<ImageButton>(R.id.guessButton).also {
+        guessEditText = findViewById(R.id.guessEditText)
+        scoreTextView = findViewById(R.id.scoreTextView)
+        guessButton = findViewById<ImageButton>(R.id.guessButton).also {
             it.setOnClickListener {
                 guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
                 guess(isVocal, isAuto = false)
@@ -216,33 +184,97 @@ class DemoFragment : Fragment() {
             }
         }
 
-        startButton = view.findViewById<LottieAnimationView>(R.id.startButton).also {
+        startButton = findViewById<LottieAnimationView>(R.id.startButton).also {
             it.setOnClickListener {
                 playAndPause()
             }
         }
 
-        crossAnim = view.findViewById(R.id.cross)
+        crossAnim = findViewById(R.id.cross)
         crossAnim.repeatCount = 1
 
-        view.findViewById<ConstraintLayout>(R.id.fragment_container).setOnClickListener {
+        findViewById<ConstraintLayout>(R.id.fragment_container).setOnClickListener {
             guessEditText.onEditorAction(EditorInfo.IME_ACTION_DONE)
         }
 
         voiceRecognizer = VoiceRecognizer()
-        audioVisualizer = view.findViewById(R.id.audioVisualizer)
+        audioVisualizer = findViewById(R.id.audioVisualizer)
         startButton.setMinAndMaxFrame(30, 50)
 
-        microphoneButton = view.findViewById(R.id.microphone)
-        context?.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
+        microphoneButton = findViewById(R.id.microphone)
+        this.let { voiceRecognizer.init(it, Locale.ENGLISH.toLanguageTag()) }
         gameSummary = GameSummaryFragment()
 
-        return view
+        // Listen for fragment result
+        this.supportFragmentManager.setFragmentResultListener("SongSummaryExit", this
+        ) { _, bundle ->
+            fragmentResultListener(bundle)
+        }
+
+        // Prepare the voice recognizer
+        prepareVoiceRecognizer()
+
+        // Start the game
+        startGame()
+    }
+
+    private fun setGameViewModel() {
+        when (gameInstance.gameFormat) {
+            GameFormat.SOLO -> {
+                gameViewModel = GameViewModel(
+                    gameInstance,
+                    resources
+                )
+
+                // Hide the scoreboard
+                scoreboard.visibility = View.INVISIBLE
+            }
+            GameFormat.MULTI -> {
+                gameViewModel = GameViewModel(
+                    gameInstance,
+                    resources,
+                    scoreboardAdapter
+                )
+            }
+            else -> {
+            }
+        }
+
+    }
+
+    private fun setGameInstance() {
+        // If currently in a match, get the gameSettingsViewModel from the server
+        if (matchId != null) {
+            MatchDatabase.addListener(matchId!!, Firebase.firestore, databaseListener)
+            MatchDatabase.getMatchSnapshot(matchId!!, Firebase.firestore)?.let {
+                val match = it.toObject(Match::class.java)
+                val gameInstanceShared = match?.game
+                this.gameInstance = gameInstanceShared!!
+            }
+        }
+        else {
+            // Get the game instance from the arguments
+            this.gameInstance = (intent.getSerializableExtra("game_instance") as? GameInstance)!!
+        }
+
+    }
+
+    private fun fragmentResultListener(bundle: Bundle) {
+
+        // Does the user liked the music ?
+        val liked = bundle.getBoolean("liked")
+
+        // Does the user succeed ?
+        val succeed = bundle.getBoolean("succeed")
+
+        // Start the next round
+        nextRound(liked, succeed)
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        voiceRecognizer.resultString.observe(viewLifecycleOwner) {
+    fun prepareVoiceRecognizer() {
+        // TODO Check this == viewLifecycleOwner
+        voiceRecognizer.resultString.observe(this) {
             guessEditText.setText(it)
             guess(isVocal, isAuto = false)
             isVocal = false
@@ -265,8 +297,6 @@ class DemoFragment : Fragment() {
             }
             true
         }
-        startGame()
-        super.onViewCreated(view, savedInstanceState)
     }
 
     /**
@@ -321,7 +351,7 @@ class DemoFragment : Fragment() {
         audioVisualizer.visibility = code
         startButton.visibility = code
         microphoneButton.visibility = code
-        view?.findViewById<ImageButton>(R.id.guessButton)?.visibility = code
+        findViewById<ImageButton>(R.id.guessButton)?.visibility = code
     }
 
     /**
@@ -380,7 +410,7 @@ class DemoFragment : Fragment() {
     private fun initSurvivalMode() {
         heartImage.visibility = View.VISIBLE
         heartNumber.visibility = View.VISIBLE
-        gameViewModel.lives.observe(requireActivity()) {
+        gameViewModel.lives.observe(this) {
             heartNumber.text = getString(R.string.heart_number, it)
         }
     }
@@ -396,8 +426,7 @@ class DemoFragment : Fragment() {
             // Update the number of point view
             increaseScore()
             scoreTextView.text = gameViewModel.score.toString()
-            (activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
-                .hideSoftInputFromWindow(view?.windowToken, 0)
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
             launchSongSummary(success = true)
         } else if (!isAuto) {
             /** Resets the base frame value of the animation and keep the reversing mode **/
@@ -412,7 +441,7 @@ class DemoFragment : Fragment() {
      * Increases the score of a User(designated by uid) after a good guess.
      */
     private fun increaseScore() {
-        when (gameInstanceViewModel.gameInstance.value?.gameFormat) {
+        when (gameInstance.gameFormat) {
             GameFormat.MULTI -> {
                 MatchDatabase.incrementScore(matchId!!, playerIndex, Firebase.firestore)
             }
@@ -433,15 +462,11 @@ class DemoFragment : Fragment() {
         timer.cancel()
         chronometer.stop()
 
-        val transaction = activity?.supportFragmentManager?.beginTransaction()
-        transaction?.addToBackStack("DEMO")
-        transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-
-        val songSummary = SongSummaryFragment()
-        songSummary.arguments = createBundleSongSummary(success)
-
-        transaction?.add((view?.parent as ViewGroup).id, songSummary, "Song Summary")
-        transaction?.commit()
+        this.supportFragmentManager.beginTransaction()
+            .addToBackStack("DEMO")
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .add<SongSummaryFragment>(R.id.fragment_container, "Song Summary", args = createBundleSongSummary(success))
+            .commit()
     }
 
     /**
@@ -455,7 +480,7 @@ class DemoFragment : Fragment() {
         bundle.putBoolean(SUCCESS_KEY, success)
         bundle.putBoolean(
             IS_MULTI,
-            gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI
+            gameInstance.gameFormat == GameFormat.MULTI
         )
         return bundle
     }
@@ -465,65 +490,56 @@ class DemoFragment : Fragment() {
      */
     private fun gameOver() {
         // If we are in multiplayer, wait for the others
-        if (gameInstanceViewModel.gameInstance.value?.gameFormat == GameFormat.MULTI) {
+        if (gameInstance.gameFormat == GameFormat.MULTI) {
             MatchDatabase.playerFinish(matchId!!, playerIndex, Firebase.firestore)
         }
         launchGameSummary()
     }
 
     /**
-     * Lauch the game over summary
+     * Launch the game over summary
      *
      */
     private fun launchGameSummary() {
-        val transaction = activity?.supportFragmentManager?.beginTransaction()
-        transaction?.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        // Pass the match id
-        val bundle = Bundle()
-        bundle.putString("matchId", matchId)
-        gameSummary.arguments = bundle
-        transaction?.replace((view?.parent as ViewGroup).id, gameSummary, "Game Summary")
-        transaction?.commit()
+        if (gameInstance.gameFormat == GameFormat.SOLO) {
+            // Get the match id and give the bundle to the fragment
+            gameSummary.arguments = bundleOf("matchId" to matchId)
+
+            supportFragmentManager.beginTransaction()
+                .addToBackStack("SUMMARY")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .add(R.id.fragment_container, gameSummary)
+                .commit()
+        }
     }
 
-    // LIFECYCLE
-    /**
-     * Handle next round logic //TODO handle multi
-     */
-    override fun onResume() {
-        super.onResume()
+
+    private fun nextRound(isLastMusicLiked: Boolean, isLastMusicSuccess: Boolean) {
+
+        val bundle = createBundleSongSummary(isLastMusicSuccess)
+
+        duration = gameInstance.gameConfig
+            ?.parameter
+            ?.timeToFind!!
+        restartChronometer()
+
+        bundle.putBoolean("liked", isLastMusicLiked)
+
+        // Add a new song record to the final game summary fragment
         val songRecord = SongSummaryFragment()
-        Log.d("debug", "size = " + activity?.supportFragmentManager?.fragments!!.size)
-        if (activity?.supportFragmentManager?.fragments!!.size > 1) {
-            Log.d("debug", "if1")
-            if (activity?.supportFragmentManager?.fragments?.get(1) is SongSummaryFragment) {
-                val songFragment =
-                    (activity?.supportFragmentManager?.fragments?.get(1) as SongSummaryFragment)
-                val bundle = createBundleSongSummary(songFragment.success())
-                Log.d("debug", "if2")
+        songRecord.arguments = bundle
+        gameSummary.addNewSongFragment(songRecord)
 
-                duration = gameInstanceViewModel.gameInstance.value?.gameConfig
-                    ?.parameter
-                    ?.timeToFind!!
-                restartChronometer()
-                bundle.putBoolean("liked", songFragment.liked())
-                songRecord.arguments = bundle
-                gameSummary.setSongFragment(songRecord)
-
-                if (!gameViewModel.nextRound()) {
-                    Log.d("debug", "if3")
-                    setVisibilityLayout(View.VISIBLE)
-                    // Pass to the next music
-                    musicMetadata = gameViewModel.currentMetadata()!!
-                    guessEditText.hint = musicMetadata.author
-                    guessEditText.setText("")
-                    timer = createCountDown()
-                    timer.start()
-                } else {
-                    Log.d("debug", "gameover")
-                    gameOver()
-                }
-            }
+        if (!gameViewModel.nextRound()) {
+            setVisibilityLayout(View.VISIBLE)
+            // Pass to the next music
+            musicMetadata = gameViewModel.currentMetadata()!!
+            guessEditText.hint = musicMetadata.author
+            guessEditText.setText("")
+            timer = createCountDown()
+            timer.start()
+        } else {
+            gameOver()
         }
     }
 

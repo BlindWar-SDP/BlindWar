@@ -1,6 +1,7 @@
 package ch.epfl.sdp.blindwar.data.music.metadata
 
 import ch.epfl.sdp.blindwar.game.model.Displayable
+import java.io.Serializable
 
 open class MusicMetadata(
     var duration: Int = 0,
@@ -13,8 +14,8 @@ open class MusicMetadata(
     override var cover: String = "",
     override var previewUrl: String = "",
     override var size: Int = 0,
-    override val extendable: Boolean = false
-) : Displayable {
+    override val extendable: Boolean = false,
+) : Displayable, Serializable {
     companion object {
         /**
          * Create e musicMetadata from uri

@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
-import ch.epfl.sdp.blindwar.game.viewmodels.GameInstanceViewModel
+import ch.epfl.sdp.blindwar.game.viewmodels.GameSettingsViewModel
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 
@@ -23,7 +23,7 @@ import com.airbnb.lottie.LottieDrawable
  */
 class ModeSelectionFragment : Fragment() {
 
-    private val gameInstanceViewModel: GameInstanceViewModel by activityViewModels()
+    private val gameSettingsViewModel: GameSettingsViewModel by activityViewModels()
     private lateinit var regularButton: Button
     private lateinit var survivalButton: Button
     private lateinit var raceButton: Button
@@ -90,14 +90,14 @@ class ModeSelectionFragment : Fragment() {
      */
     private fun selectMode(button: View) {
         button.setOnClickListener {
-            gameInstanceViewModel.setGameMode(
+            gameSettingsViewModel.setGameMode(
                 when (button.id) {
                     R.id.raceButton_ -> GameMode.TIMED
                     R.id.survivalButton_ -> GameMode.SURVIVAL
                     else -> GameMode.REGULAR
                 }
             )
-            gameInstanceViewModel.setGameFunny(funnyCheck.isChecked)
+            gameSettingsViewModel.setGameFunny(funnyCheck.isChecked)
             launchPlaylistSelection()
         }
     }
