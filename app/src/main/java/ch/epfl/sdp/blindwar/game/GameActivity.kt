@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.epfl.sdp.blindwar.R
 import ch.epfl.sdp.blindwar.data.music.metadata.MusicMetadata
 import ch.epfl.sdp.blindwar.database.MatchDatabase
+import ch.epfl.sdp.blindwar.database.UserDatabase
 import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.game.model.config.GameInstance
 import ch.epfl.sdp.blindwar.game.model.config.GameMode
@@ -31,6 +32,7 @@ import ch.epfl.sdp.blindwar.game.solo.fragments.SongSummaryFragment.Companion.TI
 import ch.epfl.sdp.blindwar.game.util.ScoreboardAdapter
 import ch.epfl.sdp.blindwar.game.util.VoiceRecognizer
 import ch.epfl.sdp.blindwar.game.viewmodels.GameViewModel
+import ch.epfl.sdp.blindwar.profile.model.User
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.google.firebase.auth.ktx.auth
@@ -112,11 +114,9 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_animated_demo)
 
-        // Get the arguments
-        val arguments = intent.extras
+        // if multi mode, get matchId from the user database
+        matchId = UserDatabase.getCurrentUser()?.getValue(User::class.java)!!.matchId
 
-        // if multi mode, get gameInstance from matchId
-        matchId = arguments?.getString("match_id")
 
         // Get the scoreboard
         scoreboard = findViewById(R.id.scoreboard)
@@ -149,15 +149,8 @@ class GameActivity : AppCompatActivity() {
         // Set the gameViewModel
         setGameViewModel()
 
-        Log.d("DEBUG", gameInstance.gameConfig
-            ?.parameter
-            ?.timeToFind!!.toString())
-
         gameViewModel.createMusicViewModel(this)
 
-        Log.d("DEBUG", gameInstance.gameConfig
-            ?.parameter
-            ?.timeToFind!!.toString())
         // Retrieve the game duration from the GameInstance object
         duration = gameInstance.gameConfig?.parameter?.timeToFind!!
 

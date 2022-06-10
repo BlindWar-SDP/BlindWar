@@ -256,29 +256,15 @@ class DisplayableItemAdapter(
          *
          */
         private fun startGameMulti() {
-            // Get the match id from the database
-            val matchId = UserDatabase.getCurrentUser()?.getValue(User::class.java)!!.matchId
-
-            // Create the bundle with the match id
-            val bundle = Bundle().apply {
-                putString("match_id", matchId)
-            }
-
             // Create the intent and give it the bundle
             val intent = Intent(context, GameActivity::class.java)
-            intent.putExtras(bundle)
             context.startActivity(intent)
         }
 
         private fun startGameSolo() {
-            Log.d("DEBUG", "game solo")
-            Log.d("DEBUG", gameSettingsViewModel.gameInstance.value?.gameConfig
-                ?.parameter
-                ?.timeToFind!!.toString())
-
             // Create the bundle with the match id and the game instance that contain the parameter
             val gameInstance = gameSettingsViewModel.gameInstance.value!!//gameSettingsViewModel.gameInstance.value
-            val bundle = bundleOf("match_id" to null, "game_instance" to gameInstance)
+            val bundle = bundleOf("game_instance" to gameInstance)
 
             // Create the intent and give it the bundle
             val intent = Intent(context, GameActivity::class.java)
