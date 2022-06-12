@@ -35,11 +35,11 @@ class UserDatabaseTest : TestCase() {
         launchFragmentInContainer<ProfileFragment>().onFragment {
             val elo = 1000
             user0.userStatistics.eloSetter(elo)
-            UserDatabase.database
-            UserDatabase.updateUser(user0)
-            // TODO: Use Tasks.await to make sure that the assertions are called
-            UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
-                assertTrue((it.getValue(User::class.java)?.userStatistics?.elo == elo))
+            UserDatabase.updateUser(user0)!!.addOnSuccessListener {
+                // TODO: Use Tasks.await to make sure that the assertions are called
+                UserDatabase.userDoc(testUID).get().addOnSuccessListener {
+                    assertTrue((it.toObject(User::class.java)?.userStatistics?.elo == elo))
+                }
             }
         }
     }
@@ -49,11 +49,10 @@ class UserDatabaseTest : TestCase() {
         launchFragmentInContainer<ProfileFragment>().onFragment {
             val birthdate = 1000L
             user0.birthdate = birthdate
-            UserDatabase.database
             UserDatabase.updateUser(user0)
             // TODO: Use Tasks.await to make sure that the assertions are called
-            UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
-                assertTrue((it.getValue(User::class.java)?.birthdate == birthdate))
+            UserDatabase.userDoc(testUID).get().addOnSuccessListener {
+                assertTrue((it.toObject(User::class.java)?.birthdate == birthdate))
             }
         }
     }
@@ -63,11 +62,33 @@ class UserDatabaseTest : TestCase() {
         launchFragmentInContainer<ProfileFragment>().onFragment {
             val description = "User description"
             user0.description = description
-            UserDatabase.database
             UserDatabase.updateUser(user0)
             // TODO: Use Tasks.await to make sure that the assertions are called
-            UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
-                assertTrue((it.getValue(User::class.java)?.description == description))
+            UserDatabase.userDoc(testUID).get().addOnSuccessListener {
+                assertTrue((it.toObject(User::class.java)?.description == description))
+            }
+        }
+    }
+
+    @Test
+    fun testAddMatchID() {
+        launchFragmentInContainer<ProfileFragment>().onFragment {
+            val mid = "test"
+            UserDatabase.addMatchId(user0.uid, mid)
+            Thread.sleep(2000)
+            UserDatabase.userDoc(testUID).get().addOnSuccessListener {
+                assertTrue((it.toObject(User::class.java)?.matchId == mid))
+            }
+        }
+    }
+
+    @Test
+    fun testRemoveMatchID() {
+        launchFragmentInContainer<ProfileFragment>().onFragment {
+            UserDatabase.removeMatchId(user0.uid)
+            Thread.sleep(2000)
+            UserDatabase.userDoc(testUID).get().addOnSuccessListener {
+                assertTrue((it.toObject(User::class.java)?.matchId==""))
             }
         }
     }
@@ -79,7 +100,6 @@ class UserDatabaseTest : TestCase() {
         val lastName = "Goodenough"
         user0.firstName = firstName
         user0.lastName = lastName
-        UserDatabase.database
         runBlocking {
             var user: User?
             withContext(Dispatchers.IO) {
@@ -87,8 +107,8 @@ class UserDatabaseTest : TestCase() {
                     await(
                         UserDatabase.updateUser(user0)!!
                             .continueWithTask {
-                                UserDatabase.userReference.child(testUID).get()
-                            }).getValue(User::class.java)
+                                UserDatabase.userDoc(testUID).get()
+                            }).toObject(User::class.java)
             }
 
             assertTrue(user?.firstName == firstName)
@@ -108,8 +128,8 @@ class UserDatabaseTest : TestCase() {
                     await(
                         UserDatabase.updateUser(user0)!!
                             .continueWithTask {
-                                UserDatabase.userReference.child(testUID).get()
-                            }).getValue(User::class.java)
+                                UserDatabase.userDoc(testUID).get()
+                            }).toObject(User::class.java)
             }
 
             assertTrue(user?.gender == gender)
@@ -128,8 +148,8 @@ class UserDatabaseTest : TestCase() {
                     await(
                         UserDatabase.updateUser(user0)!!
                             .continueWithTask {
-                                UserDatabase.userReference.child(testUID).get()
-                            }).getValue(User::class.java)
+                                UserDatabase.userDoc(testUID).get()
+                            }).toObject(User::class.java)
             }
             assertTrue(user?.pseudo == pseudo)
         }
@@ -140,8 +160,8 @@ class UserDatabaseTest : TestCase() {
         launchFragmentInContainer<ProfileFragment>().onFragment {
             val path = "TEST_PATH"
             UserDatabase.addProfilePicture(testUID, path)
-            UserDatabase.userReference.child(testUID).get().addOnSuccessListener {
-                assertTrue((it.getValue(User::class.java)?.profilePicture == path))
+            UserDatabase.userDoc(testUID).get().addOnSuccessListener {
+                assertTrue((it.toObject(User::class.java)?.profilePicture == path))
             }
         }
     }
@@ -157,20 +177,12 @@ class UserDatabaseTest : TestCase() {
             withContext(Dispatchers.IO) {
                 user = await(
                     UserDatabase.updateSoloUserStatistics(testUID, score, fail).continueWithTask {
-                        UserDatabase.userReference.child(testUID).get()
-                    }).getValue(User::class.java)
+                        UserDatabase.userDoc(testUID).get()
+                    }).toObject(User::class.java)
 
                 assertTrue(user?.userStatistics?.correctArray?.first() == score)
                 assertTrue(user?.userStatistics?.wrongArray?.first() == fail)
             }
-        }
-    }
-
-    @Test
-    fun removeUserTest() {
-        launchFragmentInContainer<ProfileFragment>().onFragment {
-            UserDatabase.removeUser("test")
-            assertNotNull(UserDatabase.getImageReference(testUID))
         }
     }
 
@@ -181,25 +193,11 @@ class UserDatabaseTest : TestCase() {
         runBlocking {
             withContext(Dispatchers.IO) {
                 user = await(UserDatabase.addLikedMusic(testUID, GameUtil.fly).continueWithTask {
-                    UserDatabase.userReference.child(testUID).get()
-                }).getValue(User::class.java)
+                    UserDatabase.userDoc(testUID).get()
+                }).toObject(User::class.java)
             }
         }
 
         assertTrue(user?.likedMusics?.last()?.name == GameUtil.fly.name)
-    }
-
-    @Test
-    fun getImageReferenceCorrectly() {
-        launchFragmentInContainer<ProfileFragment>().onFragment {
-            assertNotNull(UserDatabase.getImageReference(testUID))
-        }
-    }
-
-    @Test
-    fun getEloReferenceCorrectly() {
-        launchFragmentInContainer<ProfileFragment>().onFragment {
-            assertNotNull(UserDatabase.getEloReference(testUID))
-        }
     }
 }

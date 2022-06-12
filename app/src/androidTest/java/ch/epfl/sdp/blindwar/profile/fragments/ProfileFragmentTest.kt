@@ -83,7 +83,7 @@ class ProfileFragmentTest : TestCase() {
         val loginMail: Task<AuthResult> =
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
         Firebase.auth.signOut()
-        Thread.sleep(1500)
+        Thread.sleep(2000)
         try {
             Tasks.await(loginAnon)
         } catch (e: ExecutionException) {
@@ -92,7 +92,7 @@ class ProfileFragmentTest : TestCase() {
             e.printStackTrace()
         }
         launchFragmentInContainer<ProfileFragment>()
-        Thread.sleep(1500)
+        Thread.sleep(2000)
         clickOn(R.id.deleteBtn)
         assertDisplayed(R.string.account_deletion_text)
         clickOn(android.R.string.ok)

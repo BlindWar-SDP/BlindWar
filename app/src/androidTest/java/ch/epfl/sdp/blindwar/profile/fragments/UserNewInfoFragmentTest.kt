@@ -212,7 +212,7 @@ class UserNewInfoFragmentTest : TestCase() {
             .perform(click())
 
         launchFragmentInContainer<UserNewInfoFragment>()
-
+        Thread.sleep(1000)
         onView(withId(R.id.NU_reset_birthdate))
             .perform(scrollTo())
             .perform(click())
@@ -290,6 +290,7 @@ class UserNewInfoFragmentTest : TestCase() {
             .perform(click())
 
         launchFragmentInContainer<UserNewInfoFragment>()
+        Thread.sleep(1000)
         onView(withId(R.id.gender_spinner))
             .perform(scrollTo())
         onView(withId(R.id.gender_spinner))

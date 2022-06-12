@@ -1,8 +1,6 @@
 package ch.epfl.sdp.blindwar.profile.fragments
 
-import android.content.ContentValues
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,11 +17,6 @@ import ch.epfl.sdp.blindwar.profile.util.LeaderboardRecyclerAdapter
 import ch.epfl.sdp.blindwar.profile.util.MatchHistoryRecyclerAdapter
 import ch.epfl.sdp.blindwar.profile.util.MusicDisplayRecyclerAdapter
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseException
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 
 class DisplayHistoryFragment : Fragment() {
 
@@ -71,59 +64,39 @@ class DisplayHistoryFragment : Fragment() {
         val historyType = arguments?.getString(HISTORY_TYPE)
         val currentUser = FirebaseAuth.getInstance().currentUser
 
-        if (currentUser != null) {
-            if (historyType == LIKED_MUSIC_TYPE) {
-                UserDatabase.addUserListener(currentUser.uid, userLikedMusicsListener)
-            } else if (historyType == MATCH_HISTORY_TYPE) {
-                UserDatabase.addUserListener(currentUser.uid, userMatchHistoryListener)
-            } else if (historyType == LEADERBOARD_TYPE) {
-                UserDatabase.addSingleEventAllUsersListener(leaderboardListener)
+        currentUser?.let {
+            when (historyType) {
+                LIKED_MUSIC_TYPE -> {
+                    setLikedMusic(it.uid)
+                }
+                MATCH_HISTORY_TYPE -> {
+                    setMatchHistory(it.uid)
+                }
+                LEADERBOARD_TYPE -> {
+                    setLeaderboard(it.uid)
+                }
             }
         }
     }
 
-    private val userLikedMusicsListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val user: User? = try {
-                dataSnapshot.getValue<User>()
-            } catch (e: DatabaseException) {
-                null
-            }
-            if (user != null) {
+    private fun setLikedMusic(uid: String) {
+        UserDatabase.userDoc(uid).get().addOnSuccessListener { snapshot ->
+            snapshot.toObject(User::class.java)?.let { user ->
                 val likedMusics: MutableList<MusicMetadata> = user.likedMusics
                 for (music in likedMusics) {
                     addToList(music.name, music.author, music.cover)
                 }
-            } else {
-                for (i in 1..10) {
-                    addToList("HELLO", "JOJO", "no image")
-                }
             }
             musicRecyclerView.adapter = MusicDisplayRecyclerAdapter(titles, artists, images)
         }
-
-
-        override fun onCancelled(databaseError: DatabaseError) {
-            // Log.w("CANCELED REQUEST", "userLikedMusic:onCancelled", databaseError.toException())
-        }
     }
 
-    private val userMatchHistoryListener = object : ValueEventListener {
-        /**
-         * Handle data changes from db
-         *
-         * @param dataSnapshot
-         */
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val user: User? = try {
-                dataSnapshot.getValue<User>()
-            } catch (e: DatabaseException) {
-                null
-            }
-            if (user != null) {
+
+    private fun setMatchHistory(uid: String) {
+        UserDatabase.userDoc(uid).get().addOnSuccessListener { snapshot ->
+            snapshot.toObject(User::class.java)?.let { user ->
                 val matchHistory: MutableList<GameResult> = user.matchHistory
                 for (match in matchHistory) {
-
                     // Create the String that will we displayed depending on the value
                     var result = "DRAW"
                     if (match.result == Result.WIN) {
@@ -138,11 +111,6 @@ class DisplayHistoryFragment : Fragment() {
                     )
                     victoriesList.add(result)
                     gameTimesList.add(match.gameTime)
-
-                }
-            } else {
-                for (i in 1..10) {
-                    addToList("HELLO", "JOJO", "no image")
                 }
             }
             musicRecyclerView.adapter = MatchHistoryRecyclerAdapter(
@@ -150,77 +118,48 @@ class DisplayHistoryFragment : Fragment() {
                 images, titles, artists
             )
         }
-
-        override fun onCancelled(databaseError: DatabaseError) {
-            Log.w(ContentValues.TAG, "loadPost:onCancelled", databaseError.toException())
-        }
     }
 
-    /**
-     * Retrieves all Users from the database an get their pseudo and elo
-     */
-    @Suppress("UNCHECKED_CAST")
-    private val leaderboardListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val usersMap = try {
-                dataSnapshot.getValue<Map<String, Any>>()
-            } catch (e: DatabaseException) {
-                null
-            }
-            if (usersMap != null) {
-                for (user in usersMap.values) {
-                    val userMap: Map<String, String> = user as Map<String, String>
-                    val userStatMap: HashMap<String, Map<String, Long>> =
-                        user as HashMap<String, Map<String, Long>>
-                    val userWinsMap: HashMap<String, Map<String, ArrayList<Long>>> =
-                        user as HashMap<String, Map<String, ArrayList<Long>>>
-                    val pseudo = userMap["pseudo"]
-                    val elo = userStatMap["userStatistics"]?.get("elo")
-
-                    // The get(1) at the end is to have the wins for multi mode only.
-                    val wins = userWinsMap["userStatistics"]?.get("wins")?.get(1)
-                    val losses = userWinsMap["userStatistics"]?.get("losses")?.get(1)
-                    if (pseudo != null && elo != null && pseudo != "" &&
-                        wins != null && losses != null
-                    ) {
-                        addToList("1", pseudo, elo.toString())
-                        winsList.add(wins.toString())
-                        lossesList.add(losses.toString())
-                    }
-                }
-            } else {
-                for (i in 1..10) {
-                    addToList("HELLO", "JOJO", "no image")
+    private fun setLeaderboard(uid: String) {
+        UserDatabase.userRef.get().addOnSuccessListener { snapshot ->
+            for (doc in snapshot) {
+                doc.toObject(User::class.java).let { user ->
+                    // The [1] at the end is to have the wins for multi mode only.
+                    val wins = user.userStatistics.wins[1]
+                    val losses = user.userStatistics.losses[1]
+                    addToList("1", user.pseudo, user.userStatistics.elo.toString())
+                    winsList.add(wins.toString())
+                    lossesList.add(losses.toString())
                 }
             }
-            // Create data class to contain data of an user to be displayed on the leaderboard
-            data class LeaderboardUserData(val elo: String, val wins: String, val losses: String)
+        }
+        // Create data class to contain data of an user to be displayed on the leaderboard
+        data class LeaderboardUserData(
+            val elo: String,
+            val wins: String,
+            val losses: String
+        )
 
-            // Create a List of (pseudo, elo) Pairs and order them by elo to have
-            // an ordered leaderboard
-            val pseudoUserData = mutableListOf<Pair<String, LeaderboardUserData>>()
-            for (i in (0 until artists.size)) {
-                val userData = LeaderboardUserData(images[i], winsList[i], lossesList[i])
-                pseudoUserData.add(Pair(artists[i], userData))
-            }
-            val sortedPseudoUsers = pseudoUserData
-                .sortedWith(compareBy({ it.second.elo }, { it.first })).asReversed()
-            for (i in (0 until artists.size)) {
-                artists[i] = sortedPseudoUsers[i].first
-                images[i] = sortedPseudoUsers[i].second.elo
-                winsList[i] = sortedPseudoUsers[i].second.wins
-                lossesList[i] = sortedPseudoUsers[i].second.losses
-            }
-
-            musicRecyclerView.adapter = LeaderboardRecyclerAdapter(
-                titles, artists, images,
-                winsList, lossesList
-            )
+        // Create a List of (pseudo, elo) Pairs and order them by elo to have
+        // an ordered leaderboard
+        val pseudoUserData = mutableListOf<Pair<String, LeaderboardUserData>>()
+        for (i in (0 until artists.size)) {
+            val userData = LeaderboardUserData(images[i], winsList[i], lossesList[i])
+            pseudoUserData.add(Pair(artists[i], userData))
+        }
+        val sortedPseudoUsers = pseudoUserData
+            .sortedWith(compareBy({ it.second.elo }, { it.first })).asReversed()
+        for (i in (0 until artists.size)) {
+            artists[i] = sortedPseudoUsers[i].first
+            images[i] = sortedPseudoUsers[i].second.elo
+            winsList[i] = sortedPseudoUsers[i].second.wins
+            lossesList[i] = sortedPseudoUsers[i].second.losses
         }
 
-        override fun onCancelled(databaseError: DatabaseError) {
-            // Log.w("CANCELED REQUEST", "userMatchHistory:onCancelled", databaseError.toException())
-        }
+        musicRecyclerView.adapter = LeaderboardRecyclerAdapter(
+            titles, artists, images,
+            winsList, lossesList
+        )
     }
 
     companion object {

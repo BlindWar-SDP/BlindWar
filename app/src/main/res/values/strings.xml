@@ -201,4 +201,6 @@
     <string name="leave">Leave</string>
     <string name="Search">Search</string>
     <string name="percent">%1$s %%</string>
+    <string name="not_logged_in_msg">please, activate internet and connect to your account in order to use offline mode.</string>
+    <string name="not_logged_in_title">Offline mode require to be logged in</string>
 </resources>

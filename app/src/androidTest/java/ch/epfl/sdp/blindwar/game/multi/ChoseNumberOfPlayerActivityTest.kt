@@ -33,7 +33,8 @@ class ChoseNumberOfPlayerActivityTest {
 
     @Test
     fun testCancelButton() {
-        onView(withId(R.id.cancel_number_player)).perform(ViewActions.click())
+        onView(withId(R.id.cancel_number_player))
+            .perform(ViewActions.click())
         intended(hasComponent(MultiPlayerMenuActivity::class.java.name))
     }
 
