@@ -19,7 +19,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class UserDatabaseTest : TestCase() {
-    private val testUID = "GzZnd5HWl0TDQbMTJy3ssavi2V63"
+    private val testUID = "JOJO"
     private var user0 = User.Builder().setUid(testUID).build()
 
 
