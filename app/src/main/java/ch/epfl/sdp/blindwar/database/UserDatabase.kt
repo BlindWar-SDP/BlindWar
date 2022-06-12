@@ -14,8 +14,6 @@ import com.google.firebase.ktx.Firebase
 
 object UserDatabase {
     private const val COLLECTION_PATH = "Users"
-//    val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-//    val userReference = database.getReference(COLLECTION_PATH)
 
 
     val userRef = Firebase.firestore.collection(COLLECTION_PATH)
@@ -24,56 +22,13 @@ object UserDatabase {
         return userRef.document(uid)
     }
 
-
-//    /**
-//     * Get user reference to manipulate user infos
-//     *
-//     * @param uid
-//     * @return
-//     */
-//    private fun getUserReference(uid: String): DatabaseReference {
-//        return userReference.child(uid)
-//    }
-
-//    /**
-//     * Get user statistics reference to manipulate user statistics
-//     *
-//     * @param uid
-//     * @return
-//     */
-//    private fun getUserStatisticsReference(uid: String): DatabaseReference {
-//        return getUserReference(uid).child("userStatistics")
-//    }
-
-//    /**
-//     * Get elo reference to manipulate elo
-//     *
-//     * @param uid user identification
-//     * @return elo reference of specified user
-//     */
-//    fun getEloReference(uid: String): DatabaseReference {
-//        return getUserStatisticsReference(uid).child("elo")
-//    }
-
-//    /**
-//     * Get image reference
-//     *
-//     * @param uid user id
-//     * @return database reference of the selected object
-//     */
-//    fun getImageReference(uid: String): DatabaseReference {
-//        return userReference.child(uid).child("profilePicture")
-//    }
-
     /**
      * Function to add an User to the database (used when creating account)
      *
      * @param user to be added
      */
-    // Add user to database
     fun updateUser(user: User): Task<Void>?{
         return if (user.uid.isNotEmpty()) {
-//            userReference.child(user.uid).setValue(user)
             userDoc(user.uid).set(user)
         } else null
     }
@@ -84,7 +39,6 @@ object UserDatabase {
      * @param uid
      */
     fun removeMatchId(uid: String) {
-//        userReference.child(uid).updateChildren(mapOf("matchId" to ""))
         userDoc(uid).update(mapOf("matchID" to ""))
     }
 
@@ -94,7 +48,6 @@ object UserDatabase {
      * @param uid
      */
     fun addMatchId(uid: String, matchId: String) {
-//        userReference.child(uid).updateChildren(mapOf("matchId" to matchId))
         userDoc(uid).update(mapOf("matchID" to matchId))
 
     }
@@ -105,7 +58,6 @@ object UserDatabase {
      * @param uid user identification
      */
     fun removeUser(uid: String) {
-//        userReference.child(uid).removeValue()
         userDoc(uid).delete()
     }
 
@@ -146,16 +98,6 @@ object UserDatabase {
         }
     }
 
-//    /**
-//     * Reset set user statistics
-//     *
-//     * @param uid user identification
-//     */
-//    private fun setUserStatistics(uid: String, userStatistics: AppStatistics){
-//        Log.d(">>>>>>>>>> stats", userStatistics.toString())
-//        userDoc(uid).update("userStatistics", userStatistics)
-//    }
-
     /**
      *  Allow user to select a profile picture and store it in database
      *
@@ -165,32 +107,6 @@ object UserDatabase {
     fun addProfilePicture(uid: String, path: String) {
         userDoc(uid).update(mapOf("profilePicture" to path))
     }
-
-//    /**
-//     * Add a Listener for a specific User(specified by uid).
-//     * @param uid
-//     * @param listener
-//     */
-//    fun addUserListener(uid: String, listener: ValueEventListener) {
-//        userReference.child(uid).addValueEventListener(listener)
-//    }
-//
-//    /**
-//     * Used to get Pseudo and Elo of all users once.
-//     */
-//    fun addSingleEventAllUsersListener(listener: ValueEventListener) {
-//        userReference.addListenerForSingleValueEvent(listener)
-//    }
-
-//    /**
-//     * Gets UserStatistics of a user. Needs to be treated as a future(addOnSuccessListener)
-//     * @param uid
-//     * @return Task<DataSnapshot>
-//     */
-//    private fun getUserStatistics(uid: String): Task<DataSnapshot> {
-//        val userStatisticsRef = getUserStatisticsReference(uid)
-//        return userStatisticsRef.get()
-//    }
 
     /**
      * Gets the userStatistics of the user from the database and update its statistics
@@ -224,14 +140,4 @@ object UserDatabase {
         }
         return out
     }
-
-//    /**
-//     * set keepSynced to true for the User
-//     * keep cache to prevent connection loss
-//     *
-//     * @param uid
-//     */
-//    fun setKeepSynced(uid: String) {
-//        getUserReference(uid).keepSynced(true)
-//    }
 }

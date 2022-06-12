@@ -51,12 +51,6 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-//
-//        if (!BuildConfig.DEBUG) { // not called when testing
-//            val database = FirebaseDatabase.getInstance()
-//            database.setPersistenceEnabled(true)
-//            database.setPersistenceCacheSizeBytes(10_000_000) // 10MB cache
-//        }
 
         if (isOnline()) {
             handleLink()
@@ -68,13 +62,9 @@ class SplashScreenActivity : AppCompatActivity() {
                     startActivity(Intent(this, SplashScreenActivity::class.java))
                 }
                 // Alert Dialog
-                AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.not_logged_in_title))
-                    .setMessage(getString(R.string.not_logged_in_msg))
-                    .setCancelable(false)
-                    .setPositiveButton(android.R.string.ok, positiveButtonClick)
-                    .create()
-                    .show()
+                AlertDialog.Builder(this).setTitle(getString(R.string.not_logged_in_title))
+                    .setMessage(getString(R.string.not_logged_in_msg)).setCancelable(false)
+                    .setPositiveButton(android.R.string.ok, positiveButtonClick).create().show()
             }
         }
     }
@@ -179,7 +169,7 @@ class SplashScreenActivity : AppCompatActivity() {
                     ).show()
                 }
             }
-            return setNewUser()
+            return getIntentData()
         } else {
             // Sign in failed. If response is null the user canceled the
             // sign-in flow using the back button. Otherwise check
@@ -212,17 +202,5 @@ class SplashScreenActivity : AppCompatActivity() {
         } ?: run {
             Intent(this, MainMenuActivity::class.java)
         }
-    }
-
-    /**
-     * Create a new user
-     *
-     * @return
-     */
-    private fun setNewUser(): Intent {
-//        Firebase.auth.currentUser?.let {
-//            UserDatabase.setKeepSynced(it.uid)
-//        }
-        return getIntentData()
     }
 }
