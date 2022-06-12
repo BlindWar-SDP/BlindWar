@@ -186,14 +186,6 @@ class UserDatabaseTest : TestCase() {
         }
     }
 
-//    @Test
-//    fun removeUserTest() {
-//        launchFragmentInContainer<ProfileFragment>().onFragment {
-//            UserDatabase.removeUser("test")
-//            assertNotNull(UserDatabase.getImageReference(testUID))
-//        }
-//    }
-
     @Test
     fun addLikedMusicTest() {
         launchFragmentInContainer<ProfileFragment>()
@@ -208,18 +200,4 @@ class UserDatabaseTest : TestCase() {
 
         assertTrue(user?.likedMusics?.last()?.name == GameUtil.fly.name)
     }
-
-//    @Test
-//    fun getImageReferenceCorrectly() {
-//        launchFragmentInContainer<ProfileFragment>().onFragment {
-//            assertNotNull(UserDatabase.getImageReference(testUID))
-//        }
-//    }
-//
-//    @Test
-//    fun getEloReferenceCorrectly() {
-//        launchFragmentInContainer<ProfileFragment>().onFragment {
-//            assertNotNull(UserDatabase.getEloReference(testUID))
-//        }
-//    }
 }

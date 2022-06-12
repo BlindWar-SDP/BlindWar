@@ -18,36 +18,8 @@ class ProfileViewModel : ViewModel() {
     val imageRef = MutableLiveData<StorageReference?>()
     val user = MutableLiveData<User>()
 
-//    private val userInfoListener = object : ValueEventListener {
-//        override fun onDataChange(dataSnapshot: DataSnapshot) {
-//            // Get User info and use the values to update the UI
-//            val userDB: User? = try {
-//                dataSnapshot.getValue<User>()
-//            } catch (e: DatabaseException) {
-//                null
-//            }
-//
-//            userDB?.let {
-//                if (it.profilePicture.isNotEmpty()) {
-//                    imageRef.postValue(ImageDatabase.getImageReference(it.profilePicture))
-//                } else {
-//                    imageRef.postValue(null)
-//                }
-//                user.postValue(it)
-//            } ?: run {
-//                //user.postValue(User()) // TODO : Wrong -> if not found should watch local data, not an empty user
-//                imageRef.postValue(null)
-//            }
-//        }
-//
-//        override fun onCancelled(databaseError: DatabaseError) {
-//        }
-//    }
-
     init {
         FirebaseAuth.getInstance().currentUser?.let {
-//            UserDatabase.addUserListener(it.uid, userInfoListener)
-
             UserDatabase.userDoc(it.uid).get().addOnSuccessListener { snapshot ->
                 snapshot.toObject(User::class.java)?.let { user0 ->
                     if (user0.profilePicture.isNotEmpty()) {
