@@ -153,13 +153,15 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.4.0'
     androidTestImplementation('com.adevinta.android:barista:4.1.0') {
         exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
-        // Firebase
-        implementation 'com.google.firebase:firebase-auth-ktx:21.0.2'
-        implementation 'com.google.android.gms:play-services-auth:20.1.0'
+        exclude module: "protobuf-lite"
+    // Firebase
+        implementation 'com.google.firebase:firebase-auth-ktx:21.0.5'
+        implementation 'com.google.android.gms:play-services-auth:20.2.0'
         implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
+        implementation 'com.google.firebase:firebase-firestore-ktx:24.1.2'
         implementation 'com.google.firebase:firebase-database:19.2.1'
         implementation 'com.google.firebase:firebase-database-ktx:20.0.5'
-        implementation 'com.google.firebase:firebase-firestore-ktx:24.1.2'
+
         implementation platform('com.google.firebase:firebase-bom:29.0.1')
         implementation 'com.google.firebase:firebase-firestore-ktx'
         implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
@@ -175,6 +177,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx:24.1.2'
     implementation 'com.google.firebase:firebase-database:20.0.5'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.5'
+
 
     debugImplementation("androidx.fragment:fragment-testing:1.4.1")
     debugImplementation("androidx.fragment:fragment-ktx:1.5.0-rc01")

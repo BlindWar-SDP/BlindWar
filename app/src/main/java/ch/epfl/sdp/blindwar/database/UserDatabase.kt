@@ -6,6 +6,7 @@ import ch.epfl.sdp.blindwar.game.model.config.GameFormat
 import ch.epfl.sdp.blindwar.profile.model.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -14,8 +15,8 @@ import com.google.firebase.ktx.Firebase
 
 object UserDatabase {
     private const val COLLECTION_PATH = "Users"
-//    val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-//    val userReference = database.getReference(COLLECTION_PATH)
+    val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    val userReference = database.getReference(COLLECTION_PATH)
 
 
     val userRef = Firebase.firestore.collection(COLLECTION_PATH)
@@ -71,11 +72,11 @@ object UserDatabase {
      * @param user to be added
      */
     // Add user to database
-    fun updateUser(user: User){
-        if (user.uid.isNotEmpty()) {
-//            userReference.child(user.uid).setValue(user)
+    fun updateUser(user: User): Task<Void>?{
+        return if (user.uid.isNotEmpty()) {
+            userReference.child(user.uid).setValue(user)
             userDoc(user.uid).set(user)
-        }
+        } else null
     }
 
     /**
