@@ -27,7 +27,7 @@ object UserDatabase {
      *
      * @param user to be added
      */
-    fun updateUser(user: User): Task<Void>?{
+    fun updateUser(user: User): Task<Void>? {
         return if (user.uid.isNotEmpty()) {
             userDoc(user.uid).set(user)
         } else null
@@ -39,7 +39,14 @@ object UserDatabase {
      * @param uid
      */
     fun removeMatchId(uid: String) {
-        userDoc(uid).update(mapOf("matchID" to ""))
+//        userDoc(uid).update(mapOf("matchID" to ""))
+
+        userDoc(uid).get().addOnSuccessListener { snapshot ->
+            snapshot.toObject(User::class.java)?.let { user ->
+                user.matchId = ""
+                updateUser(user)
+            }
+        }
     }
 
     /**
@@ -48,8 +55,12 @@ object UserDatabase {
      * @param uid
      */
     fun addMatchId(uid: String, matchId: String) {
-        userDoc(uid).update(mapOf("matchID" to matchId))
-
+        userDoc(uid).get().addOnSuccessListener { snapshot ->
+            snapshot.toObject(User::class.java)?.let { user ->
+                user.matchId = matchId
+                updateUser(user)
+            }
+        }
     }
 
     /**

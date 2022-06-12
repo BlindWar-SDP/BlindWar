@@ -75,7 +75,7 @@ class UserDatabaseTest : TestCase() {
         launchFragmentInContainer<ProfileFragment>().onFragment {
             val mid = "test"
             UserDatabase.addMatchId(user0.uid, mid)
-            Thread.sleep(1000)
+            Thread.sleep(2000)
             UserDatabase.userDoc(testUID).get().addOnSuccessListener {
                 assertTrue((it.toObject(User::class.java)?.matchId == mid))
             }
@@ -86,7 +86,7 @@ class UserDatabaseTest : TestCase() {
     fun testRemoveMatchID() {
         launchFragmentInContainer<ProfileFragment>().onFragment {
             UserDatabase.removeMatchId(user0.uid)
-            Thread.sleep(1000)
+            Thread.sleep(2000)
             UserDatabase.userDoc(testUID).get().addOnSuccessListener {
                 assertTrue((it.toObject(User::class.java)?.matchId==""))
             }
