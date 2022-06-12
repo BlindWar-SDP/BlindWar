@@ -122,6 +122,10 @@ class ProfileFragment : Fragment() {
             UserDatabase.removeUser(it.uid)
             AuthUI.getInstance().delete(requireContext()).addOnCompleteListener {
                 startActivity(Intent(requireContext(), SplashScreenActivity::class.java))
+            }.addOnFailureListener{
+                // cannot del profile while offline, but can logout --> not the real behaviour
+                // -> improve delete account while offline (disable button?)
+                logOut()
             }
             Toast.makeText(
                 requireContext(),

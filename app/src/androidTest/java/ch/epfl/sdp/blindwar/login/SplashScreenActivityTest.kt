@@ -51,22 +51,19 @@ class SplashScreenActivityTest : TestCase() {
         assertDisplayed(R.id.textView_signIn)
     }
 
-//    @Test
-//    fun testSignInGuest() {
-//        Firebase.auth.signOut()
-//        testRule.scenario.onActivity {
-//            it.startActivity(it.intent)
-//        }
-//        clickOn(R.id.Btn_anonymous)
-//        Thread.sleep(1000)
-//        testRule.scenario.onActivity {
-//            it.startActivity(it.intent)
-//        }
-//        assertDisplayed(R.id.titleText)
-//        clickOn(R.id.item_profile)
-//        clickOn(R.id.deleteBtn)
-//        clickOn(android.R.string.ok)
-//    }
+    @Test
+    fun testSignInGuest() {
+        Firebase.auth.signOut()
+        testRule.scenario.onActivity {
+            it.startActivity(it.intent)
+        }
+        clickOn(R.id.Btn_anonymous)
+        Thread.sleep(1000)
+        assertDisplayed(R.id.titleText)
+        clickOn(R.id.item_profile)
+        clickOn(R.id.deleteBtn)
+        clickOn(android.R.string.ok)
+    }
 
     @Test
     fun testLoggedIn() {
