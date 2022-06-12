@@ -344,7 +344,6 @@ class UserNewInfoFragment : Fragment() {
      * @param uri
      */
     private fun uploadImage(uri: Uri?) {
-        // TODO : Should be done in ViewModel but need return value to set profile picture ...
         uri?.let { it_uri ->
             user.profilePicture =
                 ImageDatabase.uploadProfilePicture(it_uri)

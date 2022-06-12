@@ -110,16 +110,6 @@ object UserDatabase {
     }
 
     /**
-     *  Allow user to select a profile picture and store it in database
-     *
-     * @param uid
-     * @param path
-     */
-    fun addProfilePicture(uid: String, path: String) {
-        userDoc(uid).update(mapOf("profilePicture" to path))
-    }
-
-    /**
      * Gets the userStatistics of the user from the database and update its statistics
      * using the score of the game.
      * @param uid

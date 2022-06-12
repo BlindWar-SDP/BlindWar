@@ -31,7 +31,8 @@ class PlayMenuFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_play, container, false)
-        view.findViewById<ImageButton>(R.id.soloBtn).setOnClickListener {
+        val btnSolo = view.findViewById<ImageButton>(R.id.soloBtn)
+        btnSolo.setOnClickListener {
             val intent = Intent(
                 requireActivity(),
                 GameActivity::class.java
@@ -54,7 +55,9 @@ class PlayMenuFragment : Fragment() {
             }
         } else {
             btnMulti.isClickable = false
+            btnSolo.isClickable = false
             btnMulti.alpha = 0.3F
+            btnSolo.alpha = 0.3F
         }
 
         loadProfileImage(
