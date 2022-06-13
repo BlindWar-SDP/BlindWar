@@ -3,7 +3,6 @@
 package ch.epfl.sdp.blindwar.database
 
 import android.net.Uri
-import com.google.android.gms.tasks.Tasks.await
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
@@ -28,7 +27,6 @@ object ImageDatabase {
         // Create a reference to the image to upload
         val uploadedImageRef = imagesRef.child(randomKey)
         val uploadTask = uploadedImageRef.putFile(imageURI)
-        await(uploadTask)
         while (!uploadTask.isComplete);// TODO : Bad practice, waste cycles
         return uploadedImageRef.path
     }

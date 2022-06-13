@@ -156,17 +156,6 @@ class UserDatabaseTest : TestCase() {
     }
 
     @Test
-    fun addProfilePictureCorrectly() {
-        launchFragmentInContainer<ProfileFragment>().onFragment {
-            val path = "TEST_PATH"
-            UserDatabase.addProfilePicture(testUID, path)
-            UserDatabase.userDoc(testUID).get().addOnSuccessListener {
-                assertTrue((it.toObject(User::class.java)?.profilePicture == path))
-            }
-        }
-    }
-
-    @Test
     fun getUserStatisticsTest() {
         launchFragmentInContainer<ProfileFragment>()
         val fail = 2
